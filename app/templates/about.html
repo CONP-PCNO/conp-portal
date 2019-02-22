@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block about_active %} active {% endblock %}
+
+
+{% block content %}
+
+    <div style="text-align: center;">
+    <h2>About</h2>
+    <hr>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+        Web EPANET is for engineers who use <a href="https://www.epa.gov/water-research/epanet">EPANET</a> to simulate water
+            networks outside of the United States. In the United States,
+            EPANET assumes that every customer gets as much water as they want,
+            and solves for the network pressures to ensure that. However, the
+            same is not true in some other countries. In these countries (such
+            as India and other developing nations), customer consumption is
+            strongly related to the pressure of water network. Therefore,
+            this interface adapts your inputs into EPANET to model this.
+            <br>
+            <br>
+            Please note that this technology is still in beta.
+            <br>
+            <br>
+            This code can be used by anyone who would like to, with permission of authors.
+            The javascript was adapted from certain python scripts to fit the web.
+            For permission or any inquiries, please contact dtaylor@mit.edu.
+            <br><br>
+         <i>Disclaimer: Neither Web EPANET, the authors, or MIT are responsible for
+             events stemming from use from this software. This software should be
+             used with the understanding that it is in beta. Units from .inp files
+             must be in LPS (Liters per Second).</i>
+
+        <br>
+
+        </div>
+    </div>
+{% endblock %}

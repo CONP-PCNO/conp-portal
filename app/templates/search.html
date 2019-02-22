@@ -1,0 +1,94 @@
+{% extends 'base_public.html' %}
+
+{% block head %}
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/js/table.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-xs-6 col-sm-2 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-divider"></li>
+                    <li class="active text-center"><a href="/public"><i class="fa fa-bar-chart fa-5x" aria-hidden="true"></i><br> Dashboard</a></li>
+                    <li class="nav-divider"></li>
+                    <li class="text-center"><a href="/search"><i class="fa fa-search fa-5x" aria-hidden="true"></i><br> Search</a></li>
+                    <li class="nav-divider"></li>
+                    <li class="text-center"><a href="#"><i class="fa fa-wrench fa-5x" aria-hidden="true"></i><br> Tools</a></li>
+                    <li class="nav-divider"></li>
+                    <li class="text-center"><a href="#"><i class="fa fa-comments fa-5x" aria-hidden="true"></i><br> Community</a></li>
+                </ul>
+            </div>
+            <!--/.well -->
+        </div>
+        <!--/span-->
+
+        <div class="col-xs-12 col-sm-9">
+            <div style="text-align: center;padding-bottom: 25px;">
+            <h2>CONP Portal | Dataset Search</h2>
+                <hr>
+             </div>
+
+        <table id="datatable" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Dataset Name</th>
+                <th>Date Added</th>
+                <th>Size</th>
+                <th>Status</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td> <i class="fa fa-folder-open" aria-hidden="true"></i> Some fMRI study</td>
+                <td>Feb 5 2019</td>
+                <td>30 MB</td>
+                <td><span class="label label-warning">Private</span></td>
+                <td>
+                    <button type="button" class="btn btn-default">
+                          <i class="fa fa-download" aria-hidden="true"></i>
+                      </button>
+                </td>
+
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><i class="fa fa-folder-open" aria-hidden="true"></i> Prevent-AD</td>
+                <td>Feb 6, 2019</td>
+                <td>1 GB</td>
+                <td><span class="label label-success">Public</span></td>
+                <th>
+                    <button type="button" class="btn btn-default">
+                          <i class="fa fa-download" aria-hidden="true"></i>
+                      </button>
+                </th>
+
+            </tr>
+            </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
+        </table>
+        </div>
+        <!--/span-->
+    </div>
+</div>
+{% endblock %}
+

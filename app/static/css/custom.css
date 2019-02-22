@@ -1,0 +1,118 @@
+@import 'https://code.highcharts.com/css/highcharts.css';
+
+.modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}
+
+.navbar-inverse-red {
+     background-color: #FFF;
+     border-color: #ED2225;
+}
+
+.main_sidebar {
+    min-height:100vh;
+    position:fixed;
+    top:0;
+    left:0;
+    width:350px;
+    transition: all 300ms cubic-bezier(0.65, 0.05, 0.36, 1);
+    will-change: left, width;
+    box-shadow: inset -1px 0 10px rgba(0, 0, 0, 0.4);
+    background: #293749;
+}
+.main_sidebar:after {
+    content: '';
+    background-color: #253238;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    height: 100%;
+    width: 58px;
+}
+.main_sidebar ul {
+    list-style:none;
+    padding-left:58px;
+}
+.main_sidebar ul li {
+    padding:10px;
+}
+.main_sidebar ul li a {
+    color:#fff;
+    display:block;
+}
+.main_sidebar ul li i {
+    float:left;
+    color:grey;
+    margin-left:-58px;
+    font-size:24px;
+    padding-left:7px;
+}
+.main_sidebar ul li:hover {
+    background:#167696;
+}
+.main_sidebar ul li a:hover {
+    color:#fff;
+    text-decoration:none;
+}
+.main_sidebar ul li:hover i {
+    color:#fff;
+}
+.main_sidebar ul li.active {
+    background:#0f4698;
+}
+.main_sidebar ul li.active i {
+    color:#fff;
+}
+.main_sidebar ul li.active:hover {
+    background:#167696;
+}
+.main_sidebar ul li.active:hover i {
+    color:#fff;
+}
+
+.main {
+    float:right;
+    color:#fff;
+    display:block;
+    width:100%;
+    background:red;
+    min-height:100vh;
+}
+
+#chart {
+	height: 400px;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+/* Link the series colors to axis colors */
+.highcharts-color-0 {
+	fill: #7cb5ec;
+	stroke: #7cb5ec;
+}
+.highcharts-axis.highcharts-color-0 .highcharts-axis-line {
+	stroke: #7cb5ec;
+}
+.highcharts-axis.highcharts-color-0 text {
+	fill: #7cb5ec;
+}
+.highcharts-color-1 {
+	fill: #90ed7d;
+	stroke: #90ed7d;
+}
+.highcharts-axis.highcharts-color-1 .highcharts-axis-line {
+	stroke: #90ed7d;
+}
+.highcharts-axis.highcharts-color-1 text {
+	fill: #90ed7d;
+}
+
+
+.highcharts-yaxis .highcharts-axis-line {
+	stroke-width: 2px;
+}
+
+thead input {
+        width: 100%;
+    }

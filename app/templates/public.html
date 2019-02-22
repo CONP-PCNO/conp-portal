@@ -1,0 +1,78 @@
+{% extends 'base_public.html' %}
+
+{% block head %}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container-fluid">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-xs-6 col-sm-2 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-divider"></li>
+                    <li class="active text-center"><a href="/public"><i class="fa fa-bar-chart fa-5x" aria-hidden="true"></i><br> Dashboard</a></li>
+                    <li class="nav-divider"></li>
+                    <li class="text-center"><a href="/search"><i class="fa fa-search fa-5x" aria-hidden="true"></i><br> Search</a></li>
+                    <li class="nav-divider"></li>
+                    <li class="text-center"><a href="#"><i class="fa fa-wrench fa-5x" aria-hidden="true"></i><br> Tools</a></li>
+                    <li class="nav-divider"></li>
+                    <li class="text-center"><a href="#"><i class="fa fa-comments fa-5x" aria-hidden="true"></i><br> Community</a></li>
+                </ul>
+            </div>
+            <!--/.well -->
+        </div>
+        <!--/span-->
+
+        <div class="col-xs-12 col-sm-9">
+            <br>
+            <div class="jumbotron">
+                <div style="text-align: center;">
+                <h2>CONP Data Statistics</h2>
+                </div>
+                <div id="chart"></div>
+                <script type="text/javascript" src="/static/js/charts.js"></script>
+                <div class="row" style="padding-top: 20px">
+                <div class="col-xs-6">
+                    <a href="/search"><button class="btn btn-success btn-block">Browse Datasets</button></a>
+                </div>
+                <div class="col-xs-6">
+                    <button class="btn btn-default btn-block" onclick="myFunction()">Share a Dataset</button>
+                    <script>
+                    function myFunction() {
+                      alert("Registration required to share a dataset!");
+                    }
+                    </script>
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <!--/span-->
+                <div class="col-6 col-sm-6 col-lg-8">
+                    <h2>Newest Dataset Release</h2>
+                    <p>Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap friendly HTML, CSS and Javascript. Bootstrap is a front-end framework that uses CSS and JavaScript to
+                        facilitate responsive Web design. </p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                </div>
+                <!--/span-->
+
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Study Spotlight</h2>
+                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
+                        friendly HTML, CSS and Javascript.</p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                </div>
+                <!--/span-->
+            </div>
+            <hr>
+            <!--/row-->
+        </div>
+        <!--/span-->
+    </div>
+</div>
+{% endblock %}
