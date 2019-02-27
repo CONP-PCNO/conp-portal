@@ -7,7 +7,9 @@
 
 .navbar-inverse-red {
      background-color: #FFF;
-     border-color: #ED2225;
+     border-bottom-color: #ED2225;
+     border-bottom-width: medium;
+     border-radius: 0px;
 }
 
 .main_sidebar {
