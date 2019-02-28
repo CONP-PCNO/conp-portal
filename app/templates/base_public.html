@@ -48,13 +48,10 @@
                 <li><a href="#">EXPERIENCE</a></li>
                 <li><a href="#">COMMUNITY</a></li>
                 <li class="active-nav"><a href="#">PORTAL</a></li>
-                <li><a href="#">Login</a></li>
-                <!--<button type="button" class="btn btn-default" data-toggle="modal" data-target="#signup-modal">
-                    <span class="glyphicon glyphicon-user"></span> Sign Up
-                </button>
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#login-modal">
-                    <span class="glyphicon glyphicon-log-in"></span> LOGIN
-                </button>-->
+                <li><a href="#" data-toggle="modal" data-target="#login-modal">
+                        <span class="glyphicon glyphicon-log-in"></span> Login
+                    </a>
+                </li>
             </ul>
         </div>
       </div>
@@ -106,7 +103,7 @@
       </form>
     </div>
 
-    <!-- Sign Up Modal -->
+    <!-- Sign In Modal -->
     <div class="modal fade bd-example-modal-sm" id="login-modal" tabindex="-1" role="dialog" aria-hidden="true">
       <form class="form-horizontal" id="login" role="form" action="/index" method="POST" enctype="multipart/form-data">
       <div class="modal-dialog modal-sm" role="document">
@@ -116,7 +113,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-              <div style="position: relative; left: 36%">
+              <div style="position: relative; left: 36%; margin-top: 15px;">
               <img src="static/img/conp-pcno-logo.png" style="height: 30%; width: 30%;">
               </div>
           </div>
@@ -125,18 +122,21 @@
             {{ signin.hidden_tag() }}
             <p>
             {{ signin.username.label }}<br>
-            {{ signin.username(size=30) }}
+            {{ signin.username(size=37) }}
             </p>
             <p>
             {{ signin.password.label }}<br>
-            {{ signin.password(size=30) }}
+            {{ signin.password(size=37) }}
             </p>
-            <p>{{ signin.remember_me() }} {{ signin.remember_me.label }}</p>
           </div>
           <!-- Modal Footer -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Log In</button>
+            <div class="col-xs-6">
+                <a href="#"><button class="btn btn-default btn-block">Register</button></a>
+            </div>
+            <div class="col-xs-6">
+                <a href="#"><button class="btn btn-success btn-block">Login</button></a>
+            </div>
           </div>
         </div>
       </div>
