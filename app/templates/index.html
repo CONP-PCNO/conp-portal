@@ -10,29 +10,56 @@
 
 <div class="container-fluid">
 
-    <div style="text-align: right;">
-    Welcome <strong>{{ user.username }}</strong>
-    </div>
+    <div class="row row-offcanvas row-offcanvas-left" style="margin-top: -20px;">
 
-    <div class="row row-offcanvas row-offcanvas-left">
-        <div class="col-xs-6 col-sm-2 sidebar-offcanvas" id="sidebar" role="navigation">
+        <!-- Display Sidebar -->
+        <div class="col-xs-6 col-sm-1 sidebar-offcanvas" id="sidebar" role="navigation" style="margin-left: -30px;">
             <div class="sidebar-nav">
-                <ul class="nav">
-                    <li class="nav-divider"></li>
-                    <li class="active text-center"><a href="/public"><i class="fa fa-bar-chart fa-5x" aria-hidden="true"></i><br> Dashboard</a></li>
-                    <li class="nav-divider"></li>
-                    <li class="text-center"><a href="/search"><i class="fa fa-search fa-5x" aria-hidden="true"></i><br> Search</a></li>
-                    <li class="nav-divider"></li>
-                    <li class="text-center"><a href="#"><i class="fa fa-wrench fa-5x" aria-hidden="true"></i><br> Tools</a></li>
-                    <li class="nav-divider"></li>
-                    <li class="text-center"><a href="#"><i class="fa fa-comments fa-5x" aria-hidden="true"></i><br> Community</a></li>
+                <ul class="nav" style="margin-left: -6px;">
+
+                    <li class="active text-center">
+                        <a href="/public" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-bar-chart fa-3x" aria-hidden="true"></i><br> Dashboard </span>
+                        </a>
+                    </li>
+
+
+                    <li class="text-center">
+                        <a href="/search" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-search fa-3x" aria-hidden="true"></i><br> Search </span>
+                        </a>
+                    </li>
+
+                    <li class="text-center">
+                        <a href="#" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-wrench fa-3x" aria-hidden="true"></i><br> Tools </span>
+                        </a>
+                    </li>
+
+                    <li class="text-center">
+                        <a href="#" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-upload fa-3x" aria-hidden="true"></i><br> Share </span>
+                        </a>
+                    </li>
+
+                    <li class="text-center">
+                        <a href="#" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-comments fa-3x" aria-hidden="true"></i><br> Community </span>
+                        </a>
+                    </li>
+
+                     <li class="text-center">
+                        <a href="#" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-user-circle fa-3x" aria-hidden="true"></i><br> Profile </span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <!--/.well -->
         </div>
         <!--/span-->
 
-        <div class="col-xs-12 col-sm-9">
+        <div class="col-xs-12 col-sm-10">
+
+            <!-- Display Username Login -->
+            <div style="text-align: right; padding-top: 20px;">
+            Welcome <strong>{{ user.username }}</strong>
+            </div>
+
             <br>
             <div class="jumbotron">
                 <div style="text-align: center;">
@@ -71,7 +98,6 @@
             <!--/row-->
         </div>
         <!--/span-->
-
     </div>
     <!--/row-->
 </div>
