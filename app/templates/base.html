@@ -29,23 +29,7 @@
     <div class="navbar navbar-inverse-red" role="navigation">
       <div class="container">
 
-
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-              <div style="padding-top: 7px;">
-
-                  <button type="button" class="btn btn-default">
-                     <i class="fa fa-cogs" aria-hidden="true"></i> Settings
-                </button>
-                  <a href="/">
-                <button type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-log-out"></span> Log Out
-                </button></a>
-              </div>
-          </li>
-        </ul>
-
-        <!-- Header -->
+          <!-- Header -->
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -53,15 +37,23 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <!--<a class="navbar-brand" href="/">
-             CONP
-          </a>-->
+          <a class="navbar-brand" href="/index" style="margin-top: -13px;">
+              <img src="./static/img/conp_brand.png" height="45" width="75">
+          </a>
         </div>
 
         <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-
-          </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">DISCOVER</a></li>
+                <li><a href="#">EXPERIENCE</a></li>
+                <li><a href="#">COMMUNITY</a></li>
+                <li class="active-nav"><a href="/index">PORTAL</a></li>
+                <li>
+                    <a href="#">
+                        <span class="glyphicon glyphicon-log-out"></span> Logout
+                    </a>
+                </li>
+            </ul>
         </div>
       </div>
     </div>

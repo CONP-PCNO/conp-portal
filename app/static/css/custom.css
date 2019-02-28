@@ -7,7 +7,28 @@
 
 .navbar-inverse-red {
      background-color: #FFF;
-     border-color: #ED2225;
+     border-bottom-color: #ED2225;
+     border-bottom-width: medium;
+     border-radius: 0px;
+}
+
+.navbar-brand{
+  position:absolute;
+}
+
+.navbar-nav>li>a {
+    color: black;
+    font-weight: 400;
+}
+
+li.active-nav > a{
+    background-color: #ED2225;
+    color: white;
+}
+
+li.active-nav:hover > a{
+    background-color: white;
+    color: black;
 }
 
 .main_sidebar {
