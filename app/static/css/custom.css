@@ -12,6 +12,10 @@
      border-radius: 0px;
 }
 
+.navbar-brand{
+  position:absolute;
+}
+
 .main_sidebar {
     min-height:100vh;
     position:fixed;
