@@ -16,6 +16,21 @@
   position:absolute;
 }
 
+.navbar-nav>li>a {
+    color: black;
+    font-weight: 400;
+}
+
+li.active-nav > a{
+    background-color: #ED2225;
+    color: white;
+}
+
+li.active-nav:hover > a{
+    background-color: white;
+    color: black;
+}
+
 .main_sidebar {
     min-height:100vh;
     position:fixed;
