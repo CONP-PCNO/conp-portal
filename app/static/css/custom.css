@@ -165,6 +165,7 @@ li span:hover{
 	stroke-width: 2px;
 }
 
-thead input {
-        width: 100%;
-    }
+#datatable td td {
+    border: 0;
+}
+
