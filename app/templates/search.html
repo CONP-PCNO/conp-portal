@@ -13,72 +13,136 @@
 
 <div class="container-fluid">
     <div class="row row-offcanvas row-offcanvas-left">
-        <div class="col-xs-6 col-sm-2 sidebar-offcanvas" id="sidebar" role="navigation">
-            <div class="sidebar-nav">
-                <ul class="nav">
-                    <li class="nav-divider"></li>
-                    <li class="active text-center"><a href="/public"><i class="fa fa-bar-chart fa-5x" aria-hidden="true"></i><br> Dashboard</a></li>
-                    <li class="nav-divider"></li>
-                    <li class="text-center"><a href="/search"><i class="fa fa-search fa-5x" aria-hidden="true"></i><br> Search</a></li>
-                    <li class="nav-divider"></li>
-                    <li class="text-center"><a href="#"><i class="fa fa-wrench fa-5x" aria-hidden="true"></i><br> Tools</a></li>
-                    <li class="nav-divider"></li>
-                    <li class="text-center"><a href="#"><i class="fa fa-comments fa-5x" aria-hidden="true"></i><br> Community</a></li>
-                </ul>
-            </div>
-            <!--/.well -->
-        </div>
-        <!--/span-->
 
-        <div class="col-xs-12 col-sm-9">
+        {% include "/fragments/sidebar.html" %}
+
+
+        <div class="col-xs-12 col-sm-10">
             <div style="text-align: center;padding-bottom: 25px;">
             <h2>CONP Portal | Dataset Search</h2>
                 <hr>
              </div>
 
-        <table id="datatable" cellspacing="0" width="100%">
+        <table id="datatable"  class="row-border" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Dataset Name</th>
-                <th>Date Added</th>
-                <th>Size</th>
-                <th>Status</th>
-                <th>Download</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
+            <!-- Green Example -->
             <tr>
-                <td>1</td>
-                <td> <i class="fa fa-folder-open" aria-hidden="true"></i> Some fMRI study</td>
-                <td>Feb 5 2019</td>
-                <td>30 MB</td>
-                <td><span class="label label-warning">Private</span></td>
                 <td>
-                    <button type="button" class="btn btn-default">
-                          <i class="fa fa-download" aria-hidden="true"></i>
-                      </button>
+                    <table>
+                      <tr>
+                        <th colspan="3"><img src="./static/img/placeholder.png" style="height: 100px; width: 120px;" ></th>
+                      </tr>
+                      <tr>
+                        <td><i class="fa fa-download"></i></td>
+                        <td><i class="fa fa-eye"></i></td>
+                        <td><i class="fa fa-heart"></i></td>
+                      </tr>
+                      <tr>
+                        <td>39</td>
+                        <td>124</td>
+                        <td>84</td>
+                      </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                      <tr>
+                          <th colspan="8"><h3>Dataset name to be displayed here</h3></th>
+                      </tr>
+                      <tr>
+                        <td>Date Added</td>
+                        <td>Date Updated</td>
+                        <td>Size</td>
+                        <td>Files</td>
+                        <td>Subjects</td>
+                        <td>Format</td>
+                        <td>Modalities</td>
+                        <td>Sources</td>
+                      </tr>
+                      <tr>
+                        <td>10/11/2018</td>
+                        <td>10/11/2018</td>
+                        <td>350mb</td>
+                        <td>22</td>
+                        <td>100</td>
+                        <td>BIDS</td>
+                        <td>fMRI</td>
+                        <td>3</td>
+                      </tr>
+                    </table>
+                </td>
+                <td>
+                        <img src="./static/img/run_on_cbrain_green.png" height="50%" >
+                </td>
+                <td>
+                        <img src="./static/img/download_green.png" height="50%" >
                 </td>
 
             </tr>
+            <!-- Gray Example -->
             <tr>
-                <td>2</td>
-                <td><i class="fa fa-folder-open" aria-hidden="true"></i> Prevent-AD</td>
-                <td>Feb 6, 2019</td>
-                <td>1 GB</td>
-                <td><span class="label label-success">Public</span></td>
-                <th>
-                    <button type="button" class="btn btn-default">
-                          <i class="fa fa-download" aria-hidden="true"></i>
-                      </button>
-                </th>
-
+                <td>
+                    <table>
+                      <tr>
+                        <th colspan="3"><img src="./static/img/placeholder.png" style="height: 100px; width: 120px;" ></th>
+                      </tr>
+                      <tr>
+                        <td><i class="fa fa-download"></i></td>
+                        <td><i class="fa fa-eye"></i></td>
+                        <td><i class="fa fa-heart"></i></td>
+                      </tr>
+                      <tr>
+                        <td>39</td>
+                        <td>124</td>
+                        <td>84</td>
+                      </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                      <tr>
+                          <th colspan="8"><h3>Dataset name to be displayed here</h3></th>
+                      </tr>
+                      <tr>
+                        <td>Date Added</td>
+                        <td>Date Updated</td>
+                        <td>Size</td>
+                        <td>Files</td>
+                        <td>Subjects</td>
+                        <td>Format</td>
+                        <td>Modalities</td>
+                        <td>Sources</td>
+                      </tr>
+                      <tr>
+                        <td>10/11/2018</td>
+                        <td>10/11/2018</td>
+                        <td>350mb</td>
+                        <td>22</td>
+                        <td>100</td>
+                        <td>BIDS</td>
+                        <td>fMRI</td>
+                        <td>3</td>
+                      </tr>
+                    </table>
+                </td>
+                <td>
+                        <img src="./static/img/run_on_cbrain_gray.png" height="50%" >
+                </td>
+                <td>
+                        <img src="./static/img/download_gray.png" height="50%" >
+                </td>
             </tr>
             </tbody>
         <tfoot>
             <tr>
-                <th></th>
-                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
