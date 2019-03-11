@@ -1,5 +1,8 @@
 $(document).ready(function() {
     $('#datatable').DataTable( {
+
+        "ordering": false,
+
         initComplete: function () {
             this.api().columns([]).every( function () {
                 var column = this;
