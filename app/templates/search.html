@@ -4,7 +4,7 @@
 
 <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-<script type="text/javascript" src="/lib/conp-react/umd/conp-react.js"></script>
+<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
 
 {% endblock %}
 
@@ -19,11 +19,11 @@
 </div>
 
 <script type="text/javascript">
-  ReactDOM.render(CONPReact.DataTable, document.querySelector("#datatable-mount"), {
+  const element = React.createElement(CONPReact.DataTable, {
     authorized: true,
     elements: [
       {
-        thumbnailURL: "",
+        thumbnailURL: "static/img/placeholder.png",
         downloads: 42,
         views: 24,
         likes: 12,
@@ -36,8 +36,10 @@
         modalities: "fMRI",
         sources: 3
       }
-    ]
+    ],
+    imgPath: "static/img"
   });
+  ReactDOM.render(element, document.querySelector("#datatable-mount"));
 </script>
 </div>
 <!--/span-->

@@ -95,7 +95,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -118,7 +118,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__0__;
 if (false) { var throwOnDirectAccess, ReactIs; } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(7)();
+  module.exports = __webpack_require__(3)();
 }
 
 
@@ -126,35 +126,11 @@ if (false) { var throwOnDirectAccess, ReactIs; } else {
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "run_on_cbrain_green.31f6d0cb.png";
+module.exports = __webpack_require__(5);
+
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "run_on_cbrain_gray.37dd4e0c.png";
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "download_green.3d072364.png";
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "download_gray.057ee6dd.png";
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(9);
-
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -167,7 +143,7 @@ module.exports = __webpack_require__(9);
 
 
 
-var ReactPropTypesSecret = __webpack_require__(8);
+var ReactPropTypesSecret = __webpack_require__(4);
 
 function emptyFunction() {}
 function emptyFunctionWithReset() {}
@@ -225,7 +201,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 8 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -244,7 +220,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 9 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -258,48 +234,23 @@ var external_root_React_commonjs2_react_commonjs_react_amd_react_default = /*#__
 var prop_types = __webpack_require__(1);
 var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
 
-// EXTERNAL MODULE: ./src/data-table/img/run_on_cbrain_green.png
-var run_on_cbrain_green = __webpack_require__(2);
-var run_on_cbrain_green_default = /*#__PURE__*/__webpack_require__.n(run_on_cbrain_green);
-
-// EXTERNAL MODULE: ./src/data-table/img/run_on_cbrain_gray.png
-var run_on_cbrain_gray = __webpack_require__(3);
-var run_on_cbrain_gray_default = /*#__PURE__*/__webpack_require__.n(run_on_cbrain_gray);
-
-// EXTERNAL MODULE: ./src/data-table/img/download_green.png
-var download_green = __webpack_require__(4);
-var download_green_default = /*#__PURE__*/__webpack_require__.n(download_green);
-
-// EXTERNAL MODULE: ./src/data-table/img/download_gray.png
-var download_gray = __webpack_require__(5);
-var download_gray_default = /*#__PURE__*/__webpack_require__.n(download_gray);
-
-// CONCATENATED MODULE: ./src/data-table/index.js
+// CONCATENATED MODULE: ./src/data-table/DataTable.js
 
 
 
-
-
-
-
-
-var data_table_DataTable = function DataTable(_ref) {
+var DataTable_DataTable = function DataTable(_ref) {
   var authorized = _ref.authorized,
       elements = _ref.elements,
       query = _ref.query,
       setQuery = _ref.setQuery,
       onDownload = _ref.onDownload,
-      onRunWithCBRAIN = _ref.onRunWithCBRAIN;
+      onRunWithCBRAIN = _ref.onRunWithCBRAIN,
+      imgPath = _ref.imgPath;
 
-  var innerQuery = query;
-  var innerSetQuery = setQuery;
-
-  if (!innerSetQuery) {
-    var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(null);
-
-    innerQuery = _React$useState[0];
-    innerSetQuery = _React$useState[1];
-  }
+  var runOnCbrainEnabled = imgPath + "/run_on_cbrain_green.png";
+  var runOnCbrainDisabled = imgPath + "/run_on_cbrain_gray.png";
+  var downloadEnabled = imgPath + "/download_green.png";
+  var downloadDisabled = imgPath + "/download_gray.png";
 
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "table",
@@ -319,54 +270,58 @@ var data_table_DataTable = function DataTable(_ref) {
               "table",
               null,
               external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "tr",
+                "tbody",
                 null,
                 external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "th",
-                  { colspan: "3" },
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-                    alt: "dataset format",
-                    className: "dataset-thumbnail",
-                    src: element.thumbnailURL
-                  })
-                )
-              ),
-              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "tr",
-                null,
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
+                  "tr",
                   null,
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-download" })
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "th",
+                    { colSpan: 3 },
+                    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+                      alt: "dataset format",
+                      className: "dataset-thumbnail",
+                      src: element.thumbnailURL
+                    })
+                  )
                 ),
                 external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
+                  "tr",
                   null,
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-eye" })
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-download" })
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-eye" })
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-heart" })
+                  )
                 ),
                 external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
+                  "tr",
                   null,
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-heart" })
-                )
-              ),
-              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "tr",
-                null,
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  element.downloads
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  element.views
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  element.likes
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    element.downloads
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    element.views
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    element.likes
+                  )
                 )
               )
             )
@@ -378,104 +333,108 @@ var data_table_DataTable = function DataTable(_ref) {
               "table",
               null,
               external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "tr",
+                "tbody",
                 null,
                 external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "th",
-                  { colspan: "8" },
+                  "tr",
+                  null,
                   external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "h3",
-                    null,
-                    element.title
+                    "th",
+                    { colSpan: 8 },
+                    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                      "h3",
+                      null,
+                      element.title
+                    )
                   )
-                )
-              ),
-              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "tr",
-                null,
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  "Date Added"
                 ),
                 external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
+                  "tr",
                   null,
-                  "Date Updated"
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    "Date Added"
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    "Date Updated"
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    "Size"
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    "Files"
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    "Subjects"
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    "Format"
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    "Modalities"
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    "Sources"
+                  )
                 ),
                 external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
+                  "tr",
                   null,
-                  "Size"
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  "Files"
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  "Subjects"
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  "Format"
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  "Modalities"
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  "Sources"
-                )
-              ),
-              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "tr",
-                null,
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  element.dateAdded
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  element.dateUpdated
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  element.size
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  element.files
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  element.subjects
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  element.format
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  element.modalities
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "td",
-                  null,
-                  element.sources
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    element.dateAdded
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    element.dateUpdated
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    element.size
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    element.files
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    element.subjects
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    element.format
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    element.modalities
+                  ),
+                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "td",
+                    null,
+                    element.sources
+                  )
                 )
               )
             )
@@ -486,7 +445,7 @@ var data_table_DataTable = function DataTable(_ref) {
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
               alt: "Run On Cbrain",
               className: "run-on-cbrain-button",
-              src: element.public || authorized ? run_on_cbrain_green_default.a : run_on_cbrain_gray_default.a,
+              src: element.public || authorized ? runOnCbrainEnabled : runOnCbrainDisabled,
               onClick: function onClick(event) {
                 event.preventDefault();
                 if (!(element.public || authorized)) {
@@ -502,7 +461,7 @@ var data_table_DataTable = function DataTable(_ref) {
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
               alt: "Run On Cbrain",
               className: "download-button",
-              src: element.public || authorized ? download_green_default.a : download_gray_default.a,
+              src: element.public || authorized ? downloadEnabled : downloadDisabled,
               onClick: function onClick(event) {
                 event.preventDefault();
                 if (!(element.public || authorized)) {
@@ -519,7 +478,7 @@ var data_table_DataTable = function DataTable(_ref) {
   );
 };
 
-data_table_DataTable.propTypes = {
+DataTable_DataTable.propTypes = {
   authorized: prop_types_default.a.bool,
   elements: prop_types_default.a.arrayOf(prop_types_default.a.shape({
     public: prop_types_default.a.bool,
@@ -549,12 +508,43 @@ data_table_DataTable.propTypes = {
   onRunWithCBRAIN: prop_types_default.a.func
 };
 
+DataTable_DataTable.defaultProps = {
+  imgPath: ""
+};
+
+/* harmony default export */ var data_table_DataTable = (DataTable_DataTable);
+// CONCATENATED MODULE: ./src/data-table/DataTableAJAX.js
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+
+
+
+
+
+var DataTableAJAX_DataTableAJAX = function DataTableAJAX(_ref) {
+  var baseURL = _ref.baseURL,
+      props = _objectWithoutProperties(_ref, ["baseURL"]);
+
+  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(data_table_DataTable, props);
+};
+
+DataTableAJAX_DataTableAJAX.propTypes = {
+  baseURL: prop_types_default.a.string
+};
+
 data_table_DataTable.defaultProps = {};
 
-/* harmony default export */ var data_table = (data_table_DataTable);
-// CONCATENATED MODULE: ./src/index.js
-/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "DataTable", function() { return data_table; });
+/* harmony default export */ var data_table_DataTableAJAX = (DataTableAJAX_DataTableAJAX);
+// CONCATENATED MODULE: ./src/data-table/index.js
 
+
+// CONCATENATED MODULE: ./src/index.js
+/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "DataTable", function() { return data_table_DataTable; });
+/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "DataTableAJAX", function() { return data_table_DataTableAJAX; });
+
+
+
+/* harmony default export */ var src = __webpack_exports__["default"] = ({ DataTable: data_table_DataTable, DataTableAJAX: data_table_DataTableAJAX });
 
 /***/ })
 /******/ ])["default"];

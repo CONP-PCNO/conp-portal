@@ -1,19 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import runOnCbrainEnabled from "./img/run_on_cbrain_green.png";
-import runOnCbrainDisabled from "./img/run_on_cbrain_gray.png";
-import downloadEnabled from "./img/download_green.png";
-import downloadDisabled from "./img/download_gray.png";
-
 const DataTable = ({
   authorized,
   elements,
   query,
   setQuery,
   onDownload,
-  onRunWithCBRAIN
+  onRunWithCBRAIN,
+  imgPath
 }) => {
+  const runOnCbrainEnabled = `${imgPath}/run_on_cbrain_green.png`;
+  const runOnCbrainDisabled = `${imgPath}/run_on_cbrain_gray.png`;
+  const downloadEnabled = `${imgPath}/download_green.png`;
+  const downloadDisabled = `${imgPath}/download_gray.png`;
+
   return (
     <table className="data-table row-border" cellSpacing={0}>
       <thead />
@@ -23,60 +24,64 @@ const DataTable = ({
             <tr>
               <td>
                 <table>
-                  <tr>
-                    <th colspan="3">
-                      <img
-                        alt="dataset format"
-                        className="dataset-thumbnail"
-                        src={element.thumbnailURL}
-                      />
-                    </th>
-                  </tr>
-                  <tr>
-                    <td>
-                      <i className="fa fa-download" />
-                    </td>
-                    <td>
-                      <i className="fa fa-eye" />
-                    </td>
-                    <td>
-                      <i className="fa fa-heart" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>{element.downloads}</td>
-                    <td>{element.views}</td>
-                    <td>{element.likes}</td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <th colSpan={3}>
+                        <img
+                          alt="dataset format"
+                          className="dataset-thumbnail"
+                          src={element.thumbnailURL}
+                        />
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i className="fa fa-download" />
+                      </td>
+                      <td>
+                        <i className="fa fa-eye" />
+                      </td>
+                      <td>
+                        <i className="fa fa-heart" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{element.downloads}</td>
+                      <td>{element.views}</td>
+                      <td>{element.likes}</td>
+                    </tr>
+                  </tbody>
                 </table>
               </td>
               <td>
                 <table>
-                  <tr>
-                    <th colspan="8">
-                      <h3>{element.title}</h3>
-                    </th>
-                  </tr>
-                  <tr>
-                    <td>Date Added</td>
-                    <td>Date Updated</td>
-                    <td>Size</td>
-                    <td>Files</td>
-                    <td>Subjects</td>
-                    <td>Format</td>
-                    <td>Modalities</td>
-                    <td>Sources</td>
-                  </tr>
-                  <tr>
-                    <td>{element.dateAdded}</td>
-                    <td>{element.dateUpdated}</td>
-                    <td>{element.size}</td>
-                    <td>{element.files}</td>
-                    <td>{element.subjects}</td>
-                    <td>{element.format}</td>
-                    <td>{element.modalities}</td>
-                    <td>{element.sources}</td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <th colSpan={8}>
+                        <h3>{element.title}</h3>
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>Date Added</td>
+                      <td>Date Updated</td>
+                      <td>Size</td>
+                      <td>Files</td>
+                      <td>Subjects</td>
+                      <td>Format</td>
+                      <td>Modalities</td>
+                      <td>Sources</td>
+                    </tr>
+                    <tr>
+                      <td>{element.dateAdded}</td>
+                      <td>{element.dateUpdated}</td>
+                      <td>{element.size}</td>
+                      <td>{element.files}</td>
+                      <td>{element.subjects}</td>
+                      <td>{element.format}</td>
+                      <td>{element.modalities}</td>
+                      <td>{element.sources}</td>
+                    </tr>
+                  </tbody>
                 </table>
               </td>
               <td>
@@ -157,6 +162,8 @@ DataTable.propTypes = {
   onRunWithCBRAIN: PropTypes.func
 };
 
-DataTable.defaultProps = {};
+DataTable.defaultProps = {
+  imgPath: ""
+};
 
 export default DataTable;
