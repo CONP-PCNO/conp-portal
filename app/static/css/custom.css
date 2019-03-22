@@ -190,6 +190,10 @@ li.active-nav:hover > a {
   padding-right: 2rem;
 }
 
+.navbar-toggle .icon-bar {
+  background-color: #ed2125;
+}
+
 /*
 =============================================================
 | SIDEBAR
@@ -238,6 +242,8 @@ body .container .container-wrapper {
 .container-main {
   height: 100%;
   padding: 2rem 5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 /*
