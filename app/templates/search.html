@@ -2,11 +2,10 @@
 
 {% block head %}
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/static/js/table.js"></script>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 {% endblock %}
 
 {% block content %}
@@ -16,133 +15,32 @@
     <hr>
 </div>
 
-<table id="datatable"  class="row-border" cellspacing="0" width="100%">
-<thead>
-    <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
-</thead>
-<tbody>
-    <!-- Green Example -->
-    <tr>
-        <td>
-            <table>
-              <tr>
-                <th colspan="3"><img src="./static/img/placeholder.png" style="height: 100px; width: 120px;" ></th>
-              </tr>
-              <tr>
-                <td><i class="fa fa-download"></i></td>
-                <td><i class="fa fa-eye"></i></td>
-                <td><i class="fa fa-heart"></i></td>
-              </tr>
-              <tr>
-                <td>39</td>
-                <td>124</td>
-                <td>84</td>
-              </tr>
-            </table>
-        </td>
-        <td>
-            <table>
-              <tr>
-                  <th colspan="8"><h3>Dataset name to be displayed here</h3></th>
-              </tr>
-              <tr>
-                <td>Date Added</td>
-                <td>Date Updated</td>
-                <td>Size</td>
-                <td>Files</td>
-                <td>Subjects</td>
-                <td>Format</td>
-                <td>Modalities</td>
-                <td>Sources</td>
-              </tr>
-              <tr>
-                <td>10/11/2018</td>
-                <td>10/11/2018</td>
-                <td>350mb</td>
-                <td>22</td>
-                <td>100</td>
-                <td>BIDS</td>
-                <td>fMRI</td>
-                <td>3</td>
-              </tr>
-            </table>
-        </td>
-        <td>
-                <img src="./static/img/run_on_cbrain_green.png" height="50%" >
-        </td>
-        <td>
-                <img src="./static/img/download_green.png" height="50%" >
-        </td>
+<div id="datatable-mount" >
+</div>
 
-    </tr>
-    <!-- Gray Example -->
-    <tr>
-        <td>
-            <table>
-              <tr>
-                <th colspan="3"><img src="./static/img/placeholder.png" style="height: 100px; width: 120px;" ></th>
-              </tr>
-              <tr>
-                <td><i class="fa fa-download"></i></td>
-                <td><i class="fa fa-eye"></i></td>
-                <td><i class="fa fa-heart"></i></td>
-              </tr>
-              <tr>
-                <td>39</td>
-                <td>124</td>
-                <td>84</td>
-              </tr>
-            </table>
-        </td>
-        <td>
-            <table>
-              <tr>
-                  <th colspan="8"><h3>Dataset name to be displayed here</h3></th>
-              </tr>
-              <tr>
-                <td>Date Added</td>
-                <td>Date Updated</td>
-                <td>Size</td>
-                <td>Files</td>
-                <td>Subjects</td>
-                <td>Format</td>
-                <td>Modalities</td>
-                <td>Sources</td>
-              </tr>
-              <tr>
-                <td>10/11/2018</td>
-                <td>10/11/2018</td>
-                <td>350mb</td>
-                <td>22</td>
-                <td>100</td>
-                <td>BIDS</td>
-                <td>fMRI</td>
-                <td>3</td>
-              </tr>
-            </table>
-        </td>
-        <td>
-                <img src="./static/img/run_on_cbrain_gray.png" height="50%" >
-        </td>
-        <td>
-                <img src="./static/img/download_gray.png" height="50%" >
-        </td>
-    </tr>
-    </tbody>
-<tfoot>
-    <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
-</tfoot>
-</table>
+<script type="text/javascript">
+  const element = React.createElement(CONPReact.DataTable, {
+    authorized: true,
+    elements: [
+      {
+        thumbnailURL: "static/img/placeholder.png",
+        downloads: 42,
+        views: 24,
+        likes: 12,
+        dateAdded: "10/12/2018",
+        dateUpdated: "10/13/2018",
+        size: "800mb",
+        files: 44,
+        subjects: 30,
+        format: "BIDS",
+        modalities: "fMRI",
+        sources: 3
+      }
+    ],
+    imgPath: "static/img"
+  });
+  ReactDOM.render(element, document.querySelector("#datatable-mount"));
+</script>
 </div>
 <!--/span-->
 {% endblock %}
