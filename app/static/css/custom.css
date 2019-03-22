@@ -154,9 +154,6 @@ body {
 | NAVBAR
 =============================================================
 */
-.navbar .container {
-  padding: 0;
-}
 
 .navbar-inverse-red {
   background-color: #fff;
@@ -166,8 +163,11 @@ body {
   margin-bottom: 0;
 }
 
-.navbar-brand {
-  position: absolute;
+.navbar .container {
+  padding: 0;
+}
+
+.navbar > .container .navbar-brand {
   padding: 0 2rem;
 }
 
@@ -195,6 +195,10 @@ li.active-nav:hover > a {
 | SIDEBAR
 =============================================================
 */
+.sidebar-offcanvas {
+  padding: 0;
+  height: 100%;
+}
 
 .sidebar-nav {
   background-color: #343434;
@@ -213,6 +217,10 @@ li.active-nav:hover > a {
   color: black;
 }
 
+.sidebar-nav .nav li .sidebar-link {
+  padding: 2.5rem 1rem;
+}
+
 /*
 =============================================================
 | CONTAINER
@@ -221,12 +229,15 @@ li.active-nav:hover > a {
 
 body .container {
   flex-grow: 1;
-  padding-top: 2rem;
-  padding-bottom: 0rem;
 }
 
-body .container .container-main {
+body .container .container-wrapper {
   height: 100%;
+}
+
+.container-main {
+  height: 100%;
+  padding: 2rem 5rem;
 }
 
 /*
@@ -237,7 +248,7 @@ body .container .container-main {
 
 .footer {
   background-color: #343434;
-  padding: 2rem 0;
+  padding: 4rem 0;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -253,10 +264,15 @@ body .container .container-main {
 .footer .footer-text strong {
   text-align: center;
   width: 100%;
+  margin-bottom: 1rem;
 }
 
 .footer .footer-link {
   color: white;
   text-decoration: none;
   margin: 0 0.5rem;
+}
+
+.footer .footer-link:hover {
+  color: #ed2125;
 }
