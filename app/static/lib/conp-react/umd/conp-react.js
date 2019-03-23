@@ -253,228 +253,227 @@ var DataTable_DataTable = function DataTable(_ref) {
   var downloadDisabled = imgPath + "/download_gray.png";
 
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-    "table",
-    { className: "data-table row-border", cellSpacing: 0 },
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("thead", null),
+    "div",
+    { className: "search-dataset-table", cellSpacing: 0 },
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "tbody",
-      null,
-      elements.map(function (element) {
-        return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "tr",
-          null,
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "td",
-            null,
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "table",
-              null,
-              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "tbody",
-                null,
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "tr",
-                  null,
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "th",
-                    { colSpan: 3 },
-                    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-                      alt: "dataset format",
-                      className: "dataset-thumbnail",
-                      src: element.thumbnailURL
-                    })
-                  )
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "tr",
-                  null,
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-download" })
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-eye" })
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-heart" })
-                  )
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "tr",
-                  null,
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    element.downloads
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    element.views
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    element.likes
-                  )
-                )
-              )
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "td",
-            null,
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "table",
-              null,
-              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "tbody",
-                null,
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "tr",
-                  null,
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "th",
-                    { colSpan: 8 },
-                    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                      "h3",
-                      null,
-                      element.title
-                    )
-                  )
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "tr",
-                  null,
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    "Date Added"
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    "Date Updated"
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    "Size"
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    "Files"
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    "Subjects"
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    "Format"
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    "Modalities"
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    "Sources"
-                  )
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "tr",
-                  null,
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    element.dateAdded
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    element.dateUpdated
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    element.size
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    element.files
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    element.subjects
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    element.format
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    element.modalities
-                  ),
-                  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "td",
-                    null,
-                    element.sources
-                  )
-                )
-              )
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "td",
-            null,
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-              alt: "Run On Cbrain",
-              className: "run-on-cbrain-button",
-              src: element.public || authorized ? runOnCbrainEnabled : runOnCbrainDisabled,
-              onClick: function onClick(event) {
-                event.preventDefault();
-                if (!(element.public || authorized)) {
-                  return;
-                }
-                onRunWithCBRAIN instanceof Function && onRunWithCBRAIN(event);
-              }
-            })
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "td",
-            null,
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-              alt: "Run On Cbrain",
-              className: "download-button",
-              src: element.public || authorized ? downloadEnabled : downloadDisabled,
-              onClick: function onClick(event) {
-                event.preventDefault();
-                if (!(element.public || authorized)) {
-                  return;
-                }
-                onDownload instanceof Function && onDownload(event);
-              }
-            })
-          )
-        );
-      })
+      "div",
+      { className: "search-dataset-toolbar" },
+      "SEARCH TOOLBAR"
     ),
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("tfoot", null)
+    elements.map(function (element) {
+      return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "search-dataset" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "dataset-social" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+            alt: "dataset format",
+            className: "dataset-social-img",
+            src: element.thumbnailURL
+          }),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "dataset-social-icons" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "dataset-social-icon" },
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-download social-fa" }),
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                null,
+                element.downloads
+              )
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "dataset-social-icon" },
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-eye social-fa" }),
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                null,
+                element.views
+              )
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "dataset-social-icon" },
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-heart social-fa" }),
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                null,
+                element.likes
+              )
+            )
+          )
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "dataset-details" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "dataset-details-stats" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "dataset-title" },
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                null,
+                element.title
+              )
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "dataset-stat" },
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-text" },
+                "Date Added"
+              ),
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-num" },
+                element.dateAdded
+              )
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "dataset-stat" },
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-text" },
+                "Date Updated"
+              ),
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-num" },
+                element.dateUpdated
+              )
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "dataset-stat" },
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-text" },
+                "Size"
+              ),
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-num" },
+                element.size
+              )
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "dataset-stat" },
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-text" },
+                "Files"
+              ),
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-num" },
+                element.files
+              )
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "dataset-stat" },
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-text" },
+                "Subjects"
+              ),
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-num" },
+                element.subjects
+              )
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "dataset-stat" },
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-text" },
+                "Format"
+              ),
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-num" },
+                element.format
+              )
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "dataset-stat" },
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-text" },
+                "Modalities"
+              ),
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-num" },
+                element.modalities
+              )
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "dataset-stat" },
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-text" },
+                "Sources"
+              ),
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "dataset-stat-num" },
+                element.sources
+              )
+            )
+          ),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "dataset-options" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "dataset-option" },
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+                alt: "Run On Cbrain",
+                className: "run-on-cbrain-button option-icon",
+                src: element.public || authorized ? runOnCbrainEnabled : runOnCbrainDisabled,
+                onClick: function onClick(event) {
+                  event.preventDefault();
+                  if (!(element.public || authorized)) {
+                    return;
+                  }
+                  onRunWithCBRAIN instanceof Function && onRunWithCBRAIN(event);
+                }
+              })
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "dataset-option" },
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+                alt: "Run On Cbrain",
+                className: "download-button  option-icon",
+                src: element.public || authorized ? downloadEnabled : downloadDisabled,
+                onClick: function onClick(event) {
+                  event.preventDefault();
+                  if (!(element.public || authorized)) {
+                    return;
+                  }
+                  onDownload instanceof Function && onDownload(event);
+                }
+              })
+            )
+          )
+        )
+      );
+    })
   );
 };
 
@@ -513,6 +512,176 @@ DataTable_DataTable.defaultProps = {
 };
 
 /* harmony default export */ var data_table_DataTable = (DataTable_DataTable);
+
+// import React from "react";
+// import PropTypes from "prop-types";
+
+// const DataTable = ({
+//   authorized,
+//   elements,
+//   query,
+//   setQuery,
+//   onDownload,
+//   onRunWithCBRAIN,
+//   imgPath
+// }) => {
+//   const runOnCbrainEnabled = `${imgPath}/run_on_cbrain_green.png`;
+//   const runOnCbrainDisabled = `${imgPath}/run_on_cbrain_gray.png`;
+//   const downloadEnabled = `${imgPath}/download_green.png`;
+//   const downloadDisabled = `${imgPath}/download_gray.png`;
+
+//   return (
+//     <table className="table data-table row-border" cellSpacing={0}>
+//       <thead />
+//       <tbody>
+//         {elements.map(element => {
+//           return (
+//             <tr>
+//               <td>
+//                 <table className="table">
+//                   <tbody>
+//                     <tr>
+//                       <th colSpan={3}>
+//                         <img
+//                           alt="dataset format"
+//                           className="dataset-thumbnail"
+//                           src={element.thumbnailURL}
+//                         />
+//                       </th>
+//                     </tr>
+//                     <tr>
+//                       <td>
+//                         <i className="fa fa-download" />
+//                       </td>
+//                       <td>
+//                         <i className="fa fa-eye" />
+//                       </td>
+//                       <td>
+//                         <i className="fa fa-heart" />
+//                       </td>
+//                     </tr>
+//                     <tr>
+//                       <td>{element.downloads}</td>
+//                       <td>{element.views}</td>
+//                       <td>{element.likes}</td>
+//                     </tr>
+//                   </tbody>
+//                 </table>
+//               </td>
+//               <td>
+//                 <table className="table">
+//                   <tbody>
+//                     <tr>
+//                       <th colSpan={8}>
+//                         <h3>{element.title}</h3>
+//                       </th>
+//                     </tr>
+//                     <tr>
+//                       <td>Date Added</td>
+//                       <td>Date Updated</td>
+//                       <td>Size</td>
+//                       <td>Files</td>
+//                       <td>Subjects</td>
+//                       <td>Format</td>
+//                       <td>Modalities</td>
+//                       <td>Sources</td>
+//                     </tr>
+//                     <tr>
+//                       <td>{element.dateAdded}</td>
+//                       <td>{element.dateUpdated}</td>
+//                       <td>{element.size}</td>
+//                       <td>{element.files}</td>
+//                       <td>{element.subjects}</td>
+//                       <td>{element.format}</td>
+//                       <td>{element.modalities}</td>
+//                       <td>{element.sources}</td>
+//                     </tr>
+//                   </tbody>
+//                 </table>
+//               </td>
+//               <td>
+//                 <img
+//                   alt="Run On Cbrain"
+//                   className="run-on-cbrain-button"
+//                   src={
+//                     element.public || authorized
+//                       ? runOnCbrainEnabled
+//                       : runOnCbrainDisabled
+//                   }
+//                   onClick={event => {
+//                     event.preventDefault();
+//                     if (!(element.public || authorized)) {
+//                       return;
+//                     }
+//                     onRunWithCBRAIN instanceof Function &&
+//                       onRunWithCBRAIN(event);
+//                   }}
+//                 />
+//               </td>
+//               <td>
+//                 <img
+//                   alt="Run On Cbrain"
+//                   className="download-button"
+//                   src={
+//                     element.public || authorized
+//                       ? downloadEnabled
+//                       : downloadDisabled
+//                   }
+//                   onClick={event => {
+//                     event.preventDefault();
+//                     if (!(element.public || authorized)) {
+//                       return;
+//                     }
+//                     onDownload instanceof Function && onDownload(event);
+//                   }}
+//                 />
+//               </td>
+//             </tr>
+//           );
+//         })}
+//       </tbody>
+//       <tfoot />
+//     </table>
+//   );
+// };
+
+// DataTable.propTypes = {
+//   authorized: PropTypes.bool,
+//   elements: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       public: PropTypes.bool,
+//       thumbnailURL: PropTypes.string,
+//       downloads: PropTypes.number,
+//       views: PropTypes.number,
+//       likes: PropTypes.number,
+//       dateAdded: PropTypes.string,
+//       dateUpdated: PropTypes.string,
+//       size: PropTypes.string,
+//       files: PropTypes.number,
+//       subjects: PropTypes.number,
+//       format: PropTypes.string,
+//       modalities: PropTypes.string,
+//       sources: PropTypes.number
+//     })
+//   ),
+//   query: PropTypes.shape({
+//     sort: PropTypes.shape({
+//       key: PropTypes.string,
+//       comparitor: PropTypes.string
+//     }),
+//     page: PropTypes.number,
+//     search: PropTypes.string
+//   }),
+//   setQuery: PropTypes.func,
+//   onDownload: PropTypes.func,
+//   onRunWithCBRAIN: PropTypes.func
+// };
+
+// DataTable.defaultProps = {
+//   imgPath: ""
+// };
+
+// export default DataTable;
 // CONCATENATED MODULE: ./src/data-table/DataTableAJAX.js
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
