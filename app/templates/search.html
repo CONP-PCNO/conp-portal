@@ -5,17 +5,17 @@
 <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 <script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
-
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 {% endblock %}
 
 {% block content %}
 
-<div style="text-align: center;padding-bottom: 25px;">
-<h2>CONP Portal | Dataset Search</h2>
-    <hr>
+<div class="search-header">
+  <h2>CONP Portal | Dataset Search</h2>
+  <hr>
 </div>
 
-<div id="datatable-mount" >
+<div id="search-datatable-mount" >
 </div>
 
 <script type="text/javascript">
@@ -23,6 +23,7 @@
     authorized: true,
     elements: [
       {
+        title: "Super cool data number 1",
         thumbnailURL: "static/img/placeholder.png",
         downloads: 42,
         views: 24,
@@ -39,7 +40,7 @@
     ],
     imgPath: "static/img"
   });
-  ReactDOM.render(element, document.querySelector("#datatable-mount"));
+  ReactDOM.render(element, document.querySelector("#search-datatable-mount"));
 </script>
 </div>
 <!--/span-->

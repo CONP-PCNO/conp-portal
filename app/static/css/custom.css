@@ -1,171 +1,403 @@
-@import 'https://code.highcharts.com/css/highcharts.css';
+@import "https://code.highcharts.com/css/highcharts.css";
 
 .glyphicon-log-in {
-    color: black;
+  color: black;
 }
 
 .glyphicon-log-out {
-    color: black;
+  color: black;
 }
 
-
 .modal-body {
-    max-height: calc(100vh - 210px);
-    overflow-y: auto;
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
 }
 
 .container {
-      max-width: 1920px;
-      width: 100%;
-}
-
-.navbar-inverse-red {
-     background-color: #FFF;
-     border-bottom-color: #ED2225;
-     border-bottom-width: medium;
-     border-radius: 0px;
-}
-
-.navbar-brand{
-  position:absolute;
-}
-
-.navbar-nav > li > a {
-    color: black;
-    font-weight: 400;
-}
-
-li.active-nav > a{
-    background-color: #ED2225;
-    color: white;
-}
-
-li.active-nav:hover > a{
-    background-color: white;
-    color: black;
-}
-
-li span {
-  color: white; /* text color */
-}
-
-li span:hover{
-    color: black;
-}
-
-
-.sidebar-nav{
-    background-color: #313131;
-}
-
-.sidebar-nav > li > a{
-    color: white;
+  max-width: 1920px;
+  width: 100%;
 }
 
 .main_sidebar {
-    min-height:100vh;
-    position:fixed;
-    top:0;
-    left:0;
-    width:350px;
-    transition: all 300ms cubic-bezier(0.65, 0.05, 0.36, 1);
-    will-change: left, width;
-    box-shadow: inset -1px 0 10px rgba(0, 0, 0, 0.4);
-    background: #293749;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 350px;
+  transition: all 300ms cubic-bezier(0.65, 0.05, 0.36, 1);
+  will-change: left, width;
+  box-shadow: inset -1px 0 10px rgba(0, 0, 0, 0.4);
+  background: #293749;
 }
 .main_sidebar:after {
-    content: '';
-    background-color: #253238;
-    position: absolute;
-    top: 0;
-    z-index: -1;
-    height: 100%;
-    width: 58px;
+  content: "";
+  background-color: #253238;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  height: 100%;
+  width: 58px;
 }
 .main_sidebar ul {
-    list-style:none;
-    padding-left:58px;
+  list-style: none;
+  padding-left: 58px;
 }
 .main_sidebar ul li {
-    padding:10px;
+  padding: 10px;
 }
 .main_sidebar ul li a {
-    color:#fff;
-    display:block;
+  color: #fff;
+  display: block;
 }
 .main_sidebar ul li i {
-    float:left;
-    color:grey;
-    margin-left:-58px;
-    font-size:24px;
-    padding-left:7px;
+  float: left;
+  color: grey;
+  margin-left: -58px;
+  font-size: 24px;
+  padding-left: 7px;
 }
 .main_sidebar ul li:hover {
-    background:#167696;
+  background: #167696;
 }
 .main_sidebar ul li a:hover {
-    color:#fff;
-    text-decoration:none;
+  color: #fff;
+  text-decoration: none;
 }
 .main_sidebar ul li:hover i {
-    color:#fff;
+  color: #fff;
 }
 .main_sidebar ul li.active {
-    background:#0f4698;
+  background: #0f4698;
 }
 .main_sidebar ul li.active i {
-    color:#fff;
+  color: #fff;
 }
 .main_sidebar ul li.active:hover {
-    background:#167696;
+  background: #167696;
 }
 .main_sidebar ul li.active:hover i {
-    color:#fff;
+  color: #fff;
 }
 
 .main {
-    float:right;
-    color:#fff;
-    display:block;
-    width:100%;
-    background:red;
-    min-height:100vh;
+  float: right;
+  color: #fff;
+  display: block;
+  width: 100%;
+  background: red;
+  min-height: 100vh;
 }
 
 #chart {
-	height: 400px;
-	max-width: 800px;
-	margin: 0 auto;
+  height: 400px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 /* Link the series colors to axis colors */
 .highcharts-color-0 {
-	fill: #7cb5ec;
-	stroke: #7cb5ec;
+  fill: #7cb5ec;
+  stroke: #7cb5ec;
 }
 .highcharts-axis.highcharts-color-0 .highcharts-axis-line {
-	stroke: #7cb5ec;
+  stroke: #7cb5ec;
 }
 .highcharts-axis.highcharts-color-0 text {
-	fill: #7cb5ec;
+  fill: #7cb5ec;
 }
 .highcharts-color-1 {
-	fill: #90ed7d;
-	stroke: #90ed7d;
+  fill: #90ed7d;
+  stroke: #90ed7d;
 }
 .highcharts-axis.highcharts-color-1 .highcharts-axis-line {
-	stroke: #90ed7d;
+  stroke: #90ed7d;
 }
 .highcharts-axis.highcharts-color-1 text {
-	fill: #90ed7d;
+  fill: #90ed7d;
 }
-
 
 .highcharts-yaxis .highcharts-axis-line {
-	stroke-width: 2px;
+  stroke-width: 2px;
 }
 
-#datatable td td {
-    border: 0;
+.data-table td td {
+  border: 0;
 }
 
+table td {
+  border-top: none !important;
+}
+
+.table th,
+.table td {
+  border-top: none !important;
+}
+
+/*
+=============================================================
+| STYLES
+=============================================================
+*/
+.bg-mineshaft {
+  background-color: #343434;
+}
+
+/*
+=============================================================
+| BASE
+=============================================================
+*/
+
+html {
+  display: flex;
+  min-height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+}
+
+/*
+=============================================================
+| NAVBAR
+=============================================================
+*/
+
+.navbar-inverse-red {
+  background-color: #fff;
+  border-bottom-color: #ed2225;
+  border-bottom-width: medium;
+  border-radius: 0px;
+  margin-bottom: 0;
+}
+
+.navbar .container {
+  padding: 0;
+}
+
+.navbar > .container .navbar-brand {
+  padding: 0 2rem;
+}
+
+.navbar-nav > li > a {
+  color: black;
+  font-weight: 400;
+}
+
+li.active-nav > a {
+  background-color: #ed2225;
+  color: white;
+}
+
+li.active-nav:hover > a {
+  background-color: white;
+  color: black;
+}
+
+.navbar-nav > .login > a {
+  padding-right: 2rem;
+}
+
+.navbar-toggle .icon-bar {
+  background-color: #ed2125;
+}
+
+/*
+=============================================================
+| SIDEBAR
+=============================================================
+*/
+.sidebar-offcanvas {
+  padding: 0;
+  flex-grow: 1;
+}
+
+.sidebar-nav {
+  background-color: #343434;
+  height: 100%;
+}
+
+.sidebar-nav .nav li a:hover span {
+  color: black;
+}
+
+.sidebar-nav .nav li span {
+  color: white; /* text color */
+}
+
+.sidebar-nav .nav li span:hover {
+  color: black;
+}
+
+.sidebar-nav .nav li .sidebar-link {
+  padding: 2.5rem 1rem;
+}
+
+/*
+=============================================================
+| FOOTER
+=============================================================
+*/
+
+.footer {
+  background-color: #343434;
+  padding: 4rem 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.footer .footer-text {
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer .footer-text strong {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.footer .footer-link {
+  color: white;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+.footer .footer-link:hover {
+  color: #ed2125;
+}
+
+/*
+=============================================================
+| CONTAINER
+=============================================================
+*/
+
+body .container {
+  flex-grow: 1;
+}
+
+body .container .container-wrapper {
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container-main {
+  height: 100%;
+  padding: 2rem 5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+=============================================================
+| COMPONENT - SEARCH
+=============================================================
+*/
+
+.footer {
+  background-color: #343434;
+  padding: 7rem 0;
+}
+
+.search-header {
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+.search-dataset-toolbar {
+  width: 100%;
+  border: 2px solid #343434;
+  padding: 1rem;
+}
+
+.search-dataset {
+  display: flex;
+  border: 2px solid #343434;
+  border-top: 0px solid transparent;
+  padding: 2rem 0;
+}
+
+.dataset-social {
+  display: flex;
+  flex-direction: column;
+  padding: 0 2rem;
+  flex: 1;
+}
+
+.dataset-social-icons {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5rem;
+  margin-bottom: 0;
+}
+
+.dataset-social-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.social-fa {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.dataset-details {
+  flex: 5;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dataset-details-stats {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  flex: 1 5 50rem;
+}
+
+.dataset-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  padding: 2rem;
+  padding-top: 0;
+  width: 100%;
+}
+
+.dataset-stat {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  padding-top: 0;
+}
+
+.dataset-stat-text {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.dataset-options {
+  display: flex;
+  flex: 0 1 30rem;
+  padding: 2rem;
+  padding-left: 0;
+}
+
+.dataset-option {
+  display: flex;
+  align-items: center;
+  flex: 0 1 20rem;
+  padding-right: 2rem;
+}
+
+.option-icon {
+  width: 100%;
+  padding-right: 1rem;
+}
