@@ -1,7 +1,9 @@
 from app import app
 from flask import render_template
+from flask import request
 from app.forms import SignInForm
 from app.forms import SignUpForm
+from app.config import DATA_PATH
 
 @app.route('/')
 @app.route('/public')
@@ -25,7 +27,6 @@ def login():
     #       else:
     #            flash('Invalid password')
     #return render_template('login.html', title='Login', form=form)
-
     return render_template('index_visitor.html', title='Log in', signin=signin, signup=signup)
 
 
@@ -36,8 +37,10 @@ def index():
 
 @app.route('/search')
 def search():
-    signin = SignInForm()
-    signup = SignUpForm()
     return render_template('search.html', title='Search', signin=signin, signup=signup)
 
+@app.route('/search_dataset', methods=['GET'])
+def search_dataset():
+    if request.method == 'GET':
+        return 'GET REQUEST'
 
