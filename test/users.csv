@@ -1,0 +1,2 @@
+id, oauth_id, username, email, is_whitelisted, is_pi, is_account_expired, affiliation
+1,100-100-100,myname,my.email@email.com,False,False,False,research_place
