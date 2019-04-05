@@ -3909,6 +3909,97 @@ module.exports = (string, separator) => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
+// CONCATENATED MODULE: ./node_modules/ramda/es/internal/_isPlaceholder.js
+function _isPlaceholder(a) {
+       return a != null && typeof a === 'object' && a['@@functional/placeholder'] === true;
+}
+// CONCATENATED MODULE: ./node_modules/ramda/es/internal/_curry1.js
+
+
+/**
+ * Optimized internal one-arity curry function.
+ *
+ * @private
+ * @category Function
+ * @param {Function} fn The function to curry.
+ * @return {Function} The curried function.
+ */
+function _curry1(fn) {
+  return function f1(a) {
+    if (arguments.length === 0 || _isPlaceholder(a)) {
+      return f1;
+    } else {
+      return fn.apply(this, arguments);
+    }
+  };
+}
+// CONCATENATED MODULE: ./node_modules/ramda/es/internal/_curry2.js
+
+
+
+/**
+ * Optimized internal two-arity curry function.
+ *
+ * @private
+ * @category Function
+ * @param {Function} fn The function to curry.
+ * @return {Function} The curried function.
+ */
+function _curry2(fn) {
+  return function f2(a, b) {
+    switch (arguments.length) {
+      case 0:
+        return f2;
+      case 1:
+        return _isPlaceholder(a) ? f2 : _curry1(function (_b) {
+          return fn(a, _b);
+        });
+      default:
+        return _isPlaceholder(a) && _isPlaceholder(b) ? f2 : _isPlaceholder(a) ? _curry1(function (_a) {
+          return fn(_a, b);
+        }) : _isPlaceholder(b) ? _curry1(function (_b) {
+          return fn(a, _b);
+        }) : fn(a, b);
+    }
+  };
+}
+// CONCATENATED MODULE: ./node_modules/ramda/es/internal/_isNumber.js
+function _isNumber(x) {
+  return Object.prototype.toString.call(x) === '[object Number]';
+}
+// CONCATENATED MODULE: ./node_modules/ramda/es/range.js
+
+
+
+/**
+ * Returns a list of numbers from `from` (inclusive) to `to` (exclusive).
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category List
+ * @sig Number -> Number -> [Number]
+ * @param {Number} from The first number in the list.
+ * @param {Number} to One more than the last number in the list.
+ * @return {Array} The list of numbers in the set `[a, b)`.
+ * @example
+ *
+ *      R.range(1, 5);    //=> [1, 2, 3, 4]
+ *      R.range(50, 53);  //=> [50, 51, 52]
+ */
+var range_range = /*#__PURE__*/_curry2(function range(from, to) {
+  if (!(_isNumber(from) && _isNumber(to))) {
+    throw new TypeError('Both arguments to range must be numbers');
+  }
+  var result = [];
+  var n = from;
+  while (n < to) {
+    result.push(n);
+    n += 1;
+  }
+  return result;
+});
+/* harmony default export */ var es_range = (range_range);
 // EXTERNAL MODULE: external {"root":"React","commonjs2":"react","commonjs":"react","amd":"react"}
 var external_root_React_commonjs2_react_commonjs_react_amd_react_ = __webpack_require__(0);
 var external_root_React_commonjs2_react_commonjs_react_amd_react_default = /*#__PURE__*/__webpack_require__.n(external_root_React_commonjs2_react_commonjs_react_amd_react_);
@@ -3918,12 +4009,17 @@ var prop_types = __webpack_require__(1);
 var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
 
 // CONCATENATED MODULE: ./src/DataTable/DataTable.js
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+
 
 
 
 var DataTable_DataTable = function DataTable(_ref) {
   var authorized = _ref.authorized,
+      sortKeys = _ref.sortKeys,
       elements = _ref.elements,
+      total = _ref.total,
       renderElement = _ref.renderElement,
       query = _ref.query,
       setQuery = _ref.setQuery;
@@ -3934,7 +4030,51 @@ var DataTable_DataTable = function DataTable(_ref) {
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
       { className: "search-dataset-toolbar" },
-      "SEARCH TOOLBAR"
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "input-group" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "label",
+          { className: "input-group-addon" },
+          "Sort By:"
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "select",
+          {
+            className: "form-control",
+            value: query.sortKey,
+            onChange: function onChange(e) {
+              return setQuery(_extends({}, query, { sortKey: e.currentTarget.value }));
+            }
+          },
+          sortKeys.map(function (_ref2, i) {
+            var sortKey = _ref2.key,
+                label = _ref2.label;
+            return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "option",
+              { key: i, value: sortKey },
+              label
+            );
+          })
+        )
+      ),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "input-group" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+          className: "form-control",
+          style: { width: "350px" },
+          value: query.search,
+          onChange: function onChange(e) {
+            return setQuery(_extends({}, query, { search: e.currentTarget.value }));
+          }
+        }),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "span",
+          { className: "input-group-addon" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-search" })
+        )
+      )
     ),
     elements.map(function (element, i) {
       return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -3951,15 +4091,67 @@ var DataTable_DataTable = function DataTable(_ref) {
     }),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "search-dataset-toolbar" },
-      "PAGE PARAMS"
+      { className: "search-dataset-footer" },
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "ul",
+        { className: "pagination" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "li",
+          {
+            onClick: function onClick() {
+              return setQuery(_extends({}, query, {
+                cursor: Math.max(query.cursor - query.limit, 0)
+              }));
+            }
+          },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "a",
+            { href: "#" },
+            "\xAB"
+          )
+        ),
+        es_range(1, Math.max(Math.floor(total / query.limit) + 1, 2)).map(function (page, i) {
+          return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "li",
+            {
+              key: i,
+              onClick: function onClick() {
+                return setQuery(_extends({}, query, { cursor: (page - 1) * query.limit }));
+              },
+              className: page === Math.floor(query.cursor / query.limit) + 1 ? "active" : ""
+            },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "a",
+              { href: "#" },
+              page
+            )
+          );
+        }),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "li",
+          {
+            onClick: function onClick() {
+              return setQuery(_extends({}, query, {
+                cursor: Math.max(Math.min(query.cursor + query.limit, total - query.limit), 0)
+              }));
+            }
+          },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "a",
+            { href: "#" },
+            "\xBB"
+          )
+        )
+      )
     )
   );
 };
 
 DataTable_DataTable.propTypes = {
   authorized: prop_types_default.a.bool,
+  sortKeys: prop_types_default.a.arrayOf(prop_types_default.a.shape({ key: prop_types_default.a.string, label: prop_types_default.a.string })),
   elements: prop_types_default.a.arrayOf(prop_types_default.a.object),
+  total: prop_types_default.a.number,
   renderElement: prop_types_default.a.func,
   query: prop_types_default.a.shape({
     search: prop_types_default.a.string,
@@ -3969,6 +4161,12 @@ DataTable_DataTable.propTypes = {
     limit: prop_types_default.a.number
   }),
   setQuery: prop_types_default.a.func
+};
+
+DataTable_DataTable.defaultProps = {
+  sortKeys: [],
+  elements: [],
+  total: 0
 };
 
 /* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
@@ -5101,7 +5299,7 @@ var useKeyboardJs = function (combination) {
     var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([false, null]), state = _a[0], set = _a[1];
     var _b = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null), keyboardJs = _b[0], setKeyboardJs = _b[1];
     esm_useMount(function () {
-        __webpack_require__.e(/* import() */ 1).then(__webpack_require__.t.bind(null, 29, 7)).then(setKeyboardJs);
+        __webpack_require__.e(/* import() */ 1).then(__webpack_require__.t.bind(null, 30, 7)).then(setKeyboardJs);
     });
     Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
         if (!keyboardJs)
@@ -6168,16 +6366,16 @@ var react_wait_esm_i = function(n) {
       return n !== t;
     });
   },
-  a = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext();
+  react_wait_esm_a = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext();
 function o(n) {
-  return Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(a).waiters.includes(n.on) ? n.fallback : n.children;
+  return Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(react_wait_esm_a).waiters.includes(n.on) ? n.fallback : n.children;
 }
 function react_wait_esm_f(r) {
   var f = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([]),
     s = f[0],
     g = f[1];
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-    a.Provider,
+    react_wait_esm_a.Provider,
     {
       value: {
         waiters: s,
@@ -6215,7 +6413,7 @@ function react_wait_esm_f(r) {
   );
 }
 function react_wait_esm_s() {
-  var n = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(a);
+  var n = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(react_wait_esm_a);
   return Object.assign({}, n, { Wait: o });
 }
 
@@ -6307,7 +6505,7 @@ var query_string = __webpack_require__(12);
 
 var _this = undefined;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var DataTableContainer_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
@@ -6325,9 +6523,10 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   var authorized = _ref.authorized,
       endpointURL = _ref.endpointURL,
       limit = _ref.limit,
+      total = _ref.total,
       imagePath = _ref.imagePath,
       elements = _ref.elements,
-      dataTableProps = _objectWithoutProperties(_ref, ["authorized", "endpointURL", "limit", "imagePath", "elements"]);
+      dataTableProps = _objectWithoutProperties(_ref, ["authorized", "endpointURL", "limit", "total", "imagePath", "elements"]);
 
   var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
       fetchedElements = _React$useState[0],
@@ -6343,8 +6542,12 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       query = _React$useState2[0],
       setQuery = _React$useState2[1];
 
+  var _React$useState3 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(total),
+      totalState = _React$useState3[0],
+      setTotalState = _React$useState3[1];
+
   external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useEffect(function () {
-    setQuery(_extends({}, query, { limit: limit }));
+    setQuery(DataTableContainer_extends({}, query, { limit: limit }));
   }, [limit]);
 
   var fetchElements = function () {
@@ -6382,22 +6585,23 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
 
 
               setFetchedElements(parsed.elements);
-              _context.next = 18;
+              setTotalState(parsed.total);
+              _context.next = 19;
               break;
 
-            case 14:
-              _context.prev = 14;
+            case 15:
+              _context.prev = 15;
               _context.t0 = _context["catch"](2);
 
               alert("There was an error retrieving the search results.");
               console.error(_context.t0);
 
-            case 18:
+            case 19:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, _this, [[2, 14]]);
+      }, _callee, _this, [[2, 15]]);
     }));
 
     return function fetchElements() {
@@ -6412,9 +6616,10 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     AppContext.Provider,
     { value: { imagePath: imagePath } },
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_DataTable_DataTable, _extends({
+    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_DataTable_DataTable, DataTableContainer_extends({
       authorized: authorized,
       elements: fetchedElements,
+      total: totalState,
       query: query,
       setQuery: setQuery
     }, dataTableProps))
@@ -6425,6 +6630,7 @@ DataTableContainer_DataTableContainer.propTypes = {
   authorized: prop_types_default.a.bool,
   endpointURL: prop_types_default.a.string,
   limit: prop_types_default.a.number,
+  total: prop_types_default.a.number,
   elements: prop_types_default.a.arrayOf(prop_types_default.a.object),
   imagePath: prop_types_default.a.string
 };
