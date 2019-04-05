@@ -7,11 +7,12 @@ import DataTable from "./DataTable";
 import AppContext from "../AppContext";
 
 const DataTableContainer = ({
-  authorized,
   endpointURL,
   limit,
-  total,
   imagePath,
+  authorized,
+  total,
+  sortKeys,
   elements,
   ...dataTableProps
 }) => {
@@ -26,6 +27,8 @@ const DataTableContainer = ({
   });
 
   const [totalState, setTotalState] = React.useState(total);
+
+  const [sortKeysState, setSortKeysState] = React.useState(sortKeys);
 
   React.useEffect(() => {
     setQuery({ ...query, limit });
@@ -49,13 +52,14 @@ const DataTableContainer = ({
 
       setFetchedElements(parsed.elements);
       setTotalState(parsed.total);
+      setSortKeysState(parsed.sortKeys);
     } catch (err) {
       alert("There was an error retrieving the search results.");
       console.error(err);
     }
   };
 
-  useDebounce(() => void fetchElements(), 1000, [endpointURL, query]);
+  useDebounce(() => void fetchElements(), 300, [endpointURL, query]);
 
   return (
     <AppContext.Provider value={{ imagePath }}>
@@ -63,6 +67,7 @@ const DataTableContainer = ({
         authorized={authorized}
         elements={fetchedElements}
         total={totalState}
+        sortKeys={sortKeysState}
         query={query}
         setQuery={setQuery}
         {...dataTableProps}

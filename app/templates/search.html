@@ -20,12 +20,13 @@
 
 <script type="text/javascript">
   const reactElement = React.createElement(CONPReact.DataTableContainer, {
-    authorized: true,
     endpointURL: "/dataset-search",
     limit: 10,
-    total: 50,
     imagePath: "/static/img",
     renderElement: CONPReact.DatasetElement,
+    // remove this after the backend returns search results:
+    authorized: true,
+    total: 50,
     sortKeys: [
       { key: "title", label: "Title" },
       { key: "downloads", label: "Downloads" },
@@ -40,7 +41,6 @@
       { key: "modalities", label: "Modalities" },
       { key: "sources", label: "Sources" }
     ],
-    // remove this after the backend returns search results:
     elements: [
       {
         id: "0",
