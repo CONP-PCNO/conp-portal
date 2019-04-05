@@ -6520,13 +6520,14 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 
 
 var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
-  var authorized = _ref.authorized,
-      endpointURL = _ref.endpointURL,
+  var endpointURL = _ref.endpointURL,
       limit = _ref.limit,
-      total = _ref.total,
       imagePath = _ref.imagePath,
+      authorized = _ref.authorized,
+      total = _ref.total,
+      sortKeys = _ref.sortKeys,
       elements = _ref.elements,
-      dataTableProps = _objectWithoutProperties(_ref, ["authorized", "endpointURL", "limit", "total", "imagePath", "elements"]);
+      dataTableProps = _objectWithoutProperties(_ref, ["endpointURL", "limit", "imagePath", "authorized", "total", "sortKeys", "elements"]);
 
   var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
       fetchedElements = _React$useState[0],
@@ -6545,6 +6546,10 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   var _React$useState3 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(total),
       totalState = _React$useState3[0],
       setTotalState = _React$useState3[1];
+
+  var _React$useState4 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(sortKeys),
+      sortKeysState = _React$useState4[0],
+      setSortKeysState = _React$useState4[1];
 
   external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useEffect(function () {
     setQuery(DataTableContainer_extends({}, query, { limit: limit }));
@@ -6586,22 +6591,23 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
 
               setFetchedElements(parsed.elements);
               setTotalState(parsed.total);
-              _context.next = 19;
+              setSortKeysState(parsed.sortKeys);
+              _context.next = 20;
               break;
 
-            case 15:
-              _context.prev = 15;
+            case 16:
+              _context.prev = 16;
               _context.t0 = _context["catch"](2);
 
               alert("There was an error retrieving the search results.");
               console.error(_context.t0);
 
-            case 19:
+            case 20:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, _this, [[2, 15]]);
+      }, _callee, _this, [[2, 16]]);
     }));
 
     return function fetchElements() {
@@ -6611,7 +6617,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
 
   esm_useDebounce(function () {
     return void fetchElements();
-  }, 1000, [endpointURL, query]);
+  }, 300, [endpointURL, query]);
 
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     AppContext.Provider,
@@ -6620,6 +6626,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       authorized: authorized,
       elements: fetchedElements,
       total: totalState,
+      sortKeys: sortKeysState,
       query: query,
       setQuery: setQuery
     }, dataTableProps))
