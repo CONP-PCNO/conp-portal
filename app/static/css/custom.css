@@ -313,9 +313,24 @@ body .container .container-wrapper {
 }
 
 .search-dataset-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   width: 100%;
   border: 2px solid #343434;
   padding: 1rem;
+}
+
+.search-dataset-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  border: 2px solid #343434;
+}
+
+.search-dataset-footer .pagination {
+  margin: 10px 0
 }
 
 .search-dataset {

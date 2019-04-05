@@ -23,8 +23,23 @@
     authorized: true,
     endpointURL: "/dataset-search",
     limit: 10,
+    total: 50,
     imagePath: "/static/img",
     renderElement: CONPReact.DatasetElement,
+    sortKeys: [
+      { key: "title", label: "Title" },
+      { key: "downloads", label: "Downloads" },
+      { key: "views", label: "Views" },
+      { key: "likes", label: "Likes" },
+      { key: "dateAdded", label: "Date Added" },
+      { key: "dateUpdated", label: "Date Updated" },
+      { key: "size", label: "Size" },
+      { key: "files", label: "Files" },
+      { key: "subjects", label: "Subjects" },
+      { key: "format", label: "Format" },
+      { key: "modalities", label: "Modalities" },
+      { key: "sources", label: "Sources" }
+    ],
     // remove this after the backend returns search results:
     elements: [
       {

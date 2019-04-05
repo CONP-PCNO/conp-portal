@@ -10,6 +10,7 @@ const DataTableContainer = ({
   authorized,
   endpointURL,
   limit,
+  total,
   imagePath,
   elements,
   ...dataTableProps
@@ -23,6 +24,8 @@ const DataTableContainer = ({
     cursor: 0,
     limit
   });
+
+  const [totalState, setTotalState] = React.useState(total);
 
   React.useEffect(() => {
     setQuery({ ...query, limit });
@@ -45,6 +48,7 @@ const DataTableContainer = ({
       const parsed = await res.json();
 
       setFetchedElements(parsed.elements);
+      setTotalState(parsed.total);
     } catch (err) {
       alert("There was an error retrieving the search results.");
       console.error(err);
@@ -58,6 +62,7 @@ const DataTableContainer = ({
       <DataTable
         authorized={authorized}
         elements={fetchedElements}
+        total={totalState}
         query={query}
         setQuery={setQuery}
         {...dataTableProps}
@@ -70,6 +75,7 @@ DataTableContainer.propTypes = {
   authorized: PropTypes.bool,
   endpointURL: PropTypes.string,
   limit: PropTypes.number,
+  total: PropTypes.number,
   elements: PropTypes.arrayOf(PropTypes.object),
   imagePath: PropTypes.string
 };
