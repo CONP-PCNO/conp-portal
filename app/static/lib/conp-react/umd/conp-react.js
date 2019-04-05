@@ -6642,8 +6642,13 @@ DataTableContainer_DataTableContainer.propTypes = {
   imagePath: prop_types_default.a.string
 };
 
-src_DataTable_DataTable.defaultProps = {
-  elements: []
+DataTableContainer_DataTableContainer.defaultProps = {
+  authorized: false,
+  endpointURL: "",
+  limit: 10,
+  total: 0,
+  elements: [],
+  imagePath: ""
 };
 
 /* harmony default export */ var DataTable_DataTableContainer = (DataTableContainer_DataTableContainer);
