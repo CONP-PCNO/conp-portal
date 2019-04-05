@@ -19,28 +19,14 @@
 </div>
 
 <script type="text/javascript">
-  const element = React.createElement(CONPReact.DataTable, {
-    authorized: true,
-    elements: [
-      {
-        title: "Super cool data number 1",
-        thumbnailURL: "static/img/placeholder.png",
-        downloads: 42,
-        views: 24,
-        likes: 12,
-        dateAdded: "10/12/2018",
-        dateUpdated: "10/13/2018",
-        size: "800mb",
-        files: 44,
-        subjects: 30,
-        format: "BIDS",
-        modalities: "fMRI",
-        sources: 3
-      }
-    ],
-    imgPath: "static/img"
+  const reactElement = React.createElement(CONPReact.DataTableContainer, {
+    endpointURL: "/dataset-search",
+    limit: 10,
+    imagePath: "/static/img",
+    renderElement: CONPReact.DatasetElement
   });
-  ReactDOM.render(element, document.querySelector("#search-datatable-mount"));
+
+  ReactDOM.render(reactElement, document.querySelector("#search-datatable-mount"));
 </script>
 </div>
 <!--/span-->
