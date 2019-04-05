@@ -85,8 +85,13 @@ DataTableContainer.propTypes = {
   imagePath: PropTypes.string
 };
 
-DataTable.defaultProps = {
-  elements: []
+DataTableContainer.defaultProps = {
+  authorized: false,
+  endpointURL: "",
+  limit: 10,
+  total: 0,
+  elements: [],
+  imagePath: ""
 };
 
 export default DataTableContainer;
