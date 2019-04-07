@@ -22,6 +22,24 @@ You can run the application locally with
 The application will be live on `http://127.0.0.1:5000/`
     
 
+### Localhost Database
+
+Create a localhost Postgres database named `conp` with owner `postgres`
+
+    createdb conp --owner=postgres
+    
+Export database credentials with
+
+
+    export DATABASE_URL="postgresql://localhost/conp"
+
+
+Create tables with
+
+    flask db init
+    flask db migrate
+    flask db upgrade
+
 ### AWS Cloud9 (Experimental)
 
 Some experimental testing cases are being explored with AWS Cloud 9.
