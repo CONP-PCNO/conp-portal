@@ -33,11 +33,12 @@ Export database credentials with
 
     export DATABASE_URL="postgresql://localhost/conp"
 
+If you get a `fe_sendauth: no password supplied` error, then use this command instead
+
+    export DATABASE_URL="postgresql:///conp"
 
 Create tables with
 
-    flask db init
-    flask db migrate
     flask db upgrade
 
 ### AWS Cloud9 (Experimental)

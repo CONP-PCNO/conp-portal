@@ -67,7 +67,9 @@ class InsertTestDataset(object):
         db.session.commit()
         dataset_file.close()
 
+
     def insert_sample_datasets_stats(self):
+
 
         with open(self.datasets_stats_file, 'r') as dataset_stats_file:
 
@@ -90,6 +92,7 @@ class InsertTestDataset(object):
                 db.session.add(stat)
         db.session.commit()
         dataset_stats_file.close()
+
 
     def insert_sample_pipelines(self):
 
@@ -114,11 +117,10 @@ class InsertTestDataset(object):
         pipelines_file.close()
 
 
-
 test_dataset = InsertTestDataset()
-#test_dataset.insert_sample_users()
-#test_dataset.insert_sample_datasets()
-#test_dataset.insert_sample_datasets_stats()
+test_dataset.insert_sample_users()
+test_dataset.insert_sample_datasets()
+test_dataset.insert_sample_datasets_stats()
 test_dataset.insert_sample_pipelines()
-
+#print('\x1b[6;30;42m' + 'Success!' + '\x1b[0m')
 
