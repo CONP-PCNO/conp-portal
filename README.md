@@ -22,6 +22,12 @@ You can run the application locally with
 The application will be live on `http://127.0.0.1:5000/`
     
 
+### Get the dataset repository
+
+       git clone git@github.com:CONP-PCNO/conp-dataset data
+
+The search will be executed on this `data` repository 
+
 ### AWS Cloud9 (Experimental)
 
 Some experimental testing cases are being explored with AWS Cloud 9.

@@ -1,8 +1,9 @@
+import json
 from app import app
 from flask import render_template, request
 from app.forms import SignInForm
 from app.forms import SignUpForm
-import json
+
 
 @app.route('/')
 @app.route('/public')
@@ -26,8 +27,7 @@ def login():
     #       else:
     #            flash('Invalid password')
     #return render_template('login.html', title='Login', form=form)
-
-    return render_template('index_visitor.html', title='Log in', signin=signin, signup=signup)
+    return render_template('index_visitor.html', title='Log in')
 
 
 @app.route('/index')
@@ -37,9 +37,7 @@ def index():
 
 @app.route('/search')
 def search():
-    signin = SignInForm()
-    signup = SignUpForm()
-    return render_template('search.html', title='Search', signin=signin, signup=signup)
+    return render_template('search.html', title='Search')
 
 
 @app.route('/dataset-search', methods=['GET'])
