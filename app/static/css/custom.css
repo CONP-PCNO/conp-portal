@@ -417,3 +417,27 @@ body .container .container-wrapper {
   width: 100%;
   padding-right: 1rem;
 }
+
+/*
+=============================================================
+| COMPONENT - DASHBOARD
+=============================================================
+*/
+
+.col-border {
+    border-style: solid;
+    border-radius: 15px;
+    padding: 10px;
+    margin-left: -10px;
+    margin-right: 10px;
+}
+
+.col-sm-4 {
+    border-radius: 2px;
+}
+
+.row-border{
+  border-style: solid;
+  border-radius:15px;
+  padding: 10px;
+}
