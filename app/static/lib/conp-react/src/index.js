@@ -1,4 +1,12 @@
-import { DataTable, DataTableAJAX } from "./data-table";
+import { DataTable, DataTableContainer } from "./DataTable";
+import { default as DatasetElement } from "./DatasetElement";
+import { default as PipelineElement } from "./PipelineElement";
 
-export { DataTable, DataTableAJAX };
-export default { DataTable, DataTableAJAX };
+export { DataTable, DataTableContainer, DatasetElement, PipelineElement };
+
+export default {
+  DataTable,
+  DataTableContainer,
+  DatasetElement,
+  PipelineElement
+};

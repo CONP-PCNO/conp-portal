@@ -1,9 +1,10 @@
+import json
+
 from app import app
-from flask import render_template
-from flask import request
+from flask import render_template, request
 from app.forms import SignInForm
 from app.forms import SignUpForm
-from app.config import DATA_PATH
+
 
 @app.route('/')
 @app.route('/public')
@@ -43,4 +44,101 @@ def search():
 def search_dataset():
     if request.method == 'GET':
         return 'GET REQUEST'
+
+@app.route('/dataset-search', methods=['GET'])
+def dataset_search():
+    if request.method == 'GET':
+
+       json_dummy_response = {
+  "authorized": True,
+  "total": 50,
+  "sortKeys": [
+    {
+      "key": "title",
+      "label": "Title"
+    },
+    {
+      "key": "downloads",
+      "label": "Downloads"
+    },
+    {
+      "key": "views",
+      "label": "Views"
+    },
+    {
+      "key": "likes",
+      "label": "Likes"
+    },
+    {
+      "key": "dateAdded",
+      "label": "Date Added"
+    },
+    {
+      "key": "dateUpdated",
+      "label": "Date Updated"
+    },
+    {
+      "key": "size",
+      "label": "Size"
+    },
+    {
+      "key": "files",
+      "label": "Files"
+    },
+    {
+      "key": "subjects",
+      "label": "Subjects"
+    },
+    {
+      "key": "format",
+      "label": "Format"
+    },
+    {
+      "key": "modalities",
+      "label": "Modalities"
+    },
+    {
+      "key": "sources",
+      "label": "Sources"
+    }
+  ],
+  "elements": [
+    {
+      "id": "0",
+      "title": "Super cool data number 1",
+      "isPublic": True,
+      "thumbnailURL": "/static/img/placeholder.png",
+      "downloads": 42,
+      "views": 24,
+      "likes": 12,
+      "dateAdded": "10/12/2018",
+      "dateUpdated": "10/13/2018",
+      "size": "800mb",
+      "files": 44,
+      "subjects": 30,
+      "format": "BIDS",
+      "modalities": "fMRI",
+      "sources": 3
+    },
+    {
+      "id": "2",
+      "title": "Super cool data number 2",
+      "isPublic": False,
+      "thumbnailURL": "/static/img/placeholder.png",
+      "downloads": 42,
+      "views": 24,
+      "likes": 12,
+      "dateAdded": "10/12/2018",
+      "dateUpdated": "10/13/2018",
+      "size": "800mb",
+      "files": 44,
+      "subjects": 30,
+      "format": "BIDS",
+      "modalities": "fMRI",
+      "sources": 3
+    }
+    ]
+    }
+
+    return json.dumps(json_dummy_response)
 
