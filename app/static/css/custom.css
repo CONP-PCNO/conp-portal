@@ -424,12 +424,18 @@ body .container .container-wrapper {
 =============================================================
 */
 
+.hr-border{
+  border-top: 1px solid #afafaf;
+}
+
 .col-border {
     border-style: solid;
     border-radius: 15px;
-    padding: 10px;
+    padding: 15px;
+    border: 1px solid #afafaf;
     margin-left: -10px;
     margin-right: 10px;
+    box-shadow: 2px 2px 6px #afafaf;
 }
 
 .col-sm-4 {
@@ -437,7 +443,8 @@ body .container .container-wrapper {
 }
 
 .row-border{
-  border-style: solid;
-  border-radius:15px;
-  padding: 10px;
+    border-radius: 15px;
+    padding: 15px;
+    border: 1px solid #afafaf;
+    box-shadow: 2px 2px 6px #afafaf;
 }
