@@ -99,6 +99,9 @@
   margin-top: 60px;
 }
 
+ a.a-link {
+  text-decoration: none !important;
+}
 
 #chart {
   height: 400px;
