@@ -90,6 +90,9 @@ def search():
     signup = SignUpForm()
     return render_template('search.html', title='Search', signin=signin, signup=signup)
 
+@app.route('/admin')
+def admin():
+    return render_template('admin.html', title='Admin')
 
 @app.route('/dataset-search', methods=['GET'])
 def dataset_search():

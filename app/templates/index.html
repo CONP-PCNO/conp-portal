@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
 
 {% block head %}
+
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% include "/fragments/sidebar.html" %}
+
 {% endblock %}
 
 {% block content %}
