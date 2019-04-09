@@ -258,8 +258,18 @@ li.active-nav:hover > a {
   color: black;
 }
 
+
 .sidebar-nav .nav li .sidebar-link {
   padding: 2.5rem 1rem;
+}
+
+.sidebar-nav .nav li .slim-sidebar-link {
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+
+.sidebar-nav-hr {
+  width: 80%;
 }
 
 /*

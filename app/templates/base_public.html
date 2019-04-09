@@ -65,7 +65,8 @@
 
         <div class="row row-offcanvas row-offcanvas-left container-wrapper">
 
-        {% include "/fragments/sidebar.html" %}
+
+        {% block sidebar %}{% endblock %}
 
         <div class="col-xs-12 col-sm-10 col-md-11 container-main">
             {% block content %}{% endblock %}
