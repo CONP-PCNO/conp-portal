@@ -272,6 +272,23 @@ li.active-nav:hover > a {
   width: 80%;
 }
 
+.image-swap:before {
+   display: inline-block;
+   content: '';
+   background: url(../img/neurolibre-icon.png);
+   background-size: contain;
+   background-repeat: no-repeat;
+   background-position: center;
+   width: 72px;
+   height: 72px;
+}
+.image-swap:hover:before {
+   background: url(../img/neurolibre-icon-black.png);
+   background-size: contain;
+   background-repeat: no-repeat;
+   background-position: center;
+}
+
 /*
 =============================================================
 | FOOTER
