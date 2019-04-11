@@ -1,0 +1,51 @@
+{% extends 'base_login.html' %}
+{% block content %}
+    <div class="container">
+        <div style="text-align: center;">
+            <img src="/static/img/conp-pcno-logo.png" style="height: 150px;">
+            <h3>CONP Account Registration</h3>
+        </div>
+        <div class="card card-container">
+            <form class="form-signin">
+                <p>First Name</p>
+                <input type="text" id="inputfirst" class="form-control" placeholder="First Name" required autofocus>
+                <span id="reauth-email" class="reauth-email"></span>
+                <p>Last Name</p>
+                <input type="text" id="inputlast" class="form-control" placeholder="Last Name" required autofocus>
+                <p>Institution</p>
+                <input type="text" id="inputinstitution" class="form-control" placeholder="Your Institution" required autofocus>
+                <p>Email</p>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <p>Password</p>
+                <input type="password" id="inputpassword" class="form-control" placeholder="Password" required>
+                <p>Repeat Password</p>
+                <input type="password" id="inputpassword2" class="form-control" placeholder="Repeat Password" required>
+
+                <script src="https://www.google.com/recaptcha/api.js?render=6LcNhZ0UAAAAAAPJXUIxw2UkUTPfEsnhAspNKJ6_"></script>
+                 <script>
+                  grecaptcha.ready(function() {
+                      grecaptcha.execute('6LcNhZ0UAAAAAAPJXUIxw2UkUTPfEsnhAspNKJ6_', {action: 'homepage'}).then(function(token) {
+                        // pass the token to the backend script for verification
+                      });
+                  });
+                  </script>
+
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Register</button>
+            </form><!-- /form -->
+        </div><!-- /card-container -->
+
+    <div class="bottom-link">
+    <br/>
+        <span><a href="/login">Back to Login</a></span>
+        <span style="padding: 10px;"></span>
+        <span><a href="/public">Back to CONP Public Portal</a></span>
+    <br/>
+
+
+            <div style="margin-top: 10px;">
+            <p>Copyright &copy; 2019 <a style="white-space: nowrap" href="https://conp.ca">Canadian Open Neuroscience Platform</a> &#124; <a style="white-space: nowrap" href="#">Terms of Use</a> &#124; <a style="white-space: nowrap" href="#">Privacy Policy</a></p>
+            </div>
+</div>
+
+    </div><!-- /container -->
+{% endblock %}

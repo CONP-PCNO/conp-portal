@@ -19,7 +19,7 @@ def public():
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('logged_in'))
-    return render_template('login.html', title='Log In')
+    return render_template('login.html', title='CONP | Log In')
 
 @app.route('/success')
 @login_required
@@ -78,6 +78,10 @@ def oauth_callback(provider):
     session['active_token'] = access_token
 
     return redirect(url_for('logged_in'))
+
+@app.route('/register')
+def register():
+    return render_template('register.html', title='CONP | Register')
 
 @app.route('/index')
 def index():
