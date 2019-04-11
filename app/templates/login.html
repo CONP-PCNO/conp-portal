@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container">
         <div style="text-align: center;">
-            <img src="/static/img/conp-pcno-logo.png" style="height: 150px; padding-top: 20px;">
+            <img src="/static/img/conp-pcno-logo.png" style="height: 150px;">
             <p>Sign in with your CONP account to continue</p>
         </div>
         <div class="card card-container">
@@ -17,8 +17,19 @@
                     <img class="orcid-logo" src="/static/img/orcid-logo.png">
                     <span class="label-login">Sign in with ORCID</span>
                 </a>
-            </section>
 
+
+               <div class="span4 collapse-group">
+                    <p class="collapse" id="viewdetails">
+                        ORCID provides a persistent identifier – an ORCID iD – that distinguishes you from other researchers
+                        and a mechanism for linking your research outputs and activities to your iD.
+                        Learn more at <a href="https://orcid.org/" target="_blank">orcid.org</a></p>
+                    <p><a class="btn" data-toggle="collapse" data-target="#viewdetails">
+                        More about ORCID &raquo;
+                        </a>
+                    </p>
+                </div>
+            </section>
             <section class="row">
             <hr class="hr-text" data-content="OR"></hr>
             </section>
@@ -40,13 +51,12 @@
 
     <div class="bottom-link">
     <br/>
-        <span><a id="link-create-account" href="/register">Create a CONP account</a></span>
+        <span><a href="/register">Create a CONP account</a></span>
         <span style="padding: 10px;"></span>
-
-
-        <span><a id="link-back-to-osf" href="/public">Back to CONP Public Portal</a></span>
-
+        <span><a href="/public">Back to CONP Public Portal</a></span>
     <br/>
+
+
             <div style="margin-top: 10px;">
             <p>Copyright &copy; 2019 <a style="white-space: nowrap" href="https://conp.ca">Canadian Open Neuroscience Platform</a> &#124; <a style="white-space: nowrap" href="#">Terms of Use</a> &#124; <a style="white-space: nowrap" href="#">Privacy Policy</a></p>
             </div>
