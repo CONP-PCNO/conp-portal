@@ -3,4 +3,4 @@ __pycache__
 .idea
 *.pyc
 venv
-data
+*.pyc

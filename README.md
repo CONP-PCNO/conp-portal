@@ -22,11 +22,32 @@ You can run the application locally with
 The application will be live on `http://127.0.0.1:5000/`
     
 
+<<<<<<< HEAD
 ### Get the dataset repository
 
        git clone git@github.com:CONP-PCNO/conp-dataset data
 
 The search will be executed on this `data` repository 
+=======
+### Localhost Database
+
+Create a localhost Postgres database named `conp` with owner `postgres`
+
+    createdb conp --owner=postgres
+    
+Export database credentials with
+
+
+    export DATABASE_URL="postgresql://localhost/conp"
+
+If you get a `fe_sendauth: no password supplied` error, then use this command instead
+
+    export DATABASE_URL="postgresql:///conp"
+
+Create tables with
+
+    flask db upgrade
+>>>>>>> master
 
 ### AWS Cloud9 (Experimental)
 

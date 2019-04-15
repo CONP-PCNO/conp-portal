@@ -8,11 +8,19 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 {% endblock %}
 
+{% block sidebar %}
+
+{% include "/fragments/public_sidebar.html" %}
+
+{% endblock %}
+
 {% block content %}
 
-<div class="search-header">
+<!-- Space reserved for username when logged in -->
+<div class="display-user"></div>
+
+<div class="search-header page-title">
   <h2>CONP Portal | Dataset Search</h2>
-  <hr>
 </div>
 
 <div id="search-datatable-mount" >
