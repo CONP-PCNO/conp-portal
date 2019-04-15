@@ -1,0 +1,41 @@
+{% extends 'base_public.html' %}
+
+{% block head %}
+
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block sidebar %}
+
+{% include "/fragments/public_sidebar.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Space reserved for username when logged in -->
+<div class="display-user"></div>
+
+<div class="search-header page-title">
+  <h2>CONP Tools & Pipelines</h2>
+</div>
+
+<div id="pipelines-datatable-mount" >
+</div>
+
+<script type="text/javascript">
+  const reactElement = React.createElement(CONPReact.DataTableContainer, {
+    endpointURL: "/pipeline-search",
+    limit: 10,
+    imagePath: "/static/img",
+    renderElement: CONPReact.DatasetElement
+  });
+  ReactDOM.render(reactElement, document.querySelector("#pipelines-datatable-mount"));
+</script>
+</div>
+<!--/span-->
+{% endblock %}
+

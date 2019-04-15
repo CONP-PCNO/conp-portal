@@ -90,6 +90,10 @@ def search():
     signup = SignUpForm()
     return render_template('search.html', title='Search', signin=signin, signup=signup)
 
+@app.route('/pipelines')
+def pipelines():
+    return render_template('pipelines.html', title='CONP | Tools & Pipelines')
+
 @app.route('/admin')
 def admin():
     return render_template('admin.html', title='Admin')
@@ -191,3 +195,7 @@ def dataset_search():
 
     return json.dumps(json_dummy_response)
 
+@app.route('/pipeline-search', methods=['GET'])
+def pipeline_search():
+    if request.method == 'GET':
+        return True
