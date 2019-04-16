@@ -17,16 +17,28 @@ def public():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error = None
+    form = SignInForm()
+
     if current_user.is_authenticated:
         return redirect(url_for('logged_in'))
-    return render_template('login.html', title='CONP | Log In')
+
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            user = User.query.filter_by(email=form.email.data).first()
+            if user is None or not user.check_password(form.password.data):
+                flash('Invalid username or password')
+                return redirect(url_for('login'))
+            login_user(user, remember=form.remember_me.data)
+            return redirect(url_for('index'))
+    return render_template('login.html', title='CONP | Log In', form=form, error=error)
 
 @app.route('/success', methods=['GET', 'POST'])
 @login_required
 def logged_in():
     if request.method == 'GET':
         # Protected user content can be handled here
-        return redirect(url_for('index', user=request.args.get('user')))
+        return redirect(url_for('index'))
 
 @app.route('/logout')
 def logout():
@@ -46,7 +58,7 @@ def oauth_authorize(provider):
 @app.route('/callback/<provider>')
 def oauth_callback(provider):
     if not current_user.is_anonymous:
-        return redirect(url_for('index'))
+        return redirect(url_for('public'))
 
     oauth = OAuthSignIn.get_provider(provider)
     # This is step three. The code from the provider's reply is sent back to
@@ -74,25 +86,21 @@ def oauth_callback(provider):
     login_user(user, remember=True)
     session['active_token'] = access_token
 
-
-    return redirect(url_for('logged_in', user=user.username))
+    return redirect(url_for('logged_in'))
 
 @app.route('/register')
 def register():
     return render_template('register.html', title='CONP | Register')
 
-@app.route('/index', methods=['GET','POST'])
+@app.route('/index')
+@login_required
 def index():
-    if request.method == 'GET':
-        user=request.args.get('user')
-
-    return render_template('index.html', title='Home', user=user)
+    if current_user.is_authenticated:
+        return render_template('index.html', title='Home', user=current_user)
 
 @app.route('/search')
 def search():
-    signin = SignInForm()
-    signup = SignUpForm()
-    return render_template('search.html', title='Search', signin=signin, signup=signup)
+    return render_template('search.html', title='Search')
 
 @app.route('/admin')
 def admin():

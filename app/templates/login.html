@@ -20,7 +20,7 @@
 
 
                <div class="span4 collapse-group">
-                    <p class="collapse" id="viewdetails">
+                    <p class="collapse" id="viewdetails" style="padding-top: 10px;">
                         ORCID provides a persistent identifier – an ORCID iD – that distinguishes you from other researchers
                         and a mechanism for linking your research outputs and activities to your iD.
                         Learn more at <a href="https://orcid.org/" target="_blank">orcid.org</a></p>
@@ -33,16 +33,15 @@
             <section class="row">
             <hr class="hr-text" data-content="OR"></hr>
             </section>
-            <form class="form-signin">
-                <span id="reauth-email" class="reauth-email"></span>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                <div id="remember" class="checkbox">
-                    <label>
-                        <input type="checkbox" value="remember-me"> Remember me
-                    </label>
-                </div>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+            <form class="form-signin" action="/login" method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.email(placeholder="Email Address",class="form-control") }}
+                {{ form.password(placeholder="Password",class="form-control") }}
+                <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                {{ form.submit(class="btn btn-lg btn-primary btn-block btn-signin") }}
+                {% if error %}
+                <p class="error"><strong>Error: </strong>{{ error }}</p>
+                {% endif %}
             </form><!-- /form -->
             <a href="#" class="forgot-password">
                 Forgot the password?
