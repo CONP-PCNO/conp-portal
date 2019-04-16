@@ -37,9 +37,9 @@ class ORCIDSignIn(OAuthSignIn):
         super(ORCIDSignIn, self).__init__('orcid')
         # These will need to be updated to point to the non-sandbox orcid
         # site for a production app
-        auth_url = 'https://sandbox.orcid.org/oauth/authorize'
-        base_url = 'https://sandbox.orcid.org'
-        token_url = 'https://sandbox.orcid.org/oauth/token'
+        auth_url = 'https://orcid.org/oauth/authorize'
+        base_url = 'https://orcid.org'
+        token_url = 'https://orcid.org/oauth/token'
 
         self.service = OAuth2Service(name='orcid', client_id=self.consumer_id,
                 client_secret=self.consumer_secret, authorize_url=auth_url,
