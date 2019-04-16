@@ -25,16 +25,12 @@ def login():
 @login_required
 def logged_in():
     # Protected user content can be handled here
-    return """
-        <html>
-            <h3>Congrats, you've logged in successfully!</h3>
-        </html>
-        """
+    return redirect(url_for('index'))
 
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('public'))
 
 # This is the first step in the login process: the 'login with X' buttons
 # should direct users here with the provider name filled in
