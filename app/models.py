@@ -21,7 +21,7 @@ class User(UserMixin, db.Model):
     is_whitelisted = db.Column(db.Boolean, default=False, nullable=False)
     is_pi = db.Column(db.Boolean, default=False, nullable=False)
     is_account_expired = db.Column(db.Boolean, default=False, nullable=False)
-    affiliation = db.Column(db.String(128), unique=True)
+    affiliation = db.Column(db.String(128))
     expiration = db.Column(db.DateTime, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
     date_updated = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
