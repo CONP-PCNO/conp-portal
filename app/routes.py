@@ -21,11 +21,12 @@ def login():
         return redirect(url_for('logged_in'))
     return render_template('login.html', title='CONP | Log In')
 
-@app.route('/success')
+@app.route('/success', methods=['GET', 'POST'])
 @login_required
 def logged_in():
-    # Protected user content can be handled here
-    return redirect(url_for('index'))
+    if request.method == 'GET':
+        # Protected user content can be handled here
+        return redirect(url_for('index', user=request.args.get('user')))
 
 @app.route('/logout')
 def logout():
@@ -73,15 +74,18 @@ def oauth_callback(provider):
     login_user(user, remember=True)
     session['active_token'] = access_token
 
-    return redirect(url_for('logged_in'))
+
+    return redirect(url_for('logged_in', user=user.username))
 
 @app.route('/register')
 def register():
     return render_template('register.html', title='CONP | Register')
 
-@app.route('/index')
+@app.route('/index', methods=['GET','POST'])
 def index():
-    user = {'username' : 'JB'}
+    if request.method == 'GET':
+        user=request.args.get('user')
+
     return render_template('index.html', title='Home', user=user)
 
 @app.route('/search')
