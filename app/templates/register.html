@@ -6,21 +6,26 @@
             <h3>CONP Account Registration</h3>
         </div>
         <div class="card card-container">
-            <form class="form-signin">
-                <p>First Name</p>
-                <input type="text" id="inputfirst" class="form-control" placeholder="First Name" required autofocus>
-                <span id="reauth-email" class="reauth-email"></span>
-                <p>Last Name</p>
-                <input type="text" id="inputlast" class="form-control" placeholder="Last Name" required autofocus>
-                <p>Institution</p>
-                <input type="text" id="inputinstitution" class="form-control" placeholder="Your Institution" required autofocus>
-                <p>Email</p>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                <p>Password</p>
-                <input type="password" id="inputpassword" class="form-control" placeholder="Password" required>
-                <p>Repeat Password</p>
-                <input type="password" id="inputpassword2" class="form-control" placeholder="Repeat Password" required>
-
+            <form class="form-signin" action="/register_new_user" method="POST">
+                {{ form.hidden_tag() }}
+                <p>{{ form.username.label }}</p>
+                <p>{{ form.username(class="form-control", placeholder="Your Username") }}</p>
+                <p>{{ form.orcid.label }}</p>
+                <p>{{ form.orcid(class="form-control", placeholder="Your ORCID ID") }}</p>
+                <p>{{ form.affiliation.label }}</p>
+                <p>{{ form.affiliation(class="form-control", placeholder="Your Academic Affiliation") }}</p>
+                <p>{{ form.pi() }} {{ form.pi.label }}</p>
+                <p>{{ form.email.label }}</p>
+                <p>{{ form.email(class="form-control", placeholder="Your Email") }}</p>
+                <p>{{ form.password1.label }}</p>
+                <p>{{ form.password1(class="form-control", placeholder="Your Password") }}</p>
+                <p>{{ form.password2.label }}</p>
+                <p>{{ form.password2(class="form-control", placeholder="Repeat Your Password") }}</p>
+                <p>{{ form.tos() }}{{ form.tos.label }}</p>
+                {{ form.submit(class="btn btn-lg btn-primary btn-block btn-signin") }}
+                {% if error %}
+                <p class="error"><strong>Error: </strong>{{ error }}</p>
+                {% endif %}
                 <script src="https://www.google.com/recaptcha/api.js?render=6LcNhZ0UAAAAAAPJXUIxw2UkUTPfEsnhAspNKJ6_"></script>
                  <script>
                   grecaptcha.ready(function() {
@@ -29,8 +34,6 @@
                       });
                   });
                   </script>
-
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Register</button>
             </form><!-- /form -->
         </div><!-- /card-container -->
 

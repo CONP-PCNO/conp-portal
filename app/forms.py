@@ -9,9 +9,12 @@ class SignInForm(FlaskForm):
     submit = SubmitField('Sign In')
 
 class SignUpForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired()])
-    password1 = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField('Repeat Password', validators=[DataRequired()])
-    tos = BooleanField(' I have read and agree to the Terms of Use and Privacy Policy.')
+    username = StringField('Username:', validators=[DataRequired()])
+    orcid = StringField('ORCID ID (Optional):')
+    affiliation = StringField('Affiliation:', validators=[DataRequired()])
+    pi = BooleanField('I am a Principal Investigator (PI).', false_values=(False, 'false'))
+    email = StringField('Email:', validators=[DataRequired()])
+    password1 = PasswordField('Password:', validators=[DataRequired()])
+    password2 = PasswordField('Repeat Password:', validators=[DataRequired()])
+    tos = BooleanField(' I have read and agree to the Terms of Use and Privacy Policy.', validators=[DataRequired()])
     submit = SubmitField('Register')
