@@ -238,3 +238,32 @@ def dataset_search():
 
     return json.dumps(payload)
 
+@app.route('/dataset', methods=['GET','POST'])
+def dataset_info():
+
+    if request.method == 'GET':
+
+        dataset_id = request.args.get('id')
+
+    # Query dataset
+    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
+
+    dataset = {
+        "id": dataset.dataset_id,
+        "title": dataset.name.replace("'", ""),
+        "isPublic": dataset.is_private == True,
+        "thumbnailURL": "/static/img/placeholder.png",
+        "downloads": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_downloads,
+        "views": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_views,
+        "likes": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_likes,
+        "dateAdded": str(dataset.date_created.date()),
+        "dateUpdated": str(dataset.date_updated.date()),
+        "size": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().size,
+        "files": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().files,
+        "subjects": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_subjects,
+        "format": dataset.format.replace("'", ""),
+        "modalities": dataset.modality.replace("'", ""),
+        "sources": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().sources
+    }
+    return render_template('dataset.html', title='CONP | Dataset', data=dataset)
+

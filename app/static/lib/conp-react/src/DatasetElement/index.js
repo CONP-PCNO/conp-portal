@@ -6,7 +6,8 @@ import AppContext from "../AppContext";
 const DatasetElement = props => {
   const { authorized, onRunWithCBRAIN, onDownloadMetadata, ...element } = props;
 
-  const { imagePath } = React.useContext(AppContext);
+  const context = React.useContext(AppContext);
+  const imagePath = (context && context.imagePath) || props.imagePath;
 
   const runOnCbrainEnabled = `${imagePath}/run_on_cbrain_green.png`;
   const runOnCbrainDisabled = `${imagePath}/run_on_cbrain_gray.png`;
@@ -39,7 +40,7 @@ const DatasetElement = props => {
       <div className="dataset-details">
         <div className="dataset-details-stats">
           <div className="dataset-title">
-            <div>{element.title}</div>
+            <div><a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>{element.title}</a></div>
           </div>
           <div className="dataset-stat">
             <div className="dataset-stat-text">Date Added</div>
