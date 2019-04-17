@@ -2,39 +2,64 @@
 {% block content %}
     <div class="container">
         <div style="text-align: center;">
-            <img src="/static/img/conp-pcno-logo.png" style="height: 150px; padding-top: 20px;">
+            <img src="/static/img/conp-pcno-logo.png" style="height: 150px;">
             <p>Sign in with your CONP account to continue</p>
         </div>
         <div class="card card-container">
-            <section class="row">
-                <a id="alt-login-orcid" class="btn-alt-login" href="{{ url_for('oauth_authorize', provider='orcid') }}">
-                    <img class="orcid-logo" src="/static/img/orcid-logo.png">
-                    <span class="label-login">Sign in with ORCID</span>
-                </a>
-            </section>
             <section class="row">
                 <a id="alt-login-inst" class="btn-alt-login" href="#">
                     <img class="osf-alt-logo" src="/static/img/institution-logo.png">
                     <span class="label-login">Sign in through institution</span>
                 </a>
-             </section>
+            </section>
+            <section class="row">
+                <a id="alt-login-orcid" class="btn-alt-login" href="{{ url_for('oauth_authorize', provider='orcid') }}">
+                    <img class="orcid-logo" src="/static/img/orcid-logo.png">
+                    <span class="label-login">Sign in with ORCID</span>
+                </a>
+
+
+               <div class="span4 collapse-group">
+                    <p class="collapse" id="viewdetails" style="padding-top: 10px;">
+                        ORCID provides a persistent identifier – an ORCID iD – that distinguishes you from other researchers
+                        and a mechanism for linking your research outputs and activities to your iD.
+                        Learn more at <a href="https://orcid.org/" target="_blank">orcid.org</a></p>
+                    <p><a class="btn" data-toggle="collapse" data-target="#viewdetails">
+                        More about ORCID &raquo;
+                        </a>
+                    </p>
+                </div>
+            </section>
             <section class="row">
             <hr class="hr-text" data-content="OR"></hr>
             </section>
-            <form class="form-signin">
-                <span id="reauth-email" class="reauth-email"></span>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                <div id="remember" class="checkbox">
-                    <label>
-                        <input type="checkbox" value="remember-me"> Remember me
-                    </label>
-                </div>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+            <form class="form-signin" action="/login" method="POST">
+                {{ form.hidden_tag() }}
+                <p>{{ form.email(placeholder="Email Address",class="form-control") }}</p>
+                <p>{{ form.password(placeholder="Password",class="form-control") }}</p>
+                <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                {{ form.submit(class="btn btn-lg btn-primary btn-block btn-signin") }}
+                {% if error %}
+                <p class="error"><strong>Error: </strong>{{ error }}</p>
+                {% endif %}
             </form><!-- /form -->
             <a href="#" class="forgot-password">
                 Forgot the password?
             </a>
         </div><!-- /card-container -->
+
+    <div class="bottom-link">
+    <br/>
+        <span><a href="/register">Create a CONP account</a></span>
+        <span style="padding: 10px;"></span>
+        <span><a href="/public">Back to CONP Public Portal</a></span>
+    <br/>
+
+
+            <div style="margin-top: 10px;">
+            <p>Copyright &copy; 2019 <a style="white-space: nowrap" href="https://conp.ca">Canadian Open Neuroscience Platform</a> &#124; <a style="white-space: nowrap" href="#">Terms of Use</a> &#124; <a style="white-space: nowrap" href="#">Privacy Policy</a></p>
+            </div>
+</div>
+
     </div><!-- /container -->
 {% endblock %}

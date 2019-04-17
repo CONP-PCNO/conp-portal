@@ -17,18 +17,17 @@ Create a Python virtual environment called `venv` and install Flask dependencies
 
 You can run the application locally with 
 
-    flask run
+    python3 run.py
     
-The application will be live on `http://127.0.0.1:5000/`
+The application will be live on `http://0.0.0.0:5000/` 
     
 
-<<<<<<< HEAD
 ### Get the dataset repository
 
        git clone git@github.com:CONP-PCNO/conp-dataset data
 
 The search will be executed on this `data` repository 
-=======
+
 ### Localhost Database
 
 Create a localhost Postgres database named `conp` with owner `postgres`
@@ -47,7 +46,6 @@ If you get a `fe_sendauth: no password supplied` error, then use this command in
 Create tables with
 
     flask db upgrade
->>>>>>> master
 
 ### AWS Cloud9 (Experimental)
 

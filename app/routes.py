@@ -1,5 +1,5 @@
 import json
-
+from datetime import datetime, timedelta
 from app import app, db
 from app.models import User
 from app.oauth import OAuthSignIn
@@ -16,24 +16,33 @@ def public():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error = None
+    form = SignInForm()
+
     if current_user.is_authenticated:
         return redirect(url_for('logged_in'))
-    return render_template('login.html', title='Log In')
 
-@app.route('/success')
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            user = User.query.filter_by(email=form.email.data).first()
+            if user is None or not user.check_password(form.password.data):
+                flash('Invalid username or password')
+                return redirect(url_for('login'))
+            login_user(user, remember=form.remember_me.data)
+            return redirect(url_for('index'))
+    return render_template('login.html', title='CONP | Log In', form=form, error=form.errors)
+
+@app.route('/success', methods=['GET', 'POST'])
 @login_required
 def logged_in():
-    # Protected user content can be handled here
-    return """
-        <html>
-            <h3>Congrats, you've logged in successfully!</h3>
-        </html>
-        """
+    if request.method == 'GET':
+        # Protected user content can be handled here
+        return redirect(url_for('index'))
 
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('public'))
 
 # This is the first step in the login process: the 'login with X' buttons
 # should direct users here with the provider name filled in
@@ -48,7 +57,7 @@ def oauth_authorize(provider):
 @app.route('/callback/<provider>')
 def oauth_callback(provider):
     if not current_user.is_anonymous:
-        return redirect(url_for('index'))
+        return redirect(url_for('public'))
 
     oauth = OAuthSignIn.get_provider(provider)
     # This is step three. The code from the provider's reply is sent back to
@@ -78,19 +87,62 @@ def oauth_callback(provider):
 
     return redirect(url_for('logged_in'))
 
+@app.route('/register')
+def register():
+    form = SignUpForm()
+    return render_template('register.html', title='CONP | Register', form=form)
+
+@app.route('/register_new_user', methods=['GET', 'POST'])
+def register_new_user():
+    error = None
+    form = SignUpForm()
+
+    # Handle the BooleanField to check if is_pi or not
+    if not 'pi' in request.form:
+        is_pi = False
+    elif request.form['pi']:
+        is_pi = True
+
+    if request.method == 'POST':
+        # Check if passwords match
+        if request.form['password1'] == request.form['password2']:
+            if form.validate_on_submit():
+                # Check if email already exists
+                user = User.query.filter_by(email=request.form['email']).first()
+                # Create new user
+                if not user:
+                    user = User(
+                        oauth_id=request.form['orcid'],
+                        username=request.form['username'],
+                        email=request.form['email'],
+                        is_whitelisted=False,
+                        is_pi= is_pi,
+                        affiliation=request.form['affiliation'],
+                        expiration=datetime.now() + timedelta(6 * 365 / 12),  # 6 months
+                        date_created=datetime.now(),
+                        date_updated=datetime.now()
+                    )
+                    user.set_password(request.form['password1'])
+                    db.session.add(user)
+                    db.session.commit()
+                    login_user(user)
+                    return redirect(url_for('index'))
+            error = form.errors
+        error = {'Passwords do not match'}
+    return render_template('register.html', title='CONP | Register', form=form, error=error)
+
+
 @app.route('/index')
+@login_required
 def index():
-    user = {'username' : 'JB'}
-    return render_template('index.html', title='Home', user=user)
+    if current_user.is_authenticated:
+        return render_template('index.html', title='Home', user=current_user)
 
 @app.route('/search')
 def search():
-    return render_template('search.html', title='Search', signin=signin, signup=signup)
+    return render_template('search.html', title='Search')
 
-@app.route('/search_dataset', methods=['GET'])
-def search_dataset():
-    if request.method == 'GET':
-        return 'GET REQUEST'
+
 @app.route('/admin')
 def admin():
     return render_template('admin.html', title='Admin')
