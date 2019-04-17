@@ -51,17 +51,16 @@ class InsertTestDataset(object):
 
             for row in reader:
                 dataset = Dataset(
-                    id = row[0],
-                    dataset_id = row[1],
-                    owner_id = row[2],
-                    name = row[3],
-                    modality = row[4],
-                    version = row[5],
-                    format = row[6],
-                    category = row[7],
+                    dataset_id = row[0],
+                    owner_id = row[1],
+                    name = row[2],
+                    modality = row[3],
+                    version = row[4],
+                    format = row[5],
+                    category = row[6],
                     date_created = datetime.now(),
                     date_updated = datetime.now(),
-                    is_private = row[8] == 'True'
+                    is_private = row[7] == 'True'
                 )
                 db.session.add(dataset)
         db.session.commit()
@@ -78,15 +77,14 @@ class InsertTestDataset(object):
 
             for row in reader:
                 stat = DatasetStats(
-                    id = row[0],
-                    dataset_id = row[1],
-                    size = row[2],
-                    files = row[3],
-                    sources = row[4],
-                    num_subjects = row[5],
-                    num_downloads = row[6],
-                    num_likes = row[7],
-                    num_views = row[8],
+                    dataset_id = row[0],
+                    size = row[1],
+                    files = row[2],
+                    sources = row[3],
+                    num_subjects = row[4],
+                    num_downloads = row[5],
+                    num_likes = row[6],
+                    num_views = row[7],
                     date_updated = datetime.now()
                 )
                 db.session.add(stat)
@@ -118,9 +116,9 @@ class InsertTestDataset(object):
 
 
 test_dataset = InsertTestDataset()
-test_dataset.insert_sample_users()
-test_dataset.insert_sample_datasets()
+#test_dataset.insert_sample_users()
+#test_dataset.insert_sample_datasets()
 test_dataset.insert_sample_datasets_stats()
-test_dataset.insert_sample_pipelines()
+#test_dataset.insert_sample_pipelines()
 #print('\x1b[6;30;42m' + 'Success!' + '\x1b[0m')
 

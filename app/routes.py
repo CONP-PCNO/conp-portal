@@ -1,7 +1,7 @@
 import json
 from datetime import datetime, timedelta
 from app import app, db
-from app.models import User
+from app.models import User, Dataset, DatasetStats
 from app.oauth import OAuthSignIn
 from app.forms import SignInForm
 from app.forms import SignUpForm
@@ -152,96 +152,92 @@ def admin():
 def dataset_search():
     if request.method == 'GET':
 
-       json_dummy_response = {
-  "authorized": True,
-  "total": 50,
-  "sortKeys": [
-    {
-      "key": "title",
-      "label": "Title"
-    },
-    {
-      "key": "downloads",
-      "label": "Downloads"
-    },
-    {
-      "key": "views",
-      "label": "Views"
-    },
-    {
-      "key": "likes",
-      "label": "Likes"
-    },
-    {
-      "key": "dateAdded",
-      "label": "Date Added"
-    },
-    {
-      "key": "dateUpdated",
-      "label": "Date Updated"
-    },
-    {
-      "key": "size",
-      "label": "Size"
-    },
-    {
-      "key": "files",
-      "label": "Files"
-    },
-    {
-      "key": "subjects",
-      "label": "Subjects"
-    },
-    {
-      "key": "format",
-      "label": "Format"
-    },
-    {
-      "key": "modalities",
-      "label": "Modalities"
-    },
-    {
-      "key": "sources",
-      "label": "Sources"
-    }
-  ],
-  "elements": [
-    {
-      "id": "0",
-      "title": "Super cool data number 1",
-      "isPublic": True,
-      "thumbnailURL": "/static/img/placeholder.png",
-      "downloads": 42,
-      "views": 24,
-      "likes": 12,
-      "dateAdded": "10/12/2018",
-      "dateUpdated": "10/13/2018",
-      "size": "800mb",
-      "files": 44,
-      "subjects": 30,
-      "format": "BIDS",
-      "modalities": "fMRI",
-      "sources": 3
-    },
-    {
-      "id": "2",
-      "title": "Super cool data number 2",
-      "isPublic": False,
-      "thumbnailURL": "/static/img/placeholder.png",
-      "downloads": 42,
-      "views": 24,
-      "likes": 12,
-      "dateAdded": "10/12/2018",
-      "dateUpdated": "10/13/2018",
-      "size": "800mb",
-      "files": 44,
-      "subjects": 30,
-      "format": "BIDS",
-      "modalities": "fMRI",
-      "sources": 3
-    }
-    ]
-    }
+       # Query datasets
+       datasets = Dataset.query.order_by(Dataset.id).all()
 
-    return json.dumps(json_dummy_response)
+       # Query dataset stats
+       stats = DatasetStats.query.all()
+
+       # Element input for payload
+       elements = []
+
+       # Build dataset response
+       for d in datasets:
+           dataset = {
+               "id": d.id,
+               "title": d.name.replace("'", ""),
+               "isPublic": d.is_private == True,
+               "thumbnailURL": "/static/img/placeholder.png",
+               "downloads": 0,
+               "views": 24,
+               "likes": 12,
+               "dateAdded": str(d.date_created.date()),
+               "dateUpdated": str(d.date_updated.date()),
+               "size": "800mb",
+               "files": 44,
+               "subjects": 30,
+               "format": d.format.replace("'", ""),
+               "modalities": d.modality.replace("'", ""),
+               "sources": 3
+           }
+           elements.append(dataset)
+
+       # Construct payload
+       payload = {
+          "authorized": True,
+          "total": 50,
+          "sortKeys": [
+            {
+              "key": "title",
+              "label": "Title"
+            },
+            {
+              "key": "downloads",
+              "label": "Downloads"
+            },
+            {
+              "key": "views",
+              "label": "Views"
+            },
+            {
+              "key": "likes",
+              "label": "Likes"
+            },
+            {
+              "key": "dateAdded",
+              "label": "Date Added"
+            },
+            {
+              "key": "dateUpdated",
+              "label": "Date Updated"
+            },
+            {
+              "key": "size",
+              "label": "Size"
+            },
+            {
+              "key": "files",
+              "label": "Files"
+            },
+            {
+              "key": "subjects",
+              "label": "Subjects"
+            },
+            {
+              "key": "format",
+              "label": "Format"
+            },
+            {
+              "key": "modalities",
+              "label": "Modalities"
+            },
+            {
+              "key": "sources",
+              "label": "Sources"
+            }
+          ],
+          "elements": elements
+            }
+
+    return json.dumps(payload)
 
