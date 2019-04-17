@@ -6,8 +6,10 @@ from app.oauth import OAuthSignIn
 from app.forms import SignInForm
 from app.forms import SignUpForm
 
+from sqlalchemy import func
 from flask import render_template, request, flash, session, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required
+
 
 @app.route('/')
 @app.route('/public')
@@ -152,15 +154,13 @@ def admin():
 def dataset_search():
     if request.method == 'GET':
 
-       # Query datasets
-       datasets = Dataset.query.order_by(Dataset.id).all()
+       if request.args.get('search') != '':
 
-       # Element input for payload
-       elements = []
+           term = '%' + request.args.get('search') + '%'
+           d = Dataset.query.filter(func.lower(Dataset.name).like(func.lower(term))).first()
 
-       # Build dataset response
-       for d in datasets:
-           dataset = {
+           elements = [
+               {
                "id": d.dataset_id,
                "title": d.name.replace("'", ""),
                "isPublic": d.is_private == True,
@@ -176,8 +176,37 @@ def dataset_search():
                "format": d.format.replace("'", ""),
                "modalities": d.modality.replace("'", ""),
                "sources": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().sources
-           }
-           elements.append(dataset)
+           }]
+
+
+       elif request.args.get('search') == '':
+
+           # Query datasets
+           datasets = Dataset.query.order_by(Dataset.id).all()
+
+           # Element input for payload
+           elements = []
+
+           # Build dataset response
+           for d in datasets:
+               dataset = {
+                   "id": d.dataset_id,
+                   "title": d.name.replace("'", ""),
+                   "isPublic": d.is_private == True,
+                   "thumbnailURL": "/static/img/placeholder.png",
+                   "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
+                   "views": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_views,
+                   "likes": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_likes,
+                   "dateAdded": str(d.date_created.date()),
+                   "dateUpdated": str(d.date_updated.date()),
+                   "size": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().size,
+                   "files": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().files,
+                   "subjects": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_subjects,
+                   "format": d.format.replace("'", ""),
+                   "modalities": d.modality.replace("'", ""),
+                   "sources": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().sources
+               }
+               elements.append(dataset)
 
        # Construct payload
        payload = {
