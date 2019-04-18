@@ -353,7 +353,7 @@ body .container .container-wrapper {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  border: 2px solid #343434;
+  border: 1px solid #343434;
   padding: 1rem;
 }
 
@@ -362,7 +362,7 @@ body .container .container-wrapper {
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
-  border: 2px solid #343434;
+  border: 1px solid #343434;
 }
 
 .search-dataset-footer .pagination {
@@ -371,7 +371,7 @@ body .container .container-wrapper {
 
 .search-dataset {
   display: flex;
-  border: 2px solid #343434;
+  border: 1px solid #343434;
   border-top: 0px solid transparent;
   border-bottom: 0px solid transparent;
   padding: 2rem 0;

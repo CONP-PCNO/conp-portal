@@ -22,6 +22,12 @@ You can run the application locally with
 The application will be live on `http://0.0.0.0:5000/` 
     
 
+### Get the dataset repository
+
+       git clone git@github.com:CONP-PCNO/conp-dataset data
+
+The search will be executed on this `data` repository 
+
 ### Localhost Database
 
 Create a localhost Postgres database named `conp` with owner `postgres`
