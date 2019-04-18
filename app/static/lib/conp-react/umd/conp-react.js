@@ -6878,7 +6878,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
           "div",
           { className: "dataset-option" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-            alt: "Run On Cbrain",
+            alt: "Download Metadata",
             className: "download-button  option-icon",
             src: element.isPublic || authorized ? downloadEnabled : downloadDisabled,
             onClick: function onClick(event) {

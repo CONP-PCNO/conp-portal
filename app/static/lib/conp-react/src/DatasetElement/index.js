@@ -97,7 +97,7 @@ const DatasetElement = props => {
           </div>
           <div className="dataset-option">
             <img
-              alt="Run On Cbrain"
+              alt="Download Metadata"
               className="download-button  option-icon"
               src={
                 element.isPublic || authorized
@@ -107,7 +107,7 @@ const DatasetElement = props => {
               onClick={event => {
                 event.preventDefault();
                 if (!(element.isPublic || authorized)) {
-                  return;
+                  return ;
                 }
                 onDownloadMetadata instanceof Function &&
                   onDownloadMetadata(props, event);

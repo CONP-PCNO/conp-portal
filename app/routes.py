@@ -14,7 +14,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 @app.route('/')
 @app.route('/public')
 def public():
-    return render_template('public.html', title='Home')
+    return render_template('public.html', title='Home | CONP')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -138,11 +138,11 @@ def register_new_user():
 @login_required
 def index():
     if current_user.is_authenticated:
-        return render_template('index.html', title='Home', user=current_user)
+        return render_template('index.html', title='CONP | Home', user=current_user)
 
 @app.route('/search')
 def search():
-    return render_template('search.html', title='Search')
+    return render_template('search.html', title='CONP | Search')
 
 
 @app.route('/admin')
@@ -187,8 +187,17 @@ def dataset_search():
            # Element input for payload
            elements = []
 
+
            # Build dataset response
            for d in datasets:
+
+               if 'samir' in d.name.replace("'", "").lower():
+                   metadata_path = '../data/projects/samir-das/aggregate_v1.json.DATS'
+               elif 'prevent' in d.name.replace("'", "").lower():
+                   metadata_path = '../data/projects/prevent-ad-open/aggregate_v1.json.DATS'
+               else:
+                   metadata_path = None
+
                dataset = {
                    "id": d.dataset_id,
                    "title": d.name.replace("'", ""),
@@ -204,7 +213,8 @@ def dataset_search():
                    "subjects": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_subjects,
                    "format": d.format.replace("'", ""),
                    "modalities": d.modality.replace("'", ""),
-                   "sources": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().sources
+                   "sources": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().sources,
+                   "metadata_path":metadata_path
                }
                elements.append(dataset)
 

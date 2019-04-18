@@ -6,6 +6,7 @@
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 <script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<title>{{ title }}</title>
 {% endblock %}
 
 {% block sidebar %}
@@ -20,7 +21,7 @@
 <div class="display-user"></div>
 
 <div class="search-header page-title">
-  <h2>CONP Portal | Dataset Title</h2>
+  <h2>CONP Portal | {{ data.title }} </h2>
 </div>
 
  <div id="mount-display" style="border: 1px solid black;">
