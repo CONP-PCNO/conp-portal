@@ -117,7 +117,7 @@ class InsertTestDataset(object):
 
 test_dataset = InsertTestDataset()
 #test_dataset.insert_sample_users()
-#test_dataset.insert_sample_datasets()
+test_dataset.insert_sample_datasets()
 test_dataset.insert_sample_datasets_stats()
 #test_dataset.insert_sample_pipelines()
 #print('\x1b[6;30;42m' + 'Success!' + '\x1b[0m')
