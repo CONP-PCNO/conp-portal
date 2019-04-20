@@ -6669,8 +6669,8 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       onDownloadMetadata = props.onDownloadMetadata,
       element = DatasetElement_objectWithoutProperties(props, ["authorized", "onRunWithCBRAIN", "onDownloadMetadata"]);
 
-  var _React$useContext = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useContext(AppContext),
-      imagePath = _React$useContext.imagePath;
+  var context = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useContext(AppContext);
+  var imagePath = context && context.imagePath || props.imagePath;
 
   var runOnCbrainEnabled = imagePath + "/run_on_cbrain_green.png";
   var runOnCbrainDisabled = imagePath + "/run_on_cbrain_gray.png";
@@ -6735,7 +6735,11 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
             null,
-            element.title
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "a",
+              { style: { color: "inherit" }, href: "dataset?id=" + element.id },
+              element.title
+            )
           )
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -6874,7 +6878,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
           "div",
           { className: "dataset-option" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-            alt: "Run On Cbrain",
+            alt: "Download Metadata",
             className: "download-button  option-icon",
             src: element.isPublic || authorized ? downloadEnabled : downloadDisabled,
             onClick: function onClick(event) {

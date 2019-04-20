@@ -6,7 +6,8 @@ import AppContext from "../AppContext";
 const DatasetElement = props => {
   const { authorized, onRunWithCBRAIN, onDownloadMetadata, ...element } = props;
 
-  const { imagePath } = React.useContext(AppContext);
+  const context = React.useContext(AppContext);
+  const imagePath = (context && context.imagePath) || props.imagePath;
 
   const runOnCbrainEnabled = `${imagePath}/run_on_cbrain_green.png`;
   const runOnCbrainDisabled = `${imagePath}/run_on_cbrain_gray.png`;
@@ -39,7 +40,7 @@ const DatasetElement = props => {
       <div className="dataset-details">
         <div className="dataset-details-stats">
           <div className="dataset-title">
-            <div>{element.title}</div>
+            <div><a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>{element.title}</a></div>
           </div>
           <div className="dataset-stat">
             <div className="dataset-stat-text">Date Added</div>
@@ -96,7 +97,7 @@ const DatasetElement = props => {
           </div>
           <div className="dataset-option">
             <img
-              alt="Run On Cbrain"
+              alt="Download Metadata"
               className="download-button  option-icon"
               src={
                 element.isPublic || authorized
@@ -106,7 +107,7 @@ const DatasetElement = props => {
               onClick={event => {
                 event.preventDefault();
                 if (!(element.isPublic || authorized)) {
-                  return;
+                  return ;
                 }
                 onDownloadMetadata instanceof Function &&
                   onDownloadMetadata(props, event);
