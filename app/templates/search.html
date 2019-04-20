@@ -8,6 +8,19 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 {% endblock %}
 
+<!-- Brand Block -->
+{% block brand_link %}
+{% if current_user.is_authenticated %}
+    <a class="navbar-brand" href="/index">
+        <img src="./static/img/conp_brand.png" height="45" width="75">
+    </a>
+{% else %}
+     <a class="navbar-brand" href="/">
+        <img src="./static/img/conp_brand.png" height="45" width="75">
+     </a>
+{% endif %}
+{% endblock %}
+
 <!-- Login Block -->
 {% block login %}
 {% if current_user.is_authenticated %}
