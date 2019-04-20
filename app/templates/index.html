@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
 
+<!-- Head Block -->
 {% block head %}
-
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-
 {% endblock %}
 
+<!-- Login Block -->
+<li class="login">
+    <a href="/logout">
+        <span class="glyphicon glyphicon-log-out"></span> Logout
+    </a>
+</li>
+
+<!-- Sidebar Block -->
 {% block sidebar %}
-
 {% include "/fragments/sidebar.html" %}
-
 {% endblock %}
 
+<!-- Content Block -->
 {% block content %}
 
 <!-- Display Username Login -->
