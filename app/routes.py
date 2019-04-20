@@ -142,7 +142,7 @@ def index():
 
 @app.route('/search')
 def search():
-    return render_template('search.html', title='CONP | Search')
+    return render_template('search.html', title='CONP | Search', user=current_user)
 
 
 @app.route('/admin')
