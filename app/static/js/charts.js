@@ -11,7 +11,7 @@ Highcharts.chart('chart', {
     },
 
     title: {
-        text: 'Datasets and Pipelines'
+        text: 'Number of Datasets and Pipelines'
     },
 
     yAxis: [{
@@ -27,16 +27,24 @@ Highcharts.chart('chart', {
         }
     }],
 
+    xAxis: {
+    categories: ["April'19", "May'19", "June'19","July'19"]
+    },
+
     plotOptions: {
         column: {
             borderRadius: 5
         }
     },
 
+
+
     series: [{
-        data: [1, 3, 2, 4]
+        name: 'Datasets',
+        data: [5, 10, 15, 25]
     }, {
-        data: [324, 124, 547, 221],
+        name: 'Pipelines',
+        data: [10, 20, 30, 50],
         yAxis: 1
     }]
 

@@ -1,0 +1,57 @@
+{% extends 'base_public.html' %}
+
+{% block head %}
+
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<title>{{ title }}</title>
+{% endblock %}
+
+{% block sidebar %}
+
+{% include "/fragments/public_sidebar.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Space reserved for username when logged in -->
+<div class="display-user"></div>
+
+<div class="search-header page-title">
+  <h2>CONP Portal | {{ data.title }} </h2>
+</div>
+
+ <div id="mount-display" style="border: 1px solid black;">
+</div>
+
+<script type="text/javascript">
+  const reactElement = React.createElement(CONPReact.DatasetElement, {
+
+    id: '{{ data.id }}',
+    title: '{{ data.title }}',
+    isPublic: '{{ data.isPublic }}',
+    thumbnailURL: '{{ data.thumbnailURL }}',
+    downloads: {{ data.downloads }},
+    views: '{{ data.views  }}',
+    likes: '{{ data.likes }}',
+    dateAdded: '{{ data.dateAdded }}',
+    dateUpdated: '{{ data.dateUpdated }}',
+    size: '{{ data.size }}',
+    files: '{{ data.files }}',
+    subjects: '{{ data.subjects }}',
+    format: '{{ data.format }}',
+    modalities: '{{ data.modalities }}',
+    sources: '{{ data.sources }}',
+    imagePath: "/static/img"
+
+  });
+
+  ReactDOM.render(reactElement, document.querySelector("#mount-display"));
+</script>
+</div>
+<!--/span-->
+{% endblock %}
+

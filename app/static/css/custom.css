@@ -88,6 +88,21 @@
   min-height: 100vh;
 }
 
+.page-title{
+  text-align: center;
+  padding-bottom: 15px;
+  margin-top: 20px;"
+}
+
+.display-user{
+  text-align: right;
+  margin-top: 60px;
+}
+
+ a.a-link {
+  text-decoration: none !important;
+}
+
 #chart {
   height: 400px;
   max-width: 800px;
@@ -166,12 +181,22 @@ body {
 =============================================================
 */
 
+.navbar-nav>li>a {
+  min-height: 60px;
+}
+
 .navbar-inverse-red {
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 60px;
   background-color: #fff;
+  border-bottom: 2px solid;
   border-bottom-color: #ed2225;
-  border-bottom-width: medium;
+  box-shadow: 2px 2px 8px rgba(0,0,0,.5);
   border-radius: 0px;
-  margin-bottom: 0;
 }
 
 .navbar .container {
@@ -218,6 +243,7 @@ li.active-nav:hover > a {
 .sidebar-nav {
   background-color: #343434;
   height: 100%;
+  margin-top: 60px;
 }
 
 .sidebar-nav .nav li a:hover span {
@@ -232,8 +258,18 @@ li.active-nav:hover > a {
   color: black;
 }
 
+
 .sidebar-nav .nav li .sidebar-link {
   padding: 2.5rem 1rem;
+}
+
+.sidebar-nav .nav li .slim-sidebar-link {
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+
+.sidebar-nav-hr {
+  width: 80%;
 }
 
 /*
@@ -317,7 +353,7 @@ body .container .container-wrapper {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  border: 2px solid #343434;
+  border: 1px solid #343434;
   padding: 1rem;
 }
 
@@ -326,7 +362,7 @@ body .container .container-wrapper {
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
-  border: 2px solid #343434;
+  border: 1px solid #343434;
 }
 
 .search-dataset-footer .pagination {
@@ -335,7 +371,7 @@ body .container .container-wrapper {
 
 .search-dataset {
   display: flex;
-  border: 2px solid #343434;
+  border: 1px solid #343434;
   border-top: 0px solid transparent;
   border-bottom: 0px solid transparent;
   padding: 2rem 0;
@@ -416,4 +452,39 @@ body .container .container-wrapper {
 .option-icon {
   width: 100%;
   padding-right: 1rem;
+}
+
+/*
+=============================================================
+| COMPONENT - DASHBOARD
+=============================================================
+*/
+
+.hr-border{
+  border-top: 1px solid #afafaf;
+}
+
+.col-border {
+    border-style: solid;
+    border-radius: 15px;
+    padding: 15px;
+    border: 1px solid #afafaf;
+    margin-left: -10px;
+    margin-right: 10px;
+    box-shadow: 2px 2px 6px #afafaf;
+}
+
+.col-sm-4 {
+    border-radius: 2px;
+}
+
+.row-border{
+    border-radius: 15px;
+    padding: 15px;
+    border: 1px solid #afafaf;
+    box-shadow: 2px 2px 6px #afafaf;
+}
+
+.a:hover{
+    text-decoration: none !important;
 }
