@@ -1,4 +1,4 @@
-import json
+import json, os
 from datetime import datetime, timedelta
 from app import app, db
 from app.models import User, Dataset, DatasetStats
@@ -10,6 +10,7 @@ from sqlalchemy import func
 from flask import render_template, request, flash, session, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 
+DATA_PATH = app.config['DATA_PATH']
 
 @app.route('/')
 @app.route('/public')
@@ -158,6 +159,13 @@ def dataset_search():
     if request.method == 'GET':
 
        if request.args.get('search') != '':
+
+           print(DATA_PATH)
+           for subdir, dirs, files in os.walk(DATA_PATH):
+               print("HERE IAM")
+               for file in files:
+                   print(subdir)
+                   print(os.path.join(subdir, file))
 
            term = '%' + request.args.get('search') + '%'
            d = Dataset.query.filter(func.lower(Dataset.name).like(func.lower(term))).first()
