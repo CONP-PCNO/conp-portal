@@ -8,7 +8,7 @@ const DatasetElement = props => {
 
   const context = React.useContext(AppContext);
   const imagePath = (context && context.imagePath) || props.imagePath;
-
+  const downloadPath = (context && context.downloadPath) || props.downloadPath;
   const runOnCbrainEnabled = `${imagePath}/run_on_cbrain_green.png`;
   const runOnCbrainDisabled = `${imagePath}/run_on_cbrain_gray.png`;
   const downloadEnabled = `${imagePath}/download_green.png`;
@@ -107,6 +107,7 @@ const DatasetElement = props => {
               onClick={event => {
                 event.preventDefault();
                 if (!(element.isPublic || authorized)) {
+                  //TODO: Add return here
                   return ;
                 }
                 onDownloadMetadata instanceof Function &&
@@ -129,6 +130,7 @@ DatasetElement.propTypes = {
   title: PropTypes.string,
   isPublic: PropTypes.bool,
   thumbnailURL: PropTypes.string,
+  downloadPath: PropTypes.string,
   downloads: PropTypes.number,
   views: PropTypes.number,
   likes: PropTypes.number,

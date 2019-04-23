@@ -6499,7 +6499,8 @@ var query_string = __webpack_require__(12);
 // CONCATENATED MODULE: ./src/AppContext/index.js
 
 
-/* harmony default export */ var AppContext = (external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext({ imagePath: "" }));
+/* harmony default export */ var AppContext = (external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext({ imagePath: "" }, { downloadPath: "" }));
+//export default React.createContext({ downloadPath: "" });
 // CONCATENATED MODULE: ./src/DataTable/DataTableContainer.js
 
 
@@ -6523,11 +6524,12 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   var endpointURL = _ref.endpointURL,
       limit = _ref.limit,
       imagePath = _ref.imagePath,
+      donwloadPath = _ref.donwloadPath,
       authorized = _ref.authorized,
       total = _ref.total,
       sortKeys = _ref.sortKeys,
       elements = _ref.elements,
-      dataTableProps = _objectWithoutProperties(_ref, ["endpointURL", "limit", "imagePath", "authorized", "total", "sortKeys", "elements"]);
+      dataTableProps = _objectWithoutProperties(_ref, ["endpointURL", "limit", "imagePath", "donwloadPath", "authorized", "total", "sortKeys", "elements"]);
 
   var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
       fetchedElements = _React$useState[0],
@@ -6639,7 +6641,8 @@ DataTableContainer_DataTableContainer.propTypes = {
   limit: prop_types_default.a.number,
   total: prop_types_default.a.number,
   elements: prop_types_default.a.arrayOf(prop_types_default.a.object),
-  imagePath: prop_types_default.a.string
+  imagePath: prop_types_default.a.string,
+  downloadPath: prop_types_default.a.string
 };
 
 DataTableContainer_DataTableContainer.defaultProps = {
@@ -6648,7 +6651,8 @@ DataTableContainer_DataTableContainer.defaultProps = {
   limit: 10,
   total: 0,
   elements: [],
-  imagePath: ""
+  imagePath: "",
+  downloadPath: ""
 };
 
 /* harmony default export */ var DataTable_DataTableContainer = (DataTableContainer_DataTableContainer);
@@ -6671,7 +6675,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
 
   var context = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useContext(AppContext);
   var imagePath = context && context.imagePath || props.imagePath;
-
+  var downloadPath = context && context.downloadPath || props.downloadPath;
   var runOnCbrainEnabled = imagePath + "/run_on_cbrain_green.png";
   var runOnCbrainDisabled = imagePath + "/run_on_cbrain_gray.png";
   var downloadEnabled = imagePath + "/download_green.png";
@@ -6884,6 +6888,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
             onClick: function onClick(event) {
               event.preventDefault();
               if (!(element.isPublic || authorized)) {
+                //TODO: Add return here
                 return;
               }
               onDownloadMetadata instanceof Function && onDownloadMetadata(props, event);
@@ -6904,6 +6909,7 @@ DatasetElement_DatasetElement.propTypes = {
   title: prop_types_default.a.string,
   isPublic: prop_types_default.a.bool,
   thumbnailURL: prop_types_default.a.string,
+  downloadPath: prop_types_default.a.string,
   downloads: prop_types_default.a.number,
   views: prop_types_default.a.number,
   likes: prop_types_default.a.number,

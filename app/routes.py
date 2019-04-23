@@ -165,6 +165,7 @@ def dataset_search():
                "title": d.name.replace("'", ""),
                "isPublic": d.is_private == True,
                "thumbnailURL": "/static/img/placeholder.png",
+               "downloadPath": "../data/projects/",
                "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
                "views": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_views,
                "likes": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_likes,
@@ -203,6 +204,7 @@ def dataset_search():
                    "title": d.name.replace("'", ""),
                    "isPublic": d.is_private == True,
                    "thumbnailURL": "/static/img/placeholder.png",
+                   "downloadPath": "../data/projects/",
                    "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
                    "views": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_views,
                    "likes": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_likes,
@@ -226,6 +228,10 @@ def dataset_search():
             {
               "key": "title",
               "label": "Title"
+            },
+            {
+               "key": "downloadPath",
+               "label": "Download Path"
             },
             {
               "key": "downloads",
@@ -292,6 +298,7 @@ def dataset_info():
         "title": dataset.name.replace("'", ""),
         "isPublic": dataset.is_private == True,
         "thumbnailURL": "/static/img/placeholder.png",
+        "downloadPath": "../data/projects/",
         "downloads": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_downloads,
         "views": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_views,
         "likes": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_likes,

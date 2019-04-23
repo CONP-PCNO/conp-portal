@@ -10,6 +10,7 @@ const DataTableContainer = ({
   endpointURL,
   limit,
   imagePath,
+  donwloadPath,
   authorized,
   total,
   sortKeys,
@@ -82,7 +83,8 @@ DataTableContainer.propTypes = {
   limit: PropTypes.number,
   total: PropTypes.number,
   elements: PropTypes.arrayOf(PropTypes.object),
-  imagePath: PropTypes.string
+  imagePath: PropTypes.string,
+  downloadPath: PropTypes.string
 };
 
 DataTableContainer.defaultProps = {
@@ -91,7 +93,8 @@ DataTableContainer.defaultProps = {
   limit: 10,
   total: 0,
   elements: [],
-  imagePath: ""
+  imagePath: "",
+  downloadPath: ""
 };
 
 export default DataTableContainer;
