@@ -6496,11 +6496,6 @@ react_wait_esm_s.Waiter = react_wait_esm_f;
 // EXTERNAL MODULE: ./node_modules/query-string/index.js
 var query_string = __webpack_require__(12);
 
-// CONCATENATED MODULE: ./src/AppContext/index.js
-
-
-/* harmony default export */ var AppContext = (external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext({ imagePath: "" }, { downloadPath: "" }));
-//export default React.createContext({ downloadPath: "" });
 // CONCATENATED MODULE: ./src/DataTable/DataTableContainer.js
 
 
@@ -6519,17 +6514,14 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 
 
 
-
 var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   var endpointURL = _ref.endpointURL,
       limit = _ref.limit,
-      imagePath = _ref.imagePath,
-      donwloadPath = _ref.donwloadPath,
       authorized = _ref.authorized,
       total = _ref.total,
       sortKeys = _ref.sortKeys,
       elements = _ref.elements,
-      dataTableProps = _objectWithoutProperties(_ref, ["endpointURL", "limit", "imagePath", "donwloadPath", "authorized", "total", "sortKeys", "elements"]);
+      dataTableProps = _objectWithoutProperties(_ref, ["endpointURL", "limit", "authorized", "total", "sortKeys", "elements"]);
 
   var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
       fetchedElements = _React$useState[0],
@@ -6621,18 +6613,14 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
     return void fetchElements();
   }, 300, [endpointURL, query]);
 
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-    AppContext.Provider,
-    { value: { imagePath: imagePath } },
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_DataTable_DataTable, DataTableContainer_extends({
-      authorized: authorized,
-      elements: fetchedElements,
-      total: totalState,
-      sortKeys: sortKeysState,
-      query: query,
-      setQuery: setQuery
-    }, dataTableProps))
-  );
+  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_DataTable_DataTable, DataTableContainer_extends({
+    authorized: authorized,
+    elements: fetchedElements,
+    total: totalState,
+    sortKeys: sortKeysState,
+    query: query,
+    setQuery: setQuery
+  }, dataTableProps));
 };
 
 DataTableContainer_DataTableContainer.propTypes = {
@@ -6640,9 +6628,7 @@ DataTableContainer_DataTableContainer.propTypes = {
   endpointURL: prop_types_default.a.string,
   limit: prop_types_default.a.number,
   total: prop_types_default.a.number,
-  elements: prop_types_default.a.arrayOf(prop_types_default.a.object),
-  imagePath: prop_types_default.a.string,
-  downloadPath: prop_types_default.a.string
+  elements: prop_types_default.a.arrayOf(prop_types_default.a.object)
 };
 
 DataTableContainer_DataTableContainer.defaultProps = {
@@ -6650,9 +6636,7 @@ DataTableContainer_DataTableContainer.defaultProps = {
   endpointURL: "",
   limit: 10,
   total: 0,
-  elements: [],
-  imagePath: "",
-  downloadPath: ""
+  elements: []
 };
 
 /* harmony default export */ var DataTable_DataTableContainer = (DataTableContainer_DataTableContainer);
@@ -6665,17 +6649,12 @@ function DatasetElement_objectWithoutProperties(obj, keys) { var target = {}; fo
 
 
 
-
-
 var DatasetElement_DatasetElement = function DatasetElement(props) {
   var authorized = props.authorized,
-      onRunWithCBRAIN = props.onRunWithCBRAIN,
-      onDownloadMetadata = props.onDownloadMetadata,
-      element = DatasetElement_objectWithoutProperties(props, ["authorized", "onRunWithCBRAIN", "onDownloadMetadata"]);
+      element = DatasetElement_objectWithoutProperties(props, ["authorized"]);
 
-  var context = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useContext(AppContext);
-  var imagePath = context && context.imagePath || props.imagePath;
-  var downloadPath = context && context.downloadPath || props.downloadPath;
+  var imagePath = element.imagePath;
+  var downloadPath = element.downloadPath;
   var runOnCbrainEnabled = imagePath + "/run_on_cbrain_green.png";
   var runOnCbrainDisabled = imagePath + "/run_on_cbrain_gray.png";
   var downloadEnabled = imagePath + "/download_green.png";
@@ -6865,35 +6844,28 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
           { className: "dataset-option" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-            alt: "Run On Cbrain",
-            className: "run-on-cbrain-button option-icon",
-            src: element.isPublic || authorized ? runOnCbrainEnabled : runOnCbrainDisabled,
-            onClick: function onClick(event) {
-              event.preventDefault();
-              if (!(element.isPublic || authorized)) {
-                return;
-              }
-              onRunWithCBRAIN instanceof Function && onRunWithCBRAIN(props, event);
-            }
-          })
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "a",
+            { href: "#" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+              alt: "Run On Cbrain",
+              className: "run-on-cbrain-button option-icon",
+              src: element.isPublic || authorized ? runOnCbrainEnabled : runOnCbrainDisabled
+            })
+          )
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
           { className: "dataset-option" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-            alt: "Download Metadata",
-            className: "download-button  option-icon",
-            src: element.isPublic || authorized ? downloadEnabled : downloadDisabled,
-            onClick: function onClick(event) {
-              event.preventDefault();
-              if (!(element.isPublic || authorized)) {
-                //TODO: Add return here
-                return;
-              }
-              onDownloadMetadata instanceof Function && onDownloadMetadata(props, event);
-            }
-          })
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "a",
+            { href: element.downloadPath, download: true },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+              alt: "Download Metadata",
+              className: "download-button  option-icon",
+              src: element.isPublic || authorized ? downloadEnabled : downloadDisabled
+            })
+          )
         )
       )
     )
@@ -6903,12 +6875,12 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
 DatasetElement_DatasetElement.propTypes = {
   authorized: prop_types_default.a.bool,
   onRunWithCBRAIN: prop_types_default.a.func,
-  onDownloadMetadata: prop_types_default.a.func,
   // element proptypes
   id: prop_types_default.a.string,
   title: prop_types_default.a.string,
   isPublic: prop_types_default.a.bool,
   thumbnailURL: prop_types_default.a.string,
+  imagePath: prop_types_default.a.string,
   downloadPath: prop_types_default.a.string,
   downloads: prop_types_default.a.number,
   views: prop_types_default.a.number,
@@ -6921,6 +6893,11 @@ DatasetElement_DatasetElement.propTypes = {
   format: prop_types_default.a.string,
   modalities: prop_types_default.a.string,
   sources: prop_types_default.a.number
+};
+
+DatasetElement_DatasetElement.defaultProps = {
+  imagePath: "",
+  downloadPath: ""
 };
 
 /* harmony default export */ var src_DatasetElement = (DatasetElement_DatasetElement);

@@ -4,13 +4,10 @@ import { useDebounce } from "react-use";
 import * as qs from "query-string";
 
 import DataTable from "./DataTable";
-import AppContext from "../AppContext";
 
 const DataTableContainer = ({
   endpointURL,
   limit,
-  imagePath,
-  donwloadPath,
   authorized,
   total,
   sortKeys,
@@ -63,17 +60,15 @@ const DataTableContainer = ({
   useDebounce(() => void fetchElements(), 300, [endpointURL, query]);
 
   return (
-    <AppContext.Provider value={{ imagePath }}>
-      <DataTable
-        authorized={authorized}
-        elements={fetchedElements}
-        total={totalState}
-        sortKeys={sortKeysState}
-        query={query}
-        setQuery={setQuery}
-        {...dataTableProps}
-      />
-    </AppContext.Provider>
+    <DataTable
+      authorized={authorized}
+      elements={fetchedElements}
+      total={totalState}
+      sortKeys={sortKeysState}
+      query={query}
+      setQuery={setQuery}
+      {...dataTableProps}
+    />
   );
 };
 
@@ -82,9 +77,7 @@ DataTableContainer.propTypes = {
   endpointURL: PropTypes.string,
   limit: PropTypes.number,
   total: PropTypes.number,
-  elements: PropTypes.arrayOf(PropTypes.object),
-  imagePath: PropTypes.string,
-  downloadPath: PropTypes.string
+  elements: PropTypes.arrayOf(PropTypes.object)
 };
 
 DataTableContainer.defaultProps = {
@@ -92,9 +85,7 @@ DataTableContainer.defaultProps = {
   endpointURL: "",
   limit: 10,
   total: 0,
-  elements: [],
-  imagePath: "",
-  downloadPath: ""
+  elements: []
 };
 
 export default DataTableContainer;
