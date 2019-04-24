@@ -24,7 +24,7 @@ The application will be live on `http://0.0.0.0:5000/`
 
 ### Get the dataset repository
 
-       git clone git@github.com:CONP-PCNO/conp-dataset data
+       git submodule add git@github.com:CONP-PCNO/conp-dataset data
 
 The search will be executed on this `data` repository 
 
@@ -53,10 +53,9 @@ Some experimental testing cases are being explored with AWS Cloud 9.
 
 To run the application on a Cloud9 instance:
 
-```python
+```bash
     flask run --host=0.0.0.0 --port=8080
 ```
-
 
 ### Deployment
     

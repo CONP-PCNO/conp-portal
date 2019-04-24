@@ -1,4 +1,4 @@
-import json
+import json, os
 from datetime import datetime, timedelta
 from app import app, db
 from app.models import User, Dataset, DatasetStats
@@ -10,6 +10,7 @@ from sqlalchemy import func
 from flask import render_template, request, flash, session, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 
+DATA_PATH = app.config['DATA_PATH']
 
 @app.route('/')
 @app.route('/public')
@@ -44,6 +45,7 @@ def logged_in():
 @app.route('/logout')
 def logout():
     logout_user()
+
     return redirect(url_for('public'))
 
 # This is the first step in the login process: the 'login with X' buttons
@@ -59,6 +61,7 @@ def oauth_authorize(provider):
 @app.route('/callback/<provider>')
 def oauth_callback(provider):
     if not current_user.is_anonymous:
+
         return redirect(url_for('public'))
 
     oauth = OAuthSignIn.get_provider(provider)
@@ -142,6 +145,7 @@ def index():
 
 @app.route('/search')
 def search():
+
     return render_template('search.html', title='CONP | Search', user=current_user)
 
 
@@ -190,13 +194,6 @@ def dataset_search():
 
            # Build dataset response
            for d in datasets:
-
-               if 'samir' in d.name.replace("'", "").lower():
-                   metadata_path = '../data/projects/samir-das/aggregate_v1.json.DATS'
-               elif 'prevent' in d.name.replace("'", "").lower():
-                   metadata_path = '../data/projects/prevent-ad-open/aggregate_v1.json.DATS'
-               else:
-                   metadata_path = None
 
                dataset = {
                    "id": d.dataset_id,

@@ -40,8 +40,12 @@ class Dataset(db.Model):
     __tablename__ = 'datasets'
 
     id = db.Column(db.Integer, primary_key=True)
-    dataset_id = db.Column(db.Integer, index=True)
+    dataset_id = db.Column(db.String(64), index=True, unique=True)
+    annex_uuid = db.Column(db.String(64), index=True, unique=True)
+    datalad_remote_annex_uuid = db.Column(db.String(64), index=True, unique=True)
     owner_id = db.Column(db.Integer, index=True)
+    download_path = db.Column(db.String(64), index=True)
+    image = db.Column(db.LargeBinary, default=None)
     name = db.Column(db.String(256), index=True)
     modality = db.Column(db.String(64), index=True)
     version = db.Column(db.String(128), index=True)
