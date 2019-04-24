@@ -79,7 +79,7 @@ const DatasetElement = props => {
                 alt="Run On Cbrain"
                 className="run-on-cbrain-button option-icon"
                 src={
-                  element.isPublic || authorized
+                  (!element.isPrivate) || authorized
                     ? runOnCbrainEnabled
                     : runOnCbrainDisabled
                 }
@@ -92,7 +92,7 @@ const DatasetElement = props => {
                 alt="Download Metadata"
                 className="download-button  option-icon"
                 src={
-                  element.isPublic || authorized
+                  (!element.isPrivate) || authorized
                     ? downloadEnabled
                     : downloadDisabled
                 }
@@ -111,7 +111,7 @@ DatasetElement.propTypes = {
   // element proptypes
   id: PropTypes.string,
   title: PropTypes.string,
-  isPublic: PropTypes.bool,
+  isPrivate: PropTypes.bool,
   thumbnailURL: PropTypes.string,
   imagePath: PropTypes.string,
   downloadPath: PropTypes.string,

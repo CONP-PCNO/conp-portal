@@ -27,6 +27,7 @@ const DataTableContainer = ({
   const [totalState, setTotalState] = React.useState(total);
 
   const [sortKeysState, setSortKeysState] = React.useState(sortKeys);
+  const [authorizedState, setAuthorizedState] = React.useState(authorized);
 
   React.useEffect(() => {
     setQuery({ ...query, limit });
@@ -51,6 +52,7 @@ const DataTableContainer = ({
       setFetchedElements(parsed.elements);
       setTotalState(parsed.total);
       setSortKeysState(parsed.sortKeys);
+      setAuthorizedState(parsed.authorized);
     } catch (err) {
       alert("There was an error retrieving the search results.");
       console.error(err);
@@ -61,7 +63,7 @@ const DataTableContainer = ({
 
   return (
     <DataTable
-      authorized={authorized}
+      authorized={authorizedState}
       elements={fetchedElements}
       total={totalState}
       sortKeys={sortKeysState}

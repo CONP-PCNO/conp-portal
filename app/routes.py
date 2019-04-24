@@ -158,6 +158,11 @@ def admin():
 def dataset_search():
     if request.method == 'GET':
 
+       if current_user.is_authenticated:
+            authorized = True
+       else:
+            authorized = False
+
        if request.args.get('search') != '':
 
            term = '%' + request.args.get('search') + '%'
@@ -165,11 +170,13 @@ def dataset_search():
 
            elements = [
                {
+               "authorized": authorized,
                "id": d.dataset_id,
                "title": d.name.replace("'", ""),
                "isPublic": d.is_private == True,
-               "thumbnailURL": "/static/img/placeholder.png",
-               "downloadPath": "../data/projects/",
+               "thumbnailURL": "/static/img/" + d.image,
+               "imagePath": "/static/img/",
+               "downloadPath": "../data/projects/" + d.download_path,
                "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
                "views": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_views,
                "likes": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_likes,
@@ -197,10 +204,11 @@ def dataset_search():
            for d in datasets:
 
                dataset = {
+                   "authorized": authorized,
                    "id": d.dataset_id,
                    "title": d.name.replace("'", ""),
-                   "isPublic": d.is_private == True,
-                   "thumbnailURL": "/static/img/" + d.image ,
+                   "isPrivate": d.is_private == True,
+                   "thumbnailURL": "/static/img/placeholder.png",
                    "imagePath" : "/static/img/",
                    "downloadPath": "/static/data/projects/" + d.download_path,
                    "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
@@ -214,13 +222,12 @@ def dataset_search():
                    "format": d.format.replace("'", ""),
                    "modalities": d.modality.replace("'", ""),
                    "sources": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().sources,
-                   "metadata_path":metadata_path
                }
                elements.append(dataset)
 
        # Construct payload
        payload = {
-          "authorized": True,
+          "authorized": authorized,
           "total": 50,
           "sortKeys": [
             {
@@ -295,11 +302,17 @@ def dataset_info():
     # Query dataset
     dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
 
+    if current_user.is_authenticated:
+        authorized = True
+    else:
+        authorized = False
+
     dataset = {
+        "authorized": authorized,
         "id": dataset.dataset_id,
         "title": dataset.name.replace("'", ""),
-        "isPublic": dataset.is_private == True,
-        "thumbnailURL": "/static/img/" + dataset.image,
+        "isPrivate": dataset.is_private == True,
+        "thumbnailURL": "/static/img/placeholder.png",
         "imagePath" : "/static/img/",
         "downloadPath": "/static/data/projects/" + dataset.download_path,
         "downloads": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_downloads,
