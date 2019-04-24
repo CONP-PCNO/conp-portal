@@ -1,18 +1,31 @@
 {% extends 'base.html' %}
 
+<!-- Head Block -->
 {% block head %}
-
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-
 {% endblock %}
 
+<!-- Brand Block -->
+{% block brand_link %}
+<a class="navbar-brand" href="/index">
+  <img src="./static/img/conp_brand.png" height="45" width="75">
+</a>
+{% endblock %}
+
+<!-- Login Block -->
+<li class="login">
+    <a href="/logout">
+        <span class="glyphicon glyphicon-log-out"></span> Logout
+    </a>
+</li>
+
+<!-- Sidebar Block -->
 {% block sidebar %}
-
 {% include "/fragments/sidebar.html" %}
-
 {% endblock %}
 
+<!-- Content Block -->
 {% block content %}
 
 <!-- Display Username Login -->
