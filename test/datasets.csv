@@ -1,8 +1,0 @@
-dataset_id,owner_id,name,modality,version,format,category,is_private
-123,1,'Samir Das Phantom','imaging','1.0','minc','phantom','False'
-124,1,'Simon Duchesne Phantom','imaging','1.0','nifti','phantom','False'
-125,1,'Prevent-AD Open','imaging','1.0','minc','human','True'
-126,1,'Brain connectivity predicts placebo response across chronic pain clinical trials','imaging','1.0','nifti','human','False'
-127,1,'Visual working memory: Study one Task fMRI and Behavioural response', 'imaging','1.0.1','nifti','human','False'
-128,1,'MEG-BIDS Brainstorm auditory data','imaging','1.0','dicom', 'human','False'
-129,1,'LORIS PERFORM','imaging','1.0','dicom','human','False'
