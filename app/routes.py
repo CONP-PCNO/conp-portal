@@ -160,13 +160,6 @@ def dataset_search():
 
        if request.args.get('search') != '':
 
-           print(DATA_PATH)
-           for subdir, dirs, files in os.walk(DATA_PATH):
-               print("HERE IAM")
-               for file in files:
-                   print(subdir)
-                   print(os.path.join(subdir, file))
-
            term = '%' + request.args.get('search') + '%'
            d = Dataset.query.filter(func.lower(Dataset.name).like(func.lower(term))).first()
 
@@ -201,13 +194,6 @@ def dataset_search():
 
            # Build dataset response
            for d in datasets:
-
-               if 'samir' in d.name.replace("'", "").lower():
-                   metadata_path = '../data/projects/samir-das/aggregate_v1.json.DATS'
-               elif 'prevent' in d.name.replace("'", "").lower():
-                   metadata_path = '../data/projects/prevent-ad-open/aggregate_v1.json.DATS'
-               else:
-                   metadata_path = None
 
                dataset = {
                    "id": d.dataset_id,
