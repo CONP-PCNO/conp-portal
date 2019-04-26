@@ -12,11 +12,12 @@
 {% block brand_link %}
 {% if current_user.is_authenticated %}
     <a class="navbar-brand" href="/index">
-        <img src="./static/img/conp_brand.png" height="45" width="75">
+        <img class="custom-logo-link" src="./static/img/conp.png">
+
     </a>
 {% else %}
      <a class="navbar-brand" href="/">
-        <img src="./static/img/conp_brand.png" height="45" width="75">
+        <img class="custom-logo-link" src="./static/img/conp.png">
      </a>
 {% endif %}
 {% endblock %}
