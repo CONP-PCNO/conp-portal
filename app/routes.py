@@ -1,4 +1,5 @@
 import json, os
+import requests
 from datetime import datetime, timedelta
 from app import app, db
 from app.models import User, Dataset, DatasetStats
@@ -6,8 +7,9 @@ from app.oauth import OAuthSignIn
 from app.forms import SignInForm
 from app.forms import SignUpForm
 
+
 from sqlalchemy import func
-from flask import render_template, request, flash, session, redirect, url_for
+from flask import render_template, request, flash, session, redirect, url_for, send_file, Response, abort
 from flask_login import current_user, login_user, logout_user, login_required
 
 DATA_PATH = app.config['DATA_PATH']
@@ -329,3 +331,33 @@ def dataset_info():
     }
     return render_template('dataset.html', title='CONP | Dataset', data=dataset)
 
+def get_file_paths(directory):
+    file_paths = []
+
+    for root, directories, files in os.walk(directory):
+        for filename in files:
+            filepath = os.path.join(root, filename)
+            file_paths.append(filepath)
+    return file_paths
+
+
+@app.route('/download_metadata', methods=['GET','POST'])
+def download_metadata():
+
+    if request.method == 'GET':
+
+        directory = os.path.basename(request.args.get('dataset'))
+        root_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static/data/projects/')
+        dataset_path = os.path.abspath(os.path.normpath(os.path.join(root_path, directory)))
+
+        if not dataset_path.startswith(os.path.abspath(root_path)+os.sep):
+            abort(404)
+            return
+
+        url = 'https://github.com/conpdatasets/' + directory + '/archive/master.zip'
+
+        r = requests.get(url)
+        if r.status_code == 200:
+            return Response(r.content,
+                            mimetype='application/zip',
+                            headers={'Content-Disposition': 'attachment;filename=data.zip'})

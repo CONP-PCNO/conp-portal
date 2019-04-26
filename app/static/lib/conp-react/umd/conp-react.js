@@ -6864,7 +6864,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
           { className: "dataset-option" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "a",
-            { href: element.downloadPath, download: true },
+            { href: "download_metadata?dataset=" + element.downloadPath, download: true },
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
               alt: "Download Metadata",
               className: "download-button  option-icon",

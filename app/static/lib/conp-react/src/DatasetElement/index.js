@@ -87,7 +87,7 @@ const DatasetElement = props => {
             </a>
           </div>
           <div className="dataset-option">
-            <a href={element.downloadPath} download>
+            <a href={`download_metadata?dataset=${element.downloadPath}`} download>
               <img
                 alt="Download Metadata"
                 className="download-button  option-icon"
