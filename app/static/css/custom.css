@@ -248,6 +248,14 @@ body {
     line-height: 1.6em;
 }
 
+@media screen and (max-width: 768px) {
+  .navbar-nav>li>a {
+    margin-left: 40px;
+    margin-bottom: auto;
+  }
+}
+
+
 .navbar-toggle .icon-bar {
     display: block;
     width: 30px;
@@ -371,7 +379,6 @@ body .container .container-wrapper {
 }
 
 .container-main {
-  /*height: 100%;*/
   padding: 2rem 5rem;
   display: flex;
   flex-direction: column;
@@ -519,6 +526,7 @@ body .container .container-wrapper {
     margin-bottom: 20px;
     box-shadow: 2px 2px 6px #afafaf;
 }
+
 @media screen and (min-width: 768px) {
   .col-border {
     margin-left: -10px;
@@ -527,6 +535,7 @@ body .container .container-wrapper {
   }
 
 }
+
 .col-sm-4 {
     border-radius: 2px;
 }
