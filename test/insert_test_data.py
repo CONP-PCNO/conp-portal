@@ -15,6 +15,7 @@ class InsertTestDataset(object):
         self.datasets_file = 'datasets.csv'
         self.datasets_stats_file = 'datasets_stats.csv'
         self.pipelines_file = 'pipelines.csv'
+        self.loris_image = 'loris.png'
 
     def insert_sample_users(self):
 
@@ -52,15 +53,18 @@ class InsertTestDataset(object):
             for row in reader:
                 dataset = Dataset(
                     dataset_id = row[0],
-                    owner_id = row[1],
-                    name = row[2],
-                    modality = row[3],
-                    version = row[4],
-                    format = row[5],
-                    category = row[6],
+                    annex_uuid = row[1],
+                    datalad_remote_annex_uuid = row[2],
+                    owner_id = row[3],
+                    download_path = row[4],
+                    name = row[5],
+                    modality = row[6],
+                    version = row[7],
+                    format = row[8],
+                    category = row[9],
                     date_created = datetime.now(),
                     date_updated = datetime.now(),
-                    is_private = row[7] == 'True'
+                    is_private = row[10] == 'True'
                 )
                 db.session.add(dataset)
         db.session.commit()

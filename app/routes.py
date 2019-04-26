@@ -1,4 +1,5 @@
-import json
+import json, os
+import requests
 from datetime import datetime, timedelta
 from app import app, db
 from app.models import User, Dataset, DatasetStats
@@ -6,10 +7,12 @@ from app.oauth import OAuthSignIn
 from app.forms import SignInForm
 from app.forms import SignUpForm
 
+
 from sqlalchemy import func
-from flask import render_template, request, flash, session, redirect, url_for
+from flask import render_template, request, flash, session, redirect, url_for, send_file, Response, abort
 from flask_login import current_user, login_user, logout_user, login_required
 
+DATA_PATH = app.config['DATA_PATH']
 
 @app.route('/')
 @app.route('/public')
@@ -44,6 +47,7 @@ def logged_in():
 @app.route('/logout')
 def logout():
     logout_user()
+
     return redirect(url_for('public'))
 
 # This is the first step in the login process: the 'login with X' buttons
@@ -59,6 +63,7 @@ def oauth_authorize(provider):
 @app.route('/callback/<provider>')
 def oauth_callback(provider):
     if not current_user.is_anonymous:
+
         return redirect(url_for('public'))
 
     oauth = OAuthSignIn.get_provider(provider)
@@ -142,6 +147,7 @@ def index():
 
 @app.route('/search')
 def search():
+
     return render_template('search.html', title='CONP | Search', user=current_user)
 
 
@@ -149,10 +155,20 @@ def search():
 def admin():
     return render_template('admin.html', title='Admin')
 
+def get_download_path(dataset):
+    if current_user.is_authenticated or dataset.is_private == False:
+        return "/static/data/projects/" + dataset.download_path
+    elif not current_user.is_authenticated or dataset.is_private == True:
+        return "#"
 
 @app.route('/dataset-search', methods=['GET'])
 def dataset_search():
     if request.method == 'GET':
+
+       if current_user.is_authenticated:
+            authorized = True
+       else:
+            authorized = False
 
        if request.args.get('search') != '':
 
@@ -161,10 +177,13 @@ def dataset_search():
 
            elements = [
                {
+               "authorized": authorized,
                "id": d.dataset_id,
                "title": d.name.replace("'", ""),
                "isPublic": d.is_private == True,
-               "thumbnailURL": "/static/img/placeholder.png",
+               "thumbnailURL": "/static/img/" + d.image,
+               "imagePath": "/static/img/",
+               "downloadPath": get_download_path(d),
                "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
                "views": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_views,
                "likes": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_likes,
@@ -191,18 +210,14 @@ def dataset_search():
            # Build dataset response
            for d in datasets:
 
-               if 'samir' in d.name.replace("'", "").lower():
-                   metadata_path = '../data/projects/samir-das/aggregate_v1.json.DATS'
-               elif 'prevent' in d.name.replace("'", "").lower():
-                   metadata_path = '../data/projects/prevent-ad-open/aggregate_v1.json.DATS'
-               else:
-                   metadata_path = None
-
                dataset = {
+                   "authorized": authorized,
                    "id": d.dataset_id,
                    "title": d.name.replace("'", ""),
-                   "isPublic": d.is_private == True,
+                   "isPrivate": d.is_private == True,
                    "thumbnailURL": "/static/img/placeholder.png",
+                   "imagePath" : "/static/img/",
+                   "downloadPath": get_download_path(d),
                    "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
                    "views": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_views,
                    "likes": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_likes,
@@ -214,18 +229,25 @@ def dataset_search():
                    "format": d.format.replace("'", ""),
                    "modalities": d.modality.replace("'", ""),
                    "sources": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().sources,
-                   "metadata_path":metadata_path
                }
                elements.append(dataset)
 
        # Construct payload
        payload = {
-          "authorized": True,
+          "authorized": authorized,
           "total": 50,
           "sortKeys": [
             {
               "key": "title",
               "label": "Title"
+            },
+            {
+               "key": "downloadPath",
+               "label": "Download Path"
+            },
+            {
+                "key": "imagePath",
+                "label": "Image Path"
             },
             {
               "key": "downloads",
@@ -287,11 +309,19 @@ def dataset_info():
     # Query dataset
     dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
 
+    if current_user.is_authenticated:
+        authorized = True
+    else:
+        authorized = False
+
     dataset = {
+        "authorized": authorized,
         "id": dataset.dataset_id,
         "title": dataset.name.replace("'", ""),
-        "isPublic": dataset.is_private == True,
+        "isPrivate": dataset.is_private == True,
         "thumbnailURL": "/static/img/placeholder.png",
+        "imagePath" : "/static/img/",
+        "downloadPath": get_download_path(dataset),
         "downloads": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_downloads,
         "views": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_views,
         "likes": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_likes,
@@ -306,3 +336,24 @@ def dataset_info():
     }
     return render_template('dataset.html', title='CONP | Dataset', data=dataset)
 
+
+@app.route('/download_metadata', methods=['GET','POST'])
+def download_metadata():
+
+    if request.method == 'GET':
+
+        directory = os.path.basename(request.args.get('dataset'))
+        root_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static/data/projects/')
+        dataset_path = os.path.abspath(os.path.normpath(os.path.join(root_path, directory)))
+
+        if not dataset_path.startswith(os.path.abspath(root_path)+os.sep):
+            abort(404)
+            return
+
+        url = 'https://github.com/conpdatasets/' + directory + '/archive/master.zip'
+
+        r = requests.get(url)
+        if r.status_code == 200:
+            return Response(r.content,
+                            mimetype='application/zip',
+                            headers={'Content-Disposition': 'attachment;filename=data.zip'})
