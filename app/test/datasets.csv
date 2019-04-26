@@ -1,2 +1,0 @@
-dataset_id,annex_uuid,datalad_remote_annex_uuid,owner_id,download_path,image,name,modality,version,format,category,is_private
-8de99b0e-5f94-11e9-9e05-52545e9add8e,d87abe2b-216c-4186-a94a-7104292d5358, cf13d535-b47c-5df6-8590-0793cb08a90a, 1, 'multicenter-phantom','/static/img/loris.png','Multicente Human MRI Phantom','imaging','1.0','minc','phantom','False'
