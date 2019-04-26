@@ -1,109 +1,99 @@
 {% extends 'base_public.html' %}
 
+<!-- Head Block -->
 {% block head %}
-
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
 {% endblock %}
 
+<!-- Brand Block -->
+{% block brand_link %}
+<a class="navbar-brand" href="/" >
+  <img class="custom-logo-link" src="./static/img/conp.png">
+</a>
+{% endblock %}
+
+<!-- Login Block -->
+{% block login %}
+<li class="login">
+    <a href="/login">
+        <span class="glyphicon glyphicon-log-in"></span> Login
+    </a>
+</li>
+{% endblock %}
+
+<!-- Sidebar Block -->
+{% block sidebar %}
+{% include "/fragments/public_sidebar.html" %}
+{% endblock %}
+
+<!-- Content Block -->
 {% block content %}
 
-<div class="container-fluid">
+<!-- Space reserved for username when logged in -->
+<div class="display-user"></div>
 
-    <div class="row row-offcanvas row-offcanvas-left" style="margin-top: -20px;">
-        <div class="col-xs-6 col-sm-1 sidebar-offcanvas" id="sidebar" role="navigation" style="margin-left: -30px;">
-            <div class="sidebar-nav">
-                <ul class="nav" style="margin-left: -6px;">
+<!-- Title -->
+<div class="page-title">
+    <h2>CONP Public Portal</h2>
+</div>
 
-                    <li class="active text-center">
-                        <a href="/public" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-bar-chart fa-3x" aria-hidden="true"></i><br> Dashboard </span>
-                        </a>
-                    </li>
-
-
-                    <li class="text-center">
-                        <a href="/search" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-search fa-3x" aria-hidden="true"></i><br> Search </span>
-                        </a>
-                    </li>
-
-                    <li class="text-center">
-                        <a href="#" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-wrench fa-3x" aria-hidden="true"></i><br> Tools </span>
-                        </a>
-                    </li>
-
-                    <li class="text-center">
-                        <a href="#" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-upload fa-3x" aria-hidden="true"></i><br> Share </span>
-                        </a>
-                    </li>
-
-                    <li class="text-center">
-                        <a href="#" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-comments fa-3x" aria-hidden="true"></i><br> Community </span>
-                        </a>
-                    </li>
-
-                     <li class="text-center">
-                        <a href="#" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-user-circle fa-3x" aria-hidden="true"></i><br> Profile </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!--/.well -->
+<div class="row">
+    <div class="col-sm-8 col-border" style="padding-right:30px;">
+        <div id="chart"></div>
+        <script type="text/javascript" src="/static/js/charts.js"></script>
+        <div class="row" style="padding: 20px; ">
+            <h3>CONP Data Statistics</h3>
+            <hr class="hr-border">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus feugiat augue,
+            sollicitudin malesuada enim tempus a. Morbi ut sem dapibus, blandit mi nec, suscipit nibh.
+            Nulla eget scelerisque urna. Praesent pellentesque sagittis tortor a accumsan.
+                Morbi sit amet elementum lorem.</p>
         </div>
+        <div class="row" style="padding: 20px; ">
+        <div class="col-xs-6">
+            <a href="/search" class="a-link"><button class="btn btn-success btn-block">Browse Datasets</button></a>
+        </div>
+        <div class="col-xs-6">
+            <button class="btn btn-default btn-block" onclick="myFunction()">Share a Dataset</button>
+            <script>
+            function myFunction() {
+              alert("Registration required to share a dataset!");
+            }
+            </script>
+        </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="row row-border">
         <!--/span-->
-
-        <div class="col-xs-12 col-sm-10">
-
-            <!-- Space reserved for username when logged in -->
-            <div style="padding-top: 20px;">
-            </div>
-
-            <br>
-            <div class="jumbotron" >
-                <div style="text-align: center;">
-                <h2>CONP Data Statistics</h2>
-                </div>
-                <div id="chart"></div>
-                <script type="text/javascript" src="/static/js/charts.js"></script>
-                <div class="row" style="padding-top: 20px">
-                <div class="col-xs-6">
-                    <a href="/search"><button class="btn btn-success btn-block">Browse Datasets</button></a>
-                </div>
-                <div class="col-xs-6">
-                    <button class="btn btn-default btn-block" onclick="myFunction()">Share a Dataset</button>
-                    <script>
-                    function myFunction() {
-                      alert("Registration required to share a dataset!");
-                    }
-                    </script>
-                </div>
-                </div>
-            </div>
-            <div class="row">
-                <!--/span-->
-                <div class="col-6 col-sm-6 col-lg-8">
-                    <h2>Newest Dataset Release</h2>
-                    <p>Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap friendly HTML, CSS and Javascript. Bootstrap is a front-end framework that uses CSS and JavaScript to
-                        facilitate responsive Web design. </p>
-                    <p><a class="btn btn-default" href="#">View details »</a></p>
-                </div>
-                <!--/span-->
-
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Study Spotlight</h2>
-                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
-                        friendly HTML, CSS and Javascript.</p>
-                    <p><a class="btn btn-default" href="#">View details »</a></p>
-                </div>
-                <!--/span-->
-            </div>
-            <hr>
-            <!--/row-->
+        <div>
+            <h3>NEWEST DATASET RELEASE</h3>
+            <hr class="hr-border">
+            <strong>Lorem Ipsum</strong>
+            <br/>
+            <p>Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap friendly HTML, CSS and Javascript. Bootstrap is a front-end framework that uses CSS and JavaScript to
+                facilitate responsive Web design. </p>
+            <p><a class="btn btn-default" href="#" style="float: right;">Go to Dataset »</a></p>
+        </div>
+        </div>
+        <div class="row row-border" style="margin-top: 20px;">
+        <div>
+            <h3>STUDY SPOTLIGHT</h3>
+            <hr class="hr-border">
+            <strong>Recruiting for Autism Study</strong>
+            <br/>
+            <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
+                friendly HTML, CSS and Javascript.</p>
+            <p><a class="btn btn-default" href="#" style="float: right;">Read More »</a></p>
+        </div>
         </div>
         <!--/span-->
     </div>
 </div>
-
+<hr>
+<!--/row-->
+</div>
 {% endblock %}

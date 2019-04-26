@@ -1,104 +1,93 @@
 {% extends 'base.html' %}
 
+<!-- Head Block -->
 {% block head %}
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 {% endblock %}
 
+<!-- Brand Block -->
+{% block brand_link %}
+<a class="navbar-brand" href="/index">
+  <img class="custom-logo-link" src="./static/img/conp.png">
+</a>
+{% endblock %}
+
+<!-- Login Block -->
+<li class="login">
+    <a href="/logout">
+        <span class="glyphicon glyphicon-log-out"></span> Logout
+    </a>
+</li>
+
+<!-- Sidebar Block -->
+{% block sidebar %}
+{% include "/fragments/sidebar.html" %}
+{% endblock %}
+
+<!-- Content Block -->
 {% block content %}
 
+<!-- Display Username Login -->
+<div class="display-user">
+Welcome <strong>{{ user.username }}</strong>
+</div>
 
-<div class="container-fluid">
+<!-- Title -->
+<div style="text-align: center; padding-bottom: 15px;">
+    <h2>CONP Public Portal</h2>
+</div>
 
-    <div class="row row-offcanvas row-offcanvas-left" style="margin-top: -20px;">
-
-        <!-- Display Sidebar -->
-        <div class="col-xs-6 col-sm-1 sidebar-offcanvas" id="sidebar" role="navigation" style="margin-left: -30px;">
-            <div class="sidebar-nav">
-                <ul class="nav" style="margin-left: -6px;">
-
-                    <li class="active text-center">
-                        <a href="/public" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-bar-chart fa-3x" aria-hidden="true"></i><br> Dashboard </span>
-                        </a>
-                    </li>
-
-
-                    <li class="text-center">
-                        <a href="/search" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-search fa-3x" aria-hidden="true"></i><br> Search </span>
-                        </a>
-                    </li>
-
-                    <li class="text-center">
-                        <a href="#" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-wrench fa-3x" aria-hidden="true"></i><br> Tools </span>
-                        </a>
-                    </li>
-
-                    <li class="text-center">
-                        <a href="#" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-upload fa-3x" aria-hidden="true"></i><br> Share </span>
-                        </a>
-                    </li>
-
-                    <li class="text-center">
-                        <a href="#" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-comments fa-3x" aria-hidden="true"></i><br> Community </span>
-                        </a>
-                    </li>
-
-                     <li class="text-center">
-                        <a href="#" style="padding-top: 25px; padding-bottom: 25px;"><span><i class="fa fa-user-circle fa-3x" aria-hidden="true"></i><br> Profile </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!--/.well -->
+<div class="row">
+    <div class="col-sm-8 col-border" style="padding-right:30px;">
+        <div id="chart"></div>
+        <script type="text/javascript" src="/static/js/charts.js"></script>
+        <div class="row" style="padding: 20px; ">
+            <h3>CONP Data Statistics</h3>
+            <hr class="hr-border">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus feugiat augue,
+            sollicitudin malesuada enim tempus a. Morbi ut sem dapibus, blandit mi nec, suscipit nibh.
+            Nulla eget scelerisque urna. Praesent pellentesque sagittis tortor a accumsan.
+                Morbi sit amet elementum lorem.</p>
         </div>
+        <div class="row" style="padding: 20px; ">
+        <div class="col-xs-6">
+            <a href="/search" class="a-link"><button class="btn btn-success btn-block">Browse Datasets</button></a>
+        </div>
+        <div class="col-xs-6">
+            <a href="#" class="a-link"><button class="btn btn-warning btn-block">Share a Dataset</button></a>
+        </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="row row-border">
         <!--/span-->
-
-        <div class="col-xs-12 col-sm-10">
-
-            <!-- Display Username Login -->
-            <div style="text-align: right; padding-top: 20px;">
-            Welcome <strong>{{ user.username }}</strong>
-            </div>
-
-            <br>
-            <div class="jumbotron">
-                <div style="text-align: center;">
-                <h2>CONP Data Statistics</h2>
-                </div>
-                <div id="chart"></div>
-                <script type="text/javascript" src="/static/js/charts.js"></script>
-                <div class="row" style="padding-top: 20px">
-                <div class="col-xs-6">
-                    <a href="/search"><button class="btn btn-success btn-block">Browse Datasets</button></a>
-                </div>
-                <div class="col-xs-6">
-                    <button class="btn btn-warning btn-block">Share a Dataset</button>
-                </div>
-                </div>
-            </div>
-            <div class="row">
-                <!--/span-->
-                <div class="col-6 col-sm-6 col-lg-8">
-                    <h2>Newest Dataset Release</h2>
-                    <p>Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap friendly HTML, CSS and Javascript. Bootstrap is a front-end framework that uses CSS and JavaScript to
-                        facilitate responsive Web design. </p>
-                    <p><a class="btn btn-default" href="#">View details »</a></p>
-                </div>
-                <!--/span-->
-
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Study Spotlight</h2>
-                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
-                        friendly HTML, CSS and Javascript.</p>
-                    <p><a class="btn btn-default" href="#">View details »</a></p>
-                </div>
-                <!--/span-->
-            </div>
-            <hr>
-            <!--/row-->
+        <div>
+            <h3>NEWEST DATASET RELEASE</h3>
+            <hr class="hr-border">
+            <strong>Lorem Ipsum</strong>
+            <br/>
+            <p>Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap friendly HTML, CSS and Javascript. Bootstrap is a front-end framework that uses CSS and JavaScript to
+                facilitate responsive Web design. </p>
+            <p><a class="btn btn-default" href="#" style="float: right;">Go to Dataset »</a></p>
+        </div>
+        </div>
+        <div class="row row-border" style="margin-top: 20px;">
+        <div>
+            <h3>STUDY SPOTLIGHT</h3>
+            <hr class="hr-border">
+            <strong>Recruiting for Autism Study</strong>
+            <br/>
+            <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
+                friendly HTML, CSS and Javascript.</p>
+            <p><a class="btn btn-default" href="#" style="float: right;">Read More »</a></p>
+        </div>
         </div>
         <!--/span-->
     </div>
-    <!--/row-->
 </div>
+<hr>
+<!--/row-->
+</div>
+
 {% endblock %}

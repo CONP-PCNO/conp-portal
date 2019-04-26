@@ -7,7 +7,7 @@
     <meta name="description" content="CONP">
     <meta name="author" content="CONP">
 
-    <title>{% block title %} CONP | Home {% endblock %}</title>
+    <title>{{ title }}</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
@@ -37,128 +37,50 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/" style="margin-top: -13px;">
-              <img src="./static/img/conp_brand.png" height="45" width="75">
-          </a>
+          {% block brand_link %}{% endblock %}
         </div>
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">DISCOVER</a></li>
-                <li><a href="#">EXPERIENCE</a></li>
-                <li><a href="#">COMMUNITY</a></li>
-                <li class="active-nav"><a href="/">PORTAL</a></li>
-                <li><a href="#" data-toggle="modal" data-target="#login-modal">
-                        <span class="glyphicon glyphicon-log-in"></span> Login
-                    </a>
-                </li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Discover</a></li>
+                <li><a href="#">Experience <i class="fa fa-chevron-down"></i></a></li>
+                <li><a href="#">Community <i class="fa fa-chevron-down"></i></a></li>
+                <li class="active-nav"><a href="/">Portal</a></li>
+                {% block login %}{% endblock %}
             </ul>
         </div>
       </div>
     </div>
 
 
-    <!-- Sign Up Modal -->
-    <div class="modal fade bd-example-modal-sm" id="signup-modal" tabindex="-1" role="dialog" aria-hidden="true">
-      <form class="form-horizontal" id="signup" role="form" action="#" method="POST" enctype="multipart/form-data">
-      <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-              <div style="position: relative; left: 36%">
-              <img src="static/img/conp-pcno-logo.png" style="height: 30%; width: 30%;">
-              </div>
-          </div>
-          <!-- Modal Body -->
-          <div class="modal-body" align="left">
-            {{ signup.hidden_tag() }}
-            <p>
-            {{ signup.username.label }}<br>
-            {{ signup.username(size=30) }}
-            </p>
-            <p>
-            {{ signup.email.label }}<br>
-            {{ signup.email(size=30) }}
-            </p>
-            <p>
-            {{ signup.password1.label }}<br>
-            {{ signup.password1(size=30) }}
-            </p>
-            <p>
-            {{ signup.password2.label }}<br>
-            {{ signup.password2(size=30) }}
-            </p>
-            <p>{{ signup.tos() }} {{ signup.tos.label }}</p>
-          </div>
-          <!-- Modal Footer -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Register</button>
-          </div>
-        </div>
-      </div>
-      </form>
-    </div>
-
-    <!-- Sign In Modal -->
-    <div class="modal fade bd-example-modal-sm" id="login-modal" tabindex="-1" role="dialog" aria-hidden="true">
-      <form class="form-horizontal" id="login" role="form" action="/index" method="POST" enctype="multipart/form-data">
-      <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-              <div style="position: relative; left: 36%; margin-top: 15px;">
-              <img src="static/img/conp-pcno-logo.png" style="height: 30%; width: 30%;">
-              </div>
-          </div>
-          <!-- Modal Body -->
-          <div class="modal-body" align="left">
-            {{ signin.hidden_tag() }}
-            <p>
-            {{ signin.username.label }}<br>
-            {{ signin.username(size=37) }}
-            </p>
-            <p>
-            {{ signin.password.label }}<br>
-            {{ signin.password(size=37) }}
-            </p>
-          </div>
-          <!-- Modal Footer -->
-          <div class="modal-footer">
-            <div class="col-xs-6">
-                <a href="#"><button class="btn btn-default btn-block">Register</button></a>
-            </div>
-            <div class="col-xs-6">
-                <a href="#"><button class="btn btn-success btn-block">Login</button></a>
-            </div>
-          </div>
-        </div>
-      </div>
-      </form>
-    </div>
-
-
   </div>
 
     <div class="container theme-showcase" role="main">
-      {% block content %}{% endblock %}
+
+        <div class="row row-offcanvas row-offcanvas-left container-wrapper">
+
+
+        {% block sidebar %}{% endblock %}
+
+        <div class="col-xs-12 col-sm-10 col-md-11 container-main">
+            {% block content %}{% endblock %}
+        </div>
+
+        </div>
     </div>
 
 
-  <div style="padding-top: 25px; padding-bottom: 25px; text-align: center;">
 
-      <strong>Canadian Open Neuroscience Platform </strong> (2019) <br>
-      Code available on
-        <a href="https://github.com/CONP-PCNO/conp-portal">
-            Github <i class="fa fa-github" aria-hidden="true"></i>
-        </a>
-  </div>
+    <div class="footer bg-mineshaft">
+        <div class="footer-text">
+          <strong>Canadian Open Neuroscience Platform (2019)</strong> 
+          Code available on
+          <a class="footer-link" href="https://github.com/CONP-PCNO/conp-portal">
+              Github <i class="fa fa-github" aria-hidden="true"></i>
+          </a>
+        </div> 
+    </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster-->
