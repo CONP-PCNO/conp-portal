@@ -4,12 +4,10 @@ import { useDebounce } from "react-use";
 import * as qs from "query-string";
 
 import DataTable from "./DataTable";
-import AppContext from "../AppContext";
 
 const DataTableContainer = ({
   endpointURL,
   limit,
-  imagePath,
   authorized,
   total,
   sortKeys,
@@ -29,6 +27,7 @@ const DataTableContainer = ({
   const [totalState, setTotalState] = React.useState(total);
 
   const [sortKeysState, setSortKeysState] = React.useState(sortKeys);
+  const [authorizedState, setAuthorizedState] = React.useState(authorized);
 
   React.useEffect(() => {
     setQuery({ ...query, limit });
@@ -53,6 +52,7 @@ const DataTableContainer = ({
       setFetchedElements(parsed.elements);
       setTotalState(parsed.total);
       setSortKeysState(parsed.sortKeys);
+      setAuthorizedState(parsed.authorized);
     } catch (err) {
       alert("There was an error retrieving the search results.");
       console.error(err);
@@ -62,17 +62,15 @@ const DataTableContainer = ({
   useDebounce(() => void fetchElements(), 300, [endpointURL, query]);
 
   return (
-    <AppContext.Provider value={{ imagePath }}>
-      <DataTable
-        authorized={authorized}
-        elements={fetchedElements}
-        total={totalState}
-        sortKeys={sortKeysState}
-        query={query}
-        setQuery={setQuery}
-        {...dataTableProps}
-      />
-    </AppContext.Provider>
+    <DataTable
+      authorized={authorizedState}
+      elements={fetchedElements}
+      total={totalState}
+      sortKeys={sortKeysState}
+      query={query}
+      setQuery={setQuery}
+      {...dataTableProps}
+    />
   );
 };
 
@@ -81,8 +79,7 @@ DataTableContainer.propTypes = {
   endpointURL: PropTypes.string,
   limit: PropTypes.number,
   total: PropTypes.number,
-  elements: PropTypes.arrayOf(PropTypes.object),
-  imagePath: PropTypes.string
+  elements: PropTypes.arrayOf(PropTypes.object)
 };
 
 DataTableContainer.defaultProps = {
@@ -90,8 +87,7 @@ DataTableContainer.defaultProps = {
   endpointURL: "",
   limit: 10,
   total: 0,
-  elements: [],
-  imagePath: ""
+  elements: []
 };
 
 export default DataTableContainer;
