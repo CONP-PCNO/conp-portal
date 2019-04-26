@@ -155,6 +155,11 @@ def search():
 def admin():
     return render_template('admin.html', title='Admin')
 
+def get_download_path(dataset):
+    if current_user.is_authenticated or dataset.is_private == False:
+        return "/static/data/projects/" + dataset.download_path
+    elif not current_user.is_authenticated or dataset.is_private == True:
+        return "#"
 
 @app.route('/dataset-search', methods=['GET'])
 def dataset_search():
@@ -178,7 +183,7 @@ def dataset_search():
                "isPublic": d.is_private == True,
                "thumbnailURL": "/static/img/" + d.image,
                "imagePath": "/static/img/",
-               "downloadPath": "../data/projects/" + d.download_path,
+               "downloadPath": get_download_path(d),
                "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
                "views": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_views,
                "likes": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_likes,
@@ -212,7 +217,7 @@ def dataset_search():
                    "isPrivate": d.is_private == True,
                    "thumbnailURL": "/static/img/placeholder.png",
                    "imagePath" : "/static/img/",
-                   "downloadPath": "/static/data/projects/" + d.download_path,
+                   "downloadPath": get_download_path(d),
                    "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
                    "views": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_views,
                    "likes": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_likes,
@@ -316,7 +321,7 @@ def dataset_info():
         "isPrivate": dataset.is_private == True,
         "thumbnailURL": "/static/img/placeholder.png",
         "imagePath" : "/static/img/",
-        "downloadPath": "/static/data/projects/" + dataset.download_path,
+        "downloadPath": get_download_path(dataset),
         "downloads": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_downloads,
         "views": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_views,
         "likes": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_likes,
@@ -330,15 +335,6 @@ def dataset_info():
         "sources": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().sources
     }
     return render_template('dataset.html', title='CONP | Dataset', data=dataset)
-
-def get_file_paths(directory):
-    file_paths = []
-
-    for root, directories, files in os.walk(directory):
-        for filename in files:
-            filepath = os.path.join(root, filename)
-            file_paths.append(filepath)
-    return file_paths
 
 
 @app.route('/download_metadata', methods=['GET','POST'])
