@@ -239,6 +239,22 @@ body {
   padding: 0 2rem;
 }
 
+.custom-logo-link{
+  margin-left: 105px;
+  margin-top: 5px;
+  height: 42px;
+  width: 75px;
+}
+
+@media screen and (max-width: 768px) {
+.custom-logo-link{
+  margin-left: 25px;
+  margin-top: 5px;
+  height: 42px;
+  width: 75px;
+}
+}
+
 .navbar-nav>li>a {
     position: relative;
     display: block;
