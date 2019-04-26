@@ -52,7 +52,7 @@ const DataTable = ({
             borderBottomWidth: i === elements.length - 1 ? "0px" : "1px"
           }}
         >
-          {React.createElement(renderElement, element)}
+          {React.createElement(renderElement, { ...element, authorized })}
         </div>
       ))}
       <div className="search-dataset-footer">
