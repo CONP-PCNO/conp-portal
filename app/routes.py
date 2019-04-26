@@ -334,7 +334,7 @@ def dataset_info():
         "modalities": dataset.modality.replace("'", ""),
         "sources": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().sources
     }
-    return render_template('dataset.html', title='CONP | Dataset', data=dataset)
+    return render_template('dataset.html', title='CONP | Dataset', data=dataset, user=current_user)
 
 
 @app.route('/download_metadata', methods=['GET','POST'])
