@@ -312,7 +312,10 @@ def dataset_info():
         "modalities": dataset.modality.replace("'", ""),
         "sources": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().sources
     }
-    return render_template('dataset.html', title='CONP | Dataset', data=dataset, user=current_user)
+
+    metadata = get_dataset_metadata_information(dataset)
+
+    return render_template('dataset.html', title='CONP | Dataset', data=dataset, metadata=metadata, user=current_user)
 
 
 @app.route('/download_metadata', methods=['GET','POST'])
@@ -336,6 +339,18 @@ def download_metadata():
                             mimetype='application/zip',
                             headers={'Content-Disposition': 'attachment;filename=data.zip'})
 
+
+def get_dataset_metadata_information(dataset):
+
+    payload = {
+        "authors" : "Authors here",
+        "description" : "Description Here",
+        "contact" : "Contact here",
+        "version" : "1.0",
+        "licenses" : "Licenses here"
+    }
+
+    return payload
 
 @app.route('/share')
 def share():

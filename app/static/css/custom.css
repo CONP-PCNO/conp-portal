@@ -227,9 +227,6 @@ body {
     box-shadow: 2px 2px 8px rgba(0,0,0,.5);
 }
 
-.navbar-nav {
-    /*margin: 0 0 20px;*/
-}
 
 .navbar .container {
   padding: 0;
@@ -550,7 +547,6 @@ body .container .container-wrapper {
     margin-right: 10px;
     margin-bottom: auto;
   }
-
 }
 
 .col-sm-4 {
@@ -567,3 +563,27 @@ body .container .container-wrapper {
 .a:hover{
     text-decoration: none !important;
 }
+
+/*
+=============================================================
+| DATASET Page
+=============================================================
+*/
+
+.dataset-metadata{
+  border: 1px solid black;
+}
+
+.dataset-version{
+  background-color: lightgray;
+  text-align: center;
+  border-right: 1px solid black;
+  padding: 20px;
+  height: 100%;
+}
+
+.dataset-information{
+  padding: 20px;
+
+}
+
