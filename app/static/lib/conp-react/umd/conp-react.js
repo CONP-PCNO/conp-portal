@@ -4024,6 +4024,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       query = _ref.query,
       setQuery = _ref.setQuery;
 
+  console.log(elements);
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
     { className: "search-dataset-table", cellSpacing: 0 },
@@ -6659,7 +6660,6 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       element = DatasetElement_objectWithoutProperties(props, ["authorized"]);
 
   var imagePath = element.imagePath;
-  var downloadPath = element.downloadPath;
   var runOnCbrainEnabled = imagePath + "/run_on_cbrain_green.png";
   var runOnCbrainDisabled = imagePath + "/run_on_cbrain_gray.png";
   var downloadEnabled = imagePath + "/download_green.png";
@@ -6851,24 +6851,51 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
           { className: "dataset-option" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "a",
-            { href: "#" },
+            {
+              href: "#",
+              style: {
+                pointerEvents: !element.isPrivate || authorized ? "all" : "none"
+              }
+            },
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
               alt: "Run On Cbrain",
               className: "run-on-cbrain-button option-icon",
-              src: !element.isPrivate || authorized ? runOnCbrainEnabled : runOnCbrainDisabled
+              src: element.isPrivate && !authorized ? runOnCbrainDisabled : runOnCbrainEnabled
             })
           )
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "dataset-option" },
+          { className: "dataset-option", style: { position: "relative" } },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "a",
-            { href: "download_metadata?dataset=" + element.downloadPath, download: true },
+            {
+              style: {
+                pointerEvents: element.isPrivate && authorized ? "all" : "none"
+              },
+              href: "download_metadata?dataset=" + element.downloadPath,
+              download: true
+            },
+            element.isPrivate && !authorized && external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              {
+                style: {
+                  backgroundColor: "white",
+                  padding: "5px",
+                  border: "solid black",
+                  color: "black",
+                  borderWidth: "1px",
+                  left: "-30px",
+                  textAlign: "center",
+                  position: "absolute"
+                }
+              },
+              "Please register for access."
+            ),
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
               alt: "Download Metadata",
               className: "download-button  option-icon",
-              src: !element.isPrivate || authorized ? downloadEnabled : downloadDisabled
+              src: element.isPrivate && !authorized ? downloadDisabled : downloadEnabled
             })
           )
         )
