@@ -342,13 +342,24 @@ def download_metadata():
 
 def get_dataset_metadata_information(dataset):
 
-    payload = {
-        "authors" : "Authors here",
-        "description" : "Description Here",
-        "contact" : "Contact here",
-        "version" : "1.0",
-        "licenses" : "Licenses here"
-    }
+
+    directory = os.path.basename(dataset['downloadPath'])
+    root_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static/data/projects/')
+    dataset_path = os.path.abspath(os.path.normpath(os.path.join(root_path, directory)))
+
+    descriptor_path =  dataset_path + '/descriptor.json'
+
+
+    with open(descriptor_path,'r') as json_file:
+        data = json.load(json_file)
+
+        payload = {
+            "authors" : data['authors'],
+            "description" : data['description'],
+            "contact" : data['contact'],
+            "version" : "1.0",
+            "licenses" : data['licenses']
+        }
 
     return payload
 
