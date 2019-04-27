@@ -1,0 +1,3 @@
+[submodule "app/static/data"]
+	path = app/static/data
+	url = https://github.com/CONP-PCNO/conp-dataset.git
