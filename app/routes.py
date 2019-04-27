@@ -8,7 +8,7 @@ from app.forms import SignInForm
 from app.forms import SignUpForm
 
 
-from sqlalchemy import func
+from sqlalchemy import func, or_
 from flask import render_template, request, flash, session, redirect, url_for, send_file, Response, abort
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -170,7 +170,11 @@ def dataset_search():
        if request.args.get('search') != '':
            term = '%' + request.args.get('search') + '%'
            # Query datasets
-           datasets = Dataset.query.filter(func.lower(Dataset.name).like(func.lower(term)))
+           datasets = Dataset.query.filter(
+                                            or_(func.lower(Dataset.name).like(func.lower(term)),
+                                                func.lower(Dataset.description).like(func.lower(term)))
+           )
+
        elif request.args.get('search') == '':
            # Query datasets
            datasets = Dataset.query.order_by(Dataset.id).all()
