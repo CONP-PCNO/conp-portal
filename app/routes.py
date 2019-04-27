@@ -366,3 +366,11 @@ def share():
 @app.route('/tools')
 def tools():
     return render_template('tools.html', title='CONP | Tools & Pipelines', user=current_user)
+
+@app.route('/forums')
+def forums():
+    return render_template('forums.html', title='CONP | Forums', user=current_user)
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html', title='CONP | My Profile', user=current_user)
