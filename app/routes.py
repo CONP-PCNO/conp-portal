@@ -317,7 +317,7 @@ def dataset_info():
         "modalities": dataset.modality.replace("'", ""),
         "sources": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().sources
     }
-    return render_template('dataset.html', title='CONP | Dataset', data=dataset)
+    return render_template('dataset.html', title='CONP | Dataset', data=dataset, user=current_user)
 
 
 @app.route('/download_metadata', methods=['GET','POST'])
@@ -340,3 +340,20 @@ def download_metadata():
             return Response(r.content,
                             mimetype='application/zip',
                             headers={'Content-Disposition': 'attachment;filename=data.zip'})
+
+
+@app.route('/share')
+def share():
+    return render_template('share.html', title='CONP | Share a Dataset', user=current_user)
+
+@app.route('/tools')
+def tools():
+    return render_template('tools.html', title='CONP | Tools & Pipelines', user=current_user)
+
+@app.route('/forums')
+def forums():
+    return render_template('forums.html', title='CONP | Forums', user=current_user)
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html', title='CONP | My Profile', user=current_user)

@@ -11,7 +11,7 @@
 <!-- Brand Block -->
 {% block brand_link %}
 <a class="navbar-brand" href="/" >
-  <img src="./static/img/conp_brand.png" height="45" width="75">
+  <img class="custom-logo-link" src="./static/img/conp.png">
 </a>
 {% endblock %}
 
@@ -47,22 +47,18 @@
         <div class="row" style="padding: 20px; ">
             <h3>CONP Data Statistics</h3>
             <hr class="hr-border">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus feugiat augue,
-            sollicitudin malesuada enim tempus a. Morbi ut sem dapibus, blandit mi nec, suscipit nibh.
-            Nulla eget scelerisque urna. Praesent pellentesque sagittis tortor a accumsan.
-                Morbi sit amet elementum lorem.</p>
+            <p>The CONP is constructing a resilient network of platforms, where some data
+                (when of reasonable size) could be mirrored across Canadian infrastructures.
+                We also are working on how to describe pipelines in a standard way and see how metadata of datasets
+                can be used to suggest pipelines with standard descriptors. The CONP is proposing a place for scientists
+                to search for tools adapted to a specific type of data.</p>
         </div>
         <div class="row" style="padding: 20px; ">
         <div class="col-xs-6">
-            <a href="/search" class="a-link"><button class="btn btn-success btn-block">Browse Datasets</button></a>
+            <a href="/search" class="a-link"><button class="btn btn-success btn-block btn-lg">Browse Datasets <i class="fa fa-search"></i></button></a>
         </div>
         <div class="col-xs-6">
-            <button class="btn btn-default btn-block" onclick="myFunction()">Share a Dataset</button>
-            <script>
-            function myFunction() {
-              alert("Registration required to share a dataset!");
-            }
-            </script>
+            <a href="/login" class="a-link"><button class="btn btn-default btn-block btn-lg">Share a Dataset <i class="fa fa-arrow-circle-up"></i></button></a>
         </div>
         </div>
     </div>
@@ -72,22 +68,24 @@
         <div>
             <h3>NEWEST DATASET RELEASE</h3>
             <hr class="hr-border">
-            <strong>Lorem Ipsum</strong>
+            <strong>PREVENT-AD Open</strong>
             <br/>
-            <p>Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap friendly HTML, CSS and Javascript. Bootstrap is a front-end framework that uses CSS and JavaScript to
-                facilitate responsive Web design. </p>
-            <p><a class="btn btn-default" href="#" style="float: right;">Go to Dataset »</a></p>
+            <p><i>Longitudinal multimodal study of pre-symptomatic Alzheimer Disease.</i> <br> Data used in preparation of this article
+                were obtained from the Pre-symptomatic Evaluation of Novel or Experimental Treatments for Alzheimer’s Disease (PREVENT-AD) program.
+                (Breitner et al., 2016 & Tremblay-Mercier, Madjar, et al., 2019)</p>
+            <p><a class="btn btn-default" href="/dataset?id=0ea345b4-62cf-11e9-b202-52545e9add8e" style="float: right;">Go to Dataset »</a></p>
         </div>
         </div>
         <div class="row row-border" style="margin-top: 20px;">
         <div>
             <h3>STUDY SPOTLIGHT</h3>
             <hr class="hr-border">
-            <strong>Recruiting for Autism Study</strong>
+            <strong>Multicenter Single Human MRI Phantom</strong>
             <br/>
-            <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
-                friendly HTML, CSS and Javascript.</p>
-            <p><a class="btn btn-default" href="#" style="float: right;">Read More »</a></p>
+            <p>Human Brain phantom scans, Multiple MRI scans of a single human phantom over 11 years,
+                T1 weighted images and others on 13 scanner in 6 sites accross North America.</p>
+            <p><i>McGill Center for Integrative Neuroscience (MCIN)</i></p>
+            <p><a class="btn btn-default" href="/dataset?id=8de99b0e-5f94-11e9-9e05-52545e9add8e" style="float: right;">Read More »</a></p>
         </div>
         </div>
         <!--/span-->
