@@ -146,10 +146,10 @@
         {% endif %}
 <script type="text/javascript">
   const reactElement = React.createElement(CONPReact.DatasetElement, {
-
+    authorized: {{ "true" if data.authorized else "false" }},
     id: '{{ data.id }}',
     title: '{{ data.title }}',
-    isPublic: '{{ data.isPublic }}',
+    isPrivate: {{ "true" if data.isPrivate else "false" }},
     thumbnailURL: '{{ data.thumbnailURL }}',
     downloads: {{ data.downloads }},
     views: '{{ data.views  }}',
@@ -162,7 +162,8 @@
     format: '{{ data.format }}',
     modalities: '{{ data.modalities }}',
     sources: '{{ data.sources }}',
-    imagePath: "/static/img"
+    imagePath: "/static/img",
+    downloadPath : '{{ data.downloadPath }}'
 
   });
 

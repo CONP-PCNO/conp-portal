@@ -5,7 +5,6 @@ const DatasetElement = props => {
   const { authorized, ...element } = props;
 
   const imagePath = element.imagePath;
-  const downloadPath = element.downloadPath;
   const runOnCbrainEnabled = `${imagePath}/run_on_cbrain_green.png`;
   const runOnCbrainDisabled = `${imagePath}/run_on_cbrain_gray.png`;
   const downloadEnabled = `${imagePath}/download_green.png`;
@@ -37,7 +36,11 @@ const DatasetElement = props => {
       <div className="dataset-details">
         <div className="dataset-details-stats">
           <div className="dataset-title">
-            <div><a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>{element.title}</a></div>
+            <div>
+              <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>
+                {element.title}
+              </a>
+            </div>
           </div>
           <div className="dataset-stat">
             <div className="dataset-stat-text">Date Added</div>
@@ -74,27 +77,54 @@ const DatasetElement = props => {
         </div>
         <div className="dataset-options">
           <div className="dataset-option">
-            <a href={"#"}>
+            <a
+              href={"#"}
+              style={{
+                pointerEvents: element.isPrivate && !authorized ? "none" : "all"
+              }}
+            >
               <img
                 alt="Run On Cbrain"
                 className="run-on-cbrain-button option-icon"
                 src={
-                  (!element.isPrivate) || authorized
-                    ? runOnCbrainEnabled
-                    : runOnCbrainDisabled
+                  element.isPrivate && !authorized
+                    ? runOnCbrainDisabled
+                    : runOnCbrainEnabled
                 }
               />
             </a>
           </div>
-          <div className="dataset-option">
-            <a href={`download_metadata?dataset=${element.downloadPath}`} download>
+          <div className="dataset-option" style={{ position: "relative" }}>
+            <a
+              style={{
+                pointerEvents: element.isPrivate && !authorized ? "none" : "all"
+              }}
+              href={`download_metadata?dataset=${element.downloadPath}`}
+              download
+            >
+              {element.isPrivate && !authorized && (
+                <div
+                  style={{
+                    backgroundColor: "white",
+                    padding: "5px",
+                    border: "solid black",
+                    color: "black",
+                    borderWidth: "1px",
+                    left: "-30px",
+                    textAlign: "center",
+                    position: "absolute"
+                  }}
+                >
+                  Please register for access.
+                </div>
+              )}
               <img
                 alt="Download Metadata"
                 className="download-button  option-icon"
                 src={
-                  (!element.isPrivate) || authorized
-                    ? downloadEnabled
-                    : downloadDisabled
+                  element.isPrivate && !authorized
+                    ? downloadDisabled
+                    : downloadEnabled
                 }
               />
             </a>
@@ -131,6 +161,6 @@ DatasetElement.propTypes = {
 DatasetElement.defaultProps = {
   imagePath: "",
   downloadPath: ""
-}
+};
 
 export default DatasetElement;
