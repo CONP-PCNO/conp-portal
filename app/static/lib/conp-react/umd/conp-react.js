@@ -4081,7 +4081,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
         {
-          key: i,
+          key: element.id,
           style: {
             borderBottom: "solid",
             borderBottomWidth: i === elements.length - 1 ? "0px" : "1px"

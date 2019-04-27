@@ -164,25 +164,36 @@ def get_download_path(dataset):
 @app.route('/dataset-search', methods=['GET'])
 def dataset_search():
     if request.method == 'GET':
+       datasets = []
 
        if current_user.is_authenticated:
             authorized = True
        else:
             authorized = False
 
+
        if request.args.get('search') != '':
-
            term = '%' + request.args.get('search') + '%'
-           d = Dataset.query.filter(func.lower(Dataset.name).like(func.lower(term))).first()
+           # Query datasets
+           datasets = Dataset.query.filter(func.lower(Dataset.name).like(func.lower(term)))
+       elif request.args.get('search') == '':
+           # Query datasets
+           datasets = Dataset.query.order_by(Dataset.id).all()
 
-           elements = [
-               {
+       # Element input for payload
+       elements = []
+
+
+       # Build dataset response
+       for d in datasets:
+
+           dataset = {
                "authorized": authorized,
                "id": d.dataset_id,
                "title": d.name.replace("'", ""),
-               "isPublic": d.is_private == True,
-               "thumbnailURL": "/static/img/" + d.image,
-               "imagePath": "/static/img/",
+               "isPrivate": d.is_private == True,
+               "thumbnailURL": "/static/img/placeholder.png",
+               "imagePath" : "/static/img/",
                "downloadPath": get_download_path(d),
                "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
                "views": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_views,
@@ -194,48 +205,20 @@ def dataset_search():
                "subjects": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_subjects,
                "format": d.format.replace("'", ""),
                "modalities": d.modality.replace("'", ""),
-               "sources": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().sources
-           }]
+               "sources": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().sources,
+           }
+           elements.append(dataset)
 
-
-       elif request.args.get('search') == '':
-
-           # Query datasets
-           datasets = Dataset.query.order_by(Dataset.id).all()
-
-           # Element input for payload
-           elements = []
-
-
-           # Build dataset response
-           for d in datasets:
-
-               dataset = {
-                   "authorized": authorized,
-                   "id": d.dataset_id,
-                   "title": d.name.replace("'", ""),
-                   "isPrivate": d.is_private == True,
-                   "thumbnailURL": "/static/img/placeholder.png",
-                   "imagePath" : "/static/img/",
-                   "downloadPath": get_download_path(d),
-                   "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
-                   "views": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_views,
-                   "likes": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_likes,
-                   "dateAdded": str(d.date_created.date()),
-                   "dateUpdated": str(d.date_updated.date()),
-                   "size": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().size,
-                   "files": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().files,
-                   "subjects": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_subjects,
-                   "format": d.format.replace("'", ""),
-                   "modalities": d.modality.replace("'", ""),
-                   "sources": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().sources,
-               }
-               elements.append(dataset)
+       cursor = max(min(int(request.args.get('cursor') or 0), 0), 0)
+       limit = max(min(int(request.args.get('limit') or 10), 10), 0)
+       sort_key = request.args.get('sortKey') or "id"
+       paginated = elements[(cursor):(cursor + limit)]
+       paginated.sort(key=lambda o: o[sort_key])
 
        # Construct payload
        payload = {
           "authorized": authorized,
-          "total": 50,
+          "total": len(elements),
           "sortKeys": [
             {
               "key": "title",
@@ -294,7 +277,7 @@ def dataset_search():
               "label": "Sources"
             }
           ],
-          "elements": elements
+          "elements": paginated
        }
 
     return json.dumps(payload)
