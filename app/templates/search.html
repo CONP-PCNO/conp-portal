@@ -1,4 +1,8 @@
+{% if current_user.is_authenticated %}
+{% extends 'base.html' %}
+{% else %}
 {% extends 'base_public.html' %}
+{% endif %}
 
 <!-- Head Block -->
 {% block head %}
