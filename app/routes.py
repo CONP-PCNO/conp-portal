@@ -155,11 +155,6 @@ def search():
 def admin():
     return render_template('admin.html', title='Admin')
 
-def get_download_path(dataset):
-    if current_user.is_authenticated or dataset.is_private == False:
-        return "/static/data/projects/" + dataset.download_path
-    elif not current_user.is_authenticated or dataset.is_private == True:
-        return "#"
 
 @app.route('/dataset-search', methods=['GET'])
 def dataset_search():
@@ -194,7 +189,7 @@ def dataset_search():
                "isPrivate": d.is_private == True,
                "thumbnailURL": "/static/img/placeholder.png",
                "imagePath" : "/static/img/",
-               "downloadPath": get_download_path(d),
+               "downloadPath": "/static/data/projects/" + d.download_path,
                "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
                "views": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_views,
                "likes": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_likes,
@@ -304,7 +299,7 @@ def dataset_info():
         "isPrivate": dataset.is_private == True,
         "thumbnailURL": "/static/img/placeholder.png",
         "imagePath" : "/static/img/",
-        "downloadPath": get_download_path(dataset),
+        "downloadPath": "/static/data/projects/" + dataset.download_path,
         "downloads": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_downloads,
         "views": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_views,
         "likes": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_likes,
