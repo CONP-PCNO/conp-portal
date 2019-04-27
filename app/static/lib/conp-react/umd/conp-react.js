@@ -4024,7 +4024,6 @@ var DataTable_DataTable = function DataTable(_ref) {
       query = _ref.query,
       setQuery = _ref.setQuery;
 
-  console.log(elements);
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
     { className: "search-dataset-table", cellSpacing: 0 },
@@ -6854,7 +6853,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
             {
               href: "#",
               style: {
-                pointerEvents: !element.isPrivate || authorized ? "all" : "none"
+                pointerEvents: element.isPrivate && !authorized ? "none" : "all"
               }
             },
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
@@ -6871,7 +6870,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
             "a",
             {
               style: {
-                pointerEvents: element.isPrivate && authorized ? "all" : "none"
+                pointerEvents: element.isPrivate && !authorized ? "none" : "all"
               },
               href: "download_metadata?dataset=" + element.downloadPath,
               download: true

@@ -80,7 +80,7 @@ const DatasetElement = props => {
             <a
               href={"#"}
               style={{
-                pointerEvents: !element.isPrivate || authorized ? "all" : "none"
+                pointerEvents: element.isPrivate && !authorized ? "none" : "all"
               }}
             >
               <img
@@ -97,7 +97,7 @@ const DatasetElement = props => {
           <div className="dataset-option" style={{ position: "relative" }}>
             <a
               style={{
-                pointerEvents: element.isPrivate && authorized ? "all" : "none"
+                pointerEvents: element.isPrivate && !authorized ? "none" : "all"
               }}
               href={`download_metadata?dataset=${element.downloadPath}`}
               download

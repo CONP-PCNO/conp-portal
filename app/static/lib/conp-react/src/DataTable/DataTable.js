@@ -11,7 +11,6 @@ const DataTable = ({
   query,
   setQuery
 }) => {
-  console.log(elements);
   return (
     <div className="search-dataset-table" cellSpacing={0}>
       <div className="search-dataset-toolbar">
