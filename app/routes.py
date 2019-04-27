@@ -357,3 +357,12 @@ def download_metadata():
             return Response(r.content,
                             mimetype='application/zip',
                             headers={'Content-Disposition': 'attachment;filename=data.zip'})
+
+
+@app.route('/share')
+def share():
+    return render_template('share.html', title='CONP | Share a Dataset', user=current_user)
+
+@app.route('/tools')
+def tools():
+    return render_template('tools.html', title='CONP | Tools & Pipelines', user=current_user)
