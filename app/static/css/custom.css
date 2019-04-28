@@ -339,6 +339,22 @@ li.active-nav:hover > a {
   width: 80%;
 }
 
+/*
+=============================================================
+| NEUROLIBRE
+=============================================================
+*/
+
+.image-swap {
+   display: block;
+   width: 95px;
+}
+
+.image-swap:hover {
+   background-color: #EEEEEE;
+   color: black;
+}
+
 .image-swap:before {
    display: inline-block;
    content: '';
@@ -347,13 +363,14 @@ li.active-nav:hover > a {
    background-repeat: no-repeat;
    background-position: center;
    width: 72px;
-   height: 72px;
+   height: 50px;
 }
 .image-swap:hover:before {
    background: url(../img/neurolibre-icon-black.png);
    background-size: contain;
    background-repeat: no-repeat;
    background-position: center;
+   color: black;
 }
 
 /*
