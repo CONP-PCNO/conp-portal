@@ -54,22 +54,26 @@ class InsertTestDataset(object):
                 dataset = Dataset(
                     dataset_id = row[0],
                     annex_uuid = row[1],
-                    datalad_remote_annex_uuid = row[2],
+                    description = row[2],
                     owner_id = row[3],
                     download_path = row[4],
-                    name = row[5],
-                    modality = row[6],
-                    version = row[7],
-                    format = row[8],
-                    category = row[9],
+                    raw_data_url = row[5],
+                    name = row[6],
+                    modality = row[7],
+                    version = row[8],
+                    format = row[9],
+                    category = row[10],
+                    image = self.read_image(row[11]),
                     date_created = datetime.now(),
                     date_updated = datetime.now(),
-                    is_private = row[10] == 'True'
+                    is_private = row[12] == 'True'
                 )
                 db.session.add(dataset)
         db.session.commit()
         dataset_file.close()
 
+    def read_image(self,image):
+        return open(image,'rb').read()
 
     def insert_sample_datasets_stats(self):
 

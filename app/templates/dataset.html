@@ -64,11 +64,7 @@
   <h2>CONP Portal | {{ data.title }} </h2>
 </div>
 
- <div id="mount-display" class="dataset"></div>
-
-    {% if data.id == '0ea345b4-62cf-11e9-b202-52545e9add8e' %}
-    {% include "/fragments/preventad.html" %}
-    {% endif %}
+ <div id="mount-display" class="dataset" style="border-top: 1px solid black"></div>
 
  <div class="dataset-metadata">
      <div class="dataset-version col-md-2">
@@ -79,7 +75,7 @@
              <p>No information available</p>
          {% endif %}
      </div>
-     <div class="dataset-information col-md-8">
+     <div class="dataset-information col-md-10">
          {% if metadata %}
              <div class="row" style="padding: 20px;">
                  <div class="col-xs-2">
@@ -112,6 +108,19 @@
                 <div class="col-xs-6">
                   {{ metadata.licenses }}
                 </div>
+             </div>
+             <div class="row" style="padding: 20px;">
+                <div class="col-xs-2">
+                  <span style="padding-top: 5px;"><strong>Download Dataset:</strong></span>
+                </div>
+                <div class="col-xs-3">
+                   <a href="#" class="a-link"><button class="btn btn-success btn-block">Download <i class="fa fa-arrow-circle-down"></i></button></a>
+                </div>
+             </div>
+             <div class="row" style="padding:20px;">
+                 {% if data.id == '0ea345b4-62cf-11e9-b202-52545e9add8e' %}
+                {% include "/fragments/preventad.html" %}
+                {% endif %}
              </div>
          {% else %}
              <p>No information available</p>

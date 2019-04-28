@@ -8,7 +8,7 @@ from app.forms import SignInForm
 from app.forms import SignUpForm
 
 
-from sqlalchemy import func
+from sqlalchemy import func, or_
 from flask import render_template, request, flash, session, redirect, url_for, send_file, Response, abort
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -156,6 +156,17 @@ def admin():
     return render_template('admin.html', title='Admin')
 
 
+def get_datset_logo(dataset_id):
+    logos = {
+        "8de99b0e-5f94-11e9-9e05-52545e9add8e" : "/static/img/loris.png",
+        "0ea345b4-62cf-11e9-b202-52545e9add8e" : "/static/img/preventad.png",
+        "0c1d0fe0-5240-11e9-9178-3417ebb10536" : "/static/img/perform.png",
+        "86970552-6828-11e9-89e5-52545e9add8e" : "/static/img/medics.png",
+        "47902f52-0d1c-11e9-9526-0242ac13001f" : "/static/img/openneuro.png",
+        "eb7b9b10-56ec-11e9-af32-0800277806bd" : "/static/img/1000genomes.png"
+    }
+    return logos[dataset_id]
+
 @app.route('/dataset-search', methods=['GET'])
 def dataset_search():
     if request.method == 'GET':
@@ -170,7 +181,11 @@ def dataset_search():
        if request.args.get('search') != '':
            term = '%' + request.args.get('search') + '%'
            # Query datasets
-           datasets = Dataset.query.filter(func.lower(Dataset.name).like(func.lower(term)))
+           datasets = Dataset.query.filter(
+                                            or_(func.lower(Dataset.name).like(func.lower(term)),
+                                                func.lower(Dataset.description).like(func.lower(term)))
+           )
+
        elif request.args.get('search') == '':
            # Query datasets
            datasets = Dataset.query.order_by(Dataset.id).all()
@@ -187,7 +202,7 @@ def dataset_search():
                "id": d.dataset_id,
                "title": d.name.replace("'", ""),
                "isPrivate": d.is_private == True,
-               "thumbnailURL": "/static/img/placeholder.png",
+               "thumbnailURL": get_datset_logo(d.dataset_id),
                "imagePath" : "/static/img/",
                "downloadPath": "/static/data/projects/" + d.download_path,
                "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
@@ -297,7 +312,7 @@ def dataset_info():
         "id": dataset.dataset_id,
         "title": dataset.name.replace("'", ""),
         "isPrivate": dataset.is_private == True,
-        "thumbnailURL": "/static/img/placeholder.png",
+        "thumbnailURL": get_datset_logo(dataset.dataset_id),
         "imagePath" : "/static/img/",
         "downloadPath": "/static/data/projects/" + dataset.download_path,
         "downloads": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_downloads,
@@ -342,13 +357,24 @@ def download_metadata():
 
 def get_dataset_metadata_information(dataset):
 
-    payload = {
-        "authors" : "Authors here",
-        "description" : "Description Here",
-        "contact" : "Contact here",
-        "version" : "1.0",
-        "licenses" : "Licenses here"
-    }
+
+    directory = os.path.basename(dataset['downloadPath'])
+    root_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static/data/projects/')
+    dataset_path = os.path.abspath(os.path.normpath(os.path.join(root_path, directory)))
+
+    descriptor_path =  dataset_path + '/descriptor.json'
+
+
+    with open(descriptor_path,'r') as json_file:
+        data = json.load(json_file)
+
+        payload = {
+            "authors" : data['authors'],
+            "description" : data['description'],
+            "contact" : data['contact'],
+            "version" : "1.0",
+            "licenses" : data['licenses']
+        }
 
     return payload
 
