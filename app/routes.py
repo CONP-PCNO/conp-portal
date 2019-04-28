@@ -156,6 +156,17 @@ def admin():
     return render_template('admin.html', title='Admin')
 
 
+def get_datset_logo(dataset_id):
+    logos = {
+        "8de99b0e-5f94-11e9-9e05-52545e9add8e" : "/static/img/loris.png",
+        "0ea345b4-62cf-11e9-b202-52545e9add8e" : "/static/img/preventad.png",
+        "0c1d0fe0-5240-11e9-9178-3417ebb10536" : "/static/img/perform.png",
+        "86970552-6828-11e9-89e5-52545e9add8e" : "/static/img/medics.png",
+        "47902f52-0d1c-11e9-9526-0242ac13001f" : "/static/img/openneuro.png",
+        "eb7b9b10-56ec-11e9-af32-0800277806bd" : "/static/img/1000genomes.png"
+    }
+    return logos[dataset_id]
+
 @app.route('/dataset-search', methods=['GET'])
 def dataset_search():
     if request.method == 'GET':
@@ -191,7 +202,7 @@ def dataset_search():
                "id": d.dataset_id,
                "title": d.name.replace("'", ""),
                "isPrivate": d.is_private == True,
-               "thumbnailURL": "/static/img/placeholder.png",
+               "thumbnailURL": get_datset_logo(d.dataset_id),
                "imagePath" : "/static/img/",
                "downloadPath": "/static/data/projects/" + d.download_path,
                "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
@@ -301,7 +312,7 @@ def dataset_info():
         "id": dataset.dataset_id,
         "title": dataset.name.replace("'", ""),
         "isPrivate": dataset.is_private == True,
-        "thumbnailURL": "/static/img/placeholder.png",
+        "thumbnailURL": get_datset_logo(dataset.dataset_id),
         "imagePath" : "/static/img/",
         "downloadPath": "/static/data/projects/" + dataset.download_path,
         "downloads": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_downloads,
