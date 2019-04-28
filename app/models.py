@@ -52,8 +52,8 @@ class Dataset(db.Model):
     version = db.Column(db.String(6), index=True)
     format = db.Column(db.String(64), index=True)
     category = db.Column(db.String(64), index=True)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
-    date_updated = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
+    date_created = db.Column(db.DateTime, default=datetime.now())
+    date_updated = db.Column(db.DateTime, default=datetime.now())
     is_private = db.Column(db.Boolean, index=True)
 
     def __repr__(self):
@@ -71,7 +71,7 @@ class DatasetStats(db.Model):
     num_downloads = db.Column(db.Integer, index=True)
     num_likes = db.Column(db.Integer, index=True)
     num_views = db.Column(db.Integer, index=True)
-    date_updated = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
+    date_updated = db.Column(db.DateTime, default=datetime.now())
 
 class Pipeline(db.Model):
     __tablename__ = 'pipelines'
