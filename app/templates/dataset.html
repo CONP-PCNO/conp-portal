@@ -114,7 +114,12 @@
                   <span style="padding-top: 5px;"><strong>Download Dataset:</strong></span>
                 </div>
                 <div class="col-xs-3">
-                   <a href="#" class="a-link"><button class="btn btn-success btn-block">Download <i class="fa fa-arrow-circle-down"></i></button></a>
+                   {% if current_user.is_authenticated or data.isPrivate == false  %}
+                   <a href="{{ data.URL }}" class="a-link"><button class="btn btn-success btn-block">Download <i class="fa fa-arrow-circle-down"></i></button></a>
+                   {% else %}
+
+                   <a href="/login" class="a-link"><button class="btn btn-default btn-block">Download <i class="fa fa-arrow-circle-down"></i></button></a>
+                   {% endif %}
                 </div>
              </div>
              <div class="row" style="padding:20px;">
