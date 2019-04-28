@@ -205,6 +205,7 @@ def dataset_search():
                "thumbnailURL": get_datset_logo(d.dataset_id),
                "imagePath" : "/static/img/",
                "downloadPath": "/static/data/projects/" + d.download_path,
+               "URL": d.raw_data_url,
                "downloads": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_downloads,
                "views": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_views,
                "likes": DatasetStats.query.filter_by(dataset_id=d.dataset_id).first().num_likes,
@@ -237,6 +238,10 @@ def dataset_search():
             {
                "key": "downloadPath",
                "label": "Download Path"
+            },
+            {
+                "key" : "URL",
+                "label" : "URL"
             },
             {
                 "key": "imagePath",
@@ -315,6 +320,7 @@ def dataset_info():
         "thumbnailURL": get_datset_logo(dataset.dataset_id),
         "imagePath" : "/static/img/",
         "downloadPath": "/static/data/projects/" + dataset.download_path,
+        "URL" : dataset.raw_data_url,
         "downloads": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_downloads,
         "views": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_views,
         "likes": DatasetStats.query.filter_by(dataset_id=dataset.dataset_id).first().num_likes,
