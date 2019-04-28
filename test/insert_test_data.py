@@ -63,7 +63,7 @@ class InsertTestDataset(object):
                     version = row[8],
                     format = row[9],
                     category = row[10],
-                    image = open(row[11], 'rb').read(),
+                    image = self.read_image(row[11]),
                     date_created = datetime.now(),
                     date_updated = datetime.now(),
                     is_private = row[12] == 'True'
@@ -72,6 +72,8 @@ class InsertTestDataset(object):
         db.session.commit()
         dataset_file.close()
 
+    def read_image(self,image):
+        return open(image,'rb').read()
 
     def insert_sample_datasets_stats(self):
 
