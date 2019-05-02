@@ -347,7 +347,7 @@ li.active-nav:hover > a {
 
 .image-swap {
    display: block;
-   width: 95px;
+   /*width: 95px;*/
 }
 
 .image-swap:hover {
