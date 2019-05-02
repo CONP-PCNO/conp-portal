@@ -77,17 +77,8 @@ def oauth_callback(provider):
         return redirect(url_for('login'))
 
     user = User.query.filter_by(oauth_id=oauth_id).first()
-
-    if not user:
-        # Adds any new users directly to the database. And currently only stores
-        # their ORCID ID. Probably want to change this...
-        user = User(oauth_id=oauth_id)
-        db.session.add(user)
-        try:
-            db.session.commit()
-        except:
-            flash("Creating new user account failed")
-            redirect(url_for("index"))
+    if user is None:
+        return redirect(url_for("register"))
 
     login_user(user, remember=True)
     session['active_token'] = access_token
