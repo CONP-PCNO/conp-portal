@@ -6,7 +6,7 @@
             <h3>CONP Account Registration</h3>
         </div>
         <div class="card card-container">
-            <form class="form-signin" action="/register_new_user" method="POST">
+            <form class="form-signin" action="/login" method="POST">
                 {{ form.hidden_tag() }}
                 <p>{{ form.username.label }}</p>
                 <p>{{ form.username(class="form-control", placeholder="Your Username") }}</p>
