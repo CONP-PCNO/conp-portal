@@ -1,7 +1,10 @@
 {% extends 'base_login.html' %}
 
 {% block head %}
+<link href="/static/css/font-awesome.css" rel="stylesheet" type="text/css">
+<link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <script src="/static/js/form.js" type="text/javascript"></script>
+
 {% endblock %}
 
 {% block content %}
@@ -45,7 +48,7 @@
             </form>
             </div><!-- /card-container -->
             <div class="row">
-                <div class="col-md-6 col-md-offset-3">
+                <div class="col-md-8 offset-md-2">
                     <form id="msform" class="form-signin" action="/register_new_user" method="POST">
                         {{ form.hidden_tag() }}
                         <!-- progressbar -->
@@ -57,6 +60,7 @@
                         <!-- fieldsets -->
                         <fieldset>
                             <h2 class="fs-title">Personal Details</h2>
+                            <hr>
                             <p class="text-left">{{ form.username.label }}</p>
                             <p>{{ form.username(class="form-control", placeholder="Your Username") }}</p>
                             <p class="text-left">{{ form.orcid.label }}</p>
@@ -70,29 +74,90 @@
                             <p>{{ form.password1(class="form-control", placeholder="Your Password") }}</p>
                             <p class="text-left">{{ form.password2.label }}</p>
                             <p>{{ form.password2(class="form-control", placeholder="Repeat Your Password") }}</p>
-                            <input type="button" name="next" class="next action-button" value="Next"/>
+                            <input type="button" name="next" class="next action-button" value="Continue"/>
                         </fieldset>
                         <fieldset>
-                            <h2 class="fs-title">Agreements</h2>
-                            <input type="text" name="twitter" placeholder="Twitter"/>
-                            <input type="text" name="facebook" placeholder="Facebook"/>
-                            <input type="text" name="gplus" placeholder="Google Plus"/>
+                            <h2 class="fs-title">Terms of Use and Service</h2>
+                            <hr>
+                            <p>By registering the user is agreeing to the following terms of use, service, and conduct</p>
+                            <div style="height:420px;width:520px;border:1px solid #ccc;overflow:auto;text-align: left">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                            et dolore magna aliqua. Id venenatis a condimentum vitae sapien pellentesque habitant. Posuere
+                            sollicitudin aliquam ultrices sagittis orci a scelerisque purus semper. Pretium nibh ipsum
+                            consequat nisl vel pretium lectus. Consectetur adipiscing elit pellentesque habitant morbi
+                            tristique. Posuere sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Nunc id
+                            cursus metus aliquam. Ut tellus elementum sagittis vitae et leo duis ut diam. Ullamcorper
+                            morbi tincidunt ornare massa eget egestas purus viverra accumsan. Morbi leo urna molestie
+                            at elementum eu facilisis. Quis ipsum suspendisse ultrices gravida. Odio morbi quis commodo
+                            odio aenean sed adipiscing diam donec. Dui accumsan sit amet nulla facilisi morbi tempus.
+                            Sit amet consectetur adipiscing elit pellentesque habitant. <br><br>
+
+                            Mauris nunc congue nisi vitae. Vehicula ipsum a arcu cursus vitae. Magna fringilla urna porttitor
+                            rhoncus dolor. Viverra aliquet eget sit amet tellus. Velit euismod in pellentesque massa.
+                            Ultrices gravida dictum fusce ut placerat orci nulla. Suspendisse potenti nullam ac tortor
+                            vitae purus faucibus. Felis eget nunc lobortis mattis aliquam faucibus. Sollicitudin tempor
+                            id eu nisl nunc mi ipsum faucibus vitae. Risus ultricies tristique nulla aliquet enim tortor
+                            at. Quis vel eros donec ac odio. Pellentesque habitant morbi tristique senectus. Accumsan
+                            sit amet nulla facilisi morbi. Feugiat in ante metus dictum at tempor commodo ullamcorper
+                            a. Eu facilisis sed odio morbi quis commodo odio. Orci phasellus egestas tellus rutrum tellus
+                            pellentesque eu. Pellentesque dignissim enim sit amet venenatis urna cursus eget nunc. <br><br>
+
+                            Cras fermentum odio eu feugiat pretium. In metus vulputate eu scelerisque felis imperdiet proin
+                            fermentum leo. Quis commodo odio aenean sed adipiscing diam donec adipiscing tristique.
+                            Auctor augue mauris augue neque. Egestas dui id ornare arcu. Eget nunc lobortis mattis
+                            aliquam faucibus purus in massa tempor. Convallis a cras semper auctor neque vitae tempus
+                            quam pellentesque. Malesuada proin libero nunc consequat interdum varius sit. Vulputate
+                            enim nulla aliquet porttitor lacus. Tellus id interdum velit laoreet id. Morbi tristique
+                            senectus et netus et malesuada fames. Eleifend mi in nulla posuere. At ultrices mi tempus
+                            imperdiet nulla malesuada pellentesque elit eget. In massa tempor nec feugiat nisl pretium
+                            fusce id.<br><br>
+
+                            Scelerisque felis imperdiet proin fermentum leo vel orci porta non. Sollicitudin nibh sit
+                            amet commodo nulla facilisi nullam vehicula ipsum. Vestibulum mattis ullamcorper velit sed
+                            ullamcorper morbi tincidunt ornare massa. Sed velit dignissim sodales ut. Sed faucibus turpis
+                            in eu mi bibendum neque. Tristique senectus et netus et malesuada fames ac. Ut morbi tincidunt
+                            augue interdum velit. At erat pellentesque adipiscing commodo elit at imperdiet. Nunc id cursus
+                            metus aliquam eleifend mi in nulla. Posuere lorem ipsum dolor sit amet consectetur. Auctor eu
+                            augue ut lectus. Aliquet sagittis id consectetur purus. Tristique senectus et netus et malesuada
+                            fames ac turpis. Nullam non nisi est sit amet facilisis magna. Amet cursus sit amet dictum sit
+                            amet justo donec. Tortor pretium viverra suspendisse potenti nullam ac tortor. Fringilla ut morbi
+                            tincidunt augue interdum velit euismod. Sed vulputate odio ut enim. Risus quis varius quam quisque
+                            id diam vel quam. Lorem sed risus ultricies tristique nulla aliquet. <br><br>
+
+                            Congue eu consequat ac felis donec. Facilisis gravida neque convallis a cras semper. Vel pharetra
+                            vel turpis nunc. Vitae tortor condimentum lacinia quis vel. Ac odio tempor orci dapibus ultrices
+                            in iaculis nunc. Non blandit massa enim nec dui nunc mattis. Nunc sed blandit libero volutpat.
+                            Dolor purus non enim praesent elementum facilisis leo vel fringilla. Justo nec ultrices dui
+                            sapien eget mi proin sed. Tellus mauris a diam maecenas sed enim ut sem. Bibendum neque egestas
+                            congue quisque egestas diam in arcu. Sollicitudin aliquam ultrices sagittis orci a scelerisque
+                            purus semper eget.
+                        </div>
+                            <p>{{ form.tos() }} {{ form.tos.label }}</p>
                             <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-                            <input type="button" name="next" class="next action-button" value="Next"/>
+                            <input type="button" name="next" class="next action-button" value="Continue"/>
                         </fieldset>
                         <fieldset>
                             <h2 class="fs-title">Create your account</h2>
-                            <input type="text" name="email" placeholder="Email"/>
-                            <input type="password" name="pass" placeholder="Password"/>
-                            <input type="password" name="cpass" placeholder="Confirm Password"/>
-                            <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-                            <input type="submit" name="submit" class="submit action-button" value="Submit"/>
+                            <hr>
+                            <div style="margin-top: 40px; margin-bottom: 30px;">
+                            You have completed all the steps <i class="fa fa-check-square"></i>
+                            </div>
+                            <div style="margin-top: 50px; margin-bottom: 50px;">
+                            <input type="submit" name="submit" class="submit action-button" style="width: 50%;" value="Create My Account"/>
+                            </div>
+                            <div style="margin-top: 15px; text-align: left;">
+                            <p>This account will allow you to access public datasets as well as post on forums in the forums page.</p>
+
+                            <p>To access data that requires additional authentication, please complete the REQUEST ACCESS form.</p>
+
+                            <p>This step is optional and can be done later by accessing MY ACCOUNT on the left-side navigational toolbar.</p>
+                            </div>
                         </fieldset>
                     </form>
                 </div>
             </div>
 
-    <div class="bottom-link">
+    <div class="bottom-link" style="margin-top: 6px;">
     <br/>
         <span><a href="/login">Back to Login</a></span>
         <span style="padding: 10px;"></span>

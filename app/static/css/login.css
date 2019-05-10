@@ -398,3 +398,8 @@ body {
     background: rgb(237, 34, 37);
     color: white;
 }
+
+
+.fa-check-square{
+    color: green;
+}
