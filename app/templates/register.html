@@ -67,7 +67,7 @@
                             <p>{{ form.orcid(class="form-control", placeholder="Your ORCID ID") }}</p>
                             <p class="text-left">{{ form.affiliation.label }}</p>
                             <p>{{ form.affiliation(class="form-control", placeholder="Your Academic Affiliation") }}</p>
-                            <p>{{ form.pi() }} {{ form.pi.label }}</p>
+                            <p class="text-left">{{ form.pi(style="width:5%") }} {{ form.pi.label }}</p>
                             <p class="text-left">{{ form.email.label }}</p>
                             <p>{{ form.email(class="form-control", placeholder="Your Email") }}</p>
                             <p class="text-left">{{ form.password1.label }}</p>
@@ -80,7 +80,7 @@
                             <h2 class="fs-title">Terms of Use and Service</h2>
                             <hr>
                             <p>By registering the user is agreeing to the following terms of use, service, and conduct</p>
-                            <div style="height:420px;width:520px;border:1px solid #ccc;overflow:auto;text-align: left">
+                            <div style="height:420px;width:520px;border:1px solid #ccc;overflow:auto;text-align: left; padding: 10px; margin-bottom: 15px;">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                             et dolore magna aliqua. Id venenatis a condimentum vitae sapien pellentesque habitant. Posuere
                             sollicitudin aliquam ultrices sagittis orci a scelerisque purus semper. Pretium nibh ipsum
@@ -132,7 +132,7 @@
                             congue quisque egestas diam in arcu. Sollicitudin aliquam ultrices sagittis orci a scelerisque
                             purus semper eget.
                         </div>
-                            <p>{{ form.tos() }} {{ form.tos.label }}</p>
+                            <p class="text-left">{{ form.tos(style="width:5%") }} {{ form.tos.label }}</p>
                             <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
                             <input type="button" name="next" class="next action-button" value="Continue"/>
                         </fieldset>
@@ -140,7 +140,8 @@
                             <h2 class="fs-title">Create your account</h2>
                             <hr>
                             <div style="margin-top: 40px; margin-bottom: 30px;">
-                            You have completed all the steps <i class="fa fa-check-square"></i>
+                                <i class="fa fa-check-square fa-5x"></i><br>
+                            You have completed all the steps!
                             </div>
                             <div style="margin-top: 50px; margin-bottom: 50px;">
                             <input type="submit" name="submit" class="submit action-button" style="width: 50%;" value="Create My Account"/>
@@ -148,9 +149,9 @@
                             <div style="margin-top: 15px; text-align: left;">
                             <p>This account will allow you to access public datasets as well as post on forums in the forums page.</p>
 
-                            <p>To access data that requires additional authentication, please complete the REQUEST ACCESS form.</p>
+                            <p>To access data that requires additional authentication, please complete the <strong>REQUEST ACCESS</strong> form.</p>
 
-                            <p>This step is optional and can be done later by accessing MY ACCOUNT on the left-side navigational toolbar.</p>
+                            <p>This step is optional and can be done later by accessing <strong>MY ACCOUNT</strong> on the left-side navigational toolbar.</p>
                             </div>
                         </fieldset>
                     </form>
