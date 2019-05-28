@@ -90,6 +90,10 @@ def register():
     form = SignUpForm()
     return render_template('register.html', title='CONP | Register', form=form)
 
+@app.route('/pipelines')
+def pipelines():
+    return render_template('pipelines.html', title='CONP | Tools & Pipelines')
+
 @app.route('/register_new_user', methods=['GET', 'POST'])
 def register_new_user():
     error = None
@@ -390,3 +394,21 @@ def forums():
 @app.route('/profile')
 def profile():
     return render_template('profile.html', title='CONP | My Profile', user=current_user)
+
+@app.route('/pipeline-search', methods=['GET'])
+def pipeline_search():
+    if request.method == 'GET':
+        import time
+        from app.threads import UpdatePipelineData
+        if not os.path.isfile(".cache/boutiques/pipelineData.json"):
+            if not os.path.exists(".cache/boutiques"):
+                os.makedirs(".cache/boutiques")
+            thr = UpdatePipelineData()
+            thr.start()
+            thr.join()
+        elif time.time() - os.path.getmtime(".cache/boutiques/pipelineData.json") > 300:
+            UpdatePipelineData().start()
+
+        #search cache and return result
+
+        return json.dumps("{}")
