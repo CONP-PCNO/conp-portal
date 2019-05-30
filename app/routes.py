@@ -436,7 +436,7 @@ def pipeline_search():
         elements = []
         if not (search_query in ("", '', None)):
             for d_index, descriptor in enumerate(all_descriptors):
-                if search_query in descriptor["TITLE"] + descriptor["DESCRIPTION"]:
+                if search_query in str(descriptor):
                     elements.append({"short_descriptor": descriptor, "long_descriptor": descriptors[d_index]})
         else:
             for d_index, descriptor in enumerate(all_descriptors):
