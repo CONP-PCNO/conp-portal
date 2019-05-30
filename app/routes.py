@@ -400,15 +400,52 @@ def pipeline_search():
     if request.method == 'GET':
         import time
         from app.threads import UpdatePipelineData
-        if not os.path.isfile(".cache/boutiques/pipelineData.json"):
-            if not os.path.exists(".cache/boutiques"):
-                os.makedirs(".cache/boutiques")
-            thr = UpdatePipelineData()
-            thr.start()
-            thr.join()
-        elif time.time() - os.path.getmtime(".cache/boutiques/pipelineData.json") > 300:
-            UpdatePipelineData().start()
 
-        #search cache and return result
+        #initialize variables
+        search_query = request.args.get("search")
+        cache_dir = os.path.join(os.path.expanduser('~'), ".cache", "boutiques")
+        all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
 
-        return json.dumps("{}")
+        #if cache data doesn't exist then retrieve it
+        if not os.path.isfile(all_desc_path):
+            if not os.path.exists(cache_dir):
+                os.makedirs(cache_dir)
+            thr = UpdatePipelineData(path=cache_dir) #initialize thread that will retrieve and store pipeline data
+            thr.start()     #start/run it
+            thr.join()      #wait for thread to finish
+
+        #fetch data on all descriptors
+        with open(all_desc_path, "r") as f:
+            all_descriptors = json.load(f)
+
+        #fetch every single descriptor
+        descriptors = []
+        for descriptor in all_descriptors:
+            file = descriptor["ID"].replace(".", "-") + ".json"
+            file_path = os.path.join(cache_dir, file)
+            with open(file_path, "r") as f:
+                descriptors.append(json.load(f))
+
+        #if the cache data older than 5min or 300 seconds, update in background
+        delta = time.time() - os.path.getmtime(all_desc_path)
+        if delta > 300:
+            print("Pipeline database older than 5 minutes, updating...")
+            UpdatePipelineData(path=cache_dir).start()
+
+        #search cache in title and description from search query else return everything
+        elements = []
+        if not (search_query in ("", '', None)):
+            for d_index, descriptor in enumerate(all_descriptors):
+                if search_query in descriptor["TITLE"] + descriptor["DESCRIPTION"]:
+                    elements.append({"short_descriptor": descriptor, "long_descriptor": descriptors[d_index]})
+        else:
+            for d_index, descriptor in enumerate(all_descriptors):
+                elements.append({"short_descriptor": descriptor, "long_descriptor": descriptors[d_index]})
+
+        #construct payload
+        payload = {
+            "total": len(elements),
+            "elements": elements
+        }
+
+        return json.dumps(payload)
