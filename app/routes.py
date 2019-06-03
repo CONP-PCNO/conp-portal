@@ -1,4 +1,4 @@
-import json, os
+import json, os, time
 import requests
 from datetime import datetime, timedelta
 from app import app, db
@@ -6,13 +6,18 @@ from app.models import User, Dataset, DatasetStats
 from app.oauth import OAuthSignIn
 from app.forms import SignInForm
 from app.forms import SignUpForm
-
+from app.threads import UpdatePipelineData
 
 from sqlalchemy import func, or_
 from flask import render_template, request, flash, session, redirect, url_for, send_file, Response, abort
 from flask_login import current_user, login_user, logout_user, login_required
 
 DATA_PATH = app.config['DATA_PATH']
+
+#start updating data on startup
+thr = UpdatePipelineData(path=os.path.join(os.path.expanduser('~'), ".cache", "boutiques"))
+thr.start()
+thr.join()
 
 @app.route('/')
 @app.route('/public')
@@ -398,33 +403,19 @@ def profile():
 @app.route('/pipeline-search', methods=['GET'])
 def pipeline_search():
     if request.method == 'GET':
-        import time
-        from app.threads import UpdatePipelineData
 
         #initialize variables
         search_query = request.args.get("search")
         cache_dir = os.path.join(os.path.expanduser('~'), ".cache", "boutiques")
         all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
+        all_detailed_desc_path = os.path.join(cache_dir, "detailed_all_descriptors.json")
 
-        #if cache data doesn't exist then retrieve it
-        if not os.path.isfile(all_desc_path):
-            if not os.path.exists(cache_dir):
-                os.makedirs(cache_dir)
-            thr = UpdatePipelineData(path=cache_dir) #initialize thread that will retrieve and store pipeline data
-            thr.start()     #start/run it
-            thr.join()      #wait for thread to finish
-
-        #fetch data on all descriptors
+        #fetch data from cache
         with open(all_desc_path, "r") as f:
             all_descriptors = json.load(f)
 
-        #fetch every single descriptor
-        descriptors = []
-        for descriptor in all_descriptors:
-            file = descriptor["ID"].replace(".", "-") + ".json"
-            file_path = os.path.join(cache_dir, file)
-            with open(file_path, "r") as f:
-                descriptors.append(json.load(f))
+        with open(all_detailed_desc_path, "r") as f:
+            detailed_all_descriptors = json.load(f)
 
         #if the cache data older than 5min or 300 seconds, update in background
         delta = time.time() - os.path.getmtime(all_desc_path)
@@ -432,15 +423,18 @@ def pipeline_search():
             print("Pipeline database older than 5 minutes, updating...")
             UpdatePipelineData(path=cache_dir).start()
 
-        #search cache in title and description from search query else return everything
-        elements = []
-        if not (search_query in ("", '', None)):
-            for d_index, descriptor in enumerate(all_descriptors):
-                if search_query in str(descriptor):
-                    elements.append({"short_descriptor": descriptor, "long_descriptor": descriptors[d_index]})
+        #search cache with search query else return everything
+        if search_query not in ("", '', None):
+            elements = [
+                {"short_descriptor": descriptor, "long_descriptor": detailed_all_descriptors[d_index]}
+                for d_index, descriptor in enumerate(all_descriptors)
+                if search_query in str(descriptor)
+            ]
         else:
-            for d_index, descriptor in enumerate(all_descriptors):
-                elements.append({"short_descriptor": descriptor, "long_descriptor": descriptors[d_index]})
+            elements = [
+                {"short_descriptor": descriptor, "long_descriptor": detailed_all_descriptors[d_index]}
+                for d_index, descriptor in enumerate(all_descriptors)
+            ]
 
         #construct payload
         payload = {

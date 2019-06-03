@@ -13,18 +13,27 @@ class UpdatePipelineData(threading.Thread):
 
     def run(self):
 
+        #if cache directory doesn't exist then create it
+        if not os.path.exists(self.cache_dir):
+            os.makedirs(self.cache_dir)
+
         #first search for all descriptors
         searcher = Searcher(query="", max_results=100, no_trunc=True)
         all_descriptors = searcher.search()
 
-        #if cache doesn't exist, make it
-        if not os.path.exists(self.cache_dir):
-            os.makedirs(".cache/boutiques")
+        #then pull every single descriptor
+        for descriptor in all_descriptors:
+            Puller(zid=descriptor["ID"]).pull()
+
+        #fetch every single descriptor into one file
+        detailed_all_descriptors = [
+            json.load(open(os.path.join(self.cache_dir, descriptor["ID"].replace(".", "-") + ".json"), "r"))
+            for descriptor in all_descriptors
+        ]
 
         #store data in cache
         with open(os.path.join(self.cache_dir, "all_descriptors.json"), "w") as f:
             json.dump(all_descriptors, f, indent=4)
 
-        #then pull every single descriptor and store in cache
-        for descriptor in all_descriptors:
-            Puller(zid=descriptor["ID"]).pull()
+        with open(os.path.join(self.cache_dir, "detailed_all_descriptors.json"), "w") as f:
+            json.dump(detailed_all_descriptors, f, indent=4)
