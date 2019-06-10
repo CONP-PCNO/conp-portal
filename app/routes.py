@@ -404,41 +404,70 @@ def profile():
 def pipeline_search():
     if request.method == 'GET':
 
-        #initialize variables
+        authorized = True if current_user.is_authenticated else False
+
+        # initialize variables
         search_query = request.args.get("search")
         cache_dir = os.path.join(os.path.expanduser('~'), ".cache", "boutiques")
         all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
         all_detailed_desc_path = os.path.join(cache_dir, "detailed_all_descriptors.json")
 
-        #fetch data from cache
+        # fetch data from cache
         with open(all_desc_path, "r") as f:
             all_descriptors = json.load(f)
 
         with open(all_detailed_desc_path, "r") as f:
             detailed_all_descriptors = json.load(f)
 
-        #if the cache data older than 5min or 300 seconds, update in background
+        # if the cache data older than 5min or 300 seconds, update in background
         delta = time.time() - os.path.getmtime(all_desc_path)
         if delta > 300:
             print("Pipeline database older than 5 minutes, updating...")
             UpdatePipelineData(path=cache_dir).start()
 
-        #search cache with search query else return everything
+        # search cache with search query else return everything
         if search_query not in ("", '', None):
             elements = [
-                {"short_descriptor": descriptor, "long_descriptor": detailed_all_descriptors[d_index]}
+                {
+                    "id": descriptor["ID"],
+                    "short_descriptor": descriptor,
+                    "long_descriptor": detailed_all_descriptors[d_index]
+                }
                 for d_index, descriptor in enumerate(all_descriptors)
                 if search_query in str(descriptor)
             ]
         else:
             elements = [
-                {"short_descriptor": descriptor, "long_descriptor": detailed_all_descriptors[d_index]}
+                {
+                    "id": descriptor["ID"],
+                    "short_descriptor": descriptor,
+                    "long_descriptor": detailed_all_descriptors[d_index]
+                }
                 for d_index, descriptor in enumerate(all_descriptors)
             ]
 
-        #construct payload
+        # construct payload
         payload = {
+            "authorized": authorized,
             "total": len(elements),
+            "sortKeys": [
+                {
+                    "key": "ID",
+                    "label": "ID"
+                },
+                {
+                    "key": "TITLE",
+                    "label": "Title"
+                },
+                {
+                    "key": "DESCRIPTION",
+                    "label": "Description"
+                },
+                {
+                    "key": "DOWNLOADS",
+                    "label": "Downloads"
+                }
+            ],
             "elements": elements
         }
 
