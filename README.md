@@ -17,10 +17,16 @@ Create a Python virtual environment called `venv` and install Flask dependencies
 
 You can run the application locally with 
 
-    flask run
+    python3 run.py
     
-The application will be live on `http://127.0.0.1:5000/`
+The application will be live on `http://0.0.0.0:5000/` 
     
+
+### Get the dataset repository
+
+       git submodule add git@github.com:CONP-PCNO/conp-dataset data
+
+The search will be executed on this `data` repository 
 
 ### Localhost Database
 
@@ -47,10 +53,9 @@ Some experimental testing cases are being explored with AWS Cloud 9.
 
 To run the application on a Cloud9 instance:
 
-```python
+```bash
     flask run --host=0.0.0.0 --port=8080
 ```
-
 
 ### Deployment
     

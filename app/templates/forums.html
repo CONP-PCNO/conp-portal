@@ -1,0 +1,79 @@
+{% if current_user.is_authenticated %}
+{% extends 'base.html' %}
+{% else %}
+{% extends 'base_public.html' %}
+{% endif %}
+
+<!-- Head Block -->
+{% block head %}
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+{% endblock %}
+
+<!-- Brand Block -->
+{% block brand_link %}
+{% if current_user.is_authenticated %}
+    <a class="navbar-brand" href="/index">
+        <img class="custom-logo-link" src="./static/img/conp.png">
+
+    </a>
+{% else %}
+     <a class="navbar-brand" href="/">
+        <img class="custom-logo-link" src="./static/img/conp.png">
+     </a>
+{% endif %}
+{% endblock %}
+
+<!-- Login Block -->
+{% block login %}
+{% if current_user.is_authenticated %}
+    <li class="login">
+        <a href="/logout">
+            <span class="glyphicon glyphicon-log-out"></span> Logout
+        </a>
+    </li>
+{% else %}
+    <li class="login">
+        <a href="/login">
+            <span class="glyphicon glyphicon-log-in"></span> Login
+        </a>
+    </li>
+{% endif %}
+{% endblock %}
+
+<!-- Sidebar Block -->
+{% block sidebar %}
+{% if current_user.is_authenticated %}
+{% include "/fragments/sidebar.html" %}
+{% else %}
+{% include "/fragments/public_sidebar.html" %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Space reserved for username when logged in -->
+{% if current_user.is_authenticated %}
+    <div class="display-user">
+    Welcome <strong>{{ user.username }}</strong>
+    </div>
+{% else %}
+    <div class="display-user"></div>
+{% endif %}
+
+<div class="search-header page-title">
+  <h2>CONP Portal | Forums</h2>
+</div>
+
+<div id="search-datatable-mount" >
+</div>
+
+    <div class="jumbotron text-center">
+    <h2>Coming Soon</h2>
+    </div>
+</div>
+<!--/span-->
+{% endblock %}
+

@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+#sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 
 import csv
@@ -15,6 +15,7 @@ class InsertTestDataset(object):
         self.datasets_file = 'datasets.csv'
         self.datasets_stats_file = 'datasets_stats.csv'
         self.pipelines_file = 'pipelines.csv'
+        self.loris_image = 'loris.png'
 
     def insert_sample_users(self):
 
@@ -51,22 +52,28 @@ class InsertTestDataset(object):
 
             for row in reader:
                 dataset = Dataset(
-                    id = row[0],
-                    dataset_id = row[1],
-                    owner_id = row[2],
-                    name = row[3],
-                    modality = row[4],
-                    version = row[5],
-                    format = row[6],
-                    category = row[7],
+                    dataset_id = row[0],
+                    annex_uuid = row[1],
+                    description = row[2],
+                    owner_id = row[3],
+                    download_path = row[4],
+                    raw_data_url = row[5],
+                    name = row[6],
+                    modality = row[7],
+                    version = row[8],
+                    format = row[9],
+                    category = row[10],
+                    image = self.read_image(row[11]),
                     date_created = datetime.now(),
                     date_updated = datetime.now(),
-                    is_private = row[8] == 'True'
+                    is_private = row[12] == 'True'
                 )
                 db.session.add(dataset)
         db.session.commit()
         dataset_file.close()
 
+    def read_image(self,image):
+        return open(image,'rb').read()
 
     def insert_sample_datasets_stats(self):
 
@@ -78,15 +85,14 @@ class InsertTestDataset(object):
 
             for row in reader:
                 stat = DatasetStats(
-                    id = row[0],
-                    dataset_id = row[1],
-                    size = row[2],
-                    files = row[3],
-                    sources = row[4],
-                    num_subjects = row[5],
-                    num_downloads = row[6],
-                    num_likes = row[7],
-                    num_views = row[8],
+                    dataset_id = row[0],
+                    size = row[1],
+                    files = row[2],
+                    sources = row[3],
+                    num_subjects = row[4],
+                    num_downloads = row[5],
+                    num_likes = row[6],
+                    num_views = row[7],
                     date_updated = datetime.now()
                 )
                 db.session.add(stat)
@@ -118,9 +124,9 @@ class InsertTestDataset(object):
 
 
 test_dataset = InsertTestDataset()
-test_dataset.insert_sample_users()
+#test_dataset.insert_sample_users()
 test_dataset.insert_sample_datasets()
 test_dataset.insert_sample_datasets_stats()
-test_dataset.insert_sample_pipelines()
+#test_dataset.insert_sample_pipelines()
 #print('\x1b[6;30;42m' + 'Success!' + '\x1b[0m')
 

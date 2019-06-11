@@ -46,13 +46,13 @@ const DataTable = ({
       </div>
       {elements.map((element, i) => (
         <div
-          key={i}
+          key={element.id}
           style={{
             borderBottom: "solid",
             borderBottomWidth: i === elements.length - 1 ? "0px" : "1px"
           }}
         >
-          {React.createElement(renderElement, element)}
+          {React.createElement(renderElement, { ...element, authorized })}
         </div>
       ))}
       <div className="search-dataset-footer">

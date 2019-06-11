@@ -21,7 +21,7 @@ class User(UserMixin, db.Model):
     is_whitelisted = db.Column(db.Boolean, default=False, nullable=False)
     is_pi = db.Column(db.Boolean, default=False, nullable=False)
     is_account_expired = db.Column(db.Boolean, default=False, nullable=False)
-    affiliation = db.Column(db.String(128), unique=True)
+    affiliation = db.Column(db.String(128))
     expiration = db.Column(db.DateTime, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
     date_updated = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
@@ -40,15 +40,20 @@ class Dataset(db.Model):
     __tablename__ = 'datasets'
 
     id = db.Column(db.Integer, primary_key=True)
-    dataset_id = db.Column(db.Integer, index=True)
+    dataset_id = db.Column(db.String(64), index=True, unique=True)
+    annex_uuid = db.Column(db.String(64), index=True, unique=True)
+    description = db.Column(db.Text, index=True)
     owner_id = db.Column(db.Integer, index=True)
+    download_path = db.Column(db.String(64), index=True)
+    raw_data_url = db.Column(db.String(128), index=True)
+    image = db.Column(db.LargeBinary, default=None)
     name = db.Column(db.String(256), index=True)
     modality = db.Column(db.String(64), index=True)
-    version = db.Column(db.String(128), index=True)
+    version = db.Column(db.String(6), index=True)
     format = db.Column(db.String(64), index=True)
     category = db.Column(db.String(64), index=True)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
-    date_updated = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
+    date_created = db.Column(db.DateTime, default=datetime.now())
+    date_updated = db.Column(db.DateTime, default=datetime.now())
     is_private = db.Column(db.Boolean, index=True)
 
     def __repr__(self):
@@ -58,7 +63,7 @@ class DatasetStats(db.Model):
     __tablename__ = 'dataset_stats'
 
     id = db.Column(db.Integer, primary_key=True)
-    dataset_id = db.Column(db.Integer, index=True, unique=True)
+    dataset_id = db.Column(db.String(64), index=True, unique=True)
     size = db.Column(db.Integer, index=True)
     files = db.Column(db.Integer, index=True)
     sources = db.Column(db.Integer, index=True)
@@ -66,7 +71,7 @@ class DatasetStats(db.Model):
     num_downloads = db.Column(db.Integer, index=True)
     num_likes = db.Column(db.Integer, index=True)
     num_views = db.Column(db.Integer, index=True)
-    date_updated = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
+    date_updated = db.Column(db.DateTime, default=datetime.now())
 
 class Pipeline(db.Model):
     __tablename__ = 'pipelines'

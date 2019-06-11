@@ -1,13 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import AppContext from "../AppContext";
-
 const DatasetElement = props => {
-  const { authorized, onRunWithCBRAIN, onDownloadMetadata, ...element } = props;
+  const { authorized, ...element } = props;
 
-  const { imagePath } = React.useContext(AppContext);
-
+  const imagePath = element.imagePath;
   const runOnCbrainEnabled = `${imagePath}/run_on_cbrain_green.png`;
   const runOnCbrainDisabled = `${imagePath}/run_on_cbrain_gray.png`;
   const downloadEnabled = `${imagePath}/download_green.png`;
@@ -39,7 +36,11 @@ const DatasetElement = props => {
       <div className="dataset-details">
         <div className="dataset-details-stats">
           <div className="dataset-title">
-            <div>{element.title}</div>
+            <div>
+              <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>
+                {element.title}
+              </a>
+            </div>
           </div>
           <div className="dataset-stat">
             <div className="dataset-stat-text">Date Added</div>
@@ -76,42 +77,57 @@ const DatasetElement = props => {
         </div>
         <div className="dataset-options">
           <div className="dataset-option">
-            <img
-              alt="Run On Cbrain"
-              className="run-on-cbrain-button option-icon"
-              src={
-                element.isPublic || authorized
-                  ? runOnCbrainEnabled
-                  : runOnCbrainDisabled
-              }
-              onClick={event => {
-                event.preventDefault();
-                if (!(element.isPublic || authorized)) {
-                  return;
-                }
-                onRunWithCBRAIN instanceof Function &&
-                  onRunWithCBRAIN(props, event);
+            <a
+              href={"#"}
+              style={{
+                pointerEvents: element.isPrivate && !authorized ? "none" : "all"
               }}
-            />
+            >
+              <img
+                alt="Run On Cbrain"
+                className="run-on-cbrain-button option-icon"
+                src={
+                  element.isPrivate && !authorized
+                    ? runOnCbrainDisabled
+                    : runOnCbrainEnabled
+                }
+              />
+            </a>
           </div>
-          <div className="dataset-option">
-            <img
-              alt="Run On Cbrain"
-              className="download-button  option-icon"
-              src={
-                element.isPublic || authorized
-                  ? downloadEnabled
-                  : downloadDisabled
-              }
-              onClick={event => {
-                event.preventDefault();
-                if (!(element.isPublic || authorized)) {
-                  return;
-                }
-                onDownloadMetadata instanceof Function &&
-                  onDownloadMetadata(props, event);
+          <div className="dataset-option" style={{ position: "relative" }}>
+            <a
+              style={{
+                pointerEvents: element.isPrivate && !authorized ? "none" : "all"
               }}
-            />
+              href={`download_metadata?dataset=${element.downloadPath}`}
+              download
+            >
+              {element.isPrivate && !authorized && (
+                <div
+                  style={{
+                    backgroundColor: "white",
+                    padding: "5px",
+                    border: "solid black",
+                    color: "black",
+                    borderWidth: "1px",
+                    left: "-30px",
+                    textAlign: "center",
+                    position: "absolute"
+                  }}
+                >
+                  Please register for access.
+                </div>
+              )}
+              <img
+                alt="Download Metadata"
+                className="download-button  option-icon"
+                src={
+                  element.isPrivate && !authorized
+                    ? downloadDisabled
+                    : downloadEnabled
+                }
+              />
+            </a>
           </div>
         </div>
       </div>
@@ -122,12 +138,13 @@ const DatasetElement = props => {
 DatasetElement.propTypes = {
   authorized: PropTypes.bool,
   onRunWithCBRAIN: PropTypes.func,
-  onDownloadMetadata: PropTypes.func,
   // element proptypes
   id: PropTypes.string,
   title: PropTypes.string,
-  isPublic: PropTypes.bool,
+  isPrivate: PropTypes.bool,
   thumbnailURL: PropTypes.string,
+  imagePath: PropTypes.string,
+  downloadPath: PropTypes.string,
   downloads: PropTypes.number,
   views: PropTypes.number,
   likes: PropTypes.number,
@@ -139,6 +156,11 @@ DatasetElement.propTypes = {
   format: PropTypes.string,
   modalities: PropTypes.string,
   sources: PropTypes.number
+};
+
+DatasetElement.defaultProps = {
+  imagePath: "",
+  downloadPath: ""
 };
 
 export default DatasetElement;

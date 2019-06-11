@@ -11,7 +11,7 @@ Highcharts.chart('chart', {
     },
 
     title: {
-        text: 'Datasets and Pipelines'
+        text: 'Number of Datasets and Pipelines in 2019'
     },
 
     yAxis: [{
@@ -27,16 +27,24 @@ Highcharts.chart('chart', {
         }
     }],
 
+    xAxis: {
+    categories: ["January'19", "February'19", "March'19","April'19"]
+    },
+
     plotOptions: {
         column: {
             borderRadius: 5
         }
     },
 
+
+
     series: [{
-        data: [1, 3, 2, 4]
+        name: 'CONP Datasets',
+        data: [0, 0, 0, 6]
     }, {
-        data: [324, 124, 547, 221],
+        name: 'CONP Pipelines',
+        data: [0, 0, 0, 0],
         yAxis: 1
     }]
 
