@@ -621,3 +621,42 @@ body .container .container-wrapper {
 
 }
 
+/*
+=============================================================
+| COMPONENT - PIPELINE
+=============================================================
+*/
+
+.search-pipeline {
+  display: flex;
+  border: 1px solid #343434;
+  border-top: 0px solid transparent;
+  border-bottom: 0px solid transparent;
+  padding: 2rem 0;
+}
+
+.pipeline-id {
+  display: flex;
+  flex-direction: column;
+  padding: 0 2rem;
+  flex: 1;
+}
+
+.pipeline-title {
+  flex: 2;
+  display: flex;
+  flex-wrap: wrap;
+  padding-right: 2rem;
+}
+
+.pipeline-description {
+  flex: 8;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pipeline-downloads {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+}

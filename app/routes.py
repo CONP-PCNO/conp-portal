@@ -408,6 +408,7 @@ def pipeline_search():
 
         # initialize variables
         search_query = request.args.get("search")
+        sort_key = request.args.get("sortKey") or "id"
         cache_dir = os.path.join(os.path.expanduser('~'), ".cache", "boutiques")
         all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
         all_detailed_desc_path = os.path.join(cache_dir, "detailed_all_descriptors.json")
@@ -428,23 +429,19 @@ def pipeline_search():
         # search cache with search query else return everything
         if search_query not in ("", '', None):
             elements = [
-                {
-                    "id": descriptor["ID"],
-                    "short_descriptor": descriptor,
-                    "long_descriptor": detailed_all_descriptors[d_index]
-                }
+                {**descriptor, **detailed_all_descriptors[d_index]}
                 for d_index, descriptor in enumerate(all_descriptors)
                 if search_query in str(descriptor)
             ]
         else:
             elements = [
-                {
-                    "id": descriptor["ID"],
-                    "short_descriptor": descriptor,
-                    "long_descriptor": detailed_all_descriptors[d_index]
-                }
+                {**descriptor, **detailed_all_descriptors[d_index]}
                 for d_index, descriptor in enumerate(all_descriptors)
             ]
+
+        # sort, make all keys lowercase and without hyphen
+        elements = [{k.lower().replace("-", ""): v for k, v in element.items()} for element in elements]
+        elements.sort(key=lambda x: x[sort_key])
 
         # construct payload
         payload = {
@@ -452,19 +449,19 @@ def pipeline_search():
             "total": len(elements),
             "sortKeys": [
                 {
-                    "key": "ID",
+                    "key": "id",
                     "label": "ID"
                 },
                 {
-                    "key": "TITLE",
+                    "key": "title",
                     "label": "Title"
                 },
                 {
-                    "key": "DESCRIPTION",
+                    "key": "description",
                     "label": "Description"
                 },
                 {
-                    "key": "DOWNLOADS",
+                    "key": "downloads",
                     "label": "Downloads"
                 }
             ],
