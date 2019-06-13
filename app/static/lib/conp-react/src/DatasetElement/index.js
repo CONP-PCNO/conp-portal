@@ -83,7 +83,6 @@ const DatasetElement = props => {
                 pointerEvents: element.isPrivate && !authorized ? "none" : "all"
               }}
             >
-            >
               <img
                 alt="Run On Cbrain"
                 className="run-on-cbrain-button option-icon"
