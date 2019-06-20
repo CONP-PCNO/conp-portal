@@ -7270,7 +7270,6 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
                 pointerEvents: element.isPrivate && !authorized ? "none" : "all"
               }
             },
-            ">",
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
               alt: "Run On Cbrain",
               className: "run-on-cbrain-button option-icon",
@@ -7357,32 +7356,94 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
   var authorized = props.authorized,
       element = PipelineElement_objectWithoutProperties(props, ["authorized"]);
 
+  var imagePath = element.imagePath;
+  var runOnCbrainEnabled = imagePath + "/run_on_cbrain_green.png";
+  var runOnCbrainDisabled = imagePath + "/run_on_cbrain_gray.png";
+  var downloadEnabled = imagePath + "/download_green.png";
+  var downloadDisabled = imagePath + "/download_gray.png";
+
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
-    { className: "search-pipeline" },
+    { className: "search-dataset" },
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "pipeline-id" },
+      { className: "dataset-social" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "a",
-        { style: { color: "inherit" }, href: element.url },
-        element.id
+        { href: element.url },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+          alt: "dataset format",
+          className: "dataset-social-img",
+          src: "static/img/cogs-solid.svg"
+        })
+      ),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "dataset-social-icons" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "dataset-social-icon" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-download social-fa" }),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            null,
+            element.downloads
+          )
+        )
       )
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "pipeline-title" },
-      element.title
-    ),
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "pipeline-description" },
-      element.description
-    ),
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "pipeline-downloads" },
-      element.downloads
+      { className: "dataset-details" },
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "dataset-details-stats" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "pipeline-title" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            null,
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "a",
+              { style: { color: "inherit", pointerEvents: element.descriptorurl == undefined ? "none" : "all" },
+                href: element.descriptorurl },
+              element.title
+            )
+          )
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "pipeline-id" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "a",
+            { style: { color: "black" }, href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
+            element.id
+          )
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "pipeline-description" },
+          element.description
+        )
+      ),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "dataset-options" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "dataset-option" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "a",
+            { href: element.onlineplatformurls },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+              alt: "Online platform",
+              className: "run-on-cbrain-button option-icon",
+              src: "static/img/globe-solid.svg"
+            })
+          )
+        )
+      )
     )
   );
 };
@@ -7392,6 +7453,8 @@ PipelineElement_PipelineElement.propTypes = {
   title: prop_types_default.a.string,
   description: prop_types_default.a.string,
   downloads: prop_types_default.a.number,
+  descriptorurl: prop_types_default.a.string,
+  onlineplatformurls: prop_types_default.a.string,
   name: prop_types_default.a.string,
   commandline: prop_types_default.a.string,
   author: prop_types_default.a.string,

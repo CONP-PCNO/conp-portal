@@ -443,6 +443,16 @@ def pipeline_search():
         elements = [{k.lower().replace("-", ""): v for k, v in element.items()} for element in elements]
         elements.sort(key=lambda x: x[sort_key])
 
+        # if element has online platform url, retrieve the cbrain one, else take the first one
+        for element in elements:
+            if "onlineplatformurls" in element:
+                for url in element["onlineplatformurls"]:
+                    if "cbrain" in url:
+                        element["onlineplatformurls"] = url
+                        break
+                else:
+                    element["onlineplatformurls"] = element["onlineplatformurls"][0]
+
         # construct payload
         payload = {
             "authorized": authorized,

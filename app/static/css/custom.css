@@ -627,36 +627,25 @@ body .container .container-wrapper {
 =============================================================
 */
 
-.search-pipeline {
-  display: flex;
-  border: 1px solid #343434;
-  border-top: 0px solid transparent;
-  border-bottom: 0px solid transparent;
-  padding: 2rem 0;
+.pipeline-title {
+  font-size: 4rem;
+  font-weight: 700;
+  padding: 2rem;
+  padding-top: 0;
+  width: 100%;
 }
 
 .pipeline-id {
-  display: flex;
-  flex-direction: column;
-  padding: 0 2rem;
-  flex: 1;
-}
-
-.pipeline-title {
-  flex: 2;
-  display: flex;
-  flex-wrap: wrap;
-  padding-right: 2rem;
+  font-weight: 400;
+  padding: 2rem;
+  padding-top: 0;
+  width: 100%;
+  font-style: italic;
 }
 
 .pipeline-description {
-  flex: 8;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.pipeline-downloads {
-  flex: 1;
-  display: flex;
-  flex-wrap: wrap;
+  font-weight: 700;
+  padding: 2rem;
+  padding-top: 0;
+  width: 100%;
 }

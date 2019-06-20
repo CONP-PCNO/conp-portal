@@ -5,13 +5,14 @@ import json
 import os
 import logging
 
+
 class UpdatePipelineData(threading.Thread):
 
     def __init__(self, path):
         super(UpdatePipelineData, self).__init__()
         if not os.path.exists('logs'):
             os.makedirs('logs')
-        logging.basicConfig(filename='logs/update_pipeline_thread.log',level=logging.INFO)
+        logging.basicConfig(filename='logs/update_pipeline_thread.log', level=logging.INFO)
         self.cache_dir = path
 
     def run(self):
@@ -40,5 +41,6 @@ class UpdatePipelineData(threading.Thread):
 
             with open(os.path.join(self.cache_dir, "detailed_all_descriptors.json"), "w") as f:
                 json.dump(detailed_all_descriptors, f, indent=4)
+
         except Exception as e:
-            logging.exception("An exception occurred.")
+            logging.exception("An exception occurred in the thread.")
