@@ -407,8 +407,8 @@ def pipeline_search():
         authorized = True if current_user.is_authenticated else False
 
         # initialize variables
-        search_query = request.args.get("search")
-        sort_key = request.args.get("sortKey") or "id"
+        search_query = request.args.get("search").lower()
+        sort_key = request.args.get("sortKey") or "downloads-desc"
         cache_dir = os.path.join(os.path.expanduser('~'), ".cache", "boutiques")
         all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
         all_detailed_desc_path = os.path.join(cache_dir, "detailed_all_descriptors.json")
@@ -431,7 +431,11 @@ def pipeline_search():
             elements = [
                 {**descriptor, **detailed_all_descriptors[d_index]}
                 for d_index, descriptor in enumerate(all_descriptors)
-                if search_query in str(descriptor)
+                if search_query in (
+                    (str(descriptor.values()) + str(detailed_all_descriptors[d_index]["tags"].values())).lower()
+                    if "tags" in detailed_all_descriptors[d_index] else
+                    str(descriptor.values()).lower()
+                )
             ]
         else:
             elements = [
@@ -441,7 +445,10 @@ def pipeline_search():
 
         # sort, make all keys lowercase and without hyphen
         elements = [{k.lower().replace("-", ""): v for k, v in element.items()} for element in elements]
-        elements.sort(key=lambda x: x[sort_key])
+        elements.sort(
+            key=lambda x: x["downloads"],
+            reverse=True if sort_key == "downloads-desc" or sort_key == "title" else False
+        )
 
         # if element has online platform url, retrieve the cbrain one, else take the first one
         for element in elements:
@@ -459,20 +466,12 @@ def pipeline_search():
             "total": len(elements),
             "sortKeys": [
                 {
-                    "key": "id",
-                    "label": "ID"
+                    "key": "downloads-desc",
+                    "label": "Downloads: High to Low"
                 },
                 {
-                    "key": "title",
-                    "label": "Title"
-                },
-                {
-                    "key": "description",
-                    "label": "Description"
-                },
-                {
-                    "key": "downloads",
-                    "label": "Downloads"
+                    "key": "downloads-asc",
+                    "label": "Downloads: Low to High"
                 }
             ],
             "elements": elements
