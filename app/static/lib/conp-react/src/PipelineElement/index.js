@@ -17,7 +17,7 @@ const PipelineElement = props => {
           <img
             alt="dataset format"
             className="dataset-social-img"
-            src="static/img/cogs-solid.svg"
+            src={element.url == undefined ? "static/img/cogs-solid-grey.svg" : "static/img/cogs-solid-green.svg"}
           />
         </a>
         <div className="dataset-social-icons">
@@ -52,7 +52,9 @@ const PipelineElement = props => {
               <img
                 alt="Online platform"
                 className="run-on-cbrain-button option-icon"
-                src={"static/img/globe-solid.svg"}
+                src={element.onlineplatformurls == undefined ?
+                "static/img/globe-solid-grey.svg" :
+                "static/img/globe-solid-green.svg"}
               />
             </a>
           </div>

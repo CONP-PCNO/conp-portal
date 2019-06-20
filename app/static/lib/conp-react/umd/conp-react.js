@@ -7374,7 +7374,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
           alt: "dataset format",
           className: "dataset-social-img",
-          src: "static/img/cogs-solid.svg"
+          src: element.url == undefined ? "static/img/cogs-solid-grey.svg" : "static/img/cogs-solid-green.svg"
         })
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -7439,7 +7439,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
               alt: "Online platform",
               className: "run-on-cbrain-button option-icon",
-              src: "static/img/globe-solid.svg"
+              src: element.onlineplatformurls == undefined ? "static/img/globe-solid-grey.svg" : "static/img/globe-solid-green.svg"
             })
           )
         )
