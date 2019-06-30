@@ -623,6 +623,46 @@ body .container .container-wrapper {
 
 .dataset-information{
   padding: 20px;
-
 }
 
+/*
+=============================================================
+| PIPELINE Page
+=============================================================
+*/
+
+.pipeline-page-description {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  font-size: 20px;
+}
+
+/*
+=============================================================
+| COMPONENT - PIPELINE
+=============================================================
+*/
+
+.pipeline-title {
+  font-size: 4rem;
+  font-weight: 700;
+  padding: 2rem;
+  padding-top: 0;
+  width: 100%;
+}
+
+.pipeline-id {
+  font-weight: 400;
+  padding: 2rem;
+  padding-top: 0;
+  width: 100%;
+  font-style: italic;
+}
+
+.pipeline-description {
+  font-weight: 700;
+  padding: 2rem;
+  padding-top: 0;
+  width: 100%;
+}
