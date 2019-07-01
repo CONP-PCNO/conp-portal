@@ -1,0 +1,266 @@
+{
+    "name": "BrainExtraction",
+    "command-line": "${ANTSPATH}/antsBrainExtraction.sh [ANATOMICAL_IMAGE] [BRAIN_PROBABILITY_MASK] [BRAIN_TEMPLATE] [DEBUG] [DIMENSION] [EXTRACTION_REGISTRATION_MASK] [IMAGE_SUFFIX] [KEEP_TEMPORARY_FILES] [OUT_PREFIX] [USE_FLOATINGPOINT_PRECISION] [USE_RANDOM_SEEDING]",
+    "author": "Nipype (interface), Brian B. Avants et al. (tool)",
+    "description": "BrainExtraction, as implemented in Nipype (module: nipype.interfaces.ants, interface: BrainExtraction).",
+    "url": "https://github.com/nipy/nipype/blob/master/nipype/interfaces/ants/segmentation.py",
+    "inputs": [
+        {
+            "id": "anatomical_image",
+            "name": "Anatomical image",
+            "type": "File",
+            "value-key": "[ANATOMICAL_IMAGE]",
+            "command-line-flag": "-a",
+            "description": "An existing file name. Structural image, typically t1.  if more than one anatomical image is specified, subsequently specified images are used during the segmentation process.  however, only the first image is used in the registration of priors. our suggestion would be to specify the t1 as the first image. anatomical template created using e.g. lpba40 data set with buildtemplateparallel.sh in ants.",
+            "optional": false
+        },
+        {
+            "id": "brain_probability_mask",
+            "name": "Brain probability mask",
+            "type": "File",
+            "value-key": "[BRAIN_PROBABILITY_MASK]",
+            "command-line-flag": "-m",
+            "description": "An existing file name. Brain probability mask created using e.g. lpba40 data set which have brain masks defined, and warped to anatomical template and averaged resulting in a probability image.",
+            "optional": false
+        },
+        {
+            "id": "brain_template",
+            "name": "Brain template",
+            "type": "File",
+            "value-key": "[BRAIN_TEMPLATE]",
+            "command-line-flag": "-e",
+            "description": "An existing file name. Anatomical template created using e.g. lpba40 data set with buildtemplateparallel.sh in ants.",
+            "optional": false
+        },
+        {
+            "id": "debug",
+            "name": "Debug",
+            "type": "Flag",
+            "value-key": "[DEBUG]",
+            "command-line-flag": "-z 1",
+            "description": "A boolean. If > 0, runs a faster version of the script. only for testing. implies -u 0. requires single thread computation for complete reproducibility.",
+            "optional": true
+        },
+        {
+            "id": "dimension",
+            "name": "Dimension",
+            "type": "Number",
+            "value-key": "[DIMENSION]",
+            "command-line-flag": "-d",
+            "description": "3 or 2. Image dimension (2 or 3).",
+            "optional": true,
+            "default-value": 3,
+            "integer": true,
+            "value-choices": [
+                3,
+                2
+            ]
+        },
+        {
+            "id": "extraction_registration_mask",
+            "name": "Extraction registration mask",
+            "type": "File",
+            "value-key": "[EXTRACTION_REGISTRATION_MASK]",
+            "command-line-flag": "-f",
+            "description": "An existing file name. Mask (defined in the template space) used during registration for brain extraction. to limit the metric computation to a specific region.",
+            "optional": true
+        },
+        {
+            "id": "image_suffix",
+            "name": "Image suffix",
+            "type": "String",
+            "value-key": "[IMAGE_SUFFIX]",
+            "command-line-flag": "-s",
+            "description": "A unicode string. Any of standard itk formats, nii.gz is default.",
+            "optional": true,
+            "default-value": "nii.gz"
+        },
+        {
+            "id": "keep_temporary_files",
+            "name": "Keep temporary files",
+            "type": "Number",
+            "integer": true,
+            "value-key": "[KEEP_TEMPORARY_FILES]",
+            "command-line-flag": "-k",
+            "description": "An integer (int or long). Keep brain extraction/segmentation warps, etc (default = 0).",
+            "optional": true
+        },
+        {
+            "id": "out_prefix",
+            "name": "Out prefix",
+            "type": "String",
+            "value-key": "[OUT_PREFIX]",
+            "command-line-flag": "-o",
+            "description": "A unicode string. Prefix that is prepended to all output files (default = highress001_).",
+            "optional": true,
+            "default-value": "highres001_"
+        },
+        {
+            "id": "use_floatingpoint_precision",
+            "name": "Use floatingpoint precision",
+            "type": "Number",
+            "value-key": "[USE_FLOATINGPOINT_PRECISION]",
+            "command-line-flag": "-q",
+            "description": "0 or 1. Use floating point precision in registrations (default = 0).",
+            "optional": true,
+            "integer": true,
+            "value-choices": [
+                0,
+                1
+            ]
+        },
+        {
+            "id": "use_random_seeding",
+            "name": "Use random seeding",
+            "type": "Number",
+            "value-key": "[USE_RANDOM_SEEDING]",
+            "command-line-flag": "-u",
+            "description": "0 or 1. Use random number generated from system clock in atropos (default = 1).",
+            "optional": true,
+            "integer": true,
+            "value-choices": [
+                0,
+                1
+            ]
+        }
+    ],
+    "output-files": [
+        {
+            "name": "Brainextractionbrain",
+            "id": "BrainExtractionBrain",
+            "path-template": "[OUT_PREFIX]BrainExtractionBrain.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. Brain extraction image."
+        },
+        {
+            "name": "Brainextractioncsf",
+            "id": "BrainExtractionCSF",
+            "path-template": "[OUT_PREFIX]BrainExtractionCSF.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. Segmentation mask with only csf."
+        },
+        {
+            "name": "Brainextractiongm",
+            "id": "BrainExtractionGM",
+            "path-template": "[OUT_PREFIX]BrainExtractionGM.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. Segmentation mask with only grey matter."
+        },
+        {
+            "name": "Brainextractioninitialaffine",
+            "id": "BrainExtractionInitialAffine",
+            "path-template": "[OUT_PREFIX]BrainExtractionInitialAffine.mat",
+            "optional": true,
+            "description": "An existing file name. No description provided."
+        },
+        {
+            "name": "Brainextractioninitialaffinefixed",
+            "id": "BrainExtractionInitialAffineFixed",
+            "path-template": "[OUT_PREFIX]BrainExtractionInitialAffineFixed.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. No description provided."
+        },
+        {
+            "name": "Brainextractioninitialaffinemoving",
+            "id": "BrainExtractionInitialAffineMoving",
+            "path-template": "[OUT_PREFIX]BrainExtractionInitialAffineMoving.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. No description provided."
+        },
+        {
+            "name": "Brainextractionlaplacian",
+            "id": "BrainExtractionLaplacian",
+            "path-template": "[OUT_PREFIX]BrainExtractionLaplacian.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. No description provided."
+        },
+        {
+            "name": "Brainextractionmask",
+            "id": "BrainExtractionMask",
+            "path-template": "[OUT_PREFIX]BrainExtractionMask.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. Brain extraction mask."
+        },
+        {
+            "name": "Brainextractionprior0genericaffine",
+            "id": "BrainExtractionPrior0GenericAffine",
+            "path-template": "[OUT_PREFIX]BrainExtractionPrior0GenericAffine.mat",
+            "optional": true,
+            "description": "An existing file name. No description provided."
+        },
+        {
+            "name": "Brainextractionprior1inversewarp",
+            "id": "BrainExtractionPrior1InverseWarp",
+            "path-template": "[OUT_PREFIX]BrainExtractionPrior1InverseWarp.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. No description provided."
+        },
+        {
+            "name": "Brainextractionprior1warp",
+            "id": "BrainExtractionPrior1Warp",
+            "path-template": "[OUT_PREFIX]BrainExtractionPrior1Warp.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. No description provided."
+        },
+        {
+            "name": "Brainextractionpriorwarped",
+            "id": "BrainExtractionPriorWarped",
+            "path-template": "[OUT_PREFIX]BrainExtractionPriorWarped.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. No description provided."
+        },
+        {
+            "name": "Brainextractionsegmentation",
+            "id": "BrainExtractionSegmentation",
+            "path-template": "[OUT_PREFIX]BrainExtractionSegmentation.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. Segmentation mask with csf, gm, and wm."
+        },
+        {
+            "name": "Brainextractiontemplatelaplacian",
+            "id": "BrainExtractionTemplateLaplacian",
+            "path-template": "[OUT_PREFIX]BrainExtractionTemplateLaplacian.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. No description provided."
+        },
+        {
+            "name": "Brainextractiontmp",
+            "id": "BrainExtractionTmp",
+            "path-template": "[OUT_PREFIX]BrainExtractionTmp.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. No description provided."
+        },
+        {
+            "name": "Brainextractionwm",
+            "id": "BrainExtractionWM",
+            "path-template": "[OUT_PREFIX]BrainExtractionWM.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. Segmenration mask with only white matter."
+        },
+        {
+            "name": "N4corrected0",
+            "id": "N4Corrected0",
+            "path-template": "[OUT_PREFIX]N4Corrected0.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. N4 bias field corrected image."
+        },
+        {
+            "name": "N4truncated0",
+            "id": "N4Truncated0",
+            "path-template": "[OUT_PREFIX]N4Truncated0.[IMAGE_SUFFIX]",
+            "optional": true,
+            "description": "An existing file name. No description provided."
+        }
+    ],
+    "tool-version": "1.0.0",
+    "schema-version": "0.5",
+    "container-image": {
+        "image": "bt5e/ants:latest",
+        "index": "index.docker.io",
+        "type": "docker"
+    },
+    "tags": {
+        "domain": "neuroinformatics",
+        "source": "nipype-interface"
+    }
+}

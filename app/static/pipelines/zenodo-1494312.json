@@ -1,0 +1,138 @@
+{
+    "tool-version": "5.0.0",
+    "name": "fsl_first",
+    "author": "Oxford Centre for Functional MRI of the Brain (FMRIB)",
+    "descriptor-url": "https://github.com/aces/cbrain-plugins-neuro/blob/master/cbrain_task_descriptors/fsl_first.json",
+    "command-line": "mkdir -p [OUTPUT_DIR]; run_first_all [METHOD] [BRAIN_EXTRACTED] [SPECIFIED_STRUCTURE] [AFFINE] [THREE_STAGE] [VERBOSE] [INPUT_FILE] -o [OUTPUT_DIR]/[PREFIX]",
+    "container-image": {
+        "image": "mcin/docker-fsl:latest", 
+        "index": "index.docker.io", 
+        "type": "docker"
+    },
+    "inputs": [
+        {
+            "command-line-flag": "-m",
+            "description": "Method must be one of 'auto' (default), 'fast', 'none', or it can be a numerical threshold value. This specifies the boundary correction method. Auto chooses different options for different structures using the settings that were found to be empirically optimal for each structure. Other options use: fast (using FAST-based, mixture-model, tissue-type classification) or threshold (thresholds a simple single-Gaussian intensity model).",
+            "value-key": "[METHOD]",
+            "type": "String",
+            "list": false,
+            "optional": true,
+            "id": "method",
+            "name": "Method"
+        },
+        {
+            "command-line-flag": "-i",
+            "description": "Input image file (e.g. img.nii.gz).",
+            "value-key": "[INPUT_FILE]",
+            "type": "File",
+            "list": false,
+            "optional": false,
+            "id": "input_file",
+            "name": "Input file"
+        },
+        {
+            "command-line-flag": "-b",
+            "description": "Whether the input is already brain extracted.",
+            "value-key": "[BRAIN_EXTRACTED]",
+            "type": "Flag",
+            "list": false,
+            "optional": true,
+            "id": "brain_extracted",
+            "name": "Brain extracted"
+        },
+        {
+            "command-line-flag": "-s",
+            "description": "Run only on one specified structure (e.g. L_Hipp) or a comma-separated list (no spaces). Choose from: 'L_Hipp', 'R_Hipp', 'L_Accu', 'R_Accu', 'L_Amyg', 'R_Amyg', 'L_Caud', 'R_Caud', 'L_Pall', 'R_Pall', 'L_Puta', 'R_Puta', 'L_Thal', 'R_Thal', 'BrStem'.",
+            "value-key": "[SPECIFIED_STRUCTURE]",
+            "type": "String",
+            "list": false,
+            "optional": true,
+            "id": "specified_structure",
+            "name": "Specify structure"
+        },
+        {
+            "command-line-flag": "-a",
+            "description": "Use affine matrix (i.e. do not re-run registration).",
+            "value-key": "[AFFINE]",
+            "type": "File",
+            "list": false,
+            "optional": true,
+            "id": "affine",
+            "name": "Use Affine Matrix"
+        },
+        {
+            "command-line-flag": "-3",
+            "description": "Use 3-stage affine registration. Only currently implemented for the hippocampus.",
+            "value-key": "[THREE_STAGE]",
+            "type": "Flag",
+            "list": false,
+            "optional": true,
+            "id": "three_stage",
+            "name": "Three stage registration"
+        },
+        {
+            "command-line-flag": "-v",
+            "description": "Verbose output.",
+            "value-key": "[VERBOSE]",
+            "type": "Flag",
+            "list": false,
+            "optional": true,
+            "id": "verbose",
+            "name": "Verbose"
+        },
+        {
+            "description": "Prefix for each files in the directory output.",
+            "value-key": "[PREFIX]",
+            "type": "String",
+            "optional": false,
+            "list": false,
+            "default-value": "output",
+            "id": "prefix",
+            "name": "Prefix"
+        }
+    ],
+    "schema-version": "0.5",
+    "output-files": [
+	{
+	"id": "outputs",
+	"name": "First Outputs",
+	"description": "Output directory of First",
+	"value-key": "[OUTPUT_DIR]",
+	"path-template": "[INPUT_FILE]",
+	"list": false,
+	"path-template-stripped-extensions": [".nii.gz", ".nii"]
+	},
+        {
+        "id": "std_sub_outputs",
+        "name": "Registered outputs",
+        "description": "Std sub output",
+        "path-template": "[INPUT_FILE]_to_std_sub*",
+        "list": true,
+        "path-template-stripped-extensions": [".nii.gz", ".nii"]
+        }
+    ],
+    "tests": [
+            {
+             "name": "fsl_first_test",
+             "invocation": {
+                    "input_file": "sub-01_T1w.nii.gz",
+                    "prefix": "img_first"
+                },
+                "assertions": {
+                    "exit-code": 0,
+                    "output-files": [
+                        {
+                            "id": "outputs"
+                        }
+                    ]
+                }
+        }
+    ],
+    "tags": {
+        "domain": [
+            "neuroinformatics", 
+            "mri"
+        ]
+    }, 
+    "description": "FIRST is a model-based segmentation and registration tool, based on a Bayesian model of shape and appearance for subcortical structures."
+}

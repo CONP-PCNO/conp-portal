@@ -1,0 +1,209 @@
+{
+    "tool-version": "0.3.1", 
+    "name": "ICA_AROMA", 
+    "author": "Maarten Mennes",
+    "command-line": "python /ICA-AROMA/ica-aroma-wrapper.py [OUTPUT_DIR] [INPUT_FILE] [AFFINE_FILE] [WARP_FILE] [REALIGNMENT_FILE] [MASK_FILE] [MELODIC_DIR] [FEAT_DIR] [TR_NUM] [DIMS_NUM] [DENOISING_STRATEGY]", 
+    "inputs": [
+        {
+            "command-line-flag": "-out", 
+            "description": "Output directory name.", 
+            "default-value": "AROMA_output", 
+            "value-key": "[OUTPUT_DIR]", 
+            "type": "String", 
+            "list": false, 
+            "optional": false, 
+            "id": "outdir", 
+            "name": "Output directory"
+        }, 
+        {
+            "command-line-flag": "-in", 
+            "description": "Input file name of fMRI data (.nii.gz).", 
+            "value-key": "[INPUT_FILE]", 
+            "type": "File", 
+            "list": false, 
+            "requires-inputs": [
+                "realignment_file", 
+                "affine_file", 
+                "warp_file"
+            ], 
+            "optional": true, 
+            "id": "infile", 
+            "name": "Input file"
+        }, 
+        {
+            "command-line-flag": "-affmat", 
+            "description": "File name of the mat-file describing the affine registration (e.g. FSL FLIRT) of the functional data to structural space (.mat file).", 
+            "value-key": "[AFFINE_FILE]", 
+            "type": "File", 
+            "list": false, 
+            "requires-inputs": [
+                "infile"
+            ], 
+            "optional": true, 
+            "id": "affine_file", 
+            "name": "Affine registration file"
+        }, 
+        {
+            "command-line-flag": "-warp", 
+            "description": "File name of the warp-file describing the non-linear registration (e.g. FSL FNIRT) of the structural data to MNI152 space (.nii.gz format).", 
+            "value-key": "[WARP_FILE]", 
+            "type": "File", 
+            "list": false, 
+            "requires-inputs": [
+                "infile"
+            ], 
+            "optional": true, 
+            "id": "warp_file", 
+            "name": "Non-linear registration warp file"
+        }, 
+        {
+            "command-line-flag": "-mc", 
+            "description": "File name of the text file containing the six (column-wise) realignment parameters time-courses derived from volume-realignment (e.g. MCFLIRT). (Usually .par format).", 
+            "value-key": "[REALIGNMENT_FILE]", 
+            "type": "File", 
+            "list": false, 
+            "requires-inputs": [
+                "infile"
+            ], 
+            "optional": true, 
+            "id": "realignment_file", 
+            "name": "Realignment file"
+        }, 
+        {
+            "command-line-flag": "-mask", 
+            "description": "Input fMRI data should be masked (i.e. brain-extracted) or a specific mask has to be specified (-m, -mask) when running ICA-AROMA. Note the mask determined by FEAT is not recommended to be used; rather, a mask can be created via the Brain Extraction Tool of FSL (e.g. bet input output -f 0.3 -n -m -R). Not strictly required in generic mode. (Usually .nii.gz format.)", 
+            "value-key": "[MASK_FILE]", 
+            "type": "File", 
+            "list": false, 
+            "requires-inputs": [
+                "infile"
+            ], 
+            "optional": true, 
+            "id": "mask_file", 
+            "name": "Mask file"
+        }, 
+        {
+            "command-line-flag": "-md", 
+            "description": "When you have already run MELODIC you can specify the melodic directory as additional input to avoid running MELODIC again. Note that MELODIC should have been run on the fMRI data prior to temporal filtering and after spatial smoothing. Further, unless you have a good reason for doing otherwise, we advise to run MELODIC as part of ICA-AROMA so that it runs with optimal settings. (Usually .ica extension.)", 
+            "value-key": "[MELODIC_DIR]", 
+            "type": "File", 
+            "list": false, 
+            "optional": true, 
+            "id": "melodic_dir", 
+            "name": "Melodic directory"
+        }, 
+        {
+            "command-line-flag": "-feat", 
+            "description": "Runs ICA-AROMA in post-FEAT mode. In this case, only the FEAT directory has to be specified, as well as an output directory. ICA-AROMA will automatically define the appropriate files, create an appropriate mask (see ICA-AROMA manual, section 4.1) and use the melodic.ica directory if available, in case \u2018MELODIC ICA data exploration\u2019 was checked in FEAT. (.feat extension.)", 
+            "value-key": "[FEAT_DIR]", 
+            "type": "File", 
+            "list": false, 
+            "disables-inputs": [
+                "realignment_file", 
+                "affine_file", 
+                "warp_file", 
+                "mask_file"
+            ], 
+            "optional": true, 
+            "id": "feat_dir", 
+            "name": "FEAT directory"
+        }, 
+        {
+            "command-line-flag": "-tr", 
+            "description": "TR in seconds. If this is not specified the TR will be extracted from the header of the fMRI file using \u2018fslinfo\u2019. In that case, make sure the TR in the header is correct!", 
+            "value-key": "[TR_NUM]", 
+            "type": "Number", 
+            "list": false, 
+            "minimum": 0, 
+            "optional": true, 
+            "id": "tr_num", 
+            "name": "TR"
+        }, 
+        {
+            "command-line-flag": "-dim", 
+            "description": "Dimensionality reduction into a defined number of dimensions when running MELODIC (default is 0; automatic estimation).", 
+            "value-key": "[DIMS_NUM]", 
+            "type": "Number", 
+            "list": false, 
+            "minimum": 0, 
+            "integer": true, 
+            "optional": true, 
+            "id": "dims_num", 
+            "name": "Dimensionality reduction level"
+        }, 
+        {
+            "command-line-flag": "-den", 
+            "description": "Type of denoising strategy (default is nonaggr). Can be \"no\" (only classification, no denoising), \"nonaggr\" (non-aggressive denoising, i.e. partial component regression; default), \"aggr\" (aggressive denoising, i.e. full component regression), \"both\" (both aggressive and non-aggressive denoising, two outputs).", 
+            "value-key": "[DENOISING_STRATEGY]", 
+            "optional": true, 
+            "list": false, 
+            "value-choices": [
+                "no", 
+                "nonaggr", 
+                "aggr", 
+                "both"
+            ], 
+            "type": "String", 
+            "id": "denoising_strategy", 
+            "name": "Denoising strategy"
+        }
+    ], 
+    "container-image": {
+        "index": "index.docker.io", 
+        "image": "mcin/ica-aroma:latest", 
+        "type": "docker"
+    }, 
+    "schema-version": "0.5", 
+    "groups": [
+        {
+            "description": "Either input a .nii.gz file or a Feat directory. The former allows running ICA-AROMA in generic mode; the latter runs it in Feat mode.", 
+            "one-is-required": true, 
+            "mutually-exclusive": true, 
+            "members": [
+                "infile", 
+                "feat_dir"
+            ], 
+            "id": "input_data_group", 
+            "name": "Input Data"
+        }, 
+        {
+            "description": "Input files used in generic mode. The realignment, affine registration, and warp files are required in this mode.", 
+            "id": "generic_mode_group", 
+            "members": [
+                "realignment_file", 
+                "affine_file", 
+                "warp_file", 
+                "mask_file"
+            ], 
+            "name": "Generic Mode Parameters"
+        }, 
+        {
+            "description": "Optional parameters that can be specified in either mode of ICA-AROMA.", 
+            "id": "optional_args_group", 
+            "members": [
+                "tr_num", 
+                "denoising_strategy", 
+                "dims_num", 
+                "melodic_dir"
+            ], 
+            "name": "Optional Parameters"
+        }
+    ], 
+    "output-files": [
+        {
+            "description": "A folder containing the output files for ICA-AROMA (see ICA-AROMA manual, sec. 6). Should include a denoised fMRI data file (.nii.gz), text files indicating classification and feature results, and Melodic-related files (spatial maps in .nii.gz, a mask in .nii.gz, and the .ica output directory).", 
+            "list": false, 
+            "id": "folder_out", 
+            "optional": false, 
+            "path-template": "[OUTPUT_DIR]", 
+            "name": "Output folder"
+        }
+    ], 
+    "suggested-resources": {
+        "walltime-estimate": 5000
+    }, 
+    "description": "ICA-AROMA (i.e. Independent Component Analyis-based Automatic Removal Of Motion Artifacts) is a data-driven method to identify and remove motion-related independent components from fMRI data.",
+    "tags": {
+        "domain": "fmri"
+    }
+}

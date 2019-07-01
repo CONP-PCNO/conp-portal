@@ -409,7 +409,10 @@ def pipeline_search():
         # initialize variables
         search_query = request.args.get("search").lower()
         sort_key = request.args.get("sortKey") or "downloads-desc"
-        cache_dir = os.path.join(os.path.expanduser('~'), ".cache", "boutiques")
+
+        #cache_dir = os.path.join(os.path.expanduser('~'), ".cache", "boutiques")
+        cache_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static/pipelines')
+
         all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
         all_detailed_desc_path = os.path.join(cache_dir, "detailed_all_descriptors.json")
 

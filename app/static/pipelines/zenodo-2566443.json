@@ -1,0 +1,73 @@
+{
+    "author": "Greg Kiar",
+    "command-line": "python3 /opt/mask2boundary.py [MASK] [OUTPUT] [WIDTH] [BOUTIQUES]",
+    "container-image": {
+        "image": "gkiar/mask2boundary:v0.1.0",
+        "index": "index.docker.io",
+        "type": "docker"
+    },
+    "description": "Transforms a binary mask of a niftii image (such as a brain or white matter mask) into a boundary mask. This tool was originally developed to transform a white matter mask into a mask of seed locations for performing tractography in diffusion images.",
+    "inputs": [
+        {
+            "description": "Nifti image containing a binary mask.",
+            "id": "mask",
+            "name": "mask",
+            "optional": false,
+            "type": "String",
+            "value-key": "[MASK]"
+        },
+        {
+            "description": "Path for output Nifti image containing the mask boundary.",
+            "id": "output",
+            "name": "output",
+            "optional": false,
+            "type": "String",
+            "value-key": "[OUTPUT]"
+        },
+        {
+            "command-line-flag": "--width",
+            "default-value": 3,
+            "description": "Width of the boundary to be stored.",
+            "id": "width",
+            "integer": true,
+            "minimum": 1,
+            "name": "width",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[WIDTH]"
+        },
+        {
+            "command-line-flag": "--boutiques",
+            "description": "Toggles creation of a Boutiques descriptor and invocation from the tool and inputs.",
+            "id": "boutiques",
+            "name": "boutiques",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[BOUTIQUES]"
+        }
+    ],
+    "name": "mask2boundary",
+    "output-files": [
+        {
+            "path-template": "[OUTPUT]",
+            "optional": false,
+            "id": "mask_boundary",
+            "name": "Boundary Mask"
+        }
+    ],
+    "schema-version": "0.5",
+    "suggested-resources": {
+        "cpu-cores": 1,
+        "ram": 1,
+        "walltime-estimate": 20
+    },
+    "tags": {
+        "domain": [
+            "neuroinformatics",
+            "mri",
+            "nifti",
+            "dmri"
+        ]
+    },
+    "tool-version": "v0.1.0"
+}

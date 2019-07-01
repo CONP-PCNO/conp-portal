@@ -1,0 +1,165 @@
+{
+    "author": "Greg Kiar",
+    "command-line": "ndmg_bids BIDS_DIR OUTPUT_DIR ANALYSIS_LEVEL PARTICIPANT_LABEL SESSION_LABEL BUCKET REMOTE_PATH PUSH_DATA DATASET ATLAS MINIMAL HEMISPHERES LOG DEBUG STC",
+    "container-image": {
+      "image": "bids/ndmg:v0.1.0",
+      "index": "index.docker.io",
+      "type": "docker"
+    },
+    "description": "ndmg connectome estimation pipeline",
+    "inputs": [
+        {
+            "description": "The directory with the input dataset formatted according to the BIDS standard.",
+            "id": "bids_dir",
+            "name": "bids_dir",
+            "optional": false,
+            "type": "File",
+            "value-key": "BIDS_DIR"
+        },
+        {
+            "description": "The directory where the output files should be stored. If you are running group level analysis this folder should be prepopulated with the results of the participant level analysis.",
+            "id": "output_dir",
+            "name": "output_dir",
+            "optional": false,
+            "type": "File",
+            "value-key": "OUTPUT_DIR"
+        },
+        {
+            "description": "Level of the analysis that will be performed. Multiple participant level analyses can be run independently (in parallel) using the same output_dir.",
+            "id": "analysis_level",
+            "name": "analysis_level",
+            "optional": false,
+            "type": "String",
+            "value-choices": [
+                "participant",
+                "group"
+            ],
+            "value-key": "ANALYSIS_LEVEL"
+        },
+        {
+            "command-line-flag": "--participant_label",
+            "description": "The label(s) of the participant(s) that should be analyzed. The label corresponds to sub-<participant_label> from the BIDS spec (so it does not include \"sub-\"). If this parameter is not provided all subjects should be analyzed. Multiple participants can be specified with a space separated list.",
+            "id": "participant_label",
+            "name": "participant_label",
+            "optional": true,
+            "type": "String",
+				    "list" : true,
+            "value-key": "PARTICIPANT_LABEL"
+        },
+        {
+            "command-line-flag": "--session_label",
+            "description": "The label(s) of the session that should be analyzed. The label corresponds to ses-<participant_label> from the BIDS spec (so it does not include \"ses-\"). If this parameter is not provided all sessions should be analyzed. Multiple sessions can be specified with a space separated list.",
+            "id": "session_label",
+            "name": "session_label",
+            "optional": true,
+            "type": "String",
+				    "list" : true,
+            "value-key": "SESSION_LABEL"
+        },
+        {
+            "command-line-flag": "--bucket",
+            "description": "The name of an S3 bucket which holds BIDS organized data. You must have built your bucket with credentials to the S3 bucket you wish to access.",
+            "id": "bucket",
+            "name": "bucket",
+            "optional": true,
+            "type": "String",
+            "value-key": "BUCKET"
+        },
+        {
+            "command-line-flag": "--remote_path",
+            "description": "The path to the data on your S3 bucket. The data will be downloaded to the provided bids_dir on your machine.",
+            "id": "remote_path",
+            "name": "remote_path",
+            "optional": true,
+            "type": "String",
+            "value-key": "REMOTE_PATH"
+        },
+        {
+            "command-line-flag": "--push_data",
+            "description": "flag to push derivatives back up to S3.",
+            "id": "push_data",
+            "name": "push_data",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "PUSH_DATA"
+        },
+        {
+            "command-line-flag": "--dataset",
+            "description": "The name of the dataset you are perfoming QC on.",
+            "id": "dataset",
+            "name": "dataset",
+            "optional": true,
+            "type": "String",
+            "value-key": "DATASET"
+        },
+        {
+            "command-line-flag": "--atlas",
+            "description": "The atlas being analyzed in QC (if you only want one).",
+            "id": "atlas",
+            "name": "atlas",
+            "optional": true,
+            "type": "String",
+            "value-key": "ATLAS"
+        },
+        {
+            "command-line-flag": "--minimal",
+            "description": "Determines whether to show a minimal or full set of plots.",
+            "id": "minimal",
+            "name": "minimal",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "MINIMAL"
+        },
+        {
+            "command-line-flag": "--hemispheres",
+            "description": "Whether or not to break degrees into hemispheres or not",
+            "id": "hemispheres",
+            "name": "hemispheres",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "HEMISPHERES"
+        },
+        {
+            "command-line-flag": "--log",
+            "description": "Determines axis scale for plotting.",
+            "id": "log",
+            "name": "log",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "LOG"
+        },
+        {
+            "command-line-flag": "--debug",
+            "description": "flag to store temp files along the path of processing.",
+            "id": "debug",
+            "name": "debug",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "DEBUG"
+        }
+    ],
+    "name": "BIDS App - ndmg",
+    "output-files": [
+      {
+        "id": "output_directory",
+        "name": "BIDS derivatives directory from ndmg",
+        "optional": false,
+        "path-template": "OUTPUT_DIR"
+      }
+    ],
+    "schema-version": "0.5",
+    "suggested-resources": {
+        "cpu-cores": 1,
+        "ram": 12,
+        "walltime-estimate": 7200
+    },
+    "tags": {
+        "domain": [
+            "neuroinformatics",
+            "diffusion",
+            "mri",
+            "bids"
+        ]
+    },
+    "tool-version": "v0.1.0"
+}

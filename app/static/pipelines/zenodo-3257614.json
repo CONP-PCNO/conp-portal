@@ -1,0 +1,231 @@
+{
+    "name": "spark",
+    "schema-version": "0.5",
+    "tool-version": "v1.2.1",
+    "tags": {
+        "domain": "neuroinformatics"
+    },
+    "author": "Kangjoo Lee, Jean-Marc Lina, Jean Gotman, Christophe Grova",
+    "description": "SParsity-based Analysis of Reliable K-hubness (SPARK) for brain fMRI functional connectivity",
+    "container-image": {
+        "type": "singularity",
+        "image": "multifunkimlab/spark:1.2.1"
+    },
+    "command-line": "octave --no-gui --no-init-file -q $SPARK_ROOT/SPARK.m [FMRI_DATA] [MASK] [OUT_DIR] [NB_RESAMPLING] [NETWORK_SCALES] [NB_ITERATIONS] [P_VALUE] [RESAMPLING_METHOD] [BLOCK_WINDOW_LENGTH] [DICT_INIT_METHOD] [SPARSE_CODING_METHOD] [PRESERVE_DC_ATOM] [MAX_PARALLEL_JOBS]",
+
+    "groups": [
+        {
+            "id": "bootstrap_resampling",
+            "name": "Bootstrap resampling",
+            "members": [
+                "nb_resampling",
+                "resampling_method",
+                "block_window_length"
+            ]
+        },
+        {
+            "id": "sparse_dict_learning",
+            "name": "Sparse dictionary learning",
+            "members": [
+                "network_scales",
+                "nb_iterations",
+                "dict_init_method",
+                "sparse_coding_method",
+                "preserve_dc_atom"
+            ]
+        },
+        {
+            "id": "k_hubness_map_generation",
+            "name": "k-hubness map generation",
+            "members": [
+                "p_value"
+            ]
+        }
+    ],
+    "output-files": [
+        {
+            "id": "result",
+            "name": "Results directory",
+            "description": "Results directory containing:  k-hubness maps, atom maps and intermediate files. (file formats: MINC, NIfTI)",
+            "path-template": "[OUT_DIR]",
+            "optional": false
+        }
+    ],
+    "inputs": [
+        {
+            "id": "fmri_data",
+            "name": "fMRI data",
+            "description": "The fMRI data to analyze. (file formats: MINC, NIfTI)",
+            "type": "File",
+            "optional": false,
+            "command-line-flag": "--fmri-data",
+            "value-key": "[FMRI_DATA]"
+        },
+        {
+            "id": "mask",
+            "name": "Grey-matter mask",
+            "description": "Path to the grey-matter mask. (file formats: MINC, NIfTI)",
+            "type": "File",
+            "optional": false,
+            "command-line-flag": "--mask",
+            "value-key": "[MASK]"
+        },
+        {
+            "id": "out_dir",
+            "name": "Output name",
+            "description": "The name of the output directory.",
+            "type": "String",
+            "optional": false,
+            "command-line-flag": "--out-dir",
+            "value-key": "[OUT_DIR]"
+        },
+        {
+            "id": "nb_resampling",
+            "name": "Number of resampling",
+            "description": "Number of bootstrap resampling at the individual level. (recommended: 100)",
+            "type": "Number",
+            "optional": false,
+            "integer": true,
+            "minimum": 2,
+            "command-line-flag": "--nb-resampling",
+            "value-key": "[NB_RESAMPLING]"
+        },
+        {
+            "id": "network_scales",
+            "name": "Network scales",
+            "description": "Three numbers, respectively: [begin] [step] [end], used to create a regularly-spaced vector. In order to specify a single number, for instance '15', enter the same number for [begin] and [end], as: 15 1 15. This vector of numbers corresponds to the range of network scales to be tested. An optimal network scale is estimated from the specified set of numbers. (recommended: 10 2 30)",
+            "type": "Number",
+            "optional": false,
+            "list": true,
+            "integer": true,
+            "min-list-entries": 3,
+            "max-list-entries": 3,
+            "minimum": 1,
+            "command-line-flag": "--network-scales",
+            "value-key": "[NETWORK_SCALES]"
+        },
+        {
+            "id": "nb_iterations",
+            "name": "Number of iterations",
+            "description": "Number of iterations for the sparse dictionary learning.  (recommended: 20)",
+            "type": "Number",
+            "optional": false,
+            "integer": true,
+            "minimum": 2,
+            "command-line-flag": "--nb-iterations",
+            "value-key": "[NB_ITERATIONS]"
+        },
+        {
+            "id": "p_value",
+            "name": "P-Value",
+            "description": "Significance level, using a Z-test, for removing inconsistent elements in the average sparse coefficients (considered as the Gaussian noise) after spatial clustering (using a threshold).",
+            "type": "Number",
+            "optional": false,
+            "minimum": 0,
+            "maximum": 1,
+            "command-line-flag": "--p-value",
+            "value-key": "[P_VALUE]"
+        },
+        {
+            "id": "resampling_method",
+            "name": "Resampling method",
+            "description": "Method (from NIAK) used to resample the data under the null hypothesis. Note: If 'CBB' is selected, the option --block-window-length is used. [CBB]: Circular-block-bootstrap sample of multiple time series. [AR1B]: Bootstrap sample of multiple time series based on a semiparametric scheme mixing an auto-regressive temporal model and i.i.d. bootstrap of the 'innovations'. [AR1G]: (Bootstrap sample of multiple time series based on a parametric model of Gaussian data with arbitrary spatial correlations and first-order auto-regressive temporal correlations.",
+            "type": "String",
+            "optional": true,
+            "value-choices": [
+                "CBB",
+                "AR1B",
+                "AR1G"
+            ],
+            "value-disables": {
+                "CBB": [
+                ],
+                "AR1B": [
+                    "block_window_length"
+                ],
+                "AR1G": [
+                    "block_window_length"
+                ]
+            },
+            "value-requires": {
+                "CBB": [
+                    "block_window_length"
+                ],
+                "AR1B": [
+                ],
+                "AR1G": [
+                ]
+            },
+            "default-value": "CBB",
+            "command-line-flag": "--resampling-method",
+            "value-key": "[RESAMPLING_METHOD]"
+        },
+        {
+            "id": "block_window_length",
+            "name": "Block window length",
+            "description": "Three numbers, respectively: [begin] [step] [end], used to create a regularly-spaced vector. In order to specify a single number, for instance '15', enter the same number for [begin] and [end], as: 15 1 15. A number in this vector corresponds to a window length used in the circular block bootstrap. The unit of the window length is ‘time-point’ with each time-point indicating a 3D scan at each TR. If multiple numbers are specified, then a number is randomly selected from the list at each resampling. It is recommended to use a minimum of sqrt(T), where T is the total number of time points in the fMRI time-course. It is also recommended to randomize the window length to reduce a bias by window size.",
+            "type": "Number",
+            "optional": true,
+            "list": true,
+            "integer": true,
+            "min-list-entries": 3,
+            "max-list-entries": 3,
+            "minimum": 1,
+            "default-value": [10, 1, 30],
+            "command-line-flag": "--block-window-length",
+            "value-key": "[BLOCK_WINDOW_LENGTH]"
+        },
+        {
+            "id": "dict_init_method",
+            "name": "Dictionary initialization method",
+            "description": "If 'GivenMatrix' is selected, then the dictionary will be initialized by a random permutation of the raw data obtained in step 1. If 'DataElements' is selected, then the dictionary will be initialized by the first N (number of atoms) columns in the raw data obtained in step 1.",
+            "type": "String",
+            "optional": true,
+            "value-choices": [
+                "GivenMatrix",
+                "DataElements"
+            ],
+            "default-value": "GivenMatrix",
+            "command-line-flag": "--dict-init-method",
+            "value-key": "[DICT_INIT_METHOD]"
+        },
+        {
+            "id": "sparse_coding_method",
+            "name": "Sparse coding method",
+            "description": "Sparse coding method for the sparse dictionary learning.",
+            "type": "String",
+            "optional": true,
+            "value-choices": [
+                "OMP",
+                "Thresholding"
+            ],
+            "default-value": "Thresholding",
+            "command-line-flag": "--sparse-coding-method",
+            "value-key": "[SPARSE_CODING_METHOD]"
+        },
+        {
+            "id": "preserve_dc_atom",
+            "name": "Perserve first atom",
+            "description": "If set, then the first atom will be set to a constant and will never change, while all the other atoms will be trained and updated.",
+            "type": "Flag",
+            "optional": true,
+            "command-line-flag": "--preserve-dc-atom",
+            "value-key": "[PRESERVE_DC_ATOM]"
+        },
+        {
+            "id": "max_parallel_jobs",
+            "name": "Number of parallel jobs",
+            "description": "Maximum number of jobs to run in parallel.",
+            "type": "Number",
+            "optional": true,
+            "default-value": 12,
+            "command-line-flag": "--max-parallel-jobs",
+            "value-key": "[MAX_PARALLEL_JOBS]"
+        }
+    ],
+    "suggested-resources": {
+        "cpu-cores": 2,
+        "ram": 12,
+        "walltime-estimate": 100000
+    }
+}

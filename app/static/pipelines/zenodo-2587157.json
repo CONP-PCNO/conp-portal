@@ -1,0 +1,144 @@
+{
+    "tool-version": "v2.7.1", 
+    "description": "Stand-alone BLAST formatter client, version 2.7.1+", 
+    "command-line": "init_genpipes -a /tmp/$USER/cvmfs-cache -c /etc/parrot/ /cvmfs/soft.mugqic/CentOS6/software/blast/ncbi-blast-2.7.1+/bin/blast_formatter [RID] [ARCHIVE] [OUTFORMAT] [fSHOWGIS] [NUM_DESCRIPTIONS] [NUM_ALIGNMENTS] [LINE_LENGTH] [fHTML] [MAX_TARGET_SEQS] [OUT] [fPARSE_DEFLINES]", 
+    "author": "Altschul et al.", 
+    "tags": {
+        "domain": [
+            "bioinformatics", 
+            "blast"
+        ]
+    }, 
+    "container-image": {
+        "index": "docker://", 
+        "image": "c3genomics/genpipes", 
+        "type": "singularity"
+    }, 
+    "inputs": [
+        {
+            "command-line-flag": "-show_gis", 
+            "description": "Show NCBI GIs in deflines?", 
+            "value-key": "[fSHOWGIS]", 
+            "optional": true, 
+            "type": "Flag", 
+            "id": "show_gis", 
+            "name": "Show NCBI GIs"
+        }, 
+        {
+            "command-line-flag": "-html", 
+            "description": "Produce HTML Output", 
+            "value-key": "[fHTML]", 
+            "optional": true, 
+            "type": "Flag", 
+            "id": "html", 
+            "name": "Show HTML"
+        }, 
+        {
+            "command-line-flag": "-parse_deflines", 
+            "description": "Should the query and subject defline(s) be parsed?", 
+            "value-key": "[fPARSE_DEFLINES]", 
+            "optional": true, 
+            "type": "Flag", 
+            "id": "parse_deflines", 
+            "name": "Parse Deflines"
+        }, 
+        {
+            "command-line-flag": "-rid", 
+            "description": "BLAST Request ID (RID)", 
+            "disables-inputs": [
+                "archive"
+            ], 
+            "optional": true, 
+            "value-key": "[RID]", 
+            "type": "String", 
+            "id": "rid", 
+            "name": "BLAST Request ID"
+        }, 
+        {
+            "command-line-flag": "-archive", 
+            "description": "File containing BLAST Archive format in ASN.1 (i.e.: output format 11)", 
+            "value-key": "[ARCHIVE]", 
+            "optional": true, 
+            "type": "File", 
+            "id": "archive", 
+            "name": "Blast Archive File"
+        }, 
+        {
+            "command-line-flag": "-outfmt", 
+            "description": "   alignment view options:\n     0 = Pairwise,\n     1 = Query-anchored showing identities,\n     2 = Query-anchored no identities,\n     3 = Flat query-anchored showing identities,\n     4 = Flat query-anchored no identities,\n     5 = BLAST XML,\n     6 = Tabular,\n     7 = Tabular with comment lines,\n     8 = Seqalign (Text ASN.1),\n     9 = Seqalign (Binary ASN.1),\n    10 = Comma-separated values,\n    11 = BLAST archive (ASN.1),\n    12 = Seqalign (JSON),\n    13 = Multiple-file BLAST JSON,\n    14 = Multiple-file BLAST XML2,\n    15 = Single-file BLAST JSON,\n    16 = Single-file BLAST XML2,\n    17 = Sequence Alignment/Map (SAM),\n    18 = Organism Report\n\n   Options 6, 7, 10 and 17 can be additionally configured to produce\n   a custom format specified by space delimited format specifiers.\n   The supported format specifiers for options 6, 7 and 10 are:\n            qseqid means Query Seq-id\n               qgi means Query GI\n              qacc means Query accesion\n           qaccver means Query accesion.version\n              qlen means Query sequence length\n            sseqid means Subject Seq-id\n         sallseqid means All subject Seq-id(s), separated by a ';'\n               sgi means Subject GI\n            sallgi means All subject GIs\n              sacc means Subject accession\n           saccver means Subject accession.version\n           sallacc means All subject accessions\n              slen means Subject sequence length\n            qstart means Start of alignment in query\n              qend means End of alignment in query\n            sstart means Start of alignment in subject\n              send means End of alignment in subject\n              qseq means Aligned part of query sequence\n              sseq means Aligned part of subject sequence\n            evalue means Expect value\n          bitscore means Bit score\n             score means Raw score\n            length means Alignment length\n            pident means Percentage of identical matches\n            nident means Number of identical matches\n          mismatch means Number of mismatches\n          positive means Number of positive-scoring matches\n           gapopen means Number of gap openings\n              gaps means Total number of gaps\n              ppos means Percentage of positive-scoring matches\n            frames means Query and subject frames separated by a '/'\n            qframe means Query frame\n            sframe means Subject frame\n              btop means Blast traceback operations (BTOP)\n            staxid means Subject Taxonomy ID\n          ssciname means Subject Scientific Name\n          scomname means Subject Common Name\n        sblastname means Subject Blast Name\n         sskingdom means Subject Super Kingdom\n           staxids means unique Subject Taxonomy ID(s), separated by a ';'\n                         (in numerical order)\n         sscinames means unique Subject Scientific Name(s), separated by a ';'\n         scomnames means unique Subject Common Name(s), separated by a ';'\n        sblastnames means unique Subject Blast Name(s), separated by a ';'\n                         (in alphabetical order)\n        sskingdoms means unique Subject Super Kingdom(s), separated by a ';'\n                         (in alphabetical order)\n            stitle means Subject Title\n        salltitles means All Subject Title(s), separated by a '<>'\n           sstrand means Subject Strand\n             qcovs means Query Coverage Per Subject\n           qcovhsp means Query Coverage Per HSP\n            qcovus means Query Coverage Per Unique Subject (blastn only)\n   When not provided, the default value is:\n   'qaccver saccver pident length mismatch gapopen qstart qend sstart send\n   evalue bitscore', which is equivalent to the keyword 'std'\n   The supported format specifier for option 17 is:\n                SQ means Include Sequence Data\n                SR means Subject as Reference Seq\n  Default = `0'", 
+            "value-key": "[OUTFORMAT]", 
+            "optional": true, 
+            "type": "String", 
+            "id": "outfmt", 
+            "name": "Alignment View Options"
+        }, 
+        {
+            "command-line-flag": "-num_descriptions", 
+            "description": "   Number of database sequences to show one-line descriptions for\n   Not applicable for outfmt > 4\n   Default = `500'", 
+            "value-key": "[NUM_DESCRIPTIONS]", 
+            "optional": true, 
+            "minimum": 0, 
+            "type": "Number", 
+            "id": "num_descriptions", 
+            "name": "Number of Sequence Descriptions to Show"
+        }, 
+        {
+            "command-line-flag": "-num_alignments", 
+            "description": "   Number of database sequences to show alignments for\n   Default = `250'", 
+            "value-key": "[NUM_ALIGNMENTS]", 
+            "optional": true, 
+            "minimum": 0, 
+            "type": "Number", 
+            "id": "num_alignments", 
+            "name": "Number of Sequence Alignments to Show"
+        }, 
+        {
+            "command-line-flag": "-line_length", 
+            "description": "   Line length for formatting alignments\n   Not applicable for outfmt > 4\n   Default = `60'", 
+            "value-key": "[LINE_LENGTH]", 
+            "optional": true, 
+            "minimum": 1, 
+            "type": "Number", 
+            "id": "line_length", 
+            "name": "Line Length"
+        }, 
+        {
+            "command-line-flag": "-max_target_seqs", 
+            "description": "   Maximum number of aligned sequences to keep\n   Not applicable for outfmt <= 4\n   Default = `500'", 
+            "value-key": "[MAX_TARGET_SEQS]", 
+            "optional": true, 
+            "disables-inputs": [
+                "num_descriptions", 
+                "num_alignments"
+            ], 
+            "minimum": 1, 
+            "type": "Number", 
+            "id": "max_target_seqs", 
+            "name": "Maximum Number of Aligned Sequences to Keep"
+        }, 
+        {
+            "command-line-flag": "-out", 
+            "description": "   Output file name", 
+            "value-key": "[OUT]", 
+            "optional": true, 
+            "type": "String", 
+            "id": "out", 
+            "name": "Output file name"
+        }
+    ], 
+    "schema-version": "0.5", 
+    "output-files": [
+        {
+            "path-template": "[OUT]", 
+            "optional": false, 
+            "id": "output", 
+            "name": "Output File"
+        }
+    ], 
+    "suggested-resources": {
+        "walltime-estimate": 60, 
+        "ram": 1, 
+        "cpu-cores": 1
+    }, 
+    "name": "blast_formatter"
+}

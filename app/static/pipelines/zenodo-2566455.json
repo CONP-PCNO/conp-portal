@@ -1,0 +1,128 @@
+{
+    "author": "Greg Kiar, using FSL from FMRIB at Oxford",
+    "command-line": "python3 /opt/preprocessing_pipeline.py [BIDS_DIR] [OUTPUT_DIR] [ANALYSIS_LEVEL] [PARTICIPANT_LABEL] [SESSION_LABEL] [VERBOSE] [BOUTIQUES] [GPU] [FSLDIR] [PARCELLATION]",
+    "container-image": {
+        "image": "gkiar/dwipreproc_fsl-5.0.11_minified",
+        "index": "docker.io",
+        "type": "docker"
+    },
+    "description": "Preprocessing pipeline for diffusion MRI data using the FSL software suite.",
+    "inputs": [
+        {
+            "description": "Directory to a BIDS-organized dataset.",
+            "id": "bids_dir",
+            "name": "bids_dir",
+            "optional": false,
+            "type": "String",
+            "value-key": "[BIDS_DIR]"
+        },
+        {
+            "description": "Directory to store the preprocessed derivatives.",
+            "id": "output_dir",
+            "name": "output_dir",
+            "optional": false,
+            "type": "String",
+            "value-key": "[OUTPUT_DIR]"
+        },
+        {
+            "description": "Level of analysis to perform. Options: session",
+            "id": "analysis_level",
+            "name": "analysis_level",
+            "optional": false,
+            "type": "String",
+            "value-choices": [
+                "session"
+            ],
+            "value-key": "[ANALYSIS_LEVEL]"
+        },
+        {
+            "command-line-flag": "--participant_label",
+            "description": "Label of the participant(s) to process, omitting the 'sub-' portion of the directory name. Supplying none means the entire dataset will be processed.",
+            "id": "participant_label",
+            "name": "participant_label",
+            "optional": true,
+            "type": "String",
+            "value-key": "[PARTICIPANT_LABEL]"
+        },
+        {
+            "command-line-flag": "--session_label",
+            "description": "Label of the session(s) to process, omitting the 'ses-' portion of the directory name. Supplying none means the entire dataset will be processed.",
+            "id": "session_label",
+            "name": "session_label",
+            "optional": true,
+            "type": "String",
+            "value-key": "[SESSION_LABEL]"
+        },
+        {
+            "command-line-flag": "--verbose",
+            "description": "Flag toggling verbose output statements.",
+            "id": "verbose",
+            "name": "verbose",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[VERBOSE]"
+        },
+        {
+            "command-line-flag": "--boutiques",
+            "description": "Flag toggling descriptor creation.",
+            "id": "boutiques",
+            "name": "boutiques",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[BOUTIQUES]"
+        },
+        {
+            "command-line-flag": "--gpu",
+            "description": "Toggles using GPU accelerated eddy.",
+            "id": "gpu",
+            "name": "gpu",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[GPU]"
+        },
+        {
+            "command-line-flag": "--fsldir",
+            "default-value": "/usr/share/fsl/",
+            "description": "Path to local installation of FSL. Defaults to /usr/share/fsl/.",
+            "id": "fsldir",
+            "name": "fsldir",
+            "optional": true,
+            "type": "String",
+            "value-key": "[FSLDIR]"
+        },
+        {
+            "command-line-flag": "--parcellation",
+            "description": "Parcellation/Label volumes which will be transformed into the subject/session DWI space.",
+            "id": "parcellation",
+            "list": true,
+            "name": "parcellation",
+            "optional": true,
+            "type": "String",
+            "value-key": "[PARCELLATION]"
+        }
+    ],
+    "name": "BIDS App - FSL Diffusion Preprocessing",
+    "output-files": [
+        {
+            "description": "Directory to store the preprocessed derivatives.",
+            "id": "output_dir_path",
+            "name": "Output directory",
+            "optional": false,
+            "path-template": "[OUTPUT_DIR]"
+        }
+    ],
+    "schema-version": "0.5",
+    "suggested-resources": {
+        "cpu-cores": 1,
+        "ram": 8,
+        "walltime-estimate": 10800
+    },
+    "tags": {
+        "domain": [
+            "neuroinformatics",
+            "diffusion MRI",
+            "dwi"
+        ]
+    },
+    "tool-version": "5.0.9"
+}

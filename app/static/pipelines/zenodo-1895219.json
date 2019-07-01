@@ -1,0 +1,480 @@
+{
+    "command-line": "fmriprep [BIDS_DIR] [OUTPUT_DIR] [ANALYSIS_LEVEL] [VERSION] [PARTICIPANT_LABEL] [TASK_ID] [NTHREADS] [OMP_NTHREADS] [MEM_MB] [LOW_MEM] [USE_PLUGIN] [ANAT_ONLY] [BOILERPLATE] [IGNORE_AROMA_DENOISING_ERRORS] [VERBOSE_COUNT] [DEBUG] [IGNORE] [LONGITUDINAL] [T2S_COREG] [BOLD2T1W_DOF] [OUTPUT_SPACE] [USE_BBR] [TEMPLATE] [OUTPUT_GRID_REFERENCE] [TEMPLATE_RESAMPLING_GRID] [MEDIAL_SURFACE_NAN] [USE_AROMA] [AROMA_MELODIC_DIMENSIONALITY] [SKULL_STRIP_TEMPLATE] [SKULL_STRIP_FIXED_SEED] [FMAP_BSPLINE] [FMAP_NO_DEMEAN] [USE_SYN_SDC] [FORCE_SYN] [FS_LICENSE_FILE] [HIRES] [CIFTI_OUTPUT] [RUN_RECONALL] [WORK_DIR] [RESOURCE_MONITOR] [REPORTS_ONLY] [RUN_UUID] [WRITE_GRAPH] [STOP_ON_FIRST_CRASH] [NOTRACK] [SLOPPY]", 
+    "description": "fMRIprep is a functional magneticresonance image pre-processing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to differences in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. https://fmriprep.readthedocs.io", 
+    "author": "Poldrack lab",
+    "url": "https://fmriprep.readthedocs.io",
+    "inputs": [
+        {
+            "description": "the root folder of a BIDS valid dataset (sub-XXXXX folders should be found at the top level in this folder).", 
+            "id": "bids_dir", 
+            "name": "bids_dir", 
+            "optional": false, 
+            "type": "String", 
+            "value-key": "[BIDS_DIR]"
+        }, 
+        {
+            "description": "the output path for the outcomes of preprocessing and visual reports", 
+            "id": "output_dir", 
+            "name": "output_dir", 
+            "optional": false, 
+            "type": "String", 
+            "value-key": "[OUTPUT_DIR]"
+        }, 
+        {
+            "description": "processing stage to be run, only \"participant\" in the case of FMRIPREP (see BIDS-Apps specification).", 
+            "id": "analysis_level", 
+            "name": "analysis_level", 
+            "optional": false, 
+            "type": "String", 
+            "value-choices": [
+                "participant"
+            ], 
+            "value-key": "[ANALYSIS_LEVEL]"
+        }, 
+        {
+            "command-line-flag": "--version", 
+            "default-value": "==SUPPRESS==", 
+            "description": "show program's version number and exit", 
+            "id": "version", 
+            "name": "version", 
+            "optional": true, 
+            "type": "String", 
+            "value-key": "[VERSION]"
+        }, 
+        {
+            "command-line-flag": "--participant_label", 
+            "description": "a space delimited list of participant identifiers or a single identifier (the sub- prefix can be removed)", 
+            "id": "participant_label", 
+            "list": true, 
+            "name": "participant_label", 
+            "optional": true, 
+            "type": "String", 
+            "value-key": "[PARTICIPANT_LABEL]"
+        }, 
+        {
+            "command-line-flag": "-t", 
+            "description": "select a specific task to be processed", 
+            "id": "task_id", 
+            "name": "task_id", 
+            "optional": true, 
+            "type": "String", 
+            "value-key": "[TASK_ID]"
+        }, 
+        {
+            "command-line-flag": "--nthreads", 
+            "description": "maximum number of threads across all processes", 
+            "id": "nthreads", 
+            "name": "nthreads", 
+            "optional": true, 
+            "type": "Number", 
+            "value-key": "[NTHREADS]"
+        }, 
+        {
+            "command-line-flag": "--omp-nthreads", 
+            "description": "maximum number of threads per-process", 
+            "id": "omp_nthreads", 
+            "name": "omp_nthreads", 
+            "optional": true, 
+            "type": "Number", 
+            "value-key": "[OMP_NTHREADS]"
+        }, 
+        {
+            "command-line-flag": "--mem_mb", 
+            "description": "upper bound memory limit for FMRIPREP processes", 
+            "id": "mem_mb", 
+            "name": "mem_mb", 
+            "optional": true, 
+            "type": "Number", 
+            "value-key": "[MEM_MB]"
+        }, 
+        {
+            "command-line-flag": "--low-mem", 
+            "description": "attempt to reduce memory usage (will increase disk usage in working directory)", 
+            "id": "low_mem", 
+            "name": "low_mem", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[LOW_MEM]"
+        }, 
+        {
+            "command-line-flag": "--use-plugin", 
+            "description": "nipype plugin configuration file", 
+            "id": "use_plugin", 
+            "name": "use_plugin", 
+            "optional": true, 
+            "type": "String", 
+            "value-key": "[USE_PLUGIN]"
+        }, 
+        {
+            "command-line-flag": "--anat-only", 
+            "description": "run anatomical workflows only", 
+            "id": "anat_only", 
+            "name": "anat_only", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[ANAT_ONLY]"
+        }, 
+        {
+            "command-line-flag": "--boilerplate", 
+            "description": "generate boilerplate only", 
+            "id": "boilerplate", 
+            "name": "boilerplate", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[BOILERPLATE]"
+        }, 
+        {
+            "command-line-flag": "--ignore-aroma-denoising-errors", 
+            "description": "ignores the errors ICA_AROMA returns when there are no components classified as either noise or signal", 
+            "id": "ignore_aroma_denoising_errors", 
+            "name": "ignore_aroma_denoising_errors", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[IGNORE_AROMA_DENOISING_ERRORS]"
+        }, 
+        {
+            "command-line-flag": "-v", 
+            "description": "increases log verbosity for each occurence, debug level is -vvv", 
+            "id": "verbose_count", 
+            "name": "verbose_count", 
+            "optional": true, 
+            "type": "String", 
+            "value-key": "[VERBOSE_COUNT]"
+        }, 
+        {
+            "command-line-flag": "--debug", 
+            "description": "DEPRECATED - Does not do what you want.", 
+            "id": "debug", 
+            "name": "debug", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[DEBUG]"
+        }, 
+        {
+            "command-line-flag": "--ignore", 
+            "description": "ignore selected aspects of the input dataset to disable corresponding parts of the workflow (a space delimited list)", 
+            "id": "ignore", 
+            "list": true, 
+            "name": "ignore", 
+            "optional": true, 
+            "type": "String", 
+            "value-choices": [
+                "fieldmaps", 
+                "slicetiming", 
+                "sbref"
+            ], 
+            "value-key": "[IGNORE]"
+        }, 
+        {
+            "command-line-flag": "--longitudinal", 
+            "description": "treat dataset as longitudinal - may increase runtime", 
+            "id": "longitudinal", 
+            "name": "longitudinal", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[LONGITUDINAL]"
+        }, 
+        {
+            "command-line-flag": "--t2s-coreg", 
+            "description": "If provided with multi-echo BOLD dataset, create T2*-map and perform T2*-driven coregistration. When multi-echo data is provided and this option is not enabled, standard EPI-T1 coregistration is performed using the middle echo.", 
+            "id": "t2s_coreg", 
+            "name": "t2s_coreg", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[T2S_COREG]"
+        }, 
+        {
+            "command-line-flag": "--bold2t1w-dof", 
+            "default-value": 6, 
+            "description": "Degrees of freedom when registering BOLD to T1w images. 6 degrees (rotation and translation) are used by default.", 
+            "id": "bold2t1w_dof", 
+            "name": "bold2t1w_dof", 
+            "optional": true, 
+            "type": "Number", 
+            "value-choices": [
+                6, 
+                9, 
+                12
+            ], 
+            "value-key": "[BOLD2T1W_DOF]"
+        }, 
+        {
+            "command-line-flag": "--output-space", 
+            "default-value": [
+                "template", 
+                "fsaverage5"
+            ], 
+            "description": "volume and surface spaces to resample functional series into\n - T1w: subject anatomical volume\n - template: normalization target specified by --template\n - fsnative: individual subject surface\n - fsaverage*: FreeSurfer average meshes\nthis argument can be single value or a space delimited list,\nfor example: --output-space T1w fsnative", 
+            "id": "output_space", 
+            "list": true, 
+            "name": "output_space", 
+            "optional": true, 
+            "type": "String", 
+            "value-choices": [
+                "T1w", 
+                "template", 
+                "fsnative", 
+                "fsaverage", 
+                "fsaverage6", 
+                "fsaverage5"
+            ], 
+            "value-key": "[OUTPUT_SPACE]"
+        }, 
+        {
+            "command-line-flag": "--force-bbr", 
+            "description": "Always use boundary-based registration (no goodness-of-fit checks)", 
+            "id": "use_bbr", 
+            "name": "use_bbr", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[USE_BBR]"
+        }, 
+        {
+            "command-line-flag": "--template", 
+            "default-value": "MNI152NLin2009cAsym", 
+            "description": "volume template space (default: MNI152NLin2009cAsym)", 
+            "id": "template", 
+            "name": "template", 
+            "optional": true, 
+            "type": "String", 
+            "value-choices": [
+                "MNI152NLin2009cAsym"
+            ], 
+            "value-key": "[TEMPLATE]"
+        }, 
+        {
+            "command-line-flag": "--output-grid-reference", 
+            "description": "Deprecated after FMRIPREP 1.0.8. Please use --template-resampling-grid instead.", 
+            "id": "output_grid_reference", 
+            "name": "output_grid_reference", 
+            "optional": true, 
+            "type": "String", 
+            "value-key": "[OUTPUT_GRID_REFERENCE]"
+        }, 
+        {
+            "command-line-flag": "--template-resampling-grid", 
+            "default-value": "native", 
+            "description": "Keyword (\"native\", \"1mm\", or \"2mm\") or path to an existing file. Allows to define a reference grid for the resampling of BOLD images in template space. Keyword \"native\" will use the original BOLD grid as reference. Keywords \"1mm\" and \"2mm\" will use the corresponding isotropic template resolutions. If a path is given, the grid of that image will be used. It determines the field of view and resolution of the output images, but is not used in normalization.", 
+            "id": "template_resampling_grid", 
+            "name": "template_resampling_grid", 
+            "optional": true, 
+            "type": "String", 
+            "value-key": "[TEMPLATE_RESAMPLING_GRID]"
+        }, 
+        {
+            "command-line-flag": "--medial-surface-nan", 
+            "description": "Replace medial wall values with NaNs on functional GIFTI files. Only performed for GIFTI files mapped to a freesurfer subject (fsaverage or fsnative).", 
+            "id": "medial_surface_nan", 
+            "name": "medial_surface_nan", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[MEDIAL_SURFACE_NAN]"
+        }, 
+        {
+            "command-line-flag": "--use-aroma", 
+            "description": "add ICA_AROMA to your preprocessing stream", 
+            "id": "use_aroma", 
+            "name": "use_aroma", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[USE_AROMA]"
+        }, 
+        {
+            "command-line-flag": "--aroma-melodic-dimensionality", 
+            "default-value": -200, 
+            "description": "Exact or maximum number of MELODIC components to estimate (positive = exact, negative = maximum)", 
+            "id": "aroma_melodic_dimensionality", 
+            "name": "aroma_melodic_dimensionality", 
+            "optional": true, 
+            "type": "Number", 
+            "value-key": "[AROMA_MELODIC_DIMENSIONALITY]"
+        }, 
+        {
+            "command-line-flag": "--skull-strip-template", 
+            "default-value": "OASIS", 
+            "description": "select ANTs skull-stripping template (default: OASIS))", 
+            "id": "skull_strip_template", 
+            "name": "skull_strip_template", 
+            "optional": true, 
+            "type": "String", 
+            "value-choices": [
+                "OASIS", 
+                "NKI"
+            ], 
+            "value-key": "[SKULL_STRIP_TEMPLATE]"
+        }, 
+        {
+            "command-line-flag": "--skull-strip-fixed-seed", 
+            "description": "do not use a random seed for skull-stripping - will ensure run-to-run replicability when used with --omp-nthreads 1", 
+            "id": "skull_strip_fixed_seed", 
+            "name": "skull_strip_fixed_seed", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[SKULL_STRIP_FIXED_SEED]"
+        }, 
+        {
+            "command-line-flag": "--fmap-bspline", 
+            "description": "fit a B-Spline field using least-squares (experimental)", 
+            "id": "fmap_bspline", 
+            "name": "fmap_bspline", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[FMAP_BSPLINE]"
+        }, 
+        {
+            "command-line-flag": "--fmap-no-demean", 
+            "default-value": true, 
+            "description": "do not remove median (within mask) from fieldmap", 
+            "id": "fmap_no_demean", 
+            "name": "fmap_no_demean", 
+            "optional": true, 
+            "type": "String", 
+            "value-key": "[FMAP_NO_DEMEAN]"
+        }, 
+        {
+            "command-line-flag": "--use-syn-sdc", 
+            "description": "EXPERIMENTAL: Use fieldmap-free distortion correction", 
+            "id": "use_syn_sdc", 
+            "name": "use_syn_sdc", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[USE_SYN_SDC]"
+        }, 
+        {
+            "command-line-flag": "--force-syn", 
+            "description": "EXPERIMENTAL/TEMPORARY: Use SyN correction in addition to fieldmap correction, if available", 
+            "id": "force_syn", 
+            "name": "force_syn", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[FORCE_SYN]"
+        }, 
+        {
+            "command-line-flag": "--fs-license-file", 
+            "description": "Path to FreeSurfer license key file. Get it (for free) by registering at https://surfer.nmr.mgh.harvard.edu/registration.html", 
+            "id": "fs_license_file", 
+            "name": "fs_license_file", 
+            "optional": true, 
+            "uses-absolute-path": true,
+            "type": "File", 
+            "value-key": "[FS_LICENSE_FILE]"
+        }, 
+        {
+            "command-line-flag": "--no-submm-recon", 
+            "default-value": true, 
+            "description": "disable sub-millimeter (hires) reconstruction", 
+            "id": "hires", 
+            "name": "hires", 
+            "optional": true, 
+            "type": "String", 
+            "value-key": "[HIRES]"
+        }, 
+        {
+            "command-line-flag": "--cifti-output", 
+            "description": "output BOLD files as CIFTI dtseries", 
+            "id": "cifti_output", 
+            "name": "cifti_output", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[CIFTI_OUTPUT]"
+        }, 
+        {
+            "command-line-flag": "--fs-no-reconall", 
+            "default-value": true, 
+            "description": "disable FreeSurfer surface preprocessing. Note : `--no-freesurfer` is deprecated and will be removed in 1.2. Use `--fs-no-reconall` instead.", 
+            "id": "run_reconall", 
+            "name": "run_reconall", 
+            "optional": true, 
+            "type": "String", 
+            "value-key": "[RUN_RECONALL]"
+        }, 
+        {
+            "command-line-flag": "-w", 
+            "description": "path where intermediate results should be stored", 
+            "id": "work_dir", 
+            "name": "work_dir", 
+            "optional": true, 
+            "type": "String", 
+            "value-key": "[WORK_DIR]"
+        }, 
+        {
+            "command-line-flag": "--resource-monitor", 
+            "description": "enable Nipype's resource monitoring to keep track of memory and CPU usage", 
+            "id": "resource_monitor", 
+            "name": "resource_monitor", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[RESOURCE_MONITOR]"
+        }, 
+        {
+            "command-line-flag": "--reports-only", 
+            "description": "only generate reports, don't run workflows. This will only rerun report aggregation, not reportlet generation for specific nodes.", 
+            "id": "reports_only", 
+            "name": "reports_only", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[REPORTS_ONLY]"
+        }, 
+        {
+            "command-line-flag": "--run-uuid", 
+            "description": "Specify UUID of previous run, to include error logs in report. No effect without --reports-only.", 
+            "id": "run_uuid", 
+            "name": "run_uuid", 
+            "optional": true, 
+            "type": "String", 
+            "value-key": "[RUN_UUID]"
+        }, 
+        {
+            "command-line-flag": "--write-graph", 
+            "description": "Write workflow graph.", 
+            "id": "write_graph", 
+            "name": "write_graph", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[WRITE_GRAPH]"
+        }, 
+        {
+            "command-line-flag": "--stop-on-first-crash", 
+            "description": "Force stopping on first crash, even if a work directory was specified.", 
+            "id": "stop_on_first_crash", 
+            "name": "stop_on_first_crash", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[STOP_ON_FIRST_CRASH]"
+        }, 
+        {
+            "command-line-flag": "--notrack", 
+            "description": "Opt-out of sending tracking information of this run to the FMRIPREP developers. This information helps to improve FMRIPREP and provides an indicator of real world usage crucial for obtaining funding.", 
+            "id": "notrack", 
+            "name": "notrack", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[NOTRACK]"
+        }, 
+        {
+            "command-line-flag": "--sloppy", 
+            "description": "Use low-quality tools for speed - TESTING ONLY", 
+            "id": "sloppy", 
+            "name": "sloppy", 
+            "optional": true, 
+            "type": "Flag", 
+            "value-key": "[SLOPPY]"
+        }
+    ], 
+    "name": "BIDS App - fmriprep", 
+    "schema-version": "0.5", 
+    "tags": {
+        "application-type": [
+            "bids"
+        ], 
+        "domain": [
+            "neuroinformatics", 
+            "fmri"
+        ]
+    }, 
+        "container-image": {
+        "type": "docker",
+        "image": "poldracklab/fmriprep:1.2.3"
+     },
+    "tool-version": "1.2.3"
+}

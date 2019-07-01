@@ -1,0 +1,97 @@
+{
+    "name": "LaplacianThickness",
+    "command-line": "${ANTSPATH}/LaplacianThickness [INPUT_WM] [INPUT_GM] [OUTPUT_IMAGE] [SMOOTH_PARAM] [PRIOR_THICKNESS] [DT] [SULCUS_PRIOR] [TOLERANCE]",
+    "author": "Nipype (interface), Brian B. Avants et al. (tool)",
+    "description": "LaplacianThickness, as implemented in Nipype (module: nipype.interfaces.ants, interface: LaplacianThickness).",
+    "inputs": [
+        {
+            "id": "dT",
+            "name": "Dt",
+            "type": "Number",
+            "value-key": "[DT]",
+            "description": "A float. Time delta used during integration (defaults to 0.01).",
+            "optional": true,
+            "requires-inputs": [
+                "prior_thickness"
+            ]
+        },
+        {
+            "id": "input_gm",
+            "name": "Input gm",
+            "type": "File",
+            "value-key": "[INPUT_GM]",
+            "description": "A file name. Gray matter segmentation image.",
+            "optional": false
+        },
+        {
+            "id": "input_wm",
+            "name": "Input wm",
+            "type": "File",
+            "value-key": "[INPUT_WM]",
+            "description": "A file name. White matter segmentation image.",
+            "optional": false
+        },
+        {
+            "id": "prior_thickness",
+            "name": "Prior thickness",
+            "type": "Number",
+            "value-key": "[PRIOR_THICKNESS]",
+            "description": "A float. Prior thickness (defaults to 500).",
+            "optional": true,
+            "requires-inputs": [
+                "smooth_param"
+            ]
+        },
+        {
+            "id": "smooth_param",
+            "name": "Smooth param",
+            "type": "Number",
+            "value-key": "[SMOOTH_PARAM]",
+            "description": "A float. Sigma of the laplacian recursive image filter (defaults to 1).",
+            "optional": true
+        },
+        {
+            "id": "sulcus_prior",
+            "name": "Sulcus prior",
+            "type": "Number",
+            "value-key": "[SULCUS_PRIOR]",
+            "description": "A float. Positive floating point number for sulcus prior. Authors said that 0.15 might be a reasonable value.",
+            "optional": true,
+            "requires-inputs": [
+                "dT"
+            ]
+        },
+        {
+            "id": "tolerance",
+            "name": "Tolerance",
+            "type": "Number",
+            "value-key": "[TOLERANCE]",
+            "description": "A float. Tolerance to reach during optimization (defaults to 0.001).",
+            "optional": true,
+            "requires-inputs": [
+                "sulcus_prior"
+            ]
+        }
+    ],
+    "output-files": [
+        {
+            "name": "Output image",
+            "id": "output_image",
+            "optional": true,
+            "description": "An existing file name. Cortical thickness.",
+            "path-template": "[INPUT_WM]_thickness",
+            "value-key": "[OUTPUT_IMAGE]"
+        }
+    ],
+    "tool-version": "1.0.0",
+    "schema-version": "0.5",
+    "container-image": {
+        "image": "bt5e/ants:latest",
+        "index": "index.docker.io",
+        "type": "docker"
+    },
+    "tags": {
+        "domain": "neuroinformatics",
+        "source": "nipype-interface"
+    }
+}

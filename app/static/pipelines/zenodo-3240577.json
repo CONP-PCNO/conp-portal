@@ -1,0 +1,793 @@
+{
+    "tool-version": "v2.7.1", 
+    "tests": [
+        {
+            "invocation": {
+                "query": "test1_query.fasta", 
+                "outfmt": "5", 
+                "db": "sample", 
+                "max_target_seqs": 5, 
+                "out": "blastn.out"
+            }, 
+            "name": "test1", 
+            "assertions": {
+                "output-files": [
+                    {
+                        "id": "output", 
+                        "md5-reference": "eb917a2e0723ee9cca9d86db85e83b69"
+                    }
+                ], 
+                "exit-code": 0
+            }
+        }
+    ], 
+    "description": "Nucleotide-Nucleotide BLAST 2.7.1+", 
+    "command-line": "init_genpipes -a /tmp/$USER/cvmfs-cache -c /etc/parrot/ cp -R [DB_DIR]/* . 2> /dev/null \\;  /cvmfs/soft.mugqic/CentOS6/software/blast/ncbi-blast-2.7.1+/bin/blastn [IMPORT_SEARCH_STRATEGY] [EXPORT_SEARCH_STRATEGY] [TASK] [DB] [DBSIZE] [GILIST] [SEQIDLIST] [NEGATIVE_GILIST] [NEGATIVE_SEQIDLIST] [ENTREZ_QUERY] [DB_SOFT_MASK] [DB_HARD_MASK] [SUBJECT] [SUBJECT_LOC] [QUERY] [OUT] [EVALUE] [WORD_SIZE] [GAPOPEN] [GAPEXTEND] [PERC_IDENTITY] [QCOV_HSP_PERC] [MAX_HSPS] [XDROP_UNGAP] [XDROP_GAP] [XDROP_GAP_FINAL] [SEARCHSP] [SUM_STATS] [PENALTY] [REWARD] [fNO_GREEDY] [MIN_RAW_GAPPED_SCORE] [TEMPLATE_TYPE] [TEMPLATE_LENGTH] [DUST] [FILTERING_DB] [WINDOW_MASKER_TAXID] [WINDOW_MASKER_DB] [SOFT_MASKING] [fUNGAPPED] [CULLING_LIMIT] [BEST_HIT_OVERHANG] [BEST_HIT_SCORE_EDGE] [WINDOW_SIZE] [OFF_DIAGONAL_RANGE] [USE_INDEX] [INDEX_NAME] [fLCASE_MASKING] [QUERY_LOC] [STRAND] [fPARSE_DEFLINES] [OUTFMT] [fSHOW_GIS] [NUM_DESCRIPTIONS] [NUM_ALIGNMENTS] [LINE_LENGTH] [fHTML] [MAX_TARGET_SEQS] [NUM_THREADS] [fREMOTE]", 
+    "author": "Altschul et al.", 
+    "tags": {
+        "domain": [
+            "bioinformatics", 
+            "blast"
+        ]
+    }, 
+    "container-image": {
+        "index": "docker://", 
+        "image": "c3genomics/genpipes", 
+        "type": "singularity"
+    }, 
+    "inputs": [
+        {
+            "command-line-flag": "-db", 
+            "description": "BLAST database name", 
+            "disables-inputs": [
+                "subject", 
+                "subject_loc"
+            ], 
+            "optional": true, 
+            "value-key": "[DB]", 
+            "type": "String", 
+            "id": "db", 
+            "name": "BLAST database name"
+        }, 
+        {
+            "description": "directory containing BLAST Archive format in ASN.1 (i.e.: output format 11) and all needed db files", 
+            "default-value": ".", 
+            "value-key": "[DB_DIR]", 
+            "optional": true, 
+            "requires-inputs": [
+                "db"
+            ], 
+            "type": "File", 
+            "id": "archive_dir", 
+            "name": "Blast Database Directory"
+        }, 
+        {
+            "command-line-flag": "-query_loc", 
+            "description": "Location on the query sequence in 1-based offsets (Format: start-stop)", 
+            "value-key": "[QUERY_LOC]", 
+            "optional": true, 
+            "type": "String", 
+            "id": "query_loc", 
+            "name": "query location"
+        }, 
+        {
+            "command-line-flag": "-strand", 
+            "description": "   Query strand(s) to search against database/subject\n   Default = `both'", 
+            "value-key": "[STRAND]", 
+            "optional": true, 
+            "value-choices": [
+                "both", 
+                "minus", 
+                "plus"
+            ], 
+            "type": "String", 
+            "id": "strand", 
+            "name": "Query Strand to Search"
+        }, 
+        {
+            "command-line-flag": "-subject_loc", 
+            "description": "Location on the query sequence in 1-based offsets (Format: start-stop)", 
+            "disables-inputs": [
+                "db", 
+                "gilist", 
+                "seqidlist", 
+                "negative_gilist", 
+                "negative_seqidlist", 
+                "db_soft_mask", 
+                "db_hard_mask"
+            ], 
+            "optional": true, 
+            "value-key": "[SUBJECT_LOC]", 
+            "type": "String", 
+            "id": "subject_loc", 
+            "name": "Subject Sequence Location"
+        }, 
+        {
+            "command-line-flag": "-task", 
+            "description": "Task to execute", 
+            "value-key": "[TASK]", 
+            "optional": true, 
+            "value-choices": [
+                "blastn", 
+                "blastn-short", 
+                "dc-megablast", 
+                "megablast", 
+                "rmblastn"
+            ], 
+            "type": "String", 
+            "id": "task", 
+            "name": "Task Name"
+        }, 
+        {
+            "command-line-flag": "-dust", 
+            "description": "Filter query sequence with DUST\n  (Format: 'yes', 'level window linker', or   'no' to disable)\n   Default = '20 64 1')", 
+            "value-key": "[DUST]", 
+            "optional": true, 
+            "type": "String", 
+            "id": "dust", 
+            "name": "DUST Options"
+        }, 
+        {
+            "command-line-flag": "-gilist", 
+            "description": "Restrict search of database to list of GI's", 
+            "disables-inputs": [
+                "negative_gilist", 
+                "seqidlist", 
+                "negative_seqidlist", 
+                "remote", 
+                "subject", 
+                "subject_loc"
+            ], 
+            "optional": true, 
+            "value-key": "[GILIST]", 
+            "type": "String", 
+            "id": "gilist", 
+            "name": "Restrictive GI List"
+        }, 
+        {
+            "command-line-flag": "-seqidlist", 
+            "description": "Restrict search of database to list of SeqId's", 
+            "disables-inputs": [
+                "gilist", 
+                "negative_gilist", 
+                "negative_seqidlist", 
+                "remote", 
+                "subject", 
+                "subject_loc"
+            ], 
+            "optional": true, 
+            "value-key": "[SEQIDLIST]", 
+            "type": "String", 
+            "id": "seqidlist", 
+            "name": "Restrictive Sequence Id List"
+        }, 
+        {
+            "command-line-flag": "-negative_gilist", 
+            "description": "Restrict search of database to everything except the listed GIs", 
+            "disables-inputs": [
+                "gilist", 
+                "seqidlist", 
+                "remote", 
+                "subject", 
+                "subject_loc"
+            ], 
+            "optional": true, 
+            "value-key": "[NEGATIVE_GILIST]", 
+            "type": "String", 
+            "id": "negative_gilist", 
+            "name": "Exclusive GI List"
+        }, 
+        {
+            "command-line-flag": "-negative_seqidlist", 
+            "description": "Restrict search of database to everything except the listed SeqIDs", 
+            "disables-inputs": [
+                "gilist", 
+                "seqidlist", 
+                "remote", 
+                "subject", 
+                "subject_loc"
+            ], 
+            "optional": true, 
+            "value-key": "[NEGATIVE_SEQIDLIST]", 
+            "type": "String", 
+            "id": "negative_seqidlist", 
+            "name": "Exclusive Sequence Id List"
+        }, 
+        {
+            "command-line-flag": "-entrez_query", 
+            "description": "Restrict search with the given Entrez query", 
+            "value-key": "[ENTREZ_QUERY]", 
+            "optional": true, 
+            "requires-inputs": [
+                "remote"
+            ], 
+            "type": "String", 
+            "id": "entrez_query", 
+            "name": "Exclusive Sequence Id List"
+        }, 
+        {
+            "command-line-flag": "-db_soft_mask", 
+            "description": "Filtering algorithm ID to apply to the BLAST database as soft masking", 
+            "disables-inputs": [
+                "db_hard_mask", 
+                "subject", 
+                "subject_loc"
+            ], 
+            "optional": true, 
+            "value-key": "[DB_SOFT_MASK]", 
+            "type": "String", 
+            "id": "db_soft_mask", 
+            "name": "Soft Mask ID"
+        }, 
+        {
+            "command-line-flag": "-db_hard_mask", 
+            "description": "Filtering algorithm ID to apply to the BLAST database as hard masking", 
+            "disables-inputs": [
+                "db_soft_mask", 
+                "subject", 
+                "subject_loc"
+            ], 
+            "optional": true, 
+            "value-key": "[DB_HARD_MASK]", 
+            "type": "String", 
+            "id": "db_hard_mask", 
+            "name": "Hard Mask ID"
+        }, 
+        {
+            "command-line-flag": "-index_name", 
+            "description": "MegaBLAST database index name (deprecated; use only for old style indices)", 
+            "value-key": "[INDEX_NAME]", 
+            "optional": true, 
+            "type": "String", 
+            "id": "index_name", 
+            "name": "MegaBLAST database index name"
+        }, 
+        {
+            "command-line-flag": "-filtering_db", 
+            "description": "BLAST database containing filtering elements (i.e.: repeats)", 
+            "value-key": "[FILTERING_DB]", 
+            "optional": true, 
+            "type": "String", 
+            "id": "filtering_db", 
+            "name": "BLAST filtering database"
+        }, 
+        {
+            "command-line-flag": "-window_masker_db", 
+            "description": "Enable WindowMasker filtering using this repeats database.", 
+            "value-key": "[WINDOW_MASKER_DB]", 
+            "optional": true, 
+            "type": "String", 
+            "id": "window_masker_db", 
+            "name": "Window Masker DB"
+        }, 
+        {
+            "command-line-flag": "-template_type", 
+            "description": "Discontiguous MegaBLAST template type", 
+            "value-key": "[TEMPLATE_TYPE]", 
+            "optional": true, 
+            "requires-inputs": [
+                "template_length"
+            ], 
+            "value-choices": [
+                "coding", 
+                "coding_and_optimal", 
+                "optimal"
+            ], 
+            "type": "String", 
+            "id": "template_type", 
+            "name": "Discontiguous MegaBLAST template type"
+        }, 
+        {
+            "command-line-flag": "-lcase_masking", 
+            "description": "Use lower case filtering in query and subject sequence(s)?", 
+            "value-key": "[fLCASE_MASKING]", 
+            "optional": true, 
+            "type": "Flag", 
+            "id": "lcase_masking", 
+            "name": "Lowercase Filtering"
+        }, 
+        {
+            "command-line-flag": "-ungapped", 
+            "description": "Perform ungapped alignment only?", 
+            "value-key": "[fUNGAPPED]", 
+            "optional": true, 
+            "type": "Flag", 
+            "id": "ungapped", 
+            "name": "Ungapped Alignment"
+        }, 
+        {
+            "command-line-flag": "-parse_deflines", 
+            "description": "Should the query and subject defline(s) be parsed?", 
+            "value-key": "[fPARSE_DEFLINES]", 
+            "optional": true, 
+            "type": "Flag", 
+            "id": "parse_deflines", 
+            "name": "Parse Deflines"
+        }, 
+        {
+            "command-line-flag": "-remote", 
+            "description": "Execute search remotely?", 
+            "disables-inputs": [
+                "gilist", 
+                "seqidlist", 
+                "negative_gilist", 
+                "negative_seqidlist", 
+                "subject_loc", 
+                "num_threads"
+            ], 
+            "optional": true, 
+            "value-key": "[fREMOTE]", 
+            "type": "Flag", 
+            "id": "remote", 
+            "name": "Remote Search"
+        }, 
+        {
+            "command-line-flag": "-no_greedy", 
+            "description": "Use non-greedy dynamic programming extension", 
+            "value-key": "[fNO_GREEDY]", 
+            "optional": true, 
+            "type": "Flag", 
+            "id": "no_greedy", 
+            "name": "Non-Greedy Dynamic Programming Extension"
+        }, 
+        {
+            "command-line-flag": "-use_index", 
+            "description": "Use MegaBLAST database index\n  Default 'false'", 
+            "value-key": "[USE_INDEX]", 
+            "optional": true, 
+            "value-choices": [
+                "true", 
+                "false"
+            ], 
+            "type": "String", 
+            "id": "use_index", 
+            "name": "MegaBLAST Database Index Usage"
+        }, 
+        {
+            "command-line-flag": "-soft_masking", 
+            "description": "Apply filtering locations as soft masks\n  Default 'true'", 
+            "value-key": "[SOFT_MASKING]", 
+            "optional": true, 
+            "value-choices": [
+                "true", 
+                "false"
+            ], 
+            "type": "String", 
+            "id": "soft_masking", 
+            "name": "Filtering Locations As Soft Masks"
+        }, 
+        {
+            "command-line-flag": "-sum_stats", 
+            "description": "Use sum statistics", 
+            "value-key": "[SUM_STATS]", 
+            "optional": true, 
+            "value-choices": [
+                "true", 
+                "false"
+            ], 
+            "type": "String", 
+            "id": "sum_stats", 
+            "name": "Sum Statistics"
+        }, 
+        {
+            "command-line-flag": "-word_size", 
+            "description": "Word size for wordfinder algorithm (length of best perfect match)", 
+            "value-key": "[WORD_SIZE]", 
+            "optional": true, 
+            "minimum": 4, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "word_size", 
+            "name": "Word Size"
+        }, 
+        {
+            "command-line-flag": "-gapopen", 
+            "description": "Cost to open a gap", 
+            "value-key": "[GAPOPEN]", 
+            "optional": true, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "gapopen", 
+            "name": "Gap Open Penalty"
+        }, 
+        {
+            "command-line-flag": "-gapextend", 
+            "description": "Cost to extend a gap", 
+            "value-key": "[GAPEXTEND]", 
+            "optional": true, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "gapextend", 
+            "name": "Gap Extend Penalty"
+        }, 
+        {
+            "command-line-flag": "-max_hsps", 
+            "description": "Set maximum number of HSPs per subject sequence to save for each query", 
+            "value-key": "[MAX_HSPS]", 
+            "optional": true, 
+            "minimum": 1, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "max_hsps", 
+            "name": "Max HSPs Per Subject"
+        }, 
+        {
+            "command-line-flag": "-culling_limit", 
+            "description": "   If the query range of a hit is enveloped by that of at least this many\n   higher-scoring hits, delete the hit", 
+            "value-key": "[CULLING_LIMIT]", 
+            "optional": true, 
+            "disables-inputs": [
+                "best_hit_overhang", 
+                "best_hit_score_edge"
+            ], 
+            "minimum": 0, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "culling_limit", 
+            "name": "Higher Scoring Hit Culling Limit"
+        }, 
+        {
+            "command-line-flag": "-max_target_seqs", 
+            "description": "   Maximum number of aligned sequences to keep\n   Not applicable for outfmt <= 4\n   Default = `500'", 
+            "value-key": "[MAX_TARGET_SEQS]", 
+            "optional": true, 
+            "disables-inputs": [
+                "num_descriptions", 
+                "num_alignments"
+            ], 
+            "minimum": 1, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "max_target_seqs", 
+            "name": "Maximum Target Sequence"
+        }, 
+        {
+            "command-line-flag": "-dbsize", 
+            "description": "Effective length of the database", 
+            "value-key": "[DBSIZE]", 
+            "optional": true, 
+            "maximum": 255, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "dbsize", 
+            "name": "Database Size"
+        }, 
+        {
+            "command-line-flag": "-searchsp", 
+            "description": "Effective length of the search space", 
+            "value-key": "[SEARCHSP]", 
+            "optional": true, 
+            "maximum": 255, 
+            "minimum": 0, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "searchsp", 
+            "name": "Search Space Length"
+        }, 
+        {
+            "command-line-flag": "-window_size", 
+            "description": "Multiple hits window size, use 0 to specify 1-hit algorithm", 
+            "value-key": "[WINDOW_SIZE]", 
+            "optional": true, 
+            "minimum": 0, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "window_size", 
+            "name": "Multiple Hits Window Size"
+        }, 
+        {
+            "command-line-flag": "-num_threads", 
+            "description": "   Number of threads (CPUs) to use in the BLAST search\n   Default = `1'", 
+            "value-key": "[NUM_THREADS]", 
+            "optional": true, 
+            "maximum": 12, 
+            "disables-inputs": [
+                "remote"
+            ], 
+            "minimum": 1, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "num_threads", 
+            "name": "Maximum Target Sequence"
+        }, 
+        {
+            "command-line-flag": "-penalty", 
+            "description": "Penalty for a nucleotide mismatch", 
+            "value-key": "[PENALTY]", 
+            "optional": true, 
+            "maximum": 0, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "penalty", 
+            "name": "Nucleotide Mismatch Penalty"
+        }, 
+        {
+            "command-line-flag": "-reward", 
+            "description": "Reward for a nucleotide match", 
+            "value-key": "[REWARD]", 
+            "optional": true, 
+            "minimum": 0, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "reward", 
+            "name": "Nucleotide Match Reward"
+        }, 
+        {
+            "command-line-flag": "-window_masker_taxid", 
+            "description": "Enable WindowMasker filtering using a Taxonomic ID", 
+            "value-key": "[WINDOW_MASKER_TAXID]", 
+            "optional": true, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "window_masker_taxid", 
+            "name": "Taxonomic ID for WindowMasker Filtering"
+        }, 
+        {
+            "command-line-flag": "-template_length", 
+            "description": "Discontiguous MegaBLAST template length", 
+            "value-key": "[TEMPLATE_LENGTH]", 
+            "optional": true, 
+            "requires-inputs": [
+                "template_type"
+            ], 
+            "value-choices": [
+                16, 
+                18, 
+                21
+            ], 
+            "integer": true, 
+            "type": "Number", 
+            "id": "template_length", 
+            "name": "Discontiguous MegaBLAST Template Length"
+        }, 
+        {
+            "command-line-flag": "-min_raw_gapped_score", 
+            "description": "Minimum raw gapped score to keep an alignment in the preliminary gapped and traceback stages", 
+            "value-key": "[MIN_RAW_GAPPED_SCORE]", 
+            "optional": true, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "min_raw_gapped_score", 
+            "name": "Minumum Raw Gapped Score"
+        }, 
+        {
+            "command-line-flag": "-off_diagonal_range", 
+            "description": "   Number of off-diagonals to search for the 2nd hit, use 0 to turn off\n   Default = `0'", 
+            "value-key": "[OFF_DIAGONAL_RANGE]", 
+            "optional": true, 
+            "minimum": 0, 
+            "integer": true, 
+            "type": "Number", 
+            "id": "off_diagonal_range", 
+            "name": "Off-Diagonal Range"
+        }, 
+        {
+            "command-line-flag": "-evalue", 
+            "description": "  Expectation value (E) threshold for saving hits\n  Default = `10'", 
+            "value-key": "[EVALUE]", 
+            "optional": true, 
+            "type": "Number", 
+            "id": "evalue", 
+            "name": "Expectation Value"
+        }, 
+        {
+            "command-line-flag": "-perc_identity", 
+            "description": "Percent identity", 
+            "value-key": "[PERC_IDENTITY]", 
+            "optional": true, 
+            "maximum": 100, 
+            "minimum": 0, 
+            "type": "Number", 
+            "id": "perc_identity", 
+            "name": "Percent identity"
+        }, 
+        {
+            "command-line-flag": "-qcov_hsp_perc", 
+            "description": "Percent query coverage per hsp", 
+            "value-key": "[QCOV_HSP_PERC]", 
+            "optional": true, 
+            "maximum": 100, 
+            "minimum": 0, 
+            "type": "Number", 
+            "id": "qcov_hsp_perc", 
+            "name": "Percentage Query Coverage"
+        }, 
+        {
+            "command-line-flag": "-best_hit_overhang", 
+            "description": "Best Hit algorithm overhang value (recommended value: 0.1)", 
+            "value-key": "[BEST_HIT_OVERHANG]", 
+            "optional": true, 
+            "exclusive-maximum": true, 
+            "maximum": 0.5, 
+            "disables-inputs": [
+                "culling_limit"
+            ], 
+            "minimum": 0, 
+            "exclusive-minimum": true, 
+            "type": "Number", 
+            "id": "best_hit_overhang", 
+            "name": "Best Hit Algorithm Overhang"
+        }, 
+        {
+            "command-line-flag": "-best_hit_score_edge", 
+            "description": "Best Hit algorithm score edge value (recommended value: 0.1)", 
+            "value-key": "[BEST_HIT_SCORE_EDGE]", 
+            "optional": true, 
+            "exclusive-maximum": true, 
+            "maximum": 0.5, 
+            "disables-inputs": [
+                "culling_limit"
+            ], 
+            "minimum": 0, 
+            "exclusive-minimum": true, 
+            "type": "Number", 
+            "id": "best_hit_score_edge", 
+            "name": "Best Hit Algorithm Score Edge Value"
+        }, 
+        {
+            "command-line-flag": "-xdrop_ungap", 
+            "description": "X-dropoff value (in bits) for ungapped extensions", 
+            "value-key": "[XDROP_UNGAP]", 
+            "optional": true, 
+            "type": "Number", 
+            "id": "xdrop_ungap", 
+            "name": "Ungapped Extensions X-dropoff Value"
+        }, 
+        {
+            "command-line-flag": "-xdrop_gap", 
+            "description": "X-dropoff value (in bits) for preliminary gapped extensions", 
+            "value-key": "[XDROP_GAP]", 
+            "optional": true, 
+            "type": "Number", 
+            "id": "xdrop_gap", 
+            "name": "Preiliminary Gapped Extensions X-dropoff Value"
+        }, 
+        {
+            "command-line-flag": "-xdrop_gap_final", 
+            "description": "X-dropoff value (in bits) for final gapped alignment", 
+            "value-key": "[XDROP_GAP_FINAL]", 
+            "optional": true, 
+            "type": "Number", 
+            "id": "xdrop_gap_final", 
+            "name": "Final Gapped Extensions X-dropoff Value"
+        }, 
+        {
+            "command-line-flag": "-query", 
+            "description": "Input file name", 
+            "value-key": "[QUERY]", 
+            "optional": false, 
+            "type": "File", 
+            "id": "query", 
+            "name": "Query"
+        }, 
+        {
+            "command-line-flag": "-subject", 
+            "description": "Subject sequence(s) to search", 
+            "value-key": "[SUBJECT]", 
+            "optional": true, 
+            "disables-inputs": [
+                "db", 
+                "gilist", 
+                "seqidlist", 
+                "negative_gilist", 
+                "negative_seqidlist", 
+                "db_soft_mask", 
+                "db_hard_mask"
+            ], 
+            "type": "File", 
+            "id": "subject", 
+            "name": "Subject"
+        }, 
+        {
+            "command-line-flag": "-import_search_strategy", 
+            "description": "Search strategy to use", 
+            "value-key": "[IMPORT_SEARCH_STRATEGY]", 
+            "optional": true, 
+            "disables-inputs": [
+                "export_search_strategy"
+            ], 
+            "type": "File", 
+            "id": "import_search_strategy", 
+            "name": "Search Strategy File"
+        }, 
+        {
+            "command-line-flag": "-export_search_strategy", 
+            "description": "File name to record the search strategy used", 
+            "value-key": "[EXPORT_SEARCH_STRATEGY]", 
+            "optional": true, 
+            "disables-inputs": [
+                "import_search_strategy"
+            ], 
+            "type": "File", 
+            "id": "export_search_strategy", 
+            "name": "Search Strategy Record Filename"
+        }, 
+        {
+            "command-line-flag": "-show_gis", 
+            "description": "Show NCBI GIs in deflines?", 
+            "value-key": "[fSHOW_GIS]", 
+            "optional": true, 
+            "type": "Flag", 
+            "id": "show_gis", 
+            "name": "Show NCBI GIs"
+        }, 
+        {
+            "command-line-flag": "-html", 
+            "description": "Produce HTML Output", 
+            "value-key": "[fHTML]", 
+            "optional": true, 
+            "type": "Flag", 
+            "id": "html", 
+            "name": "Show HTML"
+        }, 
+        {
+            "command-line-flag": "-outfmt", 
+            "description": "   alignment view options:\n     0 = Pairwise,\n     1 = Query-anchored showing identities,\n     2 = Query-anchored no identities,\n     3 = Flat query-anchored showing identities,\n     4 = Flat query-anchored no identities,\n     5 = BLAST XML,\n     6 = Tabular,\n     7 = Tabular with comment lines,\n     8 = Seqalign (Text ASN.1),\n     9 = Seqalign (Binary ASN.1),\n    10 = Comma-separated values,\n    11 = BLAST archive (ASN.1),\n    12 = Seqalign (JSON),\n    13 = Multiple-file BLAST JSON,\n    14 = Multiple-file BLAST XML2,\n    15 = Single-file BLAST JSON,\n    16 = Single-file BLAST XML2,\n    17 = Sequence Alignment/Map (SAM),\n    18 = Organism Report\n\n   Options 6, 7, 10 and 17 can be additionally configured to produce\n   a custom format specified by space delimited format specifiers.\n   The supported format specifiers for options 6, 7 and 10 are:\n            qseqid means Query Seq-id\n               qgi means Query GI\n              qacc means Query accesion\n           qaccver means Query accesion.version\n              qlen means Query sequence length\n            sseqid means Subject Seq-id\n         sallseqid means All subject Seq-id(s), separated by a ';'\n               sgi means Subject GI\n            sallgi means All subject GIs\n              sacc means Subject accession\n           saccver means Subject accession.version\n           sallacc means All subject accessions\n              slen means Subject sequence length\n            qstart means Start of alignment in query\n              qend means End of alignment in query\n            sstart means Start of alignment in subject\n              send means End of alignment in subject\n              qseq means Aligned part of query sequence\n              sseq means Aligned part of subject sequence\n            evalue means Expect value\n          bitscore means Bit score\n             score means Raw score\n            length means Alignment length\n            pident means Percentage of identical matches\n            nident means Number of identical matches\n          mismatch means Number of mismatches\n          positive means Number of positive-scoring matches\n           gapopen means Number of gap openings\n              gaps means Total number of gaps\n              ppos means Percentage of positive-scoring matches\n            frames means Query and subject frames separated by a '/'\n            qframe means Query frame\n            sframe means Subject frame\n              btop means Blast traceback operations (BTOP)\n            staxid means Subject Taxonomy ID\n          ssciname means Subject Scientific Name\n          scomname means Subject Common Name\n        sblastname means Subject Blast Name\n         sskingdom means Subject Super Kingdom\n           staxids means unique Subject Taxonomy ID(s), separated by a ';'\n                         (in numerical order)\n         sscinames means unique Subject Scientific Name(s), separated by a ';'\n         scomnames means unique Subject Common Name(s), separated by a ';'\n        sblastnames means unique Subject Blast Name(s), separated by a ';'\n                         (in alphabetical order)\n        sskingdoms means unique Subject Super Kingdom(s), separated by a ';'\n                         (in alphabetical order)\n            stitle means Subject Title\n        salltitles means All Subject Title(s), separated by a '<>'\n           sstrand means Subject Strand\n             qcovs means Query Coverage Per Subject\n           qcovhsp means Query Coverage Per HSP\n            qcovus means Query Coverage Per Unique Subject (blastn only)\n   When not provided, the default value is:\n   'qaccver saccver pident length mismatch gapopen qstart qend sstart send\n   evalue bitscore', which is equivalent to the keyword 'std'\n   The supported format specifier for option 17 is:\n                SQ means Include Sequence Data\n                SR means Subject as Reference Seq\n  Default = `0'", 
+            "value-key": "[OUTFMT]", 
+            "optional": true, 
+            "type": "String", 
+            "id": "outfmt", 
+            "name": "Alignment View Options"
+        }, 
+        {
+            "command-line-flag": "-num_descriptions", 
+            "description": "   Number of database sequences to show one-line descriptions for\n   Not applicable for outfmt > 4\n   Default = `500'", 
+            "value-key": "[NUM_DESCRIPTIONS]", 
+            "optional": true, 
+            "disables-inputs": [
+                "max_target_seqs"
+            ], 
+            "minimum": 0, 
+            "type": "Number", 
+            "id": "num_descriptions", 
+            "name": "Number of Sequence Descriptions to Show"
+        }, 
+        {
+            "command-line-flag": "-num_alignments", 
+            "description": "   Number of database sequences to show alignments for\n   Default = `250'", 
+            "value-key": "[NUM_ALIGNMENTS]", 
+            "optional": true, 
+            "disables-inputs": [
+                "max_target_seqs"
+            ], 
+            "minimum": 0, 
+            "type": "Number", 
+            "id": "num_alignments", 
+            "name": "Number of Sequence Alignments to Show"
+        }, 
+        {
+            "command-line-flag": "-line_length", 
+            "description": "   Line length for formatting alignments\n   Not applicable for outfmt > 4\n   Default = `60'", 
+            "value-key": "[LINE_LENGTH]", 
+            "optional": true, 
+            "minimum": 1, 
+            "type": "Number", 
+            "id": "line_length", 
+            "name": "Line Length"
+        }, 
+        {
+            "command-line-flag": "-out", 
+            "description": "   Output file name", 
+            "value-key": "[OUT]", 
+            "optional": true, 
+            "type": "String", 
+            "id": "out", 
+            "name": "Output file name"
+        }
+    ], 
+    "schema-version": "0.5", 
+    "output-files": [
+        {
+            "path-template": "[OUT]", 
+            "optional": false, 
+            "id": "output", 
+            "name": "Output File"
+        }
+    ], 
+    "suggested-resources": {
+        "walltime-estimate": 60, 
+        "ram": 1, 
+        "cpu-cores": 1
+    }, 
+    "name": "blastn"
+}

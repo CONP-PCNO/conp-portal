@@ -1,0 +1,164 @@
+{
+    "inputs": [
+        {
+            "command-line-flag": "-dbtype", 
+            "description": "Molecule type of target db", 
+            "value-key": "[DBTYPE]", 
+            "optional": true, 
+            "value-choices": [
+                "nucl", 
+                "prot", 
+                "guess"
+            ], 
+            "type": "String", 
+            "id": "dbtype", 
+            "name": "Database Type"
+        }, 
+        {
+            "command-line-flag": "-db", 
+            "description": "Specify a database name", 
+            "value-key": "[DB]", 
+            "optional": true, 
+            "type": "String", 
+            "id": "db", 
+            "name": "Database Name"
+        }, 
+        {
+            "command-line-flag": "-dir", 
+            "description": "Specify a directory containing one or more databases.", 
+            "disables-inputs": [
+                "db"
+            ], 
+            "type": "String", 
+            "value-key": "[DIR]", 
+            "optional": true, 
+            "id": "dir", 
+            "name": "Database Directory"
+        }, 
+        {
+            "command-line-flag": "-recursive", 
+            "description": "Specify true to recurse through all dbs in directory tree.", 
+            "value-key": "[RECURSIVE]", 
+            "type": "Flag", 
+            "requires-inputs": [
+                "dir"
+            ], 
+            "optional": true, 
+            "id": "recursive", 
+            "name": "Blast Archive File"
+        }, 
+        {
+            "command-line-flag": "-verbosity", 
+            "name": "Verbosity", 
+            "value-key": "[VERBOSITY]", 
+            "type": "Number", 
+            "maximum": 4, 
+            "minimum": 0, 
+            "optional": true, 
+            "id": "verbosity", 
+            "description": "Verbiosity of results.\n   0=Quiet, 1=Brief, 2=Summary, 3=Detailed, 4=Minutia"
+        }, 
+        {
+            "command-line-flag": "-full", 
+            "description": "If true, test every sequence (warning: may be slow).", 
+            "disables-inputs": [
+                "stride", 
+                "random", 
+                "ends"
+            ], 
+            "type": "Flag", 
+            "value-key": "[FULL]", 
+            "optional": true, 
+            "id": "full", 
+            "name": "Full Test"
+        }, 
+        {
+            "command-line-flag": "-stride", 
+            "description": "Check integrity of every Nth sequence.", 
+            "value-key": "[STRIDE]", 
+            "type": "Number", 
+            "minimum": 1, 
+            "optional": true, 
+            "id": "stride", 
+            "name": "Stride Sequence Integrity Test"
+        }, 
+        {
+            "command-line-flag": "-random", 
+            "description": "Check this many randomly selected sequences.", 
+            "value-key": "[RANDOM]", 
+            "type": "Number", 
+            "minimum": 1, 
+            "optional": true, 
+            "id": "random", 
+            "name": "Random Sequence Test"
+        }, 
+        {
+            "command-line-flag": "-ends", 
+            "description": "Check this many sequences at each end of the database.", 
+            "value-key": "[ENDS]", 
+            "type": "Number", 
+            "minimum": 1, 
+            "optional": true, 
+            "id": "ends", 
+            "name": "Database End Integrity Test"
+        }, 
+        {
+            "command-line-flag": "-no_isam", 
+            "description": "Disable ISAM testing.", 
+            "value-key": "[NO_ISAM]", 
+            "optional": true, 
+            "type": "Flag", 
+            "id": "no_isam", 
+            "name": "NO ISAM Testing"
+        }, 
+        {
+            "command-line-flag": "-legacy", 
+            "description": "Enable check for existence of temporary files.", 
+            "value-key": "[LEGACY]", 
+            "optional": true, 
+            "type": "Flag", 
+            "id": "legacy", 
+            "name": "Legacy temp file existence check"
+        }, 
+        {
+            "command-line-flag": "-must_have_taxids", 
+            "description": "Require that all sequences in the database have taxid set.", 
+            "value-key": "[MUST_HAVE_TAXIDS]", 
+            "optional": true, 
+            "type": "Flag", 
+            "id": "must_have_taxids", 
+            "name": "Must Have taxid set"
+        }, 
+        {
+            "command-line-flag": "-cdd_delta", 
+            "description": "Do aditional tests for a CDD database for DELTA-BLAST", 
+            "value-key": "[CDD_DELTA]", 
+            "optional": true, 
+            "type": "Flag", 
+            "id": "cdd_delta", 
+            "name": "Do CDD database tests for DELTA-BLAST"
+        }
+    ], 
+    "description": "BLAST database integrity and validity checking application", 
+    "command-line": "init_genpipes -a /tmp/$USER/cvmfs-cache -c /etc/parrot/ /cvmfs/soft.mugqic/CentOS6/software/blast/ncbi-blast-2.7.1+/bin/blastdbcheck [DB] [DBTYPE] [DIR] [RECURSIVE] [VERBOSITY] [FULL] [STRIDE] [RANDOM] [ENDS] [NO_ISAM] [LEGACY] [MUST_HAVE_TAXIDS] [CDD_DELTA]", 
+    "author": "Altschul et al.", 
+    "tool-version": "v2.7.1", 
+    "tags": {
+        "domain": [
+            "bioinformatics", 
+            "blast"
+        ]
+    }, 
+    "container-image": {
+        "index": "docker://", 
+        "image": "c3genomics/genpipes", 
+        "type": "singularity"
+    }, 
+    "schema-version": "0.5", 
+    "suggested-resources": {
+        "walltime-estimate": 60, 
+        "ram": 1, 
+        "cpu-cores": 1
+    }, 
+    "name": "blastdbcheck"
+}

@@ -1,0 +1,50 @@
+{
+    "tool-version": "3.19.0-centos7", 
+    "name": "PreFreeSurferPipelineBatch", 
+    "author": "Washington University", 
+    "descriptor-url": "https://github.com/big-data-lab-team/cbrain-plugins-hcp/blob/master/cbrain_task_descriptors/prefreesurfer-exec-centos7-fslbuild-centos5.json",
+    "command-line": "command-line-script.sh [SUBJECT_FOLDER] [NAME]", 
+    "inputs": [
+        {
+            "description": "HCP subject folder, downloaded from http://www.humanconnectome.org/documentation/S500.", 
+            "value-key": "[SUBJECT_FOLDER]", 
+            "type": "File", 
+            "optional": false, 
+            "id": "subject_folder", 
+            "name": "HCP subject folder"
+        }, 
+        {
+            "description": "Use this parameter to give a name to the execution. Example: \"Exec-CentOS5-FSLbuild-CentOS5\". The results will be written in a folder named [SUBJECT]-[EXECUTION-NAME] (a unique identifier will be appended in case a file with the same name already exists).", 
+            "default-value": "Exec-CentOS-[X]-FSLbuild-CentOS-[Y]", 
+            "value-key": "[NAME]", 
+            "optional": false, 
+            "type": "String", 
+            "id": "execution_name", 
+            "name": "Execution name"
+        }
+    ], 
+    "container-image": {
+        "image": "bigdatalabteam/hcp-prefreesurfer:exec-centos7-fslbuild-centos5-latest", 
+        "type": "docker"
+    }, 
+    "schema-version": "0.5", 
+    "output-files": [
+        {
+            "path-template": "[SUBJECT_FOLDER]-[NAME]", 
+            "description": "This directory will contain 3 directories (T1w, T2w and MNINonLinear), a monitoring file (monitor.txt) and the input data.", 
+            "optional": false, 
+            "id": "results", 
+            "name": "Results"
+        }
+    ], 
+    "suggested-resources": {
+        "walltime-estimate": 25200
+    }, 
+    "description": "PreFreeSurferPipelineBatch HCP pipeline",
+    "tags": {
+        "domain": [
+            "neuroinformatics", 
+            "mri"
+        ]
+    }
+}

@@ -1,0 +1,88 @@
+{
+    "name": "DistanceMap",
+    "command-line": "distancemap  [DISTANCE_MAP] [IN_FILE] [INVERT_INPUT] [LOCAL_MAX_FILE] [MASK_FILE]",
+    "author": "Nipype (interface), Oxford Centre for Functional MRI of the Brain (FMRIB) (tool)",
+    "description": "DistanceMap, as implemented in Nipype (module: nipype.interfaces.fsl, interface: DistanceMap).",
+    "url": "https://github.com/nipy/nipype/blob/master/nipype/interfaces/fsl/dti.py",
+    "inputs": [
+        {
+            "id": "distance_map",
+            "name": "Distance map",
+            "type": "File",
+            "value-key": "[DISTANCE_MAP]",
+            "command-line-flag": "--out",
+            "command-line-flag-separator": "=",
+            "description": "A file name. Distance map to write.",
+            "optional": false
+        },
+        {
+            "id": "in_file",
+            "name": "In file",
+            "type": "File",
+            "value-key": "[IN_FILE]",
+            "command-line-flag": "--in",
+            "command-line-flag-separator": "=",
+            "description": "An existing file name. Image to calculate distance values for.",
+            "optional": false
+        },
+        {
+            "id": "invert_input",
+            "name": "Invert input",
+            "type": "Flag",
+            "value-key": "[INVERT_INPUT]",
+            "command-line-flag": "--invert",
+            "description": "A boolean. Invert input image.",
+            "optional": true
+        },
+        {
+            "id": "local_max_file",
+            "name": "Local max file",
+            "type": "File",
+            "value-key": "[LOCAL_MAX_FILE]",
+            "command-line-flag": "--localmax",
+            "command-line-flag-separator": "=",
+            "description": "An existing file name. Write an image of the local maxima.",
+            "optional": true
+        },
+        {
+            "id": "mask_file",
+            "name": "Mask file",
+            "type": "File",
+            "value-key": "[MASK_FILE]",
+            "command-line-flag": "--mask",
+            "command-line-flag-separator": "=",
+            "description": "An existing file name. Binary mask to contrain calculations.",
+            "optional": true
+        }
+    ],
+    "output-files": [
+        {
+            "name": "Distance map",
+            "id": "distance_map_outfile",
+            "path-template": "[DISTANCE_MAP]",
+            "optional": true,
+            "description": "An existing file name. Value is distance to nearest nonzero voxels."
+        },
+        {
+            "name": "Local max file",
+            "id": "local_max_file_outfile",
+            "path-template": "[LOCAL_MAX_FILE]",
+            "optional": true,
+            "description": "A file name. Image of local maxima."
+        }
+    ],
+    "tool-version": "1.0.0",
+    "schema-version": "0.5",
+    "container-image": {
+        "image": "mcin/docker-fsl:latest",
+        "type": "docker",
+        "index": "index.docker.io"
+    },
+    "tags": {
+        "domain": [
+            "neuroinformatics",
+            "mri"
+        ],
+        "source": "nipype-interface"
+    }
+}

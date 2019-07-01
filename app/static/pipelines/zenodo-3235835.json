@@ -1,0 +1,292 @@
+{
+    "error-codes": [
+        {
+            "code": 1, 
+            "description": "failed"
+        }
+    ], 
+    "tool-version": "v1", 
+    "tests": [
+        {
+            "invocation": {
+                "5c0c0020f0a53c004bd7ae7c_M": "mean", 
+                "5c0a8a9df0a53c004bd79c82_lmax": null, 
+                "5bfebb5d80ce40002a62cdfc_eddyCorrect": "1", 
+                "5c0a8a9df0a53c004bd79c82_fibers": 500000, 
+                "5bfebb5d80ce40002a62cdfc_resolution": "default", 
+                "5c0bea9cf0a53c004bd7ae07_useinterhemisphericsplit": false, 
+                "5c0c0020f0a53c004bd7ae7c_maxlen": 4, 
+                "5bfebb5d80ce40002a62cdfc_phaseEncodeDir": "2", 
+                "5c0a8a9df0a53c004bd79c82_fibers_max": 1000000, 
+                "5bfebb5d80ce40002a62cdfc_noDwiAlignment": false, 
+                "5bfebb5d80ce40002a62cdfc_rotateBvecsWithCanXform": true, 
+                "5c0c0020f0a53c004bd7ae7c_numnodes": 100, 
+                "5bfebb5d80ce40002a62cdfc_rotateBvecsWithRx": true, 
+                "5c0c0020f0a53c004bd7ae7c_maxdist": 4, 
+                "5c0c0020f0a53c004bd7ae7c_maxiter": 5
+            }, 
+            "name": "test1", 
+            "assertions": {
+                "output-files": [
+                    {
+                        "id": "output"
+                    }
+                ], 
+                "exit-code": 0
+            }
+        }
+    ], 
+    "description": "from acpc_aligned t1 and singleshell b2000 dwi, generate afq output", 
+    "command-line": "bash run.sh", 
+    "author": "Soichi Hayashi", 
+    "tags": {
+        "source": "brainlife", 
+        "dataset_id": "5c0c06e6f6f108004b490e2a"
+    }, 
+    "inputs": [
+        {
+            "name": "brain-life/app-dtiinit(1.6)\nphaseEncodeDir:2\nresolution:default\nrotateBvecsWithCanXform:(null)\nrotateBvecsWithRx:(null)\neddyCorrect:-1\nnoDwiAlignment:true\n phaseEncodeDir", 
+            "default-value": "2", 
+            "value-key": "[task.5bfebb5d80ce40002a62cdfc.phaseEncodeDir]", 
+            "optional": true, 
+            "type": "String", 
+            "id": "5bfebb5d80ce40002a62cdfc_phaseEncodeDir"
+        }, 
+        {
+            "name": "brain-life/app-dtiinit(1.6)\nphaseEncodeDir:2\nresolution:default\nrotateBvecsWithCanXform:(null)\nrotateBvecsWithRx:(null)\neddyCorrect:-1\nnoDwiAlignment:true\n resolution", 
+            "default-value": "default", 
+            "value-key": "[task.5bfebb5d80ce40002a62cdfc.resolution]", 
+            "optional": true, 
+            "type": "String", 
+            "id": "5bfebb5d80ce40002a62cdfc_resolution"
+        }, 
+        {
+            "name": "brain-life/app-dtiinit(1.6)\nphaseEncodeDir:2\nresolution:default\nrotateBvecsWithCanXform:(null)\nrotateBvecsWithRx:(null)\neddyCorrect:-1\nnoDwiAlignment:true\n rotateBvecsWithCanXform", 
+            "default-value": "true", 
+            "value-key": "[task.5bfebb5d80ce40002a62cdfc.rotateBvecsWithCanXform]", 
+            "optional": true, 
+            "value-choices": [
+                "true", 
+                "false"
+            ], 
+            "type": "String", 
+            "id": "5bfebb5d80ce40002a62cdfc_rotateBvecsWithCanXform"
+        }, 
+        {
+            "name": "brain-life/app-dtiinit(1.6)\nphaseEncodeDir:2\nresolution:default\nrotateBvecsWithCanXform:(null)\nrotateBvecsWithRx:(null)\neddyCorrect:-1\nnoDwiAlignment:true\n rotateBvecsWithRx", 
+            "default-value": "true", 
+            "value-key": "[task.5bfebb5d80ce40002a62cdfc.rotateBvecsWithRx]", 
+            "optional": true, 
+            "value-choices": [
+                "true", 
+                "false"
+            ], 
+            "type": "String", 
+            "id": "5bfebb5d80ce40002a62cdfc_rotateBvecsWithRx"
+        }, 
+        {
+            "name": "brain-life/app-dtiinit(1.6)\nphaseEncodeDir:2\nresolution:default\nrotateBvecsWithCanXform:(null)\nrotateBvecsWithRx:(null)\neddyCorrect:-1\nnoDwiAlignment:true\n eddyCorrect", 
+            "default-value": "1", 
+            "value-key": "[task.5bfebb5d80ce40002a62cdfc.eddyCorrect]", 
+            "optional": true, 
+            "type": "String", 
+            "id": "5bfebb5d80ce40002a62cdfc_eddyCorrect"
+        }, 
+        {
+            "name": "brain-life/app-dtiinit(1.6)\nphaseEncodeDir:2\nresolution:default\nrotateBvecsWithCanXform:(null)\nrotateBvecsWithRx:(null)\neddyCorrect:-1\nnoDwiAlignment:true\n noDwiAlignment", 
+            "default-value": "false", 
+            "value-key": "[task.5bfebb5d80ce40002a62cdfc.noDwiAlignment]", 
+            "optional": true, 
+            "value-choices": [
+                "true", 
+                "false"
+            ], 
+            "type": "String", 
+            "id": "5bfebb5d80ce40002a62cdfc_noDwiAlignment"
+        }, 
+        {
+            "name": "brain-life/app-tracking(1.5)\nlmax:(null)\nfibers:500000\nfibers_max:1000000\n lmax", 
+            "default-value": null, 
+            "value-key": "[task.5c0a8a9df0a53c004bd79c82.lmax]", 
+            "optional": true, 
+            "type": "Number", 
+            "id": "5c0a8a9df0a53c004bd79c82_lmax"
+        }, 
+        {
+            "name": "brain-life/app-tracking(1.5)\nlmax:(null)\nfibers:500000\nfibers_max:1000000\n fibers", 
+            "default-value": 500000, 
+            "value-key": "[task.5c0a8a9df0a53c004bd79c82.fibers]", 
+            "type": "Number", 
+            "optional": true, 
+            "id": "5c0a8a9df0a53c004bd79c82_fibers"
+        }, 
+        {
+            "name": "brain-life/app-tracking(1.5)\nlmax:(null)\nfibers:500000\nfibers_max:1000000\n fibers_max", 
+            "default-value": 1000000, 
+            "value-key": "[task.5c0a8a9df0a53c004bd79c82.fibers_max]", 
+            "optional": true, 
+            "type": "Number", 
+            "id": "5c0a8a9df0a53c004bd79c82_fibers_max"
+        }, 
+        {
+            "name": "brain-life/app-tractclassification(1.2)\nuseinterhemisphericsplit:(null)\n useinterhemisphericsplit", 
+            "default-value": "false", 
+            "value-key": "[task.5c0bea9cf0a53c004bd7ae07.useinterhemisphericsplit]", 
+            "optional": true, 
+            "value-choices": [
+                "true", 
+                "false"
+            ], 
+            "type": "String", 
+            "id": "5c0bea9cf0a53c004bd7ae07_useinterhemisphericsplit"
+        }, 
+        {
+            "name": "brain-life/app-AFQclean(1.2)\nmaxiter:5\nnumnodes:100\nmaxlen:4\nmaxdist:4\nM:mean\n maxiter", 
+            "default-value": 5, 
+            "value-key": "[task.5c0c0020f0a53c004bd7ae7c.maxiter]", 
+            "optional": true, 
+            "type": "Number", 
+            "id": "5c0c0020f0a53c004bd7ae7c_maxiter"
+        }, 
+        {
+            "name": "brain-life/app-AFQclean(1.2)\nmaxiter:5\nnumnodes:100\nmaxlen:4\nmaxdist:4\nM:mean\n numnodes", 
+            "default-value": 100, 
+            "value-key": "[task.5c0c0020f0a53c004bd7ae7c.numnodes]", 
+            "optional": true, 
+            "type": "Number", 
+            "id": "5c0c0020f0a53c004bd7ae7c_numnodes"
+        }, 
+        {
+            "name": "brain-life/app-AFQclean(1.2)\nmaxiter:5\nnumnodes:100\nmaxlen:4\nmaxdist:4\nM:mean\n maxlen", 
+            "default-value": 4, 
+            "value-key": "[task.5c0c0020f0a53c004bd7ae7c.maxlen]", 
+            "optional": true, 
+            "type": "Number", 
+            "id": "5c0c0020f0a53c004bd7ae7c_maxlen"
+        }, 
+        {
+            "name": "brain-life/app-AFQclean(1.2)\nmaxiter:5\nnumnodes:100\nmaxlen:4\nmaxdist:4\nM:mean\n maxdist", 
+            "default-value": 4, 
+            "value-key": "[task.5c0c0020f0a53c004bd7ae7c.maxdist]", 
+            "optional": true, 
+            "type": "Number", 
+            "id": "5c0c0020f0a53c004bd7ae7c_maxdist"
+        }, 
+        {
+            "name": "brain-life/app-AFQclean(1.2)\nmaxiter:5\nnumnodes:100\nmaxlen:4\nmaxdist:4\nM:mean\n M", 
+            "default-value": "mean", 
+            "value-key": "[task.5c0c0020f0a53c004bd7ae7c.M]", 
+            "optional": true, 
+            "type": "String", 
+            "id": "5c0c0020f0a53c004bd7ae7c_M"
+        }
+    ], 
+    "schema-version": "0.5", 
+    "output-files": [
+        {
+            "path-template": "task.5a05e7ad2767f30030bcf433/config.json", 
+            "file-template": [
+                "{    \"t1\": \"../5a05e7a82767f30030bcf431/5a050966eec2b300611abff2/t1.nii.gz\"}"
+            ], 
+            "id": "5a05e7ad2767f30030bcf433_config", 
+            "name": "config.json for brain-life/app-freesurfer\n"
+        }, 
+        {
+            "path-template": "task.5bfebb5d80ce40002a62cdfc/config.json", 
+            "file-template": [
+                "{    \"phaseEncodeDir\": \"[task.5bfebb5d80ce40002a62cdfc.phaseEncodeDir]\",    \"resolution\": \"[task.5bfebb5d80ce40002a62cdfc.resolution]\",    \"rotateBvecsWithCanXform\": [task.5bfebb5d80ce40002a62cdfc.rotateBvecsWithCanXform],    \"rotateBvecsWithRx\": [task.5bfebb5d80ce40002a62cdfc.rotateBvecsWithRx],    \"eddyCorrect\": \"[task.5bfebb5d80ce40002a62cdfc.eddyCorrect]\",    \"noDwiAlignment\": [task.5bfebb5d80ce40002a62cdfc.noDwiAlignment],    \"dwi\": \"../5bfebb5d80ce40002a62cdfa/5a050a00eec2b300611abff3/dwi.nii.gz\",    \"bvecs\": \"../5bfebb5d80ce40002a62cdfa/5a050a00eec2b300611abff3/dwi.bvecs\",    \"bvals\": \"../5bfebb5d80ce40002a62cdfa/5a050a00eec2b300611abff3/dwi.bvals\",    \"t1\": \"../5bfebb5d80ce40002a62cdfa/5a050966eec2b300611abff2/t1.nii.gz\"}"
+            ], 
+            "id": "5bfebb5d80ce40002a62cdfc_config", 
+            "name": "config.json for brain-life/app-dtiinit(1.6)\nphaseEncodeDir:2\nresolution:default\nrotateBvecsWithCanXform:(null)\nrotateBvecsWithRx:(null)\neddyCorrect:-1\nnoDwiAlignment:true\n"
+        }, 
+        {
+            "path-template": "task.5c0a8a9df0a53c004bd79c82/config.json", 
+            "file-template": [
+                "{    \"lmax\": \"[task.5c0a8a9df0a53c004bd79c82.lmax]\",    \"fibers\": \"[task.5c0a8a9df0a53c004bd79c82.fibers]\",    \"fibers_max\": \"[task.5c0a8a9df0a53c004bd79c82.fibers_max]\",    \"dwi\": \"../5c098457f0a53c004bd79131/5bfee5acc203920043d43ddd/dwi.nii.gz\",    \"bvecs\": \"../5c098457f0a53c004bd79131/5bfee5acc203920043d43ddd/dwi.bvecs\",    \"bvals\": \"../5c098457f0a53c004bd79131/5bfee5acc203920043d43ddd/dwi.bvals\",    \"freesurfer\": \"../5c098457f0a53c004bd79131/5a065cc75ab38300be518f51/output\"}"
+            ], 
+            "id": "5c0a8a9df0a53c004bd79c82_config", 
+            "name": "config.json for brain-life/app-tracking(1.5)\nlmax:(null)\nfibers:500000\nfibers_max:1000000\n"
+        }, 
+        {
+            "path-template": "task.5c0bea9cf0a53c004bd7ae07/config.json", 
+            "file-template": [
+                "{    \"useinterhemisphericsplit\": [task.5c0bea9cf0a53c004bd7ae07.useinterhemisphericsplit],    \"track\": \"../5c0a8a9df0a53c004bd79c82/output.DT_STREAM.tck\",    \"dtiinit\": \"../5c093a2af0a53c004bd78b69/5bfee5abc203920043d43ddc/.\"}"
+            ], 
+            "id": "5c0bea9cf0a53c004bd7ae07_config", 
+            "name": "config.json for brain-life/app-tractclassification(1.2)\nuseinterhemisphericsplit:(null)\n"
+        }, 
+        {
+            "path-template": "task.5c0c0020f0a53c004bd7ae7c/config.json", 
+            "file-template": [
+                "{    \"maxiter\": \"[task.5c0c0020f0a53c004bd7ae7c.maxiter]\",    \"numnodes\": \"[task.5c0c0020f0a53c004bd7ae7c.numnodes]\",    \"maxlen\": \"[task.5c0c0020f0a53c004bd7ae7c.maxlen]\",    \"maxdist\": \"[task.5c0c0020f0a53c004bd7ae7c.maxdist]\",    \"M\": \"[task.5c0c0020f0a53c004bd7ae7c.M]\",    \"afq_fg\": \"../5c0bea9cf0a53c004bd7ae07/output.mat\"}"
+            ], 
+            "id": "5c0c0020f0a53c004bd7ae7c_config", 
+            "name": "config.json for brain-life/app-AFQclean(1.2)\nmaxiter:5\nnumnodes:100\nmaxlen:4\nmaxdist:4\nM:mean\n"
+        }, 
+        {
+            "path-template": "run.sh", 
+            "file-template": [
+                "#!/bin/bash", 
+                "echo \"staging task.5a05e7ad2767f30030bcf433 (brain-life/app-freesurfer)\"", 
+                "[ ! -d task.5a05e7ad2767f30030bcf433 ] && curl -L https://github.com/brain-life/app-freesurfer/archive/undefined.zip > task.5a05e7ad2767f30030bcf433.zip && unzip task.5a05e7ad2767f30030bcf433.zip && mv *undefined task.5a05e7ad2767f30030bcf433 && rm task.5a05e7ad2767f30030bcf433.zip", 
+                "", 
+                "echo \"running task task.5a05e7ad2767f30030bcf433 (brain-life/app-freesurfer)\"", 
+                "(", 
+                "\tcd task.5a05e7ad2767f30030bcf433", 
+                "\ttime ./main", 
+                ")", 
+                "", 
+                "echo \"staging task.5bfebb5d80ce40002a62cdfc (brain-life/app-dtiinit)\"", 
+                "[ ! -d task.5bfebb5d80ce40002a62cdfc ] && curl -L https://github.com/brain-life/app-dtiinit/archive/c4dcc5667c51e31f032e5148b72b236b3ff81900.zip > task.5bfebb5d80ce40002a62cdfc.zip && unzip task.5bfebb5d80ce40002a62cdfc.zip && mv *c4dcc5667c51e31f032e5148b72b236b3ff81900 task.5bfebb5d80ce40002a62cdfc && rm task.5bfebb5d80ce40002a62cdfc.zip", 
+                "", 
+                "echo \"running task task.5bfebb5d80ce40002a62cdfc (brain-life/app-dtiinit)\"", 
+                "(", 
+                "\tcd task.5bfebb5d80ce40002a62cdfc", 
+                "\ttime ./main", 
+                ")", 
+                "", 
+                "echo \"staging task.5c0a8a9df0a53c004bd79c82 (brain-life/app-tracking)\"", 
+                "[ ! -d task.5c0a8a9df0a53c004bd79c82 ] && curl -L https://github.com/brain-life/app-tracking/archive/44ff601ee2f2fd35c2a2bdb95426d828143692c6.zip > task.5c0a8a9df0a53c004bd79c82.zip && unzip task.5c0a8a9df0a53c004bd79c82.zip && mv *44ff601ee2f2fd35c2a2bdb95426d828143692c6 task.5c0a8a9df0a53c004bd79c82 && rm task.5c0a8a9df0a53c004bd79c82.zip", 
+                "", 
+                "echo \"running task task.5c0a8a9df0a53c004bd79c82 (brain-life/app-tracking)\"", 
+                "(", 
+                "\tcd task.5c0a8a9df0a53c004bd79c82", 
+                "\ttime ./main", 
+                ")", 
+                "", 
+                "echo \"staging task.5c0bea9cf0a53c004bd7ae07 (brain-life/app-tractclassification)\"", 
+                "[ ! -d task.5c0bea9cf0a53c004bd7ae07 ] && curl -L https://github.com/brain-life/app-tractclassification/archive/1ee98655908ee4a815f5da6970e18ea73bae6490.zip > task.5c0bea9cf0a53c004bd7ae07.zip && unzip task.5c0bea9cf0a53c004bd7ae07.zip && mv *1ee98655908ee4a815f5da6970e18ea73bae6490 task.5c0bea9cf0a53c004bd7ae07 && rm task.5c0bea9cf0a53c004bd7ae07.zip", 
+                "", 
+                "echo \"running task task.5c0bea9cf0a53c004bd7ae07 (brain-life/app-tractclassification)\"", 
+                "(", 
+                "\tcd task.5c0bea9cf0a53c004bd7ae07", 
+                "\ttime ./main", 
+                ")", 
+                "", 
+                "echo \"staging task.5c0c0020f0a53c004bd7ae7c (brain-life/app-AFQclean)\"", 
+                "[ ! -d task.5c0c0020f0a53c004bd7ae7c ] && curl -L https://github.com/brain-life/app-AFQclean/archive/6eb386469d5274df073ee2629d4f04e8a2d22fb2.zip > task.5c0c0020f0a53c004bd7ae7c.zip && unzip task.5c0c0020f0a53c004bd7ae7c.zip && mv *6eb386469d5274df073ee2629d4f04e8a2d22fb2 task.5c0c0020f0a53c004bd7ae7c && rm task.5c0c0020f0a53c004bd7ae7c.zip", 
+                "", 
+                "echo \"running task task.5c0c0020f0a53c004bd7ae7c (brain-life/app-AFQclean)\"", 
+                "(", 
+                "\tcd task.5c0c0020f0a53c004bd7ae7c", 
+                "\ttime ./main", 
+                ")", 
+                "", 
+                ""
+            ], 
+            "id": "run", 
+            "name": "run.sh"
+        }, 
+        {
+            "path-template": "task.5c0c0020f0a53c004bd7ae7c", 
+            "id": "output", 
+            "name": "Dataset output5c0c06e6f6f108004b490e2a"
+        }
+    ], 
+    "suggested-resources": {
+        "walltime-estimate": 120, 
+        "ram": 16, 
+        "cpu-cores": 8
+    }, 
+    "name": "workflow generated from dataset:5c0c06e6f6f108004b490e2a"
+}

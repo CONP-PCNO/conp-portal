@@ -1,0 +1,272 @@
+[
+    {
+        "ID": "zenodo.2644621",
+        "TITLE": "Example Boutiques Tool",
+        "DESCRIPTION": "This property describes the tool or application",
+        "DOWNLOADS": 14158.0
+    },
+    {
+        "ID": "zenodo.2587160",
+        "TITLE": "makeblastdb",
+        "DESCRIPTION": "Application to create BLAST databases, version 2.7.1+",
+        "DOWNLOADS": 2477.0
+    },
+    {
+        "ID": "zenodo.2602109",
+        "TITLE": "MCFLIRT",
+        "DESCRIPTION": "MCFLIRT, as implemented in Nipype (module: nipype.interfaces.fsl, interface: MCFLIRT).",
+        "DOWNLOADS": 69.0
+    },
+    {
+        "ID": "zenodo.1451003",
+        "TITLE": "qeeg",
+        "DESCRIPTION": "qeeg application",
+        "DOWNLOADS": 47.0
+    },
+    {
+        "ID": "zenodo.1482743",
+        "TITLE": "fsl_bet",
+        "DESCRIPTION": "Automated brain extraction tool for FSL",
+        "DOWNLOADS": 47.0
+    },
+    {
+        "ID": "zenodo.1451001",
+        "TITLE": "BIDS app example",
+        "DESCRIPTION": "See https://github.com/BIDS-Apps/example",
+        "DOWNLOADS": 44.0
+    },
+    {
+        "ID": "zenodo.1895219",
+        "TITLE": "BIDS App - fmriprep",
+        "DESCRIPTION": "fMRIprep is a functional magneticresonance image pre-processing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to differences in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. https://fmriprep.readthedocs.io",
+        "DOWNLOADS": 39.0
+    },
+    {
+        "ID": "zenodo.2587157",
+        "TITLE": "blast_formatter",
+        "DESCRIPTION": "Stand-alone BLAST formatter client, version 2.7.1+",
+        "DOWNLOADS": 37.0
+    },
+    {
+        "ID": "zenodo.2587156",
+        "TITLE": "blastdbcheck",
+        "DESCRIPTION": "BLAST database integrity and validity checking application",
+        "DOWNLOADS": 35.0
+    },
+    {
+        "ID": "zenodo.1484547",
+        "TITLE": "BIDS App - FreeSurfer 6.0",
+        "DESCRIPTION": "BIDS App version of freesurfer 6.0, from https://github.com/BIDS-Apps/freesurfer, see the readme there for more details, note it needs a license file to run",
+        "DOWNLOADS": 33.0
+    },
+    {
+        "ID": "zenodo.1445789",
+        "TITLE": "ICA_AROMA",
+        "DESCRIPTION": "ICA-AROMA (i.e. Independent Component Analyis-based Automatic Removal Of Motion Artifacts) is a data-driven method to identify and remove motion-related independent components from fMRI data.",
+        "DOWNLOADS": 33.0
+    },
+    {
+        "ID": "zenodo.1450991",
+        "TITLE": "fsl_probtrackx2",
+        "DESCRIPTION": "probabilistic tracking with crossing fibres",
+        "DOWNLOADS": 33.0
+    },
+    {
+        "ID": "zenodo.2601876",
+        "TITLE": "DTIFit",
+        "DESCRIPTION": "DTIFit, as implemented in Nipype (module: nipype.interfaces.fsl, interface: DTIFit).",
+        "DOWNLOADS": 30.0
+    },
+    {
+        "ID": "zenodo.1450997",
+        "TITLE": "FreeSurferPipelineBatch-CentOS7",
+        "DESCRIPTION": "FreeSurferPipelineBatch HCP pipeline",
+        "DOWNLOADS": 30.0
+    },
+    {
+        "ID": "zenodo.3242714",
+        "TITLE": "MRIQC",
+        "DESCRIPTION": "tool description",
+        "DOWNLOADS": 29.0
+    },
+    {
+        "ID": "zenodo.1450993",
+        "TITLE": "PostFreeSurferPipelineBatch-CentOS7",
+        "DESCRIPTION": "PostFreeSurferPipelineBatch HCP pipeline",
+        "DOWNLOADS": 29.0
+    },
+    {
+        "ID": "zenodo.1450999",
+        "TITLE": "ndmg",
+        "DESCRIPTION": "dwi connectome estimation pipeline",
+        "DOWNLOADS": 29.0
+    },
+    {
+        "ID": "zenodo.1494312",
+        "TITLE": "fsl_first",
+        "DESCRIPTION": "FIRST is a model-based segmentation and registration tool, based on a Bayesian model of shape and appearance for subcortical structures.",
+        "DOWNLOADS": 28.0
+    },
+    {
+        "ID": "zenodo.2566443",
+        "TITLE": "mask2boundary",
+        "DESCRIPTION": "Transforms a binary mask of a niftii image (such as a brain or white matter mask) into a boundary mask. This tool was originally developed to transform a white matter mask into a mask of seed locations for performing tractography in diffusion images.",
+        "DOWNLOADS": 28.0
+    },
+    {
+        "ID": "zenodo.2573071",
+        "TITLE": "GateCLforOpenDose",
+        "DESCRIPTION": "Descriptor for the GATE command with input parameters, used for import in VIP via Boutiques",
+        "DOWNLOADS": 27.0
+    },
+    {
+        "ID": "zenodo.1450995",
+        "TITLE": "PreFreeSurferPipelineBatch",
+        "DESCRIPTION": "PreFreeSurferPipelineBatch HCP pipeline",
+        "DOWNLOADS": 27.0
+    },
+    {
+        "ID": "zenodo.1494308",
+        "TITLE": "fsl_fast",
+        "DESCRIPTION": "FAST (FMRIB's Automated Segmentation Tool) segments a 3D image of the brain into different tissue types (Grey Matter, White Matter, CSF, etc.), whilst also correcting for spatial intensity variations (also known as bias field or RF inhomogeneities), via a hidden Markov random field model and an associated EM algorithm. Note that the alternative priors option is not supported at this time.",
+        "DOWNLOADS": 27.0
+    },
+    {
+        "ID": "zenodo.2639849",
+        "TITLE": "FNIRT",
+        "DESCRIPTION": "FNIRT, as implemented in Nipype (module: nipype.interfaces.fsl, interface: FNIRT).",
+        "DOWNLOADS": 27.0
+    },
+    {
+        "ID": "zenodo.2566455",
+        "TITLE": "BIDS App - FSL Diffusion Preprocessing",
+        "DESCRIPTION": "Preprocessing pipeline for diffusion MRI data using the FSL software suite.",
+        "DOWNLOADS": 25.0
+    },
+    {
+        "ID": "zenodo.2563057",
+        "TITLE": "BIDS App - fmriprep",
+        "DESCRIPTION": "fMRIprep is a functional magneticresonance image pre-processing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to differences in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. https://fmriprep.readthedocs.io",
+        "DOWNLOADS": 25.0
+    },
+    {
+        "ID": "zenodo.2541125",
+        "TITLE": "BEst",
+        "DESCRIPTION": "<p>EEG/MEG source localisation techniques based upon the Maximum Entropy on the Mean framework</p>",
+        "DOWNLOADS": 24.0
+    },
+    {
+        "ID": "zenodo.2573287",
+        "TITLE": "oneVoxel",
+        "DESCRIPTION": "Adds 1-voxel noise to a Nifti image at either a provided or random location within a mask.",
+        "DOWNLOADS": 24.0
+    },
+    {
+        "ID": "zenodo.2566450",
+        "TITLE": "BIDS App - ndmg",
+        "DESCRIPTION": "ndmg connectome estimation pipeline",
+        "DOWNLOADS": 23.0
+    },
+    {
+        "ID": "zenodo.2597643",
+        "TITLE": "FLIRT",
+        "DESCRIPTION": "FLIRT, as implemented in Nipype (module: nipype.interfaces.fsl, interface: FLIRT).",
+        "DOWNLOADS": 22.0
+    },
+    {
+        "ID": "zenodo.2602072",
+        "TITLE": "BEDPOSTX5",
+        "DESCRIPTION": "BEDPOSTX5, as implemented in Nipype (module: nipype.interfaces.fsl, interface: BEDPOSTX5).",
+        "DOWNLOADS": 21.0
+    },
+    {
+        "ID": "zenodo.2634608",
+        "TITLE": "CorticalThickness",
+        "DESCRIPTION": "CorticalThickness, as implemented in Nipype (module: nipype.interfaces.ants, interface: CorticalThickness).",
+        "DOWNLOADS": 21.0
+    },
+    {
+        "ID": "zenodo.2646555",
+        "TITLE": "LaplacianThickness",
+        "DESCRIPTION": "LaplacianThickness, as implemented in Nipype (module: nipype.interfaces.ants, interface: LaplacianThickness).",
+        "DOWNLOADS": 21.0
+    },
+    {
+        "ID": "zenodo.2636973",
+        "TITLE": "BrainExtraction",
+        "DESCRIPTION": "BrainExtraction, as implemented in Nipype (module: nipype.interfaces.ants, interface: BrainExtraction).",
+        "DOWNLOADS": 20.0
+    },
+    {
+        "ID": "zenodo.2640953",
+        "TITLE": "ConcatTransfo",
+        "DESCRIPTION": "Concatenate multiple ANTs warping fields using ComposeMultiTransform.\n\nFor instance if you have\n- Warping field: anatomical to MNI template\n- Affine matrix: Diffusion to anatomical\nYou can obtain the transform diffusion to MNI template\n\n\nComposeMultiTransform ImageDimension output_field [-R reference_image] {[deformation_field | [-i] affine_transform_txt ]}\n  Usage has the same form as WarpImageMultiTransform\n For Example:\n\nComposeMultiTransform Dimension  outwarp.nii   -R template.nii   ExistingWarp.nii  ExistingAffine.nii\n or for an inverse mapping :\nComposeMultiTransform Dimension  outwarp.nii   -R template.nii   -i ExistingAffine.nii ExistingInverseWarp.nii\n recalling that the -i option takes the inverse of the affine mapping\n\nOr: to compose multiple affine text file into one:\nComposeMultiTransform ImageDimension output_affine_txt [-R reference_affine_txt] {[-i] affine_transform_txt}\nThis will be evoked if a text file is given as the second parameter. In this case reference_affine_txt is used to define the center of the output affine.  The default reference is the first given affine text file. This ignores all non-txt files among the following parameters.",
+        "DOWNLOADS": 20.0
+    },
+    {
+        "ID": "zenodo.2621482",
+        "TITLE": "TOPUP",
+        "DESCRIPTION": "TOPUP, as implemented in Nipype (module: nipype.interfaces.fsl, interface: TOPUP).",
+        "DOWNLOADS": 20.0
+    },
+    {
+        "ID": "zenodo.2621487",
+        "TITLE": "ApplyTOPUP",
+        "DESCRIPTION": "ApplyTOPUP, as implemented in Nipype (module: nipype.interfaces.fsl, interface: ApplyTOPUP).",
+        "DOWNLOADS": 20.0
+    },
+    {
+        "ID": "zenodo.2648761",
+        "TITLE": "CompositeTransformUtil",
+        "DESCRIPTION": "CompositeTransformUtil, as implemented in Nipype (module: nipype.interfaces.ants, interface: CompositeTransformUtil).",
+        "DOWNLOADS": 19.0
+    },
+    {
+        "ID": "zenodo.3235835",
+        "TITLE": "workflow generated from dataset:5c0c06e6f6f108004b490e2a",
+        "DESCRIPTION": "from acpc_aligned t1 and singleshell b2000 dwi, generate afq output",
+        "DOWNLOADS": 19.0
+    },
+    {
+        "ID": "zenodo.2650465",
+        "TITLE": "DistanceMap",
+        "DESCRIPTION": "DistanceMap, as implemented in Nipype (module: nipype.interfaces.fsl, interface: DistanceMap).",
+        "DOWNLOADS": 18.0
+    },
+    {
+        "ID": "zenodo.2650440",
+        "TITLE": "ApplyWarp",
+        "DESCRIPTION": "ApplyWarp, as implemented in Nipype (module: nipype.interfaces.fsl, interface: ApplyWarp).",
+        "DOWNLOADS": 18.0
+    },
+    {
+        "ID": "zenodo.3240521",
+        "TITLE": "fslstats",
+        "DESCRIPTION": "Descriptor of fslstats from the FSL toolbox. Computes various statistics on nifti images.",
+        "DOWNLOADS": 16.0
+    },
+    {
+        "ID": "zenodo.3239451",
+        "TITLE": "blastp",
+        "DESCRIPTION": "Protein-Protein BLAST 2.7.1+",
+        "DOWNLOADS": 9.0
+    },
+    {
+        "ID": "zenodo.3240577",
+        "TITLE": "blastn",
+        "DESCRIPTION": "Nucleotide-Nucleotide BLAST 2.7.1+",
+        "DOWNLOADS": 9.0
+    },
+    {
+        "ID": "zenodo.3245387",
+        "TITLE": "AQUA",
+        "DESCRIPTION": "automatic quality improvment for multiple sequence alignment.",
+        "DOWNLOADS": 5.0
+    },
+    {
+        "ID": "zenodo.3257614",
+        "TITLE": "spark",
+        "DESCRIPTION": "SParsity-based Analysis of Reliable K-hubness (SPARK) for brain fMRI functional connectivity",
+        "DOWNLOADS": 4.0
+    }
+]

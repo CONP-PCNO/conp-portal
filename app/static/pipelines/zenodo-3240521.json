@@ -1,0 +1,311 @@
+{
+    "tool-version": "mcin/docker-fsl:latest",
+    "author": "Oxford Centre for Functional MRI of the Brain (FMRIB)",
+    "descriptor-url": "https://github.com/aces/cbrain-plugins-neuro/blob/master/cbrain_task_descriptors/fsl_stats.json",
+    "command-line": "fslstats [t] [INPUT_FILE] [l] [u] [r] [R] [e] [E] [v] [V] [m] [M] [s] [S] [w] [x] [X] [c] [C] [p] [P] [a] [n] [k] [d] [h] [H] > [OUTPUT_FILE]",
+    "container-image": {
+        "image": "mcin/docker-fsl:latest",
+        "type": "docker"
+    },
+    "description": "Descriptor of fslstats from the FSL toolbox. Computes various statistics on nifti images.",
+    "inputs": [
+        {
+            "id": "t",
+            "name": "t",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[t]",
+            "description": "give a separate output line for each 3D volume of a 4D timeseries",
+            "command-line-flag": "-t"
+        },
+        {
+            "id": "input_file",
+            "name": "Input file",
+            "optional": false,
+            "type": "File",
+            "value-key": "[INPUT_FILE]"
+        },
+        {
+            "id": "l",
+            "name": "lower threshold",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[l]",
+            "description": "set lower threshold",
+            "command-line-flag": "-l"
+        },
+        {
+            "id": "u",
+            "name": "upper threshold",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[u]",
+            "description": "set upper threshold",
+            "command-line-flag": "-u"
+        },
+        {
+            "id": "r",
+            "name": "r",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[r]",
+            "description": " output <robust min intensity> <robust max intensity>",
+            "command-line-flag": "-r"
+        },
+        {
+            "id": "R",
+            "name": "R",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[R]",
+            "description": " output <min intensity> <max intensity>",
+            "command-line-flag": "-R"
+        },
+        {
+            "id": "e",
+            "name": "e",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[e]",
+            "description": " output mean entropy ; mean(-i*ln(i))",
+            "command-line-flag": "-e"
+        },
+        {
+            "id": "E",
+            "name": "E",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[E]",
+            "description": " output mean entropy (of nonzero voxels)",
+            "command-line-flag": "-E"
+        },
+        {
+            "id": "v",
+            "name": "v",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[v]",
+            "description": " output <voxels> <volume>",
+            "command-line-flag": "-v"
+        },
+        {
+            "id": "V",
+            "name": "V",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[V]",
+            "description": " output <voxels> <volume> (for nonzero voxels)",
+            "command-line-flag": "-V"
+        },
+        {
+            "id": "m",
+            "name": "m",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[m]",
+            "description": " output mean",
+            "command-line-flag": "-m"
+        },
+        {
+            "id": "M",
+            "name": "M",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[M]",
+            "description": " output mean (for nonzero voxels)",
+            "command-line-flag": "-M"
+        },
+        {
+            "id": "s",
+            "name": "s",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[s]",
+            "description": " output standard deviation",
+            "command-line-flag": "-s"
+        },
+        {
+            "id": "S",
+            "name": "S",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[S]",
+            "description": " output standard deviation (for nonzero voxels)",
+            "command-line-flag": "-S"
+        },
+        {
+            "id": "w",
+            "name": "w",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[w]",
+            "description": " output smallest ROI <xmin> <xsize> <ymin> <ysize> <zmin> <zsize> <tmin> <tsize> containing nonzero voxels",
+            "command-line-flag": "-w"
+        },
+        {
+            "id": "x",
+            "name": "x",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[x]",
+            "description": " output co-ordinates of maximum voxel",
+            "command-line-flag": "-x"
+        },
+        {
+            "id": "X",
+            "name": "X",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[X]",
+            "description": " output co-ordinates of minimum voxel",
+            "command-line-flag": "-X"
+        },
+        {
+            "id": "c",
+            "name": "c",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[c]",
+            "description": " output centre-of-gravity (cog) in mm coordinates",
+            "command-line-flag": "-c"
+        },
+        {
+            "id": "C",
+            "name": "C",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[C]",
+            "description": " output centre-of-gravity (cog) in voxel coordinates",
+            "command-line-flag": "-C"
+        },
+        {
+            "id": "p",
+            "name": "p",
+            "optional": true,
+            "type": "Number",
+            "integer": true,
+            "minimum": 0,
+            "maximum": 100,
+            "value-key": "[p]",
+            "description": " output nth percentile (n between 0 and 100)",
+            "command-line-flag": "-p"
+        },
+        {
+            "id": "P",
+            "name": "P",
+            "optional": true,
+            "type": "Number",
+            "integer": true,
+            "minimum": 0,
+            "maximum": 100,
+            "value-key": "[P]",
+            "description": " output nth percentile (for nonzero voxels)",
+            "command-line-flag": "-P"
+        },
+        {
+            "id": "a",
+            "name": "a",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[a]",
+            "description": " use absolute values of all image intensities",
+            "command-line-flag": "-a"
+        },
+        {
+            "id": "n",
+            "name": "n",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[n]",
+            "description": " treat NaN or Inf as zero for subsequent stats",
+            "command-line-flag": "-n"
+        },
+        {
+            "id": "k",
+            "name": "k",
+            "optional": true,
+            "type": "File",
+            "value-key": "[k]",
+            "description": " use the specified image (filename) for masking - overrides lower and upper thresholds",
+            "command-line-flag": "-k"
+        },
+        {
+            "id": "d",
+            "name": "d",
+            "optional": true,
+            "type": "File",
+            "value-key": "[d]",
+            "description": " take the difference between the base image and the image specified here",
+            "command-line-flag": "-d"
+        },
+        {
+            "id": "h",
+            "name": "h",
+            "optional": true,
+            "type": "Number",
+            "integer": true,
+            "value-key": "[h]",
+            "description": " output a histogram (for the thresholded/masked voxels only) with nbins",
+            "command-line-flag": "-h"
+        },
+        {
+            "id": "H",
+            "name": "H",
+            "optional": true,
+            "type": "Number",
+            "list": true,
+            "min-list-entries": 3,
+            "max-list-entries": 3,
+            "list-separator": " ",
+            "value-key": "[H]",
+            "description": " output a histogram (for the thresholded/masked voxels only) with nbins and histogram limits of min and max",
+            "command-line-flag": "-H"
+        }
+    ],
+    "groups": [
+        {
+            "one-is-required": true,
+            "id": "output_type",
+            "name": "output type",
+            "members": [
+                "r",
+                "R",
+                "e",
+                "E",
+                "v",
+                "V",
+                "m",
+                "M",
+                "s",
+                "S",
+                "w",
+                "x",
+                "X",
+                "c",
+                "C",
+                "p",
+                "P",
+                "h",
+                "H"
+            ]
+        }
+    ],
+    "name": "fslstats",
+    "output-files": [
+        {
+            "id": "output",
+            "name": "Output",
+            "optional": false,
+            "path-template": "output.txt",
+            "value-key": "[OUTPUT_FILE]"
+        }
+    ],
+    "schema-version": "0.5",
+    "tags": {
+        "domain": [
+            "neuroinformatics",
+            "mri"
+        ],
+        "toolbox": "FSL"
+    }
+}

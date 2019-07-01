@@ -1,0 +1,262 @@
+{
+    "name": "DTIFit",
+    "command-line": "dtifit [DWI] [BASE_NAME] [MASK] [BVECS] [BVALS] [CNI] [GRADNONLIN] [LITTLE_BIT] [MAX_X] [MAX_Y] [MAX_Z] [MIN_X] [MIN_Y] [MIN_Z] [SAVE_TENSOR] [SSE]",
+    "author": "Nipype (interface), Oxford Centre for Functional MRI of the Brain (FMRIB) (tool)",
+    "description": "DTIFit, as implemented in Nipype (module: nipype.interfaces.fsl, interface: DTIFit).",
+    "inputs": [
+        {
+            "id": "base_name",
+            "name": "Base name",
+            "type": "String",
+            "value-key": "[BASE_NAME]",
+            "command-line-flag": "-o",
+            "description": "A unicode string. Base_name that all output files will start with.",
+            "optional": true,
+            "default-value": "dtifit_"
+        },
+        {
+            "id": "bvals",
+            "name": "Bvals",
+            "type": "File",
+            "value-key": "[BVALS]",
+            "command-line-flag": "-b",
+            "description": "An existing file name. B values file.",
+            "optional": false
+        },
+        {
+            "id": "bvecs",
+            "name": "Bvecs",
+            "type": "File",
+            "value-key": "[BVECS]",
+            "command-line-flag": "-r",
+            "description": "An existing file name. B vectors file.",
+            "optional": false
+        },
+        {
+            "id": "cni",
+            "name": "Cni",
+            "type": "File",
+            "value-key": "[CNI]",
+            "command-line-flag": "--cni",
+            "command-line-flag-separator": "=",
+            "description": "An existing file name. Input confound regressors.",
+            "optional": true
+        },
+        {
+            "id": "dwi",
+            "name": "Dwi",
+            "type": "File",
+            "value-key": "[DWI]",
+            "command-line-flag": "-k",
+            "description": "An existing file name. Diffusion weighted image data file.",
+            "optional": false
+        },
+        {
+            "id": "gradnonlin",
+            "name": "Gradnonlin",
+            "type": "File",
+            "value-key": "[GRADNONLIN]",
+            "command-line-flag": "--gradnonlin",
+            "command-line-flag-separator": "=",
+            "description": "An existing file name. Gradient non linearities.",
+            "optional": true
+        },
+        {
+            "id": "little_bit",
+            "name": "Little bit",
+            "type": "Flag",
+            "value-key": "[LITTLE_BIT]",
+            "command-line-flag": "--littlebit",
+            "description": "A boolean. Only process small area of brain.",
+            "optional": true
+        },
+        {
+            "id": "mask",
+            "name": "Mask",
+            "type": "File",
+            "value-key": "[MASK]",
+            "command-line-flag": "-m",
+            "description": "An existing file name. Bet binary mask file.",
+            "optional": false
+        },
+        {
+            "id": "max_x",
+            "name": "Max x",
+            "type": "Number",
+            "integer": true,
+            "value-key": "[MAX_X]",
+            "command-line-flag": "-X",
+            "description": "An integer (int or long). Max x.",
+            "optional": true
+        },
+        {
+            "id": "max_y",
+            "name": "Max y",
+            "type": "Number",
+            "integer": true,
+            "value-key": "[MAX_Y]",
+            "command-line-flag": "-Y",
+            "description": "An integer (int or long). Max y.",
+            "optional": true
+        },
+        {
+            "id": "max_z",
+            "name": "Max z",
+            "type": "Number",
+            "integer": true,
+            "value-key": "[MAX_Z]",
+            "command-line-flag": "-Z",
+            "description": "An integer (int or long). Max z.",
+            "optional": true
+        },
+        {
+            "id": "min_x",
+            "name": "Min x",
+            "type": "Number",
+            "integer": true,
+            "value-key": "[MIN_X]",
+            "command-line-flag": "-x",
+            "description": "An integer (int or long). Min x.",
+            "optional": true
+        },
+        {
+            "id": "min_y",
+            "name": "Min y",
+            "type": "Number",
+            "integer": true,
+            "value-key": "[MIN_Y]",
+            "command-line-flag": "-y",
+            "description": "An integer (int or long). Min y.",
+            "optional": true
+        },
+        {
+            "id": "min_z",
+            "name": "Min z",
+            "type": "Number",
+            "integer": true,
+            "value-key": "[MIN_Z]",
+            "command-line-flag": "-z",
+            "description": "An integer (int or long). Min z.",
+            "optional": true
+        },
+        {
+            "id": "save_tensor",
+            "name": "Save tensor",
+            "type": "Flag",
+            "value-key": "[SAVE_TENSOR]",
+            "command-line-flag": "--save_tensor",
+            "description": "A boolean. Save the elements of the tensor.",
+            "optional": true
+        },
+        {
+            "id": "sse",
+            "name": "Sse",
+            "type": "Flag",
+            "value-key": "[SSE]",
+            "command-line-flag": "--sse",
+            "description": "A boolean. Output sum of squared errors.",
+            "optional": true
+        }
+    ],
+    "output-files": [
+        {
+            "name": "Fa",
+            "id": "FA",
+            "path-template": "dtifit__FA.nii",
+            "optional": true,
+            "description": "An existing file name. Path/name of file with the fractional anisotropy."
+        },
+        {
+            "name": "L1",
+            "id": "L1",
+            "path-template": "dtifit__L1.nii",
+            "optional": true,
+            "description": "An existing file name. Path/name of file with the 1st eigenvalue."
+        },
+        {
+            "name": "L2",
+            "id": "L2",
+            "path-template": "dtifit__L2.nii",
+            "optional": true,
+            "description": "An existing file name. Path/name of file with the 2nd eigenvalue."
+        },
+        {
+            "name": "L3",
+            "id": "L3",
+            "path-template": "dtifit__L3.nii",
+            "optional": true,
+            "description": "An existing file name. Path/name of file with the 3rd eigenvalue."
+        },
+        {
+            "name": "Md",
+            "id": "MD",
+            "path-template": "dtifit__MD.nii",
+            "optional": true,
+            "description": "An existing file name. Path/name of file with the mean diffusivity."
+        },
+        {
+            "name": "Mo",
+            "id": "MO",
+            "path-template": "dtifit__MO.nii",
+            "optional": true,
+            "description": "An existing file name. Path/name of file with the mode of anisotropy."
+        },
+        {
+            "name": "S0",
+            "id": "S0",
+            "path-template": "dtifit__S0.nii",
+            "optional": true,
+            "description": "An existing file name. Path/name of file with the raw t2 signal with no diffusion weighting."
+        },
+        {
+            "name": "V1",
+            "id": "V1",
+            "path-template": "dtifit__V1.nii",
+            "optional": true,
+            "description": "An existing file name. Path/name of file with the 1st eigenvector."
+        },
+        {
+            "name": "V2",
+            "id": "V2",
+            "path-template": "dtifit__V2.nii",
+            "optional": true,
+            "description": "An existing file name. Path/name of file with the 2nd eigenvector."
+        },
+        {
+            "name": "V3",
+            "id": "V3",
+            "path-template": "dtifit__V3.nii",
+            "optional": true,
+            "description": "An existing file name. Path/name of file with the 3rd eigenvector."
+        },
+        {
+            "name": "Sse",
+            "id": "sse_outfile",
+            "path-template": "dtifit__sse.nii",
+            "optional": true,
+            "description": "An existing file name. Path/name of file with the summed squared error."
+        },
+        {
+            "name": "Tensor",
+            "id": "tensor",
+            "path-template": "dtifit__tensor.nii",
+            "optional": true,
+            "description": "An existing file name. Path/name of file with the 4d tensor volume."
+        }
+    ],
+    "tool-version": "1.0.0",
+    "schema-version": "0.5",
+    "container-image": {
+        "image": "mcin/docker-fsl:latest",
+        "type": "docker",
+        "index": "index.docker.io"
+    },
+    "tags": {
+        "domain": [
+            "neuroinformatics",
+            "dmri"
+        ],
+        "source": "nipype-interface"
+    },
+    "url": "https://github.com/nipy/nipype/blob/master/nipype/interfaces/fsl/dti.py"
+}

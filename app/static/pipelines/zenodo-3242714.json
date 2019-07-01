@@ -1,0 +1,467 @@
+{
+    "author": "Plodrack lab",
+    "command-line": "mriqc_run.py [BIDS_DIR] [OUTPUT_DIR] [ANALYSIS_LEVEL] [VERSION] [PARTICIPANT_LABEL] [SESSION_ID] [RUN_ID] [TASK_ID] [MODALITIES] [DSNAME] [WORK_DIR] [VERBOSE_REPORTS] [WRITE_GRAPH] [DRY_RUN] [PROFILE] [USE_PLUGIN] [NO_SUB] [EMAIL] [VERBOSE_COUNT] [WEBAPI_URL] [WEBAPI_PORT] [UPLOAD_STRICT] [N_PROCS] [MEM_GB] [TESTING] [FLOAT32] [ICA] [HMC_AFNI] [HMC_FSL] [FFT_SPIKES_DETECTOR] [FD_THRES] [ANTS_NTHREADS] [ANTS_FLOAT] [ANTS_SETTINGS] [DEOBLIQUE] [DESPIKE] [START_IDX] [STOP_IDX] [CORRECT_SLICE_TIMING]",
+    "description": "tool description",
+    "inputs": [
+        {
+            "description": "The directory with the input dataset formatted according to the BIDS standard.",
+            "id": "bids_dir",
+            "name": "bids_dir",
+            "optional": false,
+            "type": "File",
+            "value-key": "[BIDS_DIR]"
+        },
+        {
+            "description": "The directory where the output files should be stored. If you are running group level analysis this folder should be prepopulated with the results of theparticipant level analysis.",
+            "id": "output_dir_name",
+            "name": "output_dir_name",
+            "optional": false,
+            "type": "String",
+            "value-key": "[OUTPUT_DIR]"
+        },
+        {
+            "description": "Level of the analysis that will be performed. Multiple participant level analyses can be run independently (in parallel) using the same output_dir.",
+            "id": "analysis_level",
+            "list": true,
+            "name": "analysis_level",
+            "optional": false,
+            "type": "String",
+            "value-choices": [
+                "participant",
+                "group"
+            ],
+            "value-key": "[ANALYSIS_LEVEL]"
+        },
+        {
+            "command-line-flag": "--version",
+            "default-value": false,
+            "description": "show program's version number and exit",
+            "id": "version",
+            "name": "version",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[VERSION]"
+        },
+        {
+            "command-line-flag": "--participant_label",
+            "description": "one or more participant identifiers (the sub- prefix can be removed)",
+            "id": "participant_label",
+            "name": "participant_label",
+            "optional": true,
+            "type": "String",
+            "value-key": "[PARTICIPANT_LABEL]"
+        },
+        {
+            "command-line-flag": "--session-id",
+            "description": "filter input dataset by session id",
+            "id": "session_id",
+            "name": "session_id",
+            "optional": true,
+            "type": "String",
+            "value-key": "[SESSION_ID]"
+        },
+        {
+            "command-line-flag": "--run-id",
+            "description": "filter input dataset by run id (only integer run ids are valid)",
+            "id": "run_id",
+            "name": "run_id",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[RUN_ID]"
+        },
+        {
+            "command-line-flag": "--task-id",
+            "description": "filter input dataset by task id",
+            "id": "task_id",
+            "name": "task_id",
+            "optional": true,
+            "type": "String",
+            "value-key": "[TASK_ID]"
+        },
+        {
+            "command-line-flag": "-m",
+            "description": "filter input dataset by MRI type (\"T1w\", \"T2w\", or \"bold\")",
+            "id": "modalities",
+            "name": "modalities",
+            "optional": true,
+            "list": true,
+            "type": "String",
+            "value-choices": [
+                "T1w",
+                "bold",
+                "T2w"
+            ],
+            "value-key": "[MODALITIES]"
+        },
+        {
+            "command-line-flag": "--dsname",
+            "description": "a dataset name",
+            "id": "dsname",
+            "name": "dsname",
+            "optional": true,
+            "type": "String",
+            "value-key": "[DSNAME]"
+        },
+        {
+            "command-line-flag": "-w",
+            "default-value": "work",
+            "description": "The folder used to store intermediate results",
+            "id": "work_dir",
+            "name": "work_dir",
+            "optional": true,
+            "type": "String",
+            "value-key": "[WORK_DIR]"
+        },
+        {
+            "command-line-flag": "--verbose-reports",
+            "description": "Should MRIQC print verbose reports",
+            "id": "verbose_reports",
+            "name": "verbose_reports",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[VERBOSE_REPORTS]"
+        },
+        {
+            "command-line-flag": "--write-graph",
+            "description": "Write workflow graph.",
+            "id": "write_graph",
+            "name": "write_graph",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[WRITE_GRAPH]"
+        },
+        {
+            "command-line-flag": "--dry-run",
+            "description": "Do not run the workflow.",
+            "id": "dry_run",
+            "name": "dry_run",
+            "optional": true,
+            "type": "Flag",
+            "default-value":false,
+            "value-key": "[DRY_RUN]"
+        },
+        {
+            "command-line-flag": "--profile",
+            "description": "hook up the resource profiler callback to nipype",
+            "id": "profile",
+            "name": "profile",
+            "optional": true,
+            "type": "Flag",
+            "default-value":false,
+            "value-key": "[PROFILE]"
+        },
+        {
+            "command-line-flag": "--use-plugin",
+            "description": "Path to nipype plugin configuration file",
+            "id": "use_plugin",
+            "name": "use_plugin",
+            "optional": true,
+            "type": "String",
+            "value-key": "[USE_PLUGIN]"
+        },
+        {
+            "command-line-flag": "--no-sub",
+            "description": "Turn off submission of anonymized quality metrics to MRIQC's metrics repository.",
+            "id": "no_sub",
+            "name": "no_sub",
+            "optional": true,
+            "type": "Flag",
+            "default-value": false,
+            "value-key": "[NO_SUB]"
+        },
+        {
+            "command-line-flag": "--email",
+            "description": "Email address to include with quality metric submission.",
+            "id": "email",
+            "name": "email",
+            "optional": true,
+            "type": "String",
+            "value-key": "[EMAIL]"
+        },
+        {
+            "command-line-flag": "-v",
+            "description": "increases log verbosity for each occurence, debug level is -vvv",
+            "id": "verbose_count",
+            "name": "verbose_count",
+            "optional": true,
+            "type": "String",
+            "value-key": "[VERBOSE_COUNT]"
+        },
+        {
+            "command-line-flag": "--webapi-url",
+            "default-value": "https://mriqc.nimh.nih.gov/api/v1",
+            "description": "IP address where the MRIQC WebAPI is listening",
+            "id": "webapi_url",
+            "name": "webapi_url",
+            "optional": true,
+            "type": "String",
+            "value-key": "[WEBAPI_URL]"
+        },
+        {
+            "command-line-flag": "--webapi-port",
+            "description": "port where the MRIQC WebAPI is listening",
+            "id": "webapi_port",
+            "name": "webapi_port",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[WEBAPI_PORT]"
+        },
+        {
+            "command-line-flag": "--upload-strict",
+            "description": "upload will fail if if upload is strict",
+            "id": "upload_strict",
+            "name": "upload_strict",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[UPLOAD_STRICT]"
+        },
+        {
+            "command-line-flag": "--n_procs",
+            "description": "number of threads",
+            "id": "n_procs",
+            "name": "n_procs",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[N_PROCS]"
+        },
+        {
+            "command-line-flag": "--mem_gb",
+            "description": "available total memory",
+            "id": "mem_gb",
+            "name": "mem_gb",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[MEM_GB]"
+        },
+        {
+            "command-line-flag": "--testing",
+            "description": "use testing settings for a minimal footprint",
+            "id": "testing",
+            "name": "testing",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[TESTING]"
+        },
+        {
+            "command-line-flag": "-f",
+            "description": "Cast the input data to float32 if it's represented in higher precision (saves space and improves perfomance)",
+            "id": "float32",
+            "name": "float32",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[FLOAT32]"
+        },
+        {
+            "command-line-flag": "--ica",
+            "description": "Run ICA on the raw data and include the componentsin the individual reports (slow but potentially very insightful)",
+            "id": "ica",
+            "name": "ica",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[ICA]"
+        },
+        {
+            "command-line-flag": "--hmc-afni",
+            "default-value": true,
+            "description": "Use ANFI 3dvolreg for head motion correction (HMC) - default",
+            "id": "hmc_afni",
+            "name": "hmc_afni",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[HMC_AFNI]"
+        },
+        {
+            "command-line-flag": "--hmc-fsl",
+            "description": "Use FSL MCFLIRT instead of AFNI for head motion correction (HMC)",
+            "id": "hmc_fsl",
+            "name": "hmc_fsl",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[HMC_FSL]"
+        },
+        {
+            "command-line-flag": "--fft-spikes-detector",
+            "description": "Turn on FFT based spike detector (slow).",
+            "id": "fft_spikes_detector",
+            "name": "fft_spikes_detector",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[FFT_SPIKES_DETECTOR]"
+        },
+        {
+            "command-line-flag": "--fd_thres",
+            "default-value": 0.2,
+            "description": "motion threshold for FD computation",
+            "id": "fd_thres",
+            "name": "fd_thres",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[FD_THRES]"
+        },
+        {
+            "command-line-flag": "--ants-nthreads",
+            "default-value": 1,
+            "description": "number of threads that will be set in ANTs processes",
+            "id": "ants_nthreads",
+            "name": "ants_nthreads",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[ANTS_NTHREADS]"
+        },
+        {
+            "command-line-flag": "--ants-float",
+            "description": "use float number precision on ANTs computations",
+            "id": "ants_float",
+            "name": "ants_float",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[ANTS_FLOAT]"
+        },
+        {
+            "command-line-flag": "--ants-settings",
+            "description": "path to JSON file with settings for ANTS",
+            "id": "ants_settings",
+            "name": "ants_settings",
+            "optional": true,
+            "type": "String",
+            "value-key": "[ANTS_SETTINGS]"
+        },
+        {
+            "command-line-flag": "--deoblique",
+            "description": "Deoblique the functional scans during head motion correction preprocessing",
+            "id": "deoblique",
+            "name": "deoblique",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[DEOBLIQUE]"
+        },
+        {
+            "command-line-flag": "--despike",
+            "description": "Despike the functional scans during head motion correction preprocessing",
+            "id": "despike",
+            "name": "despike",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[DESPIKE]"
+        },
+        {
+            "command-line-flag": "--start-idx",
+            "description": "Initial volume in functional timeseries that should be considered for preprocessing",
+            "id": "start_idx",
+            "name": "start_idx",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[START_IDX]"
+        },
+        {
+            "command-line-flag": "--stop-idx",
+            "description": "Final volume in functional timeseries that should be considered for preprocessing",
+            "id": "stop_idx",
+            "name": "stop_idx",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[STOP_IDX]"
+        },
+        {
+            "command-line-flag": "--correct-slice-timing",
+            "description": "Perform slice timing correction",
+            "id": "correct_slice_timing",
+            "name": "correct_slice_timing",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[CORRECT_SLICE_TIMING]"
+        }
+    ],
+    "output-files": [
+        {
+            "description": "This is the directory where the overall outputs are to be stored.",
+            "id": "output_directory",
+            "name": "Output Directory",
+            "optional": false,
+            "path-template": "[OUTPUT_DIR]"
+        }
+    ],
+    "groups": [
+        {
+            "name": "Instrumentation Options",
+            "description": "Instrumental Options",
+            "id":"instrument_options",
+            "members": [
+                "work_dir",
+                "verbose_reports",
+                "write_graph",
+                "dry_run",
+                "profile",
+                "use_plugin",
+                "no_sub",
+                "email",
+                "webapi_url",
+                "webapi_port",
+                "upload_strict"
+            ]
+        },
+        {
+            "name": "Performance Options",
+            "description": "Options to handle performance",
+            "id": "performance_options",
+            "members": [
+                "n_procs",
+                "mem_gb",
+                "testing",
+                "float32"
+            ]
+        },
+        {
+            "name": "Workflow Options",
+            "description": "Workflow options",
+            "id": "workflow_options",
+            "members": [
+                "ica",
+                "hmc_afni",
+                "hmc_fsl",
+                "fft_spikes_detector",
+                "fd_thres"
+            ]
+        },
+        {
+            "name": "ANTs specific settings",
+            "description": "ANTs specific settings",
+            "id": "ants_specific_settings",
+            "members": [
+                "ants_settings",
+                "ants_float",
+                "ants_nthreads"
+            ]
+        },
+        {
+            "name": "AFNI specific settings",
+            "description": "AFNI specific settings",
+            "id": "afni_specific_settings",
+            "members": [
+                "deoblique",
+                "despike",
+                "start_idx",
+                "stop_idx",
+                "correct_slice_timing"
+            ]
+        }
+    ],
+    "name": "MRIQC",
+    "schema-version": "0.5",
+    "suggested-resources": {
+        "cpu-cores": 1,
+        "ram": 4,
+        "walltime-estimate": 172000
+    },
+    "tags": {
+        "application-type": [
+            "bids"
+        ],
+        "domain": [
+            "neuroinformatics",
+            "mri"
+        ]
+    },
+    "tool-version": "v0.14.2",
+    "url": "https://mriqc.readthedocs.io/en/0.14.2"
+}

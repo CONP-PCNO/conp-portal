@@ -1,0 +1,406 @@
+{
+    "name": "BEDPOSTX5",
+    "command-line": "bedpostx [OUT_DIR] [ALL_ARD] [BURN_IN] [BURN_IN_NO_ARD] [BVALS] [BVECS] [CNLINEAR] [DWI] [F0_ARD] [F0_NOARD] [FORCE_DIR] [FUDGE] [GRAD_DEV] [GRADNONLIN] [LOGDIR] [MASK] [MODEL] [N_FIBRES] [N_JUMPS] [NO_ARD] [NO_SPAT] [NON_LINEAR] [RICIAN] [SAMPLE_EVERY] [SEED] [UPDATE_PROPOSAL_EVERY] [USE_GPU]",
+    "author": "Nipype (interface), Oxford Centre for Functional MRI of the Brain (FMRIB) (tool)",
+    "description": "BEDPOSTX5, as implemented in Nipype (module: nipype.interfaces.fsl, interface: BEDPOSTX5).",
+    "inputs": [
+        {
+            "id": "all_ard",
+            "name": "All ard",
+            "type": "Flag",
+            "value-key": "[ALL_ARD]",
+            "command-line-flag": "--allard",
+            "description": "A boolean. Turn ard on on all fibres.",
+            "optional": true
+        },
+        {
+            "id": "burn_in",
+            "name": "Burn in",
+            "type": "Number",
+            "minimum": 0,
+            "value-key": "[BURN_IN]",
+            "command-line-flag": "-b",
+            "description": "A long integer >= 0. Total num of jumps at start of mcmc to be discarded.",
+            "optional": true,
+            "default-value": 0
+        },
+        {
+            "id": "burn_in_no_ard",
+            "name": "Burn in no ard",
+            "type": "Number",
+            "minimum": 0,
+            "value-key": "[BURN_IN_NO_ARD]",
+            "command-line-flag": "--burnin_noard",
+            "command-line-flag-separator": "=",
+            "description": "A long integer >= 0. Num of burnin jumps before the ard is imposed.",
+            "optional": true,
+            "default-value": 0
+        },
+        {
+            "id": "bvals",
+            "name": "Bvals",
+            "type": "File",
+            "value-key": "[BVALS]",
+            "description": "An existing file name. B values file.",
+            "optional": false
+        },
+        {
+            "id": "bvecs",
+            "name": "Bvecs",
+            "type": "File",
+            "value-key": "[BVECS]",
+            "description": "An existing file name. B vectors file.",
+            "optional": false
+        },
+        {
+            "id": "cnlinear",
+            "name": "Cnlinear",
+            "type": "Flag",
+            "value-key": "[CNLINEAR]",
+            "command-line-flag": "--cnonlinear",
+            "description": "A boolean. Initialise with constrained nonlinear fitting.",
+            "optional": true
+        },
+        {
+            "id": "dwi",
+            "name": "Dwi",
+            "type": "File",
+            "value-key": "[DWI]",
+            "description": "An existing file name. Diffusion weighted image data file.",
+            "optional": false
+        },
+        {
+            "id": "f0_ard",
+            "name": "F0 ard",
+            "type": "Flag",
+            "value-key": "[F0_ARD]",
+            "command-line-flag": "--f0 --ardf0",
+            "description": "A boolean. Noise floor model: add to the model an unattenuated signal compartment f0.",
+            "optional": true
+        },
+        {
+            "id": "f0_noard",
+            "name": "F0 noard",
+            "type": "Flag",
+            "value-key": "[F0_NOARD]",
+            "command-line-flag": "--f0",
+            "description": "A boolean. Noise floor model: add to the model an unattenuated signal compartment f0.",
+            "optional": true
+        },
+        {
+            "id": "force_dir",
+            "name": "Force dir",
+            "type": "Flag",
+            "value-key": "[FORCE_DIR]",
+            "command-line-flag": "--forcedir",
+            "description": "A boolean. Use the actual directory name given (do not add + to make a new directory).",
+            "optional": true,
+            "default-value": true
+        },
+        {
+            "id": "fudge",
+            "name": "Fudge",
+            "type": "Number",
+            "integer": true,
+            "value-key": "[FUDGE]",
+            "command-line-flag": "-w",
+            "description": "An integer (int or long). Ard fudge factor.",
+            "optional": true
+        },
+        {
+            "id": "grad_dev",
+            "name": "Grad dev",
+            "type": "File",
+            "value-key": "[GRAD_DEV]",
+            "description": "An existing file name. Grad_dev file, if gradnonlin, -g is true.",
+            "optional": true
+        },
+        {
+            "id": "gradnonlin",
+            "name": "Gradnonlin",
+            "type": "Flag",
+            "value-key": "[GRADNONLIN]",
+            "command-line-flag": "-g",
+            "description": "A boolean. Consider gradient nonlinearities, default off.",
+            "optional": true
+        },
+        {
+            "id": "logdir",
+            "name": "Logdir",
+            "type": "File",
+            "value-key": "[LOGDIR]",
+            "command-line-flag": "--logdir",
+            "command-line-flag-separator": "=",
+            "description": "A directory name. No description provided.",
+            "optional": true
+        },
+        {
+            "id": "mask",
+            "name": "Mask",
+            "type": "File",
+            "value-key": "[MASK]",
+            "description": "An existing file name. Bet binary mask file.",
+            "optional": false
+        },
+        {
+            "id": "model",
+            "name": "Model",
+            "type": "Number",
+            "value-key": "[MODEL]",
+            "command-line-flag": "-model",
+            "description": "1 or 2 or 3. Use monoexponential (1, default, required for single-shell) or multiexponential (2, multi-shell) model.",
+            "optional": true,
+            "integer": true,
+            "value-choices": [
+                1,
+                2,
+                3
+            ]
+        },
+        {
+            "id": "n_fibres",
+            "name": "N fibres",
+            "type": "Number",
+            "minimum": 1,
+            "value-key": "[N_FIBRES]",
+            "command-line-flag": "-n",
+            "description": "A long integer >= 1. Maximum number of fibres to fit in each voxel.",
+            "optional": false,
+            "default-value": 2
+        },
+        {
+            "id": "n_jumps",
+            "name": "N jumps",
+            "type": "Number",
+            "integer": true,
+            "value-key": "[N_JUMPS]",
+            "command-line-flag": "-j",
+            "description": "An integer (int or long). Num of jumps to be made by mcmc.",
+            "optional": true,
+            "default-value": 5000
+        },
+        {
+            "id": "no_ard",
+            "name": "No ard",
+            "type": "Flag",
+            "value-key": "[NO_ARD]",
+            "command-line-flag": "--noard",
+            "description": "A boolean. Turn ard off on all fibres.",
+            "optional": true
+        },
+        {
+            "id": "no_spat",
+            "name": "No spat",
+            "type": "Flag",
+            "value-key": "[NO_SPAT]",
+            "command-line-flag": "--nospat",
+            "description": "A boolean. Initialise with tensor, not spatially.",
+            "optional": true
+        },
+        {
+            "id": "non_linear",
+            "name": "Non linear",
+            "type": "Flag",
+            "value-key": "[NON_LINEAR]",
+            "command-line-flag": "--nonlinear",
+            "description": "A boolean. Initialise with nonlinear fitting.",
+            "optional": true
+        },
+        {
+            "id": "out_dir",
+            "name": "Out dir",
+            "type": "File",
+            "value-key": "[OUT_DIR]",
+            "description": "A directory name. Output directory.",
+            "optional": false,
+            "default-value": "bedpostx"
+        },
+        {
+            "id": "rician",
+            "name": "Rician",
+            "type": "Flag",
+            "value-key": "[RICIAN]",
+            "command-line-flag": "--rician",
+            "description": "A boolean. Use rician noise modeling.",
+            "optional": true
+        },
+        {
+            "id": "sample_every",
+            "name": "Sample every",
+            "type": "Number",
+            "minimum": 0,
+            "value-key": "[SAMPLE_EVERY]",
+            "command-line-flag": "-s",
+            "description": "A long integer >= 0. Num of jumps for each sample (mcmc).",
+            "optional": true,
+            "default-value": 1
+        },
+        {
+            "id": "seed",
+            "name": "Seed",
+            "type": "Number",
+            "integer": true,
+            "value-key": "[SEED]",
+            "command-line-flag": "--seed",
+            "command-line-flag-separator": "=",
+            "description": "An integer (int or long). Seed for pseudo random number generator.",
+            "optional": true
+        },
+        {
+            "id": "update_proposal_every",
+            "name": "Update proposal every",
+            "type": "Number",
+            "minimum": 1,
+            "value-key": "[UPDATE_PROPOSAL_EVERY]",
+            "command-line-flag": "--updateproposalevery",
+            "command-line-flag-separator": "=",
+            "description": "A long integer >= 1. Num of jumps for each update to the proposal density std (mcmc).",
+            "optional": true,
+            "default-value": 40
+        },
+        {
+            "id": "use_gpu",
+            "name": "Use gpu",
+            "type": "Flag",
+            "value-key": "[USE_GPU]",
+            "command-line-flag": "--use_gpu",
+            "description": "A boolean. Use the gpu version of bedpostx.",
+            "optional": true
+        }
+    ],
+    "output-files": [
+        {
+            "name": "Dyads",
+            "id": "dyads",
+            "path-template": "dyads*",
+            "optional": true,
+            "description": "A list of items which are an existing file name. Mean of pdd distribution in vector form.",
+            "list": true
+        },
+        {
+            "name": "Dyads dispersion",
+            "id": "dyads_dispersion",
+            "path-template": "dyads*_dispersion",
+            "optional": true,
+            "description": "A list of items which are an existing file name. Dispersion.",
+            "list": true
+        },
+        {
+            "name": "Mean s0samples",
+            "id": "mean_S0samples",
+            "path-template": "mean_S0samples",
+            "optional": true,
+            "description": "An existing file name. Mean of distribution on t2wbaseline signal intensity s0."
+        },
+        {
+            "name": "Mean dsamples",
+            "id": "mean_dsamples",
+            "path-template": "mean_dsamples",
+            "optional": true,
+            "description": "An existing file name. Mean of distribution on diffusivity d."
+        },
+        {
+            "name": "Mean fsamples",
+            "id": "mean_fsamples",
+            "path-template": "mean_f*samples",
+            "optional": true,
+            "description": "A list of items which are an existing file name. Mean of distribution on f anisotropy.",
+            "list": true
+        },
+        {
+            "name": "Mean phsamples",
+            "id": "mean_phsamples",
+            "path-template": "mean_ph*samples",
+            "optional": true,
+            "description": "A list of items which are an existing file name. Mean of distribution on phi.",
+            "list": true
+        },
+        {
+            "name": "Mean thsamples",
+            "id": "mean_thsamples",
+            "path-template": "mean_th*samples",
+            "optional": true,
+            "description": "A list of items which are an existing file name. Mean of distribution on theta.",
+            "list": true
+        },
+        {
+            "name": "Merged fsamples",
+            "id": "merged_fsamples",
+            "path-template": "merged_f*samples",
+            "optional": true,
+            "description": "A list of items which are an existing file name. Samples from the distribution on anisotropic volume fraction.",
+            "list": true
+        },
+        {
+            "name": "Merged phsamples",
+            "id": "merged_phsamples",
+            "path-template": "merged_ph*samples",
+            "optional": true,
+            "description": "A list of items which are an existing file name. Samples from the distribution on phi.",
+            "list": true
+        },
+        {
+            "name": "Merged thsamples",
+            "id": "merged_thsamples",
+            "path-template": "merged_th*samples",
+            "optional": true,
+            "description": "A list of items which are an existing file name. Samples from the distribution on theta.",
+            "list": true
+        }
+    ],
+    "groups": [
+        {
+            "id": "mutex_group",
+            "name": "Mutex group",
+            "members": [
+                "no_ard",
+                "all_ard"
+            ],
+            "mutually-exclusive": true
+        },
+        {
+            "id": "mutex_group_2",
+            "name": "Mutex group 2",
+            "members": [
+                "non_linear",
+                "no_spat",
+                "cnlinear"
+            ],
+            "mutually-exclusive": true
+        },
+        {
+            "id": "mutex_group_3",
+            "name": "Mutex group 3",
+            "members": [
+                "f0_ard",
+                "f0_noard"
+            ],
+            "mutually-exclusive": true
+        },
+        {
+            "id": "mutex_group_4",
+            "name": "Mutex group 4",
+            "members": [
+                "f0_ard",
+                "f0_noard",
+                "all_ard"
+            ],
+            "mutually-exclusive": true
+        }
+    ],
+    "tool-version": "1.0.0",
+    "schema-version": "0.5",
+    "container-image": {
+        "image": "mcin/docker-fsl:latest",
+        "type": "docker",
+        "index": "index.docker.io"
+    },
+    "tags": {
+        "domain": [
+            "neuroinformatics",
+            "dmri"
+        ],
+        "source": "nipype-interface"
+    },
+    "url": "https://github.com/nipy/nipype/blob/master/nipype/interfaces/fsl/dti.py"
+}

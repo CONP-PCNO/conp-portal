@@ -1,0 +1,92 @@
+{
+    "name": "CompositeTransformUtil",
+    "command-line": "${ANTSPATH}/CompositeTransformUtil [PROCESS] [OUT_FILE] [IN_FILE] [OUTPUT_PREFIX]",
+    "author": "Nipype (interface), Brian B. Avants et al. (tool)",
+    "description": "CompositeTransformUtil, as implemented in Nipype (module: nipype.interfaces.ants, interface: CompositeTransformUtil).",
+    "url": "https://github.com/nipy/nipype/blob/master/nipype/interfaces/ants/registration.py",
+    "inputs": [
+        {
+            "id": "in_file",
+            "name": "In file",
+            "type": "File",
+            "list": true,
+            "value-key": "[IN_FILE]",
+            "description": "A list of items which are an existing file name. Input transform file(s).",
+            "optional": false
+        },
+        {
+            "id": "out_file",
+            "name": "Out file",
+            "type": "File",
+            "value-key": "[OUT_FILE]",
+            "description": "A file name. Output file path (only used for assembly).",
+            "optional": true
+        },
+        {
+            "id": "output_prefix",
+            "name": "Output prefix",
+            "type": "String",
+            "value-key": "[OUTPUT_PREFIX]",
+            "description": "A unicode string. A prefix that is prepended to all output files (only used for disassembly).",
+            "optional": true,
+            "default-value": "transform"
+        },
+        {
+            "id": "process",
+            "name": "Process",
+            "type": "String",
+            "value-key": "[PROCESS]",
+            "command-line-flag": "--",
+            "command-line-flag-separator": "",
+            "description": "'assemble' or 'disassemble'. What to do with the transform inputs (assemble or disassemble).",
+            "optional": true,
+            "default-value": "assemble",
+            "value-choices": [
+                "assemble",
+                "disassemble"
+            ],
+            "value-disables": {
+                "assemble": [
+                    "output_prefix"
+                ],
+                "disassemble": [
+                    "out_file"
+                ]
+            }
+        }
+    ],
+    "output-files": [
+        {
+            "name": "Affine transform",
+            "id": "affine_transform",
+            "path-template": "00_[OUTPUT_PREFIX]_AffineTransform.mat",
+            "optional": true,
+            "description": "A file name. Affine transform component."
+        },
+        {
+            "name": "Displacement field",
+            "id": "displacement_field",
+            "path-template": "01_[OUTPUT_PREFIX]_DisplacementFieldTransform.nii.gz",
+            "optional": true,
+            "description": "A file name. Displacement field component."
+        },
+        {
+            "name": "Out file",
+            "id": "out_file_outfile",
+            "path-template": "[OUT_FILE]",
+            "optional": true,
+            "description": "A file name. Compound transformation file."
+        }
+    ],
+    "tool-version": "1.0.0",
+    "schema-version": "0.5",
+    "container-image": {
+        "image": "bt5e/ants:latest",
+        "index": "index.docker.io",
+        "type": "docker"
+    },
+    "tags": {
+        "domain": "neuroinformatics",
+        "source": "nipype-interface"
+    }
+}

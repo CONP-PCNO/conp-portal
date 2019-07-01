@@ -1,0 +1,367 @@
+{
+    "name": "TOPUP",
+    "command-line": "topup [CONFIG] [ENCODING_FILE] [ESTMOV] [FWHM] [IN_FILE] [INTERP] [MAX_ITER] [MINMET] [NUMPREC] [OUT_BASE] [OUT_CORRECTED] [OUT_FIELD] [OUT_JAC_PREFIX] [OUT_LOGFILE] [OUT_MAT_PREFIX] [OUT_WARP_PREFIX] [REG_LAMBDA] [REGMOD] [REGRID] [SCALE] [SPLINEORDER] [SSQLAMBDA] [SUBSAMP] [WARP_RES]",
+    "author": "Nipype (interface), Oxford Centre for Functional MRI of the Brain (FMRIB) (tool)",
+    "description": "TOPUP, as implemented in Nipype (module: nipype.interfaces.fsl, interface: TOPUP).",
+    "inputs": [
+        {
+            "id": "config",
+            "name": "Config",
+            "type": "String",
+            "value-key": "[CONFIG]",
+            "command-line-flag": "--config",
+            "command-line-flag-separator": "=",
+            "description": "A string. Name of config file specifying command line arguments.",
+            "optional": true,
+            "default-value": "b02b0.cnf"
+        },
+        {
+            "id": "encoding_file",
+            "name": "Encoding file",
+            "type": "File",
+            "value-key": "[ENCODING_FILE]",
+            "command-line-flag": "--datain",
+            "command-line-flag-separator": "=",
+            "description": "An existing file name. Name of text file with pe directions/times.",
+            "optional": false
+        },
+        {
+            "id": "estmov",
+            "name": "Estmov",
+            "type": "Number",
+            "value-key": "[ESTMOV]",
+            "command-line-flag": "--estmov",
+            "command-line-flag-separator": "=",
+            "description": "1 or 0. Estimate movements if set.",
+            "optional": true,
+            "integer": true,
+            "value-choices": [
+                1,
+                0
+            ]
+        },
+        {
+            "id": "fwhm",
+            "name": "Fwhm",
+            "type": "Number",
+            "value-key": "[FWHM]",
+            "command-line-flag": "--fwhm",
+            "command-line-flag-separator": "=",
+            "description": "A float. Fwhm (in mm) of gaussian smoothing kernel.",
+            "optional": true
+        },
+        {
+            "id": "in_file",
+            "name": "In file",
+            "type": "File",
+            "value-key": "[IN_FILE]",
+            "command-line-flag": "--imain",
+            "command-line-flag-separator": "=",
+            "description": "An existing file name. Name of 4d file with images.",
+            "optional": false
+        },
+        {
+            "id": "interp",
+            "name": "Interp",
+            "type": "String",
+            "value-key": "[INTERP]",
+            "command-line-flag": "--interp",
+            "command-line-flag-separator": "=",
+            "description": "'spline' or 'linear'. Image interpolation model, linear or spline.",
+            "optional": true,
+            "value-choices": [
+                "spline",
+                "linear"
+            ]
+        },
+        {
+            "id": "max_iter",
+            "name": "Max iter",
+            "type": "Number",
+            "integer": true,
+            "value-key": "[MAX_ITER]",
+            "command-line-flag": "--miter",
+            "command-line-flag-separator": "=",
+            "description": "An integer (int or long). Max # of non-linear iterations.",
+            "optional": true
+        },
+        {
+            "id": "minmet",
+            "name": "Minmet",
+            "type": "Number",
+            "value-key": "[MINMET]",
+            "command-line-flag": "--minmet",
+            "command-line-flag-separator": "=",
+            "description": "0 or 1. Minimisation method 0=levenberg-marquardt, 1=scaled conjugate gradient.",
+            "optional": true,
+            "integer": true,
+            "value-choices": [
+                0,
+                1
+            ]
+        },
+        {
+            "id": "numprec",
+            "name": "Numprec",
+            "type": "String",
+            "value-key": "[NUMPREC]",
+            "command-line-flag": "--numprec",
+            "command-line-flag-separator": "=",
+            "description": "'double' or 'float'. Precision for representing hessian, double or float.",
+            "optional": true,
+            "value-choices": [
+                "double",
+                "float"
+            ]
+        },
+        {
+            "id": "out_jac_prefix",
+            "name": "Out jac prefix",
+            "type": "String",
+            "value-key": "[OUT_JAC_PREFIX]",
+            "command-line-flag": "--jacout",
+            "command-line-flag-separator": "=",
+            "description": "A unicode string. Prefix for the warpfield images.",
+            "optional": true,
+            "default-value": "jac"
+        },
+        {
+            "id": "out_mat_prefix",
+            "name": "Out mat prefix",
+            "type": "String",
+            "value-key": "[OUT_MAT_PREFIX]",
+            "command-line-flag": "--rbmout",
+            "command-line-flag-separator": "=",
+            "description": "A unicode string. Prefix for the realignment matrices.",
+            "optional": true,
+            "default-value": "xfm"
+        },
+        {
+            "id": "out_warp_prefix",
+            "name": "Out warp prefix",
+            "type": "String",
+            "value-key": "[OUT_WARP_PREFIX]",
+            "command-line-flag": "--dfout",
+            "command-line-flag-separator": "=",
+            "description": "A unicode string. Prefix for the warpfield images (in mm).",
+            "optional": true,
+            "default-value": "warpfield"
+        },
+        {
+            "id": "reg_lambda",
+            "name": "Reg lambda",
+            "type": "Number",
+            "value-key": "[REG_LAMBDA]",
+            "command-line-flag": "--lambda",
+            "command-line-flag-separator": "=",
+            "description": "A float. Weight of regularisation, default depending on --ssqlambda and --regmod switches.",
+            "optional": true
+        },
+        {
+            "id": "regmod",
+            "name": "Regmod",
+            "type": "String",
+            "value-key": "[REGMOD]",
+            "command-line-flag": "--regmod",
+            "command-line-flag-separator": "=",
+            "description": "'bending_energy' or 'membrane_energy'. Regularisation term implementation. defaults to bending_energy. note that the two functions have vastly different scales. the membrane energy is based on the first derivatives and the bending energy on the second derivatives. the second derivatives will typically be much smaller than the first derivatives, so input lambda will have to be larger for bending_energy to yield approximately the same level of regularisation.",
+            "optional": true,
+            "value-choices": [
+                "bending_energy",
+                "membrane_energy"
+            ]
+        },
+        {
+            "id": "regrid",
+            "name": "Regrid",
+            "type": "Number",
+            "value-key": "[REGRID]",
+            "command-line-flag": "--regrid",
+            "command-line-flag-separator": "=",
+            "description": "1 or 0. If set (=1), the calculations are done in a different grid.",
+            "optional": true,
+            "integer": true,
+            "value-choices": [
+                1,
+                0
+            ]
+        },
+        {
+            "id": "scale",
+            "name": "Scale",
+            "type": "Number",
+            "value-key": "[SCALE]",
+            "command-line-flag": "--scale",
+            "command-line-flag-separator": "=",
+            "description": "0 or 1. If set (=1), the images are individually scaled to a common mean.",
+            "optional": true,
+            "integer": true,
+            "value-choices": [
+                0,
+                1
+            ]
+        },
+        {
+            "id": "splineorder",
+            "name": "Splineorder",
+            "type": "Number",
+            "integer": true,
+            "value-key": "[SPLINEORDER]",
+            "command-line-flag": "--splineorder",
+            "command-line-flag-separator": "=",
+            "description": "An integer (int or long). Order of spline, 2->qadratic spline, 3->cubic spline.",
+            "optional": true
+        },
+        {
+            "id": "ssqlambda",
+            "name": "Ssqlambda",
+            "type": "Number",
+            "value-key": "[SSQLAMBDA]",
+            "command-line-flag": "--ssqlambda",
+            "command-line-flag-separator": "=",
+            "description": "1 or 0. Weight lambda by the current value of the ssd. if used (=1), the effective weight of regularisation term becomes higher for the initial iterations, therefore initial steps are a little smoother than they would without weighting. this reduces the risk of finding a local minimum.",
+            "optional": true,
+            "integer": true,
+            "value-choices": [
+                1,
+                0
+            ]
+        },
+        {
+            "id": "subsamp",
+            "name": "Subsamp",
+            "type": "Number",
+            "integer": true,
+            "value-key": "[SUBSAMP]",
+            "command-line-flag": "--subsamp",
+            "command-line-flag-separator": "=",
+            "description": "An integer (int or long). Sub-sampling scheme.",
+            "optional": true
+        },
+        {
+            "id": "warp_res",
+            "name": "Warp res",
+            "type": "Number",
+            "value-key": "[WARP_RES]",
+            "command-line-flag": "--warpres",
+            "command-line-flag-separator": "=",
+            "description": "A float. (approximate) resolution (in mm) of warp basis for the different sub-sampling levels.",
+            "optional": true
+        }
+    ],
+    "output-files": [
+        {
+            "name": "Out base",
+            "id": "out_base",
+            "optional": true,
+            "description": "A file name. Base-name of output files (spline coefficients (hz) and movement parameters).",
+            "path-template": "[IN_FILE]_base",
+            "path-template-stripped-extensions": [
+                ".nii.gz",
+                ".nii"
+            ],
+            "value-key": "[OUT_BASE]",
+            "command-line-flag": "--out",
+            "command-line-flag-separator": "="
+        },
+        {
+            "name": "Out corrected",
+            "id": "out_corrected",
+            "path-template": "[IN_FILE]_corrected",
+            "path-template-stripped-extensions": [
+                ".nii.gz",
+                ".nii"
+            ],
+            "optional": true,
+            "description": "A file name. Name of 4d image file with unwarped images.",
+            "value-key": "[OUT_CORRECTED]",
+            "command-line-flag": "--iout",
+            "command-line-flag-separator": "="
+        },
+        {
+            "name": "Out enc file",
+            "id": "out_enc_file",
+            "path-template": "out_enc_file",
+            "optional": true,
+            "description": "A file name. Encoding directions file output for applytopup."
+        },
+        {
+            "name": "Out field",
+            "id": "out_field",
+            "path-template": "[IN_FILE]_field",
+            "path-template-stripped-extensions": [
+                ".nii.gz",
+                ".nii"
+            ],
+            "optional": true,
+            "description": "A file name. Name of image file with field (hz).",
+            "value-key": "[OUT_FIELD]",
+            "command-line-flag": "--fout",
+            "command-line-flag-separator": "="
+        },
+        {
+            "name": "Out fieldcoef",
+            "id": "out_fieldcoef",
+            "path-template": "out_fieldcoef",
+            "optional": true,
+            "description": "An existing file name. File containing the field coefficients."
+        },
+        {
+            "name": "Out jacs",
+            "id": "out_jacs",
+            "path-template": "out_jacs",
+            "optional": true,
+            "description": "A list of items which are an existing file name. Jacobian images."
+        },
+        {
+            "name": "Out logfile",
+            "id": "out_logfile",
+            "path-template": "[IN_FILE]_topup.log",
+            "path-template-stripped-extensions": [
+                ".nii.gz",
+                ".nii"
+            ],
+            "optional": true,
+            "description": "A file name. Name of log-file.",
+            "value-key": "[OUT_LOGFILE]",
+            "command-line-flag": "--logout",
+            "command-line-flag-separator": "="
+        },
+        {
+            "name": "Out mats",
+            "id": "out_mats",
+            "path-template": "out_mats",
+            "optional": true,
+            "description": "A list of items which are an existing file name. Realignment matrices."
+        },
+        {
+            "name": "Out movpar",
+            "id": "out_movpar",
+            "path-template": "out_movpar",
+            "optional": true,
+            "description": "An existing file name. Movpar.txt output file."
+        },
+        {
+            "name": "Out warps",
+            "id": "out_warps",
+            "path-template": "out_warps",
+            "optional": true,
+            "description": "A list of items which are an existing file name. Warpfield images."
+        }
+    ],
+    "tool-version": "1.0.0",
+    "schema-version": "0.5",
+    "container-image": {
+        "image": "mcin/docker-fsl:latest",
+        "type": "docker",
+        "index": "index.docker.io"
+    },
+    "tags": {
+        "domain": [
+            "neuroinformatics",
+            "dmri"
+        ],
+        "source": "nipype-interface"
+    },
+    "url": "https://github.com/nipy/nipype/blob/master/nipype/interfaces/fsl/epi.py"
+}

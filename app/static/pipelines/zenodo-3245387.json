@@ -1,0 +1,116 @@
+{
+    "tool-version": "v1.1", 
+    "tests": [
+        {
+            "invocation": {
+                "input": "uniprotminier.fasta"
+            }, 
+            "name": "test1", 
+            "assertions": {
+                "output-files": [
+                    {
+                        "id": "outmafft_rascal", 
+                        "md5-reference": "4b003bebd3fb9722152f65ab5d17c434"
+                    }
+                ], 
+                "exit-code": 0
+            }
+        }
+    ], 
+    "description": "automatic quality improvment for multiple sequence alignment.", 
+    "command-line": "AQUA.tcl [INPUT] [OUTPUT_DIR]", 
+    "author": "Muller J, Creevey CJ, Thompson JD, Arendt D, Bork P.", 
+    "tags": {
+        "domain": [
+            "bioinformatics", 
+            "AQUA"
+        ]
+    }, 
+    "container-image": {
+        "index": "shub://", 
+        "image": "bioinformatics-group/aqua-singularity-recipe", 
+        "type": "singularity"
+    }, 
+    "inputs": [
+        {
+            "description": "A file containing the input sequence in fasta format", 
+            "value-key": "[INPUT]", 
+            "optional": false, 
+            "type": "File", 
+            "id": "input", 
+            "name": "Input Sequence"
+        }, 
+        {
+            "description": "The directory where the results are stored. The default location is the same directory as the input sequence.", 
+            "default-value": ".", 
+            "value-key": "[OUTPUT_DIR]", 
+            "optional": false, 
+            "type": "File", 
+            "id": "output_dir", 
+            "name": "Output Directory"
+        }
+    ], 
+    "schema-version": "0.5", 
+    "output-files": [
+        {
+            "path-template": "[OUTPUT_DIR]/[INPUT].muscle", 
+            "optional": false, 
+            "id": "outmuscle", 
+            "name": "Output of muscle results"
+        }, 
+        {
+            "path-template": "[OUTPUT_DIR]/[INPUT].mafft", 
+            "optional": false, 
+            "id": "outmafft", 
+            "name": "Output of mafft results"
+        }, 
+        {
+            "path-template": "[OUTPUT_DIR]/[INPUT].muscle.rascal", 
+            "optional": false, 
+            "id": "outmuscle_rascal", 
+            "name": "Output of muscle and rascal results"
+        }, 
+        {
+            "path-template": "[OUTPUT_DIR]/[INPUT].mafft.rascal", 
+            "optional": false, 
+            "id": "outmafft_rascal", 
+            "name": "Output of mafft and rascal results"
+        }, 
+        {
+            "path-template": "[OUTPUT_DIR]/[INPUT].muscle.normd", 
+            "optional": false, 
+            "id": "outmuscle_normd", 
+            "name": "Output of muscle and normd results"
+        }, 
+        {
+            "path-template": "[OUTPUT_DIR]/[INPUT].mafft.normd", 
+            "optional": false, 
+            "id": "outmafft_normd", 
+            "name": "Output of mafft and normd results"
+        }, 
+        {
+            "path-template": "[OUTPUT_DIR]/[INPUT].muscle.rascal.normd", 
+            "optional": false, 
+            "id": "outmuscle_rascal_normd", 
+            "name": "Output of muscle, rascal and normd results"
+        }, 
+        {
+            "path-template": "[OUTPUT_DIR]/[INPUT].mafft.rascal.normd", 
+            "optional": false, 
+            "id": "outmafft_rascal_normd", 
+            "name": "Output of mafft, rascal and normd results"
+        }, 
+        {
+            "path-template": "[OUTPUT_DIR]/[INPUT].best", 
+            "optional": false, 
+            "id": "outbest", 
+            "name": "Output of best results"
+        }
+    ], 
+    "suggested-resources": {
+        "walltime-estimate": 60, 
+        "ram": 1, 
+        "cpu-cores": 1
+    }, 
+    "name": "AQUA"
+}
