@@ -450,15 +450,19 @@ def pipeline_search():
             reverse=True if sort_key == "downloads-desc" or sort_key == "title" else False
         )
 
-        # if element has online platform url, retrieve the cbrain one, else take the first one
+        # if element has online platform url, retrieve the cbrain one, else take the first one and set logo
         for element in elements:
             if "onlineplatformurls" in element:
                 for url in element["onlineplatformurls"]:
                     if "cbrain" in url:
                         element["onlineplatformurls"] = url
+                        element["img"] = "static/img/run_on_cbrain_green.png"
                         break
                 else:
                     element["onlineplatformurls"] = element["onlineplatformurls"][0]
+                    element["img"] = "static/img/globe-solid-green.svg"
+            else:
+                element["img"] = "static/img/globe-solid-grey.svg"
 
         # construct payload
         payload = {
