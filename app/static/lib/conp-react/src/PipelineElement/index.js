@@ -11,7 +11,7 @@ const PipelineElement = props => {
           <img
             alt="dataset format"
             className="dataset-social-img"
-            src={element.url == undefined ? "static/img/cogs-solid-grey.svg" : "static/img/cogs-solid-green.svg"}
+            src={element.url == undefined ? "static/img/cogs-solid-grey.png" : "static/img/cogs-solid-green.png"}
           />
         </a>
         <div className="dataset-social-icons">

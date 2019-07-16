@@ -460,9 +460,9 @@ def pipeline_search():
                         break
                 else:
                     element["onlineplatformurls"] = element["onlineplatformurls"][0]
-                    element["img"] = "static/img/globe-solid-green.svg"
+                    element["img"] = "static/img/globe-solid-green.png"
             else:
-                element["img"] = "static/img/globe-solid-grey.svg"
+                element["img"] = "static/img/globe-solid-grey.png"
 
         # construct payload
         payload = {

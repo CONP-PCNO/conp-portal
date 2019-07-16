@@ -7371,7 +7371,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
           alt: "dataset format",
           className: "dataset-social-img",
-          src: element.url == undefined ? "static/img/cogs-solid-grey.svg" : "static/img/cogs-solid-green.svg"
+          src: element.url == undefined ? "static/img/cogs-solid-grey.png" : "static/img/cogs-solid-green.png"
         })
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
