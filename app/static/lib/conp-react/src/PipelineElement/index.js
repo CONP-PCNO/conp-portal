@@ -4,12 +4,6 @@ import PropTypes from "prop-types";
 const PipelineElement = props => {
   const { authorized, ...element } = props;
 
-  const imagePath = element.imagePath;
-  const runOnCbrainEnabled = `${imagePath}/run_on_cbrain_green.png`;
-  const runOnCbrainDisabled = `${imagePath}/run_on_cbrain_gray.png`;
-  const downloadEnabled = `${imagePath}/download_green.png`;
-  const downloadDisabled = `${imagePath}/download_gray.png`;
-
   return (
     <div className="search-dataset">
       <div className="dataset-social">
@@ -17,7 +11,7 @@ const PipelineElement = props => {
           <img
             alt="dataset format"
             className="dataset-social-img"
-            src={element.url == undefined ? "static/img/cogs-solid-grey.svg" : "static/img/cogs-solid-green.svg"}
+            src={element.url == undefined ? "static/img/cogs-solid-grey.png" : "static/img/cogs-solid-green.png"}
           />
         </a>
         <div className="dataset-social-icons">
@@ -52,9 +46,7 @@ const PipelineElement = props => {
               <img
                 alt="Online platform"
                 className="run-on-cbrain-button option-icon"
-                src={element.onlineplatformurls == undefined ?
-                "static/img/globe-solid-grey.svg" :
-                "static/img/globe-solid-green.svg"}
+                src={element.img}
               />
             </a>
           </div>
@@ -80,7 +72,8 @@ PipelineElement.propTypes = {
   schemaversion: PropTypes.string,
   containerimage: PropTypes.object,
   tags: PropTypes.object,
-  url: PropTypes.string
+  url: PropTypes.string,
+  img: PropTypes.string
 };
 
 //PipelineElement.defaultProps = {

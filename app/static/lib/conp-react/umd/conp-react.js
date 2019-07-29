@@ -2625,7 +2625,8 @@ function parse(input, options) {
 		decode: true,
 		sort: true,
 		arrayFormat: 'none',
-		parseNumbers: false
+		parseNumbers: false,
+		parseBooleans: false
 	}, options);
 
 	const formatter = parserForArrayFormat(options);
@@ -2652,6 +2653,8 @@ function parse(input, options) {
 
 		if (options.parseNumbers && !Number.isNaN(Number(value))) {
 			value = Number(value);
+		} else if (options.parseBooleans && value !== null && (value.toLowerCase() === 'true' || value.toLowerCase() === 'false')) {
+			value = value.toLowerCase() === 'true';
 		}
 
 		formatter(decode(key, options), value, ret);
@@ -7356,12 +7359,6 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
   var authorized = props.authorized,
       element = PipelineElement_objectWithoutProperties(props, ["authorized"]);
 
-  var imagePath = element.imagePath;
-  var runOnCbrainEnabled = imagePath + "/run_on_cbrain_green.png";
-  var runOnCbrainDisabled = imagePath + "/run_on_cbrain_gray.png";
-  var downloadEnabled = imagePath + "/download_green.png";
-  var downloadDisabled = imagePath + "/download_gray.png";
-
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
     { className: "search-dataset" },
@@ -7374,7 +7371,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
           alt: "dataset format",
           className: "dataset-social-img",
-          src: element.url == undefined ? "static/img/cogs-solid-grey.svg" : "static/img/cogs-solid-green.svg"
+          src: element.url == undefined ? "static/img/cogs-solid-grey.png" : "static/img/cogs-solid-green.png"
         })
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -7439,7 +7436,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
               alt: "Online platform",
               className: "run-on-cbrain-button option-icon",
-              src: element.onlineplatformurls == undefined ? "static/img/globe-solid-grey.svg" : "static/img/globe-solid-green.svg"
+              src: element.img
             })
           )
         )
@@ -7464,7 +7461,8 @@ PipelineElement_PipelineElement.propTypes = {
   schemaversion: prop_types_default.a.string,
   containerimage: prop_types_default.a.object,
   tags: prop_types_default.a.object,
-  url: prop_types_default.a.string
+  url: prop_types_default.a.string,
+  img: prop_types_default.a.string
 };
 
 //PipelineElement.defaultProps = {
