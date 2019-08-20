@@ -27,6 +27,9 @@ def create_app(config_settings=Config):
 
     from app.search import search_bp
     app.register_blueprint(search_bp)
+
+    from app.forums import forums_bp
+    app.register_blueprint(forums_bp)
   
     migrate = Migrate(app, db)
 
