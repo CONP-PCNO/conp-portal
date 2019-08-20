@@ -23,7 +23,7 @@ def login():
             user = User.query.filter_by(email=form.email.data).first()
             if user is None or not user.check_password(form.password.data):
                 flash('Invalid username or password')
-                return redirect(url_for('login'))
+                return redirect(url_for('auth.login'))
             login_user(user, remember=form.remember_me.data)
             return redirect(url_for('index'))
     return render_template('login.html', title='CONP | Log In', form=form, error=form.errors)
@@ -39,7 +39,7 @@ def logged_in():
 def logout():
     logout_user()
 
-    return redirect(url_for('public'))
+    return redirect(url_for('main.public'))
 
 # This is the first step in the login process: the 'login with X' buttons
 # should direct users here with the provider name filled in
@@ -55,7 +55,7 @@ def oauth_authorize(provider):
 def oauth_callback(provider):
     if not current_user.is_anonymous:
 
-        return redirect(url_for('public'))
+        return redirect(url_for('main.public'))
 
     oauth = OAuthSignIn.get_provider(provider)
     # This is step three. The code from the provider's reply is sent back to
@@ -65,11 +65,11 @@ def oauth_callback(provider):
     if access_token is None or oauth_id is None:
         flash('Authentication failed. Please contact an admin if '
                 'this problem is persistent')
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
 
     user = User.query.filter_by(oauth_id=oauth_id).first()
     if user is None:
-        return redirect(url_for("register"))
+        return redirect(url_for("auth.register"))
 
     login_user(user, remember=True)
     session['active_token'] = access_token

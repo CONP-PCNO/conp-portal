@@ -8,7 +8,7 @@ from flask_migrate import Migrate
 from config import Config
 
 db = SQLAlchemy()
-login = LoginManager()
+login_manager = LoginManager()
 config = Config()
 
 def create_app(config_settings=Config):
@@ -24,11 +24,14 @@ def create_app(config_settings=Config):
 
     from app.auth import auth_bp
     app.register_blueprint(auth_bp)
+
+    from app.search import search_bp
+    app.register_blueprint(search_bp)
   
     migrate = Migrate(app, db)
 
-    login.init_app(app)
-    login.login_view = 'login'
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
 
     return app
 
