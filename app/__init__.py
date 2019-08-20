@@ -30,6 +30,9 @@ def create_app(config_settings=Config):
 
     from app.forums import forums_bp
     app.register_blueprint(forums_bp)
+
+    from app.profile import profile_bp
+    app.register_blueprint(profile_bp)
   
     migrate = Migrate(app, db)
 

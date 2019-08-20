@@ -81,10 +81,6 @@ def share():
 def tools():
     return render_template('tools.html', title='CONP | Tools & Pipelines', user=current_user)
 
-@app.route('/profile')
-def profile():
-    return render_template('profile.html', title='CONP | My Profile', user=current_user)
-
 @app.route('/pipeline-search', methods=['GET'])
 def pipeline_search():
     if request.method == 'GET':
