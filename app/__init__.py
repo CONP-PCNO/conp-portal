@@ -33,6 +33,9 @@ def create_app(config_settings=Config):
 
     from app.profile import profile_bp
     app.register_blueprint(profile_bp)
+
+    from app.pipelines import pipelines_bp
+    app.register_blueprint(pipelines_bp)
   
     migrate = Migrate(app, db)
 
