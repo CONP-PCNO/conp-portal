@@ -6,6 +6,7 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import Config
+from app.threads import UpdatePipelineData
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -17,7 +18,6 @@ def create_app(config_settings=Config):
     app.config.from_object(Config)
 
     db.init_app(app)
-    # from app import routes, models
 
     from app.main import main_bp
     app.register_blueprint(main_bp)
@@ -44,6 +44,11 @@ def create_app(config_settings=Config):
 
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
+
+    #start updating data on startup
+    thr = UpdatePipelineData(path=os.path.join(os.path.expanduser('~'), ".cache", "boutiques"))
+    thr.start()
+    thr.join()
 
     return app
 
