@@ -42,7 +42,7 @@ def register_new_user():
                     db.session.add(user)
                     db.session.commit()
                     login_user(user)
-                    return redirect(url_for('index'))
+                    return redirect(url_for('main.index'))
             error = form.errors
         error = {'Passwords do not match'}
     return render_template('register.html', title='CONP | Register', form=form, error=error)
