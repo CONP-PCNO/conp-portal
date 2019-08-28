@@ -16,7 +16,7 @@ def login():
     form = SignInForm()
 
     if current_user.is_authenticated:
-        return redirect(url_for('logged_in'))
+        return redirect(url_for('auth.logged_in'))
 
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -25,7 +25,7 @@ def login():
                 flash('Invalid username or password')
                 return redirect(url_for('auth.login'))
             login_user(user, remember=form.remember_me.data)
-            return redirect(url_for('index'))
+            return redirect(url_for('main.index'))
     return render_template('login.html', title='CONP | Log In', form=form, error=form.errors)
 
 @auth_bp.route('/success', methods=['GET', 'POST'])
@@ -33,7 +33,7 @@ def login():
 def logged_in():
     if request.method == 'GET':
         # Protected user content can be handled here
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
 
 @auth_bp.route('/logout')
 def logout():
@@ -46,7 +46,7 @@ def logout():
 @auth_bp.route('/authorize/<provider>')
 def oauth_authorize(provider):
     if not current_user.is_anonymous:
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     oauth = OAuthSignIn.get_provider(provider)
     return oauth.authorize()
 
@@ -74,7 +74,7 @@ def oauth_callback(provider):
     login_user(user, remember=True)
     session['active_token'] = access_token
 
-    return redirect(url_for('logged_in'))
+    return redirect(url_for('auth.logged_in'))
 
 @auth_bp.route('/register')
 def register():
