@@ -1,8 +1,9 @@
 FLASK_APP=conp.py
 FLASK_ENV=development
-SECRET_KEY=
-DATA_PATH =
-DATABASE_URL=
+SECRET_KEY=you-will-never-guess
+DATA_PATH=/static/data/projects/
+DATABASE_URL=postgresql://localhost/conp
+SQLALCHEMY_TRACK_MODIFICATIONS=False
 OAUTH_ORCID_ID=
 OAUTH_ORCID_SECRET=
 ORCID_AUTH_URL=https://orcid.org/oauth/authorize
