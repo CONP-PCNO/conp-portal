@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+"""Threading Module
+
+Module that contains the threaded pipeline searching functions
+"""
 from boutiques.searcher import Searcher
 from boutiques.puller import Puller
 import threading
@@ -7,7 +12,10 @@ import logging
 
 
 class UpdatePipelineData(threading.Thread):
-
+    """
+        Class that handles the threaded updating of the Pipeline
+        registrty from Zenodo
+    """
     def __init__(self, path):
         super(UpdatePipelineData, self).__init__()
         if not os.path.exists('logs'):
@@ -31,15 +39,21 @@ class UpdatePipelineData(threading.Thread):
 
             # fetch every single descriptor into one file
             detailed_all_descriptors = [
-                json.load(open(os.path.join(self.cache_dir, descriptor["ID"].replace(".", "-") + ".json"), "r"))
+                json.load(open(os.path.join(self.cache_dir,
+                                            descriptor["ID"].replace(".", "-") + ".json"),
+                          "r"))
                 for descriptor in all_descriptors
             ]
 
             # store data in cache
-            with open(os.path.join(self.cache_dir, "all_descriptors.json"), "w") as f:
+            with open(os.path.join(self.cache_dir,
+                                   "all_descriptors.json"),
+                      "w") as f:
                 json.dump(all_descriptors, f, indent=4)
 
-            with open(os.path.join(self.cache_dir, "detailed_all_descriptors.json"), "w") as f:
+            with open(os.path.join(self.cache_dir,
+                                   "detailed_all_descriptors.json"),
+                      "w") as f:
                 json.dump(detailed_all_descriptors, f, indent=4)
 
         except Exception as e:
