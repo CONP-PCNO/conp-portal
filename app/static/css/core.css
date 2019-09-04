@@ -33,6 +33,7 @@ p {
 =============================================================
 Colour names courtesy of chir.ag/projects/name-that-color
 */
+
 .bg-alto {
   background-color: #d8d8d8;
 }
@@ -63,4 +64,22 @@ Colour names courtesy of chir.ag/projects/name-that-color
 
 .bg-white {
   background-color: #ffffff;
+}
+
+/*
+=============================================================
+| FONTS
+=============================================================
+*/
+
+.text-body {
+  font-family: "arial", sans-serif;
+  font-size: 14px;
+  color: #343434;
+}
+
+.text-logo {
+  font-family: "quicksand";
+  font-size: 14px;
+  color: #404040;
 }
