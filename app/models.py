@@ -4,7 +4,7 @@
 Module that contains the Data Models
 
 """
-from app import db, login
+from app import db, login_manager
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
@@ -12,8 +12,7 @@ from pytz import timezone
 
 eastern = timezone('US/Eastern')
 
-
-@login.user_loader
+@login_manager.user_loader
 def load_user(id):
     """
         Ensures that the loaded user in templates is

@@ -6,8 +6,8 @@ Module that contains the OAUTH utilities
 import json
 from rauth import OAuth2Service
 from flask import url_for, request, redirect, session
-from app import app
 
+from app import config
 
 class OAuthSignIn(object):
     """
@@ -26,7 +26,7 @@ class OAuthSignIn(object):
                 instance class
         """
         self.provider_name = provider_name
-        credentials = app.config['OAUTH_CREDENTIALS'][provider_name]
+        credentials = config.OAUTH_CREDENTIALS[provider_name]
         self.consumer_id = credentials['id']
         self.consumer_secret = credentials['secret']
 
@@ -37,7 +37,7 @@ class OAuthSignIn(object):
         raise RuntimeError("OAuthSignIn Class: Calling callback on base class is not allowed")
 
     def get_callback_url(self):
-        return url_for('oauth_callback', provider=self.provider_name,
+        return url_for('auth.oauth_callback', provider=self.provider_name,
                        _external=True)
 
     @classmethod
