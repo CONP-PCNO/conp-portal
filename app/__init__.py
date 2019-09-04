@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import sys
 import inspect
@@ -13,6 +14,7 @@ login_manager = LoginManager()
 config = Config()
 migrate = Migrate()
 
+
 def create_app(config_settings=Config):
 
     app = Flask(__name__)
@@ -20,25 +22,25 @@ def create_app(config_settings=Config):
 
     db.init_app(app)
 
-    from app.main import main_bp
+    from app.main import main_bp  # noqa: E402
     app.register_blueprint(main_bp)
 
-    from app.admin import admin_bp
+    from app.admin import admin_bp  # noqa: E402
     app.register_blueprint(admin_bp)
 
-    from app.auth import auth_bp
+    from app.auth import auth_bp  # noqa: E402
     app.register_blueprint(auth_bp)
 
-    from app.search import search_bp
+    from app.search import search_bp  # noqa: E402
     app.register_blueprint(search_bp)
 
-    from app.forums import forums_bp
+    from app.forums import forums_bp  # noqa: E402
     app.register_blueprint(forums_bp)
 
-    from app.profile import profile_bp
+    from app.profile import profile_bp  # noqa: E402
     app.register_blueprint(profile_bp)
 
-    from app.pipelines import pipelines_bp
+    from app.pipelines import pipelines_bp  # noqa: E402
     app.register_blueprint(pipelines_bp)
   
     migrate.init_app(app, db)
@@ -46,11 +48,9 @@ def create_app(config_settings=Config):
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
 
-    #start updating data on startup
+    # start updating data on startup
     thr = UpdatePipelineData(path=os.path.join(os.path.expanduser('~'), ".cache", "boutiques"))
     thr.start()
     thr.join()
 
     return app
-
-
