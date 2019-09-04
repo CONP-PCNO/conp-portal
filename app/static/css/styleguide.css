@@ -1,0 +1,23 @@
+.styleguide {
+  width: 100%;
+}
+
+.styleguide__section {
+  border: 2px solid #ececec;
+  margin-bottom: 1rem;
+}
+
+.styleguide__section__header h4 {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.styleguide__section__header {
+  padding: 0 1rem;
+  border-bottom: 2px solid #ececec;
+  background: #f8f8f8;
+}
+
+.styleguide__section__body {
+  padding: 1rem;
+}
