@@ -20,6 +20,8 @@
   background: #f8f8f8;
   border-bottom: 2px solid #ececec;
   padding: 0 1rem;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .styleguide__section__body {
