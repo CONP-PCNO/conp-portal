@@ -12,12 +12,24 @@
   text-align: center;
 }
 
+.styleguide__section__header h5 {
+  margin: 0.5rem 0;
+}
+
 .styleguide__section__header {
-  padding: 0 1rem;
-  border-bottom: 2px solid #ececec;
   background: #f8f8f8;
+  border-bottom: 2px solid #ececec;
+  padding: 0 1rem;
 }
 
 .styleguide__section__body {
   padding: 1rem;
+}
+
+.styleguide__palette__swatch {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  box-shadow: 1px 2px 8px -5px #000000;
+  margin: 1rem;
 }

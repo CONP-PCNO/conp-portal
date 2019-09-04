@@ -1,0 +1,66 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-family: "arial", sans-serif;
+  font-size: 14px;
+  color: #343434;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+p {
+  font-size: 1rem;
+  margin: 0;
+}
+
+/*
+=============================================================
+| PALETTE
+=============================================================
+Colour names courtesy of chir.ag/projects/name-that-color
+*/
+.bg-alto {
+  background-color: #d8d8d8;
+}
+
+.bg-dusty-grey {
+  background-color: #979797;
+}
+
+.bg-mineshaft {
+  background-color: #343434;
+}
+
+.bg-pastel-green {
+  background-color: #88d368;
+}
+
+.bg-red {
+  background-color: #ff0000;
+}
+
+.bg-sea-buckthorn {
+  background-color: #f6a032;
+}
+
+.bg-silver {
+  background-color: #c2c2c2;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}

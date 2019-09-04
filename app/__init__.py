@@ -39,6 +39,9 @@ def create_app(config_settings=Config):
 
     from app.pipelines import pipelines_bp
     app.register_blueprint(pipelines_bp)
+
+    from app.styleguide import styleguide_bp
+    app.register_blueprint(styleguide_bp)
   
     migrate = Migrate(app, db)
 
