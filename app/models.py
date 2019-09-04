@@ -12,6 +12,7 @@ from pytz import timezone
 
 eastern = timezone('US/Eastern')
 
+
 @login_manager.user_loader
 def load_user(id):
     """

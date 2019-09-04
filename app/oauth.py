@@ -6,8 +6,8 @@ Module that contains the OAUTH utilities
 import json
 from rauth import OAuth2Service
 from flask import url_for, request, redirect, session
-
 from app import config
+
 
 class OAuthSignIn(object):
     """
