@@ -27,6 +27,10 @@ p {
   margin: 0;
 }
 
+a:hover {
+  text-decoration: none !important;
+}
+
 /*
 =============================================================
 | PALETTE
@@ -82,4 +86,48 @@ Colour names courtesy of chir.ag/projects/name-that-color
   font-family: "quicksand";
   font-size: 14px;
   color: #404040;
+}
+
+/*
+=============================================================
+| BUTTONS
+=============================================================
+*/
+
+.btn-green {
+  background-color: #88d368;
+  color: white;
+}
+
+.btn-green:hover {
+  background-color: #70ad56;
+}
+
+.btn-orange {
+  background-color: #f6a032;
+  /* border: 2px solid #f6a032; */
+  color: white;
+}
+
+.btn-orange:hover {
+  background-color: #c5822b;
+}
+
+/*
+=============================================================
+| NAVIGATION BAR
+=============================================================
+*/
+
+.navbar-conp {
+  width: 100%;
+  border-bottom: 2px solid #ff0000;
+}
+
+.navbar-conp-icon {
+  height: 3rem;
+}
+
+.navbar-nav .dropdown-menu {
+  border: 2px solid #ff0000;
 }
