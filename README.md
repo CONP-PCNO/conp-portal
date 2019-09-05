@@ -9,43 +9,64 @@ This code requires Python 3.7
 
 Create a Python virtual environment called `venv` and install Flask dependencies
 
+In the top level directory:
+
+    ```shell
     python3 -m venv venv
     source venv/bin/activate
     pip install -r requirements.txt
+    ```
+### Initialize the flask environment
+
+You can set environment variables in the .flaskenv file.  A template is provided for you to start from.
+
+In the top level directory:
+
+    ```shell
+    cp flaskenv.template .flaskenv
+    ```
+
+You will need to specify a database environment to use.  The easiest for testing purposes is sqlite3
+which is a filebased database system that will run locally on your system.
+
+First you will need to make sure you install sqlite3 for you system. Information can be found at https://www.sqlite.org/index.html.
+For linux we recommend using the packaged version that comes from your distribution. To make sure it installed, you can run from the terminal `sqlite3`
+and the application should run. Type `.q` and return to exit.
+
+Edit the DATABASE_URL 
+
+In .flaskenv, replace the words `<ENTER FLASK TOP DIR>' with path to your top level flask directory.  You should already be in it, so you can find the path with `pwd`.
+
+### Initilize the test database
+
+We provide some initial data for you to create a functioning database for testing purposes.  To initialize this:
+
+In the top level directory:
+
+   ```shell
+   flask db upgrade
+   flask seed_test_db
+   ```
+### Get the dataset repository
+
+In the top level directory:
+
+   ```shell
+      git submodule update --init
+   ```
+      
+You can now view the contents of the directory `app/static/data` and you should now see that the conp-datasets repository has been cloned into here.
 
 ### Run Application
 
-You can run the application locally with 
+In the top level directory:
 
-    python3 run.py
+   ```shell
+   flask run
+   ```
+
+The application should now be live on `http://0.0.0.0:5000/` 
     
-The application will be live on `http://0.0.0.0:5000/` 
-    
-
-### Get the dataset repository
-
-       git submodule add git@github.com:CONP-PCNO/conp-dataset data
-
-The search will be executed on this `data` repository 
-
-### Localhost Database
-
-Create a localhost Postgres database named `conp` with owner `postgres`
-
-    createdb conp --owner=postgres
-    
-Export database credentials with
-
-
-    export DATABASE_URL="postgresql://localhost/conp"
-
-If you get a `fe_sendauth: no password supplied` error, then use this command instead
-
-    export DATABASE_URL="postgresql:///conp"
-
-Create tables with
-
-    flask db upgrade
 
 ### AWS Cloud9 (Experimental)
 
