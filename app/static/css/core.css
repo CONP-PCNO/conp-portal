@@ -35,6 +35,12 @@ button:focus {
   outline: 0;
 }
 
+ul,
+li {
+  text-decoration: none;
+  list-style: none;
+}
+
 /*
 =============================================================
 | PALETTE
@@ -128,6 +134,7 @@ Colour names courtesy of chir.ag/projects/name-that-color
   height: 4.5rem;
   border-bottom: 2px solid #ff0000;
   padding: 0;
+  z-index: 1;
 }
 
 .navbar-conp a,
@@ -193,9 +200,8 @@ Colour names courtesy of chir.ag/projects/name-that-color
   }
 
   .navbar-conp .dropdown-menu {
-    width: 100%;
     background: white;
-    border: 2px solid red;
+    border: 2px solid #ff0000;
     border-top: 0;
     padding: 0;
   }
@@ -203,5 +209,40 @@ Colour names courtesy of chir.ag/projects/name-that-color
   .navbar-conp .dropdown-item {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
+    white-space: inherit;
   }
+}
+
+/*
+=============================================================
+| Footer
+=============================================================
+*/
+
+footer {
+  color: white;
+  padding: 2rem;
+}
+
+footer ul {
+  padding: 0;
+}
+
+footer ul li .nav-link {
+  color: #ffffff;
+  padding: 0;
+}
+
+footer ul li .nav-link:hover {
+  color: #ffffff;
+  background-color: #ff0000;
+  padding: 0;
+  width: 100%;
+}
+footer .mail-link {
+  color: white;
+}
+
+footer .mail-link:hover {
+  color: #ff0000;
 }
