@@ -12,6 +12,7 @@ from app.threads import UpdatePipelineData
 db = SQLAlchemy()
 login_manager = LoginManager()
 config = Config()
+migrate = Migrate()
 
 
 def create_app(config_settings=Config):
@@ -41,8 +42,8 @@ def create_app(config_settings=Config):
 
     from app.pipelines import pipelines_bp  # noqa: E402
     app.register_blueprint(pipelines_bp)
-
-    migrate = Migrate(app, db)
+  
+    migrate.init_app(app, db)
 
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'

@@ -3,6 +3,7 @@
 
 Module that contains the OAUTH utilities
 """
+import os
 import json
 from rauth import OAuth2Service
 from flask import url_for, request, redirect, session
@@ -56,11 +57,10 @@ class ORCIDSignIn(OAuthSignIn):
     """
     def __init__(self):
         super(ORCIDSignIn, self).__init__('orcid')
-        # These will need to be updated to point to the non-sandbox orcid
-        # site for a production app
-        auth_url = 'https://orcid.org/oauth/authorize'
-        base_url = 'https://orcid.org'
-        token_url = 'https://orcid.org/oauth/token'
+
+        auth_url = os.environ.get('ORCID_AUTH_URL')
+        base_url = os.environ.get('ORCID_BASE_URL')
+        token_url = os.environ.get('ORCID_TOKEN_URL')
 
         self.service = OAuth2Service(name='orcid',
                                      client_id=self.consumer_id,
