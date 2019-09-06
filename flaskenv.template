@@ -2,3 +2,13 @@ FLASK_APP=conp.py
 FLASK_ENV=development
 FLASK_DEBUG=0
 DATABASE_URL=sqlite:///<ENTER FLASK TOP DIR>/app.db
+SECRET_KEY=you-will-never-guess
+DATA_PATH=/static/data/projects/
+SQLALCHEMY_TRACK_MODIFICATIONS=False
+OAUTH_ORCID_ID=
+OAUTH_ORCID_SECRET=
+ORCID_AUTH_URL=https://orcid.org/oauth/authorize
+ORCID_BASE_URL=https://orcid.org
+ORCID_TOKEN_URL=https://orcid.org/oauth/token
+
+~
