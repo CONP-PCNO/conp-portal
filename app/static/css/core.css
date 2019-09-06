@@ -31,6 +31,10 @@ a:hover {
   text-decoration: none !important;
 }
 
+button:focus {
+  outline: 0;
+}
+
 /*
 =============================================================
 | PALETTE
@@ -121,13 +125,83 @@ Colour names courtesy of chir.ag/projects/name-that-color
 
 .navbar-conp {
   width: 100%;
+  height: 4.5rem;
+  border-bottom: 2px solid #ff0000;
+  padding: 0;
+}
+
+.navbar-conp a,
+.navbar-conp a img,
+.navbar-conp div ul {
+  height: 100%;
+}
+
+.navbar-conp div .nav-item:hover {
+  background-color: #d8d8d8;
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-collapse {
+  width: 100%;
+  background: white;
+}
+
+.navbar-nav .active,
+.navbar-light .navbar-nav .active > .nav-link {
+  background-color: #ff0000;
+  color: white;
+}
+
+.navbar-conp div .active:hover {
+  background-color: #ff0000;
+}
+
+.navbar-conp .show {
+  width: 100%;
+  background: white;
   border-bottom: 2px solid #ff0000;
 }
 
-.navbar-conp-icon {
-  height: 3rem;
+.navbar-conp .dropdown,
+.navbar-conp .dropdown-menu {
+  width: 100%;
+  background: white;
+  border-bottom: none;
+  border: none;
 }
 
-.navbar-nav .dropdown-menu {
-  border: 2px solid #ff0000;
+@media (min-width: 992px) {
+  .navbar-conp {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .navbar-conp .show {
+    width: auto;
+    background: white;
+    border-bottom: none;
+  }
+  .navbar-collapse {
+    height: 100%;
+  }
+
+  .navbar-nav .nav-item a {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-conp .dropdown-menu {
+    width: 100%;
+    background: white;
+    border: 2px solid red;
+    border-top: 0;
+    padding: 0;
+  }
+
+  .navbar-conp .dropdown-item {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
 }
