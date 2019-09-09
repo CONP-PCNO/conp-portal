@@ -239,10 +239,10 @@ footer ul li .nav-link:hover {
   padding: 0;
   width: 100%;
 }
-footer .mail-link {
+footer .footer-link {
   color: white;
 }
 
-footer .mail-link:hover {
+footer .footer-link:hover span {
   color: #ff0000;
 }
