@@ -42,7 +42,7 @@ def create_app(config_settings=Config):
 
     from app.pipelines import pipelines_bp  # noqa: E402
     app.register_blueprint(pipelines_bp)
-  
+
     migrate.init_app(app, db)
 
     login_manager.init_app(app)
