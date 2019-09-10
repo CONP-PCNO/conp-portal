@@ -8,6 +8,7 @@ python:
 
 install:
 - pip install -r requirements.txt
+- pip install coveralls
 
 script:
 - pycodestyle --max-line-length=99 -r *.py app/*.py
