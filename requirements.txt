@@ -8,6 +8,7 @@ certifi==2018.11.29
 chardet==3.0.4
 Click==7.0
 commonmark==0.8.1
+coverage==4.5.4
 docutils==0.14
 Flask==1.0.2
 Flask-Login==0.4.1
