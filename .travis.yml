@@ -11,4 +11,4 @@ install:
 
 script:
 - pycodestyle --max-line-length=99 -r *.py app/*.py
-
+- pytest -v
