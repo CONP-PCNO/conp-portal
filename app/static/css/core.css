@@ -257,7 +257,7 @@ footer .footer-link:hover span {
   background: #343434;
 }
 
-.sidebar .sidebar__link {
+.sidebar .sidebar-link {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -267,17 +267,17 @@ footer .footer-link:hover span {
   color: #ffffff;
 }
 
-.sidebar .sidebar__link:hover {
+.sidebar .sidebar-link:hover {
   background-color: #d8d8d8;
   color: #343434;
 }
 
-.sidebar .sidebar__link .sidebar__link__icon {
+.sidebar .sidebar-link .sidebar-link-icon {
   font-size: 2.5rem;
   padding: 1rem;
 }
 
-.sidebar .sidebar__link .sidebar__link__text {
+.sidebar .sidebar-link .sidebar-link-text {
   margin-top: 0.5rem;
   text-transform: capitalize;
   text-align: center;
