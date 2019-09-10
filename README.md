@@ -67,6 +67,16 @@ In the top level directory:
 
 The application should now be live on `http://0.0.0.0:5000/` 
     
+### Testing
+
+We use the pytest framework for testing all aspects of the application. This will be automatically run by TravisCI when a pull request is made.  
+
+The tests exists in the `tests` directory and should not effect any of the development or production builds to run. Please feel free to add unit and functional tests with any new feature.  Pytest will automatically pick up any tests that start with `test_` that are placed in the folder under a directory.  Please adhere to the structure there.
+
+For unit tests of classes and utilities, use the folder `tests/unit_tests`
+For database specific testing, please use the folder `tests/database_tests`
+for blueprint and route testing, please use the `tests/blueprint_specific_tests` folder and place it in the appropriate blueprint specific directory.
+
 
 ### AWS Cloud9 (Experimental)
 
