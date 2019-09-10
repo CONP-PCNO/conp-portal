@@ -6,19 +6,19 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from config import Config
+from config import DevelopmentConfig, ProductionConfig
 from app.threads import UpdatePipelineData
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-config = Config()
+config = DevelopmentConfig()
 migrate = Migrate()
 
 
-def create_app(config_settings=Config):
+def create_app(config_settings=DevelopmentConfig):
 
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(config_settings)
 
     db.init_app(app)
 
