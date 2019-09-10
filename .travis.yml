@@ -10,5 +10,5 @@ install:
 - pip install -r requirements.txt
 
 script:
-- pycodestyle --max-line-length=99 app/*.py app/*/*.py
+- pycodestyle --max-line-length=99 -r *.py app/*.py
 
