@@ -11,8 +11,7 @@ install:
 
 script:
 - pycodestyle --max-line-length=99 -r *.py app/*.py
-- coverage run pytest
-- coverage report -m
+- pytest --cov ../conp-portal 
 
 after_success:
 - coveralls
