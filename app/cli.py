@@ -10,6 +10,7 @@ import csv
 from datetime import datetime
 from app.threads import UpdatePipelineData
 
+
 def register(app):
 
     @app.cli.command("seed_test_db")
@@ -17,11 +18,11 @@ def register(app):
         from app import db
         from app.models import User, Dataset, DatasetStats
 
-        ## create an admin user (Not useful now, but at least we will have a user)
+        # create an admin user (Not useful now, but at least we will have a user)
 
-        ## import the current dataset information (to be replaced by dyanmic process)
-        dataset_csvfile = os.path.join(app.root_path,"../test/datasets.csv")
-        with open(dataset_csvfile,'r') as data_csv:
+        # import the current dataset information (to be replaced by dyanmic process)
+        dataset_csvfile = os.path.join(app.root_path, "../test/datasets.csv")
+        with open(dataset_csvfile, 'r') as data_csv:
             csv_reader = csv.DictReader(data_csv)
             for row in csv_reader:
                 dataset = Dataset(
@@ -36,16 +37,15 @@ def register(app):
                                   version=row['version'],
                                   format=row['format'],
                                   category=row['category'],
-                                  #image=row['image'],
                                   date_created=datetime.utcnow(),
                                   date_updated=datetime.utcnow(),
-                                  is_private=row['is_private']=='True'
+                                  is_private=row['is_private'] == 'True'
                                  )
 
                 db.session.add(dataset)
 
-            dataset_stats_csvfile = os.path.join(app.root_path,"../test/datasets_stats.csv")
-            with open(dataset_stats_csvfile,'r') as datastat_csv:
+            dataset_stats_csvfile = os.path.join(app.root_path, "../test/datasets_stats.csv")
+            with open(dataset_stats_csvfile, 'r') as datastat_csv:
                 csv_reader = csv.DictReader(datastat_csv)
                 for row in csv_reader:
                     dataset_stat = DatasetStats(
@@ -63,12 +63,9 @@ def register(app):
 
             db.session.commit()
 
-
     @app.cli.command('update_pipeline_data')
     def update_pipeline_data():
         thr = UpdatePipelineData(path=os.path.join(os.path.expanduser('-'),
                                  ".cache", "boutiques"))
         thr.start()
         thr.join()
-
-
