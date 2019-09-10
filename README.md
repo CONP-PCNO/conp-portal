@@ -12,20 +12,20 @@ Create a Python virtual environment called `venv` and install Flask dependencies
 
 In the top level directory:
 
-    ```shell
-    python3 -m venv venv
-    source venv/bin/activate
-    pip install -r requirements.txt
-    ```
+```shell
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
 ### Initialize the flask environment
 
 You can set environment variables in the .flaskenv file.  A template is provided for you to start from.
 
 In the top level directory:
 
-    ```shell
-    cp flaskenv.template .flaskenv
-    ```
+```shell
+cp flaskenv.template .flaskenv
+```
 
 You will need to specify a database environment to use.  The easiest for testing purposes is sqlite3
 which is a filebased database system that will run locally on your system.
@@ -44,17 +44,17 @@ We provide some initial data for you to create a functioning database for testin
 
 In the top level directory:
 
-   ```shell
-   flask db upgrade
-   flask seed_test_db
-   ```
+```shell
+flask db upgrade
+flask seed_test_db
+```
 ### Get the dataset repository
 
 In the top level directory:
 
-   ```shell
-      git submodule update --init
-   ```
+```shell
+  git submodule update --init
+```
       
 You can now view the contents of the directory `app/static/data` and you should now see that the conp-datasets repository has been cloned into here.
 
@@ -62,9 +62,9 @@ You can now view the contents of the directory `app/static/data` and you should 
 
 In the top level directory:
 
-   ```shell
-   flask run
-   ```
+```shell
+flask run
+```
 
 The application should now be live on `http://0.0.0.0:5000/` 
     
