@@ -1,6 +1,7 @@
 
 # CONP Portal 
 [![Build Status](https://travis-ci.org/CONP-PCNO/conp-portal.svg?branch=master)](https://travis-ci.org/CONP-PCNO/conp-portal)
+[![Coverage Status](https://coveralls.io/repos/github/shots47s/conp-portal/badge.svg?branch=master)](https://coveralls.io/github/shots47s/conp-portal?branch=master)
 ### Requirements
 
 This code requires Python 3.7 
