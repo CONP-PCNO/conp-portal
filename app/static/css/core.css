@@ -125,7 +125,7 @@ Colour names courtesy of chir.ag/projects/name-that-color
 
 /*
 =============================================================
-| NAVIGATION BAR
+| Navigation Bar
 =============================================================
 */
 
@@ -245,4 +245,40 @@ footer .footer-link {
 
 footer .footer-link:hover span {
   color: #ff0000;
+}
+
+/*
+=============================================================
+| Sidebar
+=============================================================
+*/
+
+.sidebar {
+  background: #343434;
+}
+
+.sidebar .sidebar__link {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  color: #ffffff;
+}
+
+.sidebar .sidebar__link:hover {
+  background-color: #d8d8d8;
+  color: #343434;
+}
+
+.sidebar .sidebar__link .sidebar__link__icon {
+  font-size: 2.5rem;
+  padding: 1rem;
+}
+
+.sidebar .sidebar__link .sidebar__link__text {
+  margin-top: 0.5rem;
+  text-transform: capitalize;
+  text-align: center;
 }
