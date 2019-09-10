@@ -18,7 +18,7 @@ def app(request):
     TestingConfig in Config.py
     """
     app = create_app(config_settings=TestingConfig)
-    ctx = app.app_context()
+    ctx = app.test_request_context()
     ctx.push()
 
     def teardown():
