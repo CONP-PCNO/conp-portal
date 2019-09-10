@@ -1,6 +1,6 @@
 
 # CONP Portal 
-
+[![Build Status](https://travis-ci.org/CONP-PCNO/conp-portal.svg?branch=master)](https://travis-ci.org/CONP-PCNO/conp-portal)
 ### Requirements
 
 This code requires Python 3.7 
