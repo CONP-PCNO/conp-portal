@@ -187,7 +187,7 @@
             <button type="button" class="btn btn-green">
               Green Button <i class="fa fa-upload"></i>
             </button>
-            <div class="styleguide__section__item">.btn-success</div>
+            <div class="styleguide__section__item">.btn .btn-success</div>
           </div>
           <div
             class="styleguide__section__item align-items-center col-md-3 col-sm-6"
@@ -195,7 +195,7 @@
             <button type="button" class="btn btn-orange">
               Orange Button <i class="fa fa-upload"></i>
             </button>
-            <div class="styleguide__section__item">.btn-orange</div>
+            <div class="styleguide__section__item">.btn .btn-orange</div>
           </div>
           <div
             class="styleguide__section__item align-items-center col-md-3 col-sm-6"
@@ -204,7 +204,45 @@
               Secondary
             </button>
 
-            <div class="styleguide__section__item">.btn-outline-secondary</div>
+            <div class="styleguide__section__item">
+              .btn .btn-outline-secondary
+            </div>
+          </div>
+          <div class="styleguide__section__divider"></div>
+          <div
+            class="styleguide__section__item align-items-center col-md-3 col-sm-6"
+          >
+            <button type="button" class="btn btn-download-metadata"></button>
+            <div class="styleguide__section__item">
+              .btn .btn-download-metadata
+            </div>
+          </div>
+          <div
+            class="styleguide__section__item align-items-center col-md-3 col-sm-6"
+          >
+            <button
+              type="button"
+              class="btn btn-download-metadata disabled"
+            ></button>
+            <div class="styleguide__section__item">
+              .btn .btn-download-metadata .disabled
+            </div>
+          </div>
+          <div
+            class="styleguide__section__item align-items-center col-md-3 col-sm-6"
+          >
+            <button type="button" class="btn btn-cbrain"></button>
+            <div class="styleguide__section__item">
+              .btn .btn-cbrain
+            </div>
+          </div>
+          <div
+            class="styleguide__section__item align-items-center col-md-3 col-sm-6"
+          >
+            <button type="button" class="btn btn-cbrain disabled"></button>
+            <div class="styleguide__section__item">
+              .btn .btn-cbrain .disabled
+            </div>
           </div>
         </div>
       </div>
@@ -213,7 +251,7 @@
           Navigation Bar
         </div>
         <div class="styleguide__section__body row">
-          <div class="navbar navbar-inverse-red" role="navigation">
+          <div class="navbar" role="navigation">
             <div class="container">
               <nav
                 class="navbar navbar-expand-lg navbar-light navbar-conp bg-white"
@@ -222,7 +260,7 @@
                 <a class="navbar-brand" href="https://conp.ca/"
                   ><img
                     class="navbar-conp-icon"
-                    src="./static/img/conp.png"
+                    src="/static/img/conp.png"
                     alt="conp logo"
                 /></a>
                 <button
@@ -257,7 +295,7 @@
                         Help
                       </a>
                       <div
-                        class="dropdown-menu"
+                        class="dropdown-menu pt-0 pb-0"
                         aria-labelledby="navbarDropdown"
                       >
                         <a class="dropdown-item" href="/#/">Documentation</a>
@@ -284,7 +322,9 @@
         Footer
       </div>
       <div class="styleguide__section__body row">
-        <footer class="container-fluid justify-content-center bg-mineshaft">
+        <footer
+          class="container-fluid justify-content-center bg-mineshaft text-white p-2"
+        >
           <div class="row justify-content-center px-4">
             <div
               class="col-sm-6 d-flex flex-column justify-content-center align-items-center"
@@ -333,33 +373,253 @@
         Sidebar
       </div>
       <div class="styleguide__section__body row">
-        <div class="sidebar" role="navigation">
-          <a class="sidebar-link " href="/public">
-            <i class="fa fa-bar-chart sidebar-link-icon"></i>
-            <p class="sidebar-link-text">Dashboard</p>
+        <div class="sidebar bg-mineshaft" role="navigation">
+          <a
+            class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3"
+            href="/public"
+          >
+            <h1 class="p-3"><i class="fa fa-bar-chart"></i></h1>
+            <p class="text-center text-capitalize mt-1">
+              Dashboard
+            </p>
           </a>
-          <a class="sidebar-link" href="/search">
-            <i class="fa fa-search sidebar-link-icon"></i>
-            <p class="sidebar-link-text">Search</p>
+          <a
+            class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3"
+            href="/search"
+          >
+            <h1 class="p-3"><i class="fa fa-search"></i></h1>
+            <p class="text-center text-capitalize mt-1">
+              Search
+            </p>
           </a>
-          <a class="sidebar-link" href="/pipelines">
-            <i class="fa fa-wrench sidebar-link-icon"></i>
-            <p class="sidebar-link-text">
+          <a
+            class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3"
+            href="/pipelines"
+          >
+            <h1 class="p-3"><i class="fa fa-wrench"></i></h1>
+            <p class="text-center text-capitalize mt-1">
               Tools & Pipelines
             </p>
           </a>
-          <a class="sidebar-link" href="/share">
-            <i class="fa fa-cloud-upload sidebar-link-icon"></i>
-            <p class="sidebar-link-text">
+          <a
+            class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3"
+            href="/share"
+          >
+            <h1 class="p-3"><i class="fa fa-cloud-upload"></i></h1>
+            <p class="text-center text-capitalize mt-1">
               Share
             </p>
           </a>
-          <a class="sidebar-link" href="/#/">
-            <i class="fa fa-comments sidebar-link-icon"></i>
-            <p class="sidebar-link-text">
+          <a
+            class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3"
+            href="/#/"
+          >
+            <h1 class="p-3"><i class="fa fa-comments"></i></h1>
+            <p class="text-center text-capitalize mt-1">
               Forums
             </p>
           </a>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid styleguide__section">
+      <div class="row styleguide__section__header">
+        Cards
+      </div>
+      <div class="styleguide__section__body row">
+        <div class="row m-2">
+          Dataset Card
+        </div>
+      </div>
+      <div class="card row flex-row">
+        <div class="card-img p-3">
+          <img
+            src="/static/img/placeholder.png"
+            class="card-img-top"
+            alt="dataset image"
+          />
+          <div class="d-flex justify-content-between px-1">
+            <div
+              class="d-flex flex-column justify-content-center align-items-center"
+            >
+              <i class="fa fa-download my-2"></i>
+              <p>0</p>
+            </div>
+            <div
+              class="d-flex flex-column justify-content-center align-items-center"
+            >
+              <i class="fa fa-eye my-2"></i>
+              <p>0</p>
+            </div>
+            <div
+              class="d-flex flex-column justify-content-center align-items-center"
+            >
+              <i class="fa fa-heart my-2"></i>
+              <p>0</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body d-md-flex flex-wrap">
+          <h5 class="card-title text-card-title col-12 pl-0">
+            Dataset Title
+          </h5>
+          <ul class="d-flex col-md-12 px-0">
+            <li class="d-none d-md-flex">
+              <p class="card-text text-capitalize pr-1">
+                <strong>Files: </strong>
+              </p>
+              <p class="card-text text-muted">
+                0000
+              </p>
+            </li>
+            <li class="d-none d-md-flex">
+              <p class="card-text text-capitalize pr-1">
+                <strong>Size: </strong>
+              </p>
+              <p class="card-text text-muted">
+                0000
+              </p>
+            </li>
+            <li class="d-none d-md-flex">
+              <p class="card-text text-capitalize pr-1">
+                <strong>Subjects: </strong>
+              </p>
+              <p class="card-text text-muted">
+                0000
+              </p>
+            </li>
+            <li class="d-flex">
+              <p class="card-text text-capitalize pr-1">
+                <strong>Sources: </strong>
+              </p>
+              <p class="card-text text-muted">
+                0000
+              </p>
+            </li>
+            <li class="d-flex">
+              <p class="card-text text-capitalize pr-1">
+                <strong>Format: </strong>
+              </p>
+              <p class="card-text text-muted">
+                Lorem Ipsum
+              </p>
+            </li>
+            <li class="d-flex">
+              <p class="card-text text-capitalize pr-1">
+                <strong>Modalities: </strong>
+              </p>
+              <p class="card-text text-muted">
+                Lorem Ipsum
+              </p>
+            </li>
+            <li class="d-flex">
+              <p class="card-text text-capitalize pr-1">
+                <strong>Date Added: </strong>
+              </p>
+              <p class="card-text text-muted">
+                0000-00-00
+              </p>
+            </li>
+            <li class="d-flex">
+              <p class="card-text text-capitalize pr-1">
+                <strong>Date Updated: </strong>
+              </p>
+              <p class="card-text text-muted">
+                0000-00-00
+              </p>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="card-buttons col-12 col-md-auto d-flex align-items-center justify-content-between my-2"
+        >
+          <button class="btn btn-outline-secondary d-md-none">
+            Go to Dataset
+          </button>
+          <div>
+            <button type="button" class="btn btn-cbrain card-button"></button>
+            <button
+              type="button"
+              class="btn btn-download-metadata card-button"
+            ></button>
+          </div>
+        </div>
+      </div>
+      <div class="styleguide__section__body row">
+        <div class="row m-2">
+          Tool Card
+        </div>
+      </div>
+      <div class="card row flex-row">
+        <div class="card-img p-3">
+          <img
+            src="/static/img/placeholder.png"
+            class="card-img-top"
+            alt="dataset image"
+          />
+          <div class="d-flex justify-content-between px-1">
+            <div
+              class="d-flex flex-column justify-content-center align-items-center"
+            >
+              <i class="fa fa-download my-2"></i>
+              <p>0</p>
+            </div>
+            <div
+              class="d-flex flex-column justify-content-center align-items-center"
+            >
+              <i class="fa fa-eye my-2"></i>
+              <p>0</p>
+            </div>
+            <div
+              class="d-flex flex-column justify-content-center align-items-center"
+            >
+              <i class="fa fa-heart my-2"></i>
+              <p>0</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body d-md-flex flex-wrap">
+          <h5 class="card-title text-card-title col-12 pl-0">
+            Tool/Pipeline Title
+          </h5>
+          <ul class="d-flex col-md-12 px-0">
+            <li class="d-flex">
+              <p class="card-text text-capitalize pr-1">
+                <strong>Tool Type: </strong>
+              </p>
+              <p class="card-text text-muted">
+                Lorem Ipsum
+              </p>
+            </li>
+            <li class="d-flex">
+              <p class="card-text text-capitalize pr-1">
+                <strong>Date Added: </strong>
+              </p>
+              <p class="card-text text-muted">
+                0000-00-00
+              </p>
+            </li>
+            <li class="d-flex">
+              <p class="card-text text-capitalize pr-1">
+                <strong>Date Updated: </strong>
+              </p>
+              <p class="card-text text-muted">
+                0000-00-00
+              </p>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="card-buttons col-12 col-md-auto d-flex align-items-center justify-content-between my-2"
+        >
+          <div>
+            <button class="btn btn-outline-secondary d-md-none">
+              More Details
+            </button>
+            <button class="btn btn-outline-secondary">
+              Website
+            </button>
+          </div>
         </div>
       </div>
     </div>
