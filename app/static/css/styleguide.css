@@ -12,7 +12,13 @@
   text-align: center;
 }
 
+.styleguide__section__header h5 {
+  margin: 0.5rem 0;
+}
+
 .styleguide__section__header {
+  background: #f8f8f8;
+  border-bottom: 2px solid #ececec;
   padding: 0 1rem;
   font-weight: bold;
   font-size: 16px;
