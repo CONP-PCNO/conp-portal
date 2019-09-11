@@ -1,0 +1,3 @@
+[console_scripts]
+bosh = boutiques.bosh:bosh
+
