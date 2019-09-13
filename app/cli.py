@@ -112,7 +112,7 @@ def register(app):
                             "landingPage")
                 except AttributeError:
                     raw_data_url = None
-                data_format = get_formats(model)
+                data_format = _get_formats(model)
                 private = model.get("privacy") == "Open Access"
             else:
                 description = None
@@ -196,7 +196,7 @@ def _get_dats_model(project):
     return model
 
 
-def get_formats(model):
+def _get_formats(model):
     dists = model.get("distributions")
     if not dists:
         return None
