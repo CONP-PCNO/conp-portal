@@ -57,3 +57,4 @@ def create_app(config_settings=DevelopmentConfig):
     thr.join()
 
     return app
+    
