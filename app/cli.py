@@ -122,7 +122,7 @@ def register(app):
                 modality = None
                 version = None
                 data_format = None
-                is_private = None
+                private = None
 
             record = Dataset(dataset_id=dataset_id,
                              annex_uuid=annex_uuid,
