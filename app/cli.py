@@ -78,8 +78,7 @@ def register(app):
 
         logger.setLevel(app.logger.getEffectiveLevel())
 
-        data_path = app.config.get("DATA_PATH", "static/data/projects").lstrip("/")
-        search_path = Path(app.root_path).joinpath(data_path)
+        search_path = Path(app.config.get("DATA_PATH")).joinpath("projects")
 
         for project in search_path.glob("*"):
             if not project.is_dir():
