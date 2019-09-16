@@ -213,7 +213,7 @@ def dataset_search():
         return json.dumps(payload)
 
 
-@search_bp.route('/dataset', methods=['GET', 'POST'])
+@search_bp.route('/dataset', methods=['GET'])
 def dataset_info():
     """ Dataset Route
 
@@ -279,12 +279,11 @@ def dataset_info():
                            metadata=metadata, user=current_user)
 
 
-@search_bp.route('/download_metadata', methods=['GET', 'POST'])
+@search_bp.route('/download_metadata', methods=['GET'])
 def download_metadata():
     """ Download Metadata Route
 
         route to allow downloading the metadata for a dataset
-        TODO: Currently allows post but does not use it
 
         Args:
             dataset (REQ ARG): the dataset

@@ -27,3 +27,14 @@ def test_pipelines_route(test_client):
     #assert res.status_code == 200
 
     assert True
+
+def test_pipelines_route(test_client):
+    """
+    GIVEN calling the route "/dataset"
+    WHEN no user is logged in
+    THEN should return success code
+    """
+    #res = test_client.get("/dataset")
+    #assert res.status_code == 200
+
+    assert True
