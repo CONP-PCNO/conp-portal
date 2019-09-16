@@ -44,7 +44,7 @@ def pipeline_search():
         authorized = True if current_user.is_authenticated else False
 
         # initialize variables
-        search_query = request.args.get("search").lower()
+        search_query = request.args.get("search").lower() if request.args.get("search") else ''
         sort_key = request.args.get("sortKey") or "downloads-desc"
         cache_dir = os.path.join(os.path.expanduser('~'), ".cache", "boutiques")
         all_desc_path = os.path.join(cache_dir, "all_descriptors.json")

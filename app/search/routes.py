@@ -71,7 +71,7 @@ def dataset_search():
         else:
             authorized = False
 
-        if request.args.get('search') != '':
+        if request.args.get('search'):
             term = '%' + request.args.get('search') + '%'
             # Query datasets
             datasets = Dataset.query.filter(
@@ -81,7 +81,7 @@ def dataset_search():
                                                 .like(func.lower(term)))
             )
 
-        elif request.args.get('search') == '':
+        else:
             # Query datasets
 
             datasets = Dataset.query.order_by(Dataset.id).all()
