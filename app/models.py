@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-"""Configuration Module
 
-Module that contains the Data Models
-
-"""
 from app import db, login_manager
 from flask_login import UserMixin
+from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.orm.collections import attribute_mapped_collection
 from datetime import datetime
 from pytz import timezone
 
@@ -36,7 +33,7 @@ class User(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.Integer, index=True, unique=True)
-    oauth_id = db.Column(db.String(256), index=True)
+    #oauth_id = db.Column(db.String(256), index=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(128), unique=True)
     password_hash = db.Column(db.String(128))
@@ -47,6 +44,9 @@ class User(UserMixin, db.Model):
     expiration = db.Column(db.DateTime, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
     date_updated = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
+
+    roles = db.relationship('Role', secondary='users_roles',
+                            backref=db.backref('users', lazy='dynamic'))
 
     def set_password(self, password):
         """
@@ -69,8 +69,66 @@ class User(UserMixin, db.Model):
         """
         return check_password_hash(self.password_hash, password)
 
+    def has_role(self,role):
+        """
+            Utility function to check if user has a particular role
+
+            Args:
+                role: role to test against
+
+            Returns:
+                True if the user has the role, otherwise, False
+        """
+        for item in self.roles:
+            if item.name == role:
+                return True
+        return False
+
+    def role(self): ### To DO: is this needed
+        for item in self.roles:
+            return item.name
+
     def __repr__(self):
         return '<User {}>'.format(self.username)
+
+class Role(db.Model):
+    """
+    Provides Role Model for Role based authorization
+    """
+    __tablename__ = "roles"
+    id = db.Column(db.Integer(), primary_key=True)
+    # for @roles_accepted()
+    name = db.Column(db.String(50), nullable=False, server_default='', unique=True)
+    label = db.Column(db.String(255), server_default='')  # for display purposes
+
+    def __repr__(self):
+        return self.name
+
+
+class UsersRoles(db.Model):
+    """
+    Provides a pivot table for user role association
+    """
+    __tablename__ = 'users_roles'
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
+    role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))
+
+
+# OAUTH Model
+class OAuth(OAuthConsumerMixin, db.Model):
+    """
+    provides a pivot table for oauth associations
+    """
+    __table_args__ = (db.UniqueConstraint("provider", "provider_user_id"),)
+    provider_user_id = db.Column(db.String(256), nullable=False)
+    provider_user_login = db.Column(db.String(256), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id),nullable=False)
+    user = db.relationship(User,
+                           backref=db.backref("oauth",
+                                    collection_class=attribute_mapped_collection('provider'),
+                                    cascade="all, delete-orphan")
+                           )
 
 
 class Dataset(db.Model):
