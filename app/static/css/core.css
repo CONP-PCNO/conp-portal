@@ -1,0 +1,365 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-family: "arial", sans-serif;
+  font-size: 14px;
+  color: #343434;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+p {
+  font-size: 1rem;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+button:focus {
+  outline: 0;
+}
+
+ul,
+li {
+  text-decoration: none;
+  list-style: none;
+}
+
+/*
+=============================================================
+| PALETTE
+=============================================================
+Colour names courtesy of chir.ag/projects/name-that-color
+*/
+
+.bg-alto {
+  background-color: #d8d8d8;
+}
+
+.bg-dusty-grey {
+  background-color: #979797;
+}
+
+.bg-mineshaft {
+  background-color: #343434;
+}
+
+.bg-pastel-green {
+  background-color: #88d368;
+}
+
+.bg-red {
+  background-color: #ff0000;
+}
+
+.bg-sea-buckthorn {
+  background-color: #f6a032;
+}
+
+.bg-silver {
+  background-color: #c2c2c2;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+/*
+=============================================================
+| FONTS
+=============================================================
+*/
+
+.text-card-title {
+  font-family: "arial", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #343434;
+}
+
+.text-body {
+  font-family: "arial", sans-serif;
+  font-size: 1rem;
+  color: #343434;
+}
+
+.text-logo {
+  font-family: "quicksand";
+  font-size: 1rem;
+  color: #404040;
+}
+
+/*
+=============================================================
+| BUTTONS
+=============================================================
+*/
+
+.btn-green {
+  background-color: #88d368;
+  color: white;
+}
+
+.btn-green:hover {
+  background-color: #70ad56;
+}
+
+.btn-orange {
+  background-color: #f6a032;
+  color: white;
+}
+
+.btn-orange:hover {
+  background-color: #c5822b;
+}
+
+.btn-cbrain,
+.btn-cbrain.disabled,
+.btn-download-metadata,
+.btn-download-metadata.disabled {
+  min-width: 5rem;
+  min-height: 5rem;
+  transition: transform 0.2s linear;
+}
+
+.btn-cbrain:not(.disabled):hover,
+.btn-download-metadata:not(.disabled):hover {
+  transform: translate(0px, -1px);
+  transition: transform 0.2s linear;
+}
+
+.btn-cbrain {
+  background: url(../img/run_on_cbrain_green.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.btn-cbrain.disabled {
+  background: url(../img/run_on_cbrain_gray.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.btn-download-metadata {
+  background: url(../img/download_green.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.btn-download-metadata.disabled {
+  background: url(../img/download_gray.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+@media (min-width: 786px) {
+  .btn-cbrain,
+  .btn-cbrain.disabled,
+  .btn-download-metadata,
+  .btn-download-metadata.disabled {
+    min-width: 6rem;
+    min-height: 6rem;
+  }
+}
+/*
+=============================================================
+| Navigation Bar
+=============================================================
+*/
+
+.navbar-conp {
+  width: 100%;
+  height: 4.5rem;
+  border-bottom: 2px solid #ff0000;
+  padding: 0;
+  z-index: 1;
+}
+
+.navbar-conp a,
+.navbar-conp a img,
+.navbar-conp div ul {
+  height: 100%;
+}
+
+.navbar-conp div .nav-item:hover {
+  background-color: #d8d8d8;
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-collapse {
+  width: 100%;
+  background: white;
+}
+
+.navbar-nav {
+  border-bottom: 1px solid #ff0000;
+}
+
+.navbar-nav .active,
+.navbar-light .navbar-nav .active > .nav-link {
+  background-color: #ff0000;
+  color: white;
+}
+
+.navbar-conp div .active:hover {
+  background-color: #ff0000;
+}
+
+.navbar-conp .show {
+  width: 100%;
+  background: white;
+  border-color: #ff0000;
+}
+
+.navbar-conp .dropdown,
+.navbar-conp .dropdown-menu {
+  width: 100%;
+  background: white;
+  border: none;
+}
+
+@media (min-width: 992px) {
+  .navbar-conp {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .navbar-conp .show {
+    width: auto;
+    background: white;
+  }
+
+  .navbar-collapse {
+    height: 100%;
+    background-color: transparent;
+  }
+
+  .navbar-nav {
+    border-bottom: none;
+    padding-bottom: 1px;
+  }
+
+  .navbar-nav .nav-item a {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-conp .dropdown-menu {
+    background: white;
+    border: 1px solid #ff0000;
+    padding: 0;
+  }
+
+  .navbar-conp .dropdown-item {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    white-space: inherit;
+  }
+}
+
+/*
+=============================================================
+| Footer
+=============================================================
+*/
+
+footer .footer-link {
+  color: white;
+}
+
+footer .footer-link:hover span {
+  color: #ff0000;
+}
+
+/*
+=============================================================
+| Sidebar
+=============================================================
+*/
+
+.sidebar a:hover {
+  background-color: #d8d8d8;
+  color: #343434;
+}
+
+/*
+=============================================================
+| Searchbar
+=============================================================
+*/
+
+.searchbar {
+  background-color: #ffffff;
+  box-shadow: 0px 2px 4px #979797;
+}
+
+.searchbar a:hover {
+  text-decoration: underline;
+}
+
+/*
+=============================================================
+| Cards
+=============================================================
+*/
+
+.card {
+  box-shadow: 0px 2px 4px #979797;
+  flex-wrap: wrap;
+}
+
+.card .card-img {
+  width: 10rem;
+}
+
+.card .card-body ul {
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+@media (min-width: 786px) {
+  .card {
+    flex-wrap: nowrap;
+  }
+
+  .card .card-buttons .card-button {
+    margin: 0.5rem;
+  }
+  .card .card-body ul {
+    justify-content: start;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .card .card-body ul li {
+    padding: 0.5rem;
+    padding-right: 2rem;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
