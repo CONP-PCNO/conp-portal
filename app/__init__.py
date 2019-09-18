@@ -54,6 +54,9 @@ def create_app(config_settings=DevelopmentConfig):
     from app.oauth.orcid_blueprint import orcid_blueprint
     app.register_blueprint(orcid_blueprint, url_prefix="/login")
 
+    from app.styleguide import styleguide_bp
+    app.register_blueprint(styleguide_bp)
+
     from app.models import User
     from app.auth.forms import CustomUserManager
     user_manager = CustomUserManager(app, db, User)
