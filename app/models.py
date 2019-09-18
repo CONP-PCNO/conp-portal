@@ -1,29 +1,28 @@
+# -*- coding: utf-8 -*-
+"""Models Module
 
-from app import db, login_manager
+Module that contains the Data Models
+
+"""
+from app import db
 from flask_login import UserMixin
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
-from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm.collections import attribute_mapped_collection
 from datetime import datetime
 from pytz import timezone
+import enum
 
 eastern = timezone('US/Eastern')
 
 
-@login_manager.user_loader
-def load_user(id):
-    """
-        Ensures that the loaded user in templates is
-        a user class and not a context class
-
-        Args:
-            id: the id of the user from current_user
-
-        Returns:
-            the user class for the id
-    """
-    return User.query.get(int(id))
-
+class AffiliationTypesEnum(enum.Enum):
+    pi = 'Principal Investigator (Professor)'
+    ra = 'Research Associate'
+    pd = 'Post-Doctoral Fellow'
+    phd = 'Doctoral Candidate'
+    ms = 'Masters Student'
+    ifs = 'Informatics Specialist'
+    oth = 'Other'
 
 class User(UserMixin, db.Model):
     """
@@ -32,42 +31,28 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    uid = db.Column(db.Integer, index=True, unique=True)
-    #oauth_id = db.Column(db.String(256), index=True)
-    username = db.Column(db.String(64), index=True, unique=True)
+
+    # User Authentication Information (Required by Flask-User)
+    # we will use the users email as the primary means of login
     email = db.Column(db.String(128), unique=True)
-    password_hash = db.Column(db.String(128))
-    is_whitelisted = db.Column(db.Boolean, default=False, nullable=False)
-    is_pi = db.Column(db.Boolean, default=False, nullable=False)
-    is_account_expired = db.Column(db.Boolean, default=False, nullable=False)
+    email_confirmed_at = db.Column(db.DateTime)
+    password = db.Column(db.String(256), nullable=False, server_default='')
+    active = db.Column(db.Boolean, nullable=False, server_default='0')
+
+    # Customizable Fields
+    first_name = db.Column(db.String(64), nullable=False, server_default='')
+    last_name = db.Column(db.String(64), nullable=False, server_default='')
     affiliation = db.Column(db.String(128))
+    affiliation_type = db.Column(db.Enum(AffiliationTypesEnum),
+                                 default=AffiliationTypesEnum.pi,
+                                 nullable=False
+                                )
     expiration = db.Column(db.DateTime, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
     date_updated = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
 
     roles = db.relationship('Role', secondary='users_roles',
                             backref=db.backref('users', lazy='dynamic'))
-
-    def set_password(self, password):
-        """
-            utility function to hashes and sets the password
-
-            Args:
-                password: the plain text password
-        """
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        """
-            utility function that checks the hashed password
-
-            Args:
-                password: plain text to check hashed password against
-
-            Returns:
-                boolean as to whether the two strings match
-        """
-        return check_password_hash(self.password_hash, password)
 
     def has_role(self,role):
         """

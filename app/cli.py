@@ -7,7 +7,8 @@ Module that contains the special command line tools
 import os
 import click
 import csv
-from datetime import datetime
+from datetime import datetime, timedelta
+from pytz import timezone
 from app.threads import UpdatePipelineData
 
 
@@ -16,9 +17,26 @@ def register(app):
     @app.cli.command("seed_test_db")
     def seed_test_db():
         from app import db
-        from app.models import User, Dataset, DatasetStats
+        from app.models import User, Dataset, DatasetStats, Role
 
         # create an admin user (Not useful now, but at least we will have a user)
+        user = User(
+                    email = app.config['ADMINS'][0],
+                    email_confirmed_at=datetime.utcnow(),
+                    password = app.user_manager.hash_password('TestPW!'),
+                    active = True,
+                    first_name = 'Shawn',
+                    last_name = 'Brown',
+                    affiliation = 'McGill University',
+                    expiration = datetime.utcnow() + timedelta(days=365),
+                    date_created = datetime.utcnow(),
+                    date_updated = datetime.utcnow()
+                    )
+        user.roles.append(Role(name='admin'))
+        user.roles.append(Role(name='member'))
+
+        db.session.add(user)
+        db.session.commit()
 
         # import the current dataset information (to be replaced by dyanmic process)
         dataset_csvfile = os.path.join(app.root_path, "../test/datasets.csv")
