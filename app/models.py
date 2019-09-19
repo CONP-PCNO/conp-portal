@@ -14,16 +14,6 @@ import enum
 
 eastern = timezone('US/Eastern')
 
-
-class AffiliationTypesEnum(enum.Enum):
-    pi = 'Principal Investigator (Professor)'
-    ra = 'Research Associate'
-    pd = 'Post-Doctoral Fellow'
-    phd = 'Doctoral Candidate'
-    ms = 'Masters Student'
-    ifs = 'Informatics Specialist'
-    oth = 'Other'
-
 class User(UserMixin, db.Model):
     """
         Provides User Model
@@ -43,14 +33,13 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String(64), nullable=False, server_default='')
     last_name = db.Column(db.String(64), nullable=False, server_default='')
     affiliation = db.Column(db.String(128))
-    affiliation_type = db.Column(db.Enum(AffiliationTypesEnum),
-                                 default=AffiliationTypesEnum.pi,
-                                 nullable=False
-                                )
     expiration = db.Column(db.DateTime, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
     date_updated = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
-
+    # Many To One relationship
+    affiliation_type_id = db.Column(db.Integer, db.ForeignKey('affiliation_type.id'))
+    affiliation_type = db.relationship('AffiliationType')
+    # One To Many relationship
     roles = db.relationship('Role', secondary='users_roles',
                             backref=db.backref('users', lazy='dynamic'))
 
@@ -73,8 +62,21 @@ class User(UserMixin, db.Model):
         for item in self.roles:
             return item.name
 
+    def affiliation_type_key(self):
+        return self.affiliation_type.name
+
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return '<User {}: {} {}>'.format(self.email, self.first_name, self.last_name)
+
+class AffiliationType(db.Model):
+    """
+    Provides The Types of Affiliations that a user can select
+    """
+    __tablename__ = "affiliation_type"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False, server_default='', unique=True)
+    label = db.Column(db.String(255), server_default='')  # for display purposes
+
 
 class Role(db.Model):
     """
