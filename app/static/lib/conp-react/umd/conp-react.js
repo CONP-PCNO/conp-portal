@@ -208,7 +208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -231,7 +231,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__0__;
 if (false) { var throwOnDirectAccess, ReactIs; } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(15)();
+  module.exports = __webpack_require__(14)();
 }
 
 
@@ -434,7 +434,7 @@ if (false) { var throwOnDirectAccess, ReactIs; } else {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(17);
+module.exports = __webpack_require__(16);
 
 
 /***/ }),
@@ -813,7 +813,7 @@ exports.addon = function (renderer) {
 "use strict";
 
 
-var removeRule = __webpack_require__(21).removeRule;
+var removeRule = __webpack_require__(18).removeRule;
 
 exports.addon = function (renderer) {
     // VCSSOM support only browser environment.
@@ -958,107 +958,6 @@ exports.cssToTree = cssToTree;
 
 /***/ }),
 /* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var isArray = Array.isArray;
-var keyList = Object.keys;
-var hasProp = Object.prototype.hasOwnProperty;
-var hasElementType = typeof Element !== 'undefined';
-
-function equal(a, b) {
-  // fast-deep-equal index.js 2.0.1
-  if (a === b) return true;
-
-  if (a && b && typeof a == 'object' && typeof b == 'object') {
-    var arrA = isArray(a)
-      , arrB = isArray(b)
-      , i
-      , length
-      , key;
-
-    if (arrA && arrB) {
-      length = a.length;
-      if (length != b.length) return false;
-      for (i = length; i-- !== 0;)
-        if (!equal(a[i], b[i])) return false;
-      return true;
-    }
-
-    if (arrA != arrB) return false;
-
-    var dateA = a instanceof Date
-      , dateB = b instanceof Date;
-    if (dateA != dateB) return false;
-    if (dateA && dateB) return a.getTime() == b.getTime();
-
-    var regexpA = a instanceof RegExp
-      , regexpB = b instanceof RegExp;
-    if (regexpA != regexpB) return false;
-    if (regexpA && regexpB) return a.toString() == b.toString();
-
-    var keys = keyList(a);
-    length = keys.length;
-
-    if (length !== keyList(b).length)
-      return false;
-
-    for (i = length; i-- !== 0;)
-      if (!hasProp.call(b, keys[i])) return false;
-    // end fast-deep-equal
-
-    // start react-fast-compare
-    // custom handling for DOM elements
-    if (hasElementType && a instanceof Element && b instanceof Element)
-      return a === b;
-
-    // custom handling for React
-    for (i = length; i-- !== 0;) {
-      key = keys[i];
-      if (key === '_owner' && a.$$typeof) {
-        // React-specific: avoid traversing React elements' _owner.
-        //  _owner contains circular references
-        // and is not needed when comparing the actual elements (and not their owners)
-        // .$$typeof and ._store on just reasonable markers of a react element
-        continue;
-      } else {
-        // all other properties should be traversed as usual
-        if (!equal(a[key], b[key])) return false;
-      }
-    }
-    // end react-fast-compare
-
-    // fast-deep-equal index.js 2.0.1
-    return true;
-  }
-
-  return a !== a && b !== b;
-}
-// end fast-deep-equal
-
-module.exports = function exportedEqual(a, b) {
-  try {
-    return equal(a, b);
-  } catch (error) {
-    if ((error.message && error.message.match(/stack|recursion/i)) || (error.number === -2146828260)) {
-      // warn on circular references, don't crash
-      // browsers give this different errors name and messages:
-      // chrome/safari: "RangeError", "Maximum call stack size exceeded"
-      // firefox: "InternalError", too much recursion"
-      // edge: "Error", "Out of stack space"
-      console.warn('Warning: react-fast-compare does not handle circular references.', error.name, error.message);
-      return false;
-    }
-    // some other error. we should definitely know about these
-    throw error;
-  }
-};
-
-
-/***/ }),
-/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, setImmediate) {/**
@@ -2364,10 +2263,10 @@ return index;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5), __webpack_require__(22).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5), __webpack_require__(19).setImmediate))
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2443,14 +2342,14 @@ exports.easing = {
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-const strictUriEncode = __webpack_require__(24);
-const decodeComponent = __webpack_require__(25);
-const splitOnFirst = __webpack_require__(26);
+const strictUriEncode = __webpack_require__(21);
+const decodeComponent = __webpack_require__(22);
+const splitOnFirst = __webpack_require__(23);
 
 function encoderForArrayFormat(options) {
 	switch (options.arrayFormat) {
@@ -2486,7 +2385,7 @@ function encoderForArrayFormat(options) {
 
 		case 'comma':
 			return key => (result, value, index) => {
-				if (value === null || value === undefined || value.length === 0) {
+				if (!value) {
 					return result;
 				}
 
@@ -2601,17 +2500,7 @@ function keysSorter(input) {
 	return input;
 }
 
-function removeHash(input) {
-	const hashStart = input.indexOf('#');
-	if (hashStart !== -1) {
-		input = input.slice(0, hashStart);
-	}
-
-	return input;
-}
-
 function extract(input) {
-	input = removeHash(input);
 	const queryStart = input.indexOf('?');
 	if (queryStart === -1) {
 		return '';
@@ -2623,10 +2512,7 @@ function extract(input) {
 function parse(input, options) {
 	options = Object.assign({
 		decode: true,
-		sort: true,
-		arrayFormat: 'none',
-		parseNumbers: false,
-		parseBooleans: false
+		arrayFormat: 'none'
 	}, options);
 
 	const formatter = parserForArrayFormat(options);
@@ -2651,20 +2537,10 @@ function parse(input, options) {
 		// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
 		value = value === undefined ? null : decode(value, options);
 
-		if (options.parseNumbers && !Number.isNaN(Number(value))) {
-			value = Number(value);
-		} else if (options.parseBooleans && value !== null && (value.toLowerCase() === 'true' || value.toLowerCase() === 'false')) {
-			value = value.toLowerCase() === 'true';
-		}
-
 		formatter(decode(key, options), value, ret);
 	}
 
-	if (options.sort === false) {
-		return ret;
-	}
-
-	return (options.sort === true ? Object.keys(ret).sort() : Object.keys(ret).sort(options.sort)).reduce((result, key) => {
+	return Object.keys(ret).sort().reduce((result, key) => {
 		const value = ret[key];
 		if (Boolean(value) && typeof value === 'object' && !Array.isArray(value)) {
 			// Sort object keys, not values
@@ -2720,22 +2596,27 @@ exports.stringify = (object, options) => {
 };
 
 exports.parseUrl = (input, options) => {
+	const hashStart = input.indexOf('#');
+	if (hashStart !== -1) {
+		input = input.slice(0, hashStart);
+	}
+
 	return {
-		url: removeHash(input).split('?')[0] || '',
+		url: input.split('?')[0] || '',
 		query: parse(extract(input), options)
 	};
 };
 
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(27);
+module.exports = __webpack_require__(24);
 
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2748,7 +2629,7 @@ module.exports = __webpack_require__(27);
 
 
 
-var ReactPropTypesSecret = __webpack_require__(16);
+var ReactPropTypesSecret = __webpack_require__(15);
 
 function emptyFunction() {}
 function emptyFunctionWithReset() {}
@@ -2806,7 +2687,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2825,7 +2706,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -2850,7 +2731,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(18);
+module.exports = __webpack_require__(17);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -2866,7 +2747,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports) {
 
 /**
@@ -3599,153 +3480,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var deselectCurrent = __webpack_require__(20);
-
-var defaultMessage = "Copy to clipboard: #{key}, Enter";
-
-function format(message) {
-  var copyKey = (/mac os x/i.test(navigator.userAgent) ? "⌘" : "Ctrl") + "+C";
-  return message.replace(/#{\s*key\s*}/g, copyKey);
-}
-
-function copy(text, options) {
-  var debug,
-    message,
-    reselectPrevious,
-    range,
-    selection,
-    mark,
-    success = false;
-  if (!options) {
-    options = {};
-  }
-  debug = options.debug || false;
-  try {
-    reselectPrevious = deselectCurrent();
-
-    range = document.createRange();
-    selection = document.getSelection();
-
-    mark = document.createElement("span");
-    mark.textContent = text;
-    // reset user styles for span element
-    mark.style.all = "unset";
-    // prevents scrolling to the end of the page
-    mark.style.position = "fixed";
-    mark.style.top = 0;
-    mark.style.clip = "rect(0, 0, 0, 0)";
-    // used to preserve spaces and line breaks
-    mark.style.whiteSpace = "pre";
-    // do not inherit user-select (it may be `none`)
-    mark.style.webkitUserSelect = "text";
-    mark.style.MozUserSelect = "text";
-    mark.style.msUserSelect = "text";
-    mark.style.userSelect = "text";
-    mark.addEventListener("copy", function(e) {
-      e.stopPropagation();
-      if (options.format) {
-        e.preventDefault();
-        e.clipboardData.clearData();
-        e.clipboardData.setData(options.format, text);
-      }
-    });
-
-    document.body.appendChild(mark);
-
-    range.selectNodeContents(mark);
-    selection.addRange(range);
-
-    var successful = document.execCommand("copy");
-    if (!successful) {
-      throw new Error("copy command was unsuccessful");
-    }
-    success = true;
-  } catch (err) {
-    debug && console.error("unable to copy using execCommand: ", err);
-    debug && console.warn("trying IE specific stuff");
-    try {
-      window.clipboardData.setData(options.format || "text", text);
-      success = true;
-    } catch (err) {
-      debug && console.error("unable to copy using clipboardData: ", err);
-      debug && console.error("falling back to prompt");
-      message = format("message" in options ? options.message : defaultMessage);
-      window.prompt(message, text);
-    }
-  } finally {
-    if (selection) {
-      if (typeof selection.removeRange == "function") {
-        selection.removeRange(range);
-      } else {
-        selection.removeAllRanges();
-      }
-    }
-
-    if (mark) {
-      document.body.removeChild(mark);
-    }
-    reselectPrevious();
-  }
-
-  return success;
-}
-
-module.exports = copy;
-
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
-
-module.exports = function () {
-  var selection = document.getSelection();
-  if (!selection.rangeCount) {
-    return function () {};
-  }
-  var active = document.activeElement;
-
-  var ranges = [];
-  for (var i = 0; i < selection.rangeCount; i++) {
-    ranges.push(selection.getRangeAt(i));
-  }
-
-  switch (active.tagName.toUpperCase()) { // .toUpperCase handles XHTML
-    case 'INPUT':
-    case 'TEXTAREA':
-      active.blur();
-      break;
-
-    default:
-      active = null;
-      break;
-  }
-
-  selection.removeAllRanges();
-  return function () {
-    selection.type === 'Caret' &&
-    selection.removeAllRanges();
-
-    if (!selection.rangeCount) {
-      ranges.forEach(function(range) {
-        selection.addRange(range);
-      });
-    }
-
-    active &&
-    active.focus();
-  };
-};
-
-
-/***/ }),
-/* 21 */
+/* 18 */
 /***/ (function(module, exports) {
 
 function removeRule (rule) {
@@ -3766,7 +3501,7 @@ exports.removeRule = removeRule;
 
 
 /***/ }),
-/* 22 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -3822,7 +3557,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(23);
+__webpack_require__(20);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -3836,7 +3571,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4)))
 
 /***/ }),
-/* 23 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -4029,7 +3764,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 24 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4038,7 +3773,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 
 /***/ }),
-/* 25 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4139,7 +3874,7 @@ module.exports = function (encodedURI) {
 
 
 /***/ }),
-/* 26 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4168,7 +3903,7 @@ module.exports = (string, separator) => {
 
 
 /***/ }),
-/* 27 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4291,22 +4026,22 @@ var DataTable_DataTable = function DataTable(_ref) {
 
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
-    { className: "search-dataset-table", cellSpacing: 0 },
+    { className: "search-dataset-table container", cellSpacing: 0 },
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "search-dataset-toolbar" },
+      { className: "searchbar col-12 d-flex p-2" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "input-group" },
+        { className: "d-flex dropdown" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "label",
-          { className: "input-group-addon" },
-          "Sort By:"
+          { className: "dropdown-label m-2" },
+          "Sort By: "
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "select",
           {
-            className: "form-control",
+            className: "btn btn-outline-secondary dropdown-toggle dropdown-select px-4",
             value: query.sortKey,
             onChange: function onChange(e) {
               return setQuery(_extends({}, query, { sortKey: e.currentTarget.value }));
@@ -4317,7 +4052,7 @@ var DataTable_DataTable = function DataTable(_ref) {
                 label = _ref2.label;
             return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
               "option",
-              { key: i, value: sortKey },
+              { className: "dropdown-item", key: i, value: sortKey },
               label
             );
           })
@@ -4325,10 +4060,12 @@ var DataTable_DataTable = function DataTable(_ref) {
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "input-group" },
+        { className: "input-group pt-2 pt-md-0" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
           className: "form-control",
-          style: { width: "350px" },
+          type: "text",
+          placeholder: "Search",
+          "aria-label": "Search",
           value: query.search,
           onChange: function onChange(e) {
             return setQuery(_extends({}, query, { search: e.currentTarget.value }));
@@ -4336,30 +4073,28 @@ var DataTable_DataTable = function DataTable(_ref) {
         }),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "span",
-          { className: "input-group-addon" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-search" })
+          { className: "input-group-append" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "span",
+            { className: "input-group-text", id: "basic-addon2" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-search" })
+          )
         )
       )
     ),
     elements.map(function (element, i) {
       return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        {
-          key: element.id,
-          style: {
-            borderBottom: "solid",
-            borderBottomWidth: i === elements.length - 1 ? "0px" : "1px"
-          }
-        },
+        { key: element.id, className: "container" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, { authorized: authorized }))
       );
     }),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "search-dataset-footer" },
+      { className: "search-dataset-footer d-flex align-items-center p-2" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "ul",
-        { className: "pagination" },
+        { className: "pagination m-0" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "li",
           {
@@ -4791,18 +4526,6 @@ var useToggle = function (state) {
 
 /* harmony default export */ var useBoolean = (esm_useToggle);
 
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useUpdateEffect.js
-
-var useUpdateEffect = function (effect, deps) {
-    var isInitialMount = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(true);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(isInitialMount.current
-        ? function () {
-            isInitialMount.current = false;
-        }
-        : effect, deps);
-};
-/* harmony default export */ var esm_useUpdateEffect = (useUpdateEffect);
-
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useRefMounted.js
 
 var useRefMounted = function () {
@@ -4816,94 +4539,6 @@ var useRefMounted = function () {
     return refMounted;
 };
 /* harmony default export */ var esm_useRefMounted = (useRefMounted);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useCopyToClipboard.js
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var _this = undefined;
-
-
-
-var writeTextDefault = __webpack_require__(19);
-var useCopyToClipboard = function (text, options) {
-    if (text === void 0) { text = ''; }
-    var _a = (options || {}), _b = _a.writeText, writeText = _b === void 0 ? writeTextDefault : _b, onCopy = _a.onCopy, onError = _a.onError;
-    if (false) {}
-    var mounted = esm_useRefMounted();
-    var latestText = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(text);
-    var _c = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false), copied = _c[0], setCopied = _c[1];
-    var copyToClipboard = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () { return __awaiter(_this, void 0, void 0, function () {
-        var error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (latestText.current !== text) {
-                        if (false) {}
-                        return [2 /*return*/];
-                    }
-                    _a.label = 1;
-                case 1:
-                    _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, writeText(text)];
-                case 2:
-                    _a.sent();
-                    if (!mounted.current)
-                        return [2 /*return*/];
-                    setCopied(true);
-                    onCopy && onCopy(text);
-                    return [3 /*break*/, 4];
-                case 3:
-                    error_1 = _a.sent();
-                    if (!mounted.current)
-                        return [2 /*return*/];
-                    console.error(error_1);
-                    setCopied(false);
-                    onError && onError(error_1, text);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
-            }
-        });
-    }); }, [text]);
-    esm_useUpdateEffect(function () {
-        setCopied(false);
-        latestText.current = text;
-    }, [text]);
-    return [copied, copyToClipboard];
-};
-/* harmony default export */ var esm_useCopyToClipboard = (useCopyToClipboard);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useDrop.js
 
@@ -5144,23 +4779,6 @@ var useDebounce = function (fn, ms, args) {
     }, args);
 };
 /* harmony default export */ var esm_useDebounce = (useDebounce);
-
-// EXTERNAL MODULE: ./node_modules/react-fast-compare/index.js
-var react_fast_compare = __webpack_require__(10);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useDeepCompareEffect.js
-
-
-var isPrimitive = function (val) { return val !== Object(val); };
-var useDeepCompareEffect = function (effect, deps) {
-    if (false) {}
-    var ref = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(undefined);
-    if (!react_fast_compare(deps, ref.current)) {
-        ref.current = deps;
-    }
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(effect, ref.current);
-};
-/* harmony default export */ var esm_useDeepCompareEffect = (useDeepCompareEffect);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useEffectOnce.js
 
@@ -5638,6 +5256,18 @@ var useKeyPress_useKeyPress = function (keyFilter) {
 };
 /* harmony default export */ var esm_useKeyPress = (useKeyPress_useKeyPress);
 
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useUpdateEffect.js
+
+var useUpdateEffect = function (effect, deps) {
+    var isInitialMount = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(true);
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(isInitialMount.current
+        ? function () {
+            isInitialMount.current = false;
+        }
+        : effect, deps);
+};
+/* harmony default export */ var esm_useUpdateEffect = (useUpdateEffect);
+
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useKeyPressEvent.js
 
 
@@ -5669,7 +5299,7 @@ var useKeyboardJs = function (combination) {
     var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([false, null]), state = _a[0], set = _a[1];
     var _b = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null), keyboardJs = _b[0], setKeyboardJs = _b[1];
     esm_useMount(function () {
-        __webpack_require__.e(/* import() */ 1).then(__webpack_require__.t.bind(null, 33, 7)).then(setKeyboardJs);
+        __webpack_require__.e(/* import() */ 1).then(__webpack_require__.t.bind(null, 30, 7)).then(setKeyboardJs);
     });
     Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
         if (!keyboardJs)
@@ -6316,26 +5946,24 @@ var useRaf = function (ms, delay) {
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useScroll.js
 
+
 var useScroll = function (ref) {
-    if (false) {}
     var frame = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(0);
     var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
-        x: 0,
-        y: 0
+        x: isClient ? window.scrollX : 0,
+        y: isClient ? window.scrollY : 0
     }), state = _a[0], setState = _a[1];
     Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
         var handler = function () {
             cancelAnimationFrame(frame.current);
             frame.current = requestAnimationFrame(function () {
-                if (ref.current) {
-                    setState({
-                        x: ref.current.scrollLeft,
-                        y: ref.current.scrollTop
-                    });
-                }
+                setState({
+                    x: ref.current.scrollLeft,
+                    y: ref.current.scrollTop
+                });
             });
         };
-        if (ref.current) {
+        if (ref && ref.current) {
             ref.current.addEventListener('scroll', handler, {
                 capture: false,
                 passive: true
@@ -6345,11 +5973,11 @@ var useScroll = function (ref) {
             if (frame.current) {
                 cancelAnimationFrame(frame.current);
             }
-            if (ref.current) {
+            if (ref && ref.current) {
                 ref.current.removeEventListener('scroll', handler);
             }
         };
-    }, [ref.current]);
+    }, [ref]);
     return state;
 };
 /* harmony default export */ var esm_useScroll = (useScroll);
@@ -6495,7 +6123,7 @@ var useSpeech = function (text, opts) {
 /* harmony default export */ var esm_useSpeech = (useSpeech);
 
 // EXTERNAL MODULE: ./node_modules/rebound/dist/rebound.js
-var rebound = __webpack_require__(11);
+var rebound = __webpack_require__(10);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useSpring.js
 
@@ -6533,48 +6161,6 @@ var useSpring = function (targetValue, tension, friction) {
     return value;
 };
 /* harmony default export */ var esm_useSpring = (useSpring);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useStartTyping.js
-
-var isFocusedElementEditable = function () {
-    var activeElement = document.activeElement, body = document.body;
-    if (!activeElement)
-        return false;
-    // If not element has focus, we assume it is not editable, too.
-    if (activeElement === body)
-        return false;
-    // Assume <input> and <textarea> elements are editable.
-    switch (activeElement.tagName) {
-        case 'INPUT':
-        case 'TEXTAREA':
-            return true;
-    }
-    // Check if any other focused element id editable.
-    return activeElement.hasAttribute('contenteditable');
-};
-var isTypedCharGood = function (_a) {
-    var keyCode = _a.keyCode;
-    // 0...9
-    if ((keyCode >= 48) && (keyCode <= 57))
-        return true;
-    // a...z
-    if ((keyCode >= 65) && (keyCode <= 90))
-        return true;
-    // All other keys.
-    return false;
-};
-var useStartTyping = function (onStartTyping) {
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useLayoutEffect"])(function () {
-        var keydown = function (event) {
-            !isFocusedElementEditable() && isTypedCharGood(event) && onStartTyping(event);
-        };
-        document.addEventListener('keydown', keydown);
-        return function () {
-            document.removeEventListener('keydown', keydown);
-        };
-    }, []);
-};
-/* harmony default export */ var esm_useStartTyping = (useStartTyping);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useUnmount.js
 
@@ -6682,7 +6268,7 @@ var useTitle = function (title) {
 /* harmony default export */ var esm_useTitle = (useTitle);
 
 // EXTERNAL MODULE: ./node_modules/ts-easing/lib/index.js
-var lib = __webpack_require__(12);
+var lib = __webpack_require__(11);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useTween.js
 
@@ -6907,16 +6493,13 @@ react_wait_esm_s.Waiter = react_wait_esm_f;
 
 
 
-
-
-
 // EXTERNAL MODULE: ./node_modules/query-string/index.js
-var query_string = __webpack_require__(13);
+var query_string = __webpack_require__(12);
 
 // CONCATENATED MODULE: ./src/DataTable/DataTableContainer.js
 
 
-var DataTableContainer_this = undefined;
+var _this = undefined;
 
 var DataTableContainer_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -7023,7 +6606,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
               return _context.stop();
           }
         }
-      }, _callee, DataTableContainer_this, [[2, 17]]);
+      }, _callee, _this, [[2, 17]]);
     }));
 
     return function fetchElements() {
@@ -7083,22 +6666,22 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
 
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
-    { className: "search-dataset" },
+    { className: "card row flex-row", "data-type": "dataset" },
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "dataset-social" },
+      { className: "col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
         alt: "dataset format",
-        className: "dataset-social-img",
+        className: "card-img-top card-social-img",
         src: element.thumbnailURL
       }),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "dataset-social-icons" },
+        { className: "card-social-icons" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "dataset-social-icon" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-download social-fa" }),
+          { className: "card-social-icon" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-download social-fa my-2" }),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
             null,
@@ -7107,8 +6690,8 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "dataset-social-icon" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-eye social-fa" }),
+          { className: "card-social-icon" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-eye social-fa my-2" }),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
             null,
@@ -7117,8 +6700,8 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "dataset-social-icon" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-heart social-fa" }),
+          { className: "card-social-icon" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-heart social-fa my-2" }),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
             null,
@@ -7129,191 +6712,210 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "dataset-details" },
+      { className: "card-body d-md-flex flex-wrap" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "dataset-details-stats" },
+        "a",
+        { style: { color: "inherit" }, href: "dataset?id=" + element.id },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "dataset-title" },
+          "h5",
+          { className: "card-title text-card-title col-12 pl-2 pl-md-0" },
+          element.title
+        )
+      ),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "ul",
+        { className: "d-flex col-md-12 px-1 px-md-0 card-list" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "li",
+          { className: "card-list-item" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            null,
+            "p",
+            { className: "card-text text-capitalize pr-1" },
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "a",
-              { style: { color: "inherit" }, href: "dataset?id=" + element.id },
-              element.title
+              "strong",
+              null,
+              "Files: "
             )
-          )
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "dataset-stat" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-text" },
-            "Date Added"
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-num" },
-            element.dateAdded
-          )
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "dataset-stat" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-text" },
-            "Date Updated"
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-num" },
-            element.dateUpdated
-          )
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "dataset-stat" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-text" },
-            "Size"
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-num" },
-            element.size
-          )
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "dataset-stat" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-text" },
-            "Files"
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-num" },
+            "p",
+            { className: "card-text text-muted" },
             element.files
           )
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "dataset-stat" },
+          "li",
+          { className: "card-list-item" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-text" },
-            "Subjects"
+            "p",
+            { className: "card-text text-capitalize pr-1" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Size: "
+            )
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-num" },
+            "p",
+            { className: "card-text text-muted" },
+            element.size
+          )
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "li",
+          { className: "card-list-item" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "p",
+            { className: "card-text text-capitalize pr-1" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Subjects: "
+            )
+          ),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "p",
+            { className: "card-text text-muted" },
             element.subjects
           )
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "dataset-stat" },
+          "li",
+          { className: "card-list-item" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-text" },
-            "Format"
+            "p",
+            { className: "card-text text-capitalize pr-1" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Sources: "
+            )
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-num" },
+            "p",
+            { className: "card-text text-muted" },
+            element.sources
+          )
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "li",
+          { className: "card-list-item" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "p",
+            { className: "card-text text-capitalize pr-1" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Format: "
+            )
+          ),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "p",
+            { className: "card-text text-muted" },
             element.format
           )
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "dataset-stat" },
+          "li",
+          { "class": "d-none d-md-flex" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-text" },
-            "Modalities"
+            "p",
+            { className: "card-text text-capitalize pr-1" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Modalities: "
+            )
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-num" },
+            "p",
+            { className: "card-text text-muted" },
             element.modalities
           )
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "dataset-stat" },
+          "li",
+          { "class": "d-none d-md-flex" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-text" },
-            "Sources"
+            "p",
+            { className: "card-text text-capitalize pr-1" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Date Added: "
+            )
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dataset-stat-num" },
-            element.sources
+            "p",
+            { className: "card-text text-muted" },
+            element.dateAdded
+          )
+        ),
+        " ",
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "li",
+          { "class": "d-none d-md-flex" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "p",
+            { className: "card-text text-capitalize pr-1" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Date Updated: "
+            )
+          ),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "p",
+            { className: "card-text text-muted" },
+            element.dateUpdated
           )
         )
+      )
+    ),
+    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      "div",
+      { className: "col-12 col-md-auto d-flex my-2 card-buttons" },
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "button",
+        { className: "btn btn-outline-secondary d-md-none" },
+        "Go to Dataset"
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "dataset-options" },
+        { className: "d-flex justify-content-end align-items-center flex-wrap mb-3 mb-md-0" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "dataset-option" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "a",
-            {
-              href: "#",
-              style: {
-                pointerEvents: element.isPrivate && !authorized ? "none" : "all"
-              }
-            },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-              alt: "Run On Cbrain",
-              className: "run-on-cbrain-button option-icon",
-              src: element.isPrivate && !authorized ? runOnCbrainDisabled : runOnCbrainEnabled
-            })
-          )
+          "a",
+          {
+            href: "/#/",
+            className: "card-button mx-2",
+            style: {
+              pointerEvents: element.isPrivate && !authorized ? "none" : "all"
+            }
+          },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+            alt: "Run On Cbrain",
+            src: element.isPrivate && !authorized ? runOnCbrainDisabled : runOnCbrainEnabled
+          })
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "dataset-option", style: { position: "relative" } },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "a",
-            {
-              style: {
-                pointerEvents: element.isPrivate && !authorized ? "none" : "all"
-              },
-              href: "download_metadata?dataset=" + element.downloadPath,
-              download: true
+          "a",
+          {
+            className: "card-button mx-2",
+            style: {
+              pointerEvents: element.isPrivate && !authorized ? "none" : "all"
             },
-            element.isPrivate && !authorized && external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "div",
-              {
-                style: {
-                  backgroundColor: "white",
-                  padding: "5px",
-                  border: "solid black",
-                  color: "black",
-                  borderWidth: "1px",
-                  left: "-30px",
-                  textAlign: "center",
-                  position: "absolute"
-                }
-              },
-              "Please register for access."
-            ),
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-              alt: "Download Metadata",
-              className: "download-button  option-icon",
-              src: element.isPrivate && !authorized ? downloadDisabled : downloadEnabled
-            })
-          )
+            href: "download_metadata?dataset=" + element.downloadPath,
+            download: true
+          },
+          element.isPrivate && !authorized && external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "card-button-tooltip" },
+            "Please register for access."
+          ),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+            alt: "Download Metadata",
+            src: element.isPrivate && !authorized ? downloadDisabled : downloadEnabled
+          })
         )
       )
     )

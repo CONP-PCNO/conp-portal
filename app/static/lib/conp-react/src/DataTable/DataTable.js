@@ -12,51 +12,49 @@ const DataTable = ({
   setQuery
 }) => {
   return (
-    <div className="search-dataset-table" cellSpacing={0}>
-      <div className="search-dataset-toolbar">
-        <div className="input-group">
-          <label className="input-group-addon">Sort By:</label>
+    <div className="search-dataset-table container" cellSpacing={0}>
+      <div className="searchbar col-12 d-flex p-2">
+        <div className="d-flex dropdown">
+          <label className="dropdown-label m-2">Sort By: </label>
           <select
-            className="form-control"
+            className="btn btn-outline-secondary dropdown-toggle dropdown-select px-4"
             value={query.sortKey}
             onChange={e =>
               setQuery({ ...query, sortKey: e.currentTarget.value })
             }
           >
             {sortKeys.map(({ key: sortKey, label }, i) => (
-              <option key={i} value={sortKey}>
+              <option className="dropdown-item" key={i} value={sortKey}>
                 {label}
               </option>
             ))}
           </select>
         </div>
-        <div className="input-group">
+        <div className="input-group pt-2 pt-md-0">
           <input
             className="form-control"
-            style={{ width: "350px" }}
+            type="text"
+            placeholder="Search"
+            aria-label="Search"
             value={query.search}
             onChange={e =>
               setQuery({ ...query, search: e.currentTarget.value })
             }
           />
-          <span className="input-group-addon">
-            <i className="fa fa-search" />
+          <span className="input-group-append">
+            <span className="input-group-text" id="basic-addon2">
+              <i className="fa fa-search" />
+            </span>
           </span>
         </div>
       </div>
       {elements.map((element, i) => (
-        <div
-          key={element.id}
-          style={{
-            borderBottom: "solid",
-            borderBottomWidth: i === elements.length - 1 ? "0px" : "1px"
-          }}
-        >
+        <div key={element.id} className="container">
           {React.createElement(renderElement, { ...element, authorized })}
         </div>
       ))}
-      <div className="search-dataset-footer">
-        <ul className="pagination">
+      <div className="search-dataset-footer d-flex align-items-center p-2">
+        <ul className="pagination m-0">
           <li
             onClick={() =>
               setQuery({
