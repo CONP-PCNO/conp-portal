@@ -26,7 +26,6 @@ class JsonOath2Session(OAuth2Session):
           custom json session to ensure we are getting back json from orchid
         """
         super(JsonOath2Session, self).__init__(*args, **kwargs)
-        print("setting Headers")
         self.headers["Accept"] = "application/orcid+json"
 
 
@@ -81,7 +80,6 @@ def make_orcid_blueprint(
     orcid_bp.from_config["client_id"] = "ORCID_OAUTH_CLIENT_ID"
     orcid_bp.from_config["client_secret"] = "ORCID_OAUTH_CLIENT_SECRET"
 
-    print(dir(orcid_bp))
 
     @orcid_bp.before_app_request
     def set_applocal_session():
