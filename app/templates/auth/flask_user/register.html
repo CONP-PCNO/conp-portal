@@ -1,0 +1,21 @@
+{% extends 'common/base_login.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block cardtitle %}
+CONP Portal: Register New User
+{% endblock %}
+
+{% block appcontent %}
+  <form action="" method="POST" class="form" role="form">
+      {{ form.hidden_tag() }}
+      {{ wtf.form_errors(form, hiddens="only") }}
+      {{ wtf.form_field(form.email, class='form-control', placeholder='Email Address') }}
+      {{ wtf.form_field(form.full_name, class='form-control', placeholder='Full Name') }}
+      {{ wtf.form_field(form.affiliation, class='form-control', placeholder="Your Current Affiliation") }}
+      {{ wtf.form_field(form.affiliation_type, class='form-control') }}
+      {{ wtf.form_field(form.password, class='form-control', placeholder='Please Select a Password') }}
+      {{ wtf.form_field(form.retype_password, class='form-control', placeholder='Please Retype your Password') }}
+      <button type=submit class='btn btn-primary btn-block btn-signin'>Register</button>
+  </form>
+{% endblock %}
+

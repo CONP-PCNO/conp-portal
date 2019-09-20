@@ -6,7 +6,7 @@ import pytest
 import os
 from alembic.command import upgrade
 from alembic.config import Config as alem_Config
-from app.models import Dataset, DatasetStats, User, AffiliationType, Role
+from app.models import Dataset, DatasetStats, User, AffiliationType, Role, UsersRoles
 import app.cli as cli
 
 
@@ -52,16 +52,16 @@ def test_seed_db_test(app, session, runner):
     assert ats[0].label == "Principal Investigator (Professor)"
     assert ats[-1].name == "OT"
     assert ats[-1].label == "Other"
-    u = User.query.filter(User.first_name=="CONP Admin").first()
+    u = User.query.filter(User.full_name=="CONP Admin").first()
     print ("------- {}".format(u))
-    assert u.first_name == "CONP Admin"
-    assert u.last_name == ''
+    assert u.full_name == "CONP Admin"
     assert u.email == app.config['ADMINS'][0]
     assert u.affiliation == 'CONP'
     assert u.affiliation_type_key() == "OT"
 
     session.query(User).delete()
     session.query(Role).delete()
+    session.query(UsersRoles).delete()
     session.query(AffiliationType).delete()
     session.query(Dataset).delete()
     session.query(DatasetStats).delete()
@@ -99,15 +99,15 @@ def test_seed_admin_acct(app, session, runner):
     cli.register(app)
     result1 = runner.invoke(args=['seed_aff_types_db'])
     result2 = runner.invoke(args=['seed_admin_acct_db'])
-    u = User.query.filter(User.first_name=="CONP Admin").first()
+    u = User.query.filter(User.full_name=="CONP Admin").first()
     print ("------- {}".format(u))
-    assert u.first_name == "CONP Admin"
-    assert u.last_name == ''
+    assert u.full_name == "CONP Admin"
     assert u.email == app.config['ADMINS'][0]
     assert u.affiliation == 'CONP'
     assert u.affiliation_type_key() == "OT"
     session.query(User).delete()
     session.query(Role).delete()
+    session.query(UsersRoles).delete()
     session.query(AffiliationType).delete()
     session.commit()
 

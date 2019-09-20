@@ -1,0 +1,41 @@
+{% extends 'common/base_login.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% from "flask_user/_macros.html" import render_checkbox_field %}
+{% block cardtitle %}
+CONP Portal: Sign in to your CONP account
+{% endblock %}
+
+{% block reguser %}
+    <span><a href="{{ url_for('user.register') }}">Create a CONP account</a></span>
+    <span style="padding: 10px;"></span>
+{% endblock %}
+
+{% block appcontent %}
+    <section class="row">
+        <a id="alt-login-inst" class="btn-alt-login" href="#">
+            <img class="osf-alt-logo" src="/static/img/institution-logo.png">
+            <span class="label-login">Sign in through institution</span>
+        </a>
+    </section>
+    <section class="row">
+        <hr class="hr-text" data-content="OR"></hr>
+    </section>
+    <form action="" method="POST" class="form" role="form">
+    {{ form.hidden_tag() }}
+    {{ wtf.form_field(form.email, class='form-control', placeholder='Email Address') }}
+    {{ wtf.form_field(form.password, class='form-control', placeholder='Password') }}
+
+    {# Remember me #}
+    {% if user_manager.USER_ENABLE_REMEMBER_ME %}
+        {{ render_checkbox_field(login_form.remember_me, tabindex=130) }}
+    {% endif %}
+
+    {# Submit button #}
+    <button type=submit class='btn btn-primary btn-block'>Login</button>
+    </form>
+    <section class="row">
+        <div class="col">
+            <a href="{{ url_for('user.forgot_password') }}"> Forgot your password?</a>
+        </div>
+    </section>
+{% endblock %}

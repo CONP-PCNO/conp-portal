@@ -17,12 +17,12 @@ def test_public_route(test_client):
     assert res.status_code == 200
 
 
-def test_private_index_route(test_client):
-    # Test response code
-    res = test_client.get("/index", follow_redirects=False)
-    assert res.status_code == 302
-    assert urlparse(res.location).path == url_for("auth.login")
-
-    # Test the redirect works
-    res = test_client.get("/index", follow_redirects=True)
-    assert res.status_code == 200
+#def test_private_index_route(test_client):
+#    # Test response code
+#    res = test_client.get("/index", follow_redirects=False)
+#    assert res.status_code == 302
+#    assert urlparse(res.location).path == url_for("auth.login")
+#
+#    # Test the redirect works
+#    res = test_client.get("/index", follow_redirects=True)
+#    assert res.status_code == 200

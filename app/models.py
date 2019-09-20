@@ -14,6 +14,7 @@ import enum
 
 eastern = timezone('US/Eastern')
 
+
 class RoleMixin(object):
     """
     RoleMixin provides a method to set the default roles of a person
@@ -23,12 +24,16 @@ class RoleMixin(object):
     def before_commit(cls, session):
         for obj in list(session.new):
             if isinstance(obj, RoleMixin):
-                rl = Role.query.filter(Role.name=="member").first()
+                rl = Role.query.filter(Role.name == "member").first()
+                if not rl:
+                    rl = Role(name="member", label="CONP Member Role")
                 if not obj.has_role(rl.name):
                     obj.roles.append(rl)
 
 
 db.event.listen(db.session, 'before_commit', RoleMixin.before_commit)
+
+
 class User(db.Model, UserMixin, RoleMixin):
     """
         Provides User Model
@@ -48,18 +53,20 @@ class User(db.Model, UserMixin, RoleMixin):
     full_name = db.Column(db.String(64), nullable=False, server_default='')
     affiliation = db.Column(db.String(128))
     expiration = db.Column(db.DateTime, nullable=False,
-                            default=datetime.utcnow()+ timedelta(days=365))
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
-    date_updated = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
+                           default=datetime.utcnow() + timedelta(days=365))
+    date_created = db.Column(
+        db.DateTime, nullable=False, default=datetime.utcnow())
+    date_updated = db.Column(
+        db.DateTime, nullable=False, default=datetime.utcnow())
     # Many To One relationship
-    affiliation_type_id = db.Column(db.Integer, db.ForeignKey('affiliation_type.id'))
+    affiliation_type_id = db.Column(
+        db.Integer, db.ForeignKey('affiliation_type.id'))
     affiliation_type = db.relationship('AffiliationType')
     # One To Many relationship
     roles = db.relationship('Role', secondary='users_roles',
-                            backref=db.backref('users', lazy='dynamic'))
+                            backref=db.backref('users'))
 
-
-    def has_role(self,role):
+    def has_role(self, role):
         """
             Utility function to check if user has a particular role
 
@@ -74,7 +81,7 @@ class User(db.Model, UserMixin, RoleMixin):
                 return True
         return False
 
-    def role(self): ### To DO: is this needed
+    def role(self):  # To DO: is this needed
         for item in self.roles:
             return item.name
 
@@ -91,8 +98,10 @@ class AffiliationType(db.Model):
     """
     __tablename__ = "affiliation_type"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False, server_default='', unique=True)
-    label = db.Column(db.String(255), server_default='')  # for display purposes
+    name = db.Column(db.String(50), nullable=False,
+                     server_default='', unique=True)
+    # for display purposes
+    label = db.Column(db.String(255), server_default='')
 
 
 class Role(db.Model):
@@ -102,8 +111,10 @@ class Role(db.Model):
     __tablename__ = "roles"
     id = db.Column(db.Integer(), primary_key=True)
     # for @roles_accepted()
-    name = db.Column(db.String(50), nullable=False, server_default='', unique=True)
-    label = db.Column(db.String(255), server_default='')  # for display purposes
+    name = db.Column(db.String(50), nullable=False,
+                     server_default='', unique=True)
+    # for display purposes
+    label = db.Column(db.String(255), server_default='')
 
     def __repr__(self):
         return self.name
@@ -115,8 +126,10 @@ class UsersRoles(db.Model):
     """
     __tablename__ = 'users_roles'
     id = db.Column(db.Integer(), primary_key=True)
-    user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
-    role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))
+    user_id = db.Column(db.Integer(), db.ForeignKey(
+        'users.id', ondelete='CASCADE'))
+    role_id = db.Column(db.Integer(), db.ForeignKey(
+        'roles.id', ondelete='CASCADE'))
 
 
 # OAUTH Model
@@ -127,11 +140,12 @@ class OAuth(OAuthConsumerMixin, db.Model):
     __table_args__ = (db.UniqueConstraint("provider", "provider_user_id"),)
     provider_user_id = db.Column(db.String(256), nullable=False)
     provider_user_login = db.Column(db.String(256), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id),nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
     user = db.relationship(User,
                            backref=db.backref("oauth",
-                                    collection_class=attribute_mapped_collection('provider'),
-                                    cascade="all, delete-orphan")
+                                              collection_class=attribute_mapped_collection(
+                                                  'provider'),
+                                              cascade="all, delete-orphan")
                            )
 
 
@@ -192,8 +206,10 @@ class Pipeline(db.Model):
     name = db.Column(db.String(256), index=True)
     version = db.Column(db.String(128), index=True)
     is_private = db.Column(db.Boolean, index=True)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
-    date_updated = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
+    date_created = db.Column(db.DateTime, nullable=False,
+                             default=datetime.now(tz=eastern))
+    date_updated = db.Column(db.DateTime, nullable=False,
+                             default=datetime.now(tz=eastern))
 
     def __repr__(self):
         return '<Pipeline {}>'.format(self.name)

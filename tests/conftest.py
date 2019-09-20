@@ -6,6 +6,7 @@ import pytest
 import os
 from app import create_app
 from app import db as _db
+from app.models import RoleMixin
 from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker
 from config import TestingConfig

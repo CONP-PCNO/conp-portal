@@ -1,0 +1,38 @@
+{% extends 'common/base_login.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% from 'common/_formshelpers.html' import render_multiselect_field %}
+
+{% block cardtitle %}
+CONP Portal: Edit User Profile
+{% endblock %}
+
+{% block appcontent %}
+<form action="" method="POST" class="form" role="form">
+  {{ form.hidden_tag() }}
+  {{ wtf.form_errors(form, hiddens="only") }}
+  {{ wtf.form_field(form.full_name, class='form-control', placeholder='Full Name') }}
+  {{ wtf.form_field(form.affiliation, class='form-control', placeholder="Your Current Affiliation") }}
+  {{ wtf.form_field(form.affiliation_type, class='form-control') }}
+  {% if edit_roles %}
+    {{ render_multiselect_field(form.roles, current_roles) }}
+  {% else %}
+    <div class="row">
+        <div class="col">
+            Current Roles enabled: {{ current_user.roles|join(", "|safe )}}
+        </div>
+    </div>
+    {% endif %}
+        <button type=submit class='btn btn-primary btn-block btn-signin'>Save</button>
+</form>
+<br/>
+
+{% if not user_manager.USER_ENABLE_AUTH0 %}
+    {% if user_manager.USER_ENABLE_CHANGE_USERNAME %}
+        <p><a href="{{ url_for('user.change_username') }}">{%trans%}Change username{%endtrans%}</a></p>
+    {% endif %}
+    {% if user_manager.USER_ENABLE_CHANGE_PASSWORD %}
+        <p><a href="{{ url_for('user.change_password') }}">{%trans%}Change password{%endtrans%}</a></p>
+    {% endif %}
+{% endif %}
+
+{% endblock %}

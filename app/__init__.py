@@ -19,9 +19,10 @@ csrf_protect = CSRFProtect()
 mail = Mail()
 bootstrap = Bootstrap()
 
+
 def create_app(config_settings=DevelopmentConfig):
 
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='/static')
     app.config.from_object(config_settings)
 
     db.init_app(app)
@@ -51,6 +52,9 @@ def create_app(config_settings=DevelopmentConfig):
     from app.pipelines import pipelines_bp  # noqa: E402
     app.register_blueprint(pipelines_bp)
 
+    from app.utils import utils_bp  # noqa: E402
+    app.register_blueprint(utils_bp)
+
     from app.oauth.orcid_blueprint import orcid_blueprint
     app.register_blueprint(orcid_blueprint, url_prefix="/login")
 
@@ -70,9 +74,12 @@ def create_app(config_settings=DevelopmentConfig):
 
     return app
 
-### Function to initialize the email and logs
+# Function to initialize the email and logs
+
+
 def init_email_and_logs_error_handler(app):
-    if app.debug and not app.testing: return
+    if app.debug and not app.testing:
+        return
 
     import logging
     from logging.handlers import SMTPHandler
@@ -88,7 +95,8 @@ def init_email_and_logs_error_handler(app):
             secure = 90
 
         mail_handler = SMTPHandler(mailhost=(app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
-                                   fromaddr='no-reply@' + app.config['MAIL_SERVER'],
+                                   fromaddr='no-reply@' +
+                                   app.config['MAIL_SERVER'],
                                    toaddrs=app.config['ADMINS'], subject='Microblog Failure',
                                    credentials=auth, secure=secure)
         mail_handler.setLevel(logging.ERROR)
@@ -105,7 +113,7 @@ def init_email_and_logs_error_handler(app):
                                                maxBytes=10240, backupCount=10)
             file_handler.setFormatter(logging.Formatter(
                                       '%(asctime)s %(levelname)s: %(message)s '
-                                     '[in %(pathname)s:%(lineno)d]'))
+                                      '[in %(pathname)s:%(lineno)d]'))
             file_handler.setLevel(logging.INFO)
             app.logger.addHandler(file_handler)
 
