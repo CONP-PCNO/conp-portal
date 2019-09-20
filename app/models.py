@@ -5,16 +5,31 @@ Module that contains the Data Models
 
 """
 from app import db
-from flask_login import UserMixin
+from flask_user import UserMixin, user_registered
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 from sqlalchemy.orm.collections import attribute_mapped_collection
-from datetime import datetime
+from datetime import datetime, timedelta
 from pytz import timezone
 import enum
 
 eastern = timezone('US/Eastern')
 
-class User(UserMixin, db.Model):
+class RoleMixin(object):
+    """
+    RoleMixin provides a method to set the default roles of a person
+    at registration time.
+    """
+    @classmethod
+    def before_commit(cls, session):
+        for obj in list(session.new):
+            if isinstance(obj, RoleMixin):
+                rl = Role.query.filter(Role.name=="member").first()
+                if not obj.has_role(rl.name):
+                    obj.roles.append(rl)
+
+
+db.event.listen(db.session, 'before_commit', RoleMixin.before_commit)
+class User(db.Model, UserMixin, RoleMixin):
     """
         Provides User Model
     """
@@ -30,18 +45,19 @@ class User(UserMixin, db.Model):
     active = db.Column(db.Boolean, nullable=False, server_default='0')
 
     # Customizable Fields
-    first_name = db.Column(db.String(64), nullable=False, server_default='')
-    last_name = db.Column(db.String(64), nullable=False, server_default='')
+    full_name = db.Column(db.String(64), nullable=False, server_default='')
     affiliation = db.Column(db.String(128))
-    expiration = db.Column(db.DateTime, nullable=False)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
-    date_updated = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=eastern))
+    expiration = db.Column(db.DateTime, nullable=False,
+                            default=datetime.utcnow()+ timedelta(days=365))
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
+    date_updated = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
     # Many To One relationship
     affiliation_type_id = db.Column(db.Integer, db.ForeignKey('affiliation_type.id'))
     affiliation_type = db.relationship('AffiliationType')
     # One To Many relationship
     roles = db.relationship('Role', secondary='users_roles',
                             backref=db.backref('users', lazy='dynamic'))
+
 
     def has_role(self,role):
         """
@@ -66,7 +82,8 @@ class User(UserMixin, db.Model):
         return self.affiliation_type.name
 
     def __repr__(self):
-        return '<User {}: {} {}>'.format(self.email, self.first_name, self.last_name)
+        return '<User {}: {}>'.format(self.email, self.full_name)
+
 
 class AffiliationType(db.Model):
     """
