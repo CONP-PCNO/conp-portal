@@ -6963,26 +6963,26 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
 
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
-    { className: "search-dataset" },
+    { className: "card row flex-row", "data-type": "pipeline" },
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "dataset-social" },
+      { className: "col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "a",
         { href: element.url },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
           alt: "dataset format",
-          className: "dataset-social-img",
+          className: "card-img-top card-social-img",
           src: element.url == undefined ? "static/img/cogs-solid-grey.png" : "static/img/cogs-solid-green.png"
         })
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "dataset-social-icons" },
+        { className: "card-social-icons" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "dataset-social-icon" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-download social-fa" }),
+          { className: "card-social-icon" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-download my-2" }),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
             null,
@@ -6993,54 +6993,67 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "dataset-details" },
+      { className: "card-body d-md-flex flex-wrap" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "dataset-details-stats" },
+        "a",
+        {
+          style: {
+            color: "inherit",
+            pointerEvents: element.descriptorurl == undefined ? "none" : "all"
+          },
+          href: element.descriptorurl
+        },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "pipeline-title" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            null,
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "a",
-              { style: { color: "inherit", pointerEvents: element.descriptorurl == undefined ? "none" : "all" },
-                href: element.descriptorurl },
-              element.title
-            )
-          )
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "pipeline-id" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "a",
-            { style: { color: "black" }, href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
-            element.id
-          )
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "pipeline-description" },
-          element.description
+          "h5",
+          { className: "card-title text-card-title col-12 pl-2 pl-md-0" },
+          element.title
         )
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "dataset-options" },
+        { className: "card-subtitle col-12 pl-2 pl-md-0" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "p",
+          { className: "card-text text-capitalize pr-1" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "strong",
+            null,
+            "Pipeline Id: "
+          )
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "a",
+          { href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "p",
+            { className: "card-text text-muted text-link" },
+            element.id
+          )
+        )
+      ),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "d-flex col-md-12 px-2" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "dataset-option" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "a",
-            { href: element.onlineplatformurls },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-              alt: "Online platform",
-              className: "run-on-cbrain-button option-icon",
-              src: element.img
-            })
-          )
+          { className: "card-description" },
+          element.description
+        )
+      )
+    ),
+    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      "div",
+      { className: "col-12 col-md-auto d-flex align-items-center justify-content-center my-2 card-buttons" },
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "d-flex justify-content-end align-items-center flex-wrap" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "a",
+          { className: "card-button mx-2", href: element.onlineplatformurls },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+            alt: "Online platform",
+            src: element.imagePath + "/run_on_cbrain_green.png"
+          })
         )
       )
     )

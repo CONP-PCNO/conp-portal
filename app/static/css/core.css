@@ -111,6 +111,15 @@ Colour names courtesy of chir.ag/projects/name-that-color
   color: #404040;
 }
 
+.text-link {
+  text-decoration: underline;
+}
+
+.text-link:hover {
+  color: #ff0000;
+  text-decoration: underline;
+}
+
 /*
 =============================================================
 | BUTTONS
@@ -383,11 +392,16 @@ Colour names courtesy of chir.ag/projects/name-that-color
   -o-border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-color: #c2c2c2;
+  cursor: pointer;
 }
 
 .searchbar .dropdown .dropdown-select:focus {
   outline: 0 !important;
   box-shadow: 0 0 0 0;
+}
+
+.searchbar .input-group .input-group-append .input-group-text {
+  cursor: pointer;
 }
 
 @media (min-width: 768px) {
@@ -415,7 +429,7 @@ Colour names courtesy of chir.ag/projects/name-that-color
   consistency.
 */
 
-/* Tools + Dataset Cards */
+/* Base Card Styles */
 
 .card {
   box-shadow: 0px 2px 4px #979797;
@@ -432,8 +446,6 @@ Colour names courtesy of chir.ag/projects/name-that-color
 }
 
 .card .card-social .card-social-icons {
-  padding-left: 1;
-  padding-right: 1;
   display: flex;
   justify-content: space-between;
 }
@@ -460,13 +472,9 @@ Colour names courtesy of chir.ag/projects/name-that-color
   flex-wrap: wrap;
 }
 
-.card[data-type="dataset"] .card-buttons {
-  flex-direction: column-reverse;
-  align-items: center;
-}
-
 .card .card-buttons .card-button {
   margin: 0.5rem;
+  cursor: pointer;
 }
 
 .card .card-buttons .card-button img {
@@ -500,11 +508,6 @@ Colour names courtesy of chir.ag/projects/name-that-color
     justify-content: space-between;
   }
 
-  .card[data-type="dataset"] .card-buttons {
-    flex-direction: column-reverse;
-    align-items: center;
-  }
-
   .card .card-buttons .card-button img {
     width: 6rem;
     height: 6rem;
@@ -529,11 +532,6 @@ Colour names courtesy of chir.ag/projects/name-that-color
     min-width: 10rem;
   }
 
-  .card[data-type="dataset"] .card-buttons {
-    flex-direction: row;
-    align-items: center;
-  }
-
   .card .card-body ul {
     justify-content: start;
 
@@ -547,6 +545,32 @@ Colour names courtesy of chir.ag/projects/name-that-color
     flex-direction: column;
     justify-content: center;
   }
+}
+
+/* Dataset Cards */
+
+.card[data-type="dataset"] .card-buttons {
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+@media (min-width: 576px) {
+  .card[data-type="dataset"] .card-buttons {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+}
+
+@media (min-width: 786px) {
+  .card[data-type="dataset"] .card-buttons {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* Pipeline Cards */
+.card[data-type="pipeline"] .card-social .card-social-icons {
+  justify-content: center;
 }
 
 /* Dashboard Cards */
