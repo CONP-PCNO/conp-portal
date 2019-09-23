@@ -17,14 +17,26 @@ def test_pipelines_route(test_client):
     assert res.status_code == 200
 
 
-def test_pipeline_search_route(test_client):
+def test_pipeline_search_route(session, new_pipeline, test_client):
     """
     GIVEN calling the route "/pipeline-search"
     WHEN no user is logged in
     THEN should return success code
     """
-    res = test_client.get("/pipeline-search")
+
+    session.add(new_pipeline)
+    session.commit()
+
+    headers = {'Content-Type': 'application/json'}
+    res = test_client.get("/pipeline-search", headers = headers)
     assert res.status_code == 200
+
+    body = res.get_json(force=True)
+
+    assert type(body) != type(None)
+    assert body["authorized"] == False
+    assert type(body["elements"]) != type(None)
+    assert body["total"] > 0
 
 
 def test_share_route(test_client):

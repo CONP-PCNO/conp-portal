@@ -6,10 +6,11 @@ import pytest
 import os
 from app import create_app
 from app import db as _db
-from app.models import Dataset, DatasetStats
+from app.models import Dataset, DatasetStats, Pipeline
 from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker
 from config import TestingConfig
+from datetime import datetime
 
 
 @pytest.fixture(scope='session')
@@ -125,3 +126,20 @@ def new_dataset_stats():
                      
                   )
     return dataset_stats     
+
+@pytest.fixture(scope='module')
+def new_pipeline():
+    """
+    Creastes a new mock dataset to test
+    """
+    pipeline = Pipeline(
+                    id = 1,
+                    pipeline_id = 12,
+                    owner_id = 1,
+                    name = 'Freesurfer',
+                    version = '1.9',
+                    is_private = False,
+                    date_created = datetime.now(),
+                    date_updated = datetime.now()
+                  )
+    return pipeline
