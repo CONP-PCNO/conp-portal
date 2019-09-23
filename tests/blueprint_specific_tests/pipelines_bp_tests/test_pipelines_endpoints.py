@@ -21,7 +21,8 @@ def test_pipeline_search_route(session, new_pipeline, test_client):
     """
     GIVEN calling the route "/pipeline-search"
     WHEN no user is logged in
-    THEN should return success code
+    AND no filter is used
+    THEN should return success code and all pipelines
     """
 
     session.add(new_pipeline)
@@ -37,6 +38,29 @@ def test_pipeline_search_route(session, new_pipeline, test_client):
     assert body["authorized"] == False
     assert type(body["elements"]) != type(None)
     assert body["total"] > 0
+
+def test_pipeline_search_route_with_filter(session, new_pipeline, test_client):
+    """
+    GIVEN calling the route "/pipeline-search"
+    WHEN no user is logged in
+    AND a filter is used
+    THEN should return success code and filtered pipelines
+    """
+
+    session.add(new_pipeline)
+    session.commit()
+
+    query = {'search': 'RandomSearchTerm'}
+    headers = {'Content-Type': 'application/json'}
+    res = test_client.get("/pipeline-search", headers = headers, query_string = query)
+    assert res.status_code == 200
+
+    body = res.get_json(force=True)
+
+    assert type(body) != type(None)
+    assert body["authorized"] == False
+    assert type(body["elements"]) != type(None)
+    assert body["total"] == 0
 
 
 def test_share_route(test_client):
