@@ -5,51 +5,58 @@ const PipelineElement = props => {
   const { authorized, ...element } = props;
 
   return (
-    <div className="search-dataset">
-      <div className="dataset-social">
+    <div className="card row flex-row" data-type="pipeline">
+      <div className="col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social">
         <a href={element.url}>
           <img
             alt="dataset format"
-            className="dataset-social-img"
-            src={element.url == undefined ? "static/img/cogs-solid-grey.png" : "static/img/cogs-solid-green.png"}
+            className="card-img-top card-social-img"
+            src={
+              element.url == undefined
+                ? "static/img/cogs-solid-grey.png"
+                : "static/img/cogs-solid-green.png"
+            }
           />
         </a>
-        <div className="dataset-social-icons">
-          <div className="dataset-social-icon">
-            <i className="fa fa-download social-fa" />
+        <div className="card-social-icons">
+          <div className="card-social-icon">
+            <i className="fa fa-download my-2" />
             <div>{element.downloads}</div>
           </div>
         </div>
       </div>
-      <div className="dataset-details">
-        <div className="dataset-details-stats">
-          <div className="pipeline-title">
-            <div>
-              <a style={{ color: "inherit", pointerEvents: element.descriptorurl == undefined ? "none" : "all" }}
-              href={element.descriptorurl}>
-                {element.title}
-              </a>
-            </div>
-          </div>
-          <div className="pipeline-id">
-            <a style={{ color: "black" }} href={"https://www.zenodo.org/record/" + element.id.split(".")[1]}>
-              {element.id}
-            </a>
-          </div>
-          <div className="pipeline-description">
-            {element.description}
-          </div>
+      <div className="card-body d-md-flex flex-wrap">
+        <a
+          style={{
+            color: "inherit",
+            pointerEvents: element.descriptorurl == undefined ? "none" : "all"
+          }}
+          href={element.descriptorurl}
+        >
+          <h5 className="card-title text-card-title col-12 pl-2 pl-md-0">
+            {element.title}
+          </h5>
+        </a>
+        <div className="card-subtitle col-12 pl-2 pl-md-0">
+          <p className="card-text text-capitalize pr-1">
+            <strong>Pipeline Id: </strong>
+          </p>
+          <a href={"https://www.zenodo.org/record/" + element.id.split(".")[1]}>
+            <p className="card-text text-muted text-link">{element.id}</p>
+          </a>
         </div>
-        <div className="dataset-options">
-          <div className="dataset-option">
-            <a href={element.onlineplatformurls}>
-              <img
-                alt="Online platform"
-                className="run-on-cbrain-button option-icon"
-                src={element.img}
-              />
-            </a>
-          </div>
+        <div className="d-flex col-md-12 px-2">
+          <div className="card-description">{element.description}</div>
+        </div>
+      </div>
+      <div className="col-12 col-md-auto d-flex align-items-center justify-content-center my-2 card-buttons">
+        <div className="d-flex justify-content-end align-items-center flex-wrap">
+          <a className="card-button mx-2" href={element.onlineplatformurls}>
+            <img
+              alt="Online platform"
+              src={`${element.imagePath}/run_on_cbrain_green.png`}
+            />
+          </a>
         </div>
       </div>
     </div>
