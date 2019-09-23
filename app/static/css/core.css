@@ -20,6 +20,7 @@ h4,
 h5,
 h6 {
   margin: 0;
+  font-family: "PT Sans Narrow", sans-serif;
 }
 
 p {
@@ -110,11 +111,25 @@ Colour names courtesy of chir.ag/projects/name-that-color
   color: #404040;
 }
 
+.text-link {
+  text-decoration: underline;
+}
+
+.text-link:hover {
+  color: #ff0000;
+  text-decoration: underline;
+}
+
 /*
 =============================================================
 | BUTTONS
 =============================================================
 */
+
+.btn {
+  padding: 1rem;
+  width: 100%;
+}
 
 .btn-green {
   background-color: #88d368;
@@ -123,6 +138,7 @@ Colour names courtesy of chir.ag/projects/name-that-color
 
 .btn-green:hover {
   background-color: #70ad56;
+  color: white;
 }
 
 .btn-orange {
@@ -182,27 +198,30 @@ Colour names courtesy of chir.ag/projects/name-that-color
     min-height: 6rem;
   }
 }
+
 /*
 =============================================================
 | Navigation Bar
 =============================================================
 */
 
-.navbar-conp {
+.navigation-bar {
   width: 100%;
   height: 4.5rem;
-  border-bottom: 2px solid #ff0000;
+  border-bottom: 1px solid #ff0000;
+  border-radius: 0;
   padding: 0;
   z-index: 1;
 }
 
-.navbar-conp a,
-.navbar-conp a img,
-.navbar-conp div ul {
+.navigation-bar a,
+.navigation-bar a img,
+.navigation-bar div ul {
   height: 100%;
+  flex: 1;
 }
 
-.navbar-conp div .nav-item:hover {
+.navigation-bar div .nav-item:hover {
   background-color: #d8d8d8;
 }
 
@@ -225,42 +244,59 @@ Colour names courtesy of chir.ag/projects/name-that-color
   color: white;
 }
 
-.navbar-conp div .active:hover {
+.navigation-bar div .active:hover {
   background-color: #ff0000;
 }
 
-.navbar-conp .show {
+.navigation-bar .show {
   width: 100%;
-  background: white;
-  border-color: #ff0000;
+  background: red;
 }
 
-.navbar-conp .dropdown,
-.navbar-conp .dropdown-menu {
+.navigation-bar .dropdown,
+.navigation-bar .dropdown-menu {
   width: 100%;
   background: white;
   border: none;
+  box-shadow: none;
 }
 
-@media (min-width: 992px) {
-  .navbar-conp {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+.navigation-bar .dropdown-menu a {
+  color: rgba(0, 0, 0, 0.5);
+  padding-top: inherit;
+  padding-bottom: inherit;
+}
+
+.navigation-bar .dropdown-menu a:hover {
+  color: rgba(0, 0, 0, 1);
+}
+
+@media (min-width: 768px) {
+  .navigation-bar a,
+  .navigation-bar a img,
+  .navigation-bar div ul {
+    flex: none;
   }
 
-  .navbar-conp .show {
+  .navigation-bar .show {
     width: auto;
-    background: white;
+    background: red;
+  }
+
+  .navbar-collapse.collapse {
+    height: 100% !important;
+    margin-bottom: 1px;
   }
 
   .navbar-collapse {
     height: 100%;
     background-color: transparent;
+    padding-right: 0;
+    padding-left: 0;
   }
 
   .navbar-nav {
     border-bottom: none;
-    padding-bottom: 1px;
   }
 
   .navbar-nav .nav-item a {
@@ -268,13 +304,14 @@ Colour names courtesy of chir.ag/projects/name-that-color
     align-items: center;
   }
 
-  .navbar-conp .dropdown-menu {
+  .navigation-bar .dropdown-menu {
     background: white;
     border: 1px solid #ff0000;
     padding: 0;
+    margin-top: 0;
   }
 
-  .navbar-conp .dropdown-item {
+  .navigation-bar .dropdown-menu a {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     white-space: inherit;
@@ -287,11 +324,11 @@ Colour names courtesy of chir.ag/projects/name-that-color
 =============================================================
 */
 
-footer .footer-link {
+#footer .footer-link {
   color: white;
 }
 
-footer .footer-link:hover span {
+#footer .footer-link:hover span {
   color: #ff0000;
 }
 
@@ -301,9 +338,18 @@ footer .footer-link:hover span {
 =============================================================
 */
 
-.sidebar a:hover {
+#sidebar {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+}
+
+.sidebar-tab:hover {
   background-color: #d8d8d8;
   color: #343434;
+  cursor: pointer;
 }
 
 /*
@@ -312,28 +358,107 @@ footer .footer-link:hover span {
 =============================================================
 */
 
-.searchbar {
+.searchbar,
+.search-dataset-footer {
   background-color: #ffffff;
   box-shadow: 0px 2px 4px #979797;
+  flex-direction: column;
 }
 
 .searchbar a:hover {
   text-decoration: underline;
 }
 
+.searchbar .input-group input {
+  border-color: #c2c2c2;
+}
+
+.searchbar .dropdown {
+  min-height: 2rem;
+}
+
+.searchbar .dropdown .dropdown-label {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  min-width: fit-content;
+  white-space: nowrap;
+}
+
+.searchbar .dropdown .dropdown-select {
+  -webkit-border-radius: 0.25rem;
+  -moz-border-radius: 0.25rem;
+  -ms-border-radius: 0.25rem;
+  -o-border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  border-color: #c2c2c2;
+  cursor: pointer;
+}
+
+.searchbar .dropdown .dropdown-select:focus {
+  outline: 0 !important;
+  box-shadow: 0 0 0 0;
+}
+
+.searchbar .input-group .input-group-append .input-group-text {
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .searchbar {
+    flex-direction: row;
+  }
+
+  .searchbar .dropdown {
+    margin-right: 1rem;
+  }
+
+  .searchbar .dropdown .dropdown-select {
+    width: auto;
+  }
+}
+
 /*
 =============================================================
 | Cards
 =============================================================
+  NOTE: I've used more custom classes here instead of bootstrap 
+  classes to facilitate style changed since these classes are 
+  applied to react components.
+  If no longer using react, revert to using bootstrap classes for 
+  consistency.
 */
+
+/* Base Card Styles */
 
 .card {
   box-shadow: 0px 2px 4px #979797;
   flex-wrap: wrap;
 }
 
-.card .card-img {
-  width: 10rem;
+.card .card-social {
+  padding: 1rem;
+  margin: 0 auto;
+}
+
+.card .card-social img {
+  margin-bottom: 2rem;
+}
+
+.card .card-social .card-social-icons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card .card-social .card-social-icons .card-social-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card .card-body {
+  padding: 0.5rem;
 }
 
 .card .card-body ul {
@@ -341,14 +466,72 @@ footer .footer-link:hover span {
   flex-direction: column;
 }
 
+.card .card-buttons {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.card .card-buttons .card-button {
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+.card .card-buttons .card-button img {
+  width: 4rem;
+  height: 4rem;
+}
+
+.card .card-buttons .card-button .card-button-tooltip {
+  background-color: white;
+  padding: 5px;
+  border: solid black;
+  color: black;
+  border-width: 1px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.card .card-body .card-list .card-list-item {
+  display: flex;
+}
+
+@media (min-width: 576px) {
+  .card .card-buttons {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .card .card-buttons .card-button img {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  .card .card-body {
+    padding: 1rem;
+  }
+}
+
 @media (min-width: 786px) {
   .card {
     flex-wrap: nowrap;
   }
 
-  .card .card-buttons .card-button {
-    margin: 0.5rem;
+  .card .card-social {
+    padding: 1rem 2rem;
   }
+
+  .card .card-buttons {
+    margin: 0.5rem;
+    min-width: 10rem;
+  }
+
   .card .card-body ul {
     justify-content: start;
 
@@ -361,5 +544,65 @@ footer .footer-link:hover span {
     padding-right: 2rem;
     flex-direction: column;
     justify-content: center;
+  }
+}
+
+/* Dataset Cards */
+
+.card[data-type="dataset"] .card-buttons {
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+@media (min-width: 576px) {
+  .card[data-type="dataset"] .card-buttons {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+}
+
+@media (min-width: 786px) {
+  .card[data-type="dataset"] .card-buttons {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* Pipeline Cards */
+.card[data-type="pipeline"] .card-social .card-social-icons {
+  justify-content: center;
+}
+
+/* Dashboard Cards */
+
+.card[data-type="dashboard"] {
+  padding: 2rem;
+  margin-bottom: 1rem;
+}
+
+.card[data-type="dashboard"] .highcharts-container svg {
+  width: 100%;
+}
+
+.card[data-type="dashboard"] .card-description {
+  padding: 0.5rem;
+}
+
+.card[data-type="dashboard"] .card-description .card-description-subtitle {
+  font-weight: 700;
+  padding: 1rem 0;
+}
+
+@media (min-width: 576px) {
+  .card[data-type="dashboard"] .card-description {
+    padding: 2rem;
+    flex: 1;
+  }
+}
+
+@media (min-width: 992px) {
+  .card[data-type="dashboard"] {
+    flex: 1;
+    margin-bottom: 0rem;
   }
 }

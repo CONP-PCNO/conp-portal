@@ -11,124 +11,130 @@ const DatasetElement = props => {
   const downloadDisabled = `${imagePath}/download_gray.png`;
 
   return (
-    <div className="search-dataset">
-      <div className="dataset-social">
+    <div className="card row flex-row" data-type="dataset">
+      <div className="col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social">
         <img
           alt="dataset format"
-          className="dataset-social-img"
+          className="card-img-top card-social-img"
           src={element.thumbnailURL}
         />
-        <div className="dataset-social-icons">
-          <div className="dataset-social-icon">
-            <i className="fa fa-download social-fa" />
+        <div className="card-social-icons">
+          <div className="card-social-icon">
+            <i className="fa fa-download social-fa my-2" />
             <div>{element.downloads}</div>
           </div>
-          <div className="dataset-social-icon">
-            <i className="fa fa-eye social-fa" />
+          <div className="card-social-icon">
+            <i className="fa fa-eye social-fa my-2" />
             <div>{element.views}</div>
           </div>
-          <div className="dataset-social-icon">
-            <i className="fa fa-heart social-fa" />
+          <div className="card-social-icon">
+            <i className="fa fa-heart social-fa my-2" />
             <div>{element.likes}</div>
           </div>
         </div>
       </div>
-      <div className="dataset-details">
-        <div className="dataset-details-stats">
-          <div className="dataset-title">
-            <div>
-              <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>
-                {element.title}
-              </a>
-            </div>
-          </div>
-          <div className="dataset-stat">
-            <div className="dataset-stat-text">Date Added</div>
-            <div className="dataset-stat-num">{element.dateAdded}</div>
-          </div>
-          <div className="dataset-stat">
-            <div className="dataset-stat-text">Date Updated</div>
-            <div className="dataset-stat-num">{element.dateUpdated}</div>
-          </div>
-          <div className="dataset-stat">
-            <div className="dataset-stat-text">Size</div>
-            <div className="dataset-stat-num">{element.size}</div>
-          </div>
-          <div className="dataset-stat">
-            <div className="dataset-stat-text">Files</div>
-            <div className="dataset-stat-num">{element.files}</div>
-          </div>
-          <div className="dataset-stat">
-            <div className="dataset-stat-text">Subjects</div>
-            <div className="dataset-stat-num">{element.subjects}</div>
-          </div>
-          <div className="dataset-stat">
-            <div className="dataset-stat-text">Format</div>
-            <div className="dataset-stat-num">{element.format}</div>
-          </div>
-          <div className="dataset-stat">
-            <div className="dataset-stat-text">Modalities</div>
-            <div className="dataset-stat-num">{element.modalities}</div>
-          </div>
-          <div className="dataset-stat">
-            <div className="dataset-stat-text">Sources</div>
-            <div className="dataset-stat-num">{element.sources}</div>
-          </div>
-        </div>
-        <div className="dataset-options">
-          <div className="dataset-option">
-            <a
-              href={"#"}
-              style={{
-                pointerEvents: element.isPrivate && !authorized ? "none" : "all"
-              }}
-            >
-              <img
-                alt="Run On Cbrain"
-                className="run-on-cbrain-button option-icon"
-                src={
-                  element.isPrivate && !authorized
-                    ? runOnCbrainDisabled
-                    : runOnCbrainEnabled
-                }
-              />
-            </a>
-          </div>
-          <div className="dataset-option" style={{ position: "relative" }}>
-            <a
-              style={{
-                pointerEvents: element.isPrivate && !authorized ? "none" : "all"
-              }}
-              href={`download_metadata?dataset=${element.downloadPath}`}
-              download
-            >
-              {element.isPrivate && !authorized && (
-                <div
-                  style={{
-                    backgroundColor: "white",
-                    padding: "5px",
-                    border: "solid black",
-                    color: "black",
-                    borderWidth: "1px",
-                    left: "-30px",
-                    textAlign: "center",
-                    position: "absolute"
-                  }}
-                >
-                  Please register for access.
-                </div>
-              )}
-              <img
-                alt="Download Metadata"
-                className="download-button  option-icon"
-                src={
-                  element.isPrivate && !authorized
-                    ? downloadDisabled
-                    : downloadEnabled
-                }
-              />
-            </a>
-          </div>
+      <div className="card-body d-md-flex flex-wrap">
+        <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>
+          <h5 className="card-title text-card-title col-12 pl-2 pl-md-0">
+            {element.title}
+          </h5>
+        </a>
+        <ul className="d-flex col-md-12 px-1 px-md-0 card-list">
+          <li className="card-list-item">
+            <p className="card-text text-capitalize pr-1">
+              <strong>Files: </strong>
+            </p>
+            <p className="card-text text-muted">{element.files}</p>
+          </li>
+          <li className="card-list-item">
+            <p className="card-text text-capitalize pr-1">
+              <strong>Size: </strong>
+            </p>
+            <p className="card-text text-muted">{element.size}</p>
+          </li>
+          <li className="card-list-item">
+            <p className="card-text text-capitalize pr-1">
+              <strong>Subjects: </strong>
+            </p>
+            <p className="card-text text-muted">{element.subjects}</p>
+          </li>
+          <li className="card-list-item">
+            <p className="card-text text-capitalize pr-1">
+              <strong>Sources: </strong>
+            </p>
+            <p className="card-text text-muted">{element.sources}</p>
+          </li>
+          <li className="card-list-item">
+            <p className="card-text text-capitalize pr-1">
+              <strong>Format: </strong>
+            </p>
+            <p className="card-text text-muted">{element.format}</p>
+          </li>
+          <li class="d-none d-md-flex">
+            <p className="card-text text-capitalize pr-1">
+              <strong>Modalities: </strong>
+            </p>
+            <p className="card-text text-muted">{element.modalities}</p>
+          </li>
+          <li class="d-none d-md-flex">
+            <p className="card-text text-capitalize pr-1">
+              <strong>Date Added: </strong>
+            </p>
+            <p className="card-text text-muted">{element.dateAdded}</p>
+          </li>{" "}
+          <li class="d-none d-md-flex">
+            <p className="card-text text-capitalize pr-1">
+              <strong>Date Updated: </strong>
+            </p>
+            <p className="card-text text-muted">{element.dateUpdated}</p>
+          </li>
+        </ul>
+      </div>
+      <div className="col-12 col-md-auto d-flex my-2 card-buttons">
+        <button className="btn btn-outline-secondary d-md-none">
+          Go to Dataset
+        </button>
+        <div className="d-flex justify-content-end align-items-center flex-wrap mb-3 mb-md-0">
+          <a
+            href={"/#/"}
+            className="card-button mx-2"
+            style={{
+              pointerEvents: element.isPrivate && !authorized ? "none" : "all"
+            }}
+          >
+            <img
+              alt="Run On Cbrain"
+              src={
+                element.isPrivate && !authorized
+                  ? runOnCbrainDisabled
+                  : runOnCbrainEnabled
+              }
+            />
+          </a>
+
+          <a
+            className="card-button mx-2"
+            style={{
+              pointerEvents: element.isPrivate && !authorized ? "none" : "all"
+            }}
+            href={`download_metadata?dataset=${element.downloadPath}`}
+            download
+          >
+            {element.isPrivate && !authorized && (
+              <div className="card-button-tooltip">
+                Please register for access.
+              </div>
+            )}
+
+            <img
+              alt="Download Metadata"
+              src={
+                element.isPrivate && !authorized
+                  ? downloadDisabled
+                  : downloadEnabled
+              }
+            />
+          </a>
         </div>
       </div>
     </div>

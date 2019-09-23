@@ -1,51 +1,44 @@
 {% extends 'base_public.html' %}
 
+<!-- Head Block -->
+
 {% block head %}
-
-<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 {% endblock %}
 
-{% block sidebar %}
+<!-- Title Block -->
 
-{% include "/fragments/public_sidebar.html" %}
-
+{% block title %}
+  <h2><span style="color:red;">CONP Portal </span> | Tools & Pipelines</h2>
 {% endblock %}
+
+<!-- Content Block -->
 
 {% block content %}
+  <div>
+    <div class="container mb-4">
+      <p>
+        CONP pipelines can be easily installed and run on any computer with a container engine. For more information see our tutorial
+        <a class="text-link" href="https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb#reusing_tools" target=_blank>
+          here</a>.
+      You can also add your own tool by following the instructions <a class="text-link" href="https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb#publishing_tools"
+      target=_blank>here</a>.
+      </p>
+    </div>
 
-<!-- Space reserved for username when logged in -->
-<div class="display-user"></div>
+    <div id="pipelines-datatable-mount"></div>
 
-<div class="search-header page-title">
-  <h2>CONP Tools & Pipelines</h2>
-</div>
-
-<div class="pipeline-page-description">
-  <p>
-    CONP pipelines can be easily installed and run on any computer with a container engine. For more information see our tutorial
-    <a href="https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb#reusing_tools" target=_blank>
-      here.
-    </a>
-   You can also add your own tool by following the instructions <a href="https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb#publishing_tools"
-   target=_blank>here</a>.
-  </p>
-</div>
-
-<div id="pipelines-datatable-mount" >
-</div>
-
-<script type="text/javascript">
-  const reactElement = React.createElement(CONPReact.DataTableContainer, {
-    endpointURL: "/pipeline-search",
-    limit: 10,
-    imagePath: "/static/img",
-    renderElement: CONPReact.PipelineElement
-  });
-  ReactDOM.render(reactElement, document.querySelector("#pipelines-datatable-mount"));
-</script>
-</div>
-<!--/span-->
+    <script type="text/javascript">
+      const reactElement = React.createElement(CONPReact.DataTableContainer, {
+        endpointURL: "/dataset-search",
+        limit: 10,
+        imagePath: "/static/img",
+        renderElement: CONPReact.PipelineElement
+      });
+      ReactDOM.render(reactElement, document.querySelector("#pipelines-datatable-mount"));
+    </script>
+  </div>
 {% endblock %}
