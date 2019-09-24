@@ -21,8 +21,48 @@ CONP Portal: Edit User Profile
             Current Roles enabled: {{ current_user.roles|join(", "|safe )}}
         </div>
     </div>
+  {% endif %}
+
+  {% if form_user.associated_oauths() %}
+  <div class="row">
+    <div class="col">
+      Account Associated with the following external accounts:
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead>
+            <th>
+              Service
+            </th>
+            <th>
+              Account
+            </th>
+          </thead>
+          {% for s,u,p in form_user.associated_oauths() %}
+          <tr>
+            <td>
+              {{ p }}
+            </td>
+            <td>
+              {{ u }}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% if not current_user.is_oauth_associated("orcid") %}
+    {% if can_associate %}
+    <div class="col">
+      <a id="alt-login-orcid" class="btn-alt-login" href="{{ url_for('orcid.login')}}">
+          <img class="orcid-logo" src="{{ url_for('static', filename='img/orcid-logo.png') }}">
+          <span class="label-login">Associate With ORCID</span>
+      </a>
+    </div>
     {% endif %}
-        <button type=submit class='btn btn-primary btn-block btn-signin'>Save</button>
+  {% endif %}
+    <button type=submit class='btn btn-primary btn-block btn-signin'>Save</button>
 </form>
 <br/>
 

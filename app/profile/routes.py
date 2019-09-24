@@ -13,7 +13,7 @@ from app.models import User, Role, AffiliationType
 
 @profile_bp.route('/profile/edit_current_user_profile', methods=["GET", "POST"])
 @login_required
-def curret_user_profile_page():
+def current_user_profile_page():
     """
     Route that provides a path to the current users profile page for editting
     """
@@ -32,9 +32,11 @@ def curret_user_profile_page():
         flash("Profile Information Updated", "message")
         # TODO: Add a redirect
 
-    return render_template('auth/flask_user/edit_user_profile.html',
+    return render_template('profile/edit_user_profile.html',
                            form=form,
-                           edit_roles=False)
+                           form_user=current_user,
+                           edit_roles=False,
+                           can_associate=True)
 
 
 @profile_bp.route('/profile/admin_edit_user_profile', methods=["GET", "POST"])
@@ -71,7 +73,9 @@ def admin_user_profile_page():
         flash("Profile Information Updated", "message")
         # TO DO: Add redirect
 
-    return render_template('auth/flask_user/edit_user_profile.html',
+    return render_template('profile/edit_user_profile.html',
                            form=form,
+                           form_user=user,
                            current_roles=current_roles,
-                           edit_roles=True)
+                           edit_roles=True,
+                           can_associate=False)

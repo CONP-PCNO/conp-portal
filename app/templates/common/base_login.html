@@ -10,10 +10,14 @@
 
 {% block styles %}
 {{ super() }}
-    <link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet" />
     <link rel="icon" href="{{ url_for('static', filename='img/conp.ico') }}" type="image/x-icon" />
+    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='css/bootstrap-multiselect.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/core.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/pages.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet" />
+
 {% endblock %}
 
 {% block scripts %}
@@ -24,8 +28,8 @@
     <script src="{{ url_for('static', filename='js/bootstrap-multiselect.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
     <script>
-        $(".invalid-feedback").show();
         $(function() {
+          $(".invalid-feedback").show();
           $(".mdb-select").multiselect();
         });
     </script>
@@ -33,7 +37,7 @@
 
 {% block body %}
 {{ super() }}
-  <div class="container">
+  <div id="page-content" class="container">
       <div style="text-align: center;">
           <img src="/static/img/conp-pcno-logo.png" style="height: 150px;">
           <p>{% block cardtitle %}{% endblock %}</p>

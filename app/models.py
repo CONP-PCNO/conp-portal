@@ -11,6 +11,7 @@ from sqlalchemy.orm.collections import attribute_mapped_collection
 from datetime import datetime, timedelta
 from pytz import timezone
 import enum
+from app.oauth import OAuth_pretty
 
 eastern = timezone('US/Eastern')
 
@@ -24,11 +25,13 @@ class RoleMixin(object):
     def before_commit(cls, session):
         for obj in list(session.new):
             if isinstance(obj, RoleMixin):
-                rl = Role.query.filter(Role.name == "member").first()
-                if not rl:
-                    rl = Role(name="member", label="CONP Member Role")
-                if not obj.has_role(rl.name):
-                    obj.roles.append(rl)
+                obj.add_role("member")
+
+                # rl = Role.query.filter(Role.name == "member").first()
+                # if not rl:
+                #     rl = Role(name="member", label="CONP Member Role")
+                # if not obj.has_role(rl.name):
+                #     obj.roles.append(rl)
 
 
 db.event.listen(db.session, 'before_commit', RoleMixin.before_commit)
@@ -85,8 +88,57 @@ class User(db.Model, UserMixin, RoleMixin):
         for item in self.roles:
             return item.name
 
+    def add_role(self,role_name,add_to_roles=True):
+        """
+        Utility function that can add roles to users
+
+        Args:
+            role_name: name of the role to add
+            add_to_roles: if True, it will add the role if it doesn't exist
+                          if False, will only add if the role is there will return
+                                    False if it cannot
+        Result:
+            True if the role has been added to the user
+            False if the role cannot be added to the user
+        """
+        ## check if the role exists
+        if role_name is None:
+            return False
+
+        if self.has_role(role_name):
+            return True
+
+        rl = Role.query.filter(Role.name==role_name).first()
+
+
+        if rl is None:
+            if add_to_roles:
+                rl = Role(name=role_name,label=role_name)
+            else:
+                return False
+        self.roles.append(rl)
+        return True
+
     def affiliation_type_key(self):
+        """
+        Utility function to return the key for the affilaition type
+        """
         return self.affiliation_type.name
+
+    def associated_oauths(self):
+        """
+        Utility function that returns the information about
+        the oauths this user has associated with
+        """
+        oauths = OAuth.query.filter(OAuth.user==self).all()
+        return [(x.provider,x.provider_user_login,OAuth_pretty[x.provider]) for x in oauths]
+
+    def is_oauth_associated(self,provider_name):
+        if OAuth.query.filter(OAuth.user==self,
+                              OAuth.provider==provider_name).first():
+            return True
+        else:
+            return False
 
     def __repr__(self):
         return '<User {}: {}>'.format(self.email, self.full_name)

@@ -4,7 +4,7 @@
 Module that contains the full blueprint for ORCID OAuth
 
 """
-from flask import flash, redirect, session
+from flask import flash, redirect, session, url_for, current_app, Markup
 from flask_user import current_user
 from flask_login import login_user
 from app.oauth.orcid_flask_dance import make_orcid_blueprint
@@ -74,21 +74,27 @@ def orcid_logged_in(orcid_blueprint, token):
             token=token)
 
     if current_user.is_anonymous:
+        print("Current user is anonymous")
         if oauth.user:
             # Case 1 (above)
-            login_user(oauth.user)
-            flash("Successfully logged in through ORCID")
+            return current_app.user_manager._do_login_user(oauth.user,url_for("main.public"))
         else:
             # Case 2 (above)
+            print ("!!! No Oauth")
             orcid_person = orcid_record['person']
 
             # check if there is a user with this email address
             # Check to see if the ORCID user has an email exposed, otherwise, we cannot use it
 
             if len(orcid_person['emails']['email']) == 0:
-                flash(
+                flash(Markup(
                     "Failed to create new user, must have at least one ORCID "
-                    "email address accessible to restricted")
+                    "email address accessible to restricted. Please login to your "
+                    "ORCID account at http://orcid.org and update your permissions."
+                    " Please see <a href='https://support.orcid.org/hc/en-us/articles/360006897614'>"
+                    " Visibitility in ORCID</a> "
+                    "for more information."))
+                return redirect(url_for("user.login"))
                 return False
 
             orcid_email = orcid_person['emails']['email'][0]['email']
@@ -102,28 +108,38 @@ def orcid_logged_in(orcid_blueprint, token):
                 login_user(oauth.user)
 
             except NoResultFound:
+                print("!!!! we need to make an account")
                 # Case 3
+                try:
+                    user = User(email=orcid_person['emails']['email'][0]['email'],
+                                full_name="{} {}".format(orcid_person['name']['given-names']['value'],
+                                                         orcid_person['name']['family-name']['value']),
+                                active=True,
+                                email_confirmed_at=datetime.utcnow(),
 
-                user = User(email=orcid_person['emails']['email'][0]['email'],
-                            first_name=orcid_person['name']['given-names']['value'],
-                            last_name=orcid_person['name']['family-name']['value'],
-                            active=True,
-                            email_confirmed_at=datetime.utcnow())
+                                )
 
-                user.roles.append(Role.query.filter(
-                    Role.name == "member").first())
-                oauth.user = user
+                    user.add_role("member")
+                    user.add_role("registered-orcid",add_to_roles=True)
 
-                db.session.add_all([user, oauth])
-                db.session.commit()
+                    oauth.user = user
 
-                login_user(user)
+                    db.session.add_all([user, oauth])
+                    db.session.commit()
+                    ## Need to use private method to bypass in this case
+                    flash("Please update your Profile affiliation and affiliation type")
+                    return current_app.user_manager._do_login_user(user,url_for('profile.current_user_profile_page'))
+                except Exception as e:
+                    flash("There was an error creating a user from the ORCID credentials: {}".format(e))
+                    return redirect(url_for("user.login"))
     else:
+        print("!!! Authenticated User")
         if oauth.user:
-            # Case 3 (above)
-            flash("Account already associated with another user")
+            flash("Account already associated with another user, cannot be associated")
+            return redirect(url_for('profile.current_user_profile_page'))
         else:
             # Case 4 (above)
+            print("!!! SHOULD BE HERE")
             oauth.user = current_user
             db.session.add(oauth)
             db.session.commit()
