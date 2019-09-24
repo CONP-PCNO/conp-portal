@@ -140,10 +140,17 @@ def new_pipeline():
                   )
     return pipeline
 
-#@pytest.fixture
-#def authenticated_request(app):
-#    with app.test_request_context():
-#        # Here we're not overloading the login manager, we're just directly logging in a user
-#        # with whatever parameters we want. The user should only be logged in for the test,
-#        # so you're not polluting the other tests.
-#        yield login_user(new_user)
+@pytest.fixture(scope='module')
+def new_user():
+    """
+    Creates a new mock user for us to test things
+    """
+    user = User(
+                oauth_id="0000-0000-0000-0000",
+                username="testuser",
+                email="example@mailinator.com",
+                affiliation="CONP",
+                expiration=datetime.utcnow() + timedelta(days=30)
+            )
+    user.set_password("ThisPassword")
+    return user
