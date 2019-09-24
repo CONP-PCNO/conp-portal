@@ -6,11 +6,13 @@ import pytest
 import os
 from app import create_app
 from app import db as _db
-from app.models import Dataset, DatasetStats, Pipeline
+from app.models import Dataset, DatasetStats, Pipeline, User
 from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker
 from config import TestingConfig
-from datetime import datetime
+from datetime import datetime, timedelta
+
+from flask_login import current_user, login_user, logout_user
 
 
 @pytest.fixture(scope='session')
@@ -20,13 +22,7 @@ def app(request):
     TestingConfig in Config.py
     """
     app = create_app(config_settings=TestingConfig)
-    ctx = app.test_request_context()
-    ctx.push()
 
-    def teardown():
-        ctx.pop()
-
-    request.addfinalizer(teardown)
     return app
 
 
@@ -125,7 +121,7 @@ def new_dataset_stats():
                       num_views=0,
                      
                   )
-    return dataset_stats     
+    return dataset_stats
 
 @pytest.fixture(scope='module')
 def new_pipeline():
@@ -143,3 +139,11 @@ def new_pipeline():
                     date_updated = datetime.now()
                   )
     return pipeline
+
+#@pytest.fixture
+#def authenticated_request(app):
+#    with app.test_request_context():
+#        # Here we're not overloading the login manager, we're just directly logging in a user
+#        # with whatever parameters we want. The user should only be logged in for the test,
+#        # so you're not polluting the other tests.
+#        yield login_user(new_user)
