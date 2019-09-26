@@ -5,10 +5,15 @@ DATABASE_URL=sqlite:///<ENTER FLASK TOP DIR>/app.db
 SECRET_KEY=you-will-never-guess
 DATA_PATH=/static/data/projects/
 SQLALCHEMY_TRACK_MODIFICATIONS=False
-OAUTH_ORCID_ID=
-OAUTH_ORCID_SECRET=
-ORCID_AUTH_URL=https://orcid.org/oauth/authorize
-ORCID_BASE_URL=https://orcid.org
+MAIL_SERVER=smtp.googlemail.com
+MAIL_PORT=587
+MAIL_USE_TLS=1
+MAIL_USERNAME=<Your gmail user name>
+MAIL_PASSWORD=<Your gmail app specific password, not your normal one>
+OAUTHLIB_INSECURE_TRANSPORT=1
+OAUTH_ORCID_ID=<ORCID CLIENT ID>
+OAUTH_ORCID_SECRET=<ORCID SECRET ID>
 ORCID_TOKEN_URL=https://orcid.org/oauth/token
+ADMIN_EMAIL = <Your gmail>
 
 ~
