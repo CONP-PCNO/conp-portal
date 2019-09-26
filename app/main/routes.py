@@ -25,6 +25,7 @@ def public():
 
 @main_bp.route('/')
 @main_bp.route('/index')
+@login_required
 def index():
     """ Index Route
 
