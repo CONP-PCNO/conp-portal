@@ -1,5 +1,6 @@
 {% extends 'common/base_login.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
+{% import 'common/_formshelpers.html' as termsbox %}
 
 {% block cardtitle %}
 CONP Portal: Register New User
@@ -15,7 +16,10 @@ CONP Portal: Register New User
       {{ wtf.form_field(form.affiliation_type, class='form-control') }}
       {{ wtf.form_field(form.password, class='form-control', placeholder='Please Select a Password') }}
       {{ wtf.form_field(form.retype_password, class='form-control', placeholder='Please Retype your Password') }}
+      {{ termsbox.render_terms_box() }}
+      {{ wtf.form_field(form.agreeToTerms, class='form-control') }}
       <button type=submit class='btn btn-primary btn-block btn-signin'>Register</button>
   </form>
+
 {% endblock %}
 

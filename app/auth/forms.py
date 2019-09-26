@@ -5,7 +5,7 @@ Defines forms needed for Flask-User login
 from flask_wtf import FlaskForm
 from flask_user.forms import RegisterForm
 from flask_user import UserManager
-from wtforms import StringField, SelectField
+from wtforms import StringField, SelectField, BooleanField
 from wtforms.widgets import ListWidget
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, Required
@@ -28,6 +28,9 @@ class CustomRegisterForm(RegisterForm):
     affiliation_type = QuerySelectField('Current Status',
                                         query_factory=possible_affiliation_types,
                                         get_label='label', allow_blank=False)
+
+    agreeToTerms = BooleanField('I Agree to the CONP Terms and Conditions',
+                                 validators=[DataRequired('Need to agree to the terms to register account')])
 
     def validate_affiliation_type(form, field):
         """
