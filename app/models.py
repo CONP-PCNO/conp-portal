@@ -27,12 +27,6 @@ class RoleMixin(object):
             if isinstance(obj, RoleMixin):
                 obj.add_role("member")
 
-                # rl = Role.query.filter(Role.name == "member").first()
-                # if not rl:
-                #     rl = Role(name="member", label="CONP Member Role")
-                # if not obj.has_role(rl.name):
-                #     obj.roles.append(rl)
-
 
 db.event.listen(db.session, 'before_commit', RoleMixin.before_commit)
 
@@ -71,13 +65,13 @@ class User(db.Model, UserMixin, RoleMixin):
 
     def has_role(self, role):
         """
-            Utility function to check if user has a particular role
+        Utility function to check if user has a particular role
 
-            Args:
-                role: role to test against
+        Args:
+            role: role to test against
 
-            Returns:
-                True if the user has the role, otherwise, False
+        Returns:
+            True if the user has the role, otherwise, False
         """
         for item in self.roles:
             if item.name == role:
@@ -88,7 +82,7 @@ class User(db.Model, UserMixin, RoleMixin):
         for item in self.roles:
             return item.name
 
-    def add_role(self,role_name,add_to_roles=True):
+    def add_role(self, role_name, add_to_roles=True):
         """
         Utility function that can add roles to users
 
@@ -101,19 +95,18 @@ class User(db.Model, UserMixin, RoleMixin):
             True if the role has been added to the user
             False if the role cannot be added to the user
         """
-        ## check if the role exists
+        # check if the role exists
         if role_name is None:
             return False
 
         if self.has_role(role_name):
             return True
 
-        rl = Role.query.filter(Role.name==role_name).first()
-
+        rl = Role.query.filter(Role.name == role_name).first()
 
         if rl is None:
             if add_to_roles:
-                rl = Role(name=role_name,label=role_name)
+                rl = Role(name=role_name, label=role_name)
             else:
                 return False
         self.roles.append(rl)
@@ -130,12 +123,12 @@ class User(db.Model, UserMixin, RoleMixin):
         Utility function that returns the information about
         the oauths this user has associated with
         """
-        oauths = OAuth.query.filter(OAuth.user==self).all()
-        return [(x.provider,x.provider_user_login,OAuth_pretty[x.provider]) for x in oauths]
+        oauths = OAuth.query.filter(OAuth.user == self).all()
+        return [(x.provider, x.provider_user_login, OAuth_pretty[x.provider]) for x in oauths]
 
-    def is_oauth_associated(self,provider_name):
-        if OAuth.query.filter(OAuth.user==self,
-                              OAuth.provider==provider_name).first():
+    def is_oauth_associated(self, provider_name):
+        if OAuth.query.filter(OAuth.user == self,
+                              OAuth.provider == provider_name).first():
             return True
         else:
             return False
