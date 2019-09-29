@@ -154,3 +154,4 @@ def new_user():
             )
     user.set_password("ThisPassword")
     return user
+    

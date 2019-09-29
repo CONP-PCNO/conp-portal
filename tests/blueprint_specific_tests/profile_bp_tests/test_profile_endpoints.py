@@ -15,3 +15,4 @@ def test_pipelines_route(test_client):
     """
     res = test_client.get("/profile")
     assert res.status_code == 200
+    
