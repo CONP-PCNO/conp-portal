@@ -36,7 +36,7 @@ and the application should run. Type `.q` and return to exit.
 
 Edit the DATABASE_URL 
 
-In .flaskenv, replace the words `<ENTER FLASK TOP DIR>' with path to your top level flask directory.  You should already be in it, so you can find the path with `pwd`.
+In .flaskenv, replace the words `<ENTER FLASK TOP DIR>` with path to your top level flask directory.  You should already be in it, so you can find the path with `pwd`.
 
 ### Initilize the test database
 

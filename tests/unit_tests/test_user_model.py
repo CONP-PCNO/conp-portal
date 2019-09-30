@@ -3,22 +3,8 @@ import pytest
 from app.models import User, Role,UsersRoles
 from datetime import datetime, timedelta
 
-
-@pytest.fixture(scope='module')
-def new_user(app):
-    """
-    Creates a new mock user for us to test things
-    """
-    user = User(
-                email="example@mailinator.com",
-                full_name="Example User",
-                affiliation="CONP",
-                expiration=datetime.utcnow() + timedelta(days=30),
-                password=app.user_manager.hash_password("ThisPassword")
-            )
-    return user
-
-def test_new_user(new_user,app):
+@pytest.fixture(scope='function')
+def test_new_user(new_user):
     """
     GIVEN a User Model
     WHEN a new User is created

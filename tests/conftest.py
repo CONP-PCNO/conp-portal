@@ -6,10 +6,13 @@ import pytest
 import os
 from app import create_app
 from app import db as _db
-from app.models import RoleMixin
+from app.models import Dataset, DatasetStats, Pipeline, User
 from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker
 from config import TestingConfig
+from datetime import datetime, timedelta
+
+from flask_login import current_user, login_user, logout_user
 
 
 @pytest.fixture(scope='session')
@@ -19,13 +22,7 @@ def app(request):
     TestingConfig in Config.py
     """
     app = create_app(config_settings=TestingConfig)
-    ctx = app.test_request_context()
-    ctx.push()
 
-    def teardown():
-        ctx.pop()
-
-    request.addfinalizer(teardown)
     return app
 
 
@@ -80,3 +77,79 @@ def test_client(app):
 @pytest.fixture()
 def runner(app):
     return app.test_cli_runner()
+
+
+@pytest.fixture(scope='module')
+def new_dataset():
+    """
+    Creastes a new mock dataset to test
+    """
+    dataset = Dataset(
+                      dataset_id="8de99b0e-5f94-11e9-9e05-52545e9add8e",
+                      annex_uuid="4fd032a1-220a-404e-95ac-ccaa3f7efcb7",
+                      description="Human Brain phantom scans, Multiple MRI"
+                                  " scans of a single human phantom over 11"
+                                  " years, T1 weighted images and others on"
+                                  " 13 scanner in 6 sites accross North America."
+                                  " The data are available in minc format",
+                      owner_id=1,
+                      download_path="multicenter-phantom",
+                      raw_data_url="https://phantom-dev.loris.ca",
+                      name="Multicenter Single Subject Human MRI Phantom",
+                      modality="Imaging",
+                      version="1.0",
+                      format="minc",
+                      category="Phantom",
+                      is_private=False,
+
+                  )
+    return dataset
+
+@pytest.fixture(scope='module')
+def new_dataset_stats():
+    """
+    Creastes a new mock DatasetStats to test
+    """
+    dataset_stats = DatasetStats(
+                      dataset_id="8de99b0e-5f94-11e9-9e05-52545e9add8e",
+                      size=40,
+                      files=2712,
+                      sources=1,
+                      num_subjects=1,
+                      num_downloads=0,
+                      num_likes=0,
+                      num_views=0,
+
+                  )
+    return dataset_stats
+
+@pytest.fixture(scope='module')
+def new_pipeline():
+    """
+    Creastes a new mock dataset to test
+    """
+    pipeline = Pipeline(
+                    id = 1,
+                    pipeline_id = 12,
+                    owner_id = 1,
+                    name = 'Freesurfer',
+                    version = '1.9',
+                    is_private = False,
+                    date_created = datetime.now(),
+                    date_updated = datetime.now()
+                  )
+    return pipeline
+
+@pytest.fixture(scope='module')
+def new_user(app):
+    """
+    Creates a new mock user for us to test things
+    """
+    user = User(
+                email="example@mailinator.com",
+                affiliation="CONP",
+                full_name="Example User",
+                expiration=datetime.utcnow() + timedelta(days=30),
+                password=app.user_manager.hash_password("ThisPassword")
+            )
+    return user
