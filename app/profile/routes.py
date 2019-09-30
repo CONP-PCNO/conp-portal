@@ -18,6 +18,7 @@ def current_user_profile_page():
     Route that provides a path to the current users profile page for editting
     """
     form = UserProfileForm(request.form, obj=current_user)
+    session.pop('_flashes',None)
 
     if request.method == 'POST':
         current_user.full_name = request.form.get('full_name')

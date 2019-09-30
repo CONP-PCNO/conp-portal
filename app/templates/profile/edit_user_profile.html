@@ -54,12 +54,14 @@ CONP Portal: Edit User Profile
   {% endif %}
   {% if not current_user.is_oauth_associated("orcid") %}
     {% if can_associate %}
+  <section class="row">
     <div class="col">
       <a id="alt-login-orcid" class="btn-alt-login" href="{{ url_for('orcid.login')}}">
           <img class="orcid-logo" src="{{ url_for('static', filename='img/orcid-logo.png') }}">
           <span class="label-login">Associate With ORCID</span>
       </a>
     </div>
+  </section>
     {% endif %}
   {% endif %}
     <button type=submit class='btn btn-primary btn-block btn-signin'>Save</button>
