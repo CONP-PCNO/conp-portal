@@ -3,23 +3,6 @@ import pytest
 from app.models import User
 from datetime import datetime, timedelta
 
-
-@pytest.fixture(scope='module')
-def new_user():
-    """
-    Creates a new mock user for us to test things
-    """
-    user = User(
-                oauth_id="0000-0000-0000-0000",
-                username="testuser",
-                email="example@mailinator.com",
-                affiliation="CONP",
-                expiration=datetime.utcnow() + timedelta(days=30)
-            )
-    user.set_password("ThisPassword")
-    return user
-
-
 def test_new_user(new_user):
     """
     GIVEN a User Model
