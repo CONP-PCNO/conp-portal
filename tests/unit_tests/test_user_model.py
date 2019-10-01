@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 import pytest
-from app.models import User, Role,UsersRoles
+from app.models import User, Role,UsersRoles, AffiliationType
 from datetime import datetime, timedelta
 
-@pytest.fixture(scope='function')
-def test_new_user(new_user):
+def test_new_user(session, new_user, new_affiliation_type, app):
     """
     GIVEN a User Model
     WHEN a new User is created
@@ -14,6 +13,8 @@ def test_new_user(new_user):
     assert new_user.full_name=="Example User"
     assert new_user.password != "THISPassword"
     assert new_user.affiliation == "CONP"
+    assert new_user.affiliation_type is not None
+    assert new_user.affiliation_type == new_affiliation_type
     assert app.user_manager.verify_password("ThisPassword",new_user.password)
 
 def test_user_db_model(session, new_user):
@@ -31,6 +32,10 @@ def test_user_db_model(session, new_user):
     assert new_user.id > 0
     assert u.full_name == new_user.full_name
     assert u.affiliation == new_user.affiliation
+    assert u.affiliation_type is not None
+    assert u.affiliation_type == AffiliationType.query.filter(
+                                 AffiliationType.name == "PR").first()
+
     assert u.has_role("member")
     session.delete(u)
     session.commit()

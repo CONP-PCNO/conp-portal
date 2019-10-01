@@ -45,8 +45,6 @@ def orcid_logged_in(orcid_blueprint, token):
         flash("Failed to log in.", category="error")
         return False
 
-    print(token.items())
-
     # get the orcid id information
     # ORCID API calls require that the orcid id be in the request, so that needs
     # to be extracted from the token prior to making any requests
