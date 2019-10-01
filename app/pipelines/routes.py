@@ -52,6 +52,7 @@ def pipeline_search():
 
     if not os.path.exists(all_desc_path) or \
         not os.path.exists(all_detailed_desc_path):
+        print("--- no files need to update")
         thr = UpdatePipelineData(path=cache_dir)
         thr.start()
         thr.join()
