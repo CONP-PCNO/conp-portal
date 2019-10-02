@@ -13,6 +13,12 @@ def test_pipelines_route(test_client):
     WHEN no user is logged in
     THEN should return success code
     """
-    res = test_client.get("/profile")
-    assert res.status_code == 200
-    
+    res = test_client.get(url_for('profile.current_user_profile_page'),
+                          follow_redirects=False)
+    assert res.status_code == 302
+    assert urlparse(res.location).path == url_for("user.login")
+
+    res = test_client.get(url_for('profile.current_user_profile_page'),
+                          follow_redirects=True)
+    assert res.status_code==200
+

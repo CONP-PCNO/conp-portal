@@ -13,5 +13,5 @@ def test_login_route(test_client):
     WHEN no user is logged in
     THEN should return success code
     """
-    res = test_client.get("/login")
+    res = test_client.get(url_for('user.login'))
     assert res.status_code == 200
