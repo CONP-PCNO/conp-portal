@@ -100,38 +100,17 @@ def dataset_search():
                 "imagePath": "/static/img/",
                 "downloadPath": "/static/data/projects/" + d.download_path,
                 "URL": d.raw_data_url,
-                "downloads": DatasetStats
-                             .query
-                             .filter_by(dataset_id=d.dataset_id)
-                             .first().num_downloads,
-                "views": DatasetStats
-                        .query
-                        .filter_by(dataset_id=d.dataset_id)
-                        .first().num_views,
-                "likes": DatasetStats
-                        .query
-                        .filter_by(dataset_id=d.dataset_id)
-                        .first().num_likes,
+                "downloads": d.num_downloads,
+                "views": d.num_views,
+                "likes": d.num_likes,
                 "dateAdded": str(d.date_created.date()),
                 "dateUpdated": str(d.date_updated.date()),
-                "size": DatasetStats
-                       .query
-                       .filter_by(dataset_id=d.dataset_id)
-                       .first().size,
-                "files": DatasetStats
-                        .query
-                        .filter_by(dataset_id=d.dataset_id)
-                        .first().files,
-                "subjects": DatasetStats
-                          .query
-                          .filter_by(dataset_id=d.dataset_id)
-                          .first().num_subjects,
+                "size": d.size,
+                "files": d.files,
+                "subjects": d.num_subjects,
                 "format": d.format.replace("'", ""),
                 "modalities": d.modality.replace("'", ""),
-                "sources": DatasetStats
-                          .query
-                          .filter_by(dataset_id=d.dataset_id)
-                          .first().sources,
+                "sources": d.sources,
             }
             elements.append(dataset)
 
@@ -246,31 +225,17 @@ def dataset_info():
         "imagePath": "/static/img/",
         "downloadPath": "/static/data/projects/" + dataset.download_path,
         "URL": dataset.raw_data_url,
-        "downloads": DatasetStats.query
-                                 .filter_by(dataset_id=dataset.dataset_id)
-                                 .first().num_downloads,
-        "views": DatasetStats.query
-                             .filter_by(dataset_id=dataset.dataset_id)
-                             .first().num_views,
-        "likes": DatasetStats.query
-                             .filter_by(dataset_id=dataset.dataset_id)
-                             .first().num_likes,
+        "downloads": dataset.num_downloads,
+        "views": dataset.num_views,
+        "likes": dataset.num_likes,
         "dateAdded": str(dataset.date_created.date()),
         "dateUpdated": str(dataset.date_updated.date()),
-        "size": DatasetStats.query
-                            .filter_by(dataset_id=dataset.dataset_id)
-                            .first().size,
-        "files": DatasetStats.query
-                             .filter_by(dataset_id=dataset.dataset_id)
-                             .first().files,
-        "subjects": DatasetStats.query
-                                .filter_by(dataset_id=dataset.dataset_id)
-                                .first().num_subjects,
+        "size": dataset.size,
+        "files": dataset.files,
+        "subjects": dataset.num_subjects,
         "format": dataset.format.replace("'", ""),
         "modalities": dataset.modality.replace("'", ""),
-        "sources": DatasetStats.query
-                               .filter_by(dataset_id=dataset.dataset_id)
-                               .first().sources
+        "sources": dataset.sources,
     }
 
     metadata = get_dataset_metadata_information(dataset)

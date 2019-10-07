@@ -5,7 +5,7 @@ import os
 
 import csv
 from datetime import datetime, timedelta
-from app.models import User, Dataset, DatasetStats, Pipeline
+from app.models import User, Dataset, Pipeline
 from app import db
 
 class InsertTestDataset(object):
@@ -84,17 +84,17 @@ class InsertTestDataset(object):
             next(reader)
 
             for row in reader:
-                stat = DatasetStats(
-                    dataset_id = row[0],
-                    size = row[1],
-                    files = row[2],
-                    sources = row[3],
-                    num_subjects = row[4],
-                    num_downloads = row[5],
-                    num_likes = row[6],
-                    num_views = row[7],
-                    date_updated = datetime.now()
-                )
+                dataset = Dataset.query.filter_by(dataset_id=row['dataset_id']).first()
+                    dataset.size=row['size']
+                    dataset.files=row['files']
+                    dataset.sources=row['sources']
+                    dataset.num_subjects=row['num_subjects']
+                    dataset.num_downloads=row['num_downloads']
+                    dataset.num_likes=row['num_likes']
+                    dataset.num_views=row['num_views']
+
+                    db.session.commit()
+
                 db.session.add(stat)
         db.session.commit()
         dataset_stats_file.close()

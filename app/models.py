@@ -76,7 +76,7 @@ class Dataset(db.Model):
     """
         Provides DataSet Model
     """
-    __tablename__ = 'newdatasets'
+    __tablename__ = 'datasets'
 
     id = db.Column(db.Integer, primary_key=True)
     dataset_id = db.Column(db.String(64), index=True, unique=True)

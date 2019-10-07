@@ -16,7 +16,7 @@ def register(app):
     @app.cli.command("seed_test_db")
     def seed_test_db():
         from app import db
-        from app.models import User, Dataset, DatasetStats
+        from app.models import User, Dataset
 
         # create an admin user (Not useful now, but at least we will have a user)
 
@@ -44,24 +44,23 @@ def register(app):
 
                 db.session.add(dataset)
 
+            db.session.commit()
+
             dataset_stats_csvfile = os.path.join(app.root_path, "../test/datasets_stats.csv")
             with open(dataset_stats_csvfile, 'r') as datastat_csv:
                 csv_reader = csv.DictReader(datastat_csv)
                 for row in csv_reader:
-                    dataset_stat = DatasetStats(
-                                                dataset_id=row['dataset_id'],
-                                                size=row['size'],
-                                                files=row['files'],
-                                                sources=row['sources'],
-                                                num_subjects=row['num_subjects'],
-                                                num_downloads=row['num_downloads'],
-                                                num_likes=row['num_likes'],
-                                                num_views=row['num_views'],
-                                                date_updated=datetime.utcnow()
-                                                )
-                    db.session.add(dataset_stat)
+                    dataset = Dataset.query.filter_by(dataset_id=row['dataset_id']).first()
+                    dataset.size=row['size']
+                    dataset.files=row['files']
+                    dataset.sources=row['sources']
+                    dataset.num_subjects=row['num_subjects']
+                    dataset.num_downloads=row['num_downloads']
+                    dataset.num_likes=row['num_likes']
+                    dataset.num_views=row['num_views']
 
-            db.session.commit()
+                    db.session.commit()
+
 
     @app.cli.command('update_pipeline_data')
     def update_pipeline_data():
