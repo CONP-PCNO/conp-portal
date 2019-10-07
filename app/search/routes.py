@@ -7,7 +7,7 @@ import json
 import os
 import requests
 from datetime import datetime, timedelta
-from app.models import User, Dataset, DatasetStats
+from app.models import User, Dataset
 from sqlalchemy import func, or_
 from flask import render_template, request, Response, abort
 from flask_login import current_user
