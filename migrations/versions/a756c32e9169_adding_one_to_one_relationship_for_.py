@@ -23,6 +23,10 @@ def upgrade():
       "REFERENCES datasets(id) " 
     )
     op.execute(
+      "CREATE UNIQUE INDEX ix_dataset_stats_fk_dataset_id "
+      "ON dataset_stats (fk_dataset_id) "
+    )
+    op.execute(
       "UPDATE dataset_stats "
       "SET fk_dataset_id = ("
         "SELECT id FROM datasets "
@@ -39,6 +43,7 @@ def downgrade():
         "num_views, date_updated "
       "FROM dataset_stats"
     )
+    op.drop_index('ix_dataset_stats_fk_dataset_id', table_name='dataset_stats')
     op.drop_index('ix_dataset_stats_dataset_id', table_name='dataset_stats')
     op.drop_index('ix_dataset_stats_files', table_name='dataset_stats')
     op.drop_index('ix_dataset_stats_num_downloads', table_name='dataset_stats')
