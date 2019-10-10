@@ -11,6 +11,7 @@ import os
 import logging
 import requests
 
+
 class UpdatePipelineData(threading.Thread):
     """
         Class that handles the threaded updating of the Pipeline
@@ -59,6 +60,7 @@ class UpdatePipelineData(threading.Thread):
         except Exception as e:
             logging.exception("An exception occurred in the thread.")
 
+
 class UpdateDatasets(threading.Thread):
     def __init__(self, path):
         super(UpdateDatasets, self).__init__()
@@ -78,10 +80,10 @@ class UpdateDatasets(threading.Thread):
             # first search for all descriptors
             datasets = json.loads(
                 requests.get('https://api.github.com/orgs/conpdatasets/repos')
-                    .content.decode('ascii')
-            );
+                .content.decode('ascii')
+            )
 
-            all_descriptors_filepath = os.path.join(self.cache_dir,"all_descriptors.json")
+            all_descriptors_filepath = os.path.join(self.cache_dir, "all_descriptors.json")
             print('here')
             with open(all_descriptors_filepath, "w") as f:
                 json.dump(datasets, f, indent=4)
