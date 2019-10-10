@@ -70,19 +70,19 @@ const DatasetElement = props => {
             </p>
             <p className="card-text text-muted">{element.format}</p>
           </li>
-          <li class="d-none d-md-flex">
+          <li className="d-none d-md-flex">
             <p className="card-text text-capitalize pr-1">
               <strong>Modalities: </strong>
             </p>
             <p className="card-text text-muted">{element.modalities}</p>
           </li>
-          <li class="d-none d-md-flex">
+          <li className="d-none d-md-flex">
             <p className="card-text text-capitalize pr-1">
               <strong>Date Added: </strong>
             </p>
             <p className="card-text text-muted">{element.dateAdded}</p>
           </li>{" "}
-          <li class="d-none d-md-flex">
+          <li className="d-none d-md-flex">
             <p className="card-text text-capitalize pr-1">
               <strong>Date Updated: </strong>
             </p>
