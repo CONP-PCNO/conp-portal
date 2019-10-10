@@ -238,7 +238,7 @@ class DatasetStats(db.Model):
     num_likes = db.Column(db.Integer, index=True)
     num_views = db.Column(db.Integer, index=True)
     date_updated = db.Column(db.DateTime, default=datetime.now())
-    fk_dataset_id = db.Column(db.Integer, db.ForeignKey('datasets.id'), nullable=False)
+    fk_dataset_id = db.Column(db.Integer, db.ForeignKey('datasets.id'), unique=True, nullable=False)
     dataset = db.relationship(Dataset, back_populates="stats")
 
 

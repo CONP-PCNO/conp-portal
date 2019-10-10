@@ -121,7 +121,7 @@ def new_dataset_stats():
         num_downloads=0,
         num_likes=0,
         num_views=0,
-
+        fk_dataset_id=1,
     )
     return dataset_stats
 

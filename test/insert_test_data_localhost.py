@@ -83,6 +83,8 @@ class InsertTestDataset(object):
             reader = csv.reader(dataset_stats_file)
             next(reader)
 
+            dataset = Dataset.query.filter_by(dataset_id=row[0]).first()
+
             for row in reader:
                 stat = DatasetStats(
                     dataset_id = row[0],
@@ -93,7 +95,8 @@ class InsertTestDataset(object):
                     num_downloads = row[5],
                     num_likes = row[6],
                     num_views = row[7],
-                    date_updated = datetime.now()
+                    date_updated = datetime.now(),
+                    fk_dataset_id = dataset.id
                 )
                 db.session.add(stat)
         db.session.commit()
