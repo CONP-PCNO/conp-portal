@@ -216,6 +216,7 @@ class Dataset(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.now())
     date_updated = db.Column(db.DateTime, default=datetime.now())
     is_private = db.Column(db.Boolean, index=True)
+    stats = db.relationship("DatasetStats", uselist=False, back_populates="dataset")
 
     def __repr__(self):
         return '<Dataset {}>'.format(self.name)
@@ -237,6 +238,8 @@ class DatasetStats(db.Model):
     num_likes = db.Column(db.Integer, index=True)
     num_views = db.Column(db.Integer, index=True)
     date_updated = db.Column(db.DateTime, default=datetime.now())
+    fk_dataset_id = db.Column(db.Integer, db.ForeignKey('datasets.id'), nullable=False)
+    dataset = db.relationship(Dataset, back_populates="stats")
 
 
 class Pipeline(db.Model):
