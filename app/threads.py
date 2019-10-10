@@ -9,7 +9,7 @@ import threading
 import json
 import os
 import logging
-
+import requests
 
 class UpdatePipelineData(threading.Thread):
     """
@@ -55,6 +55,36 @@ class UpdatePipelineData(threading.Thread):
                                    "detailed_all_descriptors.json"),
                       "w") as f:
                 json.dump(detailed_all_descriptors, f, indent=4)
+
+        except Exception as e:
+            logging.exception("An exception occurred in the thread.")
+
+class UpdateDatasets(threading.Thread):
+    def __init__(self, path):
+        super(UpdateDatasets, self).__init__()
+        if not os.path.exists('logs'):
+            os.makedirs('logs')
+        logging.basicConfig(filename='logs/update_datasets_thread.log', level=logging.INFO)
+        self.cache_dir = path
+
+    def run(self):
+        try:
+            # if cache directory doesn't exist then create it
+            print(self.cache_dir)
+            if not os.path.exists(self.cache_dir):
+                print('yo')
+                os.makedirs(self.cache_dir)
+
+            # first search for all descriptors
+            datasets = json.loads(
+                requests.get('https://api.github.com/orgs/conpdatasets/repos')
+                    .content.decode('ascii')
+            );
+
+            all_descriptors_filepath = os.path.join(self.cache_dir,"all_descriptors.json")
+            print('here')
+            with open(all_descriptors_filepath, "w") as f:
+                json.dump(datasets, f, indent=4)
 
         except Exception as e:
             logging.exception("An exception occurred in the thread.")
