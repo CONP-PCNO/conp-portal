@@ -140,12 +140,14 @@ def _seed_test_datasets_db(app):
             )
 
             db.session.add(dataset)
+        db.session.commit()
 
         dataset_stats_csvfile = os.path.join(
             app.root_path, "../test/datasets_stats.csv")
         with open(dataset_stats_csvfile, 'r') as datastat_csv:
             csv_reader = csv.DictReader(datastat_csv)
             for row in csv_reader:
+                dataset_id = Dataset.query.filter_by(dataset_id=row['dataset_id']).first().id
                 dataset_stat = DatasetStats(
                     dataset_id=row['dataset_id'],
                     size=row['size'],
@@ -155,7 +157,8 @@ def _seed_test_datasets_db(app):
                     num_downloads=row['num_downloads'],
                     num_likes=row['num_likes'],
                     num_views=row['num_views'],
-                    date_updated=datetime.utcnow()
+                    date_updated=datetime.utcnow(),
+                    fk_dataset_id=dataset_id
                 )
                 db.session.add(dataset_stat)
 
