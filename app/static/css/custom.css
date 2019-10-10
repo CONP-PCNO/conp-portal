@@ -1,5 +1,5 @@
-@import "https://code.highcharts.com/css/highcharts.css";
-<link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Sans:400,700" rel="stylesheet">
+@import "static/css/highcharts.css";
+<link href="static/css/google-fonts.css" rel="stylesheet">
 
 body {
     	color: #343434;

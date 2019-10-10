@@ -3,14 +3,14 @@
 <!-- Head Block -->
 {% block scripts %}
 {{ super() }}
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script type="text/javascript" src="{{ url_for('static',filename='js/charts.js') }}"></script>
+<script src="static/js/highcharts/highcharts.js"></script>
+<script src="static/js/highcharts/exporting.js"></script>
+<script type="text/javascript" src="static/js/charts.js"></script>
 {% endblock %}
 
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="https://code.highcharts.com/css/highcharts.css" />
+<link rel="stylesheet" href="static/css/highcharts.css" />
 {% endblock %}
 
 <!-- Login Block -->
