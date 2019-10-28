@@ -61,28 +61,12 @@ def pipeline_search():
     all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
     all_detailed_desc_path = os.path.join(cache_dir, "detailed_all_descriptors.json")
 
-    if not os.path.exists(all_desc_path) or \
-        not os.path.exists(all_detailed_desc_path):
-        print("--- no files need to update")
-        thr = UpdatePipelineData(path=cache_dir)
-        thr.start()
-        thr.join()
-
-
     # fetch data from cache
-
     with open(all_desc_path, "r") as f:
         all_descriptors = json.load(f)
 
     with open(all_detailed_desc_path, "r") as f:
         detailed_all_descriptors = json.load(f)
-
-    # if the cache data older than 5min or 300 seconds, update in background
-    delta = time.time() - os.path.getmtime(all_desc_path)
-    if delta > 300:
-        print("Pipeline database older than 5 minutes, updating...")
-        UpdatePipelineData(path=cache_dir).start()
-
 
     # search cache with search query else return everything
     if search_query not in ("", '', None):
