@@ -166,7 +166,7 @@ def _update_pipeline_data(app):
     """
     Updates from Zenodo the available pipelines
     """
-    thr = UpdatePipelineData(path=os.path.join(os.path.expanduser('-'),
+    thr = UpdatePipelineData(path=os.path.join(os.path.expanduser('~'),
                                                ".cache", "boutiques"))
     thr.start()
     thr.join()
