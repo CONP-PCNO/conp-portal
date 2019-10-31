@@ -50,6 +50,12 @@ def register(app):
         """
         _update_pipeline_data(app)
 
+    @app.cli.command('update_datasets_metadata')
+    def update_datasets_metadata():
+        """
+        Wrapper to call the updating to the datasets metadata
+        """
+        _update_datasets_metadata(app)
 
 def _seed_aff_types_db(app):
     """
@@ -140,33 +146,86 @@ def _seed_test_datasets_db(app):
             )
 
             db.session.add(dataset)
-
-        dataset_stats_csvfile = os.path.join(
-            app.root_path, "../test/datasets_stats.csv")
-        with open(dataset_stats_csvfile, 'r') as datastat_csv:
-            csv_reader = csv.DictReader(datastat_csv)
-            for row in csv_reader:
-                dataset_stat = DatasetStats(
-                    dataset_id=row['dataset_id'],
-                    size=row['size'],
-                    files=row['files'],
-                    sources=row['sources'],
-                    num_subjects=row['num_subjects'],
-                    num_downloads=row['num_downloads'],
-                    num_likes=row['num_likes'],
-                    num_views=row['num_views'],
-                    date_updated=datetime.utcnow()
-                )
-                db.session.add(dataset_stat)
-
         db.session.commit()
+
+    dataset_stats_csvfile = os.path.join(
+        app.root_path, "../test/datasets_stats.csv")
+    with open(dataset_stats_csvfile, 'r') as datastat_csv:
+        csv_reader = csv.DictReader(datastat_csv)
+        for row in csv_reader:
+            dataset_stat = DatasetStats(
+                dataset_id=row['dataset_id'],
+                size=row['size'],
+                files=row['files'],
+                sources=row['sources'],
+                num_subjects=row['num_subjects'],
+                num_downloads=row['num_downloads'],
+                num_likes=row['num_likes'],
+                num_views=row['num_views'],
+                date_updated=datetime.utcnow()
+            )
+            db.session.add(dataset_stat)
+
 
 
 def _update_pipeline_data(app):
     """
     Updates from Zenodo the available pipelines
     """
-    thr = UpdatePipelineData(path=os.path.join(os.path.expanduser('-'),
+    thr = UpdatePipelineData(path=os.path.join(os.path.expanduser('~'),
                                                ".cache", "boutiques"))
     thr.start()
     thr.join()
+
+def _update_datasets_metadata(app):
+    """
+    Updates from Zenodo the available pipelines
+    """
+    from app import db, config
+    from app.models import Dataset as DBDataset
+    from datalad import api
+    from datalad.api import Dataset as DataladDataset
+    import fnmatch
+    import json
+
+    datasetspath = app.config['DATA_PATH']
+
+    d = DataladDataset(path=datasetspath + '/conp-dataset')
+    if not d.is_installed():
+        api.clone(source='http://github.com/CONP-PCNO/conp-dataset', path=datasetspath + '/conp-dataset')
+        d = DataladDataset(path=datasetspath + '/conp-dataset')
+        d.install(path='', recursive=True)
+    
+    try:
+       d.update(path='')
+    except Exception as e:
+       logging.exception("An exception occurred in datalad update")
+    
+    for ds in d.subdatasets():
+        subdataset = DataladDataset(path=ds['path'])
+        if not subdataset.is_installed():
+            subdataset.install(path='')
+
+        dirs = os.listdir(ds['path'])
+        descriptor = ''
+        for file in dirs:
+            if fnmatch.fnmatch(file.lower(), 'dats.json'):
+                descriptor = file
+        if descriptor == '':
+            print('DATS file can`t be found in ' + ds['path'])
+            continue
+
+        with open(ds['path'] + '/' + descriptor, 'r') as f:
+            dats = json.load(f)
+
+        # use dats.json data to fill the datasets table
+        # avoid duplication / REPLACE instead of insert
+        dataset = DBDataset(
+             download_path=ds['path'],
+            name=ds['gitmodule_name'],
+            date_created=datetime.utcnow(),
+            date_updated=datetime.utcnow(),
+        )
+        db.session.add(dataset)
+
+    db.session.commit()
