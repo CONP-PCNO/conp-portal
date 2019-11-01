@@ -4,8 +4,7 @@
 {% block scripts %}
 {{ super() }}
 <script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script type="text/javascript" src="{{ url_for('static',filename='js/charts.js') }}"></script>
+<!--<script src="https://code.highcharts.com/modules/exporting.js"></script>-->
 {% endblock %}
 
 {% block styles %}
@@ -121,5 +120,6 @@ Welcome <strong>{{ user.username }}</strong>
         </div>
       </div>
     </div>
-  </div>
+  </div> <!-- row -->
+  <script type="text/javascript" src="{{ url_for('static',filename='js/charts.js') }}"></script>
 {% endblock %}

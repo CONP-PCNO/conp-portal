@@ -49,7 +49,7 @@ def pipeline_search():
     all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
     all_detailed_desc_path = os.path.join(cache_dir, "detailed_all_descriptors.json")
 
-
+    print("!!!!!! {}".format(all_detailed_desc_path))
     if not os.path.exists(all_desc_path) or \
         not os.path.exists(all_detailed_desc_path):
         print("--- no files need to update")
