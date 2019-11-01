@@ -199,7 +199,9 @@ def _update_datasets_metadata(app):
     try:
        d.update(path='')
     except Exception as e:
-       logging.exception("An exception occurred in datalad update")
+       print("An exception occurred in datalad update")
+       print(e.args)
+       
     
     for ds in d.subdatasets():
         subdataset = DataladDataset(path=ds['path'])
@@ -212,7 +214,7 @@ def _update_datasets_metadata(app):
             if fnmatch.fnmatch(file.lower(), 'dats.json'):
                 descriptor = file
         if descriptor == '':
-            print('DATS file can`t be found in ' + ds['path'])
+            print('DATS.json file can`t be found in ' + ds['path'])
             continue
 
         with open(ds['path'] + '/' + descriptor, 'r') as f:
@@ -220,12 +222,19 @@ def _update_datasets_metadata(app):
 
         # use dats.json data to fill the datasets table
         # avoid duplication / REPLACE instead of insert
-        dataset = DBDataset(
-             download_path=ds['path'],
-            name=ds['gitmodule_name'],
-            date_created=datetime.utcnow(),
-            date_updated=datetime.utcnow(),
-        )
-        db.session.add(dataset)
+        dataset = DBDataset.query.filter_by(dataset_id=ds['gitmodule_name']).first()
+        if dataset is None:
+            dataset = DBDataset()
+            dataset['date_created'] = datetime.utcnow()
+
+        dataset.dataset_id = ds['gitmodule_name']
+        dataset.download_path = ds['path'] + '/' + descriptor
+        dataset.date_updated = datetime.utcnow()
+        dataset.description = dats['description']
+        dataset.name = dats['title']
+        dataset.raw_data_url = ds['path'] 
+        
+        db.session.merge(dataset)
+        print(ds['gitmodule_name'] + ' updated.')
 
     db.session.commit()

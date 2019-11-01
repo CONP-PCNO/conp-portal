@@ -42,6 +42,7 @@ def get_datset_logo(dataset_id):
         Returns:
             path to the png file for the logo
     """
+    return "/static/img/medics.png"
     logos = {
         "8de99b0e-5f94-11e9-9e05-52545e9add8e": "/static/img/loris.png",
         "0ea345b4-62cf-11e9-b202-52545e9add8e": "/static/img/preventad.png",
@@ -98,41 +99,20 @@ def dataset_search():
             "title": d.name.replace("'", ""),
             "isPrivate": d.is_private,
             "thumbnailURL": get_datset_logo(d.dataset_id),
-            "imagePath": "/static/img/",
-            "downloadPath": "/static/data/projects/" + d.download_path,
+            "imagePath": "/?",
+            "downloadPath": d.download_path,
             "URL": d.raw_data_url,
-            "downloads": DatasetStats
-                            .query
-                            .filter_by(dataset_id=d.dataset_id)
-                            .first().num_downloads,
-            "views": DatasetStats
-            .query
-            .filter_by(dataset_id=d.dataset_id)
-                    .first().num_views,
-            "likes": DatasetStats
-                    .query
-                    .filter_by(dataset_id=d.dataset_id)
-                    .first().num_likes,
+            "downloads": "0",
+            "views": "0",
+            "likes": "0",
             "dateAdded": str(d.date_created.date()),
             "dateUpdated": str(d.date_updated.date()),
-            "size": DatasetStats
-            .query
-            .filter_by(dataset_id=d.dataset_id)
-            .first().size,
-            "files": DatasetStats
-            .query
-                    .filter_by(dataset_id=d.dataset_id)
-                    .first().files,
-            "subjects": DatasetStats
-            .query
-            .filter_by(dataset_id=d.dataset_id)
-            .first().num_subjects,
-            "format": d.format.replace("'", ""),
-            "modalities": d.modality.replace("'", ""),
-            "sources": DatasetStats
-            .query
-            .filter_by(dataset_id=d.dataset_id)
-            .first().sources,
+            "size": "0",
+            "files": "0",
+            "subjects": "0",
+            "format": "?",
+            "modalities": "?",
+            "sources": "?"
         }
         elements.append(dataset)
 
@@ -231,7 +211,7 @@ def dataset_info():
     dataset_id = request.args.get('id')
 
     # Query dataset
-    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
+    d = Dataset.query.filter_by(dataset_id=dataset_id).first()
 
     if current_user.is_authenticated:
         authorized = True
@@ -240,43 +220,29 @@ def dataset_info():
 
     dataset = {
         "authorized": authorized,
-        "id": dataset.dataset_id,
-        "title": dataset.name.replace("'", ""),
-        "isPrivate": dataset.is_private,
-        "thumbnailURL": get_datset_logo(dataset.dataset_id),
-        "imagePath": "/static/img/",
-        "downloadPath": "/static/data/projects/" + dataset.download_path,
-        "URL": dataset.raw_data_url,
-        "downloads": DatasetStats.query
-                                 .filter_by(dataset_id=dataset.dataset_id)
-                                 .first().num_downloads,
-        "views": DatasetStats.query
-                             .filter_by(dataset_id=dataset.dataset_id)
-                             .first().num_views,
-        "likes": DatasetStats.query
-                             .filter_by(dataset_id=dataset.dataset_id)
-                             .first().num_likes,
-        "dateAdded": str(dataset.date_created.date()),
-        "dateUpdated": str(dataset.date_updated.date()),
-        "size": DatasetStats.query
-                            .filter_by(dataset_id=dataset.dataset_id)
-                            .first().size,
-        "files": DatasetStats.query
-                             .filter_by(dataset_id=dataset.dataset_id)
-                             .first().files,
-        "subjects": DatasetStats.query
-                                .filter_by(dataset_id=dataset.dataset_id)
-                                .first().num_subjects,
-        "format": dataset.format.replace("'", ""),
-        "modalities": dataset.modality.replace("'", ""),
-        "sources": DatasetStats.query
-                               .filter_by(dataset_id=dataset.dataset_id)
-                               .first().sources
+        "id": d.dataset_id,
+        "title": d.name.replace("'", ""),
+        "isPrivate": d.is_private,
+        "thumbnailURL": get_datset_logo(d.dataset_id),
+        "imagePath": "/?",
+        "downloadPath": d.download_path,
+        "URL": d.raw_data_url,
+        "downloads": "0",
+        "views": "0",
+        "likes": "0",
+        "dateAdded": str(d.date_created.date()),
+        "dateUpdated": str(d.date_updated.date()),
+        "size": "0",
+        "files": "0",
+        "subjects": "0",
+        "format": "?",
+        "modalities": "?",
+        "sources": "?"
     }
 
-    metadata = get_dataset_metadata_information(dataset)
+    metadata = get_dataset_metadata_information(d)
 
-    return render_template('dataset.html', title='CONP | Dataset', data=dataset,
+    return render_template('dataset.html', title='CONP | Dataset', data=d,
                            metadata=metadata, user=current_user)
 
 
@@ -326,22 +292,15 @@ def get_dataset_metadata_information(dataset):
             payload containing the datasets metadata
 
     """
-    directory = os.path.basename(dataset['downloadPath'])
-    root_path = os.path.join(os.path.dirname(
-        os.path.abspath(__file__)), 'static/data/projects/')
-    dataset_path = os.path.abspath(
-        os.path.normpath(os.path.join(root_path, directory)))
-
-    descriptor_path = dataset_path + '/descriptor.json'
-
+    descriptor_path = dataset.download_path
     with open(descriptor_path, 'r') as json_file:
         data = json.load(json_file)
 
         payload = {
-            "authors": data['authors'],
+            "authors": data['creators'],
             "description": data['description'],
-            "contact": data['contact'],
-            "version": "1.0",
+            "contact": 'TODO',
+            "version": data['version'],
             "licenses": data['licenses']
         }
 
