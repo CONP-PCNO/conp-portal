@@ -3,6 +3,11 @@ import PropTypes from "prop-types";
 
 const PipelineElement = props => {
   const { authorized, ...element } = props;
+  const platforms = element.platforms.map((item,key) =>
+    <a key={key} className="card-button mx-2" href={item.uri}>
+      <img alt="Online platform" src={item.img} />
+    </a>
+  );
 
   return (
     <div className="card row flex-row" data-type="pipeline">
@@ -39,7 +44,7 @@ const PipelineElement = props => {
         </a>
         <div className="card-subtitle col-12 pl-2 pl-md-0">
           <p className="card-text text-capitalize pr-1">
-            <strong>Pipeline Id: </strong>
+            <strong>Pipeline Id:</strong>
           </p>
           <a href={"https://www.zenodo.org/record/" + element.id.split(".")[1]}>
             <p className="card-text text-muted text-link">{element.id}</p>
@@ -51,12 +56,7 @@ const PipelineElement = props => {
       </div>
       <div className="col-12 col-md-auto d-flex align-items-center justify-content-center my-2 card-buttons">
         <div className="d-flex justify-content-end align-items-center flex-wrap">
-          <a className="card-button mx-2" href={element.onlineplatformurls}>
-            <img
-              alt="Online platform"
-              src={`${element.imagePath}/run_on_cbrain_green.png`}
-            />
-          </a>
+          {platforms}
         </div>
       </div>
     </div>
@@ -69,7 +69,7 @@ PipelineElement.propTypes = {
   description: PropTypes.string,
   downloads: PropTypes.number,
   descriptorurl: PropTypes.string,
-  onlineplatformurls: PropTypes.string,
+  platforms: PropTypes.arrayOf(PropTypes.object),
   name: PropTypes.string,
   commandline: PropTypes.string,
   author: PropTypes.string,
@@ -80,12 +80,12 @@ PipelineElement.propTypes = {
   containerimage: PropTypes.object,
   tags: PropTypes.object,
   url: PropTypes.string,
-  img: PropTypes.string
+  img: PropTypes.string,
+  imagePath: PropTypes.string
 };
 
 //PipelineElement.defaultProps = {
-//  imagePath: "",
-//  downloadPath: ""
+//  imagePath: ""
 //};
 
 export default PipelineElement;

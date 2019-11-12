@@ -6,25 +6,34 @@
 import json
 import os
 import time
+import math
 from app.threads import UpdatePipelineData
-from flask import render_template, request
+from flask import render_template, request, url_for
 from flask_login import current_user
 from app.pipelines import pipelines_bp
 
 
-@pipelines_bp.route('/pipelines')
+
+@pipelines_bp.route('/pipelines', methods=['GET'])
 def pipelines():
     """ Pipelines Route
 
         The route that leads to the pipelines page
 
         Args:
-            None
+            page: the page that you want to display (default: 1)
+            max_per_page: the number of items per page (default: 10)
 
         Returns:
             Rendered template for pipelines.html
     """
-    return render_template('pipelines.html', title='CONP | Tools & Pipelines')
+    page = int(request.args.get('page') or 1)
+    max_per_page = int(request.args.get('max_per_page') or 10)
+
+    return render_template('pipelines.html',
+                            title='CONP | Tools & Pipelines',
+                            page=page,
+                            max_per_page=max_per_page)
 
 
 @pipelines_bp.route('/pipeline-search', methods=['GET'])
@@ -42,14 +51,16 @@ def pipeline_search():
 
     authorized = True if current_user.is_authenticated else False
 
-    # initialize variables
+    # get request variables
     search_query = request.args.get("search").lower() if request.args.get("search") else ''
     sort_key = request.args.get("sortKey") or "downloads-desc"
+    max_per_page = int(request.args.get("max_per_page") or 999999)
+    page = int(request.args.get("page") or 1)
+    print("Params: {} {}".format(page,max_per_page))
     cache_dir = os.path.join(os.path.expanduser('~'), ".cache", "boutiques")
     all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
     all_detailed_desc_path = os.path.join(cache_dir, "detailed_all_descriptors.json")
 
-    print("!!!!!! {}".format(all_detailed_desc_path))
     if not os.path.exists(all_desc_path) or \
         not os.path.exists(all_detailed_desc_path):
         print("--- no files need to update")
@@ -99,25 +110,43 @@ def pipeline_search():
         reverse=True if sort_key == "downloads-desc" or sort_key == "title" else False
     )
 
+
+    # extract the appropriate page
+    elements_on_page = elements
+    if len(elements) > max_per_page:
+        start_index = (page-1)*max_per_page;
+        end_index = start_index + max_per_page;
+        print("!!!! indexes: {} {}".format(start_index,end_index))
+        if end_index > len(elements):
+            end_index = len(elements)
+        elements_on_page = elements[start_index:end_index]
+
     # if element has online platform url, retrieve the cbrain one,
     # else take the first one and set logo
-    for element in elements:
+    # TODO right now, this handles CBRAIN and one other platform
+
+    for element in elements_on_page:
+        element["platforms"] = [{} for x in range(0,1)]
+        element["platforms"][0]["img"] = url_for('static',filename="img/run_on_cbrain_gray.png")
+        element["platforms"][0]["uri"] = ""
+
         if "onlineplatformurls" in element:
+            ## Check CBRAIN
             for url in element["onlineplatformurls"]:
                 if "cbrain" in url:
-                    element["onlineplatformurls"] = url
-                    element["img"] = "static/img/run_on_cbrain_green.png"
-                    break
-            else:
-                element["onlineplatformurls"] = element["onlineplatformurls"][0]
-                element["img"] = "static/img/globe-solid-green.png"
-        else:
-            element["img"] = "static/img/globe-solid-grey.png"
+                    element["platforms"][0]["img"] = url_for('static',filename="img/run_on_cbrain_green.png")
+                    element["platforms"][0]["uri"] = "https://portal.cbrain.mcgill.ca"
+                else:
+                    platform_dict = {"img":url_for('static',filename="img/globe-solid-green.png"),
+                                     "uri":url}
+                    element["platforms"].append(platform_dict)
 
     # construct payload
     payload = {
         "authorized": authorized,
         "total": len(elements),
+        "page": page,
+        'num_pages':math.ceil(len(elements)/max_per_page),
         "sortKeys": [
             {
                 "key": "downloads-desc",
@@ -128,7 +157,7 @@ def pipeline_search():
                 "label": "Downloads: Low to High"
             }
         ],
-        "elements": elements
+        "elements": elements_on_page
     }
 
     return json.dumps(payload)

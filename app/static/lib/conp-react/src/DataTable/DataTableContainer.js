@@ -10,6 +10,8 @@ const DataTableContainer = ({
   limit,
   authorized,
   total,
+  page,
+  max_per_page,
   sortKeys,
   elements,
   ...dataTableProps
@@ -20,6 +22,8 @@ const DataTableContainer = ({
     search: "",
     sortKey: "title",
     sortComparitor: "asc",
+    page,
+    max_per_page,
     cursor: 0,
     limit
   });
@@ -34,6 +38,7 @@ const DataTableContainer = ({
   }, [limit]);
 
   const fetchElements = async () => {
+    console.log(query);
     const url = `${endpointURL}?${qs.stringify(query)}`;
 
     console.log(`Fetching from: ${url}`);
@@ -79,6 +84,8 @@ DataTableContainer.propTypes = {
   endpointURL: PropTypes.string,
   limit: PropTypes.number,
   total: PropTypes.number,
+  page: PropTypes.number,
+  max_per_page: PropTypes.number,
   elements: PropTypes.arrayOf(PropTypes.object)
 };
 

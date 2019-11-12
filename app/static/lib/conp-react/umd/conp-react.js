@@ -4093,54 +4093,40 @@ var DataTable_DataTable = function DataTable(_ref) {
       "div",
       { className: "search-dataset-footer d-flex align-items-center p-2" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "ul",
-        { className: "pagination m-0" },
+        "div",
+        { "class": "btn-group" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "li",
-          {
-            onClick: function onClick() {
-              return setQuery(_extends({}, query, {
-                cursor: Math.max(query.cursor - query.limit, 0)
-              }));
-            }
-          },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "a",
-            { href: "#" },
-            "\xAB"
-          )
+          "a",
+          { "class": "btn btn-outline-dark btn-sm", href: location.href + "?page=1&max_per_page=" + query.max_per_page },
+          "<<"
         ),
-        es_range(1, Math.max(Math.floor(total / query.limit) + 1, 2)).map(function (page, i) {
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "a",
+          { "class": "btn btn-outline-dark btn-sm", href: location.href + "?page=" + Math.max(query.page - 1, 1) + "&max_per_page=" + query.max_per_page },
+          " < "
+        ),
+        es_range(1, Math.max(Math.ceil(total / query.max_per_page) + 1, 2)).map(function (page, i) {
           return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "li",
-            {
-              key: i,
-              onClick: function onClick() {
-                return setQuery(_extends({}, query, { cursor: (page - 1) * query.limit }));
-              },
-              className: page === Math.floor(query.cursor / query.limit) + 1 ? "active" : ""
-            },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "a",
-              { href: "#" },
-              page
-            )
+            "a",
+            { className: page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm",
+              href: location.href + "?page=" + page + "&max_per_page=" + query.max_per_page,
+              key: i },
+            page
           );
         }),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "li",
-          {
-            onClick: function onClick() {
-              return setQuery(_extends({}, query, {
-                cursor: Math.max(Math.min(query.cursor + query.limit, total - query.limit), 0)
-              }));
-            }
+          "a",
+          { className: "btn btn-outline-dark btn-sm",
+            href: location.hrefL + "?page=" + Math.min(query.page + 1, Math.floor(total / query.max_per_page) + 1) + "&max_per_page=" + query.max_per_page
           },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "a",
-            { href: "#" },
-            "\xBB"
-          )
+          ">"
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "a",
+          { className: "btn btn-outline-dark btn-sm",
+            href: location.href + "?page=" + Math.ceil(total / query.max_per_page) + "&max_per_page=" + query.max_per_page
+          },
+          ">>"
         )
       )
     )
@@ -4156,6 +4142,8 @@ DataTable_DataTable.propTypes = {
   query: prop_types_default.a.shape({
     search: prop_types_default.a.string,
     sortKey: prop_types_default.a.string,
+    page: prop_types_default.a.number,
+    max_per_page: prop_types_default.a.number,
     sortComparitor: prop_types_default.a.string,
     cursor: prop_types_default.a.number,
     limit: prop_types_default.a.number
@@ -6519,9 +6507,11 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       limit = _ref.limit,
       authorized = _ref.authorized,
       total = _ref.total,
+      page = _ref.page,
+      max_per_page = _ref.max_per_page,
       sortKeys = _ref.sortKeys,
       elements = _ref.elements,
-      dataTableProps = _objectWithoutProperties(_ref, ["endpointURL", "limit", "authorized", "total", "sortKeys", "elements"]);
+      dataTableProps = _objectWithoutProperties(_ref, ["endpointURL", "limit", "authorized", "total", "page", "max_per_page", "sortKeys", "elements"]);
 
   var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
       fetchedElements = _React$useState[0],
@@ -6531,6 +6521,8 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
     search: "",
     sortKey: "title",
     sortComparitor: "asc",
+    page: page,
+    max_per_page: max_per_page,
     cursor: 0,
     limit: limit
   }),
@@ -6560,30 +6552,31 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              console.log(query);
               url = endpointURL + "?" + query_string["stringify"](query);
 
 
               console.log("Fetching from: " + url);
 
-              _context.prev = 2;
-              _context.next = 5;
+              _context.prev = 3;
+              _context.next = 6;
               return fetch(url);
 
-            case 5:
+            case 6:
               res = _context.sent;
 
               if (res.ok) {
-                _context.next = 8;
+                _context.next = 9;
                 break;
               }
 
               throw new Error("Request failed with status: " + res.status + " (" + res.statusText + ")");
 
-            case 8:
-              _context.next = 10;
+            case 9:
+              _context.next = 11;
               return res.json();
 
-            case 10:
+            case 11:
               parsed = _context.sent;
 
 
@@ -6591,22 +6584,22 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
               setTotalState(parsed.total);
               setSortKeysState(parsed.sortKeys);
               setAuthorizedState(parsed.authorized);
-              _context.next = 21;
+              _context.next = 22;
               break;
 
-            case 17:
-              _context.prev = 17;
-              _context.t0 = _context["catch"](2);
+            case 18:
+              _context.prev = 18;
+              _context.t0 = _context["catch"](3);
 
               alert("There was an error retrieving the search results.");
               console.error(_context.t0);
 
-            case 21:
+            case 22:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, _this, [[2, 17]]);
+      }, _callee, _this, [[3, 18]]);
     }));
 
     return function fetchElements() {
@@ -6633,6 +6626,8 @@ DataTableContainer_DataTableContainer.propTypes = {
   endpointURL: prop_types_default.a.string,
   limit: prop_types_default.a.number,
   total: prop_types_default.a.number,
+  page: prop_types_default.a.number,
+  max_per_page: prop_types_default.a.number,
   elements: prop_types_default.a.arrayOf(prop_types_default.a.object)
 };
 
@@ -6961,6 +6956,14 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
   var authorized = props.authorized,
       element = PipelineElement_objectWithoutProperties(props, ["authorized"]);
 
+  var platforms = element.platforms.map(function (item, key) {
+    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      "a",
+      { key: key, className: "card-button mx-2", href: item.uri },
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { alt: "Online platform", src: item.img })
+    );
+  });
+
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
     { className: "card row flex-row", "data-type": "pipeline" },
@@ -7018,7 +7021,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "strong",
             null,
-            "Pipeline Id: "
+            "Pipeline Id:"
           )
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -7047,14 +7050,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
         { className: "d-flex justify-content-end align-items-center flex-wrap" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "a",
-          { className: "card-button mx-2", href: element.onlineplatformurls },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-            alt: "Online platform",
-            src: element.imagePath + "/run_on_cbrain_green.png"
-          })
-        )
+        platforms
       )
     )
   );
@@ -7066,7 +7062,7 @@ PipelineElement_PipelineElement.propTypes = {
   description: prop_types_default.a.string,
   downloads: prop_types_default.a.number,
   descriptorurl: prop_types_default.a.string,
-  onlineplatformurls: prop_types_default.a.string,
+  platforms: prop_types_default.a.arrayOf(prop_types_default.a.object),
   name: prop_types_default.a.string,
   commandline: prop_types_default.a.string,
   author: prop_types_default.a.string,
@@ -7077,12 +7073,12 @@ PipelineElement_PipelineElement.propTypes = {
   containerimage: prop_types_default.a.object,
   tags: prop_types_default.a.object,
   url: prop_types_default.a.string,
-  img: prop_types_default.a.string
+  img: prop_types_default.a.string,
+  imagePath: prop_types_default.a.string
 };
 
 //PipelineElement.defaultProps = {
-//  imagePath: "",
-//  downloadPath: ""
+//  imagePath: ""
 //};
 
 /* harmony default export */ var src_PipelineElement = (PipelineElement_PipelineElement);
