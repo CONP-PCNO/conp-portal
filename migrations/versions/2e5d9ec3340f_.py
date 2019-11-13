@@ -61,7 +61,7 @@ def upgrade():
     op.create_index(op.f('ix_datasets_annex_uuid'), 'datasets', ['annex_uuid'], unique=True)
     op.create_index(op.f('ix_datasets_category'), 'datasets', ['category'], unique=False)
     op.create_index(op.f('ix_datasets_dataset_id'), 'datasets', ['dataset_id'], unique=True)
-    op.create_index(op.f('ix_datasets_description'), 'datasets', ['description'], unique=False)
+    #op.create_index(op.f('ix_datasets_description'), 'datasets', ['description'], unique=False)
     op.create_index(op.f('ix_datasets_download_path'), 'datasets', ['download_path'], unique=False)
     op.create_index(op.f('ix_datasets_format'), 'datasets', ['format'], unique=False)
     op.create_index(op.f('ix_datasets_is_private'), 'datasets', ['is_private'], unique=False)
