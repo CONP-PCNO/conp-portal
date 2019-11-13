@@ -18,7 +18,7 @@ class Config(object):
     """
     SECRET_KEY = os.environ.get('SECRET_KEY') or "conp-secret-key-for-here"
     DATA_PATH = os.environ.get('DATA_PATH') or os.path.join(
-        basedir, "app/static/data")
+        basedir, "app/static/data/projects")
     SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get(
         'SQLALCHEMY_TRACK_MODIFICATIONS') or False
 
@@ -55,6 +55,8 @@ class Config(object):
     USER_RESEND_CONFIRM_EMAIL_TEMPLATE = "auth/flask_user/resend_confirm_email.html"
     USER_RESET_PASSWORD_TEMPLATE = "auth/flask_user/reset_password.html"
     USER_EDIT_USER_PROFILE_TEMPLATE = "auth/flask_user/edit_user_profile.html"
+    USER_CONFIRM_EMAIL_TEMPLATE = "auth/flask_user/emails/confirm_email"
+    USER_REGISTERED_EMAIL_TEMPLATE = "auth/flask_user/emails/registered"
 
     # ORCID PARAMETERS, must come from .flaskenv file!
     ORCID_OAUTH_CLIENT_ID = os.environ.get("ORCID_OAUTH_CLIENT_ID")
