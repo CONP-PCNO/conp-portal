@@ -180,9 +180,10 @@ def _update_datasets_metadata(app):
         dataset = DBDataset.query.filter_by(dataset_id=ds['gitmodule_name']).first()
         if dataset is None:
             dataset = DBDataset()
-            dataset['date_created'] = datetime.utcnow()
+            dataset.date_created = datetime.utcnow()
 
-        dataset.dataset_id = ds['gitmodule_name']
+        print(ds)
+        dataset.dataset_id = ds.id
         dataset.download_path = ds['path'] + '/' + descriptor
         dataset.date_updated = datetime.utcnow()
         dataset.description = dats['description']
