@@ -20,7 +20,7 @@ const DataTable = ({
             className="btn btn-outline-secondary dropdown-toggle dropdown-select px-4"
             value={query.sortKey}
             onChange={e =>
-              setQuery({ ...query, page: 1 })
+              setQuery({ ...query, sortKey: e.currentTarget.value })
             }
           >
             {sortKeys.map(({ key: sortKey, label }, i) => (
