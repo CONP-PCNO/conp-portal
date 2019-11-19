@@ -20,7 +20,7 @@ const DataTable = ({
             className="btn btn-outline-secondary dropdown-toggle dropdown-select px-4"
             value={query.sortKey}
             onChange={e =>
-              setQuery({ ...query, sortKey: e.currentTarget.value })
+              setQuery({ ...query, page: 1 })
             }
           >
             {sortKeys.map(({ key: sortKey, label }, i) => (
@@ -54,28 +54,40 @@ const DataTable = ({
         </div>
       ))}
       <div className="search-dataset-footer d-flex align-items-center p-2">
-        <div class="btn-group">
-          <a class="btn btn-outline-dark btn-sm" href={location.href+"?page=1&max_per_page=" + query.max_per_page}>&lt;&lt;</a>
-          <a class="btn btn-outline-dark btn-sm" href={location.href+"?page=" + Math.max(query.page-1,1)+"&max_per_page=" + query.max_per_page}> &lt; </a>
-          {R.range(1, Math.max(Math.ceil(total / query.max_per_page)+1, 2)).map(
+        <div className="btn-group">
+          <div className="btn btn-outline-dark btn-sm"
+            onClick={e =>
+              setQuery({ ...query, page: 1 })
+            }>&lt;&lt;</div>
+          <div className="btn btn-outline-dark btn-sm"
+           onClick={e =>
+            setQuery({ ...query, page: Math.max(1, query.page-1) })
+          }> &lt; </div>
+          {R.range(1, Math.max(Math.ceil(total / query.max_per_page) + 1, 2)).map(
             (page, i) => (
-              <a className={page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm"}
-                 href = {location.href +"?page=" + page + "&max_per_page=" + query.max_per_page}
-                 key={i}>
-                 {page}
-                 </a>
+              <div className={page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm"}
+              onClick={e =>
+                setQuery({ ...query, page: page })
+              }
+                key={i}>
+                {page}
+              </div>
             )
           )}
-          <a className="btn btn-outline-dark btn-sm"
-             href={location.hrefL+"?page="+ Math.min(query.page+1,(Math.floor(total / query.max_per_page) + 1)) + "&max_per_page="  +query.max_per_page}
-             >
-             &gt;
-          </a>
-          <a className="btn btn-outline-dark btn-sm"
-             href={location.href+"?page="+ (Math.ceil(total / query.max_per_page)) + "&max_per_page="  +query.max_per_page}
-             >
-             &gt;&gt;
-          </a>
+          <div className="btn btn-outline-dark btn-sm"
+            onClick={e =>
+              setQuery({ ...query, page: Math.min(query.page+1, Math.ceil(total / query.max_per_page)) })
+            }
+          >
+            &gt;
+          </div>
+          <div className="btn btn-outline-dark btn-sm"
+            onClick={e =>
+              setQuery({ ...query, page: Math.ceil(total / query.max_per_page) })
+            }
+          >
+            &gt;&gt;
+          </div>
         </div>
       </div>
     </div>
