@@ -50,12 +50,12 @@ def register(app):
         """
         _update_pipeline_data(app)
 
-    @app.cli.command('update_datasets_metadata')
-    def update_datasets_metadata():
+    @app.cli.command('update_datasets')
+    def update_datasets():
         """
         Wrapper to call the updating to the datasets metadata
         """
-        _update_datasets_metadata(app)
+        _update_datasets(app)
 
 def _seed_aff_types_db(app):
     """
@@ -121,7 +121,7 @@ def _seed_test_datasets_db(app):
     """
     Seeds a set of test datasets populated from a static csv file
     """
-    _update_datasets_metadata(app)
+    _update_datasets(app)
 
 def _update_pipeline_data(app):
     """
@@ -132,9 +132,9 @@ def _update_pipeline_data(app):
     thr.start()
     thr.join()
 
-def _update_datasets_metadata(app):
+def _update_datasets(app):
     """
-    Updates from Zenodo the available pipelines
+    Updates from conp-datasets
     """
     from app import db, config
     from app.models import Dataset as DBDataset
@@ -168,11 +168,12 @@ def _update_datasets_metadata(app):
         for file in dirs:
             if fnmatch.fnmatch(file.lower(), 'dats.json'):
                 descriptor = file
+
         if descriptor == '':
             print('DATS.json file can`t be found in ' + ds['path'])
             continue
 
-        with open(ds['path'] + '/' + descriptor, 'r') as f:
+        with open(os.path.join(ds['path'], descriptor), 'r') as f:
             dats = json.load(f)
 
         # use dats.json data to fill the datasets table
@@ -180,16 +181,15 @@ def _update_datasets_metadata(app):
         dataset = DBDataset.query.filter_by(dataset_id=ds['gitmodule_name']).first()
         if dataset is None:
             dataset = DBDataset()
+            dataset.dataset_id = ds['gitmodule_name']
             dataset.date_created = datetime.utcnow()
 
-        print(ds)
-        dataset.dataset_id = ds.id
-        dataset.download_path = ds['path'] + '/' + descriptor
+        dataset.download_path = os.path.join(ds['path'], descriptor) 
         dataset.date_updated = datetime.utcnow()
         dataset.description = dats['description']
         dataset.name = dats['title']
         dataset.raw_data_url = ds['path'] 
-        
+
         db.session.merge(dataset)
         print(ds['gitmodule_name'] + ' updated.')
 

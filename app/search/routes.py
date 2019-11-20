@@ -31,7 +31,7 @@ def search():
     return render_template('search.html', title='CONP | Search', user=current_user)
 
 
-def get_datset_logo(dataset_id):
+def get_dataset_logo(dataset_id):
     """
         Gets data set logos that are statically stored in the portal
         TODO: This should not be static, should be a fucntion the dataset in the database
@@ -42,7 +42,7 @@ def get_datset_logo(dataset_id):
         Returns:
             path to the png file for the logo
     """
-    return "/static/img/medics.png"
+    return "/static/img/default_dataset.jpeg"
     logos = {
         "8de99b0e-5f94-11e9-9e05-52545e9add8e": "/static/img/loris.png",
         "0ea345b4-62cf-11e9-b202-52545e9add8e": "/static/img/preventad.png",
@@ -98,7 +98,7 @@ def dataset_search():
             "id": d.dataset_id,
             "title": d.name.replace("'", ""),
             "isPrivate": d.is_private,
-            "thumbnailURL": get_datset_logo(d.dataset_id),
+            "thumbnailURL": get_dataset_logo(d.dataset_id),
             "imagePath": "/?",
             "downloadPath": d.download_path,
             "URL": d.raw_data_url,
@@ -223,7 +223,7 @@ def dataset_info():
         "id": d.dataset_id,
         "title": d.name.replace("'", ""),
         "isPrivate": d.is_private,
-        "thumbnailURL": get_datset_logo(d.dataset_id),
+        "thumbnailURL": get_dataset_logo(d.dataset_id),
         "imagePath": "/?",
         "downloadPath": d.download_path,
         "URL": d.raw_data_url,
