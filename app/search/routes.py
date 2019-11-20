@@ -12,7 +12,7 @@ from flask import Response, abort, render_template, request
 from flask_login import current_user
 from sqlalchemy import func, or_
 
-from app.models import Dataset, DatasetStats, User
+from app.models import Dataset, User
 from app.search import search_bp
 
 

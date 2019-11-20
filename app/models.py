@@ -202,41 +202,17 @@ class Dataset(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     dataset_id = db.Column(db.String(64), index=True, unique=True)
-    annex_uuid = db.Column(db.String(64), index=True, unique=True)
     description = db.Column(db.Text, index=True)
-    owner_id = db.Column(db.Integer, index=True)
     download_path = db.Column(db.String(64), index=True)
     raw_data_url = db.Column(db.String(128), index=True)
-    image = db.Column(db.LargeBinary, default=None)
     name = db.Column(db.String(256), index=True)
-    modality = db.Column(db.String(64), index=True)
     version = db.Column(db.String(6), index=True)
-    format = db.Column(db.String(64), index=True)
-    category = db.Column(db.String(64), index=True)
     date_created = db.Column(db.DateTime, default=datetime.now())
     date_updated = db.Column(db.DateTime, default=datetime.now())
     is_private = db.Column(db.Boolean, index=True)
 
     def __repr__(self):
         return '<Dataset {}>'.format(self.name)
-
-
-class DatasetStats(db.Model):
-    """
-        Provides DatasetStats model for keeping stats on downloads and views
-    """
-    __tablename__ = 'dataset_stats'
-
-    id = db.Column(db.Integer, primary_key=True)
-    dataset_id = db.Column(db.String(64), index=True, unique=True)
-    size = db.Column(db.Integer, index=True)
-    files = db.Column(db.Integer, index=True)
-    sources = db.Column(db.Integer, index=True)
-    num_subjects = db.Column(db.Integer, index=True)
-    num_downloads = db.Column(db.Integer, index=True)
-    num_likes = db.Column(db.Integer, index=True)
-    num_views = db.Column(db.Integer, index=True)
-    date_updated = db.Column(db.DateTime, default=datetime.now())
 
 
 class Pipeline(db.Model):
