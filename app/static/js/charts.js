@@ -1,5 +1,5 @@
 
-Highcharts.chart('chart', {
+var CONPChart = Highcharts.chart('chart', {
 
     chart: {
         type: 'column',

@@ -7,7 +7,7 @@ to create a orchid blueprint for Flask-Dance
 """
 from __future__ import unicode_literals
 
-import os.path
+import os.path,os
 from urlobject import URLObject
 from oauthlib.oauth1 import SIGNATURE_RSA
 from flask_dance.consumer import OAuth2ConsumerBlueprint
@@ -39,7 +39,7 @@ def make_orcid_blueprint(
     login_url=None,
     authorized_url=None,
     session_class=None,
-    storage=None,
+    storage=None
   ):
     """
     This function actually creates a specific orchid blueprint for use with Flask Dance
@@ -60,15 +60,24 @@ def make_orcid_blueprint(
     scope = scope or ["/authenticate", "/read-limited"]
     session_class = session_class or JsonOath2Session
 
+    _base_url = "https://orcid.org/oauth"
+    _token_url="https://orcid.org/oauth/token"
+    _authorization_url="https://orcid.org/oauth/authorize"
+
+    if os.environ.get("USE_ORCID_OAUTH_SANDBOX"):
+        _base_url="https://api.sandbox.orcid.org/v2.0"
+        _token_url="https://api.sandbox.orcid.org/oauth/token"
+        _authorization_url="https://sandbox.orcid.org/oauth/authorize"
+
     orcid_bp = OAuth2ConsumerBlueprint(
         "orcid",
         __name__,
         client_id=client_id,
         client_secret=client_secret,
         scope=scope,
-        base_url="https://api.sandbox.orcid.org/v2.0",
-        token_url="https://api.sandbox.orcid.org/oauth/token",
-        authorization_url="https://sandbox.orcid.org/oauth/authorize",
+        base_url=_base_url,
+        token_url=_token_url,
+        authorization_url=_authorization_url,
         redirect_url=redirect_url,
         redirect_to=redirect_to,
         login_url=login_url,

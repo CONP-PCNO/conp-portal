@@ -54,52 +54,34 @@ const DataTable = ({
         </div>
       ))}
       <div className="search-dataset-footer d-flex align-items-center p-2">
-        <ul className="pagination m-0">
-          <li
-            onClick={() =>
-              setQuery({
-                ...query,
-                cursor: Math.max(query.cursor - query.limit, 0)
-              })
-            }
-          >
-            <a href="#">&laquo;</a>
-          </li>
-          {R.range(1, Math.max(Math.floor(total / query.limit) + 1, 2)).map(
+        <div class="btn-group">
+          <a class="btn btn-outline-dark btn-sm" href={location.href+"?page=1&max_per_page=" + query.max_per_page}>&lt;&lt;</a>
+          <a class="btn btn-outline-dark btn-sm" href={location.href+"?page=" + Math.max(query.page-1,1)+"&max_per_page=" + query.max_per_page}> &lt; </a>
+          {R.range(1, Math.max(Math.ceil(total / query.max_per_page)+1, 2)).map(
             (page, i) => (
-              <li
-                key={i}
-                onClick={() =>
-                  setQuery({ ...query, cursor: (page - 1) * query.limit })
-                }
-                className={
-                  page === Math.floor(query.cursor / query.limit) + 1
-                    ? "active"
-                    : ""
-                }
-              >
-                <a href="#">{page}</a>
-              </li>
+              <a className={page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm"}
+                 href = {location.href +"?page=" + page + "&max_per_page=" + query.max_per_page}
+                 key={i}>
+                 {page}
+                 </a>
             )
           )}
-          <li
-            onClick={() =>
-              setQuery({
-                ...query,
-                cursor: Math.max(
-                  Math.min(query.cursor + query.limit, total - query.limit),
-                  0
-                )
-              })
-            }
-          >
-            <a href="#">&raquo;</a>
-          </li>
-        </ul>
+          <a className="btn btn-outline-dark btn-sm"
+             href={location.hrefL+"?page="+ Math.min(query.page+1,(Math.floor(total / query.max_per_page) + 1)) + "&max_per_page="  +query.max_per_page}
+             >
+             &gt;
+          </a>
+          <a className="btn btn-outline-dark btn-sm"
+             href={location.href+"?page="+ (Math.ceil(total / query.max_per_page)) + "&max_per_page="  +query.max_per_page}
+             >
+             &gt;&gt;
+          </a>
+        </div>
       </div>
     </div>
   );
 };
+
 
 DataTable.propTypes = {
   authorized: PropTypes.bool,
@@ -112,6 +94,8 @@ DataTable.propTypes = {
   query: PropTypes.shape({
     search: PropTypes.string,
     sortKey: PropTypes.string,
+    page: PropTypes.number,
+    max_per_page: PropTypes.number,
     sortComparitor: PropTypes.string,
     cursor: PropTypes.number,
     limit: PropTypes.number

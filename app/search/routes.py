@@ -8,7 +8,7 @@ import os
 from datetime import datetime, timedelta
 
 import requests
-from flask import Response, abort, render_template, request
+from flask import Response, abort, render_template, request, current_app, send_from_directory
 from flask_login import current_user
 from sqlalchemy import func, or_
 
@@ -69,9 +69,9 @@ def dataset_search():
     datasets = []
 
     if current_user.is_authenticated:
-            authorized = True
+        authorized = True
     else:
-            authorized = False
+        authorized = False
 
     if request.args.get('search'):
         term = '%' + request.args.get('search') + '%'
@@ -80,7 +80,7 @@ def dataset_search():
             or_(func.lower(Dataset.name)
                 .like(func.lower(term)),
                 func.lower(Dataset.description)
-                                            .like(func.lower(term)))
+                .like(func.lower(term)))
         )
 
     else:
@@ -130,63 +130,63 @@ def dataset_search():
             {
                 "key": "title",
                 "label": "Title"
-                },
+            },
             {
                 "key": "downloadPath",
                 "label": "Download Path"
-                },
+            },
             {
                 "key": "URL",
                 "label": "URL"
-                },
+            },
             {
                 "key": "imagePath",
                 "label": "Image Path"
-                },
+            },
             {
                 "key": "downloads",
                 "label": "Downloads"
-                },
+            },
             {
                 "key": "views",
                 "label": "Views"
-                },
+            },
             {
                 "key": "likes",
                 "label": "Likes"
-                },
+            },
             {
                 "key": "dateAdded",
                 "label": "Date Added"
-                },
+            },
             {
                 "key": "dateUpdated",
                 "label": "Date Updated"
-                },
+            },
             {
                 "key": "size",
                 "label": "Size"
-                },
+            },
             {
                 "key": "files",
                 "label": "Files"
-                },
+            },
             {
                 "key": "subjects",
                 "label": "Subjects"
-                },
+            },
             {
                 "key": "format",
                 "label": "Format"
-                },
+            },
             {
                 "key": "modalities",
                 "label": "Modalities"
-                },
+            },
             {
                 "key": "sources",
                 "label": "Sources"
-                }
+            }
         ],
         "elements": paginated
     }
@@ -220,6 +220,7 @@ def dataset_info():
 
     dataset = {
         "authorized": authorized,
+
         "id": d.dataset_id,
         "title": d.name.replace("'", ""),
         "isPrivate": d.is_private,
@@ -261,24 +262,38 @@ def download_metadata():
         Raises:
             HTML error if this fails
     """
+    from zipfile import ZipFile
+    from tempfile import TemporaryDirectory
 
-    directory = os.path.basename(request.args.get('dataset'))
-    root_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                 'static/data/projects/')
-    dataset_path = os.path.abspath(
-        os.path.normpath(os.path.join(root_path, directory)))
+    # This should be made dynamic based on the dataset
+    metadata_file_list = ["DATS.json", ".datalad"]
+    dataset_directory = os.path.basename(request.args.get('dataset'))
+    abs_dataset_directory = os.path.join(
+        current_app.config['DATA_PATH'], dataset_directory)
 
-    if not dataset_path.startswith(os.path.abspath(root_path)+os.sep):
-        abort(404)
-        return
+    tmpDir = TemporaryDirectory()
 
-        url = 'https://github.com/conpdatasets/' + directory + '/archive/master.zip'
+    with TemporaryDirectory() as tmpDir:
+        with ZipFile("{}/{}.zip".format(tmpDir, dataset_directory), "w") as zip:
+            for f in metadata_file_list:
+                abs_file_path = os.path.join(abs_dataset_directory, f)
+                zip_file_path = os.path.join(dataset_directory, f)
+                if os.path.exists(abs_file_path):
+                    if os.path.isdir(abs_file_path):
+                        file_paths = []
+                        for root, directories, files in os.walk(abs_file_path):
+                            for filename in files:
+                                root_name = filename.replace(root, "")
+                                file_path = os.path.join(root, filename)
+                                file_paths.append((root_name, file_path))
+                        for rn, fp in file_paths:
+                            if os.path.isfile(fp):
+                                zip.write(
+                                    fp, "{}/{}".format(zip_file_path, rn))
+                    else:
+                        zip.write(abs_file_path, zip_file_path)
 
-        r = requests.get(url)
-        if r.status_code == 200:
-            return Response(r.content,
-                            mimetype='application/zip',
-                            headers={'Content-Disposition': 'attachment;filename=data.zip'})
+        return send_from_directory(tmpDir, "{}.zip".format(dataset_directory), as_attachment=True)
 
 
 def get_dataset_metadata_information(dataset):
@@ -292,16 +307,39 @@ def get_dataset_metadata_information(dataset):
             payload containing the datasets metadata
 
     """
+
     descriptor_path = dataset.download_path
+
     with open(descriptor_path, 'r') as json_file:
         data = json.load(json_file)
 
+        authorString = ""
+        if type(data['creators']) == list:
+            authorString = ", ".join([x['name'] for x in data['creators']])
+        else:
+            authorString = data['creators']['name']
+
+        licenseString = ""
+        print(type(data['licenses']))
+
+        if type(data['licenses']) == list:
+            licenseString = ", ".join([x['name'] for x in data['licenses']])
+        else:
+            if 'naame' in data['licenses']:
+                licenseString = data['licenses']['name']
+            elif '$chema' in data['licenses']:
+                licenseString = data['licenses']['$schema']
+            elif 'dataUsesConditions' in data['licenses']:
+                licenseString = data['licenses']['dataUsesConditions']
+            else:
+                licenseString = "None"
+
         payload = {
-            "authors": data['creators'],
+            "authors": authorString,
             "description": data['description'],
-            "contact": 'TODO',
+            "contact": None,  # data['contact'],
             "version": data['version'],
-            "licenses": data['licenses']
+            "licenses": licenseString
         }
 
     return payload
