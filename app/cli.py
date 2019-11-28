@@ -151,13 +151,11 @@ def _update_datasets(app):
     d = DataladDataset(path=datasetspath + '/conp-dataset')
     if not d.is_installed():
         api.clone(
-            source='http://github.com/CONP-PCNO/conp-dataset',
+            source='https://github.com/CONP-PCNO/conp-dataset',
             path=datasetspath + '/conp-dataset'
         )
         d = DataladDataset(path=datasetspath + '/conp-dataset')
         d.install(path='', recursive=True)
-    print('here')
-    d.update(path='')
 
     try:
         d.update(path='')
