@@ -200,6 +200,7 @@ def _update_datasets(app):
         dataset.raw_data_url = ds['path']
 
         db.session.merge(dataset)
+        db.session.commit()
         print(ds['gitmodule_name'] + ' updated.')
 
     db.session.commit()
