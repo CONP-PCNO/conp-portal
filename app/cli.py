@@ -156,7 +156,7 @@ def _update_datasets(app):
         )
         d = DataladDataset(path=datasetspath + '/conp-dataset')
         d.install(path='', recursive=True)
-
+    print('here')
     d.update(path='')
 
     try:
@@ -193,8 +193,8 @@ def _update_datasets(app):
 
         dataset.download_path = os.path.join(ds['path'], descriptor)
         dataset.date_updated = datetime.utcnow()
-        dataset.description = dats['description']
-        dataset.name = dats['title']
+        dataset.description = dats.get('description', 'No description in DATS.json')
+        dataset.name = dats.get('title', 'No title in DATS.json')
         dataset.raw_data_url = ds['path']
 
         db.session.merge(dataset)
