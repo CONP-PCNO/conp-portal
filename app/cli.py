@@ -166,7 +166,11 @@ def _update_datasets(app):
     for ds in d.subdatasets():
         subdataset = DataladDataset(path=ds['path'])
         if not subdataset.is_installed():
-            subdataset.install(path='')
+            try:
+                subdataset.install(path='')
+            except Exception as e:
+                print("An exception occurred in datalad install for " + str(ds))
+                print(e.args)
 
         dirs = os.listdir(ds['path'])
         descriptor = ''
