@@ -44,7 +44,7 @@ def test_seed_db_test(app, session, runner):
     cli.register(app)
     result = runner.invoke(args=["seed_test_db"])
     d = Dataset.query.all()
-    assert len(d) > 0
+    assert d
 
     ats = AffiliationType.query.all()
 
@@ -71,7 +71,7 @@ def test_seed_test_datasets_db(app,session,runner):
     cli.register(app)
     result = runner.invoke(args=["seed_test_datasets_db"])
     d = Dataset.query.all()
-    assert len(d) > 0
+    assert d
     session.query(Dataset).delete()
     session.commit()
 
