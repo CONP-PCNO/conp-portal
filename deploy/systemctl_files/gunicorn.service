@@ -1,0 +1,18 @@
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=conp-admin
+Group=www-data
+WorkingDirectory=/home/conp-admin/conp-portal
+Environment="PATH=/home/conp-admin/conp-portal/venv/bin"
+ExecStart=/home/conp-admin/conp-portal/venv/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.socket \
+          wsgi:app
+
+[Install]
+WantedBy=multi-user.target
