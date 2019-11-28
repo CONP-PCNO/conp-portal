@@ -157,6 +157,8 @@ def _update_datasets(app):
         d = DataladDataset(path=datasetspath + '/conp-dataset')
         d.install(path='', recursive=True)
 
+    d.update(path='')
+
     try:
         d.update(path='')
     except Exception as e:
