@@ -71,7 +71,7 @@ def test_seed_db_test(app, session, runner):
 def test_seed_test_datasets_db(app,session,runner):
     cli.register(app)
     result = runner.invoke(args=["seed_test_datasets_db"])
-    assert result.exit_code == 0, result.output
+    assert result.exit_code == 0, result.stderr
 
     d = Dataset.query.all()
     assert d
