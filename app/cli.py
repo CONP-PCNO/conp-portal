@@ -203,4 +203,3 @@ def _update_datasets(app):
         db.session.commit()
         print(ds['gitmodule_name'] + ' updated.')
 
-    db.session.commit()
