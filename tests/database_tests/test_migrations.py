@@ -46,7 +46,7 @@ def test_seed_db_test(app, session, runner):
     d = Dataset.query.filter(
         Dataset.name == "Multicenter Single Subject Human MRI Phantom"
     ).first()
-    assert d is None
+    assert d is not None
 
     ats = AffiliationType.query.all()
 
