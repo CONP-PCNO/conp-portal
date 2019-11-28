@@ -43,12 +43,12 @@ def test_seed_db_test(app, session, runner):
     """
     cli.register(app)
     result = runner.invoke(args=["seed_test_db"])
-    print(str(result))
+    assert result.exit_code == 0, result.output
+
     d = Dataset.query.all()
     assert d
 
     ats = AffiliationType.query.all()
-
     assert ats[0].name == "PI"
     assert ats[0].label == "Principal Investigator (Professor)"
     assert ats[-1].name == "OT"
