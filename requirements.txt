@@ -20,7 +20,7 @@ dominate==2.4.0
 Flask==1.0.2
 Flask-Admin==1.5.3
 Flask-Bootstrap4==4.0.2
-Flask-Dance==2.2.0
+git+https://github.com/CONP-PCNO/flask-dance.git
 Flask-Ext==0.1
 Flask-Login==0.4.1
 Flask-Mail==0.9.1
