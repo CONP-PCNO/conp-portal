@@ -6,7 +6,7 @@ import pytest
 import os
 from app import create_app
 from app import db as _db
-from app.models import Dataset, DatasetStats, Pipeline, User, AffiliationType, \
+from app.models import Dataset, Pipeline, User, AffiliationType, \
     OAuth, Role
 from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker
@@ -105,25 +105,6 @@ def new_dataset():
 
     )
     return dataset
-
-
-@pytest.fixture(scope='module')
-def new_dataset_stats():
-    """
-    Creates a new mock DatasetStats to test
-    """
-    dataset_stats = DatasetStats(
-        dataset_id="8de99b0e-5f94-11e9-9e05-52545e9add8e",
-        size=40,
-        files=2712,
-        sources=1,
-        num_subjects=1,
-        num_downloads=0,
-        num_likes=0,
-        num_views=0,
-
-    )
-    return dataset_stats
 
 
 @pytest.fixture(scope='module')
