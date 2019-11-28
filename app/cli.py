@@ -57,6 +57,7 @@ def register(app):
         """
         _update_datasets(app)
 
+
 def _seed_aff_types_db(app):
     """
     Seeds the inital affiliation types
@@ -123,6 +124,7 @@ def _seed_test_datasets_db(app):
     """
     _update_datasets(app)
 
+
 def _update_pipeline_data(app):
     """
     Updates from Zenodo the available pipelines
@@ -131,6 +133,7 @@ def _update_pipeline_data(app):
                                                ".cache", "boutiques"))
     thr.start()
     thr.join()
+
 
 def _update_datasets(app):
     """
@@ -147,17 +150,19 @@ def _update_datasets(app):
 
     d = DataladDataset(path=datasetspath + '/conp-dataset')
     if not d.is_installed():
-        api.clone(source='http://github.com/CONP-PCNO/conp-dataset', path=datasetspath + '/conp-dataset')
+        api.clone(
+            source='http://github.com/CONP-PCNO/conp-dataset',
+            path=datasetspath + '/conp-dataset'
+        )
         d = DataladDataset(path=datasetspath + '/conp-dataset')
         d.install(path='', recursive=True)
-    
+
     try:
-       d.update(path='')
+        d.update(path='')
     except Exception as e:
-       print("An exception occurred in datalad update")
-       print(e.args)
-       
-    
+        print("An exception occurred in datalad update")
+        print(e.args)
+
     for ds in d.subdatasets():
         subdataset = DataladDataset(path=ds['path'])
         if not subdataset.is_installed():
@@ -184,11 +189,11 @@ def _update_datasets(app):
             dataset.dataset_id = ds['gitmodule_name']
             dataset.date_created = datetime.utcnow()
 
-        dataset.download_path = os.path.join(ds['path'], descriptor) 
+        dataset.download_path = os.path.join(ds['path'], descriptor)
         dataset.date_updated = datetime.utcnow()
         dataset.description = dats['description']
         dataset.name = dats['title']
-        dataset.raw_data_url = ds['path'] 
+        dataset.raw_data_url = ds['path']
 
         db.session.merge(dataset)
         print(ds['gitmodule_name'] + ' updated.')
