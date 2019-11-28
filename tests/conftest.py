@@ -87,22 +87,16 @@ def new_dataset():
     """
     dataset = Dataset(
         dataset_id="8de99b0e-5f94-11e9-9e05-52545e9add8e",
-        annex_uuid="4fd032a1-220a-404e-95ac-ccaa3f7efcb7",
         description="Human Brain phantom scans, Multiple MRI"
         " scans of a single human phantom over 11"
         " years, T1 weighted images and others on"
         " 13 scanner in 6 sites accross North America."
         " The data are available in minc format",
-        owner_id=1,
         download_path="multicenter-phantom",
         raw_data_url="https://phantom-dev.loris.ca",
         name="Multicenter Single Subject Human MRI Phantom",
-        modality="Imaging",
         version="1.0",
-        format="minc",
-        category="Phantom",
         is_private=False,
-
     )
     return dataset
 

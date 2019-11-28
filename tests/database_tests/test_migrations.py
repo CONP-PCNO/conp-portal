@@ -43,9 +43,11 @@ def test_seed_db_test(app, session, runner):
     """
     cli.register(app)
     result = runner.invoke(args=["seed_test_db"])
-    d = Dataset.query.filter(Dataset.dataset_id ==
-                             "8de99b0e-5f94-11e9-9e05-52545e9add8e").first()
-    assert d.name == "Multicenter Single Subject Human MRI Phantom"
+    d = Dataset.query.filter(
+        Dataset.name == "Multicenter Single Subject Human MRI Phantom"
+    ).first()
+    assert d is None
+
     ats = AffiliationType.query.all()
 
     assert ats[0].name == "PI"
