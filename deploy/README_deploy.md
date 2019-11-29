@@ -28,7 +28,7 @@ NOTE: The package Flask-Dance required a modification to ensure that redirect ur
 
 ### systemctl files
 
-In the systemctl_files directory are the scripts to add to the `/etc/systemd/system` directory.  There are two files:
+In the `systemctl_files/` directory are the scripts to add to the `/etc/systemd/system` directory.  There are two files:
 
 1. `gunicorn.socket` - This creates an on-the-fly socket for the gunicorn service to use.
 
@@ -64,7 +64,6 @@ For example, to restart the NGINX service:
 
 1. `sudo systemctl start gunicron.socket`
 2. `sudo systemctl start nginx`
-
 
 
 
