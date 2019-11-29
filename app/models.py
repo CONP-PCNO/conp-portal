@@ -203,8 +203,6 @@ class Dataset(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     dataset_id = db.Column(db.String(64), index=True, unique=True)
     description = db.Column(db.Text, index=True)
-    download_path = db.Column(db.String(64), index=True)
-    raw_data_url = db.Column(db.String(128), index=True)
     name = db.Column(db.String(256), index=True)
     version = db.Column(db.String(6), index=True)
     date_created = db.Column(db.DateTime, default=datetime.now())

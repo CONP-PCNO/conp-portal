@@ -193,11 +193,9 @@ def _update_datasets(app):
             dataset.dataset_id = ds['gitmodule_name']
             dataset.date_created = datetime.utcnow()
 
-        dataset.download_path = os.path.join(ds['path'], descriptor)
         dataset.date_updated = datetime.utcnow()
         dataset.description = dats.get('description', 'No description in DATS.json')
         dataset.name = dats.get('title', 'No title in DATS.json')
-        dataset.raw_data_url = ds['path']
 
         db.session.merge(dataset)
         db.session.commit()

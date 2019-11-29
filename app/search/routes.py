@@ -100,8 +100,8 @@ def dataset_search():
             "isPrivate": d.is_private,
             "thumbnailURL": get_dataset_logo(d.dataset_id),
             "imagePath": "/?",
-            "downloadPath": d.download_path,
-            "URL": d.raw_data_url,
+            "downloadPath": 'download-path',
+            "URL": 'url',
             "downloads": "0",
             "views": "0",
             "likes": "0",
@@ -130,14 +130,6 @@ def dataset_search():
             {
                 "key": "title",
                 "label": "Title"
-            },
-            {
-                "key": "downloadPath",
-                "label": "Download Path"
-            },
-            {
-                "key": "URL",
-                "label": "URL"
             },
             {
                 "key": "imagePath",
@@ -226,8 +218,8 @@ def dataset_info():
         "isPrivate": d.is_private,
         "thumbnailURL": get_dataset_logo(d.dataset_id),
         "imagePath": "/?",
-        "downloadPath": d.download_path,
-        "URL": d.raw_data_url,
+        "downloadPath": 'download_path',
+        "URL": 'raw_data_url',
         "downloads": "0",
         "views": "0",
         "likes": "0",
@@ -308,7 +300,12 @@ def get_dataset_metadata_information(dataset):
 
     """
 
-    descriptor_path = dataset.download_path
+    descriptor_path = os.path.join(
+        current_app.config['DATA_PATH'],
+        'conp-dataset',
+        dataset.dataset_id,
+        'DATS.json'
+    )
 
     with open(descriptor_path, 'r') as json_file:
         data = json.load(json_file)
