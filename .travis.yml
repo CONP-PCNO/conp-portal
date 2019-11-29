@@ -7,6 +7,8 @@ python:
 - 3.7-dev
 
 install:
+- apt-get install git-annex
+- git-annex version
 - pip install -r requirements.txt
 - pip install coveralls
 
