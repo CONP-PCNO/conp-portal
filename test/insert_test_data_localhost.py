@@ -5,7 +5,7 @@ import os
 
 import csv
 from datetime import datetime, timedelta
-from app.models import User, Dataset, DatasetStats, Pipeline
+from app.models import User, Dataset, Pipeline
 from app import db
 
 class InsertTestDataset(object):
@@ -75,30 +75,6 @@ class InsertTestDataset(object):
     def read_image(self,image):
         return open(image,'rb').read()
 
-    def insert_sample_datasets_stats(self):
-
-
-        with open(self.datasets_stats_file, 'r') as dataset_stats_file:
-
-            reader = csv.reader(dataset_stats_file)
-            next(reader)
-
-            for row in reader:
-                stat = DatasetStats(
-                    dataset_id = row[0],
-                    size = row[1],
-                    files = row[2],
-                    sources = row[3],
-                    num_subjects = row[4],
-                    num_downloads = row[5],
-                    num_likes = row[6],
-                    num_views = row[7],
-                    date_updated = datetime.now()
-                )
-                db.session.add(stat)
-        db.session.commit()
-        dataset_stats_file.close()
-
 
     def insert_sample_pipelines(self):
 
@@ -126,7 +102,6 @@ class InsertTestDataset(object):
 test_dataset = InsertTestDataset()
 #test_dataset.insert_sample_users()
 test_dataset.insert_sample_datasets()
-test_dataset.insert_sample_datasets_stats()
 #test_dataset.insert_sample_pipelines()
 #print('\x1b[6;30;42m' + 'Success!' + '\x1b[0m')
 
