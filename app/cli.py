@@ -202,4 +202,3 @@ def _update_datasets(app):
         db.session.merge(dataset)
         db.session.commit()
         print(ds['gitmodule_name'] + ' updated.')
-
