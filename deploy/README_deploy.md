@@ -38,7 +38,7 @@ Once installed, one just needs to start the socket service, and the server will 
 
 `sudo systemctl start gunicorn.socket`
 
-You can use the `journalctl` tool to view the logs of the running services. To see the logs for the web server with the latest entries at the top, us can use:
+You can use the `journalctl` tool to view the logs of the running services. To see the logs for the web server with the latest entries at the top, you can use:
 
 `sudo journalctl gunicron.service -r`
 
@@ -64,7 +64,6 @@ For example, to restart the NGINX service:
 
 1. `sudo systemctl start gunicron.socket`
 2. `sudo systemctl start nginx`
-
 
 
 
