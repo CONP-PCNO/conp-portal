@@ -18,7 +18,7 @@ You will need sudo and access to the user `conp-admin` on the machine.
 
 ### GUNICORN
 
-Part of the requirments.txt installs the appropriate python packages. The server used is Gunicorn, which is a python based multi-worker production server that supports WSGI.
+Part of the `requirments.txt` installs the appropriate python packages. The server used is Gunicorn, which is a python based multi-worker production server that supports WSGI.
 
 ### Source Code
 
@@ -64,7 +64,6 @@ For example, to restart the NGINX service:
 
 1. `sudo systemctl start gunicron.socket`
 2. `sudo systemctl start nginx`
-
 
 
 
