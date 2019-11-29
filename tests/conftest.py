@@ -92,8 +92,6 @@ def new_dataset():
         " years, T1 weighted images and others on"
         " 13 scanner in 6 sites accross North America."
         " The data are available in minc format",
-        download_path="multicenter-phantom",
-        raw_data_url="https://phantom-dev.loris.ca",
         name="Multicenter Single Subject Human MRI Phantom",
         version="1.0",
         is_private=False,

@@ -16,8 +16,6 @@ def test_new_dataset(new_dataset):
                                       " years, T1 weighted images and others on"\
                                       " 13 scanner in 6 sites accross North America."\
                                       " The data are available in minc format"
-    assert new_dataset.download_path == "multicenter-phantom"
-    assert new_dataset.raw_data_url == "https://phantom-dev.loris.ca"
     assert new_dataset.name == "Multicenter Single Subject Human MRI Phantom"
     assert new_dataset.version == "1.0"
     assert not new_dataset.is_private
