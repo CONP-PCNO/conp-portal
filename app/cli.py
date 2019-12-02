@@ -195,7 +195,10 @@ def _update_datasets(app):
 
         dataset.date_updated = datetime.utcnow()
         dataset.description = dats.get('description', 'No description in DATS.json')
-        dataset.name = dats.get('title', 'No title in DATS.json')
+        dataset.name = dats.get(
+            'title',
+            os.path.basename(dataset.dataset_id)
+        )
 
         db.session.merge(dataset)
         db.session.commit()

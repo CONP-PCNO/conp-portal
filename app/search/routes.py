@@ -99,17 +99,17 @@ def dataset_search():
             "title": d.name.replace("'", ""),
             "isPrivate": d.is_private,
             "thumbnailURL": get_dataset_logo(d.dataset_id),
-            "imagePath": "/?",
-            "downloadPath": 'download-path',
-            "URL": 'url',
-            "downloads": "0",
-            "views": "0",
-            "likes": "0",
+            "imagePath": "?",
+            "downloadPath": '?',
+            "URL": '?',
+            "downloads": "?",
+            "views": "?",
+            "likes": "?",
             "dateAdded": str(d.date_created.date()),
             "dateUpdated": str(d.date_updated.date()),
-            "size": "0",
-            "files": "0",
-            "subjects": "0",
+            "size": "?",
+            "files": "?",
+            "subjects": "?",
             "format": "?",
             "modalities": "?",
             "sources": "?"
@@ -235,8 +235,13 @@ def dataset_info():
 
     metadata = get_dataset_metadata_information(d)
 
-    return render_template('dataset.html', title='CONP | Dataset', data=d,
-                           metadata=metadata, user=current_user)
+    return render_template(
+        'dataset.html',
+         title='CONP | Dataset',
+         data=dataset,
+         metadata=metadata,
+         user=current_user
+    )
 
 
 @search_bp.route('/download_metadata', methods=['GET'])
@@ -310,32 +315,32 @@ def get_dataset_metadata_information(dataset):
     with open(descriptor_path, 'r') as json_file:
         data = json.load(json_file)
 
-        authorString = ""
-        if type(data['creators']) == list:
-            authorString = ", ".join([x['name'] for x in data['creators']])
+        authorString = data.get('creators', 'Undefined')
+        if type(authorString) == list:
+            authors = ", ".join([x['name'] for x in authorString])
+        elif 'name' in authorString:
+            authors = authorString['name']
         else:
-            authorString = data['creators']['name']
+            authors = authorString
 
-        licenseString = ""
-        print(type(data['licenses']))
-
-        if type(data['licenses']) == list:
-            licenseString = ", ".join([x['name'] for x in data['licenses']])
+        licenseString = data.get('licenses', 'None') 
+        if type(licenseString) == list:
+            licenseString = ", ".join([x['name'] for x in licenseString])
         else:
-            if 'naame' in data['licenses']:
-                licenseString = data['licenses']['name']
-            elif '$chema' in data['licenses']:
-                licenseString = data['licenses']['$schema']
-            elif 'dataUsesConditions' in data['licenses']:
-                licenseString = data['licenses']['dataUsesConditions']
+            if 'name' in licenseString:
+                licenseString = licenseString['name']
+            elif '$schema' in licenseString:
+                licenseString = licenseString['$schema']
+            elif 'dataUsesConditions' in licenseString:
+                licenseString = licenseString['dataUsesConditions']
             else:
-                licenseString = "None"
+                licence = licenseString
 
         payload = {
-            "authors": authorString,
-            "description": data['description'],
+            "authors": authors,
+            "description": data.get('description', 'Undefined'),
             "contact": None,  # data['contact'],
-            "version": data['version'],
+            "version": data.get('version', 'Undefined'),
             "licenses": licenseString
         }
 
