@@ -158,7 +158,7 @@ def _update_datasets(app):
         d.install(path='', recursive=True)
 
     try:
-        d.update(path='')
+        d.update(path='', recursive=True)
     except Exception as e:
         print("An exception occurred in datalad update")
         print(e.args)

@@ -325,23 +325,23 @@ def get_dataset_metadata_information(dataset):
 
         licenseString = data.get('licenses', 'None') 
         if type(licenseString) == list:
-            licenseString = ", ".join([x['name'] for x in licenseString])
+            licenses = ", ".join([x['name'] for x in licenseString])
         else:
             if 'name' in licenseString:
-                licenseString = licenseString['name']
+                licenses = licenseString['name']
             elif '$schema' in licenseString:
-                licenseString = licenseString['$schema']
+                licenses = licenseString['$schema']
             elif 'dataUsesConditions' in licenseString:
-                licenseString = licenseString['dataUsesConditions']
+                licenses = licenseString['dataUsesConditions']
             else:
-                licence = licenseString
+                licences = licenseString
 
         payload = {
             "authors": authors,
             "description": data.get('description', 'Undefined'),
             "contact": None,  # data['contact'],
             "version": data.get('version', 'Undefined'),
-            "licenses": licenseString
+            "licenses": licenses
         }
 
     return payload
