@@ -24,12 +24,10 @@
 
     <script type="text/javascript">
       const reactElement = React.createElement(CONPReact.DataTableContainer, {
-        endpointURL: "/dataset-search",
-        limit: 10,
+        endpointURL: "{{ url_for('search.dataset_search') }}",
         imagePath: "/static/img",
         renderElement: CONPReact.DatasetElement
-        });
-
+      });
       ReactDOM.render(reactElement, document.querySelector("#search-datatable-mount"));
     </script>
   </div>

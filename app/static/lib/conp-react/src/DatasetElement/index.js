@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const DatasetElement = props => {
   const { authorized, ...element } = props;
 
-  const imagePath = element.imagePath;
+  const imagePath = element.img;
   const runOnCbrainEnabled = `${imagePath}/run_on_cbrain_green.png`;
   const runOnCbrainDisabled = `${imagePath}/run_on_cbrain_gray.png`;
   const downloadEnabled = `${imagePath}/download_green.png`;
@@ -70,19 +70,19 @@ const DatasetElement = props => {
             </p>
             <p className="card-text text-muted">{element.format}</p>
           </li>
-          <li class="d-none d-md-flex">
+          <li className="d-none d-md-flex">
             <p className="card-text text-capitalize pr-1">
               <strong>Modalities: </strong>
             </p>
             <p className="card-text text-muted">{element.modalities}</p>
           </li>
-          <li class="d-none d-md-flex">
+          <li className="d-none d-md-flex">
             <p className="card-text text-capitalize pr-1">
               <strong>Date Added: </strong>
             </p>
             <p className="card-text text-muted">{element.dateAdded}</p>
           </li>{" "}
-          <li class="d-none d-md-flex">
+          <li className="d-none d-md-flex">
             <p className="card-text text-capitalize pr-1">
               <strong>Date Updated: </strong>
             </p>

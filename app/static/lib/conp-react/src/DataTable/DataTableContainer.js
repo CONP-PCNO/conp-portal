@@ -94,6 +94,8 @@ DataTableContainer.defaultProps = {
   endpointURL: "",
   limit: 10,
   total: 0,
+  page: 1,
+  max_per_page: 10,
   elements: []
 };
 

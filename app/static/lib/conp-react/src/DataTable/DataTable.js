@@ -63,7 +63,7 @@ const DataTable = ({
            onClick={e =>
             setQuery({ ...query, page: Math.max(1, query.page-1) })
           }> &lt; </div>
-          {R.range(1, Math.max(Math.ceil(total / query.max_per_page) + 1, 2)).map(
+          {R.range(1, Math.ceil(total / query.max_per_page)+1).map(
             (page, i) => (
               <div className={page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm"}
               onClick={e =>

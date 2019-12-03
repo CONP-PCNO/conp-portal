@@ -4337,7 +4337,7 @@ var DataTable_DataTable = function DataTable(_ref) {
             className: "btn btn-outline-secondary dropdown-toggle dropdown-select px-4",
             value: query.sortKey,
             onChange: function onChange(e) {
-              return setQuery(_extends({}, query, { page: 1 }));
+              return setQuery(_extends({}, query, { sortKey: e.currentTarget.value }));
             }
           },
           sortKeys.map(function (_ref2, i) {
@@ -4404,7 +4404,7 @@ var DataTable_DataTable = function DataTable(_ref) {
             } },
           " < "
         ),
-        es_range(1, Math.max(Math.ceil(total / query.max_per_page) + 1, 2)).map(function (page, i) {
+        es_range(1, Math.ceil(total / query.max_per_page) + 1).map(function (page, i) {
           return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
             { className: page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm",
@@ -7093,6 +7093,8 @@ DataTableContainer_DataTableContainer.defaultProps = {
   endpointURL: "",
   limit: 10,
   total: 0,
+  page: 1,
+  max_per_page: 10,
   elements: []
 };
 
@@ -7110,7 +7112,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   var authorized = props.authorized,
       element = DatasetElement_objectWithoutProperties(props, ["authorized"]);
 
-  var imagePath = element.imagePath;
+  var imagePath = element.img;
   var runOnCbrainEnabled = imagePath + "/run_on_cbrain_green.png";
   var runOnCbrainDisabled = imagePath + "/run_on_cbrain_gray.png";
   var downloadEnabled = imagePath + "/download_green.png";
@@ -7269,7 +7271,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "li",
-          { "class": "d-none d-md-flex" },
+          { className: "d-none d-md-flex" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "p",
             { className: "card-text text-capitalize pr-1" },
@@ -7287,7 +7289,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "li",
-          { "class": "d-none d-md-flex" },
+          { className: "d-none d-md-flex" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "p",
             { className: "card-text text-capitalize pr-1" },
@@ -7306,7 +7308,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
         " ",
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "li",
-          { "class": "d-none d-md-flex" },
+          { className: "d-none d-md-flex" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "p",
             { className: "card-text text-capitalize pr-1" },
