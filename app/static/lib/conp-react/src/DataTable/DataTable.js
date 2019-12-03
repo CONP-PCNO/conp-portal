@@ -6,6 +6,7 @@ const DataTable = ({
   authorized,
   sortKeys,
   elements,
+  imagePath,
   total,
   renderElement,
   query,
@@ -50,7 +51,7 @@ const DataTable = ({
       </div>
       {elements.map((element, i) => (
         <div key={element.id} className="container">
-          {React.createElement(renderElement, { ...element, authorized })}
+          {React.createElement(renderElement, { ...element, authorized, imagePath })}
         </div>
       ))}
       <div className="search-dataset-footer d-flex align-items-center p-2">
@@ -101,6 +102,7 @@ DataTable.propTypes = {
     PropTypes.shape({ key: PropTypes.string, label: PropTypes.string })
   ),
   elements: PropTypes.arrayOf(PropTypes.object),
+  imagePath: PropTypes.string,
   total: PropTypes.number,
   renderElement: PropTypes.func,
   query: PropTypes.shape({
@@ -118,7 +120,8 @@ DataTable.propTypes = {
 DataTable.defaultProps = {
   sortKeys: [],
   elements: [],
-  total: 0
+  total: 0,
+  imagePath: 'static/img/'
 };
 
 export default DataTable;
