@@ -6,6 +6,11 @@ python:
 - 3.6-dev
 - 3.7-dev
 
+before_install:
+  - bash <(wget -q -O- http://neuro.debian.net/_files/neurodebian-travis.sh)
+  - sudo apt-get -q update
+  - sudo apt-get -y install git-annex-standalone
+
 install:
 - pip install -r requirements.txt
 - pip install coveralls

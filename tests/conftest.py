@@ -6,7 +6,7 @@ import pytest
 import os
 from app import create_app
 from app import db as _db
-from app.models import Dataset, DatasetStats, Pipeline, User, AffiliationType, \
+from app.models import Dataset, Pipeline, User, AffiliationType, \
     OAuth, Role
 from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker
@@ -87,43 +87,16 @@ def new_dataset():
     """
     dataset = Dataset(
         dataset_id="8de99b0e-5f94-11e9-9e05-52545e9add8e",
-        annex_uuid="4fd032a1-220a-404e-95ac-ccaa3f7efcb7",
         description="Human Brain phantom scans, Multiple MRI"
         " scans of a single human phantom over 11"
         " years, T1 weighted images and others on"
         " 13 scanner in 6 sites accross North America."
         " The data are available in minc format",
-        owner_id=1,
-        download_path="multicenter-phantom",
-        raw_data_url="https://phantom-dev.loris.ca",
         name="Multicenter Single Subject Human MRI Phantom",
-        modality="Imaging",
         version="1.0",
-        format="minc",
-        category="Phantom",
         is_private=False,
-
     )
     return dataset
-
-
-@pytest.fixture(scope='module')
-def new_dataset_stats():
-    """
-    Creates a new mock DatasetStats to test
-    """
-    dataset_stats = DatasetStats(
-        dataset_id="8de99b0e-5f94-11e9-9e05-52545e9add8e",
-        size=40,
-        files=2712,
-        sources=1,
-        num_subjects=1,
-        num_downloads=0,
-        num_likes=0,
-        num_views=0,
-
-    )
-    return dataset_stats
 
 
 @pytest.fixture(scope='module')

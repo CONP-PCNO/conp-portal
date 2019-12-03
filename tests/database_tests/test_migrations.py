@@ -6,7 +6,7 @@ import pytest
 import os
 from alembic.command import upgrade
 from alembic.config import Config as alem_Config
-from app.models import Dataset, DatasetStats, User, AffiliationType, Role, UsersRoles
+from app.models import Dataset, User, AffiliationType, Role, UsersRoles
 import app.cli as cli
 
 
@@ -43,11 +43,12 @@ def test_seed_db_test(app, session, runner):
     """
     cli.register(app)
     result = runner.invoke(args=["seed_test_db"])
-    d = Dataset.query.filter(Dataset.dataset_id ==
-                             "8de99b0e-5f94-11e9-9e05-52545e9add8e").first()
-    assert d.name == "Multicenter Single Subject Human MRI Phantom"
-    ats = AffiliationType.query.all()
+    assert result.exit_code == 0, result.output
 
+    d = session.query(Dataset).all()
+    assert d
+
+    ats = AffiliationType.query.all()
     assert ats[0].name == "PI"
     assert ats[0].label == "Principal Investigator (Professor)"
     assert ats[-1].name == "OT"
@@ -64,18 +65,17 @@ def test_seed_db_test(app, session, runner):
     session.query(UsersRoles).delete()
     session.query(AffiliationType).delete()
     session.query(Dataset).delete()
-    session.query(DatasetStats).delete()
     session.commit()
 
 
 def test_seed_test_datasets_db(app,session,runner):
     cli.register(app)
     result = runner.invoke(args=["seed_test_datasets_db"])
-    d = Dataset.query.filter(Dataset.dataset_id ==
-                             "8de99b0e-5f94-11e9-9e05-52545e9add8e").first()
-    assert d.name == "Multicenter Single Subject Human MRI Phantom"
+    assert result.exit_code == 0, result.stderr
+
+    d = session.query(Dataset).all()
+    assert d
     session.query(Dataset).delete()
-    session.query(DatasetStats).delete()
     session.commit()
 
 def test_seed_aff_type_db(app, session,runner):

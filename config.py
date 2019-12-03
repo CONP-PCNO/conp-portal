@@ -18,7 +18,7 @@ class Config(object):
     """
     SECRET_KEY = os.environ.get('SECRET_KEY') or "conp-secret-key-for-here"
     DATA_PATH = os.environ.get('DATA_PATH') or os.path.join(
-        basedir, "app/static/data/projects")
+        basedir, "app/static/data")
     SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get(
         'SQLALCHEMY_TRACK_MODIFICATIONS') or False
 
