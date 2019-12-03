@@ -116,11 +116,21 @@ def dataset_search():
         }
         elements.append(dataset)
 
-    cursor = max(min(int(request.args.get('cursor') or 0), 0), 0)
-    limit = max(min(int(request.args.get('limit') or 10), 10), 0)
+    page = int(request.args.get('page') or 1)
+    max_per_page = int(request.args.get("max_per_page") or 999999)
     sort_key = request.args.get('sortKey') or "id"
-    paginated = elements[(cursor):(cursor + limit)]
-    paginated.sort(key=lambda o: o[sort_key])
+
+    # extract the appropriate page
+    elements_on_page = elements
+    if len(elements) > max_per_page:
+        start_index = (page-1)*max_per_page;
+        end_index = start_index + max_per_page;
+        print("!!!! indexes: {} {}".format(start_index,end_index))
+        if end_index > len(elements):
+            end_index = len(elements)
+        elements_on_page = elements[start_index:end_index]
+
+    elements_on_page.sort(key=lambda o: o[sort_key])
 
     # Construct payload
     payload = {
@@ -180,7 +190,7 @@ def dataset_search():
                 "label": "Sources"
             }
         ],
-        "elements": paginated
+        "elements": elements_on_page
     }
 
     return json.dumps(payload)
