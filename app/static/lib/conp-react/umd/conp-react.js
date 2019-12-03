@@ -4019,6 +4019,7 @@ var DataTable_DataTable = function DataTable(_ref) {
   var authorized = _ref.authorized,
       sortKeys = _ref.sortKeys,
       elements = _ref.elements,
+      imagePath = _ref.imagePath,
       total = _ref.total,
       renderElement = _ref.renderElement,
       query = _ref.query,
@@ -4086,7 +4087,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
         { key: element.id, className: "container" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, { authorized: authorized }))
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, { authorized: authorized, imagePath: imagePath }))
       );
     }),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -4149,6 +4150,7 @@ DataTable_DataTable.propTypes = {
   authorized: prop_types_default.a.bool,
   sortKeys: prop_types_default.a.arrayOf(prop_types_default.a.shape({ key: prop_types_default.a.string, label: prop_types_default.a.string })),
   elements: prop_types_default.a.arrayOf(prop_types_default.a.object),
+  imagePath: prop_types_default.a.string,
   total: prop_types_default.a.number,
   renderElement: prop_types_default.a.func,
   query: prop_types_default.a.shape({
@@ -4166,7 +4168,8 @@ DataTable_DataTable.propTypes = {
 DataTable_DataTable.defaultProps = {
   sortKeys: [],
   elements: [],
-  total: 0
+  total: 0,
+  imagePath: 'static/img/'
 };
 
 /* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
@@ -6516,6 +6519,7 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 
 var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   var endpointURL = _ref.endpointURL,
+      imagePath = _ref.imagePath,
       limit = _ref.limit,
       authorized = _ref.authorized,
       total = _ref.total,
@@ -6523,7 +6527,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       max_per_page = _ref.max_per_page,
       sortKeys = _ref.sortKeys,
       elements = _ref.elements,
-      dataTableProps = _objectWithoutProperties(_ref, ["endpointURL", "limit", "authorized", "total", "page", "max_per_page", "sortKeys", "elements"]);
+      dataTableProps = _objectWithoutProperties(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "sortKeys", "elements"]);
 
   var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
       fetchedElements = _React$useState[0],
@@ -6626,6 +6630,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_DataTable_DataTable, DataTableContainer_extends({
     authorized: authorizedState,
     elements: fetchedElements,
+    imagePath: imagePath,
     total: totalState,
     sortKeys: sortKeysState,
     query: query,
@@ -6635,7 +6640,8 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
 
 DataTableContainer_DataTableContainer.propTypes = {
   authorized: prop_types_default.a.bool,
-  endpointURL: prop_types_default.a.string,
+  endpointURL: prop_types_default.a.string.isRequired,
+  imagePath: prop_types_default.a.string,
   limit: prop_types_default.a.number,
   total: prop_types_default.a.number,
   page: prop_types_default.a.number,
@@ -6646,6 +6652,7 @@ DataTableContainer_DataTableContainer.propTypes = {
 DataTableContainer_DataTableContainer.defaultProps = {
   authorized: false,
   endpointURL: "",
+  imagePath: 'static/img/',
   limit: 10,
   total: 0,
   page: 1,
@@ -6665,9 +6672,9 @@ function DatasetElement_objectWithoutProperties(obj, keys) { var target = {}; fo
 
 var DatasetElement_DatasetElement = function DatasetElement(props) {
   var authorized = props.authorized,
-      element = DatasetElement_objectWithoutProperties(props, ["authorized"]);
+      imagePath = props.imagePath,
+      element = DatasetElement_objectWithoutProperties(props, ["authorized", "imagePath"]);
 
-  var imagePath = element.img;
   var runOnCbrainEnabled = imagePath + "/run_on_cbrain_green.png";
   var runOnCbrainDisabled = imagePath + "/run_on_cbrain_gray.png";
   var downloadEnabled = imagePath + "/download_green.png";

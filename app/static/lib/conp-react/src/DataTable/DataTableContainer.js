@@ -7,6 +7,7 @@ import DataTable from "./DataTable";
 
 const DataTableContainer = ({
   endpointURL,
+  imagePath,
   limit,
   authorized,
   total,
@@ -70,6 +71,7 @@ const DataTableContainer = ({
     <DataTable
       authorized={authorizedState}
       elements={fetchedElements}
+      imagePath={imagePath}
       total={totalState}
       sortKeys={sortKeysState}
       query={query}
@@ -81,7 +83,8 @@ const DataTableContainer = ({
 
 DataTableContainer.propTypes = {
   authorized: PropTypes.bool,
-  endpointURL: PropTypes.string,
+  endpointURL: PropTypes.string.isRequired,
+  imagePath: PropTypes.string,
   limit: PropTypes.number,
   total: PropTypes.number,
   page: PropTypes.number,
@@ -92,6 +95,7 @@ DataTableContainer.propTypes = {
 DataTableContainer.defaultProps = {
   authorized: false,
   endpointURL: "",
+  imagePath: 'static/img/',
   limit: 10,
   total: 0,
   page: 1,
