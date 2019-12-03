@@ -32,7 +32,6 @@ class UpdatePipelineData(threading.Thread):
             # first search for all descriptors
             searcher = Searcher(query="", max_results=100, no_trunc=True)
             all_descriptors = searcher.search()
-
             # then pull every single descriptor
             all_descriptor_ids = list(map(lambda x: x["ID"], all_descriptors))
             Puller(all_descriptor_ids).pull()
@@ -57,4 +56,4 @@ class UpdatePipelineData(threading.Thread):
                 json.dump(detailed_all_descriptors, f, indent=4)
 
         except Exception as e:
-            logging.exception("An exception occurred in the thread.")
+            logging.exception("An exception occurred in the thread:{0}.".format(e))

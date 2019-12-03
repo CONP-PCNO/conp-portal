@@ -53,7 +53,7 @@ flask seed_test_db
 In the top level directory:
 
 ```shell
-  git submodule update --init
+  git submodule update --init --recursive --remote
 ```
       
 You can now view the contents of the directory `app/static/data` and you should now see that the conp-datasets repository has been cloned into here.

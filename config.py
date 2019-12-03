@@ -55,6 +55,8 @@ class Config(object):
     USER_RESEND_CONFIRM_EMAIL_TEMPLATE = "auth/flask_user/resend_confirm_email.html"
     USER_RESET_PASSWORD_TEMPLATE = "auth/flask_user/reset_password.html"
     USER_EDIT_USER_PROFILE_TEMPLATE = "auth/flask_user/edit_user_profile.html"
+    USER_CONFIRM_EMAIL_TEMPLATE = "auth/flask_user/emails/confirm_email"
+    USER_REGISTERED_EMAIL_TEMPLATE = "auth/flask_user/emails/registered"
 
     # ORCID PARAMETERS, must come from .flaskenv file!
     ORCID_OAUTH_CLIENT_ID = os.environ.get("ORCID_OAUTH_CLIENT_ID")

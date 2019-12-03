@@ -50,12 +50,13 @@ def register(app):
         """
         _update_pipeline_data(app)
 
-    @app.cli.command('update_datasets_metadata')
-    def update_datasets_metadata():
+    @app.cli.command('update_datasets')
+    def update_datasets():
         """
         Wrapper to call the updating to the datasets metadata
         """
-        _update_datasets_metadata(app)
+        _update_datasets(app)
+
 
 def _seed_aff_types_db(app):
     """
@@ -121,7 +122,8 @@ def _seed_test_datasets_db(app):
     """
     Seeds a set of test datasets populated from a static csv file
     """
-    _update_datasets_metadata(app)
+    _update_datasets(app)
+
 
 def _update_pipeline_data(app):
     """
@@ -132,9 +134,10 @@ def _update_pipeline_data(app):
     thr.start()
     thr.join()
 
-def _update_datasets_metadata(app):
+
+def _update_datasets(app):
     """
-    Updates from Zenodo the available pipelines
+    Updates from conp-datasets
     """
     from app import db, config
     from app.models import Dataset as DBDataset
@@ -147,32 +150,39 @@ def _update_datasets_metadata(app):
 
     d = DataladDataset(path=datasetspath + '/conp-dataset')
     if not d.is_installed():
-        api.clone(source='http://github.com/CONP-PCNO/conp-dataset', path=datasetspath + '/conp-dataset')
+        api.clone(
+            source='https://github.com/CONP-PCNO/conp-dataset',
+            path=datasetspath + '/conp-dataset'
+        )
         d = DataladDataset(path=datasetspath + '/conp-dataset')
         d.install(path='', recursive=True)
-    
+
     try:
-       d.update(path='')
+        d.update(path='', merge=True, recursive=True)
     except Exception as e:
-       print("An exception occurred in datalad update")
-       print(e.args)
-       
-    
+        print("An exception occurred in datalad update")
+        print(e.args)
+
     for ds in d.subdatasets():
         subdataset = DataladDataset(path=ds['path'])
         if not subdataset.is_installed():
-            subdataset.install(path='')
+            try:
+                subdataset.install(path='')
+            except Exception as e:
+                print("An exception occurred in datalad install for " + str(ds))
+                print(e.args)
 
         dirs = os.listdir(ds['path'])
         descriptor = ''
         for file in dirs:
             if fnmatch.fnmatch(file.lower(), 'dats.json'):
                 descriptor = file
+
         if descriptor == '':
             print('DATS.json file can`t be found in ' + ds['path'])
             continue
 
-        with open(ds['path'] + '/' + descriptor, 'r') as f:
+        with open(os.path.join(ds['path'], descriptor), 'r') as f:
             dats = json.load(f)
 
         # use dats.json data to fill the datasets table
@@ -180,16 +190,16 @@ def _update_datasets_metadata(app):
         dataset = DBDataset.query.filter_by(dataset_id=ds['gitmodule_name']).first()
         if dataset is None:
             dataset = DBDataset()
-            dataset['date_created'] = datetime.utcnow()
+            dataset.dataset_id = ds['gitmodule_name']
+            dataset.date_created = datetime.utcnow()
 
-        dataset.dataset_id = ds['gitmodule_name']
-        dataset.download_path = ds['path'] + '/' + descriptor
         dataset.date_updated = datetime.utcnow()
-        dataset.description = dats['description']
-        dataset.name = dats['title']
-        dataset.raw_data_url = ds['path'] 
-        
-        db.session.merge(dataset)
-        print(ds['gitmodule_name'] + ' updated.')
+        dataset.description = dats.get('description', 'No description in DATS.json')
+        dataset.name = dats.get(
+            'title',
+            os.path.basename(dataset.dataset_id)
+        )
 
-    db.session.commit()
+        db.session.merge(dataset)
+        db.session.commit()
+        print(ds['gitmodule_name'] + ' updated.')

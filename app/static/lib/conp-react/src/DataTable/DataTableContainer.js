@@ -7,9 +7,12 @@ import DataTable from "./DataTable";
 
 const DataTableContainer = ({
   endpointURL,
+  imagePath,
   limit,
   authorized,
   total,
+  page,
+  max_per_page,
   sortKeys,
   elements,
   ...dataTableProps
@@ -20,6 +23,8 @@ const DataTableContainer = ({
     search: "",
     sortKey: "title",
     sortComparitor: "asc",
+    page,
+    max_per_page,
     cursor: 0,
     limit
   });
@@ -34,6 +39,7 @@ const DataTableContainer = ({
   }, [limit]);
 
   const fetchElements = async () => {
+    console.log(query);
     const url = `${endpointURL}?${qs.stringify(query)}`;
 
     console.log(`Fetching from: ${url}`);
@@ -65,6 +71,7 @@ const DataTableContainer = ({
     <DataTable
       authorized={authorizedState}
       elements={fetchedElements}
+      imagePath={imagePath}
       total={totalState}
       sortKeys={sortKeysState}
       query={query}
@@ -76,17 +83,23 @@ const DataTableContainer = ({
 
 DataTableContainer.propTypes = {
   authorized: PropTypes.bool,
-  endpointURL: PropTypes.string,
+  endpointURL: PropTypes.string.isRequired,
+  imagePath: PropTypes.string,
   limit: PropTypes.number,
   total: PropTypes.number,
+  page: PropTypes.number,
+  max_per_page: PropTypes.number,
   elements: PropTypes.arrayOf(PropTypes.object)
 };
 
 DataTableContainer.defaultProps = {
   authorized: false,
   endpointURL: "",
+  imagePath: 'static/img/',
   limit: 10,
   total: 0,
+  page: 1,
+  max_per_page: 10,
   elements: []
 };
 

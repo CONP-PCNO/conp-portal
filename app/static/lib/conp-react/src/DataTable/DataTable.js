@@ -6,6 +6,7 @@ const DataTable = ({
   authorized,
   sortKeys,
   elements,
+  imagePath,
   total,
   renderElement,
   query,
@@ -50,56 +51,50 @@ const DataTable = ({
       </div>
       {elements.map((element, i) => (
         <div key={element.id} className="container">
-          {React.createElement(renderElement, { ...element, authorized })}
+          {React.createElement(renderElement, { ...element, authorized, imagePath })}
         </div>
       ))}
       <div className="search-dataset-footer d-flex align-items-center p-2">
-        <ul className="pagination m-0">
-          <li
-            onClick={() =>
-              setQuery({
-                ...query,
-                cursor: Math.max(query.cursor - query.limit, 0)
-              })
-            }
-          >
-            <a href="#">&laquo;</a>
-          </li>
-          {R.range(1, Math.max(Math.floor(total / query.limit) + 1, 2)).map(
+        <div className="btn-group">
+          <div className="btn btn-outline-dark btn-sm"
+            onClick={e =>
+              setQuery({ ...query, page: 1 })
+            }>&lt;&lt;</div>
+          <div className="btn btn-outline-dark btn-sm"
+           onClick={e =>
+            setQuery({ ...query, page: Math.max(1, query.page-1) })
+          }> &lt; </div>
+          {R.range(1, Math.ceil(total / query.max_per_page)+1).map(
             (page, i) => (
-              <li
-                key={i}
-                onClick={() =>
-                  setQuery({ ...query, cursor: (page - 1) * query.limit })
-                }
-                className={
-                  page === Math.floor(query.cursor / query.limit) + 1
-                    ? "active"
-                    : ""
-                }
-              >
-                <a href="#">{page}</a>
-              </li>
+              <div className={page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm"}
+              onClick={e =>
+                setQuery({ ...query, page: page })
+              }
+                key={i}>
+                {page}
+              </div>
             )
           )}
-          <li
-            onClick={() =>
-              setQuery({
-                ...query,
-                cursor: Math.max(
-                  Math.min(query.cursor + query.limit, total - query.limit),
-                  0
-                )
-              })
+          <div className="btn btn-outline-dark btn-sm"
+            onClick={e =>
+              setQuery({ ...query, page: Math.min(query.page+1, Math.ceil(total / query.max_per_page)) })
             }
           >
-            <a href="#">&raquo;</a>
-          </li>
-        </ul>
+            &gt;
+          </div>
+          <div className="btn btn-outline-dark btn-sm"
+            onClick={e =>
+              setQuery({ ...query, page: Math.ceil(total / query.max_per_page) })
+            }
+          >
+            &gt;&gt;
+          </div>
+        </div>
       </div>
     </div>
   );
 };
+
 
 DataTable.propTypes = {
   authorized: PropTypes.bool,
@@ -107,11 +102,14 @@ DataTable.propTypes = {
     PropTypes.shape({ key: PropTypes.string, label: PropTypes.string })
   ),
   elements: PropTypes.arrayOf(PropTypes.object),
+  imagePath: PropTypes.string,
   total: PropTypes.number,
   renderElement: PropTypes.func,
   query: PropTypes.shape({
     search: PropTypes.string,
     sortKey: PropTypes.string,
+    page: PropTypes.number,
+    max_per_page: PropTypes.number,
     sortComparitor: PropTypes.string,
     cursor: PropTypes.number,
     limit: PropTypes.number
@@ -122,7 +120,8 @@ DataTable.propTypes = {
 DataTable.defaultProps = {
   sortKeys: [],
   elements: [],
-  total: 0
+  total: 0,
+  imagePath: 'static/img/'
 };
 
 export default DataTable;

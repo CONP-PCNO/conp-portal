@@ -8,7 +8,7 @@
 <p>You will need to confirm your email next.</p>
 
 <p>If you initiated this registration, please click on the link below:<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ confirm_email_link }}">Confirm your email</a>.</p>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ confirm_email_link.replace('http','https') }}">Confirm your email</a>.</p>
 
 <p>If you did not initiate this registration, you may safely ignore this email.</p>
 {%- endif %}

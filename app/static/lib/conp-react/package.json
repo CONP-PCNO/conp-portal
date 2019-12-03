@@ -19,12 +19,14 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
+    "bootstrap": "^4.3.1",
     "fuse.js": "3.4.4",
     "keyboardjs": "^2.5.1",
     "prop-types": "15.7.2",
     "query-string": "^6.4.2",
     "ramda": "^0.26.1",
     "react-use": "^7.3.1",
+    "reactstrap": "^8.1.1",
     "rebound": "^0.1.0"
   },
   "peerDependencies": {
