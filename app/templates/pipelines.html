@@ -34,9 +34,6 @@
     <script type="text/javascript">
       const reactElement = React.createElement(CONPReact.DataTableContainer, {
         endpointURL: "{{ url_for('pipelines.pipeline_search') }}",
-        limit: 10,
-        page:{{ page }},
-        max_per_page:{{ max_per_page }},
         imagePath: "/static/img",
         renderElement: CONPReact.PipelineElement
       });
