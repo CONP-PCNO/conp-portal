@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const DatasetElement = props => {
   const { authorized, ...element } = props;
 
-  const imagePath = element.imagePath;
+  const imagePath = element.img;
   const runOnCbrainEnabled = `${imagePath}/run_on_cbrain_green.png`;
   const runOnCbrainDisabled = `${imagePath}/run_on_cbrain_gray.png`;
   const downloadEnabled = `${imagePath}/download_green.png`;

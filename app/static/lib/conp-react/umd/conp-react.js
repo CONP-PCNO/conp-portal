@@ -4404,7 +4404,7 @@ var DataTable_DataTable = function DataTable(_ref) {
             } },
           " < "
         ),
-        es_range(1, Math.max(Math.ceil(total / query.max_per_page) + 1, 2)).map(function (page, i) {
+        es_range(1, Math.ceil(total / query.max_per_page) + 1).map(function (page, i) {
           return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
             { className: page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm",
@@ -7112,7 +7112,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   var authorized = props.authorized,
       element = DatasetElement_objectWithoutProperties(props, ["authorized"]);
 
-  var imagePath = element.imagePath;
+  var imagePath = element.img;
   var runOnCbrainEnabled = imagePath + "/run_on_cbrain_green.png";
   var runOnCbrainDisabled = imagePath + "/run_on_cbrain_gray.png";
   var downloadEnabled = imagePath + "/download_green.png";
