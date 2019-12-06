@@ -160,17 +160,32 @@ def _update_datasets(app):
     try:
         d.update(path='', merge=True, recursive=True)
     except Exception as e:
-        print("An exception occurred in datalad update")
+        print("\033[91m")
+        print("[ERROR  ] An exception occurred in datalad update.")
         print(e.args)
+        print("\033[0m")
+        return
+
+    print('[INFO   ] conp-dataset update complete')
+    print('[INFO   ] Updating subdatasets')
 
     for ds in d.subdatasets():
+        print('[INFO   ] Updating ' + ds['gitmodule_url'])
         subdataset = DataladDataset(path=ds['path'])
         if not subdataset.is_installed():
             try:
+                api.clone(
+                    source=ds['gitmodule_url'],
+                    path=ds['path']
+                )
+                subdataset = DataladDataset(path=ds['path'])
                 subdataset.install(path='')
             except Exception as e:
-                print("An exception occurred in datalad install for " + str(ds))
+                print("\033[91m")
+                print("[ERROR  ] An exception occurred in datalad install for " + str(ds) + ".")
                 print(e.args)
+                print("\033[0m")
+                continue
 
         dirs = os.listdir(ds['path'])
         descriptor = ''
@@ -179,11 +194,20 @@ def _update_datasets(app):
                 descriptor = file
 
         if descriptor == '':
-            print('DATS.json file can`t be found in ' + ds['path'])
+            print("\033[91m")
+            print('[ERROR  ] DATS.json file can`t be found in ' + ds['path'] + ".")
+            print("\033[0m")
             continue
 
-        with open(os.path.join(ds['path'], descriptor), 'r') as f:
-            dats = json.load(f)
+        try:
+            with open(os.path.join(ds['path'], descriptor), 'r') as f:
+                dats = json.load(f)
+        except Exception as e:
+            print("\033[91m")
+            print("[ERROR  ] Descriptor file can't be read.")
+            print(e.args)
+            print("\033[0m")
+            continue
 
         # use dats.json data to fill the datasets table
         # avoid duplication / REPLACE instead of insert
@@ -202,4 +226,4 @@ def _update_datasets(app):
 
         db.session.merge(dataset)
         db.session.commit()
-        print(ds['gitmodule_name'] + ' updated.')
+        print('[INFO   ] ' + ds['gitmodule_name'] + ' updated.')
