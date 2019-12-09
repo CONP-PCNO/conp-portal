@@ -4,20 +4,12 @@
 {% block scripts %}
 {{ super() }}
 <script src="https://code.highcharts.com/highcharts.js"></script>
-<!--<script src="https://code.highcharts.com/modules/exporting.js"></script>-->
 {% endblock %}
 
 {% block styles %}
 {{ super() }}
 <link rel="stylesheet" href="https://code.highcharts.com/css/highcharts.css" />
 {% endblock %}
-
-<!-- Login Block -->
-<!--<li class="login">
-    <a href="/logout">
-        <span class="glyphicon glyphicon-log-out"></span> Logout
-    </a>
-</li>-->
 
 {% block contenttitle %}
     <h2><span style="color:red;">CONP</span> Portal</h2>
@@ -33,66 +25,14 @@ Welcome <strong>{{ user.username }}</strong>
 </div>
 {% endif %}
  <div class="row">
-    <div class="d-flex col-sm-12 col-md-12 col-lg-6 p-sm-0 pr-lg-2">
+    <div class="col-6">
       <div class="card" data-type="dashboard">
         <div id="chart"></div>
-        <div class="card-description">
-          <h3 class="card-description-title">CONP Data Statistics</h3>
-          <hr />
-          <p class="card-description-text">
-            The CONP is constructing a resilient network of platforms, where some
-            data (when of reasonable size) could be mirrored across Canadian
-            infrastructures. We also are working on how to describe pipelines in a
-            standard way and see how metadata of datasets can be used to suggest
-            pipelines with standard descriptors. The CONP is proposing a place for
-            scientists to search for tools adapted to a specific type of data.
-          </p>
-        </div>
-        <div class="d-flex mt-4">
-          <a class="col-6 pl-0" href="/search"
-            ><button class="btn btn-green mr-4" type="button">
-              Browse Dataset
-            </button></a
-          >
-          <a class="col-6 pr-0" href="/login"
-            ><button class="btn btn-outline-secondary" type="button">
-              Share a Dataset
-            </button></a
-          >
-        </div>
       </div>
     </div>
-    <div class="d-flex flex-column col-sm-12 col-md-12 col-lg-6 p-sm-0 pl-lg-2">
-      <div class="card mb-md-3" data-type="dashboard">
-        <div class="card-description">
-          <h3 class="card-description-title">NEWEST DATASET RELEASE</h3>
-          <hr />
-
-          <div class="card-description-text">
-            <p class="card-description-subtitle">PREVENT-AD Open</p>
-            <i>
-              Longitudinal multimodal study of pre-symptomatic Alzheimer Disease.
-            </i>
-            <p>
-              The CONP is constructing a resilient network of platforms, where
-              some data (when of reasonable size) could be mirrored across
-              Canadian infrastructures. We also are working on how to describe
-              pipelines in a standard way and see how metadata of datasets can be
-              used to suggest pipelines with standard descriptors. The CONP is
-              proposing a place for scientists to search for tools adapted to a
-              specific type of data.
-            </p>
-          </div>
-        </div>
-
-        <div class="d-flex mt-4 justify-content-end">
-          <a href="/dataset?id=0ea345b4-62cf-11e9-b202-52545e9add8e"
-            ><button class="btn btn-outline-secondary" type="button">
-              Go To Dataset
-            </button></a
-          >
-        </div>
-      </div>
+ </div>
+ <div class="row">
+    <div class="col-6">
       <div class="card" data-type="dashboard">
         <div class="card-description">
           <h3 class="card-description-title">STUDY SPOTLIGHT</h3>
