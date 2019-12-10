@@ -1,5 +1,11 @@
+import React from "react";
+import PropTypes from "prop-types";
+import Highcharts from "highcharts";
 
-var CONPChart = Highcharts.chart('chart', {
+const DashboardChart = props => {
+  const { ...data } = props;
+
+  Highcharts.chart('dashboard-chart-container', {
 
     chart: {
         type: 'column',
@@ -44,8 +50,23 @@ var CONPChart = Highcharts.chart('chart', {
         data: [0, 0, 0, 6]
     }, {
         name: 'CONP Pipelines',
-        data: [0, 0, 0, 0],
+        data: [0, 0, 0, 8],
         yAxis: 1
     }]
 
 });
+
+  return (
+    <div id="dashboard-chart"/>
+  );
+};
+
+DashboardChart.propTypes = {
+  
+};
+
+DashboardChart.defaultProps = {
+  
+};
+
+export default DashboardChart;

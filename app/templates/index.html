@@ -3,7 +3,9 @@
 <!-- Head Block -->
 {% block scripts %}
 {{ super() }}
-<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
+<script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
+<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
 {% endblock %}
 
 {% block styles %}
@@ -27,7 +29,17 @@ Welcome <strong>{{ user.username }}</strong>
  <div class="row">
     <div class="col-6">
       <div class="card" data-type="dashboard">
-        <div id="chart"></div>
+        <div id="dashboard-chart-container">
+
+          <script type="text/javascript">
+            const reactElement = React.createElement(CONPReact.DashboardChart, {
+              endpointURL: "{{ url_for('search.dataset_search') }}",
+              imagePath: "/static/img",
+            });
+            ReactDOM.render(reactElement, document.querySelector("#dashboard-chart-container"));
+          </script>
+
+        </div>
       </div>
     </div>
  </div>
@@ -60,6 +72,5 @@ Welcome <strong>{{ user.username }}</strong>
         </div>
       </div>
     </div>
-  </div> <!-- row -->
-  <script type="text/javascript" src="{{ url_for('static',filename='js/charts.js') }}"></script>
+  </div>
 {% endblock %}

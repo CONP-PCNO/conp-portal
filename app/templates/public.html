@@ -2,7 +2,10 @@
 
 <!-- Head Block -->
 
-{% block head %}
+{% block scripts %}
+  <script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
+  <script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
+  <script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
   <link rel="stylesheet" href="https://code.highcharts.com/css/highcharts.css" />
 {% endblock %}
 
@@ -18,7 +21,17 @@
   <div class="row">
     <div class="d-flex col-sm-12 col-md-12 col-lg-6 p-sm-0 pr-lg-2">
       <div class="card" data-type="dashboard">
-        <div id="chart"></div>
+        <div id="dashboard-chart-container">
+
+          <script type="text/javascript">
+            const reactElement = React.createElement(CONPReact.DashboardChart, {
+              endpointURL: "{{ url_for('search.dataset_search') }}",
+              imagePath: "/static/img",
+            });
+            ReactDOM.render(reactElement, document.querySelector("#dashboard-chart-container"));
+          </script>
+
+        </div>
         <div class="card-description">
           <h3 class="card-description-title">CONP Data Statistics</h3>
           <hr />
@@ -105,9 +118,3 @@
     </div>
   </div>
 {% endblock %} 
-
-<!-- Scripts Block -->
-
-{% block scripts %}
-  <script type="text/javascript" src="/static/js/charts.js"></script>
-{% endblock %}
