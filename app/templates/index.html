@@ -33,7 +33,8 @@ Welcome <strong>{{ user.username }}</strong>
 
           <script type="text/javascript">
             const reactElement = React.createElement(CONPReact.DashboardChart, {
-              endpointURL: "{{ url_for('search.dataset_search') }}",
+              datasetsURL: "{{ url_for('search.dataset_search') }}",
+              pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
               imagePath: "/static/img",
             });
             ReactDOM.render(reactElement, document.querySelector("#dashboard-chart-container"));

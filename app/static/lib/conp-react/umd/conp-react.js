@@ -8067,20 +8067,15 @@ function DashboardChart_objectWithoutProperties(obj, keys) { var target = {}; fo
 
 
 var DashboardChart_DashboardChart = function DashboardChart(_ref) {
-    var endpointURL = _ref.endpointURL,
-        props = DashboardChart_objectWithoutProperties(_ref, ["endpointURL"]);
+    var datasetsURL = _ref.datasetsURL,
+        pipelinesURL = _ref.pipelinesURL,
+        props = DashboardChart_objectWithoutProperties(_ref, ["datasetsURL", "pipelinesURL"]);
 
-    var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState([]),
-        fetchedElements = _React$useState[0],
-        setFetchedElements = _React$useState[1];
+    //const [fetchedElements, setFetchedElements] = React.useState([]);
+    //const [totalState, setTotalState] = React.useState(0);
 
-    var _React$useState2 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(0),
-        totalState = _React$useState2[0],
-        setTotalState = _React$useState2[1];
-
-    var drawChart = function drawChart(total) {
+    var drawChart = function drawChart(data) {
         console.log('drawing chart');
-        console.log('totalState is ' + totalState);
         highcharts_default.a.chart('dashboard-chart-container', {
 
             chart: {
@@ -8121,10 +8116,10 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
             series: [{
                 name: 'CONP Datasets',
-                data: [0, 0, 0, total]
+                data: [0, 0, 0, data.datasetsTotal]
             }, {
                 name: 'CONP Pipelines',
-                data: [0, 0, 0, 8],
+                data: [0, 0, 0, data.pipelinesTotal],
                 yAxis: 1
             }]
 
@@ -8133,61 +8128,88 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
     var fetchElements = function () {
         var _ref2 = DashboardChart_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-            var url, res, parsed;
+            var res, datasetsRes, pipelines, pipelinesRes, data;
             return regenerator_default.a.wrap(function _callee$(_context) {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
-                            url = endpointURL;
+                            _context.prev = 0;
 
+                            console.log("Fetching from: " + datasetsURL);
+                            _context.next = 4;
+                            return fetch(datasetsURL);
 
-                            console.log("Fetching from: " + url);
-
-                            _context.prev = 2;
-                            _context.next = 5;
-                            return fetch(url);
-
-                        case 5:
+                        case 4:
                             res = _context.sent;
 
                             if (res.ok) {
-                                _context.next = 8;
+                                _context.next = 7;
                                 break;
                             }
 
                             throw new Error("Request failed with status: " + res.status + " (" + res.statusText + ")");
 
-                        case 8:
-                            _context.next = 10;
+                        case 7:
+                            _context.next = 9;
                             return res.json();
 
-                        case 10:
-                            parsed = _context.sent;
+                        case 9:
+                            datasetsRes = _context.sent;
 
 
-                            console.log(JSON.stringify(parsed.total));
+                            console.log(JSON.stringify(datasetsRes.total));
 
-                            setFetchedElements(parsed.elements);
-                            setTotalState(parsed.total);
+                            //setFetchedElements(parsed.elements);
+                            //setTotalState(parsed.total);
 
-                            drawChart(parsed.total);
+                            console.log("Fetching from: " + pipelinesURL);
+                            _context.next = 14;
+                            return fetch(pipelinesURL);
 
-                            _context.next = 21;
-                            break;
+                        case 14:
+                            pipelines = _context.sent;
+
+                            if (pipelines.ok) {
+                                _context.next = 17;
+                                break;
+                            }
+
+                            throw new Error("Request failed with status: " + pipelines.status + " (" + pipelines.statusText + ")");
 
                         case 17:
-                            _context.prev = 17;
-                            _context.t0 = _context["catch"](2);
+                            _context.next = 19;
+                            return pipelines.json();
+
+                        case 19:
+                            pipelinesRes = _context.sent;
+
+
+                            console.log(JSON.stringify(pipelinesRes.elements.length));
+
+                            data = {
+                                datasetsTotal: datasetsRes.total,
+                                pipelinesTotal: pipelinesRes.elements.length
+                            };
+
+
+                            drawChart(data);
+
+                            _context.next = 29;
+                            break;
+
+                        case 25:
+                            _context.prev = 25;
+                            _context.t0 = _context["catch"](0);
 
                             alert("There was an error retrieving the search results.");
                             console.error(_context.t0);
 
-                        case 21:
+                        case 29:
                         case "end":
                             return _context.stop();
                     }
                 }
-            }, _callee, DashboardChart_this, [[2, 17]]);
+            }, _callee, DashboardChart_this, [[0, 25]]);
         }));
 
         return function fetchElements() {
@@ -8197,7 +8219,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
     esm_useDebounce(function () {
         return void fetchElements();
-    }, 300, [endpointURL]);
+    }, 300, [datasetsURL]);
 
     return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", { id: "dashboard-chart" });
 };
