@@ -443,6 +443,315 @@ module.exports = __webpack_require__(18);
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+const strictUriEncode = __webpack_require__(25);
+const decodeComponent = __webpack_require__(26);
+const splitOnFirst = __webpack_require__(27);
+
+function encoderForArrayFormat(options) {
+	switch (options.arrayFormat) {
+		case 'index':
+			return key => (result, value) => {
+				const index = result.length;
+				if (value === undefined || (options.skipNull && value === null)) {
+					return result;
+				}
+
+				if (value === null) {
+					return [...result, [encode(key, options), '[', index, ']'].join('')];
+				}
+
+				return [
+					...result,
+					[encode(key, options), '[', encode(index, options), ']=', encode(value, options)].join('')
+				];
+			};
+
+		case 'bracket':
+			return key => (result, value) => {
+				if (value === undefined || (options.skipNull && value === null)) {
+					return result;
+				}
+
+				if (value === null) {
+					return [...result, [encode(key, options), '[]'].join('')];
+				}
+
+				return [...result, [encode(key, options), '[]=', encode(value, options)].join('')];
+			};
+
+		case 'comma':
+			return key => (result, value) => {
+				if (value === null || value === undefined || value.length === 0) {
+					return result;
+				}
+
+				if (result.length === 0) {
+					return [[encode(key, options), '=', encode(value, options)].join('')];
+				}
+
+				return [[result, encode(value, options)].join(',')];
+			};
+
+		default:
+			return key => (result, value) => {
+				if (value === undefined || (options.skipNull && value === null)) {
+					return result;
+				}
+
+				if (value === null) {
+					return [...result, encode(key, options)];
+				}
+
+				return [...result, [encode(key, options), '=', encode(value, options)].join('')];
+			};
+	}
+}
+
+function parserForArrayFormat(options) {
+	let result;
+
+	switch (options.arrayFormat) {
+		case 'index':
+			return (key, value, accumulator) => {
+				result = /\[(\d*)\]$/.exec(key);
+
+				key = key.replace(/\[\d*\]$/, '');
+
+				if (!result) {
+					accumulator[key] = value;
+					return;
+				}
+
+				if (accumulator[key] === undefined) {
+					accumulator[key] = {};
+				}
+
+				accumulator[key][result[1]] = value;
+			};
+
+		case 'bracket':
+			return (key, value, accumulator) => {
+				result = /(\[\])$/.exec(key);
+				key = key.replace(/\[\]$/, '');
+
+				if (!result) {
+					accumulator[key] = value;
+					return;
+				}
+
+				if (accumulator[key] === undefined) {
+					accumulator[key] = [value];
+					return;
+				}
+
+				accumulator[key] = [].concat(accumulator[key], value);
+			};
+
+		case 'comma':
+			return (key, value, accumulator) => {
+				const isArray = typeof value === 'string' && value.split('').indexOf(',') > -1;
+				const newValue = isArray ? value.split(',') : value;
+				accumulator[key] = newValue;
+			};
+
+		default:
+			return (key, value, accumulator) => {
+				if (accumulator[key] === undefined) {
+					accumulator[key] = value;
+					return;
+				}
+
+				accumulator[key] = [].concat(accumulator[key], value);
+			};
+	}
+}
+
+function encode(value, options) {
+	if (options.encode) {
+		return options.strict ? strictUriEncode(value) : encodeURIComponent(value);
+	}
+
+	return value;
+}
+
+function decode(value, options) {
+	if (options.decode) {
+		return decodeComponent(value);
+	}
+
+	return value;
+}
+
+function keysSorter(input) {
+	if (Array.isArray(input)) {
+		return input.sort();
+	}
+
+	if (typeof input === 'object') {
+		return keysSorter(Object.keys(input))
+			.sort((a, b) => Number(a) - Number(b))
+			.map(key => input[key]);
+	}
+
+	return input;
+}
+
+function removeHash(input) {
+	const hashStart = input.indexOf('#');
+	if (hashStart !== -1) {
+		input = input.slice(0, hashStart);
+	}
+
+	return input;
+}
+
+function extract(input) {
+	input = removeHash(input);
+	const queryStart = input.indexOf('?');
+	if (queryStart === -1) {
+		return '';
+	}
+
+	return input.slice(queryStart + 1);
+}
+
+function parseValue(value, options) {
+	if (options.parseNumbers && !Number.isNaN(Number(value)) && (typeof value === 'string' && value.trim() !== '')) {
+		value = Number(value);
+	} else if (options.parseBooleans && value !== null && (value.toLowerCase() === 'true' || value.toLowerCase() === 'false')) {
+		value = value.toLowerCase() === 'true';
+	}
+
+	return value;
+}
+
+function parse(input, options) {
+	options = Object.assign({
+		decode: true,
+		sort: true,
+		arrayFormat: 'none',
+		parseNumbers: false,
+		parseBooleans: false
+	}, options);
+
+	const formatter = parserForArrayFormat(options);
+
+	// Create an object with no prototype
+	const ret = Object.create(null);
+
+	if (typeof input !== 'string') {
+		return ret;
+	}
+
+	input = input.trim().replace(/^[?#&]/, '');
+
+	if (!input) {
+		return ret;
+	}
+
+	for (const param of input.split('&')) {
+		let [key, value] = splitOnFirst(options.decode ? param.replace(/\+/g, ' ') : param, '=');
+
+		// Missing `=` should be `null`:
+		// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
+		value = value === undefined ? null : decode(value, options);
+		formatter(decode(key, options), value, ret);
+	}
+
+	for (const key of Object.keys(ret)) {
+		const value = ret[key];
+		if (typeof value === 'object' && value !== null) {
+			for (const k of Object.keys(value)) {
+				value[k] = parseValue(value[k], options);
+			}
+		} else {
+			ret[key] = parseValue(value, options);
+		}
+	}
+
+	if (options.sort === false) {
+		return ret;
+	}
+
+	return (options.sort === true ? Object.keys(ret).sort() : Object.keys(ret).sort(options.sort)).reduce((result, key) => {
+		const value = ret[key];
+		if (Boolean(value) && typeof value === 'object' && !Array.isArray(value)) {
+			// Sort object keys, not values
+			result[key] = keysSorter(value);
+		} else {
+			result[key] = value;
+		}
+
+		return result;
+	}, Object.create(null));
+}
+
+exports.extract = extract;
+exports.parse = parse;
+
+exports.stringify = (object, options) => {
+	if (!object) {
+		return '';
+	}
+
+	options = Object.assign({
+		encode: true,
+		strict: true,
+		arrayFormat: 'none'
+	}, options);
+
+	const formatter = encoderForArrayFormat(options);
+
+	const objectCopy = Object.assign({}, object);
+	if (options.skipNull) {
+		for (const key of Object.keys(objectCopy)) {
+			if (objectCopy[key] === undefined || objectCopy[key] === null) {
+				delete objectCopy[key];
+			}
+		}
+	}
+
+	const keys = Object.keys(objectCopy);
+
+	if (options.sort !== false) {
+		keys.sort(options.sort);
+	}
+
+	return keys.map(key => {
+		const value = object[key];
+
+		if (value === undefined) {
+			return '';
+		}
+
+		if (value === null) {
+			return encode(key, options);
+		}
+
+		if (Array.isArray(value)) {
+			return value
+				.reduce(formatter(key), [])
+				.join('&');
+		}
+
+		return encode(key, options) + '=' + encode(value, options);
+	}).filter(x => x.length > 0).join('&');
+};
+
+exports.parseUrl = (input, options) => {
+	return {
+		url: removeHash(input).split('?')[0] || '',
+		query: parse(extract(input), options)
+	};
+};
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports) {
 
 var g;
@@ -468,7 +777,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -658,7 +967,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -770,7 +1079,7 @@ exports.create = function (config) {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -811,7 +1120,7 @@ exports.addon = function (renderer) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -913,7 +1222,7 @@ exports.addon = function (renderer) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 function cssToTree (tree, css, selector, prelude) {
@@ -961,7 +1270,7 @@ exports.cssToTree = cssToTree;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1062,7 +1371,7 @@ module.exports = function exportedEqual(a, b) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, setImmediate) {/**
@@ -2368,10 +2677,10 @@ return index;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5), __webpack_require__(23).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(6), __webpack_require__(23).setImmediate))
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2443,315 +2752,6 @@ exports.easing = {
         t -= 2;
         return (Math.sqrt(1 - t * t) + 1) / 2;
     }
-};
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-const strictUriEncode = __webpack_require__(25);
-const decodeComponent = __webpack_require__(26);
-const splitOnFirst = __webpack_require__(27);
-
-function encoderForArrayFormat(options) {
-	switch (options.arrayFormat) {
-		case 'index':
-			return key => (result, value) => {
-				const index = result.length;
-				if (value === undefined || (options.skipNull && value === null)) {
-					return result;
-				}
-
-				if (value === null) {
-					return [...result, [encode(key, options), '[', index, ']'].join('')];
-				}
-
-				return [
-					...result,
-					[encode(key, options), '[', encode(index, options), ']=', encode(value, options)].join('')
-				];
-			};
-
-		case 'bracket':
-			return key => (result, value) => {
-				if (value === undefined || (options.skipNull && value === null)) {
-					return result;
-				}
-
-				if (value === null) {
-					return [...result, [encode(key, options), '[]'].join('')];
-				}
-
-				return [...result, [encode(key, options), '[]=', encode(value, options)].join('')];
-			};
-
-		case 'comma':
-			return key => (result, value) => {
-				if (value === null || value === undefined || value.length === 0) {
-					return result;
-				}
-
-				if (result.length === 0) {
-					return [[encode(key, options), '=', encode(value, options)].join('')];
-				}
-
-				return [[result, encode(value, options)].join(',')];
-			};
-
-		default:
-			return key => (result, value) => {
-				if (value === undefined || (options.skipNull && value === null)) {
-					return result;
-				}
-
-				if (value === null) {
-					return [...result, encode(key, options)];
-				}
-
-				return [...result, [encode(key, options), '=', encode(value, options)].join('')];
-			};
-	}
-}
-
-function parserForArrayFormat(options) {
-	let result;
-
-	switch (options.arrayFormat) {
-		case 'index':
-			return (key, value, accumulator) => {
-				result = /\[(\d*)\]$/.exec(key);
-
-				key = key.replace(/\[\d*\]$/, '');
-
-				if (!result) {
-					accumulator[key] = value;
-					return;
-				}
-
-				if (accumulator[key] === undefined) {
-					accumulator[key] = {};
-				}
-
-				accumulator[key][result[1]] = value;
-			};
-
-		case 'bracket':
-			return (key, value, accumulator) => {
-				result = /(\[\])$/.exec(key);
-				key = key.replace(/\[\]$/, '');
-
-				if (!result) {
-					accumulator[key] = value;
-					return;
-				}
-
-				if (accumulator[key] === undefined) {
-					accumulator[key] = [value];
-					return;
-				}
-
-				accumulator[key] = [].concat(accumulator[key], value);
-			};
-
-		case 'comma':
-			return (key, value, accumulator) => {
-				const isArray = typeof value === 'string' && value.split('').indexOf(',') > -1;
-				const newValue = isArray ? value.split(',') : value;
-				accumulator[key] = newValue;
-			};
-
-		default:
-			return (key, value, accumulator) => {
-				if (accumulator[key] === undefined) {
-					accumulator[key] = value;
-					return;
-				}
-
-				accumulator[key] = [].concat(accumulator[key], value);
-			};
-	}
-}
-
-function encode(value, options) {
-	if (options.encode) {
-		return options.strict ? strictUriEncode(value) : encodeURIComponent(value);
-	}
-
-	return value;
-}
-
-function decode(value, options) {
-	if (options.decode) {
-		return decodeComponent(value);
-	}
-
-	return value;
-}
-
-function keysSorter(input) {
-	if (Array.isArray(input)) {
-		return input.sort();
-	}
-
-	if (typeof input === 'object') {
-		return keysSorter(Object.keys(input))
-			.sort((a, b) => Number(a) - Number(b))
-			.map(key => input[key]);
-	}
-
-	return input;
-}
-
-function removeHash(input) {
-	const hashStart = input.indexOf('#');
-	if (hashStart !== -1) {
-		input = input.slice(0, hashStart);
-	}
-
-	return input;
-}
-
-function extract(input) {
-	input = removeHash(input);
-	const queryStart = input.indexOf('?');
-	if (queryStart === -1) {
-		return '';
-	}
-
-	return input.slice(queryStart + 1);
-}
-
-function parseValue(value, options) {
-	if (options.parseNumbers && !Number.isNaN(Number(value)) && (typeof value === 'string' && value.trim() !== '')) {
-		value = Number(value);
-	} else if (options.parseBooleans && value !== null && (value.toLowerCase() === 'true' || value.toLowerCase() === 'false')) {
-		value = value.toLowerCase() === 'true';
-	}
-
-	return value;
-}
-
-function parse(input, options) {
-	options = Object.assign({
-		decode: true,
-		sort: true,
-		arrayFormat: 'none',
-		parseNumbers: false,
-		parseBooleans: false
-	}, options);
-
-	const formatter = parserForArrayFormat(options);
-
-	// Create an object with no prototype
-	const ret = Object.create(null);
-
-	if (typeof input !== 'string') {
-		return ret;
-	}
-
-	input = input.trim().replace(/^[?#&]/, '');
-
-	if (!input) {
-		return ret;
-	}
-
-	for (const param of input.split('&')) {
-		let [key, value] = splitOnFirst(options.decode ? param.replace(/\+/g, ' ') : param, '=');
-
-		// Missing `=` should be `null`:
-		// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
-		value = value === undefined ? null : decode(value, options);
-		formatter(decode(key, options), value, ret);
-	}
-
-	for (const key of Object.keys(ret)) {
-		const value = ret[key];
-		if (typeof value === 'object' && value !== null) {
-			for (const k of Object.keys(value)) {
-				value[k] = parseValue(value[k], options);
-			}
-		} else {
-			ret[key] = parseValue(value, options);
-		}
-	}
-
-	if (options.sort === false) {
-		return ret;
-	}
-
-	return (options.sort === true ? Object.keys(ret).sort() : Object.keys(ret).sort(options.sort)).reduce((result, key) => {
-		const value = ret[key];
-		if (Boolean(value) && typeof value === 'object' && !Array.isArray(value)) {
-			// Sort object keys, not values
-			result[key] = keysSorter(value);
-		} else {
-			result[key] = value;
-		}
-
-		return result;
-	}, Object.create(null));
-}
-
-exports.extract = extract;
-exports.parse = parse;
-
-exports.stringify = (object, options) => {
-	if (!object) {
-		return '';
-	}
-
-	options = Object.assign({
-		encode: true,
-		strict: true,
-		arrayFormat: 'none'
-	}, options);
-
-	const formatter = encoderForArrayFormat(options);
-
-	const objectCopy = Object.assign({}, object);
-	if (options.skipNull) {
-		for (const key of Object.keys(objectCopy)) {
-			if (objectCopy[key] === undefined || objectCopy[key] === null) {
-				delete objectCopy[key];
-			}
-		}
-	}
-
-	const keys = Object.keys(objectCopy);
-
-	if (options.sort !== false) {
-		keys.sort(options.sort);
-	}
-
-	return keys.map(key => {
-		const value = object[key];
-
-		if (value === undefined) {
-			return '';
-		}
-
-		if (value === null) {
-			return encode(key, options);
-		}
-
-		if (Array.isArray(value)) {
-			return value
-				.reduce(formatter(key), [])
-				.join('&');
-		}
-
-		return encode(key, options) + '=' + encode(value, options);
-	}).filter(x => x.length > 0).join('&');
-};
-
-exports.parseUrl = (input, options) => {
-	return {
-		url: removeHash(input).split('?')[0] || '',
-		query: parse(extract(input), options)
-	};
 };
 
 
@@ -4359,7 +4359,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5)))
 
 /***/ }),
 /* 24 */
@@ -4552,7 +4552,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5), __webpack_require__(6)))
 
 /***/ }),
 /* 25 */
@@ -5623,16 +5623,16 @@ var useCounter = function (initialValue) {
 /* harmony default export */ var esm_useCounter = (useCounter);
 
 // EXTERNAL MODULE: ./node_modules/nano-css/index.js
-var nano_css = __webpack_require__(6);
+var nano_css = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./node_modules/nano-css/addon/cssom.js
-var cssom = __webpack_require__(7);
+var cssom = __webpack_require__(8);
 
 // EXTERNAL MODULE: ./node_modules/nano-css/addon/vcssom.js
-var vcssom = __webpack_require__(8);
+var vcssom = __webpack_require__(9);
 
 // EXTERNAL MODULE: ./node_modules/nano-css/addon/vcssom/cssToTree.js
-var cssToTree = __webpack_require__(9);
+var cssToTree = __webpack_require__(10);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useCss.js
 
@@ -5675,7 +5675,7 @@ var useDebounce = function (fn, ms, args) {
 /* harmony default export */ var esm_useDebounce = (useDebounce);
 
 // EXTERNAL MODULE: ./node_modules/react-fast-compare/index.js
-var react_fast_compare = __webpack_require__(10);
+var react_fast_compare = __webpack_require__(11);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useDeepCompareEffect.js
 
@@ -7024,7 +7024,7 @@ var useSpeech = function (text, opts) {
 /* harmony default export */ var esm_useSpeech = (useSpeech);
 
 // EXTERNAL MODULE: ./node_modules/rebound/dist/rebound.js
-var rebound = __webpack_require__(11);
+var rebound = __webpack_require__(12);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useSpring.js
 
@@ -7211,7 +7211,7 @@ var useTitle = function (title) {
 /* harmony default export */ var esm_useTitle = (useTitle);
 
 // EXTERNAL MODULE: ./node_modules/ts-easing/lib/index.js
-var lib = __webpack_require__(12);
+var lib = __webpack_require__(13);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useTween.js
 
@@ -7440,7 +7440,7 @@ react_wait_esm_s.Waiter = react_wait_esm_f;
 
 
 // EXTERNAL MODULE: ./node_modules/query-string/index.js
-var query_string = __webpack_require__(13);
+var query_string = __webpack_require__(4);
 
 // CONCATENATED MODULE: ./src/DataTable/DataTableContainer.js
 
@@ -8051,63 +8051,153 @@ var highcharts = __webpack_require__(14);
 var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
 
 // CONCATENATED MODULE: ./src/DashboardChart/index.js
+
+
+var DashboardChart_this = undefined;
+
+function DashboardChart_asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 function DashboardChart_objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 
 
 
 
-var DashboardChart_DashboardChart = function DashboardChart(props) {
-    var data = DashboardChart_objectWithoutProperties(props, []);
 
-    highcharts_default.a.chart('dashboard-chart-container', {
 
-        chart: {
-            type: 'column',
-            styledMode: true,
-            backgroundColor: '#FFF'
-        },
-        credits: {
-            enabled: false
-        },
 
-        title: {
-            text: 'Number of Datasets and Pipelines in 2019'
-        },
+var DashboardChart_DashboardChart = function DashboardChart(_ref) {
+    var endpointURL = _ref.endpointURL,
+        props = DashboardChart_objectWithoutProperties(_ref, ["endpointURL"]);
 
-        yAxis: [{
-            className: 'highcharts-color-0',
+    var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState([]),
+        fetchedElements = _React$useState[0],
+        setFetchedElements = _React$useState[1];
+
+    var _React$useState2 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(0),
+        totalState = _React$useState2[0],
+        setTotalState = _React$useState2[1];
+
+    var drawChart = function drawChart(total) {
+        console.log('drawing chart');
+        console.log('totalState is ' + totalState);
+        highcharts_default.a.chart('dashboard-chart-container', {
+
+            chart: {
+                type: 'column',
+                styledMode: true,
+                backgroundColor: '#FFF'
+            },
+            credits: {
+                enabled: false
+            },
+
             title: {
-                text: 'Number of Pipelines'
-            }
-        }, {
-            className: 'highcharts-color-1',
-            opposite: true,
-            title: {
-                text: 'Number of Datasets'
-            }
-        }],
+                text: 'Number of Datasets and Pipelines in 2019'
+            },
 
-        xAxis: {
-            categories: ["January'19", "February'19", "March'19", "April'19"]
-        },
+            yAxis: [{
+                className: 'highcharts-color-0',
+                title: {
+                    text: 'Number of Pipelines'
+                }
+            }, {
+                className: 'highcharts-color-1',
+                opposite: true,
+                title: {
+                    text: 'Number of Datasets'
+                }
+            }],
 
-        plotOptions: {
-            column: {
-                borderRadius: 5
-            }
-        },
+            xAxis: {
+                categories: ["January'19", "February'19", "March'19", "April'19"]
+            },
 
-        series: [{
-            name: 'CONP Datasets',
-            data: [0, 0, 0, 6]
-        }, {
-            name: 'CONP Pipelines',
-            data: [0, 0, 0, 8],
-            yAxis: 1
-        }]
+            plotOptions: {
+                column: {
+                    borderRadius: 5
+                }
+            },
 
-    });
+            series: [{
+                name: 'CONP Datasets',
+                data: [0, 0, 0, total]
+            }, {
+                name: 'CONP Pipelines',
+                data: [0, 0, 0, 8],
+                yAxis: 1
+            }]
+
+        });
+    };
+
+    var fetchElements = function () {
+        var _ref2 = DashboardChart_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+            var url, res, parsed;
+            return regenerator_default.a.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            url = endpointURL;
+
+
+                            console.log("Fetching from: " + url);
+
+                            _context.prev = 2;
+                            _context.next = 5;
+                            return fetch(url);
+
+                        case 5:
+                            res = _context.sent;
+
+                            if (res.ok) {
+                                _context.next = 8;
+                                break;
+                            }
+
+                            throw new Error("Request failed with status: " + res.status + " (" + res.statusText + ")");
+
+                        case 8:
+                            _context.next = 10;
+                            return res.json();
+
+                        case 10:
+                            parsed = _context.sent;
+
+
+                            console.log(JSON.stringify(parsed.total));
+
+                            setFetchedElements(parsed.elements);
+                            setTotalState(parsed.total);
+
+                            drawChart(parsed.total);
+
+                            _context.next = 21;
+                            break;
+
+                        case 17:
+                            _context.prev = 17;
+                            _context.t0 = _context["catch"](2);
+
+                            alert("There was an error retrieving the search results.");
+                            console.error(_context.t0);
+
+                        case 21:
+                        case "end":
+                            return _context.stop();
+                    }
+                }
+            }, _callee, DashboardChart_this, [[2, 17]]);
+        }));
+
+        return function fetchElements() {
+            return _ref2.apply(this, arguments);
+        };
+    }();
+
+    esm_useDebounce(function () {
+        return void fetchElements();
+    }, 300, [endpointURL]);
 
     return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", { id: "dashboard-chart" });
 };
