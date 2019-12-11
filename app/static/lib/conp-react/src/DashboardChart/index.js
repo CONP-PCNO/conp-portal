@@ -5,14 +5,13 @@ import * as qs from "query-string";
 
 import Highcharts from "highcharts";
 
-const DashboardChart = ({ endpointURL, ...props }) => {
+const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
 
-    const [fetchedElements, setFetchedElements] = React.useState([]);
-    const [totalState, setTotalState] = React.useState(0);
+    //const [fetchedElements, setFetchedElements] = React.useState([]);
+    //const [totalState, setTotalState] = React.useState(0);
 
-    const drawChart = (total) => {
+    const drawChart = (data) => {
         console.log('drawing chart');
-        console.log('totalState is ' + totalState);
         Highcharts.chart('dashboard-chart-container', {
 
             chart: {
@@ -55,10 +54,10 @@ const DashboardChart = ({ endpointURL, ...props }) => {
 
             series: [{
                 name: 'CONP Datasets',
-                data: [0, 0, 0, total]
+                data: [0, 0, 0, data.datasetsTotal]
             }, {
                 name: 'CONP Pipelines',
-                data: [0, 0, 0, 8],
+                data: [0, 0, 0, data.pipelinesTotal],
                 yAxis: 1
             }]
 
@@ -67,12 +66,9 @@ const DashboardChart = ({ endpointURL, ...props }) => {
 
     const fetchElements = async () => {
 
-        const url = endpointURL;
-
-        console.log(`Fetching from: ${url}`);
-
         try {
-            const res = await fetch(url);
+            console.log(`Fetching from: ${datasetsURL}`);
+            const res = await fetch(datasetsURL);
 
             if (!res.ok) {
                 throw new Error(
@@ -80,14 +76,32 @@ const DashboardChart = ({ endpointURL, ...props }) => {
                 );
             }
 
-            const parsed = await res.json();
+            const datasetsRes = await res.json();
 
-            console.log(JSON.stringify(parsed.total));
+            console.log(JSON.stringify(datasetsRes.total));
 
-            setFetchedElements(parsed.elements);
-            setTotalState(parsed.total);
+            //setFetchedElements(parsed.elements);
+            //setTotalState(parsed.total);
 
-            drawChart(parsed.total);
+            console.log(`Fetching from: ${pipelinesURL}`);
+            const pipelines = await fetch(pipelinesURL);
+
+            if (!pipelines.ok) {
+                throw new Error(
+                    `Request failed with status: ${pipelines.status} (${pipelines.statusText})`
+                );
+            }
+
+            const pipelinesRes = await pipelines.json();
+
+            console.log(JSON.stringify(pipelinesRes.elements.length));
+
+            const data = {
+                datasetsTotal: datasetsRes.total,
+                pipelinesTotal: pipelinesRes.elements.length
+            };
+
+            drawChart(data);
 
         } catch (err) {
             alert("There was an error retrieving the search results.");
@@ -95,7 +109,7 @@ const DashboardChart = ({ endpointURL, ...props }) => {
         }
     };
 
-    useDebounce(() => void fetchElements(), 300, [endpointURL]);
+    useDebounce(() => void fetchElements(), 300, [datasetsURL]);
 
     return (
         <div id="dashboard-chart" />
