@@ -8076,6 +8076,23 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
     var drawChart = function drawChart(data) {
         console.log('drawing chart');
+
+        var xAxis = [];
+        var yAxisDatasets = [];
+        var yAxisPipelines = [];
+
+        Object.keys(data.datasets).forEach(function (year) {
+            Object.keys(data.datasets[year]).forEach(function (month) {
+                xAxis.push(month + "/" + year);
+                yAxisDatasets.push(data.datasets[year][month]);
+                yAxisPipelines.push(data.pipelines[year][month] ? data.pipelines[year][month] : 0);
+            });
+        });
+
+        console.log(xAxis);
+        console.log(yAxisDatasets);
+        console.log(yAxisPipelines);
+
         highcharts_default.a.chart('dashboard-chart-container', {
 
             chart: {
@@ -8094,18 +8111,18 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
             yAxis: [{
                 className: 'highcharts-color-0',
                 title: {
-                    text: 'Number of Pipelines'
+                    text: 'Number of Datasets'
                 }
             }, {
                 className: 'highcharts-color-1',
                 opposite: true,
                 title: {
-                    text: 'Number of Datasets'
+                    text: 'Number of Pipelines'
                 }
             }],
 
             xAxis: {
-                categories: ["January'19", "February'19", "March'19", "April'19"]
+                categories: xAxis
             },
 
             plotOptions: {
@@ -8116,10 +8133,10 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
             series: [{
                 name: 'CONP Datasets',
-                data: [0, 0, 0, data.datasetsTotal]
+                data: yAxisDatasets
             }, {
                 name: 'CONP Pipelines',
-                data: [0, 0, 0, data.pipelinesTotal],
+                data: yAxisPipelines,
                 yAxis: 1
             }]
 
@@ -8128,7 +8145,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
     var fetchElements = function () {
         var _ref2 = DashboardChart_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-            var res, datasetsRes, pipelines, pipelinesRes, data;
+            var res, datasetsRes, chartData, pipelines, pipelinesRes;
             return regenerator_default.a.wrap(function _callee$(_context) {
                 while (1) {
                     switch (_context.prev = _context.next) {
@@ -8157,59 +8174,76 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                             datasetsRes = _context.sent;
 
 
-                            console.log(JSON.stringify(datasetsRes.total));
+                            console.log(JSON.stringify(datasetsRes));
 
-                            //setFetchedElements(parsed.elements);
-                            //setTotalState(parsed.total);
+                            chartData = {
+                                datasets: {},
+                                pipelines: {}
+                            };
+
+
+                            datasetsRes.elements.map(function (element) {
+                                var dateAdded = new Date(element.dateAdded);
+
+                                if (!chartData.datasets[dateAdded.getFullYear()]) {
+                                    chartData.datasets[dateAdded.getFullYear()] = {};
+                                }
+
+                                if (!chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
+                                    chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+                                } else {
+                                    chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
+                                }
+                            });
+
+                            console.log(chartData);
 
                             console.log("Fetching from: " + pipelinesURL);
-                            _context.next = 14;
+                            _context.next = 17;
                             return fetch(pipelinesURL);
 
-                        case 14:
+                        case 17:
                             pipelines = _context.sent;
 
                             if (pipelines.ok) {
-                                _context.next = 17;
+                                _context.next = 20;
                                 break;
                             }
 
                             throw new Error("Request failed with status: " + pipelines.status + " (" + pipelines.statusText + ")");
 
-                        case 17:
-                            _context.next = 19;
+                        case 20:
+                            _context.next = 22;
                             return pipelines.json();
 
-                        case 19:
+                        case 22:
                             pipelinesRes = _context.sent;
 
 
-                            console.log(JSON.stringify(pipelinesRes.elements.length));
+                            console.log(JSON.stringify(pipelinesRes));
 
-                            data = {
-                                datasetsTotal: datasetsRes.total,
-                                pipelinesTotal: pipelinesRes.elements.length
-                            };
+                            chartData.pipelines[2019] = {};
 
+                            chartData.pipelines[2019][12] = pipelinesRes.elements.length;
 
-                            drawChart(data);
+                            drawChart(chartData);
 
-                            _context.next = 29;
+                            _context.next = 33;
                             break;
 
-                        case 25:
-                            _context.prev = 25;
+                        case 29:
+                            _context.prev = 29;
                             _context.t0 = _context["catch"](0);
 
                             alert("There was an error retrieving the search results.");
                             console.error(_context.t0);
 
-                        case 29:
+                        case 33:
                         case "end":
                             return _context.stop();
                     }
                 }
-            }, _callee, DashboardChart_this, [[0, 25]]);
+            }, _callee, DashboardChart_this, [[0, 29]]);
         }));
 
         return function fetchElements() {
