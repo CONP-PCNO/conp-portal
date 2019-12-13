@@ -7636,7 +7636,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       }),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "card-social-icons" },
+        { className: "card-social-icons justify-content-center" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
           { className: "card-social-icon" },
@@ -7645,26 +7645,6 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
             "div",
             null,
             element.downloads
-          )
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "card-social-icon" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-eye social-fa my-2" }),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            null,
-            element.views
-          )
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "card-social-icon" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-heart social-fa my-2" }),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            null,
-            element.likes
           )
         )
       )
@@ -7801,25 +7781,6 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
               "strong",
               null,
-              "Date Added: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
-            element.dateAdded
-          )
-        ),
-        " ",
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "li",
-          { className: "d-none d-md-flex" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-capitalize pr-1" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
               "Date Updated: "
             )
           ),
@@ -7845,25 +7806,11 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "a",
           {
-            href: "/#/",
-            className: "card-button mx-2",
-            style: {
-              pointerEvents: element.isPrivate && !authorized ? "none" : "all"
-            }
-          },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-            alt: "Run On Cbrain",
-            src: element.isPrivate && !authorized ? runOnCbrainDisabled : runOnCbrainEnabled
-          })
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "a",
-          {
             className: "card-button mx-2",
             style: {
               pointerEvents: element.isPrivate && !authorized ? "none" : "all"
             },
-            href: "download_metadata?dataset=" + element.downloadPath,
+            href: "download_metadata?dataset=" + element.id,
             download: true
           },
           element.isPrivate && !authorized && external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
