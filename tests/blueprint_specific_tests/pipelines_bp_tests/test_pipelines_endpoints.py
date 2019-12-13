@@ -3,8 +3,10 @@
 Unit tests for endpoints in the pipelines blueprint
 """
 import pytest
+import app.cli as cli
 from urllib.parse import urlparse
 from flask import url_for
+
 
 
 def test_pipelines_route(test_client):
@@ -17,7 +19,7 @@ def test_pipelines_route(test_client):
     assert res.status_code == 200
 
 
-def test_pipeline_search_route(session, new_pipeline, test_client):
+def test_pipeline_search_route(session, new_pipeline, test_client, app, runner):
     """
     GIVEN calling the route "/pipeline-search"
     WHEN no user is logged in
@@ -27,6 +29,9 @@ def test_pipeline_search_route(session, new_pipeline, test_client):
 
     session.add(new_pipeline)
     session.commit()
+
+    cli.register(app)
+    result = runner.invoke(args=["update_pipeline_data"])
 
     headers = {'Content-Type': 'application/json'}
     res = test_client.get("/pipeline-search", headers = headers)
