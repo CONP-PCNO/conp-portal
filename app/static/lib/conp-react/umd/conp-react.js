@@ -8089,10 +8089,6 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
             });
         });
 
-        console.log(xAxis);
-        console.log(yAxisDatasets);
-        console.log(yAxisPipelines);
-
         highcharts_default.a.chart('dashboard-chart-container', {
 
             chart: {
@@ -8109,12 +8105,10 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
             },
 
             yAxis: [{
-                className: 'highcharts-color-0',
                 title: {
                     text: 'Number of Datasets'
                 }
             }, {
-                className: 'highcharts-color-1',
                 opposite: true,
                 title: {
                     text: 'Number of Pipelines'
@@ -8177,7 +8171,22 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                             console.log(JSON.stringify(datasetsRes));
 
                             chartData = {
-                                datasets: {},
+                                datasets: {
+                                    2019: {
+                                        1: 0,
+                                        2: 0,
+                                        3: 0,
+                                        4: 0,
+                                        5: 0,
+                                        6: 0,
+                                        7: 0,
+                                        8: 0,
+                                        9: 0,
+                                        10: 0,
+                                        11: 0,
+                                        12: 0
+                                    }
+                                },
                                 pipelines: {}
                             };
 

@@ -25,10 +25,6 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             });
         });
 
-        console.log(xAxis);
-        console.log(yAxisDatasets);
-        console.log(yAxisPipelines);
-
         Highcharts.chart('dashboard-chart-container', {
 
             chart: {
@@ -45,12 +41,10 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             },
 
             yAxis: [{
-                className: 'highcharts-color-0',
                 title: {
                     text: 'Number of Datasets'
                 }
             }, {
-                className: 'highcharts-color-1',
                 opposite: true,
                 title: {
                     text: 'Number of Pipelines'
@@ -98,7 +92,22 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             console.log(JSON.stringify(datasetsRes));
 
             const chartData = {
-                datasets: {},
+                datasets: {
+                    2019:{
+                        1: 0,
+                        2: 0,
+                        3: 0,
+                        4: 0,
+                        5: 0,
+                        6: 0,
+                        7: 0,
+                        8: 0,
+                        9: 0,
+                        10: 0,
+                        11: 0,
+                        12: 0,
+                    }
+                },
                 pipelines: {}
             };
 
