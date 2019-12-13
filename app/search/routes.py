@@ -31,7 +31,8 @@ def search():
     return render_template('search.html', title='CONP | Search', user=current_user)
 
 
-def get_dataset_logo(dataset_id):
+@search_bp.route('/dataset_logo')
+def get_dataset_logo():
     """
         Gets data set logos that are statically stored in the portal
         TODO: This should not be static, should be a fucntion the dataset in the database
@@ -42,16 +43,40 @@ def get_dataset_logo(dataset_id):
         Returns:
             path to the png file for the logo
     """
-    return "/static/img/default_dataset.jpeg"
-    logos = {
-        "8de99b0e-5f94-11e9-9e05-52545e9add8e": "/static/img/loris.png",
-        "0ea345b4-62cf-11e9-b202-52545e9add8e": "/static/img/preventad.png",
-        "0c1d0fe0-5240-11e9-9178-3417ebb10536": "/static/img/perform.png",
-        "86970552-6828-11e9-89e5-52545e9add8e": "/static/img/medics.png",
-        "47902f52-0d1c-11e9-9526-0242ac13001f": "/static/img/openneuro.png",
-        "eb7b9b10-56ec-11e9-af32-0800277806bd": "/static/img/1000genomes.png"
-    }
-    return logos[dataset_id]
+    logopath = "app/static/img/default_dataset.jpeg"
+
+    dataset_id = request.args.get('id', '')
+    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
+    if dataset is None:
+        # This shoud return a 404 not found
+        return 'Not Found', 400
+
+    datasetrootdir = os.path.join(
+        current_app.config['DATA_PATH'],
+        'conp-dataset',
+        dataset.dataset_id
+    )
+
+    descriptor_path = os.path.join(
+        datasetrootdir,
+        'DATS.json'
+    )
+
+    with open(descriptor_path, 'r') as json_file:
+        data = json.load(json_file)
+        extraprops = data.get('extraProperties', {})
+        for prop in extraprops:
+            if prop.get('category') == 'logo':
+                logofilename = prop.get('values').pop().get('value', logopath)
+                logofilepath = os.path.join(
+                    datasetrootdir,
+                    logofilename
+                )
+                if os.path.isfile(logofilepath):
+                    logopath = logofilepath
+
+    with open(logopath, 'rb') as logofile:
+        return logofile.read()
 
 
 @search_bp.route('/dataset-search', methods=['GET'])
@@ -98,7 +123,7 @@ def dataset_search():
             "id": d.dataset_id,
             "title": d.name.replace("'", ""),
             "isPrivate": d.is_private,
-            "thumbnailURL": get_dataset_logo(d.dataset_id),
+            "thumbnailURL": "/dataset_logo?id={}".format(d.dataset_id),
             "imagePath": "?",
             "downloadPath": '?',
             "URL": '?',
@@ -216,7 +241,7 @@ def dataset_info():
         "id": d.dataset_id,
         "title": d.name.replace("'", ""),
         "isPrivate": d.is_private,
-        "thumbnailURL": get_dataset_logo(d.dataset_id),
+        "thumbnailURL": "/dataset_logo?id={}".format(d.dataset_id),
         "imagePath": "/?",
         "downloadPath": 'download_path',
         "URL": 'raw_data_url',
