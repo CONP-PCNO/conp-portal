@@ -14,6 +14,7 @@ from sqlalchemy import func, or_
 
 from app.models import Dataset, User
 from app.search import search_bp
+from app.search.models import DATSDataset
 
 
 @search_bp.route('/search')
@@ -57,23 +58,7 @@ def get_dataset_logo():
         dataset.dataset_id
     )
 
-    descriptor_path = os.path.join(
-        datasetrootdir,
-        'DATS.json'
-    )
-
-    with open(descriptor_path, 'r') as json_file:
-        data = json.load(json_file)
-        extraprops = data.get('extraProperties', {})
-        for prop in extraprops:
-            if prop.get('category') == 'logo':
-                logofilename = prop.get('values').pop().get('value', logopath)
-                logofilepath = os.path.join(
-                    datasetrootdir,
-                    logofilename
-                )
-                if os.path.isfile(logofilepath):
-                    logopath = logofilepath
+    logopath = DATSDataset(datasetrootdir).getLogoFilepath()
 
     with open(logopath, 'rb') as logofile:
         return logofile.read()
