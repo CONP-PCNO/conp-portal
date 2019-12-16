@@ -10,11 +10,6 @@ class DATSDataset(object):
         """
 
         dataset = DataladDataset(path=datasetpath)
-        print(dataset.id)
-        print(dataset.config)
-        print(dataset.repo)
-        print(dataset.path)
-        print(dataset.pathobj)
         if not os.path.isdir(datasetpath):
             raise 'No dataset found at {}'.format(datasetpath)
         self.datasetpath = datasetpath

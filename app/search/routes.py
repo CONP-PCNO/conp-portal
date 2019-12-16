@@ -55,7 +55,7 @@ def get_dataset_logo():
     datasetrootdir = os.path.join(
         current_app.config['DATA_PATH'],
         'conp-dataset',
-        dataset.dataset_id
+        dataset.fspath
     )
 
     logopath = DATSDataset(datasetrootdir).getLogoFilepath()
