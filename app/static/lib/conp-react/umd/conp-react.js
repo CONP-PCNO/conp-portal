@@ -8028,11 +8028,18 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
         var yAxisDatasets = [];
         var yAxisPipelines = [];
 
+        var countDatasets = 0;
+        var countPipelines = 0;
+
         Object.keys(data.datasets).forEach(function (year) {
             Object.keys(data.datasets[year]).forEach(function (month) {
+                countDatasets += data.datasets[year][month];
+                if (data.pipelines[year][month]) {
+                    countPipelines += data.pipelines[year][month];
+                }
                 xAxis.push(month + "/" + year);
-                yAxisDatasets.push(data.datasets[year][month]);
-                yAxisPipelines.push(data.pipelines[year][month] ? data.pipelines[year][month] : 0);
+                yAxisDatasets.push(countDatasets);
+                yAxisPipelines.push(countPipelines);
             });
         });
 
