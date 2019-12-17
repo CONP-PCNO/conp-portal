@@ -17,12 +17,6 @@ const DatasetElement = props => {
           className="card-img-top card-social-img"
           src={element.thumbnailURL}
         />
-        <div className="card-social-icons justify-content-center">
-          <div className="card-social-icon">
-            <i className="fa fa-download social-fa my-2" />
-            <div>{element.downloads}</div>
-          </div>
-        </div>
       </div>
       <div className="card-body d-md-flex flex-wrap">
         <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>

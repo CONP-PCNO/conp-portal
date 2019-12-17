@@ -7633,21 +7633,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
         alt: "dataset format",
         className: "card-img-top card-social-img",
         src: element.thumbnailURL
-      }),
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "card-social-icons justify-content-center" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "card-social-icon" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-download social-fa my-2" }),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            null,
-            element.downloads
-          )
-        )
-      )
+      })
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
