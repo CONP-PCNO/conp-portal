@@ -45,11 +45,7 @@
 
 <!-- Sidebar Block -->
 {% block sidebar %}
-{% if current_user.is_authenticated %}
 {% include "/fragments/sidebar.html" %}
-{% else %}
-{% include "/fragments/public_sidebar.html" %}
-{% endif %}
 {% endblock %}
 
 {% block content %}

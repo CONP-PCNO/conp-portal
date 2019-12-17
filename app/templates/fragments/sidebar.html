@@ -1,7 +1,7 @@
 <div id="sidebar container col-2" class="bg-mineshaft" role="navigation">
   <a
     class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
-    href="/public"
+    href="{{ url_for('main.index') }}"
   >
     <h1 class="p-3"><i class="fa fa-bar-chart"></i></h1>
     <p class="text-center text-capitalize mt-1">
@@ -10,16 +10,16 @@
   </a>
   <a
     class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
-    href="/search"
+    href="{{ url_for('search.search') }}"
   >
     <h1 class="p-3"><i class="fa fa-search"></i></h1>
     <p class="text-center text-capitalize mt-1">
-      Search
+      Data
     </p>
   </a>
   <a
     class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
-    href="/pipelines"
+    href="{{ url_for('pipelines.pipelines') }}"
   >
     <h1 class="p-3"><i class="fa fa-wrench"></i></h1>
     <p class="text-center text-capitalize mt-1">
@@ -28,16 +28,7 @@
   </a>
   <a
     class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
-    href="/share"
-  >
-    <h1 class="p-3"><i class="fa fa-cloud-upload"></i></h1>
-    <p class="text-center text-capitalize mt-1">
-      Share
-    </p>
-  </a>
-  <a
-    class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
-    href="/forums"
+    href="{{ url_for('forums.forums') }}"
   >
     <h1 class="p-3"><i class="fa fa-comments"></i></h1>
     <p class="text-center text-capitalize mt-1">

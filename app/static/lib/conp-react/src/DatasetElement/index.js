@@ -17,20 +17,6 @@ const DatasetElement = props => {
           className="card-img-top card-social-img"
           src={element.thumbnailURL}
         />
-        <div className="card-social-icons">
-          <div className="card-social-icon">
-            <i className="fa fa-download social-fa my-2" />
-            <div>{element.downloads}</div>
-          </div>
-          <div className="card-social-icon">
-            <i className="fa fa-eye social-fa my-2" />
-            <div>{element.views}</div>
-          </div>
-          <div className="card-social-icon">
-            <i className="fa fa-heart social-fa my-2" />
-            <div>{element.likes}</div>
-          </div>
-        </div>
       </div>
       <div className="card-body d-md-flex flex-wrap">
         <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>
@@ -77,12 +63,6 @@ const DatasetElement = props => {
           </li>
           <li className="d-none d-md-flex">
             <p className="card-text text-capitalize pr-1">
-              <strong>Date Added: </strong>
-            </p>
-            <p className="card-text text-muted">{element.dateAdded}</p>
-          </li>{" "}
-          <li className="d-none d-md-flex">
-            <p className="card-text text-capitalize pr-1">
               <strong>Date Updated: </strong>
             </p>
             <p className="card-text text-muted">{element.dateUpdated}</p>
@@ -94,29 +74,13 @@ const DatasetElement = props => {
           Go to Dataset
         </button>
         <div className="d-flex justify-content-end align-items-center flex-wrap mb-3 mb-md-0">
-          <a
-            href={"/#/"}
-            className="card-button mx-2"
-            style={{
-              pointerEvents: element.isPrivate && !authorized ? "none" : "all"
-            }}
-          >
-            <img
-              alt="Run On Cbrain"
-              src={
-                element.isPrivate && !authorized
-                  ? runOnCbrainDisabled
-                  : runOnCbrainEnabled
-              }
-            />
-          </a>
 
           <a
             className="card-button mx-2"
             style={{
               pointerEvents: element.isPrivate && !authorized ? "none" : "all"
             }}
-            href={`download_metadata?dataset=${element.downloadPath}`}
+            href={`download_metadata?dataset=${element.id}`}
             download
           >
             {element.isPrivate && !authorized && (

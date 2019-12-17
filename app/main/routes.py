@@ -7,22 +7,6 @@ from flask import render_template
 from flask_login import current_user, login_required
 from app.main import main_bp
 
-
-
-@main_bp.route('/public')
-def public():
-    """Public Route
-
-        This is the route that leads to the public main page
-
-        Args:
-            None
-
-        Returns:
-            rendered public.html template
-    """
-    return render_template('public.html', title='Home | CONP')
-
 @main_bp.route('/')
 @main_bp.route('/index')
 def index():
