@@ -10,9 +10,11 @@ import csv
 from datetime import datetime, timedelta
 from pytz import timezone
 from app.threads import UpdatePipelineData
+from app.search.models import DATSDataset
 
 
 def register(app):
+
     @app.cli.command('seed_aff_types_db')
     def seed_aff_types_db():
         """
@@ -218,6 +220,7 @@ def _update_datasets(app):
             dataset.date_created = datetime.utcnow()
 
         dataset.date_updated = datetime.utcnow()
+        dataset.fspath = ds['path']
         dataset.description = dats.get('description', 'No description in DATS.json')
         dataset.name = dats.get(
             'title',

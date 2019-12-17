@@ -19,6 +19,7 @@ def test_new_dataset(new_dataset):
     assert new_dataset.name == "Multicenter Single Subject Human MRI Phantom"
     assert new_dataset.version == "1.0"
     assert not new_dataset.is_private
+    assert new_dataset.fspath == './test/test_dataset'
 
 
 def test_dataset_db_model(session, new_dataset):
