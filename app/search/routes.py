@@ -126,7 +126,8 @@ def dataset_search():
         }
         elements.append(dataset)
 
-    cursor = max(min(int(request.args.get('cursor') or 0), 0), 0)
+    delta = int(request.args.get('max_per_page', 10)) * (int(request.args.get('page', 0)) - 1 )
+    cursor = max(min(int(request.args.get('cursor') or 0), 0), 0) + delta
     limit = max(min(int(request.args.get('limit') or 10), 10), 0)
     sort_key = request.args.get('sortKey') or "id"
     paginated = elements[(cursor):(cursor + limit)]
