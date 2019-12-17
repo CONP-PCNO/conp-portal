@@ -286,7 +286,9 @@ def download_metadata():
     return send_from_directory(
         os.path.dirname(datspath),
         os.path.basename(datspath),
-        as_attachment=True
+        as_attachment=True,
+        attachment_filename=os.path.join(dataset.name.replace(' ', '_'), '.dats.json'),
+        mimetype='application/json'
     )
 
 
