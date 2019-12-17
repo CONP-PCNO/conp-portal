@@ -204,6 +204,7 @@ class Dataset(db.Model):
     dataset_id = db.Column(db.String(64), index=True, unique=True)
     description = db.Column(db.Text, index=True)
     name = db.Column(db.String(256), index=True)
+    fspath = db.Column(db.Text)
     version = db.Column(db.String(6), index=True)
     date_created = db.Column(db.DateTime, default=datetime.now())
     date_updated = db.Column(db.DateTime, default=datetime.now())

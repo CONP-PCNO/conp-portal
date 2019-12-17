@@ -95,6 +95,7 @@ def new_dataset():
         name="Multicenter Single Subject Human MRI Phantom",
         version="1.0",
         is_private=False,
+        fspath='./test/test_dataset'
     )
     return dataset
 

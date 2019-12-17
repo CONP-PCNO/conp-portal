@@ -14,6 +14,7 @@ from sqlalchemy import func, or_
 
 from app.models import Dataset, User
 from app.search import search_bp
+from app.search.models import DATSDataset
 
 
 @search_bp.route('/search')
@@ -31,7 +32,8 @@ def search():
     return render_template('search.html', title='CONP | Search', user=current_user)
 
 
-def get_dataset_logo(dataset_id):
+@search_bp.route('/dataset_logo')
+def get_dataset_logo():
     """
         Gets data set logos that are statically stored in the portal
         TODO: This should not be static, should be a fucntion the dataset in the database
@@ -42,16 +44,24 @@ def get_dataset_logo(dataset_id):
         Returns:
             path to the png file for the logo
     """
-    return "/static/img/default_dataset.jpeg"
-    logos = {
-        "8de99b0e-5f94-11e9-9e05-52545e9add8e": "/static/img/loris.png",
-        "0ea345b4-62cf-11e9-b202-52545e9add8e": "/static/img/preventad.png",
-        "0c1d0fe0-5240-11e9-9178-3417ebb10536": "/static/img/perform.png",
-        "86970552-6828-11e9-89e5-52545e9add8e": "/static/img/medics.png",
-        "47902f52-0d1c-11e9-9526-0242ac13001f": "/static/img/openneuro.png",
-        "eb7b9b10-56ec-11e9-af32-0800277806bd": "/static/img/1000genomes.png"
-    }
-    return logos[dataset_id]
+    logopath = "app/static/img/default_dataset.jpeg"
+
+    dataset_id = request.args.get('id', '')
+    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
+    if dataset is None:
+        # This shoud return a 404 not found
+        return 'Not Found', 400
+
+    datasetrootdir = os.path.join(
+        current_app.config['DATA_PATH'],
+        'conp-dataset',
+        dataset.fspath
+    )
+
+    logopath = DATSDataset(datasetrootdir).LogoFilepath
+
+    with open(logopath, 'rb') as logofile:
+        return logofile.read()
 
 
 @search_bp.route('/dataset-search', methods=['GET'])
@@ -85,7 +95,6 @@ def dataset_search():
 
     else:
         # Query datasets
-
         datasets = Dataset.query.order_by(Dataset.id).all()
 
     # Element input for payload
@@ -93,26 +102,27 @@ def dataset_search():
 
     # Build dataset response
     for d in datasets:
+        datsdataset = DATSDataset(d.fspath)    
         dataset = {
             "authorized": authorized,
             "id": d.dataset_id,
             "title": d.name.replace("'", ""),
             "isPrivate": d.is_private,
-            "thumbnailURL": get_dataset_logo(d.dataset_id),
+            "thumbnailURL": "/dataset_logo?id={}".format(d.dataset_id),
             "imagePath": "?",
-            "downloadPath": '?',
+            "downloadPath": d.dataset_id,
             "URL": '?',
             "downloads": "?",
             "views": "?",
             "likes": "?",
             "dateAdded": str(d.date_created.date()),
             "dateUpdated": str(d.date_updated.date()),
-            "size": "?",
-            "files": "?",
-            "subjects": "?",
-            "format": "?",
-            "modalities": "?",
-            "sources": "?"
+            "size": datsdataset.size,
+            "files": datsdataset.fileCount,
+            "subjects": datsdataset.subjectCount,
+            "format": datsdataset.formats,
+            "modalities": datsdataset.modalities,
+            "sources": datsdataset.sources
         }
         elements.append(dataset)
 
@@ -204,6 +214,7 @@ def dataset_info():
 
     # Query dataset
     d = Dataset.query.filter_by(dataset_id=dataset_id).first()
+    datsdataset = DATSDataset(d.fspath)
 
     if current_user.is_authenticated:
         authorized = True
@@ -216,21 +227,21 @@ def dataset_info():
         "id": d.dataset_id,
         "title": d.name.replace("'", ""),
         "isPrivate": d.is_private,
-        "thumbnailURL": get_dataset_logo(d.dataset_id),
+        "thumbnailURL": "/dataset_logo?id={}".format(d.dataset_id),
         "imagePath": "/?",
-        "downloadPath": 'download_path',
+        "downloadPath": d.dataset_id,
         "URL": 'raw_data_url',
         "downloads": "0",
         "views": "0",
         "likes": "0",
         "dateAdded": str(d.date_created.date()),
         "dateUpdated": str(d.date_updated.date()),
-        "size": "0",
-        "files": "0",
-        "subjects": "0",
-        "format": "?",
-        "modalities": "?",
-        "sources": "?"
+        "size": datsdataset.size,
+        "files": datsdataset.fileCount,
+        "subjects": datsdataset.subjectCount,
+        "format": datsdataset.formats,
+        "modalities": datsdataset.modalities,
+        "sources": datsdataset.sources
     }
 
     metadata = get_dataset_metadata_information(d)
@@ -259,38 +270,24 @@ def download_metadata():
         Raises:
             HTML error if this fails
     """
-    from zipfile import ZipFile
-    from tempfile import TemporaryDirectory
+    dataset_id = request.args.get('dataset', '')
+    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
+    if dataset is None:
+        # This shoud return a 404 not found
+        return 'Not Found', 400
 
-    # This should be made dynamic based on the dataset
-    metadata_file_list = ["DATS.json", ".datalad"]
-    dataset_directory = os.path.basename(request.args.get('dataset'))
-    abs_dataset_directory = os.path.join(
-        current_app.config['DATA_PATH'], dataset_directory)
+    datasetrootdir = os.path.join(
+        current_app.config['DATA_PATH'],
+        'conp-dataset',
+        dataset.fspath
+    )
 
-    tmpDir = TemporaryDirectory()
-
-    with TemporaryDirectory() as tmpDir:
-        with ZipFile("{}/{}.zip".format(tmpDir, dataset_directory), "w") as zip:
-            for f in metadata_file_list:
-                abs_file_path = os.path.join(abs_dataset_directory, f)
-                zip_file_path = os.path.join(dataset_directory, f)
-                if os.path.exists(abs_file_path):
-                    if os.path.isdir(abs_file_path):
-                        file_paths = []
-                        for root, directories, files in os.walk(abs_file_path):
-                            for filename in files:
-                                root_name = filename.replace(root, "")
-                                file_path = os.path.join(root, filename)
-                                file_paths.append((root_name, file_path))
-                        for rn, fp in file_paths:
-                            if os.path.isfile(fp):
-                                zip.write(
-                                    fp, "{}/{}".format(zip_file_path, rn))
-                    else:
-                        zip.write(abs_file_path, zip_file_path)
-
-        return send_from_directory(tmpDir, "{}.zip".format(dataset_directory), as_attachment=True)
+    datspath = DATSDataset(datasetrootdir).DatsFilepath
+    return send_from_directory(
+        os.path.dirname(datspath),
+        os.path.basename(datspath),
+        as_attachment=True
+    )
 
 
 def get_dataset_metadata_information(dataset):
@@ -305,43 +302,13 @@ def get_dataset_metadata_information(dataset):
 
     """
 
-    descriptor_path = os.path.join(
-        current_app.config['DATA_PATH'],
-        'conp-dataset',
-        dataset.dataset_id,
-        'DATS.json'
-    )
+    datsdataset = DATSDataset(dataset.fspath)
 
-    with open(descriptor_path, 'r') as json_file:
-        data = json.load(json_file)
+    return {
+        "authors": datsdataset.authors,
+        "description": datsdataset.description,
+        "contact": datsdataset.contacts,
+        "version": datsdataset.version,
+        "licenses": datsdataset.licences
+    }
 
-        authorString = data.get('creators', 'Undefined')
-        if type(authorString) == list:
-            authors = ", ".join([x['name'] for x in authorString])
-        elif 'name' in authorString:
-            authors = authorString['name']
-        else:
-            authors = authorString
-
-        licenseString = data.get('licenses', 'None') 
-        if type(licenseString) == list:
-            licenses = ", ".join([x['name'] for x in licenseString])
-        else:
-            if 'name' in licenseString:
-                licenses = licenseString['name']
-            elif '$schema' in licenseString:
-                licenses = licenseString['$schema']
-            elif 'dataUsesConditions' in licenseString:
-                licenses = licenseString['dataUsesConditions']
-            else:
-                licences = licenseString
-
-        payload = {
-            "authors": authors,
-            "description": data.get('description', 'Undefined'),
-            "contact": None,  # data['contact'],
-            "version": data.get('version', 'Undefined'),
-            "licenses": licenses
-        }
-
-    return payload
