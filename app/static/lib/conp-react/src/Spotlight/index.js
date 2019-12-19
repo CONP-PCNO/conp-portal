@@ -23,7 +23,6 @@ const Spotlight = ({ datasetURL, ...props }) => {
 
             const datasetRes = await res.json();
 
-            console.log(JSON.stringify(datasetRes.elements[0]));
             setFetchedElements(datasetRes.elements);
 
         } catch (err) {
@@ -35,31 +34,32 @@ const Spotlight = ({ datasetURL, ...props }) => {
     useDebounce(() => void fetchElements(), 300, [datasetURL]);
 
     return (
-        <div className="card-description">
-            <h3 className="card-description-title">STUDY SPOTLIGHT</h3>
-            <hr />
+        fetchedElements.length > 0 ?
+            <div className="card-description">
+                <h3 className="card-description-title">STUDY SPOTLIGHT</h3>
+                <hr />
 
-            <div className="card-description-text">
-                <p className="card-description-subtitle">
-                    {fetchedElements.length > 0 ? fetchedElements[0].title : ""}
+                <div className="card-description-text">
+                    <p className="card-description-subtitle">
+                        fetchedElements[0].title
                 </p>
-                <i>
-                    {fetchedElements.length > 0 ? "StoP-AD Center - Douglas Mental Health University Institute" : ""}
+                    <i>
+                        "StoP-AD Center - Douglas Mental Health University Institute"
                 </i>
-                <p>
-                    {fetchedElements.length > 0 ? "Longitudinal multimodal study of pre-symptomatic Alzheimer's Disease" : ""}
+                    <p>
+                        "Longitudinal multimodal study of pre-symptomatic Alzheimer's Disease"
                 </p>
-            </div>
-            <div className="d-flex mt-4 justify-content-end">
-                {fetchedElements.length > 0 ?
+                </div>
+                <div className="d-flex mt-4 justify-content-end">
                     <a href={`/dataset?id=${fetchedElements[0].id}`}>
                         <button className="btn btn-outline-secondary"
                             type="button">
                             Read More
                             </button>
-                    </a> : null}
+                    </a>
+                </div>
             </div>
-        </div>
+            : null
     );
 };
 

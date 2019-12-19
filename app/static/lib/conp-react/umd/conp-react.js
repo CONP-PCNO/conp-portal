@@ -8038,7 +8038,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
             },
 
             title: {
-                text: 'Number of Datasets and Pipelines in 2019'
+                text: 'Cumulative Number of Datasets and Pipelines in 2019'
             },
 
             yAxis: [{
@@ -8063,10 +8063,10 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
             },
 
             series: [{
-                name: 'CONP Datasets',
+                name: 'Datasets',
                 data: yAxisDatasets
             }, {
-                name: 'CONP Pipelines',
+                name: 'Pipelines',
                 data: yAxisPipelines,
                 yAxis: 1
             }]
@@ -8255,25 +8255,24 @@ var Spotlight_Spotlight = function Spotlight(_ref) {
                             datasetRes = _context.sent;
 
 
-                            console.log(JSON.stringify(datasetRes.elements[0]));
                             setFetchedElements(datasetRes.elements);
 
-                            _context.next = 18;
+                            _context.next = 17;
                             break;
 
-                        case 14:
-                            _context.prev = 14;
+                        case 13:
+                            _context.prev = 13;
                             _context.t0 = _context["catch"](0);
 
                             alert("There was an error retrieving the search results.");
                             console.error(_context.t0);
 
-                        case 18:
+                        case 17:
                         case "end":
                             return _context.stop();
                     }
                 }
-            }, _callee, Spotlight_this, [[0, 14]]);
+            }, _callee, Spotlight_this, [[0, 13]]);
         }));
 
         return function fetchElements() {
@@ -8285,7 +8284,7 @@ var Spotlight_Spotlight = function Spotlight(_ref) {
         return void fetchElements();
     }, 300, [datasetURL]);
 
-    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+    return fetchedElements.length > 0 ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
         { className: "card-description" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -8300,34 +8299,34 @@ var Spotlight_Spotlight = function Spotlight(_ref) {
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
                 "p",
                 { className: "card-description-subtitle" },
-                fetchedElements.length > 0 ? fetchedElements[0].title : ""
+                "fetchedElements[0].title"
             ),
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
                 "i",
                 null,
-                fetchedElements.length > 0 ? "StoP-AD Center - Douglas Mental Health University Institute" : ""
+                "\"StoP-AD Center - Douglas Mental Health University Institute\""
             ),
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
                 "p",
                 null,
-                fetchedElements.length > 0 ? "Longitudinal multimodal study of pre-symptomatic Alzheimer's Disease" : ""
+                "\"Longitudinal multimodal study of pre-symptomatic Alzheimer's Disease\""
             )
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
-            { "class": "d-flex mt-4 justify-content-end" },
-            fetchedElements.length > 0 ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            { className: "d-flex mt-4 justify-content-end" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
                 "a",
                 { href: "/dataset?id=" + fetchedElements[0].id },
                 external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
                     "button",
-                    { "class": "btn btn-outline-secondary",
+                    { className: "btn btn-outline-secondary",
                         type: "button" },
                     "Read More"
                 )
-            ) : null
+            )
         )
-    );
+    ) : null;
 };
 
 Spotlight_Spotlight.propTypes = {};
