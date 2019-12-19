@@ -100,8 +100,20 @@ def dataset_search():
     # Element input for payload
     elements = []
 
+    # CONP datasets whitelist
+    whitelist = [
+        'projects/PERFORM_Dataset__one_control_subject',
+        'projects/SIMON-dataset',
+        'projects/multicenter-phantom',
+        'projects/visual-working-memory',
+        'projects/preventad-open'
+    ]
+
     # Build dataset response
     for d in datasets:
+        if not d.dataset_id in whitelist:
+            continue
+
         datsdataset = DATSDataset(d.fspath)    
         dataset = {
             "authorized": authorized,
