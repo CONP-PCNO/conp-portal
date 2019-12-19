@@ -93,6 +93,10 @@ def dataset_search():
                 .like(func.lower(term)))
         )
 
+    elif request.args.get('id'):
+        # Query datasets
+        datasets = Dataset.query.filter_by(dataset_id=request.args.get('id')).all()
+
     else:
         # Query datasets
         datasets = Dataset.query.order_by(Dataset.id).all()
