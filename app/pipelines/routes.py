@@ -89,9 +89,15 @@ def pipeline_search():
     # sort, make all keys lowercase and without hyphen
     elements = [{k.lower().replace("-", ""): v for k, v in element.items()}
                 for element in elements]
+    real_key = sort_key
+    if sort_key == "downloads-asc":
+        real_key = "downloads"
+    elif sort_key == "downloads-desc":
+        real_key = "downloads"
+    reverse = sort_key.endswith("-desc")
     elements.sort(
-        key=lambda x: x["downloads"],
-        reverse=True if sort_key == "downloads-desc" or sort_key == "title" else False
+        key=lambda x: (x[real_key] is None, x[real_key]),
+        reverse=reverse
     )
 
 
@@ -139,7 +145,15 @@ def pipeline_search():
             {
                 "key": "downloads-asc",
                 "label": "Downloads: Low to High"
-            }
+            },
+            {
+                "key": "title",
+                "label": "Title"
+            },
+            {
+                "key": "id",
+                "label": "Pipeline ID"
+            },
         ],
         "elements": elements_on_page
     }
