@@ -1,13 +1,9 @@
-{% if current_user.is_authenticated %}
-  {% extends 'base.html' %}
-{% else %} 
-  {% extends 'base_public.html' %}
-{% endif %}
+{% extends 'base_public.html' %}
 
 <!-- Title Block -->
 
 {% block title %}
-  <h2><span style="color:red;">CONP Portal </span> | Share</h2>
+<h2><span style="color:red;">CONP Portal </span> | Share</h2>
 {% endblock %}
 
 <!-- Content Block -->
@@ -15,30 +11,75 @@
 {% block content %}
 <h1>Uploading data for CONP</h1>
 
+<br><br>
+
 <h2>1. Metadata</h2>
 
-We use the DATS.json file format to store metadata about CONP datasets. DATS.json is a flexible machine-readable structure allowing for sophisticated representation of a wide range of different types of datasets, from neuroimaging to genomics.  A DATS.json file must be prepared for each dataset.
+<br>
 
-The CONP DATS.json schema includes the following required fields:
+<p>
+  We use the DATS.json file format to store metadata about CONP datasets. DATS.json is a flexible
+  machine-readable
+  structure allowing for sophisticated representation of a wide range of different types of datasets, from
+  neuroimaging to
+  genomics. A DATS.json file must be prepared for each dataset.
 
-- Dataset title and description
-- Creators of the dataset
-- DOI or other unique identifier
-- License under which the dataset is distributed
-- Keywords and specification of data type
-- Version of the dataset
-- Format of primary data files in dataset
-- Total number of files in the dataset
-- Size of dataset and unit used (usually GB)
-- Web address for original dataset
+  <br><br>
 
+  The CONP DATS.json schema includes the following required fields:
 
+  <br><br>
 
-The schema also includes many other recommended and optional fields.  The DATS dataset schema can be found <a href="https://github.com/biocaddie/DATS/blob/master/dataset_schema.json">here</a>, and details of CONP's expansions and descriptions of what to enter in each field <a href="../CONP_DATS_fields.docx">here</a>.  The example DATS.json file for the 1000 Genomes Project <a href="https://github.com/emmetaobrien/1000GenomesProject/blob/master/DATS.json">here</a> can be used as a template.  An interface allowing users to fill in required fields online is under development <a href="https://dats-creator.herokuapp.com/">here</a>.
+  - Dataset title and description<br>
+  - Creators of the dataset<br>
+  - DOI or other unique identifier<br>
+  - License under which the dataset is distributed<br>
+  - Keywords and specification of data type<br>
+  - Version of the dataset<br>
+  - Format of primary data files in dataset<br>
+  - Total number of files in the dataset<br>
+  - Size of dataset and unit used (usually GB)<br>
+  - Web address for original dataset
+
+  <br><br>
+
+  The schema also includes many other recommended and optional fields. The DATS dataset schema can be found <a
+    class="btn-link" href="https://github.com/biocaddie/DATS/blob/master/dataset_schema.json">here</a>, and details of
+  CONP's
+  expansions
+  and descriptions of what to enter in each field <a class="btn-link" href="../CONP_DATS_fields.docx">here</a>. The
+  example
+  DATS.json
+  file
+  for the 1000 Genomes Project <a class="btn-link"
+    href="https://github.com/emmetaobrien/1000GenomesProject/blob/master/DATS.json">here</a>
+  can be used as a template. An interface allowing users to fill in required fields online is under development
+  <a class="btn-link" href="https://dats-creator.herokuapp.com/">here</a>.
+</p>
+
+<br><br>
 
 <h2>2. Data files</h2>
 
-CONP stores some datasets locally and provides access to others hosted at external resources.  We use the DataLad and GitAnnex software tools to manage data storage and access to external data.  This system allows users to construct links to datasets at locations of their choice, and for users to download only the files of particular interest to them from any given dataset.
+<br>
 
-A technical description of the installation and use of DataLad/GitAnnex to upload and download data can be found <a href="../datalad_dataset_addition_procedure.md">here</a>
+<p>
+  CONP stores some datasets locally and provides access to others hosted at external resources. We use the
+  DataLad
+  and
+  GitAnnex software tools to manage data storage and access to external data. This system allows users to
+  construct
+  links
+  to datasets at locations of their choice, and for users to download only the files of particular interest to
+  them
+  from
+  any given dataset.
+
+  <br><br>
+
+  A technical description of the installation and use of DataLad/GitAnnex to upload and download data can be
+  found
+  <a class="btn-link" href="../datalad_dataset_addition_procedure.md">here</a>
+</p>
+<br><br><br>
 {% endblock %}
