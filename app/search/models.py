@@ -1,15 +1,12 @@
 import os
 import json
 import fnmatch
-from datalad.api import Dataset as DataladDataset
 
 class DATSDataset(object):
     def __init__(self, datasetpath):
         """
           store the datsetopath and tries to find a DATS.json file
         """
-
-        dataset = DataladDataset(path=datasetpath)
         if not os.path.isdir(datasetpath):
             raise 'No dataset found at {}'.format(datasetpath)
         self.datasetpath = datasetpath

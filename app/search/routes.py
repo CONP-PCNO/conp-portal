@@ -113,12 +113,8 @@ def dataset_search():
             "title": d.name.replace("'", ""),
             "isPrivate": d.is_private,
             "thumbnailURL": "/dataset_logo?id={}".format(d.dataset_id),
-            "imagePath": "?",
             "downloadPath": d.dataset_id,
             "URL": '?',
-            "downloads": "?",
-            "views": "?",
-            "likes": "?",
             "dateAdded": str(d.date_created.date()),
             "dateUpdated": str(d.date_updated.date()),
             "size": datsdataset.size,
@@ -130,11 +126,12 @@ def dataset_search():
         }
         elements.append(dataset)
 
-    cursor = max(min(int(request.args.get('cursor') or 0), 0), 0)
+    delta = int(request.args.get('max_per_page', 10)) * (int(request.args.get('page', 0)) - 1 )
+    cursor = max(min(int(request.args.get('cursor') or 0), 0), 0) + delta
     limit = max(min(int(request.args.get('limit') or 10), 10), 0)
     sort_key = request.args.get('sortKey') or "id"
     paginated = elements[(cursor):(cursor + limit)]
-    paginated.sort(key=lambda o: o[sort_key])
+    paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
 
     # Construct payload
     payload = {
@@ -144,22 +141,6 @@ def dataset_search():
             {
                 "key": "title",
                 "label": "Title"
-            },
-            {
-                "key": "imagePath",
-                "label": "Image Path"
-            },
-            {
-                "key": "downloads",
-                "label": "Downloads"
-            },
-            {
-                "key": "views",
-                "label": "Views"
-            },
-            {
-                "key": "likes",
-                "label": "Likes"
             },
             {
                 "key": "dateAdded",
@@ -290,7 +271,9 @@ def download_metadata():
     return send_from_directory(
         os.path.dirname(datspath),
         os.path.basename(datspath),
-        as_attachment=True
+        as_attachment=True,
+        attachment_filename=os.path.join(dataset.name.replace(' ', '_'), '.dats.json'),
+        mimetype='application/json'
     )
 
 
