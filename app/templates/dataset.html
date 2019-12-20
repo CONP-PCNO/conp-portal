@@ -88,8 +88,9 @@
 # Here are commands to download content from this dataset:
 ~$ datalad install --source http://github.com/CONP-PCNO/conp-dataset
 ~$ datalad get --no-data conp-dataset/{{data.id}}
-~$ git annex enableremote datalad
-~$ datalad get conp-dataset/{{data.id}}/<filepath>
+~$ cd conp-dataset/{{data.id}}
+# For datasets that requires login to the remote server use: git annex enableremote <remote-name>
+~$ datalad get <filepath>
                     </xmp>
                   </fieldset>
                 </div>
