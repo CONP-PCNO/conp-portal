@@ -24,10 +24,11 @@ const PipelineElement = props => {
           />
         </a>
         <div className="card-social-icons">
+          {element.downloads ?
           <div className="card-social-icon">
             <i className="fa fa-download my-2" />
             <div>{element.downloads}</div>
-          </div>
+          </div> : null }
         </div>
       </div>
       <div className="card-body d-md-flex flex-wrap">

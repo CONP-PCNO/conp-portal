@@ -7,6 +7,7 @@ from flask import render_template
 from flask_login import current_user, login_required
 from app.main import main_bp
 
+
 @main_bp.route('/')
 @main_bp.route('/index')
 def index():
@@ -22,3 +23,19 @@ def index():
     """
 
     return render_template('index.html', title='CONP | Home', user=current_user)
+
+
+@main_bp.route('/share')
+def share():
+    """ Share Route
+
+        Route to lead to the share page
+        CURRENTLY NOT WORKING
+
+        Args:
+            None
+
+        Returns:
+            rendered template for share.html
+    """
+    return render_template('share.html', title='CONP | Share a Dataset', user=current_user)

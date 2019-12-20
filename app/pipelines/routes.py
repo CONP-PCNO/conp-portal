@@ -160,23 +160,6 @@ def pipeline_search():
 
     return json.dumps(payload)
 
-
-@pipelines_bp.route('/share')
-def share():
-    """ Share Route
-
-        Route to lead to the share page
-        CURRENTLY NOT WORKING
-
-        Args:
-            None
-
-        Returns:
-            rendered template for share.html
-    """
-    return render_template('share.html', title='CONP | Share a Dataset', user=current_user)
-
-
 @pipelines_bp.route('/tools')
 def tools():
     """ Tools Route

@@ -25,48 +25,55 @@ const DatasetElement = props => {
           </h5>
         </a>
         <ul className="d-flex col-md-12 px-1 px-md-0 card-list">
+          {element.files ?
           <li className="card-list-item">
             <p className="card-text text-capitalize pr-1">
               <strong>Files: </strong>
             </p>
             <p className="card-text text-muted">{element.files}</p>
-          </li>
+          </li> : null }
+          {element.size ?
           <li className="card-list-item">
             <p className="card-text text-capitalize pr-1">
               <strong>Size: </strong>
             </p>
             <p className="card-text text-muted">{element.size}</p>
-          </li>
+          </li> : null }
+          {element.subjects ?
           <li className="card-list-item">
             <p className="card-text text-capitalize pr-1">
               <strong>Subjects: </strong>
             </p>
             <p className="card-text text-muted">{element.subjects}</p>
-          </li>
+          </li> : null }
+          {element.sources ?
           <li className="card-list-item">
             <p className="card-text text-capitalize pr-1">
               <strong>Sources: </strong>
             </p>
             <p className="card-text text-muted">{element.sources}</p>
-          </li>
+          </li> : null }
+          {element.format ? 
           <li className="card-list-item">
             <p className="card-text text-capitalize pr-1">
               <strong>Format: </strong>
             </p>
             <p className="card-text text-muted">{element.format}</p>
-          </li>
+          </li> : null }
+          {element.modalities ? 
           <li className="d-none d-md-flex">
             <p className="card-text text-capitalize pr-1">
               <strong>Modalities: </strong>
             </p>
             <p className="card-text text-muted">{element.modalities}</p>
-          </li>
+          </li> : null }
+          {element.updated ?
           <li className="d-none d-md-flex">
             <p className="card-text text-capitalize pr-1">
               <strong>Date Updated: </strong>
             </p>
             <p className="card-text text-muted">{element.dateUpdated}</p>
-          </li>
+          </li> : null}
         </ul>
       </div>
       <div className="col-12 col-md-auto d-flex my-2 card-buttons">
