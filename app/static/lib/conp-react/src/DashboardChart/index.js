@@ -44,7 +44,7 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             },
 
             title: {
-                text: 'Number of Datasets and Pipelines in 2019'
+                text: 'Cumulative Number of Datasets and Pipelines in 2019'
             },
 
             yAxis: [{
@@ -71,10 +71,10 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
 
 
             series: [{
-                name: 'CONP Datasets',
+                name: 'Datasets',
                 data: yAxisDatasets
             }, {
-                name: 'CONP Pipelines',
+                name: 'Pipelines',
                 data: yAxisPipelines,
                 yAxis: 1
             }]

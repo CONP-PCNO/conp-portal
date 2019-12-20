@@ -8041,7 +8041,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
             },
 
             title: {
-                text: 'Number of Datasets and Pipelines in 2019'
+                text: 'Cumulative Number of Datasets and Pipelines in 2019'
             },
 
             yAxis: [{
@@ -8066,10 +8066,10 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
             },
 
             series: [{
-                name: 'CONP Datasets',
+                name: 'Datasets',
                 data: yAxisDatasets
             }, {
-                name: 'CONP Pipelines',
+                name: 'Pipelines',
                 data: yAxisPipelines,
                 yAxis: 1
             }]
