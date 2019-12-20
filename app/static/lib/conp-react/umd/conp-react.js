@@ -8280,53 +8280,56 @@ var Spotlight_Spotlight = function Spotlight(_ref) {
         };
     }();
 
-    esm_useDebounce(function () {
-        return void fetchElements();
-    }, 300, [datasetURL]);
+    //useDebounce(() => void fetchElements(), 300, [datasetURL]);
 
-    return fetchedElements.length > 0 ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "card-description" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "h3",
-            { className: "card-description-title" },
-            "STUDY SPOTLIGHT"
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("hr", null),
+    return (
+        //fetchedElements.length > 0 ?
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
-            { className: "card-description-text" },
+            { className: "card-description" },
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "p",
-                { className: "card-description-subtitle" },
-                "fetchedElements[0].title"
+                "h3",
+                { className: "card-description-title" },
+                "STUDY SPOTLIGHT"
             ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("hr", null),
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "i",
-                null,
-                "\"StoP-AD Center - Douglas Mental Health University Institute\""
-            ),
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "p",
-                null,
-                "\"Longitudinal multimodal study of pre-symptomatic Alzheimer's Disease\""
-            )
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "d-flex mt-4 justify-content-end" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "a",
-                { href: "/dataset?id=" + fetchedElements[0].id },
+                "div",
+                { className: "card-description-text" },
                 external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "button",
-                    { className: "btn btn-outline-secondary",
-                        type: "button" },
-                    "Read More"
+                    "p",
+                    { className: "card-description-subtitle" },
+                    "Prevent-AD"
+                ),
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "i",
+                    null,
+                    "\"StoP-AD Center - Douglas Mental Health University Institute\""
+                ),
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "p",
+                    null,
+                    "\"Longitudinal multimodal study of pre-symptomatic Alzheimer's Disease\""
+                )
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "d-flex mt-4 justify-content-end" },
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                    "a",
+                    { href: "/dataset?id=projects/preventad-open" },
+                    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                        "button",
+                        { className: "btn btn-outline-secondary",
+                            type: "button" },
+                        "Read More"
+                    )
                 )
             )
         )
-    ) : null;
+        //: null
+
+    );
 };
 
 Spotlight_Spotlight.propTypes = {};

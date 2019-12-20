@@ -31,17 +31,17 @@ const Spotlight = ({ datasetURL, ...props }) => {
         }
     };
 
-    useDebounce(() => void fetchElements(), 300, [datasetURL]);
+    //useDebounce(() => void fetchElements(), 300, [datasetURL]);
 
     return (
-        fetchedElements.length > 0 ?
+        //fetchedElements.length > 0 ?
             <div className="card-description">
                 <h3 className="card-description-title">STUDY SPOTLIGHT</h3>
                 <hr />
 
                 <div className="card-description-text">
                     <p className="card-description-subtitle">
-                        fetchedElements[0].title
+                        Prevent-AD
                 </p>
                     <i>
                         "StoP-AD Center - Douglas Mental Health University Institute"
@@ -51,7 +51,7 @@ const Spotlight = ({ datasetURL, ...props }) => {
                 </p>
                 </div>
                 <div className="d-flex mt-4 justify-content-end">
-                    <a href={`/dataset?id=${fetchedElements[0].id}`}>
+                    <a href={`/dataset?id=projects/preventad-open`}>
                         <button className="btn btn-outline-secondary"
                             type="button">
                             Read More
@@ -59,7 +59,7 @@ const Spotlight = ({ datasetURL, ...props }) => {
                     </a>
                 </div>
             </div>
-            : null
+            //: null
     );
 };
 
