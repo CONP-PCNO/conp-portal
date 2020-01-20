@@ -7,9 +7,6 @@ import Highcharts from "highcharts";
 
 const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
 
-    //const [fetchedElements, setFetchedElements] = React.useState([]);
-    //const [totalState, setTotalState] = React.useState(0);
-
     const drawChart = (data) => {
         console.log('drawing chart');
 
@@ -44,7 +41,7 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             },
 
             title: {
-                text: 'Number of Datasets and Pipelines in 2019'
+                text: 'Cumulative Number of Datasets and Pipelines in 2019'
             },
 
             yAxis: [{
@@ -71,10 +68,10 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
 
 
             series: [{
-                name: 'CONP Datasets',
+                name: 'Datasets',
                 data: yAxisDatasets
             }, {
-                name: 'CONP Pipelines',
+                name: 'Pipelines',
                 data: yAxisPipelines,
                 yAxis: 1
             }]
@@ -85,7 +82,6 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
     const fetchElements = async () => {
 
         try {
-            console.log(`Fetching from: ${datasetsURL}`);
             const res = await fetch(datasetsURL);
 
             if (!res.ok) {
@@ -95,8 +91,6 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             }
 
             const datasetsRes = await res.json();
-
-            console.log(JSON.stringify(datasetsRes));
 
             const chartData = {
                 datasets: {
@@ -135,7 +129,6 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
 
             console.log(chartData);
 
-            console.log(`Fetching from: ${pipelinesURL}`);
             const pipelines = await fetch(pipelinesURL);
 
             if (!pipelines.ok) {
@@ -145,8 +138,6 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             }
 
             const pipelinesRes = await pipelines.json();
-
-            console.log(JSON.stringify(pipelinesRes));
 
             chartData.pipelines[2019] = {};
 

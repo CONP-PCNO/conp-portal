@@ -32,12 +32,11 @@
       <div id="dashboard-chart-container">
 
         <script type="text/javascript">
-          const reactElement = React.createElement(CONPReact.DashboardChart, {
+          const dashboardChartElement = React.createElement(CONPReact.DashboardChart, {
             datasetsURL: "{{ url_for('search.dataset_search') }}",
             pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
-            imagePath: "/static/img",
           });
-          ReactDOM.render(reactElement, document.querySelector("#dashboard-chart-container"));
+          ReactDOM.render(dashboardChartElement, document.querySelector("#dashboard-chart-container"));
         </script>
 
       </div>
@@ -45,30 +44,18 @@
   </div>
   <div class="p-2 flex-fill">
     <div class="card" data-type="dashboard">
-      <div class="card-description">
-        <h3 class="card-description-title">STUDY SPOTLIGHT</h3>
-        <hr />
+      <div id="spotlight-container">
 
-        <div class="card-description-text">
-          <p class="card-description-subtitle">
-            Multicenter Single Human MRI Phantom
-          </p>
-          <i>McGill Center for Integrative Neuroscience (MCIN)</i>
-          <p>
-            Human Brain phantom scans, Multiple MRI scans of a single human
-            phantom over 11 years, T1 weighted images and others on 13 scanner
-            in 6 sites accross North America.
-          </p>
-        </div>
-      </div>
+        <script type="text/javascript">
+          const spotlightElement = React.createElement(CONPReact.Spotlight, {
+            datasetURL: "{{ url_for('search.dataset_search') }}" + "?id=projects/preventad-open",
+          });
+          ReactDOM.render(spotlightElement, document.querySelector("#spotlight-container"));
+        </script>
 
-      <div class="d-flex mt-4 justify-content-end">
-        <a href="/dataset?id=projects/multicenter-phantom"><button class="btn btn-outline-secondary"
-            type="button">
-            Read More
-          </button></a>
       </div>
     </div>
   </div>
+</div>
 </div>
 {% endblock %}
