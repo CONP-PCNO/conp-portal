@@ -226,7 +226,8 @@ def dataset_info():
         "subjects": datsdataset.subjectCount,
         "format": datsdataset.formats,
         "modalities": datsdataset.modalities,
-        "sources": datsdataset.sources
+        "sources": datsdataset.sources,
+        "conpStatus": datsdataset.conpStatus
     }
 
     metadata = get_dataset_metadata_information(d)
