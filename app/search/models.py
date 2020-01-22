@@ -110,7 +110,7 @@ class DATSDataset(object):
         return formats
 
     @property
-    def licences(self):
+    def licenses(self):
         licenseString = self.descriptor.get('licenses', 'None')
         if type(licenseString) == list:
             licenses = ", ".join([x['name'] for x in licenseString])
@@ -122,7 +122,7 @@ class DATSDataset(object):
             elif 'dataUsesConditions' in licenseString:
                 licenses = licenseString['dataUsesConditions']
             else:
-                licences = licenseString
+                licenses = licenseString
 
         return licenses
 
