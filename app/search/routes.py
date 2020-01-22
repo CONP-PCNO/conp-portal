@@ -122,7 +122,8 @@ def dataset_search():
             "subjects": datsdataset.subjectCount,
             "format": datsdataset.formats,
             "modalities": datsdataset.modalities,
-            "sources": datsdataset.sources
+            "sources": datsdataset.sources,
+            "conpStatus": datsdataset.conpStatus
         }
         elements.append(dataset)
 
