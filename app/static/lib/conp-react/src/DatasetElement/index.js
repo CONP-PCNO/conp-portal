@@ -9,8 +9,13 @@ const DatasetElement = props => {
   const downloadEnabled = `${imagePath}/download_green.png`;
   const downloadDisabled = `${imagePath}/download_gray.png`;
 
+  const statusCONP = `${imagePath}/canada.svg`;
+
   return (
     <div className="card row flex-row" data-type="dataset">
+      <div className="card-header">
+        {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP}/>) : <div style={{width: 32}}/>}
+      </div>
       <div className="col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social">
         <img
           alt="dataset format"
