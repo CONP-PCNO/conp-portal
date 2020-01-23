@@ -12,7 +12,6 @@ const Spotlight = ({ datasetURL, ...props }) => {
     const fetchElements = async () => {
 
         try {
-            console.log(`Fetching from: ${datasetURL}`);
             const res = await fetch(datasetURL);
 
             if (!res.ok) {

@@ -22,7 +22,9 @@ def index():
             The rendered index.html template for the current_user
     """
 
-    return render_template('index.html', title='CONP | Home', user=current_user)
+    showTerms = True
+
+    return render_template('index.html', title='CONP | Home', user=current_user, showTerms=showTerms)
 
 
 @main_bp.route('/share')
