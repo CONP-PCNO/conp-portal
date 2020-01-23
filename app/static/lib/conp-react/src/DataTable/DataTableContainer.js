@@ -21,7 +21,7 @@ const DataTableContainer = ({
 
   const [query, setQuery] = React.useState({
     search: "",
-    sortKey: "title",
+    sortKey: "conpStatus",
     sortComparitor: "asc",
     page,
     max_per_page,
