@@ -7180,14 +7180,13 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
 
   var statusCONP = imagePath + "/canada.svg";
 
-  console.log(JSON.stringify(element));
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
     { className: "card row flex-row", "data-type": "dataset" },
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { "class": "card-header" },
-      element.conpStatus !== 'external' ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { height: "32", width: "32", src: statusCONP }) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", { height: "32", width: "32" })
+      { className: "card-header" },
+      element.conpStatus !== 'external' ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { height: "32", width: "32", src: statusCONP }) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", { style: { width: 32 } })
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",

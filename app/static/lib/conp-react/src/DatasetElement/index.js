@@ -11,11 +11,10 @@ const DatasetElement = props => {
 
   const statusCONP = `${imagePath}/canada.svg`;
 
-  console.log(JSON.stringify(element));
   return (
     <div className="card row flex-row" data-type="dataset">
-      <div class="card-header">
-        {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP}></img>) : null}
+      <div className="card-header">
+        {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP}/>) : <div style={{width: 32}}/>}
       </div>
       <div className="col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social">
         <img
