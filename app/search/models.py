@@ -77,7 +77,7 @@ class DATSDataset(object):
 
     @property
     def conpStatus(self):
-        conpStatus = None
+        conpStatus = 'external'
         extraprops = self.descriptor.get('extraProperties', {})
         for prop in extraprops:
             if prop.get('category') == 'CONP_status':
