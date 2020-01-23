@@ -136,15 +136,20 @@ def dataset_search():
     delta = int(request.args.get('max_per_page', 10)) * (int(request.args.get('page', 0)) - 1 )
     cursor = max(min(int(request.args.get('cursor') or 0), 0), 0) + delta
     limit = max(min(int(request.args.get('limit') or 10), 10), 0)
-    sort_key = request.args.get('sortKey') or "id"
-    paginated = elements[(cursor):(cursor + limit)]
+    sort_key = request.args.get('sortKey') or "conpStatus"
+    paginated = elements
     paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
+    paginated = paginated[(cursor):(cursor + limit)]
 
     # Construct payload
     payload = {
         "authorized": authorized,
         "total": len(elements),
         "sortKeys": [
+            {
+                "key": "conpStatus",
+                "label": "Origin"
+            },
             {
                 "key": "title",
                 "label": "Title"
