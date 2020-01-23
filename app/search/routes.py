@@ -106,7 +106,13 @@ def dataset_search():
 
     # Build dataset response
     for d in datasets:
-        datsdataset = DATSDataset(d.fspath)    
+        try:
+            datsdataset = DATSDataset(d.fspath)
+        except Exception as e:
+            # If the DATS file can't be laoded, skip this dataset.
+            # There should be an error message in the logs/update_datsets.log
+            continue
+
         dataset = {
             "authorized": authorized,
             "id": d.dataset_id,
