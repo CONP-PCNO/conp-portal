@@ -3,7 +3,7 @@
 
     Currently this module contains all of the routes for the main blueprint
 """
-from flask import render_template
+from flask import render_template, request
 from flask_login import current_user, login_required
 from app.main import main_bp
 
@@ -22,7 +22,11 @@ def index():
             The rendered index.html template for the current_user
     """
 
-    showTerms = True
+    termsAccepted = request.cookies.get('termsAccepted')
+    print('showTerms')
+    print(termsAccepted)
+    showTerms = not termsAccepted
+    print(showTerms)
 
     return render_template('index.html', title='CONP | Home', user=current_user, showTerms=showTerms)
 
