@@ -7033,7 +7033,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
 
   var _React$useState2 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState({
     search: "",
-    sortKey: "title",
+    sortKey: "conpStatus",
     sortComparitor: "asc",
     page: page,
     max_per_page: max_per_page,

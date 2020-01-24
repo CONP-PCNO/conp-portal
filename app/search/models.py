@@ -12,7 +12,10 @@ class DATSDataset(object):
         self.datasetpath = datasetpath
 
         with open(self.DatsFilepath, 'r') as f:
-            self.descriptor = json.load(f)
+            try:
+                self.descriptor = json.load(f)
+            except Exception as e:
+                raise 'Can`t parse {}'.format(self.DatsFilepath)
 
     @property
     def DatsFilepath(self):
