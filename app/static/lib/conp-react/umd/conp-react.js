@@ -7274,8 +7274,8 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
             )
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            "a",
+            { className: "card-text text-muted", href: element.sources },
             element.sources
           )
         ) : null,

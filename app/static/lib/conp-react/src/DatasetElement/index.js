@@ -56,7 +56,7 @@ const DatasetElement = props => {
             <p className="card-text text-capitalize pr-1">
               <strong>Sources: </strong>
             </p>
-            <p className="card-text text-muted">{element.sources}</p>
+            <a className="card-text text-muted" href={element.sources}>{element.sources}</a>
           </li> : null }
           {element.format ? 
           <li className="card-list-item">

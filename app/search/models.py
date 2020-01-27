@@ -176,7 +176,22 @@ class DATSDataset(object):
 
     @property
     def sources(self):
-        return None
+        dists = self.descriptor.get('distributions', None)
+        if dists is None:
+            return None
+
+        if not type(dists) == list:
+            if dists.get('@type', '') == 'DatasetDistribution': 
+                dist = dists
+            else:
+               dist = {}
+        else:
+            dist = dists[0]
+        
+        sources = dist.get('access', {}).get('landingPage', '')
+
+        return "{}".format(sources)
+
 
 
     @property

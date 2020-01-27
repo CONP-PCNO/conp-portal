@@ -88,6 +88,10 @@ def pipeline_search():
     # sort, make all keys lowercase and without hyphen
     elements = [{k.lower().replace("-", ""): v for k, v in element.items()}
                 for element in elements]
+
+    if sort_key == 'conpStatus':
+        sort_key = 'downloads-desc'
+
     real_key = sort_key
     if sort_key == "downloads-asc":
         real_key = "downloads"

@@ -23,10 +23,7 @@ def index():
     """
 
     termsAccepted = request.cookies.get('termsAccepted')
-    print('showTerms')
-    print(termsAccepted)
     showTerms = not termsAccepted
-    print(showTerms)
 
     return render_template('index.html', title='CONP | Home', user=current_user, showTerms=showTerms)
 
