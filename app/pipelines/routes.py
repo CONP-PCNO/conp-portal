@@ -56,7 +56,6 @@ def pipeline_search():
     sort_key = request.args.get("sortKey") or "downloads-desc"
     max_per_page = int(request.args.get("max_per_page") or 999999)
     page = int(request.args.get("page") or 1)
-    print("Params: {} {}".format(page,max_per_page))
     cache_dir = os.path.join(os.path.expanduser('~'), ".cache", "boutiques")
     all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
     all_detailed_desc_path = os.path.join(cache_dir, "detailed_all_descriptors.json")

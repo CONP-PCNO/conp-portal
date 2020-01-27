@@ -39,10 +39,7 @@ const DataTableContainer = ({
   }, [limit]);
 
   const fetchElements = async () => {
-    console.log(query);
     const url = `${endpointURL}?${qs.stringify(query)}`;
-
-    console.log(`Fetching from: ${url}`);
 
     try {
       const res = await fetch(url);

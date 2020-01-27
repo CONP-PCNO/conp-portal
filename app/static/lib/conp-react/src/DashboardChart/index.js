@@ -8,7 +8,6 @@ import Highcharts from "highcharts";
 const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
 
     const drawChart = (data) => {
-        console.log('drawing chart');
 
         const xAxis = [];
         const yAxisDatasets = [];
@@ -126,8 +125,6 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
                     chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1
                 }
             })
-
-            console.log(chartData);
 
             const pipelines = await fetch(pipelinesURL);
 
