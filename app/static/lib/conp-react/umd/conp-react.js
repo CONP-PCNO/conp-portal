@@ -7066,26 +7066,31 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              console.log(query);
               url = endpointURL + "?" + query_string["stringify"](query);
-              _context.prev = 1;
-              _context.next = 4;
+
+
+              console.log("Fetching from: " + url);
+
+              _context.prev = 3;
+              _context.next = 6;
               return fetch(url);
 
-            case 4:
+            case 6:
               res = _context.sent;
 
               if (res.ok) {
-                _context.next = 7;
+                _context.next = 9;
                 break;
               }
 
               throw new Error("Request failed with status: " + res.status + " (" + res.statusText + ")");
 
-            case 7:
-              _context.next = 9;
+            case 9:
+              _context.next = 11;
               return res.json();
 
-            case 9:
+            case 11:
               parsed = _context.sent;
 
 
@@ -7093,22 +7098,22 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
               setTotalState(parsed.total);
               setSortKeysState(parsed.sortKeys);
               setAuthorizedState(parsed.authorized);
-              _context.next = 20;
+              _context.next = 22;
               break;
 
-            case 16:
-              _context.prev = 16;
-              _context.t0 = _context["catch"](1);
+            case 18:
+              _context.prev = 18;
+              _context.t0 = _context["catch"](3);
 
               alert("There was an error retrieving the search results.");
               console.error(_context.t0);
 
-            case 20:
+            case 22:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, _this, [[1, 16]]);
+      }, _callee, _this, [[3, 18]]);
     }));
 
     return function fetchElements() {
@@ -7562,6 +7567,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
         props = DashboardChart_objectWithoutProperties(_ref, ["datasetsURL", "pipelinesURL"]);
 
     var drawChart = function drawChart(data) {
+        console.log('drawing chart');
 
         var xAxis = [];
         var yAxisDatasets = [];
@@ -7692,24 +7698,26 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                                 }
                             });
 
-                            _context.next = 13;
+                            console.log(chartData);
+
+                            _context.next = 14;
                             return fetch(pipelinesURL);
 
-                        case 13:
+                        case 14:
                             pipelines = _context.sent;
 
                             if (pipelines.ok) {
-                                _context.next = 16;
+                                _context.next = 17;
                                 break;
                             }
 
                             throw new Error("Request failed with status: " + pipelines.status + " (" + pipelines.statusText + ")");
 
-                        case 16:
-                            _context.next = 18;
+                        case 17:
+                            _context.next = 19;
                             return pipelines.json();
 
-                        case 18:
+                        case 19:
                             pipelinesRes = _context.sent;
 
 
@@ -7719,22 +7727,22 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
                             drawChart(chartData);
 
-                            _context.next = 28;
+                            _context.next = 29;
                             break;
 
-                        case 24:
-                            _context.prev = 24;
+                        case 25:
+                            _context.prev = 25;
                             _context.t0 = _context["catch"](0);
 
                             alert("There was an error retrieving the search results.");
                             console.error(_context.t0);
 
-                        case 28:
+                        case 29:
                         case "end":
                             return _context.stop();
                     }
                 }
-            }, _callee, DashboardChart_this, [[0, 24]]);
+            }, _callee, DashboardChart_this, [[0, 25]]);
         }));
 
         return function fetchElements() {
@@ -7786,45 +7794,47 @@ var Spotlight_Spotlight = function Spotlight(_ref) {
                     switch (_context.prev = _context.next) {
                         case 0:
                             _context.prev = 0;
-                            _context.next = 3;
+
+                            console.log("Fetching from: " + datasetURL);
+                            _context.next = 4;
                             return fetch(datasetURL);
 
-                        case 3:
+                        case 4:
                             res = _context.sent;
 
                             if (res.ok) {
-                                _context.next = 6;
+                                _context.next = 7;
                                 break;
                             }
 
                             throw new Error("Request failed with status: " + res.status + " (" + res.statusText + ")");
 
-                        case 6:
-                            _context.next = 8;
+                        case 7:
+                            _context.next = 9;
                             return res.json();
 
-                        case 8:
+                        case 9:
                             datasetRes = _context.sent;
 
 
                             setFetchedElements(datasetRes.elements);
 
-                            _context.next = 16;
+                            _context.next = 17;
                             break;
 
-                        case 12:
-                            _context.prev = 12;
+                        case 13:
+                            _context.prev = 13;
                             _context.t0 = _context["catch"](0);
 
                             alert("There was an error retrieving the search results.");
                             console.error(_context.t0);
 
-                        case 16:
+                        case 17:
                         case "end":
                             return _context.stop();
                     }
                 }
-            }, _callee, Spotlight_this, [[0, 12]]);
+            }, _callee, Spotlight_this, [[0, 13]]);
         }));
 
         return function fetchElements() {
