@@ -58,12 +58,13 @@ const DatasetElement = props => {
             </p>
             <a className="card-text text-muted" href={element.sources}>{element.sources}</a>
           </li> : null }
+          {console.log(JSON.stringify(element.format))}
           {element.format ? 
           <li className="card-list-item">
             <p className="card-text text-capitalize pr-1">
               <strong>Format: </strong>
             </p>
-            <p className="card-text text-muted">{element.format}</p>
+            <p className="card-text text-muted">{element.format.toString()}</p>
           </li> : null }
           {element.modalities ? 
           <li className="d-none d-md-flex">

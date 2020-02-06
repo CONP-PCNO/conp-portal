@@ -115,11 +115,13 @@ class DATSDataset(object):
         if dists is None:
             return None
 
+        print(dists)
+        print(type(dists))
         if not type(dists) == list:
             if dists.get('@type', '') == 'DatasetDistribution':
                 formats = ", ".join([x['description'] for x in dists.get('formats', [])])
         else:
-            formats = ", ".join([",".join(x['formats']) for x in dists])
+            formats = ", ".join([", ".join(x['formats']) for x in dists])
 
         return formats
 

@@ -19,7 +19,7 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
         Object.keys(data.datasets).forEach(year => {
             Object.keys(data.datasets[year]).forEach(month => {
                 countDatasets += data.datasets[year][month];
-                if(data.pipelines[year][month]){
+                if(data.pipelines[year] && data.pipelines[year][month]){
                     countPipelines += data.pipelines[year][month];
                 }
                 xAxis.push(`${month}/${year}`);
