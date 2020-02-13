@@ -115,11 +115,13 @@ class DATSDataset(object):
         if dists is None:
             return None
 
+        print(dists)
+        print(type(dists))
         if not type(dists) == list:
             if dists.get('@type', '') == 'DatasetDistribution':
                 formats = ", ".join([x['description'] for x in dists.get('formats', [])])
         else:
-            formats = ", ".join([",".join(x['formats']) for x in dists])
+            formats = ", ".join([", ".join(x['formats']) for x in dists])
 
         return formats
 
@@ -176,7 +178,22 @@ class DATSDataset(object):
 
     @property
     def sources(self):
-        return None
+        dists = self.descriptor.get('distributions', None)
+        if dists is None:
+            return None
+
+        if not type(dists) == list:
+            if dists.get('@type', '') == 'DatasetDistribution': 
+                dist = dists
+            else:
+               dist = {}
+        else:
+            dist = dists[0]
+        
+        sources = dist.get('access', {}).get('landingPage', '')
+
+        return "{}".format(sources)
+
 
 
     @property

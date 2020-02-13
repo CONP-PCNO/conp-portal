@@ -19,7 +19,7 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
         Object.keys(data.datasets).forEach(year => {
             Object.keys(data.datasets[year]).forEach(month => {
                 countDatasets += data.datasets[year][month];
-                if(data.pipelines[year][month]){
+                if(data.pipelines[year] && data.pipelines[year][month]){
                     countPipelines += data.pipelines[year][month];
                 }
                 xAxis.push(`${month}/${year}`);
@@ -92,22 +92,7 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             const datasetsRes = await res.json();
 
             const chartData = {
-                datasets: {
-                    2019:{
-                        1: 0,
-                        2: 0,
-                        3: 0,
-                        4: 0,
-                        5: 0,
-                        6: 0,
-                        7: 0,
-                        8: 0,
-                        9: 0,
-                        10: 0,
-                        11: 0,
-                        12: 0,
-                    }
-                },
+                datasets: {},
                 pipelines: {}
             };
 

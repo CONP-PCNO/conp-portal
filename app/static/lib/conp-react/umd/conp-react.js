@@ -7274,8 +7274,8 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
             )
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            "a",
+            { className: "card-text text-muted", href: element.sources },
             element.sources
           )
         ) : null,
@@ -7294,7 +7294,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "p",
             { className: "card-text text-muted" },
-            element.format
+            element.format.toString()
           )
         ) : null,
         element.modalities ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -7573,7 +7573,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
         Object.keys(data.datasets).forEach(function (year) {
             Object.keys(data.datasets[year]).forEach(function (month) {
                 countDatasets += data.datasets[year][month];
-                if (data.pipelines[year][month]) {
+                if (data.pipelines[year] && data.pipelines[year][month]) {
                     countPipelines += data.pipelines[year][month];
                 }
                 xAxis.push(month + "/" + year);
@@ -7658,22 +7658,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                         case 8:
                             datasetsRes = _context.sent;
                             chartData = {
-                                datasets: {
-                                    2019: {
-                                        1: 0,
-                                        2: 0,
-                                        3: 0,
-                                        4: 0,
-                                        5: 0,
-                                        6: 0,
-                                        7: 0,
-                                        8: 0,
-                                        9: 0,
-                                        10: 0,
-                                        11: 0,
-                                        12: 0
-                                    }
-                                },
+                                datasets: {},
                                 pipelines: {}
                             };
 
