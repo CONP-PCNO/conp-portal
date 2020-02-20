@@ -27,7 +27,7 @@
     </div>
     <div class="row" style="padding: 20px;">
       <div class="col-xs-2">
-        <b>Source: </b> <a href="{{ metadata.sources }}">{{ metadata.sources }}</a>
+        <b>Source: </b> <a class="btn-link" href="{{ metadata.sources }}">{{ metadata.sources }}</a>
       </div>
     </div>
     <div class="row" style="padding: 20px;">
@@ -73,29 +73,12 @@
 </div>
 
 <script type="text/javascript">
-  const reactElement = React.createElement(CONPReact.DatasetElement, {
-    authorized: {{ "true" if data.authorized else "false" }},
-    id: '{{ data.id }}',
-    title: '{{ data.title }}',
-    isPrivate: {{ "true" if data.isPrivate else "false" }},
-    thumbnailURL: '{{ data.thumbnailURL }}',
-    downloads: {{ data.downloads }},
-    views: '{{ data.views  }}',
-    likes: '{{ data.likes }}',
-    dateAdded: '{{ data.dateAdded }}',
-    dateUpdated: '{{ data.dateUpdated }}',
-    size: '{{ data.size }}',
-    files: '{{ data.files }}',
-    subjects: '{{ data.subjects }}',
-    format: '{{ data.format }}',
-    modalities: '{{ data.modalities }}',
-    sources: '{{ data.sources }}',
-    imagePath: "/static/img",
-    downloadPath: '{{ data.downloadPath }}',
-    conpStatus: '{{ data.conpStatus }}'
-  });
 
+  console.log('1');
+  console.log({{ data|tojson }});
+  const reactElement = React.createElement(CONPReact.DatasetElement, {{ data|tojson }});
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));
+
 </script>
 </div>
 <!--/span-->

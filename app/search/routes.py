@@ -225,7 +225,7 @@ def dataset_info():
         "title": d.name.replace("'", ""),
         "isPrivate": d.is_private,
         "thumbnailURL": "/dataset_logo?id={}".format(d.dataset_id),
-        "imagePath": "/?",
+        "imagePath": "static/img/",
         "downloadPath": d.dataset_id,
         "URL": 'raw_data_url',
         "downloads": "0",
