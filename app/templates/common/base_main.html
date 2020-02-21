@@ -79,7 +79,7 @@ CONP Portal
 <script>
   $(function () {
     $('#btnAcceptTerms').on('click', function (event) {
-      document.cookie = "termsAccepted=true";
+      document.cookie = "termsAccepted=true;max-age=31536000";
 
       $('#termsModal').modal('hide')
 
