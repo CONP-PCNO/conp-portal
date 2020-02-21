@@ -7565,20 +7565,14 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
         var xAxis = [];
         var yAxisDatasets = [];
-        var yAxisPipelines = [];
 
         var countDatasets = 0;
-        var countPipelines = 0;
 
         Object.keys(data.datasets).forEach(function (year) {
             Object.keys(data.datasets[year]).forEach(function (month) {
                 countDatasets += data.datasets[year][month];
-                if (data.pipelines[year] && data.pipelines[year][month]) {
-                    countPipelines += data.pipelines[year][month];
-                }
                 xAxis.push(month + "/" + year);
                 yAxisDatasets.push(countDatasets);
-                yAxisPipelines.push(countPipelines);
             });
         });
 
@@ -7601,11 +7595,6 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                 title: {
                     text: 'Number of Datasets'
                 }
-            }, {
-                opposite: true,
-                title: {
-                    text: 'Number of Pipelines'
-                }
             }],
 
             xAxis: {
@@ -7621,10 +7610,6 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
             series: [{
                 name: 'Datasets',
                 data: yAxisDatasets
-            }, {
-                name: 'Pipelines',
-                data: yAxisPipelines,
-                yAxis: 1
             }]
 
         });
@@ -7632,7 +7617,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
     var fetchElements = function () {
         var _ref2 = DashboardChart_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-            var res, datasetsRes, chartData, pipelines, pipelinesRes;
+            var res, datasetsRes, chartData;
             return regenerator_default.a.wrap(function _callee$(_context) {
                 while (1) {
                     switch (_context.prev = _context.next) {
@@ -7658,8 +7643,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                         case 8:
                             datasetsRes = _context.sent;
                             chartData = {
-                                datasets: {},
-                                pipelines: {}
+                                datasets: {}
                             };
 
 
@@ -7677,49 +7661,24 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                                 }
                             });
 
-                            _context.next = 13;
-                            return fetch(pipelinesURL);
-
-                        case 13:
-                            pipelines = _context.sent;
-
-                            if (pipelines.ok) {
-                                _context.next = 16;
-                                break;
-                            }
-
-                            throw new Error("Request failed with status: " + pipelines.status + " (" + pipelines.statusText + ")");
-
-                        case 16:
-                            _context.next = 18;
-                            return pipelines.json();
-
-                        case 18:
-                            pipelinesRes = _context.sent;
-
-
-                            chartData.pipelines[2019] = {};
-
-                            chartData.pipelines[2019][12] = pipelinesRes.elements.length;
-
                             drawChart(chartData);
 
-                            _context.next = 28;
+                            _context.next = 18;
                             break;
 
-                        case 24:
-                            _context.prev = 24;
+                        case 14:
+                            _context.prev = 14;
                             _context.t0 = _context["catch"](0);
 
                             alert("There was an error retrieving the search results.");
                             console.error(_context.t0);
 
-                        case 28:
+                        case 18:
                         case "end":
                             return _context.stop();
                     }
                 }
-            }, _callee, DashboardChart_this, [[0, 24]]);
+            }, _callee, DashboardChart_this, [[0, 14]]);
         }));
 
         return function fetchElements() {
