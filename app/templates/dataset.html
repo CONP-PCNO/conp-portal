@@ -42,7 +42,7 @@
     </div>
     <div class="row" style="padding: 20px;">
       <div class="col-xs-2">
-        <b>Description: </b> {{ metadata.description }}
+        <b>Description: </b> {{ metadata.description|safe }}
       </div>
     </div>
     <div class="row" style="padding: 20px;">
@@ -74,8 +74,6 @@
 
 <script type="text/javascript">
 
-  console.log('1');
-  console.log({{ data|tojson }});
   const reactElement = React.createElement(CONPReact.DatasetElement, {{ data|tojson }});
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));
 
