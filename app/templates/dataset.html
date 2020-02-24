@@ -74,8 +74,6 @@
 
 <script type="text/javascript">
 
-  console.log('1');
-  console.log({{ data|tojson }});
   const reactElement = React.createElement(CONPReact.DatasetElement, {{ data|tojson }});
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));
 
