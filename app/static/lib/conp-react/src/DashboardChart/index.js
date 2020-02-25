@@ -34,13 +34,14 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             },
 
             title: {
-                text: 'Cumulative Number of Datasets and Pipelines in 2019'
+                text: 'Cumulative Number of Datasets and Pipelines'
             },
 
             yAxis: [{
                 title: {
                     text: 'Number of Datasets'
-                }
+                },
+                allowDecimals: false,
             }],
 
             xAxis: {
@@ -66,7 +67,7 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
     const fetchElements = async () => {
 
         try {
-            const res = await fetch(datasetsURL);
+            const res = await fetch(datasetsURL + '?elements=all');
 
             if (!res.ok) {
                 throw new Error(

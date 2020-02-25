@@ -7089,26 +7089,28 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
               parsed = _context.sent;
 
 
+              console.log(parsed);
+
               setFetchedElements(parsed.elements);
               setTotalState(parsed.total);
               setSortKeysState(parsed.sortKeys);
               setAuthorizedState(parsed.authorized);
-              _context.next = 20;
+              _context.next = 21;
               break;
 
-            case 16:
-              _context.prev = 16;
+            case 17:
+              _context.prev = 17;
               _context.t0 = _context["catch"](1);
 
               alert("There was an error retrieving the search results.");
               console.error(_context.t0);
 
-            case 20:
+            case 21:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, _this, [[1, 16]]);
+      }, _callee, _this, [[1, 17]]);
     }));
 
     return function fetchElements() {
@@ -7588,13 +7590,14 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
             },
 
             title: {
-                text: 'Cumulative Number of Datasets and Pipelines in 2019'
+                text: 'Cumulative Number of Datasets and Pipelines'
             },
 
             yAxis: [{
                 title: {
                     text: 'Number of Datasets'
-                }
+                },
+                allowDecimals: false
             }],
 
             xAxis: {
@@ -7624,7 +7627,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                         case 0:
                             _context.prev = 0;
                             _context.next = 3;
-                            return fetch(datasetsURL);
+                            return fetch(datasetsURL + '?elements=all');
 
                         case 3:
                             res = _context.sent;
