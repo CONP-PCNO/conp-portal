@@ -6,6 +6,7 @@
 from flask import render_template, request
 from flask_login import current_user, login_required
 from app.main import main_bp
+import requests
 
 
 @main_bp.route('/')
@@ -38,4 +39,11 @@ def share():
         Returns:
             rendered template for share.html
     """
-    return render_template('share.html', title='CONP | Share a Dataset', user=current_user)
+
+    url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/CONP_main_data_documentation.htm'
+    headers = {'Content-type': 'text/html; charset=UTF-8'}
+    response = requests.get(url, headers=headers)
+
+    content = response.text
+
+    return render_template('share.html', title='CONP | Share a Dataset', user=current_user, content=content)
