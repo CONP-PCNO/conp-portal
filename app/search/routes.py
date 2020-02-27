@@ -133,13 +133,18 @@ def dataset_search():
         }
         elements.append(dataset)
 
-    delta = int(request.args.get('max_per_page', 10)) * (int(request.args.get('page', 1)) - 1 )
-    cursor = max(min(int(request.args.get('cursor') or 0), 0), 0) + delta
-    limit = max(min(int(request.args.get('limit') or 10), 10), 0)
-    sort_key = request.args.get('sortKey') or "conpStatus"
-    paginated = elements
-    paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
-    paginated = paginated[(cursor):(cursor + limit)]
+    queryAll = bool(request.args.get('elements') == 'all')
+
+    if(not queryAll):
+        delta = int(request.args.get('max_per_page', 10)) * (int(request.args.get('page', 1)) - 1 )
+        cursor = max(min(int(request.args.get('cursor') or 0), 0), 0) + delta
+        limit = max(min(int(request.args.get('limit') or 10), 10), 0)
+        sort_key = request.args.get('sortKey') or "conpStatus"
+        paginated = elements
+        paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
+        paginated = paginated[(cursor):(cursor + limit)]
+    else:
+        paginated = elements
 
     # Construct payload
     payload = {
@@ -225,7 +230,7 @@ def dataset_info():
         "title": d.name.replace("'", ""),
         "isPrivate": d.is_private,
         "thumbnailURL": "/dataset_logo?id={}".format(d.dataset_id),
-        "imagePath": "/?",
+        "imagePath": "static/img/",
         "downloadPath": d.dataset_id,
         "URL": 'raw_data_url',
         "downloads": "0",

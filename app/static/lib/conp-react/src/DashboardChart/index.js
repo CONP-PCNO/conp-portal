@@ -11,20 +11,14 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
 
         const xAxis = [];
         const yAxisDatasets = [];
-        const yAxisPipelines = [];
 
         var countDatasets = 0;
-        var countPipelines = 0;
 
         Object.keys(data.datasets).forEach(year => {
             Object.keys(data.datasets[year]).forEach(month => {
                 countDatasets += data.datasets[year][month];
-                if(data.pipelines[year] && data.pipelines[year][month]){
-                    countPipelines += data.pipelines[year][month];
-                }
                 xAxis.push(`${month}/${year}`);
                 yAxisDatasets.push(countDatasets);
-                yAxisPipelines.push(countPipelines);
             });
         });
 
@@ -40,18 +34,14 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             },
 
             title: {
-                text: 'Cumulative Number of Datasets and Pipelines in 2019'
+                text: 'Cumulative Number of Datasets and Pipelines'
             },
 
             yAxis: [{
                 title: {
                     text: 'Number of Datasets'
-                }
-            }, {
-                opposite: true,
-                title: {
-                    text: 'Number of Pipelines'
-                }
+                },
+                allowDecimals: false,
             }],
 
             xAxis: {
@@ -69,10 +59,6 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             series: [{
                 name: 'Datasets',
                 data: yAxisDatasets
-            }, {
-                name: 'Pipelines',
-                data: yAxisPipelines,
-                yAxis: 1
             }]
 
         })
@@ -81,7 +67,7 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
     const fetchElements = async () => {
 
         try {
-            const res = await fetch(datasetsURL);
+            const res = await fetch(datasetsURL + '?elements=all');
 
             if (!res.ok) {
                 throw new Error(
@@ -92,8 +78,7 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             const datasetsRes = await res.json();
 
             const chartData = {
-                datasets: {},
-                pipelines: {}
+                datasets: {}
             };
 
             datasetsRes.elements.map(element => {
@@ -110,20 +95,6 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
                     chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1
                 }
             })
-
-            const pipelines = await fetch(pipelinesURL);
-
-            if (!pipelines.ok) {
-                throw new Error(
-                    `Request failed with status: ${pipelines.status} (${pipelines.statusText})`
-                );
-            }
-
-            const pipelinesRes = await pipelines.json();
-
-            chartData.pipelines[2019] = {};
-
-            chartData.pipelines[2019][12] = pipelinesRes.elements.length;
 
             drawChart(chartData);
 
