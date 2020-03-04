@@ -7176,6 +7176,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   var downloadDisabled = imagePath + "/download_gray.png";
 
   var statusCONP = imagePath + "/canada.svg";
+  var statusAuth = imagePath + "/authorized.svg";
 
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
@@ -7183,7 +7184,8 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
       { className: "card-header" },
-      element.conpStatus !== 'external' ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { height: "32", width: "32", src: statusCONP }) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", { style: { width: 32 } })
+      element.conpStatus !== 'external' ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { height: "32", width: "32", src: statusCONP }) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", { style: { width: 32 } }),
+      element.authorized !== 'false' ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { height: "32", width: "32", src: statusAuth }) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", { style: { width: 32 } })
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
