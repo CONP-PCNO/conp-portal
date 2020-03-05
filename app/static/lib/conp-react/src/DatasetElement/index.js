@@ -10,13 +10,13 @@ const DatasetElement = props => {
   const downloadDisabled = `${imagePath}/download_gray.png`;
 
   const statusCONP = `${imagePath}/canada.svg`;
-  const statusAuth = `${imagePath}/authorized.svg`
+  const authRestricted = `${imagePath}/restricted.svg`
 
   return (
     <div className="card row flex-row" data-type="dataset">
       <div className="card-header">
         {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP}/>) : <div style={{width: 32}}/>}
-        {element.authorized !== 'false' ? (<img height="32" width="32" src={statusAuth}/>) : <div style={{width: 32}}/>}
+        {element.authorizations == 'restricted' ? (<img height="32" width="32" src={restricted}/>) : <div style={{width: 32}}/>}
       </div>
       <div className="col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social">
         <img

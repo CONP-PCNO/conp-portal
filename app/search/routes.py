@@ -129,7 +129,8 @@ def dataset_search():
             "format": datsdataset.formats,
             "modalities": datsdataset.modalities,
             "sources": datsdataset.sources,
-            "conpStatus": datsdataset.conpStatus
+            "conpStatus": datsdataset.conpStatus,
+            "authorizations": datsdataset.authorizations
         }
         elements.append(dataset)
 
@@ -244,7 +245,8 @@ def dataset_info():
         "format": datsdataset.formats,
         "modalities": datsdataset.modalities,
         "sources": datsdataset.sources,
-        "conpStatus": datsdataset.conpStatus
+        "conpStatus": datsdataset.conpStatus,
+        "authorizations": datsdataset.authorizations
     }
 
     metadata = get_dataset_metadata_information(d)

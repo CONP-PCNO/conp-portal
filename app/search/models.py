@@ -68,6 +68,29 @@ class DATSDataset(object):
 
 
     @property
+    def authorizations(self):
+        dists = self.descriptor.get('distributions', None)
+        if dists is None:
+            return None
+
+        if not type(dists) == list:
+            if dists.get('@type', '') == 'DatasetDistribution': 
+                dist = dists
+            else:
+               dist = {}
+        else:
+            dist = dists[0]
+        
+        authorizations = dist.get('access', {}).get('authorizations', '')
+
+        if type(authorizations) == list:
+            auth = authorizations.pop().get('value', None)
+        else:
+            auth = None
+
+        return "{}".format(auth)
+
+    @property
     def contacts(self):
         contacts = None
         extraprops = self.descriptor.get('extraProperties', {})
