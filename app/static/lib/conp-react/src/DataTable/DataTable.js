@@ -2,6 +2,10 @@ import * as R from "ramda";
 import React from "react";
 import PropTypes from "prop-types";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserLock } from '@fortawesome/free-solid-svg-icons'
+import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
+
 const DataTable = ({
   authorized,
   sortKeys,
@@ -15,6 +19,10 @@ const DataTable = ({
   return (
     <div className="search-dataset-table container" cellSpacing={0}>
       <div className="searchbar col-12 d-flex p-2">
+        <div className="d-flex flex-column p-2 justify-content-center">
+          <div className="text-nowrap text-truncate"><FontAwesomeIcon icon={faUserAlt} color="black" size="lg"/>: CONP account required</div>
+          <div className="text-nowrap text-truncate"><FontAwesomeIcon icon={faUserLock} color="black" size="lg"/>: Third-party account required</div>
+        </div>
         <div className="d-flex dropdown">
           <label className="dropdown-label m-2">Sort By: </label>
           <select

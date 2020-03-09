@@ -14,28 +14,29 @@ const DatasetElement = props => {
   const downloadDisabled = `${imagePath}/download_gray.png`;
 
   const statusCONP = `${imagePath}/canada.svg`;
-  let authIcon;
+  let authIcons = [];
 
   switch (element.authorizations) {
     case 'restricted':
-      authIcon = <FontAwesomeIcon icon={faUserAlt} color="grey" size="2x" />;
+      authIcons.push(<FontAwesomeIcon icon={faUserAlt} color="black" size="lg"/>);
       break;
     case 'private':
-      authIcon = <FontAwesomeIcon icon={faUserLock} color="grey" size="2x" />;
+      authIcons.push(<FontAwesomeIcon icon={faUserLock} color="black" size="lg"/>);
       break;
     default:
-      authIcon = null;
+      break;
   }
-
 
   return (
     <div className="card row flex-row" data-type="dataset">
-      <div className="card-header">
-        <div className="d-flex p-1 justify-content-center">
+      <div className="card-header d-flex flex-column justify-content-between">
+        <div className="d-flex justify-content-center">
           {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP}/>) : <div style={{width: 32}}/>}
         </div>
-        <div className="d-flex p-1 justify-content-center">
-          {authIcon}
+        <div className="d-flex justify-content-center">
+          <div className="d-flex">
+            {authIcons.map(icon => <div className="p-1">{icon}</div>)}
+          </div>
         </div>
       </div>
       <div className="col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social">

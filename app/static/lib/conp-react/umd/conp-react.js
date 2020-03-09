@@ -438,7 +438,7 @@ if (false) { var throwOnDirectAccess, ReactIs; } else {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(20);
+module.exports = __webpack_require__(21);
 
 
 /***/ }),
@@ -3748,10 +3748,80 @@ var autoReplace = function autoReplace() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5), __webpack_require__(9).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5), __webpack_require__(8).setImmediate))
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
+            (typeof self !== "undefined" && self) ||
+            window;
+var apply = Function.prototype.apply;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) {
+  if (timeout) {
+    timeout.close();
+  }
+};
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(scope, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// setimmediate attaches itself to the global object
+__webpack_require__(20);
+// On some exotic environments, it's not clear which object `setimmediate` was
+// able to install onto.  Search each possibility in the same order as the
+// `setimmediate` library.
+exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
+                       (typeof global !== "undefined" && global.setImmediate) ||
+                       (this && this.setImmediate);
+exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
+                         (typeof global !== "undefined" && global.clearImmediate) ||
+                         (this && this.clearImmediate);
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5)))
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -3941,76 +4011,6 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
-            (typeof self !== "undefined" && self) ||
-            window;
-var apply = Function.prototype.apply;
-
-// DOM APIs, for completeness
-
-exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
-};
-exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
-};
-exports.clearTimeout =
-exports.clearInterval = function(timeout) {
-  if (timeout) {
-    timeout.close();
-  }
-};
-
-function Timeout(id, clearFn) {
-  this._id = id;
-  this._clearFn = clearFn;
-}
-Timeout.prototype.unref = Timeout.prototype.ref = function() {};
-Timeout.prototype.close = function() {
-  this._clearFn.call(scope, this._id);
-};
-
-// Does not start the time, just sets up the members needed.
-exports.enroll = function(item, msecs) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = msecs;
-};
-
-exports.unenroll = function(item) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = -1;
-};
-
-exports._unrefActive = exports.active = function(item) {
-  clearTimeout(item._idleTimeoutId);
-
-  var msecs = item._idleTimeout;
-  if (msecs >= 0) {
-    item._idleTimeoutId = setTimeout(function onTimeout() {
-      if (item._onTimeout)
-        item._onTimeout();
-    }, msecs);
-  }
-};
-
-// setimmediate attaches itself to the global object
-__webpack_require__(25);
-// On some exotic environments, it's not clear which object `setimmediate` was
-// able to install onto.  Search each possibility in the same order as the
-// `setimmediate` library.
-exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
-                       (typeof global !== "undefined" && global.setImmediate) ||
-                       (this && this.setImmediate);
-exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
-                         (typeof global !== "undefined" && global.clearImmediate) ||
-                         (this && this.clearImmediate);
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5)))
-
-/***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4170,7 +4170,7 @@ exports.addon = function (renderer) {
 "use strict";
 
 
-var removeRule = __webpack_require__(24).removeRule;
+var removeRule = __webpack_require__(25).removeRule;
 
 exports.addon = function (renderer) {
     // VCSSOM support only browser environment.
@@ -5721,7 +5721,7 @@ return index;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(8), __webpack_require__(9).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(9), __webpack_require__(8).setImmediate))
 
 /***/ }),
 /* 16 */
@@ -5900,6 +5900,199 @@ module.exports = ReactPropTypesSecret;
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
+    "use strict";
+
+    if (global.setImmediate) {
+        return;
+    }
+
+    var nextHandle = 1; // Spec says greater than zero
+    var tasksByHandle = {};
+    var currentlyRunningATask = false;
+    var doc = global.document;
+    var registerImmediate;
+
+    function setImmediate(callback) {
+      // Callback can either be a function or a string
+      if (typeof callback !== "function") {
+        callback = new Function("" + callback);
+      }
+      // Copy function arguments
+      var args = new Array(arguments.length - 1);
+      for (var i = 0; i < args.length; i++) {
+          args[i] = arguments[i + 1];
+      }
+      // Store and register the task
+      var task = { callback: callback, args: args };
+      tasksByHandle[nextHandle] = task;
+      registerImmediate(nextHandle);
+      return nextHandle++;
+    }
+
+    function clearImmediate(handle) {
+        delete tasksByHandle[handle];
+    }
+
+    function run(task) {
+        var callback = task.callback;
+        var args = task.args;
+        switch (args.length) {
+        case 0:
+            callback();
+            break;
+        case 1:
+            callback(args[0]);
+            break;
+        case 2:
+            callback(args[0], args[1]);
+            break;
+        case 3:
+            callback(args[0], args[1], args[2]);
+            break;
+        default:
+            callback.apply(undefined, args);
+            break;
+        }
+    }
+
+    function runIfPresent(handle) {
+        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
+        // So if we're currently running a task, we'll need to delay this invocation.
+        if (currentlyRunningATask) {
+            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
+            // "too much recursion" error.
+            setTimeout(runIfPresent, 0, handle);
+        } else {
+            var task = tasksByHandle[handle];
+            if (task) {
+                currentlyRunningATask = true;
+                try {
+                    run(task);
+                } finally {
+                    clearImmediate(handle);
+                    currentlyRunningATask = false;
+                }
+            }
+        }
+    }
+
+    function installNextTickImplementation() {
+        registerImmediate = function(handle) {
+            process.nextTick(function () { runIfPresent(handle); });
+        };
+    }
+
+    function canUsePostMessage() {
+        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
+        // where `global.postMessage` means something completely different and can't be used for this purpose.
+        if (global.postMessage && !global.importScripts) {
+            var postMessageIsAsynchronous = true;
+            var oldOnMessage = global.onmessage;
+            global.onmessage = function() {
+                postMessageIsAsynchronous = false;
+            };
+            global.postMessage("", "*");
+            global.onmessage = oldOnMessage;
+            return postMessageIsAsynchronous;
+        }
+    }
+
+    function installPostMessageImplementation() {
+        // Installs an event handler on `global` for the `message` event: see
+        // * https://developer.mozilla.org/en/DOM/window.postMessage
+        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
+
+        var messagePrefix = "setImmediate$" + Math.random() + "$";
+        var onGlobalMessage = function(event) {
+            if (event.source === global &&
+                typeof event.data === "string" &&
+                event.data.indexOf(messagePrefix) === 0) {
+                runIfPresent(+event.data.slice(messagePrefix.length));
+            }
+        };
+
+        if (global.addEventListener) {
+            global.addEventListener("message", onGlobalMessage, false);
+        } else {
+            global.attachEvent("onmessage", onGlobalMessage);
+        }
+
+        registerImmediate = function(handle) {
+            global.postMessage(messagePrefix + handle, "*");
+        };
+    }
+
+    function installMessageChannelImplementation() {
+        var channel = new MessageChannel();
+        channel.port1.onmessage = function(event) {
+            var handle = event.data;
+            runIfPresent(handle);
+        };
+
+        registerImmediate = function(handle) {
+            channel.port2.postMessage(handle);
+        };
+    }
+
+    function installReadyStateChangeImplementation() {
+        var html = doc.documentElement;
+        registerImmediate = function(handle) {
+            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
+            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
+            var script = doc.createElement("script");
+            script.onreadystatechange = function () {
+                runIfPresent(handle);
+                script.onreadystatechange = null;
+                html.removeChild(script);
+                script = null;
+            };
+            html.appendChild(script);
+        };
+    }
+
+    function installSetTimeoutImplementation() {
+        registerImmediate = function(handle) {
+            setTimeout(runIfPresent, 0, handle);
+        };
+    }
+
+    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
+    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
+    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
+
+    // Don't get fooled by e.g. browserify environments.
+    if ({}.toString.call(global.process) === "[object process]") {
+        // For Node.js before 0.9
+        installNextTickImplementation();
+
+    } else if (canUsePostMessage()) {
+        // For non-IE10 modern browsers
+        installPostMessageImplementation();
+
+    } else if (global.MessageChannel) {
+        // For web workers, where supported
+        installMessageChannelImplementation();
+
+    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
+        // For IE 6–8
+        installReadyStateChangeImplementation();
+
+    } else {
+        // For older browsers
+        installSetTimeoutImplementation();
+    }
+
+    attachTo.setImmediate = setImmediate;
+    attachTo.clearImmediate = clearImmediate;
+}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5), __webpack_require__(9)))
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -5922,7 +6115,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(21);
+module.exports = __webpack_require__(22);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -5938,7 +6131,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports) {
 
 /**
@@ -6671,13 +6864,13 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var deselectCurrent = __webpack_require__(23);
+var deselectCurrent = __webpack_require__(24);
 
 var clipboardToIE11Formatting = {
   "text/plain": "Text",
@@ -6791,7 +6984,7 @@ module.exports = copy;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 
@@ -6836,7 +7029,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 function removeRule (rule) {
@@ -6855,199 +7048,6 @@ function removeRule (rule) {
 
 exports.removeRule = removeRule;
 
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
-    "use strict";
-
-    if (global.setImmediate) {
-        return;
-    }
-
-    var nextHandle = 1; // Spec says greater than zero
-    var tasksByHandle = {};
-    var currentlyRunningATask = false;
-    var doc = global.document;
-    var registerImmediate;
-
-    function setImmediate(callback) {
-      // Callback can either be a function or a string
-      if (typeof callback !== "function") {
-        callback = new Function("" + callback);
-      }
-      // Copy function arguments
-      var args = new Array(arguments.length - 1);
-      for (var i = 0; i < args.length; i++) {
-          args[i] = arguments[i + 1];
-      }
-      // Store and register the task
-      var task = { callback: callback, args: args };
-      tasksByHandle[nextHandle] = task;
-      registerImmediate(nextHandle);
-      return nextHandle++;
-    }
-
-    function clearImmediate(handle) {
-        delete tasksByHandle[handle];
-    }
-
-    function run(task) {
-        var callback = task.callback;
-        var args = task.args;
-        switch (args.length) {
-        case 0:
-            callback();
-            break;
-        case 1:
-            callback(args[0]);
-            break;
-        case 2:
-            callback(args[0], args[1]);
-            break;
-        case 3:
-            callback(args[0], args[1], args[2]);
-            break;
-        default:
-            callback.apply(undefined, args);
-            break;
-        }
-    }
-
-    function runIfPresent(handle) {
-        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
-        // So if we're currently running a task, we'll need to delay this invocation.
-        if (currentlyRunningATask) {
-            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
-            // "too much recursion" error.
-            setTimeout(runIfPresent, 0, handle);
-        } else {
-            var task = tasksByHandle[handle];
-            if (task) {
-                currentlyRunningATask = true;
-                try {
-                    run(task);
-                } finally {
-                    clearImmediate(handle);
-                    currentlyRunningATask = false;
-                }
-            }
-        }
-    }
-
-    function installNextTickImplementation() {
-        registerImmediate = function(handle) {
-            process.nextTick(function () { runIfPresent(handle); });
-        };
-    }
-
-    function canUsePostMessage() {
-        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
-        // where `global.postMessage` means something completely different and can't be used for this purpose.
-        if (global.postMessage && !global.importScripts) {
-            var postMessageIsAsynchronous = true;
-            var oldOnMessage = global.onmessage;
-            global.onmessage = function() {
-                postMessageIsAsynchronous = false;
-            };
-            global.postMessage("", "*");
-            global.onmessage = oldOnMessage;
-            return postMessageIsAsynchronous;
-        }
-    }
-
-    function installPostMessageImplementation() {
-        // Installs an event handler on `global` for the `message` event: see
-        // * https://developer.mozilla.org/en/DOM/window.postMessage
-        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
-
-        var messagePrefix = "setImmediate$" + Math.random() + "$";
-        var onGlobalMessage = function(event) {
-            if (event.source === global &&
-                typeof event.data === "string" &&
-                event.data.indexOf(messagePrefix) === 0) {
-                runIfPresent(+event.data.slice(messagePrefix.length));
-            }
-        };
-
-        if (global.addEventListener) {
-            global.addEventListener("message", onGlobalMessage, false);
-        } else {
-            global.attachEvent("onmessage", onGlobalMessage);
-        }
-
-        registerImmediate = function(handle) {
-            global.postMessage(messagePrefix + handle, "*");
-        };
-    }
-
-    function installMessageChannelImplementation() {
-        var channel = new MessageChannel();
-        channel.port1.onmessage = function(event) {
-            var handle = event.data;
-            runIfPresent(handle);
-        };
-
-        registerImmediate = function(handle) {
-            channel.port2.postMessage(handle);
-        };
-    }
-
-    function installReadyStateChangeImplementation() {
-        var html = doc.documentElement;
-        registerImmediate = function(handle) {
-            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
-            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
-            var script = doc.createElement("script");
-            script.onreadystatechange = function () {
-                runIfPresent(handle);
-                script.onreadystatechange = null;
-                html.removeChild(script);
-                script = null;
-            };
-            html.appendChild(script);
-        };
-    }
-
-    function installSetTimeoutImplementation() {
-        registerImmediate = function(handle) {
-            setTimeout(runIfPresent, 0, handle);
-        };
-    }
-
-    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
-    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
-    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
-
-    // Don't get fooled by e.g. browserify environments.
-    if ({}.toString.call(global.process) === "[object process]") {
-        // For Node.js before 0.9
-        installNextTickImplementation();
-
-    } else if (canUsePostMessage()) {
-        // For non-IE10 modern browsers
-        installPostMessageImplementation();
-
-    } else if (global.MessageChannel) {
-        // For web workers, where supported
-        installMessageChannelImplementation();
-
-    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
-        // For IE 6–8
-        installReadyStateChangeImplementation();
-
-    } else {
-        // For older browsers
-        installSetTimeoutImplementation();
-    }
-
-    attachTo.setImmediate = setImmediate;
-    attachTo.clearImmediate = clearImmediate;
-}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5), __webpack_require__(8)))
 
 /***/ }),
 /* 26 */
@@ -7294,2809 +7294,6 @@ var external_root_React_commonjs2_react_commonjs_react_amd_react_default = /*#__
 var prop_types = __webpack_require__(1);
 var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
 
-// CONCATENATED MODULE: ./src/DataTable/DataTable.js
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-
-
-
-
-var DataTable_DataTable = function DataTable(_ref) {
-  var authorized = _ref.authorized,
-      sortKeys = _ref.sortKeys,
-      elements = _ref.elements,
-      imagePath = _ref.imagePath,
-      total = _ref.total,
-      renderElement = _ref.renderElement,
-      query = _ref.query,
-      setQuery = _ref.setQuery;
-
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-    "div",
-    { className: "search-dataset-table container", cellSpacing: 0 },
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "searchbar col-12 d-flex p-2" },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "d-flex dropdown" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "label",
-          { className: "dropdown-label m-2" },
-          "Sort By: "
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "select",
-          {
-            className: "btn btn-outline-secondary dropdown-toggle dropdown-select px-4",
-            value: query.sortKey,
-            onChange: function onChange(e) {
-              return setQuery(_extends({}, query, { sortKey: e.currentTarget.value }));
-            }
-          },
-          sortKeys.map(function (_ref2, i) {
-            var sortKey = _ref2.key,
-                label = _ref2.label;
-            return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "option",
-              { className: "dropdown-item", key: i, value: sortKey },
-              label
-            );
-          })
-        )
-      ),
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "input-group pt-2 pt-md-0" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
-          className: "form-control",
-          type: "text",
-          placeholder: "Search",
-          "aria-label": "Search",
-          value: query.search,
-          onChange: function onChange(e) {
-            return setQuery(_extends({}, query, { search: e.currentTarget.value }));
-          }
-        }),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "span",
-          { className: "input-group-append" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "span",
-            { className: "input-group-text", id: "basic-addon2" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-search" })
-          )
-        )
-      )
-    ),
-    elements.map(function (element, i) {
-      return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { key: element.id, className: "container" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, { authorized: authorized, imagePath: imagePath }))
-      );
-    }),
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "search-dataset-footer d-flex align-items-center p-2" },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "btn-group" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "btn btn-outline-dark btn-sm",
-            onClick: function onClick(e) {
-              return setQuery(_extends({}, query, { page: 1 }));
-            } },
-          "<<"
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "btn btn-outline-dark btn-sm",
-            onClick: function onClick(e) {
-              return setQuery(_extends({}, query, { page: Math.max(1, query.page - 1) }));
-            } },
-          " < "
-        ),
-        es_range(1, Math.ceil(total / query.max_per_page) + 1).map(function (page, i) {
-          return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm",
-              onClick: function onClick(e) {
-                return setQuery(_extends({}, query, { page: page }));
-              },
-              key: i },
-            page
-          );
-        }),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "btn btn-outline-dark btn-sm",
-            onClick: function onClick(e) {
-              return setQuery(_extends({}, query, { page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page)) }));
-            }
-          },
-          ">"
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "btn btn-outline-dark btn-sm",
-            onClick: function onClick(e) {
-              return setQuery(_extends({}, query, { page: Math.ceil(total / query.max_per_page) }));
-            }
-          },
-          ">>"
-        )
-      )
-    )
-  );
-};
-
-DataTable_DataTable.propTypes = {
-  authorized: prop_types_default.a.bool,
-  sortKeys: prop_types_default.a.arrayOf(prop_types_default.a.shape({ key: prop_types_default.a.string, label: prop_types_default.a.string })),
-  elements: prop_types_default.a.arrayOf(prop_types_default.a.object),
-  imagePath: prop_types_default.a.string,
-  total: prop_types_default.a.number,
-  renderElement: prop_types_default.a.func,
-  query: prop_types_default.a.shape({
-    search: prop_types_default.a.string,
-    sortKey: prop_types_default.a.string,
-    page: prop_types_default.a.number,
-    max_per_page: prop_types_default.a.number,
-    sortComparitor: prop_types_default.a.string,
-    cursor: prop_types_default.a.number,
-    limit: prop_types_default.a.number
-  }),
-  setQuery: prop_types_default.a.func
-};
-
-DataTable_DataTable.defaultProps = {
-  sortKeys: [],
-  elements: [],
-  total: 0,
-  imagePath: 'static/img/'
-};
-
-/* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
-// EXTERNAL MODULE: ./node_modules/babel-runtime/regenerator/index.js
-var regenerator = __webpack_require__(3);
-var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/createMemo.js
-
-var createMemo = function (fn) { return function () {
-    var args = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        args[_i] = arguments[_i];
-    }
-    return Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return fn.apply(void 0, args); }, args);
-}; };
-/* harmony default export */ var esm_createMemo = (createMemo);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useAsync.js
-
-var useAsync = function (fn, deps) {
-    if (deps === void 0) { deps = []; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
-        loading: true
-    }), state = _a[0], set = _a[1];
-    var memoized = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(fn, deps);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var mounted = true;
-        set({
-            loading: true
-        });
-        var promise = memoized();
-        promise.then(function (value) {
-            if (mounted) {
-                set({
-                    loading: false,
-                    value: value
-                });
-            }
-        }, function (error) {
-            if (mounted) {
-                set({
-                    loading: false,
-                    error: error
-                });
-            }
-        });
-        return function () {
-            mounted = false;
-        };
-    }, [memoized]);
-    return state;
-};
-/* harmony default export */ var esm_useAsync = (useAsync);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useAsyncRetry.js
-var __assign = (undefined && undefined.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-
-
-var useAsyncRetry = function (fn, deps) {
-    if (deps === void 0) { deps = []; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(0), attempt = _a[0], setAttempt = _a[1];
-    var state = esm_useAsync(fn, deps.concat([attempt]));
-    var stateLoading = state.loading;
-    var retry = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () {
-        if (stateLoading) {
-            if (false) {}
-            return;
-        }
-        setAttempt(function (attempt) { return attempt + 1; });
-    }, deps.concat([stateLoading, attempt]));
-    return __assign({}, state, { retry: retry });
-};
-/* harmony default export */ var esm_useAsyncRetry = (useAsyncRetry);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useSetState.js
-
-var useSetState = function (initialState) {
-    if (initialState === void 0) { initialState = {}; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], set = _a[1];
-    var setState = function (patch) {
-        set(function (prevState) { return Object.assign({}, prevState, patch instanceof Function ? patch(prevState) : patch); });
-    };
-    return [state, setState];
-};
-/* harmony default export */ var esm_useSetState = (useSetState);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/util/parseTimeRanges.js
-var parseTimeRanges = function (ranges) {
-    var result = [];
-    for (var i = 0; i < ranges.length; i++) {
-        result.push({
-            start: ranges.start(i),
-            end: ranges.end(i)
-        });
-    }
-    return result;
-};
-/* harmony default export */ var util_parseTimeRanges = (parseTimeRanges);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/util/createHTMLMediaHook.js
-var createHTMLMediaHook_assign = (undefined && undefined.__assign) || function () {
-    createHTMLMediaHook_assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return createHTMLMediaHook_assign.apply(this, arguments);
-};
-
-
-
-
-var createHTMLMediaHook = function (tag) {
-    var hook = function (elOrProps) {
-        var element;
-        var props;
-        if (external_root_React_commonjs2_react_commonjs_react_amd_react_["isValidElement"](elOrProps)) {
-            element = elOrProps;
-            props = element.props;
-        }
-        else {
-            props = elOrProps;
-        }
-        var _a = esm_useSetState({
-            buffered: [],
-            time: 0,
-            duration: 0,
-            isPlaying: false,
-            muted: false,
-            volume: 1,
-        }), state = _a[0], setState = _a[1];
-        var ref = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
-        var wrapEvent = function (userEvent, proxyEvent) {
-            return function (event) {
-                try {
-                    proxyEvent && proxyEvent(event);
-                }
-                finally {
-                    userEvent && userEvent(event);
-                }
-            };
-        };
-        var onPlay = function () { return setState({ isPlaying: true }); };
-        var onPause = function () { return setState({ isPlaying: false }); };
-        var onVolumeChange = function () {
-            var el = ref.current;
-            if (!el)
-                return;
-            setState({
-                muted: el.muted,
-                volume: el.volume,
-            });
-        };
-        var onDurationChange = function () {
-            var el = ref.current;
-            if (!el)
-                return;
-            var duration = el.duration, buffered = el.buffered;
-            setState({
-                duration: duration,
-                buffered: util_parseTimeRanges(buffered),
-            });
-        };
-        var onTimeUpdate = function () {
-            var el = ref.current;
-            if (!el)
-                return;
-            setState({ time: el.currentTime });
-        };
-        var onProgress = function () {
-            var el = ref.current;
-            if (!el)
-                return;
-            setState({ buffered: util_parseTimeRanges(el.buffered) });
-        };
-        if (element) {
-            element = external_root_React_commonjs2_react_commonjs_react_amd_react_["cloneElement"](element, createHTMLMediaHook_assign({ controls: false }, props, { ref: ref, onPlay: wrapEvent(props.onPlay, onPlay), onPause: wrapEvent(props.onPause, onPause), onVolumeChange: wrapEvent(props.onVolumeChange, onVolumeChange), onDurationChange: wrapEvent(props.onDurationChange, onDurationChange), onTimeUpdate: wrapEvent(props.onTimeUpdate, onTimeUpdate), onProgress: wrapEvent(props.onProgress, onProgress) }));
-        }
-        else {
-            element = external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"](tag, createHTMLMediaHook_assign({ controls: false }, props, { ref: ref, onPlay: wrapEvent(props.onPlay, onPlay), onPause: wrapEvent(props.onPause, onPause), onVolumeChange: wrapEvent(props.onVolumeChange, onVolumeChange), onDurationChange: wrapEvent(props.onDurationChange, onDurationChange), onTimeUpdate: wrapEvent(props.onTimeUpdate, onTimeUpdate), onProgress: wrapEvent(props.onProgress, onProgress) })); // TODO: fix this typing.
-        }
-        // Some browsers return `Promise` on `.play()` and may throw errors
-        // if one tries to execute another `.play()` or `.pause()` while that
-        // promise is resolving. So we prevent that with this lock.
-        // See: https://bugs.chromium.org/p/chromium/issues/detail?id=593273
-        var lockPlay = false;
-        var controls = {
-            play: function () {
-                var el = ref.current;
-                if (!el)
-                    return undefined;
-                if (!lockPlay) {
-                    var promise = el.play();
-                    var isPromise = typeof promise === 'object';
-                    if (isPromise) {
-                        lockPlay = true;
-                        var resetLock = function () {
-                            lockPlay = false;
-                        };
-                        promise.then(resetLock, resetLock);
-                    }
-                    return promise;
-                }
-                return undefined;
-            },
-            pause: function () {
-                var el = ref.current;
-                if (el && !lockPlay) {
-                    return el.pause();
-                }
-            },
-            seek: function (time) {
-                var el = ref.current;
-                if (!el || (state.duration === undefined))
-                    return;
-                time = Math.min(state.duration, Math.max(0, time));
-                el.currentTime = time;
-            },
-            volume: function (volume) {
-                var el = ref.current;
-                if (!el)
-                    return;
-                volume = Math.min(1, Math.max(0, volume));
-                el.volume = volume;
-                setState({ volume: volume });
-            },
-            mute: function () {
-                var el = ref.current;
-                if (!el)
-                    return;
-                el.muted = true;
-            },
-            unmute: function () {
-                var el = ref.current;
-                if (!el)
-                    return;
-                el.muted = false;
-            },
-        };
-        Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-            var el = ref.current;
-            if (!el) {
-                if (false) {}
-                return;
-            }
-            // Start media, if autoPlay requested.
-            if (props.autoPlay && el.paused) {
-                controls.play();
-            }
-            setState({
-                volume: el.volume,
-                muted: el.muted,
-            });
-        }, [props.src]);
-        return [element, state, controls, ref];
-    };
-    return hook;
-};
-/* harmony default export */ var util_createHTMLMediaHook = (createHTMLMediaHook);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useAudio.js
-
-var useAudio = util_createHTMLMediaHook('audio');
-/* harmony default export */ var esm_useAudio = (useAudio);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/util.js
-var isClient = typeof window === 'object';
-var util_on = function (obj) {
-    var args = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        args[_i - 1] = arguments[_i];
-    }
-    return obj.addEventListener.apply(obj, args);
-};
-var off = function (obj) {
-    var args = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        args[_i - 1] = arguments[_i];
-    }
-    return obj.removeEventListener.apply(obj, args);
-};
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useBattery.js
-
-
-var useBattery = function () {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}), state = _a[0], setState = _a[1];
-    var mounted = true;
-    var battery = null;
-    var onChange = function () {
-        var charging = battery.charging, level = battery.level, chargingTime = battery.chargingTime, dischargingTime = battery.dischargingTime;
-        setState({
-            charging: charging,
-            level: level,
-            chargingTime: chargingTime,
-            dischargingTime: dischargingTime
-        });
-    };
-    var onBattery = function () {
-        onChange();
-        util_on(battery, 'chargingchange', onChange);
-        util_on(battery, 'levelchange', onChange);
-        util_on(battery, 'chargingtimechange', onChange);
-        util_on(battery, 'dischargingtimechange', onChange);
-    };
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        navigator.getBattery().then(function (bat) {
-            if (mounted) {
-                battery = bat;
-                onBattery();
-            }
-        });
-        return function () {
-            mounted = false;
-            if (battery) {
-                off(battery, 'chargingchange', onChange);
-                off(battery, 'levelchange', onChange);
-                off(battery, 'chargingtimechange', onChange);
-                off(battery, 'dischargingtimechange', onChange);
-            }
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useBattery = (useBattery);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useToggle.js
-
-var useToggle = function (state) {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(state), value = _a[0], setValue = _a[1];
-    var toggle = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (nextValue) {
-        if (typeof nextValue !== 'undefined') {
-            setValue(!!nextValue);
-            return;
-        }
-        setValue(function (value) { return !value; });
-    }, [setValue]);
-    return [value, toggle];
-};
-/* harmony default export */ var esm_useToggle = (useToggle);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useBoolean.js
-
-/* harmony default export */ var useBoolean = (esm_useToggle);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useUpdateEffect.js
-
-var useUpdateEffect = function (effect, deps) {
-    var isInitialMount = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(true);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(isInitialMount.current
-        ? function () {
-            isInitialMount.current = false;
-        }
-        : effect, deps);
-};
-/* harmony default export */ var esm_useUpdateEffect = (useUpdateEffect);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useRefMounted.js
-
-var useRefMounted = function () {
-    var refMounted = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(false);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        refMounted.current = true;
-        return function () {
-            refMounted.current = false;
-        };
-    });
-    return refMounted;
-};
-/* harmony default export */ var esm_useRefMounted = (useRefMounted);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useCopyToClipboard.js
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var _this = undefined;
-
-
-
-var writeTextDefault = __webpack_require__(22);
-var useCopyToClipboard = function (text, options) {
-    if (text === void 0) { text = ''; }
-    var _a = (options || {}), _b = _a.writeText, writeText = _b === void 0 ? writeTextDefault : _b, onCopy = _a.onCopy, onError = _a.onError;
-    if (false) {}
-    var mounted = esm_useRefMounted();
-    var latestText = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(text);
-    var _c = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false), copied = _c[0], setCopied = _c[1];
-    var copyToClipboard = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () { return __awaiter(_this, void 0, void 0, function () {
-        var error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (latestText.current !== text) {
-                        if (false) {}
-                        return [2 /*return*/];
-                    }
-                    _a.label = 1;
-                case 1:
-                    _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, writeText(text)];
-                case 2:
-                    _a.sent();
-                    if (!mounted.current)
-                        return [2 /*return*/];
-                    setCopied(true);
-                    onCopy && onCopy(text);
-                    return [3 /*break*/, 4];
-                case 3:
-                    error_1 = _a.sent();
-                    if (!mounted.current)
-                        return [2 /*return*/];
-                    console.error(error_1);
-                    setCopied(false);
-                    onError && onError(error_1, text);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
-            }
-        });
-    }); }, [text]);
-    esm_useUpdateEffect(function () {
-        setCopied(false);
-        latestText.current = text;
-    }, [text]);
-    return [copied, copyToClipboard];
-};
-/* harmony default export */ var esm_useCopyToClipboard = (useCopyToClipboard);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useDrop.js
-
-
-var useState = external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"], useMemo = external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"], useCallback = external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"], useEffect = external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"];
-var noop = function () { };
-var useDrop_defaultState = {
-    over: false,
-};
-var createProcess = function (options, mounted) { return function (dataTransfer, event) {
-    var uri = dataTransfer.getData('text/uri-list');
-    if (uri) {
-        (options.onUri || noop)(uri, event);
-        return;
-    }
-    if (dataTransfer.files && dataTransfer.files.length) {
-        (options.onFiles || noop)(Array.from(dataTransfer.files), event);
-        return;
-    }
-    if (dataTransfer.items && dataTransfer.items.length) {
-        dataTransfer.items[0].getAsString(function (text) {
-            if (mounted.current) {
-                (options.onText || noop)(text, event);
-            }
-        });
-    }
-}; };
-var useDrop = function (options, args) {
-    if (options === void 0) { options = {}; }
-    if (args === void 0) { args = []; }
-    var onFiles = options.onFiles, onText = options.onText, onUri = options.onUri;
-    var mounted = esm_useRefMounted();
-    var _a = useState(false), over = _a[0], setOverRaw = _a[1];
-    var setOver = useCallback(setOverRaw, []);
-    var process = useMemo(function () { return createProcess(options, mounted); }, [onFiles, onText, onUri]);
-    useEffect(function () {
-        var onDragOver = function (event) {
-            event.preventDefault();
-            setOver(true);
-        };
-        var onDragEnter = function (event) {
-            event.preventDefault();
-            setOver(true);
-        };
-        var onDragLeave = function () {
-            setOver(false);
-        };
-        var onDragExit = function () {
-            setOver(false);
-        };
-        var onDrop = function (event) {
-            event.preventDefault();
-            setOver(false);
-            process(event.dataTransfer, event);
-        };
-        var onPaste = function (event) {
-            process(event.clipboardData, event);
-        };
-        document.addEventListener('dragover', onDragOver);
-        document.addEventListener('dragenter', onDragEnter);
-        document.addEventListener('dragleave', onDragLeave);
-        document.addEventListener('dragexit', onDragExit);
-        document.addEventListener('drop', onDrop);
-        if (onText)
-            document.addEventListener('paste', onPaste);
-        return function () {
-            document.removeEventListener('dragover', onDragOver);
-            document.removeEventListener('dragenter', onDragEnter);
-            document.removeEventListener('dragleave', onDragLeave);
-            document.removeEventListener('dragexit', onDragExit);
-            document.removeEventListener('drop', onDrop);
-            document.removeEventListener('paste', onPaste);
-        };
-    }, [process].concat(args));
-    return { over: over };
-};
-/* harmony default export */ var esm_useDrop = (useDrop);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useDropArea.js
-
-
-var useDropArea_noop = function () { };
-var useDropArea_defaultState = {
-    over: false,
-};
-var useDropArea_createProcess = function (options, mounted) { return function (dataTransfer, event) {
-    var uri = dataTransfer.getData('text/uri-list');
-    if (uri) {
-        (options.onUri || useDropArea_noop)(uri, event);
-        return;
-    }
-    if (dataTransfer.files && dataTransfer.files.length) {
-        (options.onFiles || useDropArea_noop)(Array.from(dataTransfer.files), event);
-        return;
-    }
-    if (dataTransfer.items && dataTransfer.items.length) {
-        dataTransfer.items[0].getAsString(function (text) {
-            if (mounted.current) {
-                (options.onText || useDropArea_noop)(text, event);
-            }
-        });
-    }
-}; };
-var createBond = function (process, setOver) { return ({
-    onDragOver: function (event) {
-        event.preventDefault();
-    },
-    onDragEnter: function (event) {
-        event.preventDefault();
-        setOver(true);
-    },
-    onDragLeave: function () {
-        setOver(false);
-    },
-    onDrop: function (event) {
-        event.preventDefault();
-        event.persist();
-        setOver(false);
-        process(event.dataTransfer, event);
-    },
-    onPaste: function (event) {
-        event.persist();
-        process(event.clipboardData, event);
-    },
-}); };
-var useDropArea = function (options) {
-    if (options === void 0) { options = {}; }
-    var onFiles = options.onFiles, onText = options.onText, onUri = options.onUri;
-    var mounted = esm_useRefMounted();
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false), over = _a[0], setOver = _a[1];
-    var process = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return useDropArea_createProcess(options, mounted); }, [onFiles, onText, onUri]);
-    var bond = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return createBond(process, setOver); }, [process, setOver]);
-    return [bond, { over: over }];
-};
-/* harmony default export */ var esm_useDropArea = (useDropArea);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useUpdate.js
-
-var useUpdate = function () {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(0), setState = _a[1];
-    return function () { return setState(function (cnt) { return cnt + 1; }); };
-};
-/* harmony default export */ var esm_useUpdate = (useUpdate);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useGetSet.js
-
-
-var useGetSet = function (initialValue) {
-    var state = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(initialValue);
-    var update = esm_useUpdate();
-    var get = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () { return state.current; }, []);
-    var set = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (value) {
-        state.current = value;
-        update();
-    }, []);
-    return [get, set];
-};
-/* harmony default export */ var esm_useGetSet = (useGetSet);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useCounter.js
-
-
-var useCounter = function (initialValue) {
-    if (initialValue === void 0) { initialValue = 0; }
-    var _a = esm_useGetSet(initialValue), get = _a[0], set = _a[1];
-    var inc = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (delta) {
-        if (delta === void 0) { delta = 1; }
-        return set(get() + delta);
-    }, []);
-    var dec = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (delta) {
-        if (delta === void 0) { delta = 1; }
-        return inc(-delta);
-    }, []);
-    var reset = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (value) {
-        if (value === void 0) { value = initialValue; }
-        initialValue = value;
-        set(value);
-    }, []);
-    var actions = {
-        inc: inc,
-        dec: dec,
-        get: get,
-        set: set,
-        reset: reset,
-    };
-    return [get(), actions];
-};
-/* harmony default export */ var esm_useCounter = (useCounter);
-
-// EXTERNAL MODULE: ./node_modules/nano-css/index.js
-var nano_css = __webpack_require__(10);
-
-// EXTERNAL MODULE: ./node_modules/nano-css/addon/cssom.js
-var cssom = __webpack_require__(11);
-
-// EXTERNAL MODULE: ./node_modules/nano-css/addon/vcssom.js
-var vcssom = __webpack_require__(12);
-
-// EXTERNAL MODULE: ./node_modules/nano-css/addon/vcssom/cssToTree.js
-var cssToTree = __webpack_require__(13);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useCss.js
-
-
-
-
-
-var nano = Object(nano_css["create"])();
-Object(cssom["addon"])(nano);
-Object(vcssom["addon"])(nano);
-var counter = 0;
-var useCss = function (css) {
-    var className = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return 'react-use-css-' + (counter++).toString(36); }, []);
-    var sheet = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return new nano.VSheet(); }, []);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useLayoutEffect"])(function () {
-        var tree = {};
-        Object(cssToTree["cssToTree"])(tree, css, '.' + className, '');
-        sheet.diff(tree);
-        return function () {
-            sheet.diff({});
-        };
-    });
-    return className;
-};
-/* harmony default export */ var esm_useCss = (useCss);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useDebounce.js
-
-var useDebounce = function (fn, ms, args) {
-    if (ms === void 0) { ms = 0; }
-    if (args === void 0) { args = []; }
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var handle = setTimeout(fn.bind(null, args), ms);
-        return function () {
-            // if args change then clear timeout
-            clearTimeout(handle);
-        };
-    }, args);
-};
-/* harmony default export */ var esm_useDebounce = (useDebounce);
-
-// EXTERNAL MODULE: ./node_modules/react-fast-compare/index.js
-var react_fast_compare = __webpack_require__(14);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useDeepCompareEffect.js
-
-
-var isPrimitive = function (val) { return val !== Object(val); };
-var useDeepCompareEffect = function (effect, deps) {
-    if (false) {}
-    var ref = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(undefined);
-    if (!react_fast_compare(deps, ref.current)) {
-        ref.current = deps;
-    }
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(effect, ref.current);
-};
-/* harmony default export */ var esm_useDeepCompareEffect = (useDeepCompareEffect);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useEffectOnce.js
-
-var useEffectOnce = function (effect) {
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(effect, []);
-};
-/* harmony default export */ var esm_useEffectOnce = (useEffectOnce);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useEvent.js
-
-
-var defaultTarget = isClient ? window : null;
-var useEvent = function (name, handler, target, options) {
-    if (target === void 0) { target = defaultTarget; }
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (!handler)
-            return;
-        if (!target)
-            return;
-        var fn = (target.addEventListener || target.on);
-        fn.call(target, name, handler, options);
-        return function () {
-            var fn = (target.removeEventListener || target.off);
-            fn.call(target, name, handler, options);
-        };
-    }, [name, handler, target, JSON.stringify(options)]);
-};
-/* harmony default export */ var esm_useEvent = (useEvent);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useFavicon.js
-
-var useFavicon = function (href) {
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-        link.type = 'image/x-icon';
-        link.rel = 'shortcut icon';
-        link.href = href;
-        document.getElementsByTagName('head')[0].appendChild(link);
-    }, [href]);
-};
-/* harmony default export */ var esm_useFavicon = (useFavicon);
-
-// EXTERNAL MODULE: ./node_modules/screenfull/dist/screenfull.js
-var screenfull = __webpack_require__(2);
-var screenfull_default = /*#__PURE__*/__webpack_require__.n(screenfull);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useFullscreen.js
-
-
-var useFullscreen_noop = function () { };
-var useFullscreen = function (ref, on, options) {
-    if (options === void 0) { options = {}; }
-    var video = options.video, _a = options.onClose, onClose = _a === void 0 ? useFullscreen_noop : _a;
-    var _b = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(on), isFullscreen = _b[0], setIsFullscreen = _b[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useLayoutEffect"])(function () {
-        if (!on)
-            return;
-        if (!ref.current)
-            return;
-        var onWebkitEndFullscreen = function () {
-            video.current.removeEventListener('webkitendfullscreen', onWebkitEndFullscreen);
-            onClose();
-        };
-        var onChange = function () {
-            if (screenfull_default.a) {
-                var isFullscreen_1 = screenfull_default.a.isFullscreen;
-                setIsFullscreen(isFullscreen_1);
-                if (!isFullscreen_1) {
-                    onClose();
-                }
-            }
-        };
-        if (screenfull_default.a && screenfull_default.a.enabled) {
-            try {
-                screenfull_default.a.request(ref.current);
-                setIsFullscreen(true);
-            }
-            catch (error) {
-                onClose(error);
-                setIsFullscreen(false);
-            }
-            screenfull_default.a.on('change', onChange);
-        }
-        else if (video && video.current && video.current.webkitEnterFullscreen) {
-            video.current.webkitEnterFullscreen();
-            video.current.addEventListener('webkitendfullscreen', onWebkitEndFullscreen);
-            setIsFullscreen(true);
-        }
-        else {
-            onClose();
-            setIsFullscreen(false);
-        }
-        return function () {
-            setIsFullscreen(false);
-            if (screenfull_default.a && screenfull_default.a.enabled) {
-                try {
-                    screenfull_default.a.off('change', onChange);
-                    screenfull_default.a.exit();
-                }
-                catch (_a) { }
-            }
-            else if (video && video.current && video.current.webkitExitFullscreen) {
-                video.current.removeEventListener('webkitendfullscreen', onWebkitEndFullscreen);
-                video.current.webkitExitFullscreen();
-            }
-        };
-    }, [ref.current, video, on]);
-    return isFullscreen;
-};
-/* harmony default export */ var esm_useFullscreen = (useFullscreen);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useGeolocation.js
-var useGeolocation_assign = (undefined && undefined.__assign) || function () {
-    useGeolocation_assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return useGeolocation_assign.apply(this, arguments);
-};
-
-var useGeolocation = function () {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
-        loading: true,
-        accuracy: null,
-        altitude: null,
-        altitudeAccuracy: null,
-        heading: null,
-        latitude: null,
-        longitude: null,
-        speed: null,
-        timestamp: Date.now(),
-    }), state = _a[0], setState = _a[1];
-    var mounted = true;
-    var watchId;
-    var onEvent = function (event) {
-        if (mounted) {
-            setState({
-                loading: false,
-                accuracy: event.coords.accuracy,
-                altitude: event.coords.altitude,
-                altitudeAccuracy: event.coords.altitudeAccuracy,
-                heading: event.coords.heading,
-                latitude: event.coords.latitude,
-                longitude: event.coords.longitude,
-                speed: event.coords.speed,
-                timestamp: event.timestamp,
-            });
-        }
-    };
-    var onEventError = function (error) {
-        return mounted && setState(function (oldState) { return (useGeolocation_assign({}, oldState, { loading: false, error: error })); });
-    };
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        navigator.geolocation.getCurrentPosition(onEvent, onEventError);
-        watchId = navigator.geolocation.watchPosition(onEvent, onEventError);
-        return function () {
-            mounted = false;
-            navigator.geolocation.clearWatch(watchId);
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useGeolocation = (useGeolocation);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useGetSetState.js
-var useGetSetState_assign = (undefined && undefined.__assign) || function () {
-    useGetSetState_assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return useGetSetState_assign.apply(this, arguments);
-};
-
-
-var useGetSetState = function (initialState) {
-    if (initialState === void 0) { initialState = {}; }
-    if (false) {}
-    var update = esm_useUpdate();
-    var state = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(useGetSetState_assign({}, initialState));
-    var get = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () { return state.current; }, []);
-    var set = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (patch) {
-        if (!patch)
-            return;
-        if (false) {}
-        Object.assign(state.current, patch);
-        update();
-    }, []);
-    return [get, set];
-};
-/* harmony default export */ var esm_useGetSetState = (useGetSetState);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useHover.js
-
-var useHover_useState = external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"];
-var useHover_noop = function () { };
-var useHover = function (element) {
-    var _a = useHover_useState(false), state = _a[0], setState = _a[1];
-    var onMouseEnter = function (originalOnMouseEnter) { return function (event) {
-        (originalOnMouseEnter || useHover_noop)(event);
-        setState(true);
-    }; };
-    var onMouseLeave = function (originalOnMouseLeave) { return function (event) {
-        (originalOnMouseLeave || useHover_noop)(event);
-        setState(false);
-    }; };
-    if (typeof element === 'function') {
-        element = element(state);
-    }
-    var el = external_root_React_commonjs2_react_commonjs_react_amd_react_["cloneElement"](element, {
-        onMouseEnter: onMouseEnter(element.props.onMouseEnter),
-        onMouseLeave: onMouseLeave(element.props.onMouseLeave)
-    });
-    return [el, state];
-};
-/* harmony default export */ var esm_useHover = (useHover);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useHoverDirty.js
-
-// kudos: https://usehooks.com/
-var useHoverDirty = function (ref, enabled) {
-    if (enabled === void 0) { enabled = true; }
-    if (false) {}
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false), value = _a[0], setValue = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var onMouseOver = function () { return setValue(true); };
-        var onMouseOut = function () { return setValue(false); };
-        if (enabled && ref && ref.current) {
-            ref.current.addEventListener('mouseover', onMouseOver);
-            ref.current.addEventListener('mouseout', onMouseOut);
-        }
-        return function () {
-            if (enabled && ref && ref.current) {
-                ref.current.removeEventListener('mouseover', onMouseOver);
-                ref.current.removeEventListener('mouseout', onMouseOut);
-            }
-        };
-    }, [enabled, ref]);
-    return value;
-};
-/* harmony default export */ var esm_useHoverDirty = (useHoverDirty);
-
-// CONCATENATED MODULE: ./node_modules/throttle-debounce/dist/index.esm.js
-/* eslint-disable no-undefined,no-param-reassign,no-shadow */
-
-/**
- * Throttle execution of a function. Especially useful for rate limiting
- * execution of handlers on events like resize and scroll.
- *
- * @param  {Number}    delay          A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
- * @param  {Boolean}   [noTrailing]   Optional, defaults to false. If noTrailing is true, callback will only execute every `delay` milliseconds while the
- *                                    throttled-function is being called. If noTrailing is false or unspecified, callback will be executed one final time
- *                                    after the last throttled-function call. (After the throttled-function has not been called for `delay` milliseconds,
- *                                    the internal counter is reset)
- * @param  {Function}  callback       A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
- *                                    to `callback` when the throttled-function is executed.
- * @param  {Boolean}   [debounceMode] If `debounceMode` is true (at begin), schedule `clear` to execute after `delay` ms. If `debounceMode` is false (at end),
- *                                    schedule `callback` to execute after `delay` ms.
- *
- * @return {Function}  A new, throttled, function.
- */
-function throttle (delay, noTrailing, callback, debounceMode) {
-  /*
-   * After wrapper has stopped being called, this timeout ensures that
-   * `callback` is executed at the proper times in `throttle` and `end`
-   * debounce modes.
-   */
-  var timeoutID;
-  var cancelled = false; // Keep track of the last time `callback` was executed.
-
-  var lastExec = 0; // Function to clear existing timeout
-
-  function clearExistingTimeout() {
-    if (timeoutID) {
-      clearTimeout(timeoutID);
-    }
-  } // Function to cancel next exec
-
-
-  function cancel() {
-    clearExistingTimeout();
-    cancelled = true;
-  } // `noTrailing` defaults to falsy.
-
-
-  if (typeof noTrailing !== 'boolean') {
-    debounceMode = callback;
-    callback = noTrailing;
-    noTrailing = undefined;
-  }
-  /*
-   * The `wrapper` function encapsulates all of the throttling / debouncing
-   * functionality and when executed will limit the rate at which `callback`
-   * is executed.
-   */
-
-
-  function wrapper() {
-    var self = this;
-    var elapsed = Date.now() - lastExec;
-    var args = arguments;
-
-    if (cancelled) {
-      return;
-    } // Execute `callback` and update the `lastExec` timestamp.
-
-
-    function exec() {
-      lastExec = Date.now();
-      callback.apply(self, args);
-    }
-    /*
-     * If `debounceMode` is true (at begin) this is used to clear the flag
-     * to allow future `callback` executions.
-     */
-
-
-    function clear() {
-      timeoutID = undefined;
-    }
-
-    if (debounceMode && !timeoutID) {
-      /*
-       * Since `wrapper` is being called for the first time and
-       * `debounceMode` is true (at begin), execute `callback`.
-       */
-      exec();
-    }
-
-    clearExistingTimeout();
-
-    if (debounceMode === undefined && elapsed > delay) {
-      /*
-       * In throttle mode, if `delay` time has been exceeded, execute
-       * `callback`.
-       */
-      exec();
-    } else if (noTrailing !== true) {
-      /*
-       * In trailing throttle mode, since `delay` time has not been
-       * exceeded, schedule `callback` to execute `delay` ms after most
-       * recent execution.
-       *
-       * If `debounceMode` is true (at begin), schedule `clear` to execute
-       * after `delay` ms.
-       *
-       * If `debounceMode` is false (at end), schedule `callback` to
-       * execute after `delay` ms.
-       */
-      timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
-    }
-  }
-
-  wrapper.cancel = cancel; // Return the wrapper function.
-
-  return wrapper;
-}
-
-/* eslint-disable no-undefined */
-/**
- * Debounce execution of a function. Debouncing, unlike throttling,
- * guarantees that a function is only executed a single time, either at the
- * very beginning of a series of calls, or at the very end.
- *
- * @param  {Number}   delay         A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
- * @param  {Boolean}  [atBegin]     Optional, defaults to false. If atBegin is false or unspecified, callback will only be executed `delay` milliseconds
- *                                  after the last debounced-function call. If atBegin is true, callback will be executed only at the first debounced-function call.
- *                                  (After the throttled-function has not been called for `delay` milliseconds, the internal counter is reset).
- * @param  {Function} callback      A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
- *                                  to `callback` when the debounced-function is executed.
- *
- * @return {Function} A new, debounced function.
- */
-
-function debounce (delay, atBegin, callback) {
-  return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
-}
-
-
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useIdle.js
-
-
-
-var defaultEvents = ['mousemove', 'mousedown', 'resize', 'keydown', 'touchstart', 'wheel'];
-var oneMinute = 60e3;
-var useIdle = function (ms, initialState, events) {
-    if (ms === void 0) { ms = oneMinute; }
-    if (initialState === void 0) { initialState = false; }
-    if (events === void 0) { events = defaultEvents; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var mounted = true;
-        var timeout;
-        var localState = state;
-        var set = function (newState) {
-            if (mounted) {
-                localState = newState;
-                setState(newState);
-            }
-        };
-        var onEvent = throttle(50, function () {
-            if (localState) {
-                set(false);
-            }
-            clearTimeout(timeout);
-            timeout = setTimeout(function () { return set(true); }, ms);
-        });
-        var onVisibility = function () {
-            if (!document.hidden)
-                onEvent();
-        };
-        for (var i = 0; i < events.length; i++) {
-            util_on(window, events[i], onEvent);
-        }
-        util_on(document, 'visibilitychange', onVisibility);
-        timeout = setTimeout(function () { return set(true); }, ms);
-        return function () {
-            mounted = false;
-            for (var i = 0; i < events.length; i++) {
-                off(window, events[i], onEvent);
-            }
-            off(document, 'visibilitychange', onVisibility);
-        };
-    }, events);
-    return state;
-};
-/* harmony default export */ var esm_useIdle = (useIdle);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useKey.js
-
-
-var useKey_noop = function () { };
-var createKeyPredicate = function (keyFilter) {
-    return typeof keyFilter === 'function'
-        ? keyFilter
-        : typeof keyFilter === 'string'
-            ? function (event) { return event.key === keyFilter; }
-            : keyFilter
-                ? function () { return true; }
-                : function () { return false; };
-};
-var useKey = function (key, fn, opts, deps) {
-    if (fn === void 0) { fn = useKey_noop; }
-    if (opts === void 0) { opts = {}; }
-    if (deps === void 0) { deps = [key]; }
-    var _a = opts.event, event = _a === void 0 ? 'keydown' : _a, target = opts.target, options = opts.options;
-    var handler = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () {
-        var predicate = createKeyPredicate(key);
-        var handler = function (event) {
-            if (predicate(event))
-                return fn(event);
-        };
-        return handler;
-    }, deps);
-    esm_useEvent(event, handler, target, options);
-};
-/* harmony default export */ var esm_useKey = (useKey);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useKeyPress.js
-
-
-var useKeyPress_useKeyPress = function (keyFilter) {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([false, null]), state = _a[0], set = _a[1];
-    esm_useKey(keyFilter, function (event) { return set([true, event]); }, { event: 'keydown' }, [state]);
-    esm_useKey(keyFilter, function (event) { return set([false, event]); }, { event: 'keyup' }, [state]);
-    return state;
-};
-/* harmony default export */ var esm_useKeyPress = (useKeyPress_useKeyPress);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useKeyPressEvent.js
-
-
-var useKeyPressEvent = function (key, keydown, keyup, useKeyPress) {
-    if (useKeyPress === void 0) { useKeyPress = esm_useKeyPress; }
-    var _a = useKeyPress(key), pressed = _a[0], event = _a[1];
-    esm_useUpdateEffect(function () {
-        if (!pressed && keyup)
-            keyup(event);
-        else if (pressed && keydown)
-            keydown(event);
-    }, [pressed]);
-};
-/* harmony default export */ var esm_useKeyPressEvent = (useKeyPressEvent);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useMount.js
-
-var useMount = function (fn) {
-    esm_useEffectOnce(function () {
-        fn();
-    });
-};
-/* harmony default export */ var esm_useMount = (useMount);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useKeyboardJs.js
-
-
-var useKeyboardJs = function (combination) {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([false, null]), state = _a[0], set = _a[1];
-    var _b = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null), keyboardJs = _b[0], setKeyboardJs = _b[1];
-    esm_useMount(function () {
-        __webpack_require__.e(/* import() */ 1).then(__webpack_require__.t.bind(null, 35, 7)).then(setKeyboardJs);
-    });
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (!keyboardJs)
-            return;
-        var down = function (event) { return set([true, event]); };
-        var up = function (event) { return set([false, event]); };
-        keyboardJs.bind(combination, down, up);
-        return function () {
-            keyboardJs.unbind(combination, down, up);
-        };
-    }, [combination, keyboardJs]);
-    return state;
-};
-/* harmony default export */ var esm_useKeyboardJs = (useKeyboardJs);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useLifecycles.js
-
-var useLifecycles = function (mount, unmount) {
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (mount)
-            mount();
-        return function () {
-            if (unmount)
-                unmount();
-        };
-    }, []);
-};
-/* harmony default export */ var esm_useLifecycles = (useLifecycles);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useList.js
-
-var useList = function (initialList) {
-    if (initialList === void 0) { initialList = []; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialList), list = _a[0], set = _a[1];
-    return [list, {
-            set: set,
-            clear: function () { return set([]); },
-            updateAt: function (index, entry) { return set(function (list) { return list.slice(0, index).concat([
-                entry
-            ], list.slice(index + 1)); }); },
-            remove: function (index) { return set(function (list) { return list.slice(0, index).concat(list.slice(index + 1)); }); },
-            push: function (entry) { return set(function (list) { return list.concat([entry]); }); },
-            filter: function (fn) { return set(function (list) { return list.filter(fn); }); },
-            sort: function (fn) { return set(function (list) { return list.slice().sort(fn); }); },
-        }];
-};
-/* harmony default export */ var esm_useList = (useList);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useLocalStorage.js
-
-
-var useLocalStorage = function (key, initialValue, raw) {
-    if (!isClient) {
-        return [initialValue, function () { }];
-    }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(function () {
-        try {
-            var localStorageValue = localStorage.getItem(key);
-            if (typeof localStorageValue !== 'string') {
-                localStorage.setItem(key, raw ? String(initialValue) : JSON.stringify(initialValue));
-                return initialValue;
-            }
-            else {
-                return raw ? localStorageValue : JSON.parse(localStorageValue || 'null');
-            }
-        }
-        catch (_a) {
-            // If user is in private mode or has storage restriction
-            // localStorage can throw. JSON.parse and JSON.stringify
-            // can throw, too.
-            return initialValue;
-        }
-    }), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        try {
-            var serializedState = raw ? String(state) : JSON.stringify(state);
-            localStorage.setItem(key, serializedState);
-        }
-        catch (_a) {
-            // If user is in private mode or has storage restriction
-            // localStorage can throw. Also JSON.stringify can throw.
-        }
-    });
-    return [state, setState];
-};
-/* harmony default export */ var esm_useLocalStorage = (useLocalStorage);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useLocation.js
-
-
-var patchHistoryMethod = function (method) {
-    var original = history[method];
-    history[method] = function (state) {
-        var result = original.apply(this, arguments);
-        var event = new Event(method.toLowerCase());
-        event.state = state;
-        window.dispatchEvent(event);
-        return result;
-    };
-};
-if (isClient) {
-    patchHistoryMethod('pushState');
-    patchHistoryMethod('replaceState');
-}
-var useLocation = function () {
-    var buildState = function (trigger) {
-        var state = history.state, length = history.length;
-        var hash = location.hash, host = location.host, hostname = location.hostname, href = location.href, origin = location.origin, pathname = location.pathname, port = location.port, protocol = location.protocol, search = location.search;
-        return {
-            trigger: trigger,
-            state: state,
-            length: length,
-            hash: hash,
-            host: host,
-            hostname: hostname,
-            href: href,
-            origin: origin,
-            pathname: pathname,
-            port: port,
-            protocol: protocol,
-            search: search
-        };
-    };
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(isClient
-        ? buildState('load')
-        : {
-            trigger: 'load',
-            length: 1
-        }), state = _a[0], setState = _a[1];
-    var onChange = function (trigger) {
-        return setState(buildState(trigger));
-    };
-    var onPopstate = function () { return onChange('popstate'); };
-    var onPushstate = function () { return onChange('pushstate'); };
-    var onReplacestate = function () { return onChange('replacestate'); };
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        util_on(window, 'popstate', onPopstate);
-        util_on(window, 'pushstate', onPushstate);
-        util_on(window, 'replacestate', onReplacestate);
-        return function () {
-            off(window, 'popstate', onPopstate);
-            off(window, 'pushstate', onPushstate);
-            off(window, 'replacestate', onReplacestate);
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useLocation = (useLocation);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useLockBodyScroll.js
-
-var useLockBodyScroll_counter = 0;
-var originalOverflow = null;
-var lock = function () {
-    originalOverflow = window.getComputedStyle(document.body).overflow;
-    document.body.style.overflow = 'hidden';
-};
-var unlock = function () {
-    document.body.style.overflow = originalOverflow;
-    originalOverflow = null;
-};
-var increment = function () {
-    useLockBodyScroll_counter++;
-    if (useLockBodyScroll_counter === 1)
-        lock();
-};
-var decrement = function () {
-    useLockBodyScroll_counter--;
-    if (useLockBodyScroll_counter === 0)
-        unlock();
-};
-var useLockBodyScroll = function (enabled) {
-    if (enabled === void 0) { enabled = true; }
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () { return enabled ? (increment(), decrement) : undefined; }, [enabled]);
-};
-/* harmony default export */ var esm_useLockBodyScroll = (useLockBodyScroll);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useLogger.js
-
-
-var useLogger = function (componentName) {
-    var rest = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        rest[_i - 1] = arguments[_i];
-    }
-    esm_useEffectOnce(function () {
-        console.log.apply(console, [componentName + " mounted"].concat(rest));
-        return function () { return console.log(componentName + " unmounted"); };
-    });
-    esm_useUpdateEffect(function () {
-        console.log.apply(console, [componentName + " updated"].concat(rest));
-    });
-};
-/* harmony default export */ var esm_useLogger = (useLogger);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useMap.js
-var useMap_assign = (undefined && undefined.__assign) || function () {
-    useMap_assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return useMap_assign.apply(this, arguments);
-};
-var __rest = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
-            t[p[i]] = s[p[i]];
-    return t;
-};
-
-var useMap = function (initialMap) {
-    if (initialMap === void 0) { initialMap = {}; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialMap), map = _a[0], set = _a[1];
-    return [map, {
-            get: function (key) { return map[key]; },
-            set: function (key, entry) {
-                var _a;
-                return set(useMap_assign({}, map, (_a = {}, _a[key] = entry, _a)));
-            },
-            remove: function (key) {
-                var _a = map, _b = key, omit = _a[_b], rest = __rest(_a, [typeof _b === "symbol" ? _b : _b + ""]);
-                set(rest);
-            },
-            reset: function () { return set(initialMap); },
-        }];
-};
-/* harmony default export */ var esm_useMap = (useMap);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useMedia.js
-
-var useMedia = function (query, defaultState) {
-    if (defaultState === void 0) { defaultState = false; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(defaultState), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var mounted = true;
-        var mql = window.matchMedia(query);
-        var onChange = function () {
-            if (!mounted)
-                return;
-            setState(!!mql.matches);
-        };
-        mql.addListener(onChange);
-        setState(mql.matches);
-        return function () {
-            mounted = false;
-            mql.removeListener(onChange);
-        };
-    }, [query]);
-    return state;
-};
-/* harmony default export */ var esm_useMedia = (useMedia);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useMediaDevices.js
-
-
-var useMediaDevices_noop = function () { };
-var useMediaDevices = function () {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var mounted = true;
-        var onChange = function () {
-            navigator.mediaDevices.enumerateDevices()
-                .then(function (devices) {
-                if (mounted) {
-                    setState({
-                        devices: devices.map(function (_a) {
-                            var deviceId = _a.deviceId, groupId = _a.groupId, kind = _a.kind, label = _a.label;
-                            return ({ deviceId: deviceId, groupId: groupId, kind: kind, label: label });
-                        })
-                    });
-                }
-            })
-                .catch(useMediaDevices_noop);
-        };
-        util_on(navigator.mediaDevices, 'devicechange', onChange);
-        onChange();
-        return function () {
-            mounted = false;
-            off(navigator.mediaDevices, 'devicechange', onChange);
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useMediaDevices = (useMediaDevices);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useMotion.js
-
-
-var useMotion_defaultState = {
-    acceleration: {
-        x: null,
-        y: null,
-        z: null,
-    },
-    accelerationIncludingGravity: {
-        x: null,
-        y: null,
-        z: null,
-    },
-    rotationRate: {
-        alpha: null,
-        beta: null,
-        gamma: null,
-    },
-    interval: 16,
-};
-var useMotion = function (initialState) {
-    if (initialState === void 0) { initialState = useMotion_defaultState; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var handler = function (event) {
-            var acceleration = event.acceleration, accelerationIncludingGravity = event.accelerationIncludingGravity, rotationRate = event.rotationRate, interval = event.interval;
-            setState({
-                acceleration: {
-                    x: acceleration.x,
-                    y: acceleration.y,
-                    z: acceleration.z
-                },
-                accelerationIncludingGravity: {
-                    x: accelerationIncludingGravity.x,
-                    y: accelerationIncludingGravity.y,
-                    z: accelerationIncludingGravity.z
-                },
-                rotationRate: {
-                    alpha: rotationRate.alpha,
-                    beta: rotationRate.beta,
-                    gamma: rotationRate.gamma,
-                },
-                interval: interval
-            });
-        };
-        util_on(window, 'devicemotion', handler);
-        return function () {
-            off(window, 'devicemotion', handler);
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useMotion = (useMotion);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useMouse.js
-
-var useMouse = function (ref) {
-    if (false) {}
-    var frame = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(0);
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
-        docX: 0,
-        docY: 0,
-        posX: 0,
-        posY: 0,
-        elX: 0,
-        elY: 0,
-        elH: 0,
-        elW: 0,
-    }), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var moveHandler = function (event) {
-            cancelAnimationFrame(frame.current);
-            frame.current = requestAnimationFrame(function () {
-                if (ref && ref.current) {
-                    var _a = ref.current.getBoundingClientRect(), left = _a.left, top_1 = _a.top, elW = _a.width, elH = _a.height;
-                    var posX = left + window.scrollX;
-                    var posY = top_1 + window.scrollY;
-                    var elX = event.pageX - posX;
-                    var elY = event.pageY - posY;
-                    setState({
-                        docX: event.pageX,
-                        docY: event.pageY,
-                        posX: posX,
-                        posY: posY,
-                        elX: elX,
-                        elY: elY,
-                        elH: elH,
-                        elW: elW,
-                    });
-                }
-            });
-        };
-        document.addEventListener('mousemove', moveHandler);
-        return function () {
-            cancelAnimationFrame(frame.current);
-            document.removeEventListener('mousemove', moveHandler);
-        };
-    }, [ref.current]);
-    return state;
-};
-/* harmony default export */ var esm_useMouse = (useMouse);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useMouseHovered.js
-
-
-var nullRef = { current: null };
-var useMouseHovered = function (ref, options) {
-    if (options === void 0) { options = {}; }
-    var whenHovered = !!options.whenHovered;
-    var bound = !!options.bound;
-    var isHovered = esm_useHoverDirty(ref, whenHovered);
-    var state = esm_useMouse(whenHovered && !isHovered ? nullRef : ref);
-    if (bound) {
-        state.elX = Math.max(0, Math.min(state.elX, state.elW));
-        state.elY = Math.max(0, Math.min(state.elY, state.elH));
-    }
-    return state;
-};
-/* harmony default export */ var esm_useMouseHovered = (useMouseHovered);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useNetwork.js
-var useNetwork_assign = (undefined && undefined.__assign) || function () {
-    useNetwork_assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return useNetwork_assign.apply(this, arguments);
-};
-
-
-var getConnection = function () {
-    if (typeof navigator !== 'object') {
-        return null;
-    }
-    var nav = navigator;
-    return nav.connection || nav.mozConnection || nav.webkitConnection;
-};
-var getConnectionState = function () {
-    var connection = getConnection();
-    if (!connection) {
-        return {};
-    }
-    var downlink = connection.downlink, downlinkMax = connection.downlinkMax, effectiveType = connection.effectiveType, type = connection.type, rtt = connection.rtt;
-    return {
-        downlink: downlink,
-        downlinkMax: downlinkMax,
-        effectiveType: effectiveType,
-        type: type,
-        rtt: rtt
-    };
-};
-var useNetwork = function (initialState) {
-    if (initialState === void 0) { initialState = {}; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var localState = state;
-        var localSetState = function (patch) {
-            localState = useNetwork_assign({}, localState, patch);
-            setState(localState);
-        };
-        var connection = getConnection();
-        var onOnline = function () {
-            localSetState({
-                online: true,
-                since: new Date()
-            });
-        };
-        var onOffline = function () {
-            localSetState({
-                online: false,
-                since: new Date()
-            });
-        };
-        var onConnectionChange = function () {
-            localSetState(getConnectionState());
-        };
-        util_on(window, 'online', onOnline);
-        util_on(window, 'offline', onOffline);
-        if (connection) {
-            util_on(connection, 'change', onConnectionChange);
-            localSetState(useNetwork_assign({}, state, { online: navigator.onLine, since: undefined }, getConnectionState()));
-        }
-        return function () {
-            off(window, 'online', onOnline);
-            off(window, 'offline', onOffline);
-            if (connection) {
-                off(connection, 'change', onConnectionChange);
-            }
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useNetwork = (useNetwork);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useNumber.js
-
-/* harmony default export */ var useNumber = (esm_useCounter);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useObservable.js
-
-var useObservable = function (observable$, initialValue) {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialValue), value = _a[0], update = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var s = observable$.subscribe(update);
-        return function () { return s.unsubscribe(); };
-    }, [observable$]);
-    return value;
-};
-/* harmony default export */ var esm_useObservable = (useObservable);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useOrientation.js
-
-
-var useOrientation_defaultState = {
-    angle: 0,
-    type: 'landscape-primary'
-};
-var useOrientation = function (initialState) {
-    if (initialState === void 0) { initialState = useOrientation_defaultState; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var mounted = true;
-        var onChange = function () {
-            if (mounted) {
-                var orientation_1 = screen.orientation;
-                if (orientation_1) {
-                    var angle = orientation_1.angle, type = orientation_1.type;
-                    setState({ angle: angle, type: type });
-                }
-                else if (window.orientation) {
-                    setState({
-                        angle: typeof window.orientation === 'number' ? window.orientation : 0,
-                        type: ''
-                    });
-                }
-                else {
-                    setState(initialState);
-                }
-            }
-        };
-        util_on(window, 'orientationchange', onChange);
-        onChange();
-        return function () {
-            mounted = false;
-            off(window, 'orientationchange', onChange);
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useOrientation = (useOrientation);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useClickAway.js
-
-
-var useClickAway = function (ref, onClickAway) {
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var handler = function (event) {
-            var el = ref.current;
-            el && !el.contains(event.target) && onClickAway(event);
-        };
-        util_on(document, 'click', handler);
-        return function () {
-            off(document, 'click', handler);
-        };
-    });
-};
-/* harmony default export */ var esm_useClickAway = (useClickAway);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/usePageLeave.js
-
-var usePageLeave = function (onPageLeave, args) {
-    if (args === void 0) { args = []; }
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (!onPageLeave)
-            return;
-        var handler = function (event) {
-            event = event ? event : window.event;
-            var from = event.relatedTarget || event.toElement;
-            if (!from || from.nodeName === 'HTML')
-                onPageLeave();
-        };
-        document.addEventListener('mouseout', handler);
-        return function () {
-            document.removeEventListener('mouseout', handler);
-        };
-    }, args);
-};
-/* harmony default export */ var esm_usePageLeave = (usePageLeave);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/usePromise.js
-
-
-var usePromise = function () {
-    var refMounted = esm_useRefMounted();
-    return Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (promise) {
-        return new Promise(function (resolve, reject) {
-            var onValue = function (value) {
-                if (refMounted.current) {
-                    resolve(value);
-                }
-            };
-            var onError = function (error) {
-                if (refMounted.current) {
-                    reject(error);
-                }
-            };
-            promise.then(onValue, onError);
-        });
-    }, []);
-};
-/* harmony default export */ var esm_usePromise = (usePromise);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useRaf.js
-
-var useRaf = function (ms, delay) {
-    if (ms === void 0) { ms = 1e12; }
-    if (delay === void 0) { delay = 0; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(0), elapsed = _a[0], set = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useLayoutEffect"])(function () {
-        var raf, timerStop, start;
-        var onFrame = function () {
-            var time = Math.min(1, (Date.now() - start) / ms);
-            set(time);
-            loop();
-        };
-        var loop = function () {
-            raf = requestAnimationFrame(onFrame);
-        };
-        var onStart = function () {
-            timerStop = setTimeout(function () {
-                cancelAnimationFrame(raf);
-                set(1);
-            }, ms);
-            start = Date.now();
-            loop();
-        };
-        var timerDelay = setTimeout(onStart, delay);
-        return function () {
-            clearTimeout(timerStop);
-            clearTimeout(timerDelay);
-            cancelAnimationFrame(raf);
-        };
-    }, [ms, delay]);
-    return elapsed;
-};
-/* harmony default export */ var esm_useRaf = (useRaf);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useScroll.js
-
-var useScroll = function (ref) {
-    if (false) {}
-    var frame = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(0);
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
-        x: 0,
-        y: 0
-    }), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var handler = function () {
-            cancelAnimationFrame(frame.current);
-            frame.current = requestAnimationFrame(function () {
-                if (ref.current) {
-                    setState({
-                        x: ref.current.scrollLeft,
-                        y: ref.current.scrollTop
-                    });
-                }
-            });
-        };
-        if (ref.current) {
-            ref.current.addEventListener('scroll', handler, {
-                capture: false,
-                passive: true
-            });
-        }
-        return function () {
-            if (frame.current) {
-                cancelAnimationFrame(frame.current);
-            }
-            if (ref.current) {
-                ref.current.removeEventListener('scroll', handler);
-            }
-        };
-    }, [ref.current]);
-    return state;
-};
-/* harmony default export */ var esm_useScroll = (useScroll);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useSessionStorage.js
-
-
-var useSessionStorage = function (key, initialValue, raw) {
-    if (!isClient) {
-        return [initialValue, function () { }];
-    }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(function () {
-        try {
-            var sessionStorageValue = sessionStorage.getItem(key);
-            if (typeof sessionStorageValue !== 'string') {
-                sessionStorage.setItem(key, raw ? String(initialValue) : JSON.stringify(initialValue));
-                return initialValue;
-            }
-            else {
-                return raw ? sessionStorageValue : JSON.parse(sessionStorageValue || 'null');
-            }
-        }
-        catch (_a) {
-            // If user is in private mode or has storage restriction
-            // sessionStorage can throw. JSON.parse and JSON.stringify
-            // cat throw, too.
-            return initialValue;
-        }
-    }), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        try {
-            var serializedState = raw ? String(state) : JSON.stringify(state);
-            sessionStorage.setItem(key, serializedState);
-        }
-        catch (_a) {
-            // If user is in private mode or has storage restriction
-            // sessionStorage can throw. Also JSON.stringify can throw.
-        }
-    });
-    return [state, setState];
-};
-/* harmony default export */ var esm_useSessionStorage = (useSessionStorage);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useSize.js
-
-
-var useSize_useState = external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"], useSize_useEffect = external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"], useRef = external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"];
-var DRAF = function (callback) { return setTimeout(callback, 35); };
-var useSize = function (element, _a) {
-    var _b = _a === void 0 ? {} : _a, _c = _b.width, width = _c === void 0 ? Infinity : _c, _d = _b.height, height = _d === void 0 ? Infinity : _d;
-    if (!isClient) {
-        return [
-            typeof element === 'function'
-                ? element({ width: width, height: height })
-                : element,
-            { width: width, height: height }
-        ];
-    }
-    var _e = useSize_useState({ width: width, height: height }), state = _e[0], setState = _e[1];
-    if (typeof element === 'function') {
-        element = element(state);
-    }
-    var style = element.props.style || {};
-    var ref = useRef(null);
-    var window = null;
-    var setSize = function () {
-        var iframe = ref.current;
-        var size = iframe
-            ? {
-                width: iframe.offsetWidth,
-                height: iframe.offsetHeight,
-            }
-            : { width: width, height: height, };
-        setState(size);
-    };
-    var onWindow = function (window) {
-        window.addEventListener('resize', setSize);
-        DRAF(setSize);
-    };
-    useSize_useEffect(function () {
-        var iframe = ref.current;
-        if (iframe.contentWindow) {
-            window = iframe.contentWindow;
-            onWindow(window);
-        }
-        else {
-            var onLoad_1 = function () {
-                iframe.removeEventListener('load', onLoad_1);
-                window = iframe.contentWindow;
-                onWindow(window);
-            };
-            iframe.addEventListener('load', onLoad_1);
-        }
-        return function () {
-            if (window) {
-                window.removeEventListener('resize', setSize);
-            }
-        };
-    }, []);
-    style.position = 'relative';
-    var sized = external_root_React_commonjs2_react_commonjs_react_amd_react_["cloneElement"].apply(external_root_React_commonjs2_react_commonjs_react_amd_react_, [element, { style: style }].concat([
-        external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"]('iframe', {
-            ref: ref,
-            style: {
-                background: 'transparent',
-                border: 'none',
-                height: '100%',
-                left: 0,
-                position: 'absolute',
-                top: 0,
-                width: '100%',
-                zIndex: -1
-            }
-        })
-    ].concat(external_root_React_commonjs2_react_commonjs_react_amd_react_["Children"].toArray(element.props.children))));
-    return [sized, state];
-};
-/* harmony default export */ var esm_useSize = (useSize);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useSpeech.js
-
-
-
-var useSpeech = function (text, opts) {
-    if (opts === void 0) { opts = {}; }
-    var _a = esm_useSetState({
-        isPlaying: false,
-        volume: opts.volume || 1,
-    }), state = _a[0], setState = _a[1];
-    var uterranceRef = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
-    esm_useMount(function () {
-        var utterance = new SpeechSynthesisUtterance(text);
-        utterance.volume = opts.volume || 1;
-        utterance.onstart = function () { return setState({ isPlaying: true }); };
-        utterance.onresume = function () { return setState({ isPlaying: true }); };
-        utterance.onend = function () { return setState({ isPlaying: false }); };
-        utterance.onpause = function () { return setState({ isPlaying: false }); };
-        uterranceRef.current = utterance;
-        window.speechSynthesis.speak(uterranceRef.current);
-    });
-    return state;
-};
-/* harmony default export */ var esm_useSpeech = (useSpeech);
-
-// EXTERNAL MODULE: ./node_modules/rebound/dist/rebound.js
-var rebound = __webpack_require__(15);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useSpring.js
-
-
-var useSpring = function (targetValue, tension, friction) {
-    if (targetValue === void 0) { targetValue = 0; }
-    if (tension === void 0) { tension = 50; }
-    if (friction === void 0) { friction = 3; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null), spring = _a[0], setSpring = _a[1];
-    var _b = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(targetValue), value = _b[0], setValue = _b[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var listener = {
-            onSpringUpdate: function (spring) {
-                var value = spring.getCurrentValue();
-                setValue(value);
-            }
-        };
-        if (!spring) {
-            var newSpring = (new rebound["SpringSystem"]()).createSpring(tension, friction);
-            newSpring.setCurrentValue(targetValue);
-            setSpring(newSpring);
-            newSpring.addListener(listener);
-            return;
-        }
-        return function () {
-            spring.removeListener(listener);
-            setSpring(null);
-        };
-    }, [tension, friction]);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (spring) {
-            spring.setEndValue(targetValue);
-        }
-    }, [targetValue]);
-    return value;
-};
-/* harmony default export */ var esm_useSpring = (useSpring);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useStartTyping.js
-
-var isFocusedElementEditable = function () {
-    var activeElement = document.activeElement, body = document.body;
-    if (!activeElement)
-        return false;
-    // If not element has focus, we assume it is not editable, too.
-    if (activeElement === body)
-        return false;
-    // Assume <input> and <textarea> elements are editable.
-    switch (activeElement.tagName) {
-        case 'INPUT':
-        case 'TEXTAREA':
-            return true;
-    }
-    // Check if any other focused element id editable.
-    return activeElement.hasAttribute('contenteditable');
-};
-var isTypedCharGood = function (_a) {
-    var keyCode = _a.keyCode;
-    // 0...9
-    if ((keyCode >= 48) && (keyCode <= 57))
-        return true;
-    // a...z
-    if ((keyCode >= 65) && (keyCode <= 90))
-        return true;
-    // All other keys.
-    return false;
-};
-var useStartTyping = function (onStartTyping) {
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useLayoutEffect"])(function () {
-        var keydown = function (event) {
-            !isFocusedElementEditable() && isTypedCharGood(event) && onStartTyping(event);
-        };
-        document.addEventListener('keydown', keydown);
-        return function () {
-            document.removeEventListener('keydown', keydown);
-        };
-    }, []);
-};
-/* harmony default export */ var esm_useStartTyping = (useStartTyping);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useUnmount.js
-
-var useUnmount = function (fn) {
-    esm_useEffectOnce(function () { return fn; });
-};
-/* harmony default export */ var esm_useUnmount = (useUnmount);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useThrottle.js
-
-
-var useThrottle = function (value, ms) {
-    if (ms === void 0) { ms = 200; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(value), state = _a[0], setState = _a[1];
-    var timeout = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
-    var nextValue = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
-    var hasNextValue = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(0);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (!timeout.current) {
-            setState(value);
-            var timeoutCallback_1 = function () {
-                if (hasNextValue.current) {
-                    hasNextValue.current = false;
-                    setState(nextValue.current);
-                    timeout.current = setTimeout(timeoutCallback_1, ms);
-                }
-                else {
-                    timeout.current = null;
-                }
-            };
-            timeout.current = setTimeout(timeoutCallback_1, ms);
-        }
-        else {
-            nextValue.current = value;
-            hasNextValue.current = true;
-        }
-    }, [value]);
-    esm_useUnmount(function () {
-        clearTimeout(timeout.current);
-    });
-    return state;
-};
-/* harmony default export */ var esm_useThrottle = (useThrottle);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useThrottleFn.js
-
-
-var useThrottleFn = function (fn, ms, args) {
-    if (ms === void 0) { ms = 200; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null), state = _a[0], setState = _a[1];
-    var timeout = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
-    var nextArgs = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
-    var hasNextArgs = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(false);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (!timeout.current) {
-            setState(fn.apply(void 0, args));
-            var timeoutCallback_1 = function () {
-                if (hasNextArgs.current) {
-                    hasNextArgs.current = false;
-                    setState(fn.apply(void 0, nextArgs.current));
-                    timeout.current = setTimeout(timeoutCallback_1, ms);
-                }
-                else {
-                    timeout.current = null;
-                }
-            };
-            timeout.current = setTimeout(timeoutCallback_1, ms);
-        }
-        else {
-            nextArgs.current = args;
-            hasNextArgs.current = true;
-        }
-    }, args);
-    esm_useUnmount(function () {
-        clearTimeout(timeout.current);
-    });
-    return state;
-};
-/* harmony default export */ var esm_useThrottleFn = (useThrottleFn);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useTimeout.js
-
-var useTimeout = function (ms) {
-    if (ms === void 0) { ms = 0; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false), ready = _a[0], setReady = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var timer = setTimeout(function () {
-            setReady(true);
-        }, ms);
-        return function () {
-            clearTimeout(timer);
-        };
-    }, [ms]);
-    return ready;
-};
-/* harmony default export */ var esm_useTimeout = (useTimeout);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useTitle.js
-
-var useTitle = function (title) {
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        document.title = title;
-    }, [title]);
-};
-/* harmony default export */ var esm_useTitle = (useTitle);
-
-// EXTERNAL MODULE: ./node_modules/ts-easing/lib/index.js
-var lib = __webpack_require__(16);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useTween.js
-
-
-var useTween = function (easingName, ms, delay) {
-    if (easingName === void 0) { easingName = 'inCirc'; }
-    if (ms === void 0) { ms = 200; }
-    if (delay === void 0) { delay = 0; }
-    var fn = lib["easing"][easingName];
-    var t = esm_useRaf(ms, delay);
-    if (false) {}
-    return fn(t);
-};
-/* harmony default export */ var esm_useTween = (useTween);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useVideo.js
-
-var useVideo = util_createHTMLMediaHook('video');
-/* harmony default export */ var esm_useVideo = (useVideo);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useWindowScroll.js
-
-
-var useWindowScroll = function () {
-    var frame = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(0);
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
-        x: isClient ? window.scrollX : 0,
-        y: isClient ? window.scrollY : 0
-    }), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var handler = function () {
-            cancelAnimationFrame(frame.current);
-            frame.current = requestAnimationFrame(function () {
-                setState({
-                    x: window.scrollX,
-                    y: window.scrollY
-                });
-            });
-        };
-        window.addEventListener('scroll', handler, {
-            capture: false,
-            passive: true
-        });
-        return function () {
-            cancelAnimationFrame(frame.current);
-            window.removeEventListener('scroll', handler);
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useWindowScroll = (useWindowScroll);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useWindowSize.js
-
-
-var useWindowSize = function (initialWidth, initialHeight) {
-    if (initialWidth === void 0) { initialWidth = Infinity; }
-    if (initialHeight === void 0) { initialHeight = Infinity; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
-        width: isClient ? window.innerWidth : initialWidth,
-        height: isClient ? window.innerHeight : initialHeight,
-    }), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (isClient) {
-            var handler_1 = function () {
-                setState({
-                    width: window.innerWidth,
-                    height: window.innerHeight
-                });
-            };
-            window.addEventListener('resize', handler_1);
-            return function () { return window.removeEventListener('resize', handler_1); };
-        }
-        else {
-            return undefined;
-        }
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useWindowSize = (useWindowSize);
-
-// CONCATENATED MODULE: ./node_modules/react-wait/dist/react-wait.esm.js
-
-var react_wait_esm_i = function(n) {
-    return n.length > 0;
-  },
-  e = function(n, t) {
-    return n.includes(t);
-  },
-  u = function(n, t) {
-    return e(n, t) ? n : n.concat([t]);
-  },
-  c = function(n, t) {
-    return n.filter(function(n) {
-      return n !== t;
-    });
-  },
-  react_wait_esm_a = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext();
-function o(n) {
-  return Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(react_wait_esm_a).waiters.includes(n.on) ? n.fallback : n.children;
-}
-function react_wait_esm_f(r) {
-  var f = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([]),
-    s = f[0],
-    g = f[1];
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-    react_wait_esm_a.Provider,
-    {
-      value: {
-        waiters: s,
-        createWaitingContext: function(t) {
-          return {
-            isWaiting: function() {
-              return e(s, t);
-            },
-            startWaiting: function() {
-              return g(u(s, t));
-            },
-            endWaiting: function() {
-              return g(c(s, t));
-            },
-            Wait: function(r) {
-              return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(o, Object.assign({}, { on: t }, r));
-            }
-          };
-        },
-        anyWaiting: function() {
-          return react_wait_esm_i(s);
-        },
-        isWaiting: function(n) {
-          return e(s, n);
-        },
-        startWaiting: function(n) {
-          g(u(s, n));
-        },
-        endWaiting: function(n) {
-          g(c(s, n));
-        }
-      }
-    },
-    r.children
-  );
-}
-function react_wait_esm_s() {
-  var n = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(react_wait_esm_a);
-  return Object.assign({}, n, { Wait: o });
-}
-
-//# sourceMappingURL=react-wait.esm.js.map
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useWait.js
-
-react_wait_esm_s.Waiter = react_wait_esm_f;
-/* harmony default export */ var useWait = (react_wait_esm_s);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/index.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// EXTERNAL MODULE: ./node_modules/query-string/index.js
-var query_string = __webpack_require__(4);
-
-// CONCATENATED MODULE: ./src/DataTable/DataTableContainer.js
-
-
-var DataTableContainer_this = undefined;
-
-var DataTableContainer_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-
-
-
-
-
-
-
-var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
-  var endpointURL = _ref.endpointURL,
-      imagePath = _ref.imagePath,
-      limit = _ref.limit,
-      authorized = _ref.authorized,
-      total = _ref.total,
-      page = _ref.page,
-      max_per_page = _ref.max_per_page,
-      sortKeys = _ref.sortKeys,
-      elements = _ref.elements,
-      dataTableProps = _objectWithoutProperties(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "sortKeys", "elements"]);
-
-  var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
-      fetchedElements = _React$useState[0],
-      setFetchedElements = _React$useState[1];
-
-  var _React$useState2 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState({
-    search: "",
-    sortKey: "conpStatus",
-    sortComparitor: "asc",
-    page: page,
-    max_per_page: max_per_page,
-    cursor: 0,
-    limit: limit
-  }),
-      query = _React$useState2[0],
-      setQuery = _React$useState2[1];
-
-  var _React$useState3 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(total),
-      totalState = _React$useState3[0],
-      setTotalState = _React$useState3[1];
-
-  var _React$useState4 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(sortKeys),
-      sortKeysState = _React$useState4[0],
-      setSortKeysState = _React$useState4[1];
-
-  var _React$useState5 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(authorized),
-      authorizedState = _React$useState5[0],
-      setAuthorizedState = _React$useState5[1];
-
-  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useEffect(function () {
-    setQuery(DataTableContainer_extends({}, query, { limit: limit }));
-  }, [limit]);
-
-  var fetchElements = function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-      var url, res, parsed;
-      return regenerator_default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              url = endpointURL + "?" + query_string["stringify"](query);
-              _context.prev = 1;
-              _context.next = 4;
-              return fetch(url);
-
-            case 4:
-              res = _context.sent;
-
-              if (res.ok) {
-                _context.next = 7;
-                break;
-              }
-
-              throw new Error("Request failed with status: " + res.status + " (" + res.statusText + ")");
-
-            case 7:
-              _context.next = 9;
-              return res.json();
-
-            case 9:
-              parsed = _context.sent;
-
-
-              setFetchedElements(parsed.elements);
-              setTotalState(parsed.total);
-              setSortKeysState(parsed.sortKeys);
-              setAuthorizedState(parsed.authorized);
-              _context.next = 20;
-              break;
-
-            case 16:
-              _context.prev = 16;
-              _context.t0 = _context["catch"](1);
-
-              alert("There was an error retrieving the search results.");
-              console.error(_context.t0);
-
-            case 20:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, DataTableContainer_this, [[1, 16]]);
-    }));
-
-    return function fetchElements() {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-
-  esm_useDebounce(function () {
-    return void fetchElements();
-  }, 300, [endpointURL, query]);
-
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_DataTable_DataTable, DataTableContainer_extends({
-    authorized: authorizedState,
-    elements: fetchedElements,
-    imagePath: imagePath,
-    total: totalState,
-    sortKeys: sortKeysState,
-    query: query,
-    setQuery: setQuery
-  }, dataTableProps));
-};
-
-DataTableContainer_DataTableContainer.propTypes = {
-  authorized: prop_types_default.a.bool,
-  endpointURL: prop_types_default.a.string.isRequired,
-  imagePath: prop_types_default.a.string,
-  limit: prop_types_default.a.number,
-  total: prop_types_default.a.number,
-  page: prop_types_default.a.number,
-  max_per_page: prop_types_default.a.number,
-  elements: prop_types_default.a.arrayOf(prop_types_default.a.object)
-};
-
-DataTableContainer_DataTableContainer.defaultProps = {
-  authorized: false,
-  endpointURL: "",
-  imagePath: 'static/img/',
-  limit: 10,
-  total: 0,
-  page: 1,
-  max_per_page: 10,
-  elements: []
-};
-
-/* harmony default export */ var DataTable_DataTableContainer = (DataTableContainer_DataTableContainer);
-// CONCATENATED MODULE: ./src/DataTable/index.js
-
-
 // EXTERNAL MODULE: ./node_modules/@fortawesome/fontawesome-svg-core/index.es.js
 var index_es = __webpack_require__(7);
 
@@ -10183,7 +7380,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
   return target;
 }
 
-function index_es_objectWithoutProperties(source, excluded) {
+function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
 
   var target = _objectWithoutPropertiesLoose(source, excluded);
@@ -10340,7 +7537,7 @@ function convert(createElement, element) {
 
   var _extraProps$style = extraProps.style,
       existingStyle = _extraProps$style === void 0 ? {} : _extraProps$style,
-      remaining = index_es_objectWithoutProperties(extraProps, ["style"]);
+      remaining = _objectWithoutProperties(extraProps, ["style"]);
 
   mixins.attrs['style'] = _objectSpread2({}, mixins.attrs['style'], {}, existingStyle);
   /* eslint-enable */
@@ -16273,6 +13470,2829 @@ var _iconsCache = {
 
 
 
+// CONCATENATED MODULE: ./src/DataTable/DataTable.js
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+
+
+
+
+
+
+
+
+var DataTable_DataTable = function DataTable(_ref) {
+  var authorized = _ref.authorized,
+      sortKeys = _ref.sortKeys,
+      elements = _ref.elements,
+      imagePath = _ref.imagePath,
+      total = _ref.total,
+      renderElement = _ref.renderElement,
+      query = _ref.query,
+      setQuery = _ref.setQuery;
+
+  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+    "div",
+    { className: "search-dataset-table container", cellSpacing: 0 },
+    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      "div",
+      { className: "searchbar col-12 d-flex p-2" },
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "d-flex flex-column p-2 justify-content-center" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "text-nowrap text-truncate" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserAlt, color: "black", size: "lg" }),
+          ": CONP account required"
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "text-nowrap text-truncate" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserLock, color: "black", size: "lg" }),
+          ": Third-party account required"
+        )
+      ),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "d-flex dropdown" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "label",
+          { className: "dropdown-label m-2" },
+          "Sort By: "
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "select",
+          {
+            className: "btn btn-outline-secondary dropdown-toggle dropdown-select px-4",
+            value: query.sortKey,
+            onChange: function onChange(e) {
+              return setQuery(_extends({}, query, { sortKey: e.currentTarget.value }));
+            }
+          },
+          sortKeys.map(function (_ref2, i) {
+            var sortKey = _ref2.key,
+                label = _ref2.label;
+            return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "option",
+              { className: "dropdown-item", key: i, value: sortKey },
+              label
+            );
+          })
+        )
+      ),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "input-group pt-2 pt-md-0" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+          className: "form-control",
+          type: "text",
+          placeholder: "Search",
+          "aria-label": "Search",
+          value: query.search,
+          onChange: function onChange(e) {
+            return setQuery(_extends({}, query, { search: e.currentTarget.value }));
+          }
+        }),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "span",
+          { className: "input-group-append" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "span",
+            { className: "input-group-text", id: "basic-addon2" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-search" })
+          )
+        )
+      )
+    ),
+    elements.map(function (element, i) {
+      return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { key: element.id, className: "container" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, { authorized: authorized, imagePath: imagePath }))
+      );
+    }),
+    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      "div",
+      { className: "search-dataset-footer d-flex align-items-center p-2" },
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "btn-group" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "btn btn-outline-dark btn-sm",
+            onClick: function onClick(e) {
+              return setQuery(_extends({}, query, { page: 1 }));
+            } },
+          "<<"
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "btn btn-outline-dark btn-sm",
+            onClick: function onClick(e) {
+              return setQuery(_extends({}, query, { page: Math.max(1, query.page - 1) }));
+            } },
+          " < "
+        ),
+        es_range(1, Math.ceil(total / query.max_per_page) + 1).map(function (page, i) {
+          return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm",
+              onClick: function onClick(e) {
+                return setQuery(_extends({}, query, { page: page }));
+              },
+              key: i },
+            page
+          );
+        }),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "btn btn-outline-dark btn-sm",
+            onClick: function onClick(e) {
+              return setQuery(_extends({}, query, { page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page)) }));
+            }
+          },
+          ">"
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "btn btn-outline-dark btn-sm",
+            onClick: function onClick(e) {
+              return setQuery(_extends({}, query, { page: Math.ceil(total / query.max_per_page) }));
+            }
+          },
+          ">>"
+        )
+      )
+    )
+  );
+};
+
+DataTable_DataTable.propTypes = {
+  authorized: prop_types_default.a.bool,
+  sortKeys: prop_types_default.a.arrayOf(prop_types_default.a.shape({ key: prop_types_default.a.string, label: prop_types_default.a.string })),
+  elements: prop_types_default.a.arrayOf(prop_types_default.a.object),
+  imagePath: prop_types_default.a.string,
+  total: prop_types_default.a.number,
+  renderElement: prop_types_default.a.func,
+  query: prop_types_default.a.shape({
+    search: prop_types_default.a.string,
+    sortKey: prop_types_default.a.string,
+    page: prop_types_default.a.number,
+    max_per_page: prop_types_default.a.number,
+    sortComparitor: prop_types_default.a.string,
+    cursor: prop_types_default.a.number,
+    limit: prop_types_default.a.number
+  }),
+  setQuery: prop_types_default.a.func
+};
+
+DataTable_DataTable.defaultProps = {
+  sortKeys: [],
+  elements: [],
+  total: 0,
+  imagePath: 'static/img/'
+};
+
+/* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
+// EXTERNAL MODULE: ./node_modules/babel-runtime/regenerator/index.js
+var regenerator = __webpack_require__(3);
+var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/createMemo.js
+
+var createMemo = function (fn) { return function () {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    return Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return fn.apply(void 0, args); }, args);
+}; };
+/* harmony default export */ var esm_createMemo = (createMemo);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useAsync.js
+
+var useAsync = function (fn, deps) {
+    if (deps === void 0) { deps = []; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
+        loading: true
+    }), state = _a[0], set = _a[1];
+    var memoized = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(fn, deps);
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var mounted = true;
+        set({
+            loading: true
+        });
+        var promise = memoized();
+        promise.then(function (value) {
+            if (mounted) {
+                set({
+                    loading: false,
+                    value: value
+                });
+            }
+        }, function (error) {
+            if (mounted) {
+                set({
+                    loading: false,
+                    error: error
+                });
+            }
+        });
+        return function () {
+            mounted = false;
+        };
+    }, [memoized]);
+    return state;
+};
+/* harmony default export */ var esm_useAsync = (useAsync);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useAsyncRetry.js
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+
+var useAsyncRetry = function (fn, deps) {
+    if (deps === void 0) { deps = []; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(0), attempt = _a[0], setAttempt = _a[1];
+    var state = esm_useAsync(fn, deps.concat([attempt]));
+    var stateLoading = state.loading;
+    var retry = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () {
+        if (stateLoading) {
+            if (false) {}
+            return;
+        }
+        setAttempt(function (attempt) { return attempt + 1; });
+    }, deps.concat([stateLoading, attempt]));
+    return __assign({}, state, { retry: retry });
+};
+/* harmony default export */ var esm_useAsyncRetry = (useAsyncRetry);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useSetState.js
+
+var useSetState = function (initialState) {
+    if (initialState === void 0) { initialState = {}; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], set = _a[1];
+    var setState = function (patch) {
+        set(function (prevState) { return Object.assign({}, prevState, patch instanceof Function ? patch(prevState) : patch); });
+    };
+    return [state, setState];
+};
+/* harmony default export */ var esm_useSetState = (useSetState);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/util/parseTimeRanges.js
+var parseTimeRanges = function (ranges) {
+    var result = [];
+    for (var i = 0; i < ranges.length; i++) {
+        result.push({
+            start: ranges.start(i),
+            end: ranges.end(i)
+        });
+    }
+    return result;
+};
+/* harmony default export */ var util_parseTimeRanges = (parseTimeRanges);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/util/createHTMLMediaHook.js
+var createHTMLMediaHook_assign = (undefined && undefined.__assign) || function () {
+    createHTMLMediaHook_assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return createHTMLMediaHook_assign.apply(this, arguments);
+};
+
+
+
+
+var createHTMLMediaHook = function (tag) {
+    var hook = function (elOrProps) {
+        var element;
+        var props;
+        if (external_root_React_commonjs2_react_commonjs_react_amd_react_["isValidElement"](elOrProps)) {
+            element = elOrProps;
+            props = element.props;
+        }
+        else {
+            props = elOrProps;
+        }
+        var _a = esm_useSetState({
+            buffered: [],
+            time: 0,
+            duration: 0,
+            isPlaying: false,
+            muted: false,
+            volume: 1,
+        }), state = _a[0], setState = _a[1];
+        var ref = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
+        var wrapEvent = function (userEvent, proxyEvent) {
+            return function (event) {
+                try {
+                    proxyEvent && proxyEvent(event);
+                }
+                finally {
+                    userEvent && userEvent(event);
+                }
+            };
+        };
+        var onPlay = function () { return setState({ isPlaying: true }); };
+        var onPause = function () { return setState({ isPlaying: false }); };
+        var onVolumeChange = function () {
+            var el = ref.current;
+            if (!el)
+                return;
+            setState({
+                muted: el.muted,
+                volume: el.volume,
+            });
+        };
+        var onDurationChange = function () {
+            var el = ref.current;
+            if (!el)
+                return;
+            var duration = el.duration, buffered = el.buffered;
+            setState({
+                duration: duration,
+                buffered: util_parseTimeRanges(buffered),
+            });
+        };
+        var onTimeUpdate = function () {
+            var el = ref.current;
+            if (!el)
+                return;
+            setState({ time: el.currentTime });
+        };
+        var onProgress = function () {
+            var el = ref.current;
+            if (!el)
+                return;
+            setState({ buffered: util_parseTimeRanges(el.buffered) });
+        };
+        if (element) {
+            element = external_root_React_commonjs2_react_commonjs_react_amd_react_["cloneElement"](element, createHTMLMediaHook_assign({ controls: false }, props, { ref: ref, onPlay: wrapEvent(props.onPlay, onPlay), onPause: wrapEvent(props.onPause, onPause), onVolumeChange: wrapEvent(props.onVolumeChange, onVolumeChange), onDurationChange: wrapEvent(props.onDurationChange, onDurationChange), onTimeUpdate: wrapEvent(props.onTimeUpdate, onTimeUpdate), onProgress: wrapEvent(props.onProgress, onProgress) }));
+        }
+        else {
+            element = external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"](tag, createHTMLMediaHook_assign({ controls: false }, props, { ref: ref, onPlay: wrapEvent(props.onPlay, onPlay), onPause: wrapEvent(props.onPause, onPause), onVolumeChange: wrapEvent(props.onVolumeChange, onVolumeChange), onDurationChange: wrapEvent(props.onDurationChange, onDurationChange), onTimeUpdate: wrapEvent(props.onTimeUpdate, onTimeUpdate), onProgress: wrapEvent(props.onProgress, onProgress) })); // TODO: fix this typing.
+        }
+        // Some browsers return `Promise` on `.play()` and may throw errors
+        // if one tries to execute another `.play()` or `.pause()` while that
+        // promise is resolving. So we prevent that with this lock.
+        // See: https://bugs.chromium.org/p/chromium/issues/detail?id=593273
+        var lockPlay = false;
+        var controls = {
+            play: function () {
+                var el = ref.current;
+                if (!el)
+                    return undefined;
+                if (!lockPlay) {
+                    var promise = el.play();
+                    var isPromise = typeof promise === 'object';
+                    if (isPromise) {
+                        lockPlay = true;
+                        var resetLock = function () {
+                            lockPlay = false;
+                        };
+                        promise.then(resetLock, resetLock);
+                    }
+                    return promise;
+                }
+                return undefined;
+            },
+            pause: function () {
+                var el = ref.current;
+                if (el && !lockPlay) {
+                    return el.pause();
+                }
+            },
+            seek: function (time) {
+                var el = ref.current;
+                if (!el || (state.duration === undefined))
+                    return;
+                time = Math.min(state.duration, Math.max(0, time));
+                el.currentTime = time;
+            },
+            volume: function (volume) {
+                var el = ref.current;
+                if (!el)
+                    return;
+                volume = Math.min(1, Math.max(0, volume));
+                el.volume = volume;
+                setState({ volume: volume });
+            },
+            mute: function () {
+                var el = ref.current;
+                if (!el)
+                    return;
+                el.muted = true;
+            },
+            unmute: function () {
+                var el = ref.current;
+                if (!el)
+                    return;
+                el.muted = false;
+            },
+        };
+        Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+            var el = ref.current;
+            if (!el) {
+                if (false) {}
+                return;
+            }
+            // Start media, if autoPlay requested.
+            if (props.autoPlay && el.paused) {
+                controls.play();
+            }
+            setState({
+                volume: el.volume,
+                muted: el.muted,
+            });
+        }, [props.src]);
+        return [element, state, controls, ref];
+    };
+    return hook;
+};
+/* harmony default export */ var util_createHTMLMediaHook = (createHTMLMediaHook);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useAudio.js
+
+var useAudio = util_createHTMLMediaHook('audio');
+/* harmony default export */ var esm_useAudio = (useAudio);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/util.js
+var isClient = typeof window === 'object';
+var util_on = function (obj) {
+    var args = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        args[_i - 1] = arguments[_i];
+    }
+    return obj.addEventListener.apply(obj, args);
+};
+var off = function (obj) {
+    var args = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        args[_i - 1] = arguments[_i];
+    }
+    return obj.removeEventListener.apply(obj, args);
+};
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useBattery.js
+
+
+var useBattery = function () {
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}), state = _a[0], setState = _a[1];
+    var mounted = true;
+    var battery = null;
+    var onChange = function () {
+        var charging = battery.charging, level = battery.level, chargingTime = battery.chargingTime, dischargingTime = battery.dischargingTime;
+        setState({
+            charging: charging,
+            level: level,
+            chargingTime: chargingTime,
+            dischargingTime: dischargingTime
+        });
+    };
+    var onBattery = function () {
+        onChange();
+        util_on(battery, 'chargingchange', onChange);
+        util_on(battery, 'levelchange', onChange);
+        util_on(battery, 'chargingtimechange', onChange);
+        util_on(battery, 'dischargingtimechange', onChange);
+    };
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        navigator.getBattery().then(function (bat) {
+            if (mounted) {
+                battery = bat;
+                onBattery();
+            }
+        });
+        return function () {
+            mounted = false;
+            if (battery) {
+                off(battery, 'chargingchange', onChange);
+                off(battery, 'levelchange', onChange);
+                off(battery, 'chargingtimechange', onChange);
+                off(battery, 'dischargingtimechange', onChange);
+            }
+        };
+    }, []);
+    return state;
+};
+/* harmony default export */ var esm_useBattery = (useBattery);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useToggle.js
+
+var useToggle = function (state) {
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(state), value = _a[0], setValue = _a[1];
+    var toggle = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (nextValue) {
+        if (typeof nextValue !== 'undefined') {
+            setValue(!!nextValue);
+            return;
+        }
+        setValue(function (value) { return !value; });
+    }, [setValue]);
+    return [value, toggle];
+};
+/* harmony default export */ var esm_useToggle = (useToggle);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useBoolean.js
+
+/* harmony default export */ var useBoolean = (esm_useToggle);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useUpdateEffect.js
+
+var useUpdateEffect = function (effect, deps) {
+    var isInitialMount = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(true);
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(isInitialMount.current
+        ? function () {
+            isInitialMount.current = false;
+        }
+        : effect, deps);
+};
+/* harmony default export */ var esm_useUpdateEffect = (useUpdateEffect);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useRefMounted.js
+
+var useRefMounted = function () {
+    var refMounted = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(false);
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        refMounted.current = true;
+        return function () {
+            refMounted.current = false;
+        };
+    });
+    return refMounted;
+};
+/* harmony default export */ var esm_useRefMounted = (useRefMounted);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useCopyToClipboard.js
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var _this = undefined;
+
+
+
+var writeTextDefault = __webpack_require__(23);
+var useCopyToClipboard = function (text, options) {
+    if (text === void 0) { text = ''; }
+    var _a = (options || {}), _b = _a.writeText, writeText = _b === void 0 ? writeTextDefault : _b, onCopy = _a.onCopy, onError = _a.onError;
+    if (false) {}
+    var mounted = esm_useRefMounted();
+    var latestText = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(text);
+    var _c = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false), copied = _c[0], setCopied = _c[1];
+    var copyToClipboard = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () { return __awaiter(_this, void 0, void 0, function () {
+        var error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (latestText.current !== text) {
+                        if (false) {}
+                        return [2 /*return*/];
+                    }
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, writeText(text)];
+                case 2:
+                    _a.sent();
+                    if (!mounted.current)
+                        return [2 /*return*/];
+                    setCopied(true);
+                    onCopy && onCopy(text);
+                    return [3 /*break*/, 4];
+                case 3:
+                    error_1 = _a.sent();
+                    if (!mounted.current)
+                        return [2 /*return*/];
+                    console.error(error_1);
+                    setCopied(false);
+                    onError && onError(error_1, text);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
+            }
+        });
+    }); }, [text]);
+    esm_useUpdateEffect(function () {
+        setCopied(false);
+        latestText.current = text;
+    }, [text]);
+    return [copied, copyToClipboard];
+};
+/* harmony default export */ var esm_useCopyToClipboard = (useCopyToClipboard);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useDrop.js
+
+
+var useState = external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"], useMemo = external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"], useCallback = external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"], useEffect = external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"];
+var noop = function () { };
+var useDrop_defaultState = {
+    over: false,
+};
+var createProcess = function (options, mounted) { return function (dataTransfer, event) {
+    var uri = dataTransfer.getData('text/uri-list');
+    if (uri) {
+        (options.onUri || noop)(uri, event);
+        return;
+    }
+    if (dataTransfer.files && dataTransfer.files.length) {
+        (options.onFiles || noop)(Array.from(dataTransfer.files), event);
+        return;
+    }
+    if (dataTransfer.items && dataTransfer.items.length) {
+        dataTransfer.items[0].getAsString(function (text) {
+            if (mounted.current) {
+                (options.onText || noop)(text, event);
+            }
+        });
+    }
+}; };
+var useDrop = function (options, args) {
+    if (options === void 0) { options = {}; }
+    if (args === void 0) { args = []; }
+    var onFiles = options.onFiles, onText = options.onText, onUri = options.onUri;
+    var mounted = esm_useRefMounted();
+    var _a = useState(false), over = _a[0], setOverRaw = _a[1];
+    var setOver = useCallback(setOverRaw, []);
+    var process = useMemo(function () { return createProcess(options, mounted); }, [onFiles, onText, onUri]);
+    useEffect(function () {
+        var onDragOver = function (event) {
+            event.preventDefault();
+            setOver(true);
+        };
+        var onDragEnter = function (event) {
+            event.preventDefault();
+            setOver(true);
+        };
+        var onDragLeave = function () {
+            setOver(false);
+        };
+        var onDragExit = function () {
+            setOver(false);
+        };
+        var onDrop = function (event) {
+            event.preventDefault();
+            setOver(false);
+            process(event.dataTransfer, event);
+        };
+        var onPaste = function (event) {
+            process(event.clipboardData, event);
+        };
+        document.addEventListener('dragover', onDragOver);
+        document.addEventListener('dragenter', onDragEnter);
+        document.addEventListener('dragleave', onDragLeave);
+        document.addEventListener('dragexit', onDragExit);
+        document.addEventListener('drop', onDrop);
+        if (onText)
+            document.addEventListener('paste', onPaste);
+        return function () {
+            document.removeEventListener('dragover', onDragOver);
+            document.removeEventListener('dragenter', onDragEnter);
+            document.removeEventListener('dragleave', onDragLeave);
+            document.removeEventListener('dragexit', onDragExit);
+            document.removeEventListener('drop', onDrop);
+            document.removeEventListener('paste', onPaste);
+        };
+    }, [process].concat(args));
+    return { over: over };
+};
+/* harmony default export */ var esm_useDrop = (useDrop);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useDropArea.js
+
+
+var useDropArea_noop = function () { };
+var useDropArea_defaultState = {
+    over: false,
+};
+var useDropArea_createProcess = function (options, mounted) { return function (dataTransfer, event) {
+    var uri = dataTransfer.getData('text/uri-list');
+    if (uri) {
+        (options.onUri || useDropArea_noop)(uri, event);
+        return;
+    }
+    if (dataTransfer.files && dataTransfer.files.length) {
+        (options.onFiles || useDropArea_noop)(Array.from(dataTransfer.files), event);
+        return;
+    }
+    if (dataTransfer.items && dataTransfer.items.length) {
+        dataTransfer.items[0].getAsString(function (text) {
+            if (mounted.current) {
+                (options.onText || useDropArea_noop)(text, event);
+            }
+        });
+    }
+}; };
+var createBond = function (process, setOver) { return ({
+    onDragOver: function (event) {
+        event.preventDefault();
+    },
+    onDragEnter: function (event) {
+        event.preventDefault();
+        setOver(true);
+    },
+    onDragLeave: function () {
+        setOver(false);
+    },
+    onDrop: function (event) {
+        event.preventDefault();
+        event.persist();
+        setOver(false);
+        process(event.dataTransfer, event);
+    },
+    onPaste: function (event) {
+        event.persist();
+        process(event.clipboardData, event);
+    },
+}); };
+var useDropArea = function (options) {
+    if (options === void 0) { options = {}; }
+    var onFiles = options.onFiles, onText = options.onText, onUri = options.onUri;
+    var mounted = esm_useRefMounted();
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false), over = _a[0], setOver = _a[1];
+    var process = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return useDropArea_createProcess(options, mounted); }, [onFiles, onText, onUri]);
+    var bond = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return createBond(process, setOver); }, [process, setOver]);
+    return [bond, { over: over }];
+};
+/* harmony default export */ var esm_useDropArea = (useDropArea);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useUpdate.js
+
+var useUpdate = function () {
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(0), setState = _a[1];
+    return function () { return setState(function (cnt) { return cnt + 1; }); };
+};
+/* harmony default export */ var esm_useUpdate = (useUpdate);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useGetSet.js
+
+
+var useGetSet = function (initialValue) {
+    var state = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(initialValue);
+    var update = esm_useUpdate();
+    var get = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () { return state.current; }, []);
+    var set = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (value) {
+        state.current = value;
+        update();
+    }, []);
+    return [get, set];
+};
+/* harmony default export */ var esm_useGetSet = (useGetSet);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useCounter.js
+
+
+var useCounter = function (initialValue) {
+    if (initialValue === void 0) { initialValue = 0; }
+    var _a = esm_useGetSet(initialValue), get = _a[0], set = _a[1];
+    var inc = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (delta) {
+        if (delta === void 0) { delta = 1; }
+        return set(get() + delta);
+    }, []);
+    var dec = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (delta) {
+        if (delta === void 0) { delta = 1; }
+        return inc(-delta);
+    }, []);
+    var reset = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (value) {
+        if (value === void 0) { value = initialValue; }
+        initialValue = value;
+        set(value);
+    }, []);
+    var actions = {
+        inc: inc,
+        dec: dec,
+        get: get,
+        set: set,
+        reset: reset,
+    };
+    return [get(), actions];
+};
+/* harmony default export */ var esm_useCounter = (useCounter);
+
+// EXTERNAL MODULE: ./node_modules/nano-css/index.js
+var nano_css = __webpack_require__(10);
+
+// EXTERNAL MODULE: ./node_modules/nano-css/addon/cssom.js
+var cssom = __webpack_require__(11);
+
+// EXTERNAL MODULE: ./node_modules/nano-css/addon/vcssom.js
+var vcssom = __webpack_require__(12);
+
+// EXTERNAL MODULE: ./node_modules/nano-css/addon/vcssom/cssToTree.js
+var cssToTree = __webpack_require__(13);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useCss.js
+
+
+
+
+
+var nano = Object(nano_css["create"])();
+Object(cssom["addon"])(nano);
+Object(vcssom["addon"])(nano);
+var counter = 0;
+var useCss = function (css) {
+    var className = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return 'react-use-css-' + (counter++).toString(36); }, []);
+    var sheet = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return new nano.VSheet(); }, []);
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useLayoutEffect"])(function () {
+        var tree = {};
+        Object(cssToTree["cssToTree"])(tree, css, '.' + className, '');
+        sheet.diff(tree);
+        return function () {
+            sheet.diff({});
+        };
+    });
+    return className;
+};
+/* harmony default export */ var esm_useCss = (useCss);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useDebounce.js
+
+var useDebounce = function (fn, ms, args) {
+    if (ms === void 0) { ms = 0; }
+    if (args === void 0) { args = []; }
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var handle = setTimeout(fn.bind(null, args), ms);
+        return function () {
+            // if args change then clear timeout
+            clearTimeout(handle);
+        };
+    }, args);
+};
+/* harmony default export */ var esm_useDebounce = (useDebounce);
+
+// EXTERNAL MODULE: ./node_modules/react-fast-compare/index.js
+var react_fast_compare = __webpack_require__(14);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useDeepCompareEffect.js
+
+
+var isPrimitive = function (val) { return val !== Object(val); };
+var useDeepCompareEffect = function (effect, deps) {
+    if (false) {}
+    var ref = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(undefined);
+    if (!react_fast_compare(deps, ref.current)) {
+        ref.current = deps;
+    }
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(effect, ref.current);
+};
+/* harmony default export */ var esm_useDeepCompareEffect = (useDeepCompareEffect);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useEffectOnce.js
+
+var useEffectOnce = function (effect) {
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(effect, []);
+};
+/* harmony default export */ var esm_useEffectOnce = (useEffectOnce);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useEvent.js
+
+
+var defaultTarget = isClient ? window : null;
+var useEvent = function (name, handler, target, options) {
+    if (target === void 0) { target = defaultTarget; }
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        if (!handler)
+            return;
+        if (!target)
+            return;
+        var fn = (target.addEventListener || target.on);
+        fn.call(target, name, handler, options);
+        return function () {
+            var fn = (target.removeEventListener || target.off);
+            fn.call(target, name, handler, options);
+        };
+    }, [name, handler, target, JSON.stringify(options)]);
+};
+/* harmony default export */ var esm_useEvent = (useEvent);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useFavicon.js
+
+var useFavicon = function (href) {
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+        link.type = 'image/x-icon';
+        link.rel = 'shortcut icon';
+        link.href = href;
+        document.getElementsByTagName('head')[0].appendChild(link);
+    }, [href]);
+};
+/* harmony default export */ var esm_useFavicon = (useFavicon);
+
+// EXTERNAL MODULE: ./node_modules/screenfull/dist/screenfull.js
+var screenfull = __webpack_require__(2);
+var screenfull_default = /*#__PURE__*/__webpack_require__.n(screenfull);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useFullscreen.js
+
+
+var useFullscreen_noop = function () { };
+var useFullscreen = function (ref, on, options) {
+    if (options === void 0) { options = {}; }
+    var video = options.video, _a = options.onClose, onClose = _a === void 0 ? useFullscreen_noop : _a;
+    var _b = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(on), isFullscreen = _b[0], setIsFullscreen = _b[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useLayoutEffect"])(function () {
+        if (!on)
+            return;
+        if (!ref.current)
+            return;
+        var onWebkitEndFullscreen = function () {
+            video.current.removeEventListener('webkitendfullscreen', onWebkitEndFullscreen);
+            onClose();
+        };
+        var onChange = function () {
+            if (screenfull_default.a) {
+                var isFullscreen_1 = screenfull_default.a.isFullscreen;
+                setIsFullscreen(isFullscreen_1);
+                if (!isFullscreen_1) {
+                    onClose();
+                }
+            }
+        };
+        if (screenfull_default.a && screenfull_default.a.enabled) {
+            try {
+                screenfull_default.a.request(ref.current);
+                setIsFullscreen(true);
+            }
+            catch (error) {
+                onClose(error);
+                setIsFullscreen(false);
+            }
+            screenfull_default.a.on('change', onChange);
+        }
+        else if (video && video.current && video.current.webkitEnterFullscreen) {
+            video.current.webkitEnterFullscreen();
+            video.current.addEventListener('webkitendfullscreen', onWebkitEndFullscreen);
+            setIsFullscreen(true);
+        }
+        else {
+            onClose();
+            setIsFullscreen(false);
+        }
+        return function () {
+            setIsFullscreen(false);
+            if (screenfull_default.a && screenfull_default.a.enabled) {
+                try {
+                    screenfull_default.a.off('change', onChange);
+                    screenfull_default.a.exit();
+                }
+                catch (_a) { }
+            }
+            else if (video && video.current && video.current.webkitExitFullscreen) {
+                video.current.removeEventListener('webkitendfullscreen', onWebkitEndFullscreen);
+                video.current.webkitExitFullscreen();
+            }
+        };
+    }, [ref.current, video, on]);
+    return isFullscreen;
+};
+/* harmony default export */ var esm_useFullscreen = (useFullscreen);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useGeolocation.js
+var useGeolocation_assign = (undefined && undefined.__assign) || function () {
+    useGeolocation_assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return useGeolocation_assign.apply(this, arguments);
+};
+
+var useGeolocation = function () {
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
+        loading: true,
+        accuracy: null,
+        altitude: null,
+        altitudeAccuracy: null,
+        heading: null,
+        latitude: null,
+        longitude: null,
+        speed: null,
+        timestamp: Date.now(),
+    }), state = _a[0], setState = _a[1];
+    var mounted = true;
+    var watchId;
+    var onEvent = function (event) {
+        if (mounted) {
+            setState({
+                loading: false,
+                accuracy: event.coords.accuracy,
+                altitude: event.coords.altitude,
+                altitudeAccuracy: event.coords.altitudeAccuracy,
+                heading: event.coords.heading,
+                latitude: event.coords.latitude,
+                longitude: event.coords.longitude,
+                speed: event.coords.speed,
+                timestamp: event.timestamp,
+            });
+        }
+    };
+    var onEventError = function (error) {
+        return mounted && setState(function (oldState) { return (useGeolocation_assign({}, oldState, { loading: false, error: error })); });
+    };
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        navigator.geolocation.getCurrentPosition(onEvent, onEventError);
+        watchId = navigator.geolocation.watchPosition(onEvent, onEventError);
+        return function () {
+            mounted = false;
+            navigator.geolocation.clearWatch(watchId);
+        };
+    }, []);
+    return state;
+};
+/* harmony default export */ var esm_useGeolocation = (useGeolocation);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useGetSetState.js
+var useGetSetState_assign = (undefined && undefined.__assign) || function () {
+    useGetSetState_assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return useGetSetState_assign.apply(this, arguments);
+};
+
+
+var useGetSetState = function (initialState) {
+    if (initialState === void 0) { initialState = {}; }
+    if (false) {}
+    var update = esm_useUpdate();
+    var state = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(useGetSetState_assign({}, initialState));
+    var get = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () { return state.current; }, []);
+    var set = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (patch) {
+        if (!patch)
+            return;
+        if (false) {}
+        Object.assign(state.current, patch);
+        update();
+    }, []);
+    return [get, set];
+};
+/* harmony default export */ var esm_useGetSetState = (useGetSetState);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useHover.js
+
+var useHover_useState = external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"];
+var useHover_noop = function () { };
+var useHover = function (element) {
+    var _a = useHover_useState(false), state = _a[0], setState = _a[1];
+    var onMouseEnter = function (originalOnMouseEnter) { return function (event) {
+        (originalOnMouseEnter || useHover_noop)(event);
+        setState(true);
+    }; };
+    var onMouseLeave = function (originalOnMouseLeave) { return function (event) {
+        (originalOnMouseLeave || useHover_noop)(event);
+        setState(false);
+    }; };
+    if (typeof element === 'function') {
+        element = element(state);
+    }
+    var el = external_root_React_commonjs2_react_commonjs_react_amd_react_["cloneElement"](element, {
+        onMouseEnter: onMouseEnter(element.props.onMouseEnter),
+        onMouseLeave: onMouseLeave(element.props.onMouseLeave)
+    });
+    return [el, state];
+};
+/* harmony default export */ var esm_useHover = (useHover);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useHoverDirty.js
+
+// kudos: https://usehooks.com/
+var useHoverDirty = function (ref, enabled) {
+    if (enabled === void 0) { enabled = true; }
+    if (false) {}
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false), value = _a[0], setValue = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var onMouseOver = function () { return setValue(true); };
+        var onMouseOut = function () { return setValue(false); };
+        if (enabled && ref && ref.current) {
+            ref.current.addEventListener('mouseover', onMouseOver);
+            ref.current.addEventListener('mouseout', onMouseOut);
+        }
+        return function () {
+            if (enabled && ref && ref.current) {
+                ref.current.removeEventListener('mouseover', onMouseOver);
+                ref.current.removeEventListener('mouseout', onMouseOut);
+            }
+        };
+    }, [enabled, ref]);
+    return value;
+};
+/* harmony default export */ var esm_useHoverDirty = (useHoverDirty);
+
+// CONCATENATED MODULE: ./node_modules/throttle-debounce/dist/index.esm.js
+/* eslint-disable no-undefined,no-param-reassign,no-shadow */
+
+/**
+ * Throttle execution of a function. Especially useful for rate limiting
+ * execution of handlers on events like resize and scroll.
+ *
+ * @param  {Number}    delay          A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+ * @param  {Boolean}   [noTrailing]   Optional, defaults to false. If noTrailing is true, callback will only execute every `delay` milliseconds while the
+ *                                    throttled-function is being called. If noTrailing is false or unspecified, callback will be executed one final time
+ *                                    after the last throttled-function call. (After the throttled-function has not been called for `delay` milliseconds,
+ *                                    the internal counter is reset)
+ * @param  {Function}  callback       A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
+ *                                    to `callback` when the throttled-function is executed.
+ * @param  {Boolean}   [debounceMode] If `debounceMode` is true (at begin), schedule `clear` to execute after `delay` ms. If `debounceMode` is false (at end),
+ *                                    schedule `callback` to execute after `delay` ms.
+ *
+ * @return {Function}  A new, throttled, function.
+ */
+function throttle (delay, noTrailing, callback, debounceMode) {
+  /*
+   * After wrapper has stopped being called, this timeout ensures that
+   * `callback` is executed at the proper times in `throttle` and `end`
+   * debounce modes.
+   */
+  var timeoutID;
+  var cancelled = false; // Keep track of the last time `callback` was executed.
+
+  var lastExec = 0; // Function to clear existing timeout
+
+  function clearExistingTimeout() {
+    if (timeoutID) {
+      clearTimeout(timeoutID);
+    }
+  } // Function to cancel next exec
+
+
+  function cancel() {
+    clearExistingTimeout();
+    cancelled = true;
+  } // `noTrailing` defaults to falsy.
+
+
+  if (typeof noTrailing !== 'boolean') {
+    debounceMode = callback;
+    callback = noTrailing;
+    noTrailing = undefined;
+  }
+  /*
+   * The `wrapper` function encapsulates all of the throttling / debouncing
+   * functionality and when executed will limit the rate at which `callback`
+   * is executed.
+   */
+
+
+  function wrapper() {
+    var self = this;
+    var elapsed = Date.now() - lastExec;
+    var args = arguments;
+
+    if (cancelled) {
+      return;
+    } // Execute `callback` and update the `lastExec` timestamp.
+
+
+    function exec() {
+      lastExec = Date.now();
+      callback.apply(self, args);
+    }
+    /*
+     * If `debounceMode` is true (at begin) this is used to clear the flag
+     * to allow future `callback` executions.
+     */
+
+
+    function clear() {
+      timeoutID = undefined;
+    }
+
+    if (debounceMode && !timeoutID) {
+      /*
+       * Since `wrapper` is being called for the first time and
+       * `debounceMode` is true (at begin), execute `callback`.
+       */
+      exec();
+    }
+
+    clearExistingTimeout();
+
+    if (debounceMode === undefined && elapsed > delay) {
+      /*
+       * In throttle mode, if `delay` time has been exceeded, execute
+       * `callback`.
+       */
+      exec();
+    } else if (noTrailing !== true) {
+      /*
+       * In trailing throttle mode, since `delay` time has not been
+       * exceeded, schedule `callback` to execute `delay` ms after most
+       * recent execution.
+       *
+       * If `debounceMode` is true (at begin), schedule `clear` to execute
+       * after `delay` ms.
+       *
+       * If `debounceMode` is false (at end), schedule `callback` to
+       * execute after `delay` ms.
+       */
+      timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
+    }
+  }
+
+  wrapper.cancel = cancel; // Return the wrapper function.
+
+  return wrapper;
+}
+
+/* eslint-disable no-undefined */
+/**
+ * Debounce execution of a function. Debouncing, unlike throttling,
+ * guarantees that a function is only executed a single time, either at the
+ * very beginning of a series of calls, or at the very end.
+ *
+ * @param  {Number}   delay         A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+ * @param  {Boolean}  [atBegin]     Optional, defaults to false. If atBegin is false or unspecified, callback will only be executed `delay` milliseconds
+ *                                  after the last debounced-function call. If atBegin is true, callback will be executed only at the first debounced-function call.
+ *                                  (After the throttled-function has not been called for `delay` milliseconds, the internal counter is reset).
+ * @param  {Function} callback      A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
+ *                                  to `callback` when the debounced-function is executed.
+ *
+ * @return {Function} A new, debounced function.
+ */
+
+function debounce (delay, atBegin, callback) {
+  return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
+}
+
+
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useIdle.js
+
+
+
+var defaultEvents = ['mousemove', 'mousedown', 'resize', 'keydown', 'touchstart', 'wheel'];
+var oneMinute = 60e3;
+var useIdle = function (ms, initialState, events) {
+    if (ms === void 0) { ms = oneMinute; }
+    if (initialState === void 0) { initialState = false; }
+    if (events === void 0) { events = defaultEvents; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], setState = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var mounted = true;
+        var timeout;
+        var localState = state;
+        var set = function (newState) {
+            if (mounted) {
+                localState = newState;
+                setState(newState);
+            }
+        };
+        var onEvent = throttle(50, function () {
+            if (localState) {
+                set(false);
+            }
+            clearTimeout(timeout);
+            timeout = setTimeout(function () { return set(true); }, ms);
+        });
+        var onVisibility = function () {
+            if (!document.hidden)
+                onEvent();
+        };
+        for (var i = 0; i < events.length; i++) {
+            util_on(window, events[i], onEvent);
+        }
+        util_on(document, 'visibilitychange', onVisibility);
+        timeout = setTimeout(function () { return set(true); }, ms);
+        return function () {
+            mounted = false;
+            for (var i = 0; i < events.length; i++) {
+                off(window, events[i], onEvent);
+            }
+            off(document, 'visibilitychange', onVisibility);
+        };
+    }, events);
+    return state;
+};
+/* harmony default export */ var esm_useIdle = (useIdle);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useKey.js
+
+
+var useKey_noop = function () { };
+var createKeyPredicate = function (keyFilter) {
+    return typeof keyFilter === 'function'
+        ? keyFilter
+        : typeof keyFilter === 'string'
+            ? function (event) { return event.key === keyFilter; }
+            : keyFilter
+                ? function () { return true; }
+                : function () { return false; };
+};
+var useKey = function (key, fn, opts, deps) {
+    if (fn === void 0) { fn = useKey_noop; }
+    if (opts === void 0) { opts = {}; }
+    if (deps === void 0) { deps = [key]; }
+    var _a = opts.event, event = _a === void 0 ? 'keydown' : _a, target = opts.target, options = opts.options;
+    var handler = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () {
+        var predicate = createKeyPredicate(key);
+        var handler = function (event) {
+            if (predicate(event))
+                return fn(event);
+        };
+        return handler;
+    }, deps);
+    esm_useEvent(event, handler, target, options);
+};
+/* harmony default export */ var esm_useKey = (useKey);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useKeyPress.js
+
+
+var useKeyPress_useKeyPress = function (keyFilter) {
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([false, null]), state = _a[0], set = _a[1];
+    esm_useKey(keyFilter, function (event) { return set([true, event]); }, { event: 'keydown' }, [state]);
+    esm_useKey(keyFilter, function (event) { return set([false, event]); }, { event: 'keyup' }, [state]);
+    return state;
+};
+/* harmony default export */ var esm_useKeyPress = (useKeyPress_useKeyPress);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useKeyPressEvent.js
+
+
+var useKeyPressEvent = function (key, keydown, keyup, useKeyPress) {
+    if (useKeyPress === void 0) { useKeyPress = esm_useKeyPress; }
+    var _a = useKeyPress(key), pressed = _a[0], event = _a[1];
+    esm_useUpdateEffect(function () {
+        if (!pressed && keyup)
+            keyup(event);
+        else if (pressed && keydown)
+            keydown(event);
+    }, [pressed]);
+};
+/* harmony default export */ var esm_useKeyPressEvent = (useKeyPressEvent);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useMount.js
+
+var useMount = function (fn) {
+    esm_useEffectOnce(function () {
+        fn();
+    });
+};
+/* harmony default export */ var esm_useMount = (useMount);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useKeyboardJs.js
+
+
+var useKeyboardJs = function (combination) {
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([false, null]), state = _a[0], set = _a[1];
+    var _b = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null), keyboardJs = _b[0], setKeyboardJs = _b[1];
+    esm_useMount(function () {
+        __webpack_require__.e(/* import() */ 1).then(__webpack_require__.t.bind(null, 35, 7)).then(setKeyboardJs);
+    });
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        if (!keyboardJs)
+            return;
+        var down = function (event) { return set([true, event]); };
+        var up = function (event) { return set([false, event]); };
+        keyboardJs.bind(combination, down, up);
+        return function () {
+            keyboardJs.unbind(combination, down, up);
+        };
+    }, [combination, keyboardJs]);
+    return state;
+};
+/* harmony default export */ var esm_useKeyboardJs = (useKeyboardJs);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useLifecycles.js
+
+var useLifecycles = function (mount, unmount) {
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        if (mount)
+            mount();
+        return function () {
+            if (unmount)
+                unmount();
+        };
+    }, []);
+};
+/* harmony default export */ var esm_useLifecycles = (useLifecycles);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useList.js
+
+var useList = function (initialList) {
+    if (initialList === void 0) { initialList = []; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialList), list = _a[0], set = _a[1];
+    return [list, {
+            set: set,
+            clear: function () { return set([]); },
+            updateAt: function (index, entry) { return set(function (list) { return list.slice(0, index).concat([
+                entry
+            ], list.slice(index + 1)); }); },
+            remove: function (index) { return set(function (list) { return list.slice(0, index).concat(list.slice(index + 1)); }); },
+            push: function (entry) { return set(function (list) { return list.concat([entry]); }); },
+            filter: function (fn) { return set(function (list) { return list.filter(fn); }); },
+            sort: function (fn) { return set(function (list) { return list.slice().sort(fn); }); },
+        }];
+};
+/* harmony default export */ var esm_useList = (useList);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useLocalStorage.js
+
+
+var useLocalStorage = function (key, initialValue, raw) {
+    if (!isClient) {
+        return [initialValue, function () { }];
+    }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(function () {
+        try {
+            var localStorageValue = localStorage.getItem(key);
+            if (typeof localStorageValue !== 'string') {
+                localStorage.setItem(key, raw ? String(initialValue) : JSON.stringify(initialValue));
+                return initialValue;
+            }
+            else {
+                return raw ? localStorageValue : JSON.parse(localStorageValue || 'null');
+            }
+        }
+        catch (_a) {
+            // If user is in private mode or has storage restriction
+            // localStorage can throw. JSON.parse and JSON.stringify
+            // can throw, too.
+            return initialValue;
+        }
+    }), state = _a[0], setState = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        try {
+            var serializedState = raw ? String(state) : JSON.stringify(state);
+            localStorage.setItem(key, serializedState);
+        }
+        catch (_a) {
+            // If user is in private mode or has storage restriction
+            // localStorage can throw. Also JSON.stringify can throw.
+        }
+    });
+    return [state, setState];
+};
+/* harmony default export */ var esm_useLocalStorage = (useLocalStorage);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useLocation.js
+
+
+var patchHistoryMethod = function (method) {
+    var original = history[method];
+    history[method] = function (state) {
+        var result = original.apply(this, arguments);
+        var event = new Event(method.toLowerCase());
+        event.state = state;
+        window.dispatchEvent(event);
+        return result;
+    };
+};
+if (isClient) {
+    patchHistoryMethod('pushState');
+    patchHistoryMethod('replaceState');
+}
+var useLocation = function () {
+    var buildState = function (trigger) {
+        var state = history.state, length = history.length;
+        var hash = location.hash, host = location.host, hostname = location.hostname, href = location.href, origin = location.origin, pathname = location.pathname, port = location.port, protocol = location.protocol, search = location.search;
+        return {
+            trigger: trigger,
+            state: state,
+            length: length,
+            hash: hash,
+            host: host,
+            hostname: hostname,
+            href: href,
+            origin: origin,
+            pathname: pathname,
+            port: port,
+            protocol: protocol,
+            search: search
+        };
+    };
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(isClient
+        ? buildState('load')
+        : {
+            trigger: 'load',
+            length: 1
+        }), state = _a[0], setState = _a[1];
+    var onChange = function (trigger) {
+        return setState(buildState(trigger));
+    };
+    var onPopstate = function () { return onChange('popstate'); };
+    var onPushstate = function () { return onChange('pushstate'); };
+    var onReplacestate = function () { return onChange('replacestate'); };
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        util_on(window, 'popstate', onPopstate);
+        util_on(window, 'pushstate', onPushstate);
+        util_on(window, 'replacestate', onReplacestate);
+        return function () {
+            off(window, 'popstate', onPopstate);
+            off(window, 'pushstate', onPushstate);
+            off(window, 'replacestate', onReplacestate);
+        };
+    }, []);
+    return state;
+};
+/* harmony default export */ var esm_useLocation = (useLocation);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useLockBodyScroll.js
+
+var useLockBodyScroll_counter = 0;
+var originalOverflow = null;
+var lock = function () {
+    originalOverflow = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = 'hidden';
+};
+var unlock = function () {
+    document.body.style.overflow = originalOverflow;
+    originalOverflow = null;
+};
+var increment = function () {
+    useLockBodyScroll_counter++;
+    if (useLockBodyScroll_counter === 1)
+        lock();
+};
+var decrement = function () {
+    useLockBodyScroll_counter--;
+    if (useLockBodyScroll_counter === 0)
+        unlock();
+};
+var useLockBodyScroll = function (enabled) {
+    if (enabled === void 0) { enabled = true; }
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () { return enabled ? (increment(), decrement) : undefined; }, [enabled]);
+};
+/* harmony default export */ var esm_useLockBodyScroll = (useLockBodyScroll);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useLogger.js
+
+
+var useLogger = function (componentName) {
+    var rest = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        rest[_i - 1] = arguments[_i];
+    }
+    esm_useEffectOnce(function () {
+        console.log.apply(console, [componentName + " mounted"].concat(rest));
+        return function () { return console.log(componentName + " unmounted"); };
+    });
+    esm_useUpdateEffect(function () {
+        console.log.apply(console, [componentName + " updated"].concat(rest));
+    });
+};
+/* harmony default export */ var esm_useLogger = (useLogger);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useMap.js
+var useMap_assign = (undefined && undefined.__assign) || function () {
+    useMap_assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return useMap_assign.apply(this, arguments);
+};
+var __rest = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
+            t[p[i]] = s[p[i]];
+    return t;
+};
+
+var useMap = function (initialMap) {
+    if (initialMap === void 0) { initialMap = {}; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialMap), map = _a[0], set = _a[1];
+    return [map, {
+            get: function (key) { return map[key]; },
+            set: function (key, entry) {
+                var _a;
+                return set(useMap_assign({}, map, (_a = {}, _a[key] = entry, _a)));
+            },
+            remove: function (key) {
+                var _a = map, _b = key, omit = _a[_b], rest = __rest(_a, [typeof _b === "symbol" ? _b : _b + ""]);
+                set(rest);
+            },
+            reset: function () { return set(initialMap); },
+        }];
+};
+/* harmony default export */ var esm_useMap = (useMap);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useMedia.js
+
+var useMedia = function (query, defaultState) {
+    if (defaultState === void 0) { defaultState = false; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(defaultState), state = _a[0], setState = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var mounted = true;
+        var mql = window.matchMedia(query);
+        var onChange = function () {
+            if (!mounted)
+                return;
+            setState(!!mql.matches);
+        };
+        mql.addListener(onChange);
+        setState(mql.matches);
+        return function () {
+            mounted = false;
+            mql.removeListener(onChange);
+        };
+    }, [query]);
+    return state;
+};
+/* harmony default export */ var esm_useMedia = (useMedia);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useMediaDevices.js
+
+
+var useMediaDevices_noop = function () { };
+var useMediaDevices = function () {
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}), state = _a[0], setState = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var mounted = true;
+        var onChange = function () {
+            navigator.mediaDevices.enumerateDevices()
+                .then(function (devices) {
+                if (mounted) {
+                    setState({
+                        devices: devices.map(function (_a) {
+                            var deviceId = _a.deviceId, groupId = _a.groupId, kind = _a.kind, label = _a.label;
+                            return ({ deviceId: deviceId, groupId: groupId, kind: kind, label: label });
+                        })
+                    });
+                }
+            })
+                .catch(useMediaDevices_noop);
+        };
+        util_on(navigator.mediaDevices, 'devicechange', onChange);
+        onChange();
+        return function () {
+            mounted = false;
+            off(navigator.mediaDevices, 'devicechange', onChange);
+        };
+    }, []);
+    return state;
+};
+/* harmony default export */ var esm_useMediaDevices = (useMediaDevices);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useMotion.js
+
+
+var useMotion_defaultState = {
+    acceleration: {
+        x: null,
+        y: null,
+        z: null,
+    },
+    accelerationIncludingGravity: {
+        x: null,
+        y: null,
+        z: null,
+    },
+    rotationRate: {
+        alpha: null,
+        beta: null,
+        gamma: null,
+    },
+    interval: 16,
+};
+var useMotion = function (initialState) {
+    if (initialState === void 0) { initialState = useMotion_defaultState; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], setState = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var handler = function (event) {
+            var acceleration = event.acceleration, accelerationIncludingGravity = event.accelerationIncludingGravity, rotationRate = event.rotationRate, interval = event.interval;
+            setState({
+                acceleration: {
+                    x: acceleration.x,
+                    y: acceleration.y,
+                    z: acceleration.z
+                },
+                accelerationIncludingGravity: {
+                    x: accelerationIncludingGravity.x,
+                    y: accelerationIncludingGravity.y,
+                    z: accelerationIncludingGravity.z
+                },
+                rotationRate: {
+                    alpha: rotationRate.alpha,
+                    beta: rotationRate.beta,
+                    gamma: rotationRate.gamma,
+                },
+                interval: interval
+            });
+        };
+        util_on(window, 'devicemotion', handler);
+        return function () {
+            off(window, 'devicemotion', handler);
+        };
+    }, []);
+    return state;
+};
+/* harmony default export */ var esm_useMotion = (useMotion);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useMouse.js
+
+var useMouse = function (ref) {
+    if (false) {}
+    var frame = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(0);
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
+        docX: 0,
+        docY: 0,
+        posX: 0,
+        posY: 0,
+        elX: 0,
+        elY: 0,
+        elH: 0,
+        elW: 0,
+    }), state = _a[0], setState = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var moveHandler = function (event) {
+            cancelAnimationFrame(frame.current);
+            frame.current = requestAnimationFrame(function () {
+                if (ref && ref.current) {
+                    var _a = ref.current.getBoundingClientRect(), left = _a.left, top_1 = _a.top, elW = _a.width, elH = _a.height;
+                    var posX = left + window.scrollX;
+                    var posY = top_1 + window.scrollY;
+                    var elX = event.pageX - posX;
+                    var elY = event.pageY - posY;
+                    setState({
+                        docX: event.pageX,
+                        docY: event.pageY,
+                        posX: posX,
+                        posY: posY,
+                        elX: elX,
+                        elY: elY,
+                        elH: elH,
+                        elW: elW,
+                    });
+                }
+            });
+        };
+        document.addEventListener('mousemove', moveHandler);
+        return function () {
+            cancelAnimationFrame(frame.current);
+            document.removeEventListener('mousemove', moveHandler);
+        };
+    }, [ref.current]);
+    return state;
+};
+/* harmony default export */ var esm_useMouse = (useMouse);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useMouseHovered.js
+
+
+var nullRef = { current: null };
+var useMouseHovered = function (ref, options) {
+    if (options === void 0) { options = {}; }
+    var whenHovered = !!options.whenHovered;
+    var bound = !!options.bound;
+    var isHovered = esm_useHoverDirty(ref, whenHovered);
+    var state = esm_useMouse(whenHovered && !isHovered ? nullRef : ref);
+    if (bound) {
+        state.elX = Math.max(0, Math.min(state.elX, state.elW));
+        state.elY = Math.max(0, Math.min(state.elY, state.elH));
+    }
+    return state;
+};
+/* harmony default export */ var esm_useMouseHovered = (useMouseHovered);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useNetwork.js
+var useNetwork_assign = (undefined && undefined.__assign) || function () {
+    useNetwork_assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return useNetwork_assign.apply(this, arguments);
+};
+
+
+var getConnection = function () {
+    if (typeof navigator !== 'object') {
+        return null;
+    }
+    var nav = navigator;
+    return nav.connection || nav.mozConnection || nav.webkitConnection;
+};
+var getConnectionState = function () {
+    var connection = getConnection();
+    if (!connection) {
+        return {};
+    }
+    var downlink = connection.downlink, downlinkMax = connection.downlinkMax, effectiveType = connection.effectiveType, type = connection.type, rtt = connection.rtt;
+    return {
+        downlink: downlink,
+        downlinkMax: downlinkMax,
+        effectiveType: effectiveType,
+        type: type,
+        rtt: rtt
+    };
+};
+var useNetwork = function (initialState) {
+    if (initialState === void 0) { initialState = {}; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], setState = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var localState = state;
+        var localSetState = function (patch) {
+            localState = useNetwork_assign({}, localState, patch);
+            setState(localState);
+        };
+        var connection = getConnection();
+        var onOnline = function () {
+            localSetState({
+                online: true,
+                since: new Date()
+            });
+        };
+        var onOffline = function () {
+            localSetState({
+                online: false,
+                since: new Date()
+            });
+        };
+        var onConnectionChange = function () {
+            localSetState(getConnectionState());
+        };
+        util_on(window, 'online', onOnline);
+        util_on(window, 'offline', onOffline);
+        if (connection) {
+            util_on(connection, 'change', onConnectionChange);
+            localSetState(useNetwork_assign({}, state, { online: navigator.onLine, since: undefined }, getConnectionState()));
+        }
+        return function () {
+            off(window, 'online', onOnline);
+            off(window, 'offline', onOffline);
+            if (connection) {
+                off(connection, 'change', onConnectionChange);
+            }
+        };
+    }, []);
+    return state;
+};
+/* harmony default export */ var esm_useNetwork = (useNetwork);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useNumber.js
+
+/* harmony default export */ var useNumber = (esm_useCounter);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useObservable.js
+
+var useObservable = function (observable$, initialValue) {
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialValue), value = _a[0], update = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var s = observable$.subscribe(update);
+        return function () { return s.unsubscribe(); };
+    }, [observable$]);
+    return value;
+};
+/* harmony default export */ var esm_useObservable = (useObservable);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useOrientation.js
+
+
+var useOrientation_defaultState = {
+    angle: 0,
+    type: 'landscape-primary'
+};
+var useOrientation = function (initialState) {
+    if (initialState === void 0) { initialState = useOrientation_defaultState; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], setState = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var mounted = true;
+        var onChange = function () {
+            if (mounted) {
+                var orientation_1 = screen.orientation;
+                if (orientation_1) {
+                    var angle = orientation_1.angle, type = orientation_1.type;
+                    setState({ angle: angle, type: type });
+                }
+                else if (window.orientation) {
+                    setState({
+                        angle: typeof window.orientation === 'number' ? window.orientation : 0,
+                        type: ''
+                    });
+                }
+                else {
+                    setState(initialState);
+                }
+            }
+        };
+        util_on(window, 'orientationchange', onChange);
+        onChange();
+        return function () {
+            mounted = false;
+            off(window, 'orientationchange', onChange);
+        };
+    }, []);
+    return state;
+};
+/* harmony default export */ var esm_useOrientation = (useOrientation);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useClickAway.js
+
+
+var useClickAway = function (ref, onClickAway) {
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var handler = function (event) {
+            var el = ref.current;
+            el && !el.contains(event.target) && onClickAway(event);
+        };
+        util_on(document, 'click', handler);
+        return function () {
+            off(document, 'click', handler);
+        };
+    });
+};
+/* harmony default export */ var esm_useClickAway = (useClickAway);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/usePageLeave.js
+
+var usePageLeave = function (onPageLeave, args) {
+    if (args === void 0) { args = []; }
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        if (!onPageLeave)
+            return;
+        var handler = function (event) {
+            event = event ? event : window.event;
+            var from = event.relatedTarget || event.toElement;
+            if (!from || from.nodeName === 'HTML')
+                onPageLeave();
+        };
+        document.addEventListener('mouseout', handler);
+        return function () {
+            document.removeEventListener('mouseout', handler);
+        };
+    }, args);
+};
+/* harmony default export */ var esm_usePageLeave = (usePageLeave);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/usePromise.js
+
+
+var usePromise = function () {
+    var refMounted = esm_useRefMounted();
+    return Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (promise) {
+        return new Promise(function (resolve, reject) {
+            var onValue = function (value) {
+                if (refMounted.current) {
+                    resolve(value);
+                }
+            };
+            var onError = function (error) {
+                if (refMounted.current) {
+                    reject(error);
+                }
+            };
+            promise.then(onValue, onError);
+        });
+    }, []);
+};
+/* harmony default export */ var esm_usePromise = (usePromise);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useRaf.js
+
+var useRaf = function (ms, delay) {
+    if (ms === void 0) { ms = 1e12; }
+    if (delay === void 0) { delay = 0; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(0), elapsed = _a[0], set = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useLayoutEffect"])(function () {
+        var raf, timerStop, start;
+        var onFrame = function () {
+            var time = Math.min(1, (Date.now() - start) / ms);
+            set(time);
+            loop();
+        };
+        var loop = function () {
+            raf = requestAnimationFrame(onFrame);
+        };
+        var onStart = function () {
+            timerStop = setTimeout(function () {
+                cancelAnimationFrame(raf);
+                set(1);
+            }, ms);
+            start = Date.now();
+            loop();
+        };
+        var timerDelay = setTimeout(onStart, delay);
+        return function () {
+            clearTimeout(timerStop);
+            clearTimeout(timerDelay);
+            cancelAnimationFrame(raf);
+        };
+    }, [ms, delay]);
+    return elapsed;
+};
+/* harmony default export */ var esm_useRaf = (useRaf);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useScroll.js
+
+var useScroll = function (ref) {
+    if (false) {}
+    var frame = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(0);
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
+        x: 0,
+        y: 0
+    }), state = _a[0], setState = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var handler = function () {
+            cancelAnimationFrame(frame.current);
+            frame.current = requestAnimationFrame(function () {
+                if (ref.current) {
+                    setState({
+                        x: ref.current.scrollLeft,
+                        y: ref.current.scrollTop
+                    });
+                }
+            });
+        };
+        if (ref.current) {
+            ref.current.addEventListener('scroll', handler, {
+                capture: false,
+                passive: true
+            });
+        }
+        return function () {
+            if (frame.current) {
+                cancelAnimationFrame(frame.current);
+            }
+            if (ref.current) {
+                ref.current.removeEventListener('scroll', handler);
+            }
+        };
+    }, [ref.current]);
+    return state;
+};
+/* harmony default export */ var esm_useScroll = (useScroll);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useSessionStorage.js
+
+
+var useSessionStorage = function (key, initialValue, raw) {
+    if (!isClient) {
+        return [initialValue, function () { }];
+    }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(function () {
+        try {
+            var sessionStorageValue = sessionStorage.getItem(key);
+            if (typeof sessionStorageValue !== 'string') {
+                sessionStorage.setItem(key, raw ? String(initialValue) : JSON.stringify(initialValue));
+                return initialValue;
+            }
+            else {
+                return raw ? sessionStorageValue : JSON.parse(sessionStorageValue || 'null');
+            }
+        }
+        catch (_a) {
+            // If user is in private mode or has storage restriction
+            // sessionStorage can throw. JSON.parse and JSON.stringify
+            // cat throw, too.
+            return initialValue;
+        }
+    }), state = _a[0], setState = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        try {
+            var serializedState = raw ? String(state) : JSON.stringify(state);
+            sessionStorage.setItem(key, serializedState);
+        }
+        catch (_a) {
+            // If user is in private mode or has storage restriction
+            // sessionStorage can throw. Also JSON.stringify can throw.
+        }
+    });
+    return [state, setState];
+};
+/* harmony default export */ var esm_useSessionStorage = (useSessionStorage);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useSize.js
+
+
+var useSize_useState = external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"], useSize_useEffect = external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"], useRef = external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"];
+var DRAF = function (callback) { return setTimeout(callback, 35); };
+var useSize = function (element, _a) {
+    var _b = _a === void 0 ? {} : _a, _c = _b.width, width = _c === void 0 ? Infinity : _c, _d = _b.height, height = _d === void 0 ? Infinity : _d;
+    if (!isClient) {
+        return [
+            typeof element === 'function'
+                ? element({ width: width, height: height })
+                : element,
+            { width: width, height: height }
+        ];
+    }
+    var _e = useSize_useState({ width: width, height: height }), state = _e[0], setState = _e[1];
+    if (typeof element === 'function') {
+        element = element(state);
+    }
+    var style = element.props.style || {};
+    var ref = useRef(null);
+    var window = null;
+    var setSize = function () {
+        var iframe = ref.current;
+        var size = iframe
+            ? {
+                width: iframe.offsetWidth,
+                height: iframe.offsetHeight,
+            }
+            : { width: width, height: height, };
+        setState(size);
+    };
+    var onWindow = function (window) {
+        window.addEventListener('resize', setSize);
+        DRAF(setSize);
+    };
+    useSize_useEffect(function () {
+        var iframe = ref.current;
+        if (iframe.contentWindow) {
+            window = iframe.contentWindow;
+            onWindow(window);
+        }
+        else {
+            var onLoad_1 = function () {
+                iframe.removeEventListener('load', onLoad_1);
+                window = iframe.contentWindow;
+                onWindow(window);
+            };
+            iframe.addEventListener('load', onLoad_1);
+        }
+        return function () {
+            if (window) {
+                window.removeEventListener('resize', setSize);
+            }
+        };
+    }, []);
+    style.position = 'relative';
+    var sized = external_root_React_commonjs2_react_commonjs_react_amd_react_["cloneElement"].apply(external_root_React_commonjs2_react_commonjs_react_amd_react_, [element, { style: style }].concat([
+        external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"]('iframe', {
+            ref: ref,
+            style: {
+                background: 'transparent',
+                border: 'none',
+                height: '100%',
+                left: 0,
+                position: 'absolute',
+                top: 0,
+                width: '100%',
+                zIndex: -1
+            }
+        })
+    ].concat(external_root_React_commonjs2_react_commonjs_react_amd_react_["Children"].toArray(element.props.children))));
+    return [sized, state];
+};
+/* harmony default export */ var esm_useSize = (useSize);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useSpeech.js
+
+
+
+var useSpeech = function (text, opts) {
+    if (opts === void 0) { opts = {}; }
+    var _a = esm_useSetState({
+        isPlaying: false,
+        volume: opts.volume || 1,
+    }), state = _a[0], setState = _a[1];
+    var uterranceRef = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
+    esm_useMount(function () {
+        var utterance = new SpeechSynthesisUtterance(text);
+        utterance.volume = opts.volume || 1;
+        utterance.onstart = function () { return setState({ isPlaying: true }); };
+        utterance.onresume = function () { return setState({ isPlaying: true }); };
+        utterance.onend = function () { return setState({ isPlaying: false }); };
+        utterance.onpause = function () { return setState({ isPlaying: false }); };
+        uterranceRef.current = utterance;
+        window.speechSynthesis.speak(uterranceRef.current);
+    });
+    return state;
+};
+/* harmony default export */ var esm_useSpeech = (useSpeech);
+
+// EXTERNAL MODULE: ./node_modules/rebound/dist/rebound.js
+var rebound = __webpack_require__(15);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useSpring.js
+
+
+var useSpring = function (targetValue, tension, friction) {
+    if (targetValue === void 0) { targetValue = 0; }
+    if (tension === void 0) { tension = 50; }
+    if (friction === void 0) { friction = 3; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null), spring = _a[0], setSpring = _a[1];
+    var _b = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(targetValue), value = _b[0], setValue = _b[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var listener = {
+            onSpringUpdate: function (spring) {
+                var value = spring.getCurrentValue();
+                setValue(value);
+            }
+        };
+        if (!spring) {
+            var newSpring = (new rebound["SpringSystem"]()).createSpring(tension, friction);
+            newSpring.setCurrentValue(targetValue);
+            setSpring(newSpring);
+            newSpring.addListener(listener);
+            return;
+        }
+        return function () {
+            spring.removeListener(listener);
+            setSpring(null);
+        };
+    }, [tension, friction]);
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        if (spring) {
+            spring.setEndValue(targetValue);
+        }
+    }, [targetValue]);
+    return value;
+};
+/* harmony default export */ var esm_useSpring = (useSpring);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useStartTyping.js
+
+var isFocusedElementEditable = function () {
+    var activeElement = document.activeElement, body = document.body;
+    if (!activeElement)
+        return false;
+    // If not element has focus, we assume it is not editable, too.
+    if (activeElement === body)
+        return false;
+    // Assume <input> and <textarea> elements are editable.
+    switch (activeElement.tagName) {
+        case 'INPUT':
+        case 'TEXTAREA':
+            return true;
+    }
+    // Check if any other focused element id editable.
+    return activeElement.hasAttribute('contenteditable');
+};
+var isTypedCharGood = function (_a) {
+    var keyCode = _a.keyCode;
+    // 0...9
+    if ((keyCode >= 48) && (keyCode <= 57))
+        return true;
+    // a...z
+    if ((keyCode >= 65) && (keyCode <= 90))
+        return true;
+    // All other keys.
+    return false;
+};
+var useStartTyping = function (onStartTyping) {
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useLayoutEffect"])(function () {
+        var keydown = function (event) {
+            !isFocusedElementEditable() && isTypedCharGood(event) && onStartTyping(event);
+        };
+        document.addEventListener('keydown', keydown);
+        return function () {
+            document.removeEventListener('keydown', keydown);
+        };
+    }, []);
+};
+/* harmony default export */ var esm_useStartTyping = (useStartTyping);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useUnmount.js
+
+var useUnmount = function (fn) {
+    esm_useEffectOnce(function () { return fn; });
+};
+/* harmony default export */ var esm_useUnmount = (useUnmount);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useThrottle.js
+
+
+var useThrottle = function (value, ms) {
+    if (ms === void 0) { ms = 200; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(value), state = _a[0], setState = _a[1];
+    var timeout = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
+    var nextValue = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
+    var hasNextValue = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(0);
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        if (!timeout.current) {
+            setState(value);
+            var timeoutCallback_1 = function () {
+                if (hasNextValue.current) {
+                    hasNextValue.current = false;
+                    setState(nextValue.current);
+                    timeout.current = setTimeout(timeoutCallback_1, ms);
+                }
+                else {
+                    timeout.current = null;
+                }
+            };
+            timeout.current = setTimeout(timeoutCallback_1, ms);
+        }
+        else {
+            nextValue.current = value;
+            hasNextValue.current = true;
+        }
+    }, [value]);
+    esm_useUnmount(function () {
+        clearTimeout(timeout.current);
+    });
+    return state;
+};
+/* harmony default export */ var esm_useThrottle = (useThrottle);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useThrottleFn.js
+
+
+var useThrottleFn = function (fn, ms, args) {
+    if (ms === void 0) { ms = 200; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null), state = _a[0], setState = _a[1];
+    var timeout = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
+    var nextArgs = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
+    var hasNextArgs = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(false);
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        if (!timeout.current) {
+            setState(fn.apply(void 0, args));
+            var timeoutCallback_1 = function () {
+                if (hasNextArgs.current) {
+                    hasNextArgs.current = false;
+                    setState(fn.apply(void 0, nextArgs.current));
+                    timeout.current = setTimeout(timeoutCallback_1, ms);
+                }
+                else {
+                    timeout.current = null;
+                }
+            };
+            timeout.current = setTimeout(timeoutCallback_1, ms);
+        }
+        else {
+            nextArgs.current = args;
+            hasNextArgs.current = true;
+        }
+    }, args);
+    esm_useUnmount(function () {
+        clearTimeout(timeout.current);
+    });
+    return state;
+};
+/* harmony default export */ var esm_useThrottleFn = (useThrottleFn);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useTimeout.js
+
+var useTimeout = function (ms) {
+    if (ms === void 0) { ms = 0; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false), ready = _a[0], setReady = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var timer = setTimeout(function () {
+            setReady(true);
+        }, ms);
+        return function () {
+            clearTimeout(timer);
+        };
+    }, [ms]);
+    return ready;
+};
+/* harmony default export */ var esm_useTimeout = (useTimeout);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useTitle.js
+
+var useTitle = function (title) {
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        document.title = title;
+    }, [title]);
+};
+/* harmony default export */ var esm_useTitle = (useTitle);
+
+// EXTERNAL MODULE: ./node_modules/ts-easing/lib/index.js
+var lib = __webpack_require__(16);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useTween.js
+
+
+var useTween = function (easingName, ms, delay) {
+    if (easingName === void 0) { easingName = 'inCirc'; }
+    if (ms === void 0) { ms = 200; }
+    if (delay === void 0) { delay = 0; }
+    var fn = lib["easing"][easingName];
+    var t = esm_useRaf(ms, delay);
+    if (false) {}
+    return fn(t);
+};
+/* harmony default export */ var esm_useTween = (useTween);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useVideo.js
+
+var useVideo = util_createHTMLMediaHook('video');
+/* harmony default export */ var esm_useVideo = (useVideo);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useWindowScroll.js
+
+
+var useWindowScroll = function () {
+    var frame = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(0);
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
+        x: isClient ? window.scrollX : 0,
+        y: isClient ? window.scrollY : 0
+    }), state = _a[0], setState = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        var handler = function () {
+            cancelAnimationFrame(frame.current);
+            frame.current = requestAnimationFrame(function () {
+                setState({
+                    x: window.scrollX,
+                    y: window.scrollY
+                });
+            });
+        };
+        window.addEventListener('scroll', handler, {
+            capture: false,
+            passive: true
+        });
+        return function () {
+            cancelAnimationFrame(frame.current);
+            window.removeEventListener('scroll', handler);
+        };
+    }, []);
+    return state;
+};
+/* harmony default export */ var esm_useWindowScroll = (useWindowScroll);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useWindowSize.js
+
+
+var useWindowSize = function (initialWidth, initialHeight) {
+    if (initialWidth === void 0) { initialWidth = Infinity; }
+    if (initialHeight === void 0) { initialHeight = Infinity; }
+    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
+        width: isClient ? window.innerWidth : initialWidth,
+        height: isClient ? window.innerHeight : initialHeight,
+    }), state = _a[0], setState = _a[1];
+    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+        if (isClient) {
+            var handler_1 = function () {
+                setState({
+                    width: window.innerWidth,
+                    height: window.innerHeight
+                });
+            };
+            window.addEventListener('resize', handler_1);
+            return function () { return window.removeEventListener('resize', handler_1); };
+        }
+        else {
+            return undefined;
+        }
+    }, []);
+    return state;
+};
+/* harmony default export */ var esm_useWindowSize = (useWindowSize);
+
+// CONCATENATED MODULE: ./node_modules/react-wait/dist/react-wait.esm.js
+
+var react_wait_esm_i = function(n) {
+    return n.length > 0;
+  },
+  e = function(n, t) {
+    return n.includes(t);
+  },
+  u = function(n, t) {
+    return e(n, t) ? n : n.concat([t]);
+  },
+  c = function(n, t) {
+    return n.filter(function(n) {
+      return n !== t;
+    });
+  },
+  react_wait_esm_a = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext();
+function o(n) {
+  return Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(react_wait_esm_a).waiters.includes(n.on) ? n.fallback : n.children;
+}
+function react_wait_esm_f(r) {
+  var f = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([]),
+    s = f[0],
+    g = f[1];
+  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+    react_wait_esm_a.Provider,
+    {
+      value: {
+        waiters: s,
+        createWaitingContext: function(t) {
+          return {
+            isWaiting: function() {
+              return e(s, t);
+            },
+            startWaiting: function() {
+              return g(u(s, t));
+            },
+            endWaiting: function() {
+              return g(c(s, t));
+            },
+            Wait: function(r) {
+              return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(o, Object.assign({}, { on: t }, r));
+            }
+          };
+        },
+        anyWaiting: function() {
+          return react_wait_esm_i(s);
+        },
+        isWaiting: function(n) {
+          return e(s, n);
+        },
+        startWaiting: function(n) {
+          g(u(s, n));
+        },
+        endWaiting: function(n) {
+          g(c(s, n));
+        }
+      }
+    },
+    r.children
+  );
+}
+function react_wait_esm_s() {
+  var n = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(react_wait_esm_a);
+  return Object.assign({}, n, { Wait: o });
+}
+
+//# sourceMappingURL=react-wait.esm.js.map
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/useWait.js
+
+react_wait_esm_s.Waiter = react_wait_esm_f;
+/* harmony default export */ var useWait = (react_wait_esm_s);
+
+// CONCATENATED MODULE: ./node_modules/react-use/esm/index.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// EXTERNAL MODULE: ./node_modules/query-string/index.js
+var query_string = __webpack_require__(4);
+
+// CONCATENATED MODULE: ./src/DataTable/DataTableContainer.js
+
+
+var DataTableContainer_this = undefined;
+
+var DataTableContainer_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function DataTableContainer_objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+
+
+
+
+
+
+
+var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
+  var endpointURL = _ref.endpointURL,
+      imagePath = _ref.imagePath,
+      limit = _ref.limit,
+      authorized = _ref.authorized,
+      total = _ref.total,
+      page = _ref.page,
+      max_per_page = _ref.max_per_page,
+      sortKeys = _ref.sortKeys,
+      elements = _ref.elements,
+      dataTableProps = DataTableContainer_objectWithoutProperties(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "sortKeys", "elements"]);
+
+  var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
+      fetchedElements = _React$useState[0],
+      setFetchedElements = _React$useState[1];
+
+  var _React$useState2 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState({
+    search: "",
+    sortKey: "conpStatus",
+    sortComparitor: "asc",
+    page: page,
+    max_per_page: max_per_page,
+    cursor: 0,
+    limit: limit
+  }),
+      query = _React$useState2[0],
+      setQuery = _React$useState2[1];
+
+  var _React$useState3 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(total),
+      totalState = _React$useState3[0],
+      setTotalState = _React$useState3[1];
+
+  var _React$useState4 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(sortKeys),
+      sortKeysState = _React$useState4[0],
+      setSortKeysState = _React$useState4[1];
+
+  var _React$useState5 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(authorized),
+      authorizedState = _React$useState5[0],
+      setAuthorizedState = _React$useState5[1];
+
+  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useEffect(function () {
+    setQuery(DataTableContainer_extends({}, query, { limit: limit }));
+  }, [limit]);
+
+  var fetchElements = function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      var url, res, parsed;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              url = endpointURL + "?" + query_string["stringify"](query);
+              _context.prev = 1;
+              _context.next = 4;
+              return fetch(url);
+
+            case 4:
+              res = _context.sent;
+
+              if (res.ok) {
+                _context.next = 7;
+                break;
+              }
+
+              throw new Error("Request failed with status: " + res.status + " (" + res.statusText + ")");
+
+            case 7:
+              _context.next = 9;
+              return res.json();
+
+            case 9:
+              parsed = _context.sent;
+
+
+              setFetchedElements(parsed.elements);
+              setTotalState(parsed.total);
+              setSortKeysState(parsed.sortKeys);
+              setAuthorizedState(parsed.authorized);
+              _context.next = 20;
+              break;
+
+            case 16:
+              _context.prev = 16;
+              _context.t0 = _context["catch"](1);
+
+              alert("There was an error retrieving the search results.");
+              console.error(_context.t0);
+
+            case 20:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, DataTableContainer_this, [[1, 16]]);
+    }));
+
+    return function fetchElements() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  esm_useDebounce(function () {
+    return void fetchElements();
+  }, 300, [endpointURL, query]);
+
+  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_DataTable_DataTable, DataTableContainer_extends({
+    authorized: authorizedState,
+    elements: fetchedElements,
+    imagePath: imagePath,
+    total: totalState,
+    sortKeys: sortKeysState,
+    query: query,
+    setQuery: setQuery
+  }, dataTableProps));
+};
+
+DataTableContainer_DataTableContainer.propTypes = {
+  authorized: prop_types_default.a.bool,
+  endpointURL: prop_types_default.a.string.isRequired,
+  imagePath: prop_types_default.a.string,
+  limit: prop_types_default.a.number,
+  total: prop_types_default.a.number,
+  page: prop_types_default.a.number,
+  max_per_page: prop_types_default.a.number,
+  elements: prop_types_default.a.arrayOf(prop_types_default.a.object)
+};
+
+DataTableContainer_DataTableContainer.defaultProps = {
+  authorized: false,
+  endpointURL: "",
+  imagePath: 'static/img/',
+  limit: 10,
+  total: 0,
+  page: 1,
+  max_per_page: 10,
+  elements: []
+};
+
+/* harmony default export */ var DataTable_DataTableContainer = (DataTableContainer_DataTableContainer);
+// CONCATENATED MODULE: ./src/DataTable/index.js
+
+
 // CONCATENATED MODULE: ./src/DatasetElement/index.js
 function DatasetElement_objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
@@ -16294,17 +16314,17 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   var downloadDisabled = imagePath + "/download_gray.png";
 
   var statusCONP = imagePath + "/canada.svg";
-  var authIcon = void 0;
+  var authIcons = [];
 
   switch (element.authorizations) {
     case 'restricted':
-      authIcon = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserAlt, color: "grey", size: "2x" });
+      authIcons.push(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserAlt, color: "black", size: "lg" }));
       break;
     case 'private':
-      authIcon = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserLock, color: "grey", size: "2x" });
+      authIcons.push(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserLock, color: "black", size: "lg" }));
       break;
     default:
-      authIcon = null;
+      break;
   }
 
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -16312,16 +16332,26 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     { className: "card row flex-row", "data-type": "dataset" },
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "card-header" },
+      { className: "card-header d-flex flex-column justify-content-between" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "d-flex p-1 justify-content-center" },
+        { className: "d-flex justify-content-center" },
         element.conpStatus !== 'external' ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { height: "32", width: "32", src: statusCONP }) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", { style: { width: 32 } })
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "d-flex p-1 justify-content-center" },
-        authIcon
+        { className: "d-flex justify-content-center" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "d-flex" },
+          authIcons.map(function (icon) {
+            return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "p-1" },
+              icon
+            );
+          })
+        )
       )
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
