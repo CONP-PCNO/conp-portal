@@ -19,10 +19,6 @@ const DataTable = ({
   return (
     <div className="search-dataset-table container" cellSpacing={0}>
       <div className="searchbar col-12 d-flex p-2">
-        <div className="d-flex flex-column p-2 justify-content-center">
-          <div className="text-nowrap text-truncate"><FontAwesomeIcon icon={faUserAlt} color="black" size="lg"/>: CONP account required</div>
-          <div className="text-nowrap text-truncate"><FontAwesomeIcon icon={faUserLock} color="black" size="lg"/>: Third-party account required</div>
-        </div>
         <div className="d-flex dropdown">
           <label className="dropdown-label m-2">Sort By: </label>
           <select
@@ -57,6 +53,10 @@ const DataTable = ({
           </span>
         </div>
       </div>
+      <div className="d-flex p-2 align-items-center">
+          <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg"/>: CONP account required</div>
+          <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg"/>: Third-party account required</div>
+        </div>
       {elements.map((element, i) => (
         <div key={element.id} className="container">
           {React.createElement(renderElement, { ...element, authorized, imagePath })}

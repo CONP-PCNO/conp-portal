@@ -13499,22 +13499,6 @@ var DataTable_DataTable = function DataTable(_ref) {
       { className: "searchbar col-12 d-flex p-2" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "d-flex flex-column p-2 justify-content-center" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "text-nowrap text-truncate" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserAlt, color: "black", size: "lg" }),
-          ": CONP account required"
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "text-nowrap text-truncate" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserLock, color: "black", size: "lg" }),
-          ": Third-party account required"
-        )
-      ),
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
         { className: "d-flex dropdown" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "label",
@@ -13563,6 +13547,22 @@ var DataTable_DataTable = function DataTable(_ref) {
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-search" })
           )
         )
+      )
+    ),
+    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      "div",
+      { className: "d-flex p-2 align-items-center" },
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "p-1 text-nowrap text-truncate" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserAlt, color: "dimgray", size: "lg" }),
+        ": CONP account required"
+      ),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "p-1 text-nowrap text-truncate" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserLock, color: "dimgray", size: "lg" }),
+        ": Third-party account required"
       )
     ),
     elements.map(function (element, i) {
@@ -16318,10 +16318,10 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
 
   switch (element.authorizations) {
     case 'restricted':
-      authIcons.push(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserAlt, color: "black", size: "lg" }));
+      authIcons.push(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserAlt, color: "dimgray", size: "lg" }));
       break;
     case 'private':
-      authIcons.push(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserLock, color: "black", size: "lg" }));
+      authIcons.push(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserLock, color: "dimgray", size: "lg" }));
       break;
     default:
       break;

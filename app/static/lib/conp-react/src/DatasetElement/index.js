@@ -18,10 +18,10 @@ const DatasetElement = props => {
 
   switch (element.authorizations) {
     case 'restricted':
-      authIcons.push(<FontAwesomeIcon icon={faUserAlt} color="black" size="lg"/>);
+      authIcons.push(<FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg"/>);
       break;
     case 'private':
-      authIcons.push(<FontAwesomeIcon icon={faUserLock} color="black" size="lg"/>);
+      authIcons.push(<FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg"/>);
       break;
     default:
       break;
