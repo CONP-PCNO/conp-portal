@@ -205,7 +205,6 @@ class DATSDataset(object):
         return "{}".format(sources)
 
 
-
     @property
     def subjectCount(self):
         count = 0
@@ -223,3 +222,70 @@ class DATSDataset(object):
     @property
     def version(self):
         return self.descriptor.get('version', None)
+
+
+    @property
+    def schema_org_metadata(self):
+        """ Returns json-ld metadata snippet for Google dataset search. """
+        try:
+            jsonld_obj = {}
+            jsonld_obj["@context"] = "https://schema.org/"
+            jsonld_obj["@type"] = "Dataset"
+            # required fields
+            jsonld_obj["name"] = self.descriptor["title"]
+            jsonld_obj["description"] = self.descriptor["description"]
+            jsonld_obj["version"] = self.descriptor["version"]
+            licenses = []
+            for license in self.descriptor["licenses"]:
+                # license can be of type URL or CreativeWork
+                if license["name"].startswith("http"):
+                    licenses.append(license["name"])
+                else:
+                    license_creative_work = {}
+                    license_creative_work["@type"] = "CreativeWork"
+                    license_creative_work["name"] = license["name"]
+                    licenses.append(license_creative_work)
+            jsonld_obj["license"] = licenses
+            jsonld_obj["keywords"] = [keyword["value"] for keyword in self.descriptor["keywords"]]
+            creators = []
+            for creator in self.descriptor["creators"]:
+                if "name" in creator:
+                    organization = {}
+                    organization["@type"] = "Organization"
+                    organization["name"] = creator["name"]
+                    creators.append(organization)
+                else:
+                    person = {}
+                    person["@type"] = "Person"
+                    # all fields below are not required so we have to check if they are present
+                    if "firstName" in creator:
+                        person["givenName"] = creator["firstName"]
+                    if "lastName" in creator:
+                        person["familyName"] = creator["lastName"]
+                    if "email" in creator:
+                        person["email"] = creator["email"]
+                    # schema.org requires 'name' or 'url' to be present for Person
+                    # dats doesn't have required fields for Person,
+                    # therefore in case when no 'fullName' provided or one of 'firstName' or 'lastName' is not provided
+                    # we set a placeholder for 'name'
+                    if "fullName" in creator:
+                        person["name"] = creator["fullName"]
+                    elif all(k in creator for k in ("firstName", "lastName")):
+                        person["name"] = creator["firstName"] + " " + creator["lastName"]
+                    else:
+                        person["name"] = "Name is not provided"
+                    # check for person affiliations
+                    if "affiliations" in creator:
+                        affiliation = []
+                        for affiliated_org in creator["affiliations"]:
+                            organization = {}
+                            organization["@type"] = "Organization"
+                            organization["name"] = affiliated_org["name"]
+                            affiliation.append(organization)
+                        person["affiliation"] = affiliation
+                    creators.append(person)
+            jsonld_obj["creator"] = creators
+            return jsonld_obj
+
+        except Exception:
+            return None
