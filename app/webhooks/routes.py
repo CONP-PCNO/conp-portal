@@ -10,7 +10,7 @@ from flask_wtf.csrf import CSRFProtect
 import git
 import os
 
-@webhooks_bp.route('/webhooks', methods=['POST', 'GET'])
+@webhooks_bp.route('/webhooks', methods=['POST'])
 def webhooks():
     """ Github webhooks
 
@@ -22,18 +22,8 @@ def webhooks():
     """
     if not request.is_json:
         abort(404)
+
     payload = request.get_json()
-    secret = payload \
-        .get('hook', {}) \
-        .get('config', {}) \
-        .get('secret','')
-
-    if not secret:
-        # Pretend this endpoint do not exists if secret id not provided 
-        abort(404)
-
-    if current_app.config['WEBHOOKS_SECRET'] != secret:
-        abort(400)
 
     # Initialize the git repository object
     repo = git.Repo(os.getcwd())
