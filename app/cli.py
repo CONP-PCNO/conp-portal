@@ -147,20 +147,37 @@ def _update_datasets(app):
     from datalad.api import Dataset as DataladDataset
     import fnmatch
     import json
+    from pathlib import Path
+    import git
 
-    datasetspath = app.config['DATA_PATH']
+    datasetsdir = Path(app.config['DATA_PATH']) / 'conp-dataset'
+    datasetsdir.mkdir(parents=True, exist_ok=True)
 
-    d = DataladDataset(path=datasetspath + '/conp-dataset')
+    # Initialize the git repository object
+    try:
+        repo = git.Repo(datasetsdir)
+    except git.exc.InvalidGitRepositoryError as e:
+        repo = git.Repo.clone_from(
+            'https://github.com/CONP-PCNO/conp-dataset',
+            datasetsdir,
+            branch='master'
+        )
+
+    # Update to latest commit
+    origin = repo.remotes.origin
+    origin.pull('master')
+    repo.submodule_update(recursive=False, keep_going=True)
+
+    d = DataladDataset(path=datasetsdir)
     if not d.is_installed():
         api.clone(
             source='https://github.com/CONP-PCNO/conp-dataset',
-            path=datasetspath + '/conp-dataset'
+            path=datasetsdir
         )
-        d = DataladDataset(path=datasetspath + '/conp-dataset')
-        d.install(path='', recursive=True)
+        d = DataladDataset(path=datasetsdir)
 
     try:
-        d.update(path='', merge=True, recursive=True)
+        d.install(path='', recursive=True)
     except Exception as e:
         print("\033[91m")
         print("[ERROR  ] An exception occurred in datalad update.")
