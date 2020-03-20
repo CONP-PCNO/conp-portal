@@ -115,8 +115,6 @@ class DATSDataset(object):
         if dists is None:
             return None
 
-        print(dists)
-        print(type(dists))
         if not type(dists) == list:
             if dists.get('@type', '') == 'DatasetDistribution':
                 formats = ", ".join([x['description'] for x in dists.get('formats', [])])
@@ -172,6 +170,18 @@ class DATSDataset(object):
         
         size = dist.get('size', 0)
         unit = dist.get('unit', {}).get('value', '')
+
+        # Some data values from the DATS are not user friendly so
+        # If size > 1000, divide n times until it is < 1000 and increment the units from the array
+        units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
+        count = 0
+
+        while size > 1000:
+            size /= 1000
+            count += 1
+
+        size = round(size, 1)
+        unit = units[units.index(unit) + count]
 
         return "{} {}".format(size, unit)
 
