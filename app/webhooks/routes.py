@@ -32,9 +32,5 @@ def webhooks():
     origin = repo.remotes.origin
     origin.pull('master')
 
-    bashCommand = "cwm --rdf test.rdf --ntriples > test.nt"
-    import subprocess
-    process = subprocess.run('')
-
     return 'OK'
 
