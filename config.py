@@ -62,6 +62,9 @@ class Config(object):
     ORCID_OAUTH_CLIENT_ID = os.environ.get("ORCID_OAUTH_CLIENT_ID")
     ORCID_OAUTH_CLIENT_SECRET = os.environ.get("ORCID_OAUTH_CLIENT_SECRET")
 
+    # GitHub webhooks
+    WEBHOOKS_SECRET = os.environ.get("WEBHOOKS_SECRET")
+
 
 class DevelopmentConfig(Config):
     """This is the config for Development"""

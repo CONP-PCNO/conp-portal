@@ -65,6 +65,10 @@ def create_app(config_settings=DevelopmentConfig):
     from app.auth.forms import CustomUserManager
     user_manager = CustomUserManager(app, db, User)
 
+    from app.webhooks import webhooks_bp
+    csrf_protect.exempt(webhooks_bp)
+    app.register_blueprint(webhooks_bp)
+
     @app.context_processor
     def context_processor():
         return dict(user_manager=user_manager)
