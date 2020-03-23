@@ -11,7 +11,6 @@ from flask_wtf.csrf import CSRFProtect
 import git
 import hmac
 import os
-import json
 import hashlib
 
 
