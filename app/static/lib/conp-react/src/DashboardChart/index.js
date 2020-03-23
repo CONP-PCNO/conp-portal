@@ -34,7 +34,7 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             },
 
             title: {
-                text: 'Cumulative Number of Datasets and Pipelines'
+                text: 'Cumulative Number of Datasets'
             },
 
             yAxis: [{
