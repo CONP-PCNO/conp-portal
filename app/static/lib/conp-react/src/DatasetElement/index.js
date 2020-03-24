@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserLock } from '@fortawesome/free-solid-svg-icons'
+import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
+
 const DatasetElement = props => {
   const { authorized, imagePath, ...element } = props;
 
@@ -10,11 +14,30 @@ const DatasetElement = props => {
   const downloadDisabled = `${imagePath}/download_gray.png`;
 
   const statusCONP = `${imagePath}/canada.svg`;
+  let authIcons = [];
+
+  switch (element.authorizations) {
+    case 'restricted':
+      authIcons.push(<FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg"/>);
+      break;
+    case 'private':
+      authIcons.push(<FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg"/>);
+      break;
+    default:
+      break;
+  }
 
   return (
     <div className="card row flex-row" data-type="dataset">
-      <div className="card-header">
-        {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP}/>) : <div style={{width: 32}}/>}
+      <div className="card-header d-flex flex-column justify-content-between">
+        <div className="d-flex justify-content-center">
+          {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP}/>) : <div style={{width: 32}}/>}
+        </div>
+        <div className="d-flex justify-content-center">
+          <div className="d-flex">
+            {authIcons.map(icon => <div className="p-1">{icon}</div>)}
+          </div>
+        </div>
       </div>
       <div className="col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social">
         <img

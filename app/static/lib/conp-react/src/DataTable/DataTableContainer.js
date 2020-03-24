@@ -52,8 +52,6 @@ const DataTableContainer = ({
 
       const parsed = await res.json();
 
-      console.log(parsed);
-
       setFetchedElements(parsed.elements);
       setTotalState(parsed.total);
       setSortKeysState(parsed.sortKeys);

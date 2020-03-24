@@ -2,6 +2,10 @@ import * as R from "ramda";
 import React from "react";
 import PropTypes from "prop-types";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserLock } from '@fortawesome/free-solid-svg-icons'
+import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
+
 const DataTable = ({
   authorized,
   sortKeys,
@@ -49,6 +53,10 @@ const DataTable = ({
           </span>
         </div>
       </div>
+      <div className="d-flex p-2 align-items-center">
+          <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg"/>: CONP account required</div>
+          <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg"/>: Third-party account required</div>
+        </div>
       {elements.map((element, i) => (
         <div key={element.id} className="container">
           {React.createElement(renderElement, { ...element, authorized, imagePath })}

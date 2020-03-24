@@ -4,7 +4,7 @@
  */
 (window["webpackJsonpCONPReact"] = window["webpackJsonpCONPReact"] || []).push([[1],{
 
-/***/ 27:
+/***/ 31:
 /***/ (function(module, exports) {
 
 
@@ -142,11 +142,11 @@ module.exports = KeyCombo;
 
 /***/ }),
 
-/***/ 28:
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var KeyCombo = __webpack_require__(27);
+var KeyCombo = __webpack_require__(31);
 
 
 function Locale(name) {
@@ -300,12 +300,12 @@ module.exports = Locale;
 
 /***/ }),
 
-/***/ 29:
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
-var Locale = __webpack_require__(28);
-var KeyCombo = __webpack_require__(27);
+var Locale = __webpack_require__(32);
+var KeyCombo = __webpack_require__(31);
 
 
 function Keyboard(targetWindow, targetElement, platform, userAgent) {
@@ -686,11 +686,11 @@ Keyboard.prototype._handleCommandBug = function(event, platform) {
 
 module.exports = Keyboard;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5)))
 
 /***/ }),
 
-/***/ 30:
+/***/ 34:
 /***/ (function(module, exports) {
 
 
@@ -846,17 +846,17 @@ module.exports = function(locale, platform, userAgent) {
 
 /***/ }),
 
-/***/ 31:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Keyboard = __webpack_require__(29);
-var Locale   = __webpack_require__(28);
-var KeyCombo = __webpack_require__(27);
+var Keyboard = __webpack_require__(33);
+var Locale   = __webpack_require__(32);
+var KeyCombo = __webpack_require__(31);
 
 var keyboard = new Keyboard();
 
-keyboard.setLocale('us', __webpack_require__(30));
+keyboard.setLocale('us', __webpack_require__(34));
 
 exports          = module.exports = keyboard;
 exports.Keyboard = Keyboard;
