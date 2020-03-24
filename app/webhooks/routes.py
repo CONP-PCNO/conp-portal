@@ -11,7 +11,6 @@ from flask_wtf.csrf import CSRFProtect
 import git
 import hmac
 import os
-import json
 import hashlib
 
 
@@ -35,14 +34,14 @@ def webhooks():
         See: https://developer.github.com/webhooks/securing/
     """
     server_signature = 'sha1=' + hmac.new(
-            bytes(current_app.config['WEBHOOKS_SECRET'], 'ascii'),
-            request.get_json(),
-            digestmod=hashlib.sha1
-            ).hexdigest()
+        bytes(current_app.config['WEBHOOKS_SECRET'], 'ascii'),
+        request.data,
+        digestmod=hashlib.sha1
+    ).hexdigest()
 
     client_signature = request.headers['X-Hub-Signature']
 
-    if not server_signature == client_signature:
+    if not hmac.compare_digest(server_signature, client_signature):
         abort(400)
             
     # Initialize the git repository object
