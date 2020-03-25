@@ -57,17 +57,13 @@
   <div class="card-body">
     <h2 class="card-title">Download Options</h2>
     <pre class="card-text" style="white-space: pre-wrap;">
-# Download is enabled through <a style="color: blue;" href="https://www.datalad.org/">datalad</a>
-# Installation instructions are summarized here: <a style="color: blue;" href="https://github.com/CONP-PCNO/conp-documentation/blob/master/datalad_dataset_addition_procedure.md#setup---installing-required-software-assumes-working-on-a-linux-machine">conp-documentation</a>
+# Download is enabled through <a style="color: blue;" href="http://handbook.datalad.org/en/latest/intro/installation.html#install">datalad</a>
       
 # Here are commands to download content from this dataset:
-    ~$ datalad install --source http://github.com/CONP-PCNO/conp-dataset
-    ~$ datalad get --no-data conp-dataset/{{data.id}}
-    ~$ cd conp-dataset/{{data.id}}
-
-# For datasets that requires login to the remote server use:
-    ~$ git annex enableremote &ltremote-name&gt
-    ~$ datalad get &ltfilepath&gt
+    ~$ datalad install https://github.com/CONP-PCNO/conp-dataset.git
+    ~$ cd conp-dataset
+    ~$ datalad install projects/{{data.id}}
+    ~$ datalad get projects/&ltfilepath&gt
     </pre>
   </div>
 </div>
