@@ -8,20 +8,25 @@ html,
 body {
   width: 100%;
   height: 100%;
-  font-family: "arial", sans-serif;
+  font-family: "Arial", sans-serif;
   font-size: 14px;
   color: #343434;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  font-family: "PT Sans Narrow", sans-serif;
+h1, h2, h3, h4, h5, h6 {
+	clear: both;
+  line-height: 1.3em;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 400;
 }
+
+h1 { font-size: 2.4em; }
+h2 { font-size: 2.2em; }
+h3 { font-size: 2em; }
+h4 { font-size: 1.8em; }
+h5 { font-size: 1.6em; }
+h6 { font-size: 1.4em; }
 
 p {
   font-size: 1rem;
@@ -45,6 +50,26 @@ ul,
 li {
   text-decoration: none;
   list-style: none;
+}
+
+.modal-dialog{
+  overflow-y: initial;
+}
+
+.modal-body {
+  padding: 20px;
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+
+.terms-body p {
+  margin-left: 50px;
+  margin-bottom: 20px;
+}
+
+.terms-list p {
+  margin-left: 75px;
+  margin-bottom: 10px;
 }
 
 /*
