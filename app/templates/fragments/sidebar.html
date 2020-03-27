@@ -1,30 +1,31 @@
 <div id="sidebar container col-2" class="bg-mineshaft" role="navigation">
   <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
     href="{{ url_for('main.index') }}">
-    <h1 class="p-3"><i class="fa fa-bar-chart"></i></h1>
-    <p class="text-center text-capitalize mt-1">
+    <h1><i class="fa fa-bar-chart"></i></h1>
+    <p class="text-center text-capitalize p-1">
       Dashboard
     </p>
   </a>
   <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
     href="{{ url_for('search.search') }}">
-    <h1 class="p-3"><i class="fa fa-search"></i></h1>
-    <p class="text-center text-capitalize mt-1">
+    <h1><i class="fa fa-search"></i></h1>
+    <p class="text-center text-capitalize p-1">
       Data
     </p>
   </a>
   <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
     href="{{ url_for('pipelines.pipelines') }}">
-    <h1 class="p-3"><i class="fa fa-wrench"></i></h1>
-    <p class="text-center text-capitalize mt-1">
+    <h1><i class="fa fa-wrench"></i></h1>
+    <p class="text-center text-capitalize p-1">
       Tools & Pipelines
     </p>
   </a>
   <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
-    href="{{ url_for('main.share') }}">
-    <h1 class="p-3"><i class="fa fa-cloud-upload"></i></h1>
-    <p class="text-center text-capitalize mt-1">
-      Share
+    target="_blank" rel="noopener noreferrer"
+    href="https://github.com/CONP-PCNO/conp-documentation/blob/master/CONP_FAQ.md">
+    <h1><i class="fa fa-info-circle"></i></h1>
+    <p class="text-center text-capitalize p-1">
+      FAQ
     </p>
   </a>
 </div>
