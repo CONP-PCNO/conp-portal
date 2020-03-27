@@ -95,7 +95,8 @@ def dataset_search():
 
     elif request.args.get('id'):
         # Query datasets
-        datasets = Dataset.query.filter_by(dataset_id=request.args.get('id')).all()
+        datasets = Dataset.query.filter_by(
+            dataset_id=request.args.get('id')).all()
 
     else:
         # Query datasets
@@ -137,18 +138,32 @@ def dataset_search():
     queryAll = bool(request.args.get('elements') == 'all')
 
     if(not queryAll):
-        delta = int(request.args.get('max_per_page', 10)) * (int(request.args.get('page', 1)) - 1 )
+        delta = int(request.args.get('max_per_page', 10)) * \
+                    (int(request.args.get('page', 1)) - 1)
         cursor = max(min(int(request.args.get('cursor') or 0), 0), 0) + delta
         limit = max(min(int(request.args.get('limit') or 10), 10), 0)
         sort_key = request.args.get('sortKey') or "conpStatus"
         paginated = elements
-        paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
-        paginated = paginated[(cursor):(cursor + limit)]
+
+        if(sort_key == "conpStatus"):
+            order = {'conp': 0, 'canadian': 1, 'external': 2}
+            paginated.sort(key=lambda o: order[o[sort_key].lower()])
+
+        elif(sort_key == "title"):
+            paginated.sort(key=lambda o: o[sort_key].lower())
+
+        elif(sort_key == "size"):
+            paginated.sort(key=lambda o: o[sort_key])
+
+        else:
+            paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
+
+        paginated=paginated[(cursor):(cursor + limit)]
     else:
-        paginated = elements
+        paginated=elements
 
     # Construct payload
-    payload = {
+    payload={
         "authorized": authorized,
         "total": len(elements),
         "sortKeys": [
@@ -213,18 +228,18 @@ def dataset_info():
 
     """
 
-    dataset_id = request.args.get('id')
+    dataset_id=request.args.get('id')
 
     # Query dataset
-    d = Dataset.query.filter_by(dataset_id=dataset_id).first()
-    datsdataset = DATSDataset(d.fspath)
+    d=Dataset.query.filter_by(dataset_id=dataset_id).first()
+    datsdataset=DATSDataset(d.fspath)
 
     if current_user.is_authenticated:
-        authorized = True
+        authorized=True
     else:
-        authorized = False
+        authorized=False
 
-    dataset = {
+    dataset={
         "authorized": authorized,
 
         "id": d.dataset_id,
@@ -249,7 +264,7 @@ def dataset_info():
         "authorizations": datsdataset.authorizations
     }
 
-    metadata = get_dataset_metadata_information(d)
+    metadata=get_dataset_metadata_information(d)
 
     return render_template(
         'dataset.html',
@@ -275,24 +290,25 @@ def download_metadata():
         Raises:
             HTML error if this fails
     """
-    dataset_id = request.args.get('dataset', '')
-    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
+    dataset_id=request.args.get('dataset', '')
+    dataset=Dataset.query.filter_by(dataset_id=dataset_id).first()
     if dataset is None:
         # This shoud return a 404 not found
         return 'Not Found', 400
 
-    datasetrootdir = os.path.join(
+    datasetrootdir=os.path.join(
         current_app.config['DATA_PATH'],
         'conp-dataset',
         dataset.fspath
     )
 
-    datspath = DATSDataset(datasetrootdir).DatsFilepath
+    datspath=DATSDataset(datasetrootdir).DatsFilepath
     return send_from_directory(
         os.path.dirname(datspath),
         os.path.basename(datspath),
         as_attachment=True,
-        attachment_filename=os.path.join(dataset.name.replace(' ', '_'), '.dats.json'),
+        attachment_filename=os.path.join(
+            dataset.name.replace(' ', '_'), '.dats.json'),
         mimetype='application/json'
     )
 
@@ -309,7 +325,7 @@ def get_dataset_metadata_information(dataset):
 
     """
 
-    datsdataset = DATSDataset(dataset.fspath)
+    datsdataset=DATSDataset(dataset.fspath)
 
     return {
         "authors": datsdataset.authors,
@@ -319,4 +335,3 @@ def get_dataset_metadata_information(dataset):
         "licenses": datsdataset.licenses,
         "sources": datsdataset.sources
     }
-

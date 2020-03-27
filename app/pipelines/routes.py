@@ -98,11 +98,17 @@ def pipeline_search():
     elif sort_key == "downloads-desc":
         real_key = "downloads"
     reverse = sort_key.endswith("-desc")
-    elements.sort(
-        key=lambda x: (x[real_key] is None, x[real_key]),
-        reverse=reverse
-    )
 
+    if (real_key == 'title'):
+        elements.sort(
+            key=lambda x: (x[real_key] is None, x[real_key].lower()),
+            reverse=reverse
+        )
+    else:
+        elements.sort(
+            key=lambda x: (x[real_key] is None, x[real_key]),
+            reverse=reverse
+        )
 
     # extract the appropriate page
     elements_on_page = elements
