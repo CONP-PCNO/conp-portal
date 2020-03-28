@@ -194,18 +194,6 @@ def dataset_search():
             {
                 "key": "subjects",
                 "label": "Subjects"
-            },
-            {
-                "key": "format",
-                "label": "Format"
-            },
-            {
-                "key": "modalities",
-                "label": "Modalities"
-            },
-            {
-                "key": "sources",
-                "label": "Sources"
             }
         ],
         "elements": paginated
