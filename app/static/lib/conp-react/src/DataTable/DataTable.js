@@ -1,10 +1,12 @@
 import * as R from "ramda";
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserLock } from '@fortawesome/free-solid-svg-icons'
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 
 const DataTable = ({
   authorized,
@@ -16,6 +18,51 @@ const DataTable = ({
   query,
   setQuery
 }) => {
+  const [filters, setFilters] = useState({
+    modalities: {
+      mri: false,
+      eeg: false,
+      qualityControlSubject: false,
+      basicDemographic: false,
+      genomics: false
+    },
+    formats: {
+      minc: false,
+      json: false,
+      nifti: false,
+      stl: false,
+      mif: false,
+      vcf: false,
+      fasta: false,
+      csv: false,
+      rnaSeq: false,
+      fastq: false,
+      gtf: false,
+      tsv: false,
+      bam: false,
+      bigwig: false,
+      cel: false,
+      jpg: false,
+      dicom: false,
+      gz: false,
+      txt: false
+    },
+    sources: {}
+  });
+
+  const handleChange = (event) => {
+    const e = event.target.value;
+    const filter = e.split(".");
+    const newFilters = Object.assign({}, filters);
+    newFilters[filter[0]][filter[1]] = !newFilters[filter[0]][filter[1]];
+    setFilters(newFilters);
+    console.log(filters);
+    setQuery({ ...query,
+      modalities: Object.keys(filters.modalities).filter(m => filters.modalities[m] == true),
+      formats: Object.keys(filters.formats).filter(f => filters.formats[f] == true)
+    })
+  }
+
   return (
     <div className="search-dataset-table container" cellSpacing={0}>
       <div className="searchbar col-12 d-flex p-2">
@@ -53,10 +100,55 @@ const DataTable = ({
           </span>
         </div>
       </div>
-      <div className="d-flex p-2 align-items-center">
-          <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg"/>: CONP account required</div>
-          <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg"/>: Third-party account required</div>
+      <div>
+        <button className="btn btn-light text-left" type="button" data-toggle="collapse" data-target="#filters" aria-expanded="false" aria-controls="filters">
+          <div className="d-flex p-2 align-items-center">
+            Filters
+          <FontAwesomeIcon icon={faAngleRight} color="dimgray" size="lg" />
+          </div>
+        </button>
+        <div className="collapse" id="filters">
+          <div className="d-flex">
+            <div className="d-flex flex-column p-4">
+              <h6>Modality:</h6>
+              {Object.keys(filters.modalities).map(modality => (
+                <div className="form-check">
+                <input className="form-check-input" type="checkbox" value={"modalities." + modality} id={"filter"+modality} onChange={handleChange} />
+                <label className="form-check-label" htmlFor={"filter"+modality}>
+                  {modality}
+                </label>
+              </div>
+              ))}
+            </div>
+            <div className="d-flex flex-column p-4">
+              <h6>Format:</h6>
+              {Object.keys(filters.formats).map(format => (
+                <div className="form-check">
+                <input className="form-check-input" type="checkbox" value={"formats." + format} id={"filter"+format} onChange={handleChange} />
+                <label className="form-check-label" htmlFor={"filter"+format}>
+                  {format}
+                </label>
+              </div>
+              ))}
+            </div>
+            <div className="d-flex flex-column p-4">
+              <h6>Source:</h6>
+              {Object.keys(filters.sources).map(source => (
+                <div className="form-check">
+                <input className="form-check-input" type="checkbox" value={"sources." + source} id={"filter"+source} onChange={handleChange} />
+                <label className="form-check-label" htmlFor={"filter"+source}>
+                  {source}
+                </label>
+              </div>
+              ))}
+            </div>
+          </div>
         </div>
+      </div>
+      <div className="d-flex p-2 align-items-center">
+        <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg" />: CONP account required</div>
+        <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg" />: Third-party account required</div>
+      </div>
       {elements.map((element, i) => (
         <div key={element.id} className="container">
           {React.createElement(renderElement, { ...element, authorized, imagePath })}
@@ -69,15 +161,15 @@ const DataTable = ({
               setQuery({ ...query, page: 1 })
             }>&lt;&lt;</div>
           <div className="btn btn-outline-dark btn-sm"
-           onClick={e =>
-            setQuery({ ...query, page: Math.max(1, query.page-1) })
-          }> &lt; </div>
-          {R.range(1, Math.ceil(total / query.max_per_page)+1).map(
+            onClick={e =>
+              setQuery({ ...query, page: Math.max(1, query.page - 1) })
+            }> &lt; </div>
+          {R.range(1, Math.ceil(total / query.max_per_page) + 1).map(
             (page, i) => (
               <div className={page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm"}
-              onClick={e =>
-                setQuery({ ...query, page: page })
-              }
+                onClick={e =>
+                  setQuery({ ...query, page: page })
+                }
                 key={i}>
                 {page}
               </div>
@@ -85,7 +177,7 @@ const DataTable = ({
           )}
           <div className="btn btn-outline-dark btn-sm"
             onClick={e =>
-              setQuery({ ...query, page: Math.min(query.page+1, Math.ceil(total / query.max_per_page)) })
+              setQuery({ ...query, page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page)) })
             }
           >
             &gt;

@@ -13481,6 +13481,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 
+
+
 var DataTable_DataTable = function DataTable(_ref) {
   var authorized = _ref.authorized,
       sortKeys = _ref.sortKeys,
@@ -13490,6 +13492,57 @@ var DataTable_DataTable = function DataTable(_ref) {
       renderElement = _ref.renderElement,
       query = _ref.query,
       setQuery = _ref.setQuery;
+
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
+    modalities: {
+      mri: false,
+      eeg: false,
+      qualityControlSubject: false,
+      basicDemographic: false,
+      genomics: false
+    },
+    formats: {
+      minc: false,
+      json: false,
+      nifti: false,
+      stl: false,
+      mif: false,
+      vcf: false,
+      fasta: false,
+      csv: false,
+      rnaSeq: false,
+      fastq: false,
+      gtf: false,
+      tsv: false,
+      bam: false,
+      bigwig: false,
+      cel: false,
+      jpg: false,
+      dicom: false,
+      gz: false,
+      txt: false
+    },
+    sources: {}
+  }),
+      filters = _useState[0],
+      setFilters = _useState[1];
+
+  var handleChange = function handleChange(event) {
+    var e = event.target.value;
+    var filter = e.split(".");
+    var newFilters = Object.assign({}, filters);
+    newFilters[filter[0]][filter[1]] = !newFilters[filter[0]][filter[1]];
+    setFilters(newFilters);
+    console.log(filters);
+    setQuery(_extends({}, query, {
+      modalities: Object.keys(filters.modalities).filter(function (m) {
+        return filters.modalities[m] == true;
+      }),
+      formats: Object.keys(filters.formats).filter(function (f) {
+        return filters.formats[f] == true;
+      })
+    }));
+  };
 
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
@@ -13545,6 +13598,91 @@ var DataTable_DataTable = function DataTable(_ref) {
             "span",
             { className: "input-group-text", id: "basic-addon2" },
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-search" })
+          )
+        )
+      )
+    ),
+    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      "div",
+      null,
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "button",
+        { className: "btn btn-light text-left", type: "button", "data-toggle": "collapse", "data-target": "#filters", "aria-expanded": "false", "aria-controls": "filters" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "d-flex p-2 align-items-center" },
+          "Filters",
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faAngleRight, color: "dimgray", size: "lg" })
+        )
+      ),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "collapse", id: "filters" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "d-flex" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "d-flex flex-column p-4" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "h6",
+              null,
+              "Modality:"
+            ),
+            Object.keys(filters.modalities).map(function (modality) {
+              return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "form-check" },
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", { className: "form-check-input", type: "checkbox", value: "modalities." + modality, id: "filter" + modality, onChange: handleChange }),
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                  "label",
+                  { className: "form-check-label", htmlFor: "filter" + modality },
+                  modality
+                )
+              );
+            })
+          ),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "d-flex flex-column p-4" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "h6",
+              null,
+              "Format:"
+            ),
+            Object.keys(filters.formats).map(function (format) {
+              return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "form-check" },
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", { className: "form-check-input", type: "checkbox", value: "formats." + format, id: "filter" + format, onChange: handleChange }),
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                  "label",
+                  { className: "form-check-label", htmlFor: "filter" + format },
+                  format
+                )
+              );
+            })
+          ),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "d-flex flex-column p-4" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "h6",
+              null,
+              "Source:"
+            ),
+            Object.keys(filters.sources).map(function (source) {
+              return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { className: "form-check" },
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", { className: "form-check-input", type: "checkbox", value: "sources." + source, id: "filter" + source, onChange: handleChange }),
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                  "label",
+                  { className: "form-check-label", htmlFor: "filter" + source },
+                  source
+                )
+              );
+            })
           )
         )
       )
@@ -16169,6 +16307,8 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
 
   var _React$useState2 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState({
     search: "",
+    modalities: [],
+    formats: [],
     sortKey: "conpStatus",
     sortComparitor: "asc",
     page: page,
@@ -16202,7 +16342,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              url = endpointURL + "?" + query_string["stringify"](query);
+              url = endpointURL + "?" + query_string["stringify"](query, { arrayFormat: 'comma' });
               _context.prev = 1;
               _context.next = 4;
               return fetch(url);
@@ -16759,7 +16899,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
             },
 
             title: {
-                text: 'Cumulative Number of Datasets and Pipelines'
+                text: 'Cumulative Number of Datasets'
             },
 
             yAxis: [{

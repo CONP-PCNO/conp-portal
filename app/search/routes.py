@@ -138,6 +138,17 @@ def dataset_search():
     queryAll = bool(request.args.get('elements') == 'all')
 
     if(not queryAll):
+
+        if request.args.get('modalities'):
+            filterModalities = request.args.get('modalities').split(",")
+            elements = list(filter(lambda e: e['modalities'] is not None, elements))
+            elements = list(filter(lambda e: all(item in e['modalities'].lower() for item in filterModalities), elements))
+            print(elements)
+        if request.args.get('formats'):
+            filterFormats = request.args.get('formats')
+            elements = list(filter(lambda e: e['format'] is not None, elements))
+            elements = list(filter(lambda e: all(item in e['format'].lower() for item in filterFormats), elements))
+
         delta = int(request.args.get('max_per_page', 10)) * \
                     (int(request.args.get('page', 1)) - 1)
         cursor = max(min(int(request.args.get('cursor') or 0), 0), 0) + delta
