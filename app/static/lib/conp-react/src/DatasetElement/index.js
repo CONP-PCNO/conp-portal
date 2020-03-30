@@ -42,7 +42,7 @@ const DatasetElement = props => {
       <div className="col-2 d-flex align-items-center">
         <img
           alt="dataset format"
-          className="card-img-top card-social-img"
+          className="img-fluid"
           src={element.thumbnailURL}
         />
       </div>
@@ -113,7 +113,7 @@ const DatasetElement = props => {
       </div>
       <div className="col-2 d-flex flex-column justify-content-center">
         <a
-          className="card-button m-4"
+          className="card-button"
           style={{
             pointerEvents: element.isPrivate && !authorized ? "none" : "all"
           }}
@@ -127,13 +127,13 @@ const DatasetElement = props => {
           )}
 
           <img
+            className="img-fluid p-4"
             alt="Download Metadata"
             src={
               element.isPrivate && !authorized
                 ? downloadDisabled
                 : downloadEnabled
             }
-            width="100"
           />
         </a>
       </div>

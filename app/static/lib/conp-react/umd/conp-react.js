@@ -16359,7 +16359,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       { className: "col-2 d-flex align-items-center" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
         alt: "dataset format",
-        className: "card-img-top card-social-img",
+        className: "img-fluid",
         src: element.thumbnailURL
       })
     ),
@@ -16530,7 +16530,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "a",
         {
-          className: "card-button m-4",
+          className: "card-button",
           style: {
             pointerEvents: element.isPrivate && !authorized ? "none" : "all"
           },
@@ -16543,9 +16543,9 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
           "Please register for access."
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+          className: "img-fluid p-4",
           alt: "Download Metadata",
-          src: element.isPrivate && !authorized ? downloadDisabled : downloadEnabled,
-          width: "100"
+          src: element.isPrivate && !authorized ? downloadDisabled : downloadEnabled
         })
       )
     )
