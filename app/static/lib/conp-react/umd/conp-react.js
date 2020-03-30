@@ -13521,8 +13521,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       dicom: false,
       gz: false,
       txt: false
-    },
-    sources: {}
+    }
   }),
       filters = _useState[0],
       setFilters = _useState[1];
@@ -13659,27 +13658,6 @@ var DataTable_DataTable = function DataTable(_ref) {
                   "label",
                   { className: "form-check-label", htmlFor: "filter" + format },
                   format
-                )
-              );
-            })
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "d-flex flex-column p-4" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "h6",
-              null,
-              "Source:"
-            ),
-            Object.keys(filters.sources).map(function (source) {
-              return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "div",
-                { className: "form-check" },
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", { className: "form-check-input", type: "checkbox", value: "sources." + source, id: "filter" + source, onChange: handleChange }),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "label",
-                  { className: "form-check-label", htmlFor: "filter" + source },
-                  source
                 )
               );
             })

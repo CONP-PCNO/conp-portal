@@ -46,8 +46,7 @@ const DataTable = ({
       dicom: false,
       gz: false,
       txt: false
-    },
-    sources: {}
+    }
   });
 
   const handleChange = (event) => {
@@ -131,6 +130,7 @@ const DataTable = ({
               </div>
               ))}
             </div>
+            {/*
             <div className="d-flex flex-column p-4">
               <h6>Source:</h6>
               {Object.keys(filters.sources).map(source => (
@@ -142,6 +142,7 @@ const DataTable = ({
               </div>
               ))}
             </div>
+              */}
           </div>
         </div>
       </div>
