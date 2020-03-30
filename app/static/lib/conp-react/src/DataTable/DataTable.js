@@ -1,12 +1,10 @@
 import * as R from "ramda";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserLock } from '@fortawesome/free-solid-svg-icons'
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 
 const DataTable = ({
   authorized,
@@ -55,8 +53,8 @@ const DataTable = ({
     const newFilters = Object.assign({}, filters);
     newFilters[filter[0]][filter[1]] = !newFilters[filter[0]][filter[1]];
     setFilters(newFilters);
-    console.log(filters);
-    setQuery({ ...query,
+    setQuery({
+      ...query,
       modalities: Object.keys(filters.modalities).filter(m => filters.modalities[m] == true),
       formats: Object.keys(filters.formats).filter(f => filters.formats[f] == true)
     })
@@ -99,59 +97,47 @@ const DataTable = ({
           </span>
         </div>
       </div>
-      <div>
-        <button className="btn btn-light text-left" type="button" data-toggle="collapse" data-target="#filters" aria-expanded="false" aria-controls="filters">
-          <div className="d-flex p-2 align-items-center">
-            Filters
-          <FontAwesomeIcon icon={faAngleRight} color="dimgray" size="lg" />
+      {renderElement.name == "DatasetElement" ?
+        <div className="d-flex justify-content-between">
+          <div className="d-flex p-2 justify-content-start align-items-center">
+            <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg" />: CONP account required</div>
+            <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg" />: Third-party account required</div>
           </div>
-        </button>
-        <div className="collapse" id="filters">
-          <div className="d-flex">
-            <div className="d-flex flex-column p-4">
-              <h6>Modality:</h6>
-              {Object.keys(filters.modalities).map(modality => (
-                <div className="form-check">
-                <input className="form-check-input" type="checkbox" value={"modalities." + modality} id={"filter"+modality} onChange={handleChange} />
-                <label className="form-check-label" htmlFor={"filter"+modality}>
-                  {modality}
-                </label>
+          <div className="d-flex p-2 justify-content-end">
+            <div className="dropdown">
+              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Modality:
+          </button>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {Object.keys(filters.modalities).map(modality => (
+                  <div key={modality.id} className="dropdown-item ml-2">
+                    <input className="form-check-input" type="checkbox" value={"modalities." + modality} id={"filter" + modality} onChange={handleChange} />
+                    <label className="form-check-label" htmlFor={"filter" + modality}>
+                      {modality}
+                    </label>
+                  </div>
+                ))}
               </div>
-              ))}
             </div>
-            <div className="d-flex flex-column p-4">
-              <h6>Format:</h6>
-              {Object.keys(filters.formats).map(format => (
-                <div className="form-check">
-                <input className="form-check-input" type="checkbox" value={"formats." + format} id={"filter"+format} onChange={handleChange} />
-                <label className="form-check-label" htmlFor={"filter"+format}>
-                  {format}
-                </label>
+            <div className="dropdown">
+              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Format:
+          </button>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {Object.keys(filters.formats).map(format => (
+                  <div key={format.id} className="dropdown-item ml-2">
+                    <input className="form-check-input" type="checkbox" value={"formats." + format} id={"filter" + format} onChange={handleChange} />
+                    <label className="form-check-label" htmlFor={"filter" + format}>
+                      {format}
+                    </label>
+                  </div>
+                ))}
               </div>
-              ))}
             </div>
-            {/*
-            <div className="d-flex flex-column p-4">
-              <h6>Source:</h6>
-              {Object.keys(filters.sources).map(source => (
-                <div className="form-check">
-                <input className="form-check-input" type="checkbox" value={"sources." + source} id={"filter"+source} onChange={handleChange} />
-                <label className="form-check-label" htmlFor={"filter"+source}>
-                  {source}
-                </label>
-              </div>
-              ))}
-            </div>
-              */}
           </div>
-        </div>
-      </div>
-      <div className="d-flex p-2 align-items-center">
-        <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg" />: CONP account required</div>
-        <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg" />: Third-party account required</div>
-      </div>
+        </div> : null}
       {elements.map((element, i) => (
-        <div key={element.id} className="container">
+        <div key={"" + element.id} className="container">
           {React.createElement(renderElement, { ...element, authorized, imagePath })}
         </div>
       ))}

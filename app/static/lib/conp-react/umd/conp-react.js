@@ -13481,8 +13481,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 
-
-
 var DataTable_DataTable = function DataTable(_ref) {
   var authorized = _ref.authorized,
       sortKeys = _ref.sortKeys,
@@ -13532,7 +13530,6 @@ var DataTable_DataTable = function DataTable(_ref) {
     var newFilters = Object.assign({}, filters);
     newFilters[filter[0]][filter[1]] = !newFilters[filter[0]][filter[1]];
     setFilters(newFilters);
-    console.log(filters);
     setQuery(_extends({}, query, {
       modalities: Object.keys(filters.modalities).filter(function (m) {
         return filters.modalities[m] == true;
@@ -13601,37 +13598,43 @@ var DataTable_DataTable = function DataTable(_ref) {
         )
       )
     ),
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+    renderElement.name == "DatasetElement" ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      null,
+      { className: "d-flex justify-content-between" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "button",
-        { className: "btn btn-light text-left", type: "button", "data-toggle": "collapse", "data-target": "#filters", "aria-expanded": "false", "aria-controls": "filters" },
+        "div",
+        { className: "d-flex p-2 justify-content-start align-items-center" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "d-flex p-2 align-items-center" },
-          "Filters",
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faAngleRight, color: "dimgray", size: "lg" })
+          { className: "p-1 text-nowrap text-truncate" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserAlt, color: "dimgray", size: "lg" }),
+          ": CONP account required"
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "p-1 text-nowrap text-truncate" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserLock, color: "dimgray", size: "lg" }),
+          ": Third-party account required"
         )
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "collapse", id: "filters" },
+        { className: "d-flex p-2 justify-content-end" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "d-flex" },
+          { className: "dropdown" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "button",
+            { className: "btn btn-light dropdown-toggle", type: "button", id: "dropdownMenuButton", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" },
+            "Modality:"
+          ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
-            { className: "d-flex flex-column p-4" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "h6",
-              null,
-              "Modality:"
-            ),
+            { className: "dropdown-menu", "aria-labelledby": "dropdownMenuButton" },
             Object.keys(filters.modalities).map(function (modality) {
               return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
                 "div",
-                { className: "form-check" },
+                { key: modality.id, className: "dropdown-item ml-2" },
                 external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", { className: "form-check-input", type: "checkbox", value: "modalities." + modality, id: "filter" + modality, onChange: handleChange }),
                 external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
                   "label",
@@ -13640,19 +13643,23 @@ var DataTable_DataTable = function DataTable(_ref) {
                 )
               );
             })
+          )
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "dropdown" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "button",
+            { className: "btn btn-light dropdown-toggle", type: "button", id: "dropdownMenuButton", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" },
+            "Format:"
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
-            { className: "d-flex flex-column p-4" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "h6",
-              null,
-              "Format:"
-            ),
+            { className: "dropdown-menu", "aria-labelledby": "dropdownMenuButton" },
             Object.keys(filters.formats).map(function (format) {
               return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
                 "div",
-                { className: "form-check" },
+                { key: format.id, className: "dropdown-item ml-2" },
                 external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", { className: "form-check-input", type: "checkbox", value: "formats." + format, id: "filter" + format, onChange: handleChange }),
                 external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
                   "label",
@@ -13664,27 +13671,11 @@ var DataTable_DataTable = function DataTable(_ref) {
           )
         )
       )
-    ),
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "d-flex p-2 align-items-center" },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "p-1 text-nowrap text-truncate" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserAlt, color: "dimgray", size: "lg" }),
-        ": CONP account required"
-      ),
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "p-1 text-nowrap text-truncate" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserLock, color: "dimgray", size: "lg" }),
-        ": Third-party account required"
-      )
-    ),
+    ) : null,
     elements.map(function (element, i) {
       return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { key: element.id, className: "container" },
+        { key: "" + element.id, className: "container" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, { authorized: authorized, imagePath: imagePath }))
       );
     }),
