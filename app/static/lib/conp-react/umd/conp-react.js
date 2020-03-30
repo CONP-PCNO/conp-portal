@@ -16329,7 +16329,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
 
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
-    { className: "card row flex-row", "data-type": "dataset" },
+    { className: "card row d-flex flex-row", "data-type": "dataset" },
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
       { className: "card-header d-flex flex-column justify-content-between" },
@@ -16356,7 +16356,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social" },
+      { className: "col-2 d-flex align-items-center" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
         alt: "dataset format",
         className: "card-img-top card-social-img",
@@ -16365,7 +16365,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "card-body d-md-flex flex-wrap" },
+      { className: "col-8 card-body d-flex flex-wrap" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "a",
         { style: { color: "inherit" }, href: "dataset?id=" + element.id },
@@ -16377,7 +16377,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "ul",
-        { className: "d-flex col-md-12 px-1 px-md-0 card-list" },
+        { className: "d-flex" },
         element.files ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "li",
           { className: "card-list-item" },
@@ -16470,7 +16470,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
         ) : null,
         element.modalities ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "li",
-          { className: "d-none d-md-flex" },
+          { className: "card-list-item" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "p",
             { className: "card-text text-capitalize pr-1" },
@@ -16486,9 +16486,27 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
             element.modalities
           )
         ) : null,
-        element.updated ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        element.dateAdded ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "li",
-          { className: "d-none d-md-flex" },
+          { className: "card-list-item" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "p",
+            { className: "card-text text-capitalize pr-1" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Date Added: "
+            )
+          ),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "p",
+            { className: "card-text text-muted" },
+            element.dateAdded
+          )
+        ) : null,
+        element.dateUpdated ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "li",
+          { className: "card-list-item" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "p",
             { className: "card-text text-capitalize pr-1" },
@@ -16508,35 +16526,27 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "col-12 col-md-auto d-flex my-2 card-buttons" },
+      { className: "col-2 d-flex flex-column justify-content-center" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "button",
-        { className: "btn btn-outline-secondary d-md-none" },
-        "Go to Dataset"
-      ),
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "d-flex justify-content-end align-items-center flex-wrap mb-3 mb-md-0" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "a",
-          {
-            className: "card-button mx-2",
-            style: {
-              pointerEvents: element.isPrivate && !authorized ? "none" : "all"
-            },
-            href: "download_metadata?dataset=" + element.id,
-            download: true
+        "a",
+        {
+          className: "card-button m-4",
+          style: {
+            pointerEvents: element.isPrivate && !authorized ? "none" : "all"
           },
-          element.isPrivate && !authorized && external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "card-button-tooltip" },
-            "Please register for access."
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-            alt: "Download Metadata",
-            src: element.isPrivate && !authorized ? downloadDisabled : downloadEnabled
-          })
-        )
+          href: "download_metadata?dataset=" + element.id,
+          download: true
+        },
+        element.isPrivate && !authorized && external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "card-button-tooltip" },
+          "Please register for access."
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+          alt: "Download Metadata",
+          src: element.isPrivate && !authorized ? downloadDisabled : downloadEnabled,
+          width: "100"
+        })
       )
     )
   );
@@ -16759,7 +16769,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
             },
 
             title: {
-                text: 'Cumulative Number of Datasets and Pipelines'
+                text: 'Cumulative Number of Datasets'
             },
 
             yAxis: [{
