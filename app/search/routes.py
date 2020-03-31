@@ -143,7 +143,6 @@ def dataset_search():
             filterModalities = request.args.get('modalities').split(",")
             elements = list(filter(lambda e: e['modalities'] is not None, elements))
             elements = list(filter(lambda e: all(item in e['modalities'].lower() for item in filterModalities), elements))
-            print(elements)
         if request.args.get('formats'):
             filterFormats = request.args.get('formats')
             elements = list(filter(lambda e: e['format'] is not None, elements))
@@ -164,7 +163,17 @@ def dataset_search():
             paginated.sort(key=lambda o: o[sort_key].lower())
 
         elif(sort_key == "size"):
-            paginated.sort(key=lambda o: o[sort_key])
+
+            def getAbsoluteSize(e):
+                units = ["KB", "MB", "GB", "TB"]
+                unitScales = [1000, 1000**2, 1000**3, 1000**4]
+                size = e["size"].split(" ")
+                absoluteSize = size[0]
+                if(size[1] in units):
+                    absoluteSize = float(size[0]) * unitScales[units.index(size[1])]
+                return absoluteSize
+
+            paginated.sort(key=lambda o: (o[sort_key] is None, getAbsoluteSize(o)), reverse=True)
 
         else:
             paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
