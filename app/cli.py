@@ -131,10 +131,9 @@ def _update_pipeline_data(app):
     """
     Updates from Zenodo the available pipelines
     """
-    thr = UpdatePipelineData(path=os.path.join(os.path.expanduser('~'),
-                                               ".cache", "boutiques"))
-    thr.start()
-    thr.join()
+    t = UpdatePipelineData()
+    t.start()
+    t.join()
 
 
 def _update_datasets(app):
