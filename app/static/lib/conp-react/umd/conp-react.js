@@ -16592,10 +16592,22 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       element = PipelineElement_objectWithoutProperties(props, ["authorized"]);
 
   var platforms = element.platforms.map(function (item, key) {
-    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "a",
-      { key: key, className: "card-button mx-2", href: item.uri },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { alt: "Online platform", src: item.img })
+    return item.uri ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      "span",
+      { key: key, className: "p-1", "data-toggle": "tooltip", title: "Run Pipeline" },
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "a",
+        { className: "btn", href: item.uri },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { className: "img-fluid", alt: "Online platform", src: item.img })
+      )
+    ) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      "span",
+      { key: key, className: "p-1", "data-toggle": "tooltip", title: "Unavailable" },
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "a",
+        { className: "btn disabled", href: item.uri, disabled: true },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { className: "img-fluid", alt: "Online platform", src: item.img })
+      )
     );
   });
 
@@ -16604,22 +16616,22 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     { className: "card row flex-row", "data-type": "pipeline" },
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social" },
+      { className: "col-sm-12 col-md-2 d-flex flex-column justify-content-between align-items-center p-4" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "a",
         { href: element.url },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
           alt: "dataset format",
-          className: "card-img-top card-social-img",
+          className: "img-fluid",
           src: element.url == undefined ? "static/img/cogs-solid-grey.png" : "static/img/cogs-solid-green.png"
         })
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "card-social-icons" },
+        { className: "d-flex" },
         element.downloads ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "card-social-icon" },
+          { className: "d-flex flex-column align-items-center" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-download my-2" }),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
@@ -16631,7 +16643,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "card-body d-md-flex flex-wrap" },
+      { className: "col-sm-12 col-md-7 card-body d-flex flex-column flex-wrap" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "a",
         {
@@ -16643,45 +16655,45 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
         },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "h5",
-          { className: "card-title text-card-title col-12 pl-2 pl-md-0" },
+          { className: "card-title text-card-title p-2" },
           element.title
         )
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "card-subtitle col-12 pl-2 pl-md-0" },
+        { className: "card-subtitle" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "p",
-          { className: "card-text text-capitalize pr-1" },
+          { className: "card-text text-capitalize p-2" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "strong",
             null,
             "Pipeline Id:"
-          )
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "a",
-          { href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
+          ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted text-link" },
-            element.id
+            "a",
+            { href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "p",
+              { className: "card-text text-muted text-link" },
+              element.id
+            )
           )
         )
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "d-flex col-md-12 px-2" },
+        { className: "d-flex" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "card-description" },
+          { className: "card-description p-2" },
           element.description
         )
       )
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "col-12 col-md-auto d-flex align-items-center justify-content-center my-2 card-buttons" },
+      { className: "col-sm-12 col-md-3 d-flex align-items-center justify-content-center" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
         { className: "d-flex justify-content-end align-items-center flex-wrap" },
