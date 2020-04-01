@@ -176,7 +176,7 @@ def dataset_search():
                     absoluteSize = float(size[0]) * unitScales[units.index(size[1])]
                 return absoluteSize
 
-            paginated.sort(key=lambda o: (o[sort_key] is None, getAbsoluteSize(o)), reverse=True)
+            paginated.sort(key=lambda o: getAbsoluteSize(o), reverse=True)
 
         else:
             paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
