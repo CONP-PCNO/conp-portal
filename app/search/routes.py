@@ -165,6 +165,9 @@ def dataset_search():
         elif(sort_key == "size"):
 
             def getAbsoluteSize(e):
+                if not e["size"]:
+                    return 0.0
+
                 units = ["KB", "MB", "GB", "TB"]
                 unitScales = [1000, 1000**2, 1000**3, 1000**4]
                 size = e["size"].split(" ")
