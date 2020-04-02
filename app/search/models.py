@@ -2,6 +2,7 @@ import os
 import json
 import fnmatch
 
+
 class DATSDataset(object):
     def __init__(self, datasetpath):
         """
@@ -9,6 +10,7 @@ class DATSDataset(object):
         """
         if not os.path.isdir(datasetpath):
             raise 'No dataset found at {}'.format(datasetpath)
+
         self.datasetpath = datasetpath
 
         with open(self.DatsFilepath, 'r') as f:
@@ -16,6 +18,10 @@ class DATSDataset(object):
                 self.descriptor = json.load(f)
             except Exception as e:
                 raise 'Can`t parse {}'.format(self.DatsFilepath)
+
+    @property
+    def name(self):
+        return self.datasetpath.split('conp-dataset/projects/')[-1]
 
     @property
     def DatsFilepath(self):

@@ -53,18 +53,18 @@
   </div>
 </div>
 
+<h2 class="card-title">Download Options</h2>
+Download is enabled through <a style="color: blue;" href="http://handbook.datalad.org/en/latest/intro/installation.html#install">datalad</a>
+<br>
+Here are commands to download content from this dataset:
 <div class="card">
   <div class="card-body">
-    <h2 class="card-title">Download Options</h2>
     <pre class="card-text" style="white-space: pre-wrap;">
-# Download is enabled through <a style="color: blue;" href="http://handbook.datalad.org/en/latest/intro/installation.html#install">datalad</a>
-      
-# Here are commands to download content from this dataset:
-    ~$ datalad install https://github.com/CONP-PCNO/conp-dataset.git
-    ~$ cd conp-dataset
-    ~$ datalad install {{data.id}}
-    ~$ cd {{data.id}}
-    ~$ datalad get &ltfilepath&gt
+datalad install https://github.com/CONP-PCNO/conp-dataset.git
+cd conp-dataset
+datalad install projects/{{data.name}}
+cd projects/{{data.name}}
+datalad get &ltfilepath&gt
     </pre>
   </div>
 </div>
