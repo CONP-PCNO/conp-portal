@@ -223,10 +223,10 @@ def dataset_info():
         authorized = True
     else:
         authorized = False
-
+    print(str(d))
     dataset = {
         "authorized": authorized,
-
+        "name": datsdataset.name,
         "id": d.dataset_id,
         "title": d.name.replace("'", ""),
         "isPrivate": d.is_private,
