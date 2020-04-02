@@ -21,6 +21,8 @@ const DataTableContainer = ({
 
   const [query, setQuery] = React.useState({
     search: "",
+    modalities: [],
+    formats: [],
     sortKey: "conpStatus",
     sortComparitor: "asc",
     page,
@@ -39,7 +41,7 @@ const DataTableContainer = ({
   }, [limit]);
 
   const fetchElements = async () => {
-    const url = `${endpointURL}?${qs.stringify(query)}`;
+    const url = `${endpointURL}?${qs.stringify(query, {arrayFormat: 'comma'})}`;
 
     try {
       const res = await fetch(url);
