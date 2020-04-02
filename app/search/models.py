@@ -2,6 +2,7 @@ import os
 import json
 import fnmatch
 
+
 class DATSDataset(object):
     def __init__(self, datasetpath):
         """
@@ -20,7 +21,7 @@ class DATSDataset(object):
 
     @property
     def name(self):
-        return os.path.basename(self.datasetpath)
+        return self.datasetpath.split('conp-dataset/projects/')[-1]
 
     @property
     def DatsFilepath(self):
