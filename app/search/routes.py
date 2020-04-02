@@ -249,7 +249,7 @@ def dataset_info():
 
     dataset={
         "authorized": authorized,
-
+        "name": datsdataset.name,
         "id": d.dataset_id,
         "title": d.name.replace("'", ""),
         "isPrivate": d.is_private,
