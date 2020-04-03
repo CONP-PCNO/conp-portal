@@ -56,58 +56,51 @@ const DatasetElement = props => {
           {element.files ?
             <li className="card-list-item">
               <p className="card-text text-capitalize pr-1">
-                <strong>Files: </strong>
+                <strong>Files: </strong>{element.files}
               </p>
-              <p className="card-text text-muted">{element.files}</p>
             </li> : null}
           {element.size ?
             <li className="card-list-item">
               <p className="card-text text-capitalize pr-1">
-                <strong>Size: </strong>
+                <strong>Size: </strong>{element.size}
               </p>
-              <p className="card-text text-muted">{element.size}</p>
             </li> : null}
           {element.subjects ?
             <li className="card-list-item">
               <p className="card-text text-capitalize pr-1">
-                <strong>Subjects: </strong>
+                <strong>Subjects: </strong>{element.subjects}
               </p>
-              <p className="card-text text-muted">{element.subjects}</p>
             </li> : null}
           {element.sources ?
             <li className="card-list-item">
               <p className="card-text text-capitalize pr-1">
                 <strong>Sources: </strong>
+                <a className="card-text btn-link" href={element.sources}>{element.sources}</a>
               </p>
-              <a className="card-text btn-link" href={element.sources}>{element.sources}</a>
             </li> : null}
           {element.format ?
             <li className="card-list-item">
               <p className="card-text text-capitalize pr-1">
-                <strong>Format: </strong>
-              </p>
-              <p className="card-text text-muted">{element.format.toString()}</p>
+                <strong>Format: </strong>{element.format.toString()
+                }</p>
             </li> : null}
           {element.modalities ?
             <li className="card-list-item">
               <p className="card-text text-capitalize pr-1">
-                <strong>Modalities: </strong>
+                <strong>Modalities: </strong>{element.modalities}
               </p>
-              <p className="card-text text-muted">{element.modalities}</p>
             </li> : null}
           {element.dateAdded ?
             <li className="card-list-item">
               <p className="card-text text-capitalize pr-1">
-                <strong>Date Added: </strong>
-              </p>
-              <p className="card-text text-muted">{element.dateAdded}</p>
+                <strong>Date Added: </strong>{element.dateAdded
+                }</p>
             </li> : null}
           {element.dateUpdated ?
             <li className="card-list-item">
               <p className="card-text text-capitalize pr-1">
-                <strong>Date Updated: </strong>
+                <strong>Date Updated: </strong>{element.dateUpdated}
               </p>
-              <p className="card-text text-muted">{element.dateUpdated}</p>
             </li> : null}
         </ul>
       </div>

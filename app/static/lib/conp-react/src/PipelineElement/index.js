@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const PipelineElement = props => {
   const { authorized, ...element } = props;
-  const platforms = element.platforms.map((item,key) =>
+  const platforms = element.platforms.map((item, key) =>
     <a key={key} className="card-button mx-2" href={item.uri}>
       <img alt="Online platform" src={item.img} />
     </a>
@@ -25,10 +25,10 @@ const PipelineElement = props => {
         </a>
         <div className="card-social-icons">
           {element.downloads ?
-          <div className="card-social-icon">
-            <i className="fa fa-download my-2" />
-            <div>{element.downloads}</div>
-          </div> : null }
+            <div className="card-social-icon">
+              <i className="fa fa-download my-2" />
+              <div>{element.downloads}</div>
+            </div> : null}
         </div>
       </div>
       <div className="card-body d-md-flex flex-wrap">
@@ -43,15 +43,13 @@ const PipelineElement = props => {
             {element.title}
           </h5>
         </a>
-        <div className="card-subtitle col-12 pl-2 pl-md-0">
+        <div className="d-flex col-md-12">
           <p className="card-text text-capitalize pr-1">
-            <strong>Pipeline Id:</strong>
+            <strong>Pipeline Id: </strong>
+            <a href={"https://www.zenodo.org/record/" + element.id.split(".")[1]}>{element.id}</a>
           </p>
-          <a href={"https://www.zenodo.org/record/" + element.id.split(".")[1]}>
-            <p className="card-text text-muted text-link">{element.id}</p>
-          </a>
         </div>
-        <div className="d-flex col-md-12 px-2">
+        <div className="d-flex col-md-12">
           <div className="card-description">{element.description}</div>
         </div>
       </div>

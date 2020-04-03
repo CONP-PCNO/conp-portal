@@ -16497,11 +16497,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Files: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            ),
             element.files
           )
         ) : null,
@@ -16515,11 +16511,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Size: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            ),
             element.size
           )
         ) : null,
@@ -16533,11 +16525,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Subjects: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            ),
             element.subjects
           )
         ) : null,
@@ -16551,12 +16539,12 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Sources: "
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "a",
+              { className: "card-text btn-link", href: element.sources },
+              element.sources
             )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "a",
-            { className: "card-text btn-link", href: element.sources },
-            element.sources
           )
         ) : null,
         element.format ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -16569,11 +16557,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Format: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            ),
             element.format.toString()
           )
         ) : null,
@@ -16587,11 +16571,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Modalities: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            ),
             element.modalities
           )
         ) : null,
@@ -16605,11 +16585,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Date Added: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            ),
             element.dateAdded
           )
         ) : null,
@@ -16623,11 +16599,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Date Updated: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            ),
             element.dateUpdated
           )
         ) : null
@@ -16758,29 +16730,25 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "card-subtitle col-12 pl-2 pl-md-0" },
+        { className: "d-flex col-md-12" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "p",
           { className: "card-text text-capitalize pr-1" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "strong",
             null,
-            "Pipeline Id:"
-          )
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "a",
-          { href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
+            "Pipeline Id: "
+          ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted text-link" },
+            "a",
+            { href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
             element.id
           )
         )
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "d-flex col-md-12 px-2" },
+        { className: "d-flex col-md-12" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
           { className: "card-description" },
