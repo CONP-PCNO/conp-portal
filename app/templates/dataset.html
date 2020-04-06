@@ -16,62 +16,37 @@
 
 {% block appcontent %}
 <div id="mount-display" class="dataset"></div>
-<!--style="border-top: 1px solid black"></div>-->
 
-<div class="dataset-metadata">
-  <div class="dataset-information col-md-10">
-    <div class="row" style="padding: 20px;">
-      <div class="col-xs-2">
-        <b>Version: </b> {{ metadata.version }}
-      </div>
-    </div>
-    <div class="row" style="padding: 20px;">
-      <div class="col-xs-2">
-        <b>Source: </b> <a class="btn-link" href="{{ metadata.sources }}">{{ metadata.sources }}</a>
-      </div>
-    </div>
-    <div class="row" style="padding: 20px;">
-      <div class="col-xs-2">
-        <b>Authors: </b> {{ metadata.authors }}
-      </div>
-    </div>
-    <div class="row" style="padding: 20px;">
-      <div class="col-xs-2">
-        <b>Contact: </b> {{ metadata.contact }}
-      </div>
-    </div>
-    <div class="row" style="padding: 20px;">
-      <div class="col-xs-2">
-        <b>Description: </b> {{ metadata.description|safe }}
-      </div>
-    </div>
-    <div class="row" style="padding: 20px;">
-      <div class="col-xs-2">
-        <b>Licenses: </b> {{ metadata.licenses }}
-      </div>
-    </div>
-  </div>
+<div class="d-flex flex-column p-4">
+  <p><strong>Version: </strong> {{ metadata.version }} </p>
+  <p><strong>Source: </strong><a class="btn-link" href="{{ metadata.sources }}">{{ metadata.sources }}</a></p>
+  <p><strong>Authors: </strong>{{ metadata.authors }}</p>
+  <p><strong>Contact: </strong> {{ metadata.contact }}</p>
+  <p><strong>Description: </strong> {{ metadata.description|safe }}</p>
+  <p><strong>Licenses: </strong> {{ metadata.licenses }}</p>
 </div>
 
-<h2 class="card-title">Download Options</h2>
-Download is enabled through <a style="color: blue;" href="http://handbook.datalad.org/en/latest/intro/installation.html#install">datalad</a>
-<br>
-Here are commands to download content from this dataset:
-<div class="card">
-  <div class="card-body">
-    <pre class="card-text" style="white-space: pre-wrap;">
+<div class="d-flex flex-column p-4">
+  <h2>Download Options</h2>
+  <p>Download is enabled through <a
+      href="http://handbook.datalad.org/en/latest/intro/installation.html#install">datalad</a></p>
+  <p>Here are commands to download content from this dataset:</p>
+  <div class="card">
+    <div class="card-body">
+      <pre class="card-text" style="white-space: pre-wrap;">
 datalad install https://github.com/CONP-PCNO/conp-dataset.git
 cd conp-dataset
 datalad install projects/{{data.name}}
 cd projects/{{data.name}}
 datalad get &ltfilepath&gt
     </pre>
+    </div>
   </div>
 </div>
 
 <script type="text/javascript">
 
-  const reactElement = React.createElement(CONPReact.DatasetElement, {{ data|tojson }});
+  const reactElement = React.createElement(CONPReact.DatasetElement, {{ data| tojson }});
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));
 
 </script>

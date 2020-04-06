@@ -40,9 +40,19 @@ def share():
             rendered template for share.html
     """
 
-    url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/CONP_main_data_documentation.htm'
+    url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/datalad_dataset_addition_procedure.md'
     headers = {'Content-type': 'text/html; charset=UTF-8'}
     response = requests.get(url, headers=headers)
+
+    readmeRaw = response.text
+
+    url = 'https://api.github.com/markdown'
+    body = {
+        "text": readmeRaw,
+        "mode": "gfm",
+        "context": "github/gollum"
+    }
+    response = requests.post(url, json=body)
 
     content = response.text
 
