@@ -48,15 +48,6 @@ In the top level directory:
 flask db upgrade
 flask seed_test_db
 ```
-### Get the dataset repository
-
-In the top level directory:
-
-```shell
-  git submodule update --init --recursive --remote
-```
-      
-You can now view the contents of the directory `app/static/data` and you should now see that the conp-datasets repository has been cloned into here.
 
 ### Run Application
 
@@ -66,7 +57,7 @@ In the top level directory:
 flask run
 ```
 
-The application should now be live on `http://0.0.0.0:5000/` 
+The application should now be live on `http://localhost:5000/` 
     
 ### Testing
 
