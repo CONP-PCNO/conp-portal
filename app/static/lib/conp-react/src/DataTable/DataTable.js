@@ -56,7 +56,8 @@ const DataTable = ({
     setQuery({
       ...query,
       modalities: Object.keys(filters.modalities).filter(m => filters.modalities[m] == true),
-      formats: Object.keys(filters.formats).filter(f => filters.formats[f] == true)
+      formats: Object.keys(filters.formats).filter(f => filters.formats[f] == true),
+      page: 1
     })
   }
 
@@ -69,7 +70,7 @@ const DataTable = ({
             className="btn btn-outline-secondary dropdown-toggle dropdown-select px-4"
             value={query.sortKey}
             onChange={e =>
-              setQuery({ ...query, sortKey: e.currentTarget.value })
+              setQuery({ ...query, sortKey: e.currentTarget.value, page: 1 })
             }
           >
             {sortKeys.map(({ key: sortKey, label }, i) => (
