@@ -13536,7 +13536,8 @@ var DataTable_DataTable = function DataTable(_ref) {
       }),
       formats: Object.keys(filters.formats).filter(function (f) {
         return filters.formats[f] == true;
-      })
+      }),
+      page: 1
     }));
   };
 
@@ -13560,7 +13561,7 @@ var DataTable_DataTable = function DataTable(_ref) {
             className: "btn btn-outline-secondary dropdown-toggle dropdown-select px-4",
             value: query.sortKey,
             onChange: function onChange(e) {
-              return setQuery(_extends({}, query, { sortKey: e.currentTarget.value }));
+              return setQuery(_extends({}, query, { sortKey: e.currentTarget.value, page: 1 }));
             }
           },
           sortKeys.map(function (_ref2, i) {
@@ -13584,7 +13585,7 @@ var DataTable_DataTable = function DataTable(_ref) {
           "aria-label": "Search",
           value: query.search,
           onChange: function onChange(e) {
-            return setQuery(_extends({}, query, { search: e.currentTarget.value }));
+            return setQuery(_extends({}, query, { search: e.currentTarget.value, page: 1 }));
           }
         }),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
