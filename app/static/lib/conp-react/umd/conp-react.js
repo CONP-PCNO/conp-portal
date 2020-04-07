@@ -13584,7 +13584,7 @@ var DataTable_DataTable = function DataTable(_ref) {
           "aria-label": "Search",
           value: query.search,
           onChange: function onChange(e) {
-            return setQuery(_extends({}, query, { search: e.currentTarget.value }));
+            return setQuery(_extends({}, query, { search: e.currentTarget.value, page: 1 }));
           }
         }),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(

@@ -87,7 +87,7 @@ const DataTable = ({
             aria-label="Search"
             value={query.search}
             onChange={e =>
-              setQuery({ ...query, search: e.currentTarget.value })
+              setQuery({ ...query, search: e.currentTarget.value, page: 1 })
             }
           />
           <span className="input-group-append">
