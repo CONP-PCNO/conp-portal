@@ -19,7 +19,7 @@
 
 <div class="d-flex flex-column p-4">
   <p><strong>Version: </strong> {{ metadata.version }} </p>
-  <p><strong>Source: </strong><a class="btn-link" href="{{ metadata.sources }}">{{ metadata.sources }}</a></p>
+  <p><strong>Source: </strong><a target="_blank" rel="noopener noreferrer" href="{{ metadata.sources }}">{{ metadata.sources }}</a></p>
   <p><strong>Authors: </strong>{{ metadata.authors }}</p>
   <p><strong>Contact: </strong> {{ metadata.contact }}</p>
   <p><strong>Description: </strong> {{ metadata.description|safe }}</p>
@@ -33,7 +33,7 @@
     <strong>Note: </strong>an account is required to access this dataset. Please follow the Source URL and request an
     account on the source page.</div>
   {% endif %}
-  <p>Download is enabled through <a
+  <p>Download is enabled through <a target="_blank" rel="noopener noreferrer"
       href="http://handbook.datalad.org/en/latest/intro/installation.html#install">datalad</a></p>
   <p>Here are commands to download content from this dataset:</p>
   <div class="card">

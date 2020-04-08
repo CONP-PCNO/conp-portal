@@ -16535,7 +16535,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
           { className: "card-list-item" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "p",
-            { className: "card-text text-capitalize pr-1" },
+            { className: "card-text pr-1" },
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
               "strong",
               null,
@@ -16543,7 +16543,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
             ),
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
               "a",
-              { className: "card-text btn-link", href: element.sources },
+              { target: "_blank", rel: "noopener noreferrer", href: element.sources },
               element.sources
             )
           )
@@ -16742,7 +16742,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "a",
-            { href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
+            { target: "_blank", rel: "noopener noreferrer", href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
             element.id
           )
         )

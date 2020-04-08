@@ -73,9 +73,9 @@ const DatasetElement = props => {
             </li> : null}
           {element.sources ?
             <li className="card-list-item">
-              <p className="card-text text-capitalize pr-1">
+              <p className="card-text pr-1">
                 <strong>Sources: </strong>
-                <a className="card-text btn-link" href={element.sources}>{element.sources}</a>
+                <a target="_blank" rel="noopener noreferrer" href={element.sources}>{element.sources}</a>
               </p>
             </li> : null}
           {element.format ?
