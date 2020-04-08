@@ -31,7 +31,6 @@ def share():
     """ Share Route
 
         Route to lead to the share page
-        CURRENTLY NOT WORKING
 
         Args:
             None
@@ -57,3 +56,34 @@ def share():
     content = response.text
 
     return render_template('share.html', title='CONP | Share a Dataset', user=current_user, content=content)
+
+@main_bp.route('/faq')
+def faq():
+    """ FAQ Route
+
+        Route to lead to the faq page
+
+        Args:
+            None
+
+        Returns:
+            rendered template for faq.html
+    """
+
+    url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/CONP_FAQ.md'
+    headers = {'Content-type': 'text/html; charset=UTF-8'}
+    response = requests.get(url, headers=headers)
+
+    faqRaw = response.text
+
+    url = 'https://api.github.com/markdown'
+    body = {
+        "text": faqRaw,
+        "mode": "gfm",
+        "context": "github/gollum"
+    }
+    response = requests.post(url, json=body)
+
+    content = response.text
+
+    return render_template('faq.html', title='CONP | FAQ', user=current_user, content=content)
