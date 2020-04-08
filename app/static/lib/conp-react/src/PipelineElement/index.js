@@ -46,7 +46,7 @@ const PipelineElement = props => {
         <div className="d-flex col-md-12">
           <p className="card-text text-capitalize pr-1">
             <strong>Pipeline Id: </strong>
-            <a href={"https://www.zenodo.org/record/" + element.id.split(".")[1]}>{element.id}</a>
+            <a target="_blank" rel="noopener noreferrer" href={"https://www.zenodo.org/record/" + element.id.split(".")[1]}>{element.id}</a>
           </p>
         </div>
         <div className="d-flex col-md-12">
