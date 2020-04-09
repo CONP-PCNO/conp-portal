@@ -5,12 +5,12 @@ const PipelineElement = props => {
   const { authorized, ...element } = props;
   const platforms = element.platforms.map((item, key) =>
     item.uri ?
-      <span key={key} className="p-1" data-toggle="tooltip" title="Run Pipeline">
+      <span key={key} className="p-1" data-toggle="tooltip" title="Run Pipeline" style={{ maxWidth: "140px" }}>
         <a className="btn" href={item.uri}>
           <img className="img-fluid" alt="Online platform" src={item.img} />
         </a>
       </span> :
-      <span key={key} className="p-1" data-toggle="tooltip" title="Unavailable">
+      <span key={key} className="p-1" data-toggle="tooltip" title="Unavailable" style={{ maxWidth: "140px" }}>
         <a className="btn disabled" href={item.uri} disabled>
           <img className="img-fluid" alt="Online platform" src={item.img} />
         </a>

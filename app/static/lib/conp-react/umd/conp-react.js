@@ -16676,7 +16676,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
   var platforms = element.platforms.map(function (item, key) {
     return item.uri ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "span",
-      { key: key, className: "p-1", "data-toggle": "tooltip", title: "Run Pipeline" },
+      { key: key, className: "p-1", "data-toggle": "tooltip", title: "Run Pipeline", style: { maxWidth: "140px" } },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "a",
         { className: "btn", href: item.uri },
@@ -16684,7 +16684,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       )
     ) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "span",
-      { key: key, className: "p-1", "data-toggle": "tooltip", title: "Unavailable" },
+      { key: key, className: "p-1", "data-toggle": "tooltip", title: "Unavailable", style: { maxWidth: "140px" } },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "a",
         { className: "btn disabled", href: item.uri, disabled: true },
@@ -16746,7 +16746,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
         { className: "d-flex col-md-12" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "p",
-          { className: "card-text text-capitalize p-2" },
+          { className: "card-text text-capitalize pr-1" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "strong",
             null,
@@ -16764,7 +16764,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
         { className: "d-flex col-md-12" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "card-description p-2" },
+          { className: "card-description" },
           element.description
         )
       )
