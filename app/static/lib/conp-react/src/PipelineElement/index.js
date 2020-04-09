@@ -39,7 +39,7 @@ const PipelineElement = props => {
             </div> : null}
         </div>
       </div>
-      <div className="col-sm-12 col-md-7 card-body d-flex flex-column flex-wrap">
+      <div className="card-body d-md-flex flex-wrap">
         <a
           style={{
             color: "inherit",
@@ -47,7 +47,7 @@ const PipelineElement = props => {
           }}
           href={element.descriptorurl}
         >
-          <h5 className="card-title text-card-title p-2">
+          <h5 className="card-title text-card-title col-12 pl-2 pl-md-0">
             {element.title}
           </h5>
         </a>

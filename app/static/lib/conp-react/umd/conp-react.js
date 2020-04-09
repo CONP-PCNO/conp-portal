@@ -16725,7 +16725,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "col-sm-12 col-md-7 card-body d-flex flex-column flex-wrap" },
+      { className: "card-body d-md-flex flex-wrap" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "a",
         {
@@ -16737,7 +16737,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
         },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "h5",
-          { className: "card-title text-card-title p-2" },
+          { className: "card-title text-card-title col-12 pl-2 pl-md-0" },
           element.title
         )
       ),
