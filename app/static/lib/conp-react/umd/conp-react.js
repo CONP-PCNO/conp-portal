@@ -13491,6 +13491,56 @@ var DataTable_DataTable = function DataTable(_ref) {
       query = _ref.query,
       setQuery = _ref.setQuery;
 
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
+    modalities: {
+      mri: false,
+      eeg: false,
+      qualityControlSubject: false,
+      basicDemographic: false,
+      genomics: false
+    },
+    formats: {
+      minc: false,
+      json: false,
+      nifti: false,
+      stl: false,
+      mif: false,
+      vcf: false,
+      fasta: false,
+      csv: false,
+      rnaSeq: false,
+      fastq: false,
+      gtf: false,
+      tsv: false,
+      bam: false,
+      bigwig: false,
+      cel: false,
+      jpg: false,
+      dicom: false,
+      gz: false,
+      txt: false
+    }
+  }),
+      filters = _useState[0],
+      setFilters = _useState[1];
+
+  var handleChange = function handleChange(event) {
+    var e = event.target.value;
+    var filter = e.split(".");
+    var newFilters = Object.assign({}, filters);
+    newFilters[filter[0]][filter[1]] = !newFilters[filter[0]][filter[1]];
+    setFilters(newFilters);
+    setQuery(_extends({}, query, {
+      modalities: Object.keys(filters.modalities).filter(function (m) {
+        return filters.modalities[m] == true;
+      }),
+      formats: Object.keys(filters.formats).filter(function (f) {
+        return filters.formats[f] == true;
+      }),
+      page: 1
+    }));
+  };
+
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
     { className: "search-dataset-table container", cellSpacing: 0 },
@@ -13511,7 +13561,7 @@ var DataTable_DataTable = function DataTable(_ref) {
             className: "btn btn-outline-secondary dropdown-toggle dropdown-select px-4",
             value: query.sortKey,
             onChange: function onChange(e) {
-              return setQuery(_extends({}, query, { sortKey: e.currentTarget.value }));
+              return setQuery(_extends({}, query, { sortKey: e.currentTarget.value, page: 1 }));
             }
           },
           sortKeys.map(function (_ref2, i) {
@@ -13535,7 +13585,7 @@ var DataTable_DataTable = function DataTable(_ref) {
           "aria-label": "Search",
           value: query.search,
           onChange: function onChange(e) {
-            return setQuery(_extends({}, query, { search: e.currentTarget.value }));
+            return setQuery(_extends({}, query, { search: e.currentTarget.value, page: 1 }));
           }
         }),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -13549,26 +13599,84 @@ var DataTable_DataTable = function DataTable(_ref) {
         )
       )
     ),
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+    renderElement.name == "DatasetElement" ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "d-flex p-2 align-items-center" },
+      { className: "d-flex justify-content-between" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "p-1 text-nowrap text-truncate" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserAlt, color: "dimgray", size: "lg" }),
-        ": CONP account required"
+        { className: "d-flex p-2 justify-content-start align-items-center" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "p-1 text-nowrap text-truncate" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserAlt, color: "dimgray", size: "lg" }),
+          ": CONP account required"
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "p-1 text-nowrap text-truncate" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserLock, color: "dimgray", size: "lg" }),
+          ": Third-party account required"
+        )
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "p-1 text-nowrap text-truncate" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserLock, color: "dimgray", size: "lg" }),
-        ": Third-party account required"
+        { className: "d-flex p-2 justify-content-end" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "dropdown" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "button",
+            { className: "btn btn-light dropdown-toggle", type: "button", id: "dropdownMenuButton", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" },
+            "Modality:"
+          ),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "dropdown-menu", "aria-labelledby": "dropdownMenuButton" },
+            Object.keys(filters.modalities).map(function (modality) {
+              return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { key: modality.id, className: "dropdown-item ml-2" },
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", { className: "form-check-input", type: "checkbox", value: "modalities." + modality, id: "filter" + modality, onChange: handleChange }),
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                  "label",
+                  { className: "form-check-label", htmlFor: "filter" + modality },
+                  modality
+                )
+              );
+            })
+          )
+        ),
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "dropdown" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "button",
+            { className: "btn btn-light dropdown-toggle", type: "button", id: "dropdownMenuButton", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" },
+            "Format:"
+          ),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "dropdown-menu", "aria-labelledby": "dropdownMenuButton" },
+            Object.keys(filters.formats).map(function (format) {
+              return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "div",
+                { key: format.id, className: "dropdown-item ml-2" },
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", { className: "form-check-input", type: "checkbox", value: "formats." + format, id: "filter" + format, onChange: handleChange }),
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                  "label",
+                  { className: "form-check-label", htmlFor: "filter" + format },
+                  format
+                )
+              );
+            })
+          )
+        )
       )
-    ),
+    ) : null,
     elements.map(function (element, i) {
       return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { key: element.id, className: "container" },
+        { key: "" + element.id, className: "container" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, { authorized: authorized, imagePath: imagePath }))
       );
     }),
@@ -16169,6 +16277,8 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
 
   var _React$useState2 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState({
     search: "",
+    modalities: [],
+    formats: [],
     sortKey: "conpStatus",
     sortComparitor: "asc",
     page: page,
@@ -16202,7 +16312,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              url = endpointURL + "?" + query_string["stringify"](query);
+              url = endpointURL + "?" + query_string["stringify"](query, { arrayFormat: 'comma' });
               _context.prev = 1;
               _context.next = 4;
               return fetch(url);
@@ -16388,11 +16498,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Files: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            ),
             element.files
           )
         ) : null,
@@ -16406,11 +16512,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Size: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            ),
             element.size
           )
         ) : null,
@@ -16424,11 +16526,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Subjects: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            ),
             element.subjects
           )
         ) : null,
@@ -16437,17 +16535,17 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
           { className: "card-list-item" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "p",
-            { className: "card-text text-capitalize pr-1" },
+            { className: "card-text pr-1" },
             external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
               "strong",
               null,
               "Sources: "
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "a",
+              { target: "_blank", rel: "noopener noreferrer", href: element.sources },
+              element.sources
             )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "a",
-            { className: "card-text btn-link", href: element.sources },
-            element.sources
           )
         ) : null,
         element.format ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -16460,11 +16558,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Format: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            ),
             element.format.toString()
           )
         ) : null,
@@ -16478,11 +16572,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Modalities: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            ),
             element.modalities
           )
         ) : null,
@@ -16496,11 +16586,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Date Added: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            ),
             element.dateAdded
           )
         ) : null,
@@ -16514,11 +16600,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "strong",
               null,
               "Date Updated: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-muted" },
+            ),
             element.dateUpdated
           )
         ) : null
@@ -16661,29 +16743,25 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "card-subtitle" },
+        { className: "d-flex col-md-12" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "p",
           { className: "card-text text-capitalize p-2" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "strong",
             null,
-            "Pipeline Id:"
+            "Pipeline Id: "
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "a",
-            { href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "p",
-              { className: "card-text text-muted text-link" },
-              element.id
-            )
+            { target: "_blank", rel: "noopener noreferrer", href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
+            element.id
           )
         )
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "d-flex" },
+        { className: "d-flex col-md-12" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
           { className: "card-description p-2" },

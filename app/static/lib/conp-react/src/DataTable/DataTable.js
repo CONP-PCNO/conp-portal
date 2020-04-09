@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -16,6 +16,51 @@ const DataTable = ({
   query,
   setQuery
 }) => {
+  const [filters, setFilters] = useState({
+    modalities: {
+      mri: false,
+      eeg: false,
+      qualityControlSubject: false,
+      basicDemographic: false,
+      genomics: false
+    },
+    formats: {
+      minc: false,
+      json: false,
+      nifti: false,
+      stl: false,
+      mif: false,
+      vcf: false,
+      fasta: false,
+      csv: false,
+      rnaSeq: false,
+      fastq: false,
+      gtf: false,
+      tsv: false,
+      bam: false,
+      bigwig: false,
+      cel: false,
+      jpg: false,
+      dicom: false,
+      gz: false,
+      txt: false
+    }
+  });
+
+  const handleChange = (event) => {
+    const e = event.target.value;
+    const filter = e.split(".");
+    const newFilters = Object.assign({}, filters);
+    newFilters[filter[0]][filter[1]] = !newFilters[filter[0]][filter[1]];
+    setFilters(newFilters);
+    setQuery({
+      ...query,
+      modalities: Object.keys(filters.modalities).filter(m => filters.modalities[m] == true),
+      formats: Object.keys(filters.formats).filter(f => filters.formats[f] == true),
+      page: 1
+    })
+  }
+
   return (
     <div className="search-dataset-table container" cellSpacing={0}>
       <div className="searchbar col-12 d-flex p-2">
@@ -25,7 +70,7 @@ const DataTable = ({
             className="btn btn-outline-secondary dropdown-toggle dropdown-select px-4"
             value={query.sortKey}
             onChange={e =>
-              setQuery({ ...query, sortKey: e.currentTarget.value })
+              setQuery({ ...query, sortKey: e.currentTarget.value, page: 1 })
             }
           >
             {sortKeys.map(({ key: sortKey, label }, i) => (
@@ -43,7 +88,7 @@ const DataTable = ({
             aria-label="Search"
             value={query.search}
             onChange={e =>
-              setQuery({ ...query, search: e.currentTarget.value })
+              setQuery({ ...query, search: e.currentTarget.value, page: 1 })
             }
           />
           <span className="input-group-append">
@@ -53,12 +98,47 @@ const DataTable = ({
           </span>
         </div>
       </div>
-      <div className="d-flex p-2 align-items-center">
-          <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg"/>: CONP account required</div>
-          <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg"/>: Third-party account required</div>
-        </div>
+      {renderElement.name == "DatasetElement" ?
+        <div className="d-flex justify-content-between">
+          <div className="d-flex p-2 justify-content-start align-items-center">
+            <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg" />: CONP account required</div>
+            <div className="p-1 text-nowrap text-truncate"><FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg" />: Third-party account required</div>
+          </div>
+          <div className="d-flex p-2 justify-content-end">
+            <div className="dropdown">
+              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Modality:
+          </button>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {Object.keys(filters.modalities).map(modality => (
+                  <div key={modality.id} className="dropdown-item ml-2">
+                    <input className="form-check-input" type="checkbox" value={"modalities." + modality} id={"filter" + modality} onChange={handleChange} />
+                    <label className="form-check-label" htmlFor={"filter" + modality}>
+                      {modality}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="dropdown">
+              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Format:
+          </button>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {Object.keys(filters.formats).map(format => (
+                  <div key={format.id} className="dropdown-item ml-2">
+                    <input className="form-check-input" type="checkbox" value={"formats." + format} id={"filter" + format} onChange={handleChange} />
+                    <label className="form-check-label" htmlFor={"filter" + format}>
+                      {format}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div> : null}
       {elements.map((element, i) => (
-        <div key={element.id} className="container">
+        <div key={"" + element.id} className="container">
           {React.createElement(renderElement, { ...element, authorized, imagePath })}
         </div>
       ))}
@@ -69,15 +149,15 @@ const DataTable = ({
               setQuery({ ...query, page: 1 })
             }>&lt;&lt;</div>
           <div className="btn btn-outline-dark btn-sm"
-           onClick={e =>
-            setQuery({ ...query, page: Math.max(1, query.page-1) })
-          }> &lt; </div>
-          {R.range(1, Math.ceil(total / query.max_per_page)+1).map(
+            onClick={e =>
+              setQuery({ ...query, page: Math.max(1, query.page - 1) })
+            }> &lt; </div>
+          {R.range(1, Math.ceil(total / query.max_per_page) + 1).map(
             (page, i) => (
               <div className={page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm"}
-              onClick={e =>
-                setQuery({ ...query, page: page })
-              }
+                onClick={e =>
+                  setQuery({ ...query, page: page })
+                }
                 key={i}>
                 {page}
               </div>
@@ -85,7 +165,7 @@ const DataTable = ({
           )}
           <div className="btn btn-outline-dark btn-sm"
             onClick={e =>
-              setQuery({ ...query, page: Math.min(query.page+1, Math.ceil(total / query.max_per_page)) })
+              setQuery({ ...query, page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page)) })
             }
           >
             &gt;

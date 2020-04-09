@@ -16,62 +16,80 @@
 
 {% block appcontent %}
 <div id="mount-display" class="dataset"></div>
-<!--style="border-top: 1px solid black"></div>-->
 
-<div class="dataset-metadata">
-  <div class="dataset-information col-md-10">
-    <div class="row" style="padding: 20px;">
-      <div class="col-xs-2">
-        <b>Version: </b> {{ metadata.version }}
-      </div>
-    </div>
-    <div class="row" style="padding: 20px;">
-      <div class="col-xs-2">
-        <b>Source: </b> <a class="btn-link" href="{{ metadata.sources }}">{{ metadata.sources }}</a>
-      </div>
-    </div>
-    <div class="row" style="padding: 20px;">
-      <div class="col-xs-2">
-        <b>Authors: </b> {{ metadata.authors }}
-      </div>
-    </div>
-    <div class="row" style="padding: 20px;">
-      <div class="col-xs-2">
-        <b>Contact: </b> {{ metadata.contact }}
-      </div>
-    </div>
-    <div class="row" style="padding: 20px;">
-      <div class="col-xs-2">
-        <b>Description: </b> {{ metadata.description|safe }}
-      </div>
-    </div>
-    <div class="row" style="padding: 20px;">
-      <div class="col-xs-2">
-        <b>Licenses: </b> {{ metadata.licenses }}
-      </div>
-    </div>
-  </div>
+<div class="d-flex flex-column p-4">
+  <p><strong>Version: </strong> {{ metadata.version }} </p>
+  <p><strong>Source: </strong><a target="_blank" rel="noopener noreferrer" href="{{ metadata.sources }}">{{ metadata.sources }}</a></p>
+  <p><strong>Authors: </strong>{{ metadata.authors }}</p>
+  <p><strong>Contact: </strong> {{ metadata.contact }}</p>
+  <p><strong>Description: </strong> {{ metadata.description|safe }}</p>
+  <p><strong>Licenses: </strong> {{ metadata.licenses }}</p>
 </div>
 
-<div class="card">
-  <div class="card-body">
-    <h2 class="card-title">Download Options</h2>
-    <pre class="card-text" style="white-space: pre-wrap;">
-# Download is enabled through <a style="color: blue;" href="http://handbook.datalad.org/en/latest/intro/installation.html#install">datalad</a>
-      
-# Here are commands to download content from this dataset:
-    ~$ datalad install https://github.com/CONP-PCNO/conp-dataset.git
-    ~$ cd conp-dataset
-    ~$ datalad install {{data.id}}
-    ~$ cd {{data.id}}
-    ~$ datalad get &ltfilepath&gt
-    </pre>
+<div class="d-flex flex-column p-4">
+  <h2>Dataset Download Instructions</h2>
+  {% if data.authorizations == "private" %}
+  <div class="alert alert-info" role="alert">
+    <strong>Note: </strong>an account is required to access this dataset. Please follow the Source URL and request an
+    account on the source page.</div>
+  {% endif %}
+  <p>
+    The following instructions require a basic understanding of UNIX/LINUX command lines. Future portal functionality may 
+    include downloads directly from the web browser. Dataset download is currently enabled through 
+    <a target="_blank" rel="noopener noreferrer" href="https://www.datalad.org/">DataLad</a>.
+  </p>
+  <p>
+    To install DataLad on your system, please refer to the 
+    <a target="_blank" rel="noopener noreferrer"
+      href="http://handbook.datalad.org/en/latest/intro/installation.html#install">
+      install section of the DataLad Handbook
+    </a>
+    (installation via miniconda is recommended in order to obtain the latest version of DataLad).
+  </p>
+  <h6>1) Initiate the CONP dataset</h6>
+  <p>To initiate the CONP dataset (<code>conp-dataset</code>), run the following command in the directory where you want CONP datasets to be installed:</p>
+  <div class="card">
+    <div class="card-body">
+      <pre class="card-text" style="white-space: pre-wrap;">datalad install https://github.com/CONP-PCNO/conp-dataset.git</pre>
+    </div>
   </div>
+  <h6>2) Install the {{data.name}} dataset</h6>
+  <p>To install the dataset, go into the created conp-dataset directory and run <code>datalad install</code> on the dataset <code>{{data.name}}</code>:</p>
+  <div class="card">
+    <div class="card-body">
+      <pre class="card-text" style="white-space: pre-wrap;">cd conp-dataset<br>datalad install projects/{{data.name}}</pre>
+    </div>
+  </div>
+  <h6>3) Download the {{data.name}} dataset</h6>
+  <p>Now that the DataLad dataset has been installed, go into the dataset directory under <code>projects/{{data.name}}</code>.</p>
+  <div class="card">
+    <div class="card-body">
+      <pre class="card-text" style="white-space: pre-wrap;">cd projects/{{data.name}}</pre>
+    </div>
+  </div>
+  <p></p>
+  <p>
+    Note that files visible in the dataset are symlinks and will need to be downloaded manually using the <code>datalad get</code> 
+    command in the dataset directory:
+  </p>
+  <div class="card">
+    <div class="card-body">
+      <pre class="card-text" style="white-space: pre-wrap;">datalad get &ltfilepath&gt</pre>
+    </div>
+  </div>
+  <p></p>
+  <p>Note, if you run <code>datalad get *</code> command, all the files present in the dataset directory will be downloaded.</p>
+  <h6>For more information on how DataLad works, please visit the 
+    <a target="_blank" rel="noopener noreferrer"
+      href="http://handbook.datalad.org/en/latest/">
+      DataLad Handbook documentation
+    </a>.
+  </h6>
 </div>
 
 <script type="text/javascript">
 
-  const reactElement = React.createElement(CONPReact.DatasetElement, {{ data|tojson }});
+  const reactElement = React.createElement(CONPReact.DatasetElement, {{ data| tojson }});
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));
 
 </script>

@@ -51,16 +51,14 @@ const PipelineElement = props => {
             {element.title}
           </h5>
         </a>
-        <div className="card-subtitle">
-          <p className="card-text text-capitalize p-2">
-            <strong>Pipeline Id:</strong>
-            <a href={"https://www.zenodo.org/record/" + element.id.split(".")[1]}>
-              <p className="card-text text-muted text-link">{element.id}</p>
-            </a>
+        <div className="d-flex col-md-12">
+          <p className="card-text text-capitalize pr-1">
+            <strong>Pipeline Id: </strong>
+            <a target="_blank" rel="noopener noreferrer" href={"https://www.zenodo.org/record/" + element.id.split(".")[1]}>{element.id}</a>
           </p>
         </div>
-        <div className="d-flex">
-          <div className="card-description p-2">{element.description}</div>
+        <div className="d-flex col-md-12">
+          <div className="card-description">{element.description}</div>
         </div>
       </div>
       <div className="col-sm-12 col-md-3 d-flex align-items-center justify-content-center">
