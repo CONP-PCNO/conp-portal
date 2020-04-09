@@ -16674,10 +16674,22 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       element = PipelineElement_objectWithoutProperties(props, ["authorized"]);
 
   var platforms = element.platforms.map(function (item, key) {
-    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "a",
-      { key: key, className: "card-button mx-2", href: item.uri },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { alt: "Online platform", src: item.img })
+    return item.uri ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      "span",
+      { key: key, "data-toggle": "tooltip", title: "Run Pipeline", style: { maxWidth: "140px" } },
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "a",
+        { className: "btn", href: item.uri },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { className: "img-fluid", alt: "Online platform", src: item.img })
+      )
+    ) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      "span",
+      { key: key, "data-toggle": "tooltip", title: "Unavailable", style: { maxWidth: "140px" } },
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "a",
+        { className: "btn disabled", href: item.uri, disabled: true },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { className: "img-fluid", alt: "Online platform", src: item.img })
+      )
     );
   });
 
@@ -16686,22 +16698,22 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     { className: "card row flex-row", "data-type": "pipeline" },
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social" },
+      { className: "col-sm-12 col-md-2 d-flex flex-column justify-content-between align-items-center p-4" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "a",
         { href: element.url },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
           alt: "dataset format",
-          className: "card-img-top card-social-img",
+          className: "img-fluid",
           src: element.url == undefined ? "static/img/cogs-solid-grey.png" : "static/img/cogs-solid-green.png"
         })
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "card-social-icons" },
+        { className: "d-flex" },
         element.downloads ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "card-social-icon" },
+          { className: "d-flex flex-column align-items-center" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-download my-2" }),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
@@ -16759,10 +16771,10 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "col-12 col-md-auto d-flex align-items-center justify-content-center my-2 card-buttons" },
+      { className: "col-sm-12 col-md-4 d-flex align-items-center justify-content-end" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "d-flex justify-content-end align-items-center flex-wrap" },
+        { className: "d-flex justify-content-end align-items-center" },
         platforms
       )
     )

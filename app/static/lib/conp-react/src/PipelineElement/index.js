@@ -4,18 +4,26 @@ import PropTypes from "prop-types";
 const PipelineElement = props => {
   const { authorized, ...element } = props;
   const platforms = element.platforms.map((item, key) =>
-    <a key={key} className="card-button mx-2" href={item.uri}>
-      <img alt="Online platform" src={item.img} />
-    </a>
+    item.uri ?
+      <span key={key} data-toggle="tooltip" title="Run Pipeline" style={{ maxWidth: "140px" }}>
+        <a className="btn" href={item.uri}>
+          <img className="img-fluid" alt="Online platform" src={item.img} />
+        </a>
+      </span> :
+      <span key={key} data-toggle="tooltip" title="Unavailable" style={{ maxWidth: "140px" }}>
+        <a className="btn disabled" href={item.uri} disabled>
+          <img className="img-fluid" alt="Online platform" src={item.img} />
+        </a>
+      </span>
   );
 
   return (
     <div className="card row flex-row" data-type="pipeline">
-      <div className="col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social">
+      <div className="col-sm-12 col-md-2 d-flex flex-column justify-content-between align-items-center p-4">
         <a href={element.url}>
           <img
             alt="dataset format"
-            className="card-img-top card-social-img"
+            className="img-fluid"
             src={
               element.url == undefined
                 ? "static/img/cogs-solid-grey.png"
@@ -23,9 +31,9 @@ const PipelineElement = props => {
             }
           />
         </a>
-        <div className="card-social-icons">
+        <div className="d-flex">
           {element.downloads ?
-            <div className="card-social-icon">
+            <div className="d-flex flex-column align-items-center">
               <i className="fa fa-download my-2" />
               <div>{element.downloads}</div>
             </div> : null}
@@ -53,8 +61,8 @@ const PipelineElement = props => {
           <div className="card-description">{element.description}</div>
         </div>
       </div>
-      <div className="col-12 col-md-auto d-flex align-items-center justify-content-center my-2 card-buttons">
-        <div className="d-flex justify-content-end align-items-center flex-wrap">
+      <div className="col-sm-12 col-md-4 d-flex align-items-center justify-content-end">
+        <div className="d-flex justify-content-end align-items-center">
           {platforms}
         </div>
       </div>
