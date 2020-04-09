@@ -5,12 +5,12 @@ const PipelineElement = props => {
   const { authorized, ...element } = props;
   const platforms = element.platforms.map((item, key) =>
     item.uri ?
-      <span key={key} className="p-1" data-toggle="tooltip" title="Run Pipeline" style={{ maxWidth: "140px" }}>
+      <span key={key} data-toggle="tooltip" title="Run Pipeline" style={{ maxWidth: "140px" }}>
         <a className="btn" href={item.uri}>
           <img className="img-fluid" alt="Online platform" src={item.img} />
         </a>
       </span> :
-      <span key={key} className="p-1" data-toggle="tooltip" title="Unavailable" style={{ maxWidth: "140px" }}>
+      <span key={key} data-toggle="tooltip" title="Unavailable" style={{ maxWidth: "140px" }}>
         <a className="btn disabled" href={item.uri} disabled>
           <img className="img-fluid" alt="Online platform" src={item.img} />
         </a>
@@ -61,8 +61,8 @@ const PipelineElement = props => {
           <div className="card-description">{element.description}</div>
         </div>
       </div>
-      <div className="col-sm-12 col-md-3 d-flex align-items-center justify-content-center">
-        <div className="d-flex justify-content-end align-items-center flex-wrap">
+      <div className="col-sm-12 col-md-4 d-flex align-items-center justify-content-end">
+        <div className="d-flex justify-content-end align-items-center">
           {platforms}
         </div>
       </div>
