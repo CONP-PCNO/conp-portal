@@ -53,7 +53,18 @@ class DATSDataset(object):
 
         return logopath
 
+    @property
+    def ReadmeFilepath(self):
+        dirs = os.listdir(self.datasetpath)
+        for file in dirs:
+            if fnmatch.fnmatch(file.lower(), 'readme.md'):
+                readme = os.path.join(self.datasetpath, file)
+                break
 
+        if readme == None:
+            raise 'No Readme found'
+
+        return readme
 
     @property
     def authors(self):
