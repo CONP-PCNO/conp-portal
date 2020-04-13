@@ -26,6 +26,7 @@ entrypoints==0.3
 fasteners==0.15
 Flask==1.0.2
 Flask-Admin==1.5.3
+Flask-Bootstrap4==4.0.2
 Flask-Dance==3.0.0
 Flask-DotEnv==0.1.1
 Flask-Ext==0.1
@@ -66,6 +67,7 @@ passlib==1.7.1
 pathlib2==2.3.5
 patool==1.12
 pep8==1.7.1
+pkg-resources==0.0.0
 pluggy==0.12.0
 psycopg2==2.7.7
 psycopg2-binary==2.8.4
