@@ -67,7 +67,6 @@ passlib==1.7.1
 pathlib2==2.3.5
 patool==1.12
 pep8==1.7.1
-pkg-resources==0.0.0
 pluggy==0.12.0
 psycopg2==2.7.7
 psycopg2-binary==2.8.4
