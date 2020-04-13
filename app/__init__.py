@@ -19,6 +19,7 @@ csrf_protect = CSRFProtect()
 mail = Mail()
 bootstrap = Bootstrap()
 
+
 def create_app(config_settings=DevelopmentConfig):
 
     app = Flask(__name__, static_url_path='/static')
