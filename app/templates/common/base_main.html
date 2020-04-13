@@ -1,7 +1,4 @@
-{% extends 'bootstrap/base.html' %}
-
 {% block head %}
-{{ super() }}
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,42 +6,30 @@
 <meta name="author" content="CONP">
 {% endblock %}
 
-{% block title %}
-{% if title %}
-{{ title }}
-{% else %}
-CONP Portal
-{% endif %}
-{% endblock %}
-
 {% block styles %}
-{{ super() }}
 <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ url_for('static', filename='css/font-awesome.min.css') }} " rel="stylesheet" type="text/css" />
 <link href="{{ url_for('static',filename='img/conp.ico')}}" rel="shortcut icon" type="image/png" />
 <link href="{{ url_for('static', filename='css/core.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ url_for('static', filename='css/pages.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ url_for('static',filename='css/bootstrap-multiselect.css') }}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 {% endblock %}
 
 {% block scripts %}
-{{ super() }}
-<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-multiselect.js') }}"></script>
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+  integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+  integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block body %}
-{{ super() }}
 
 <!-- Modal -->
-<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="modalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+  aria-labelledby="modalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -55,47 +40,47 @@ CONP Portal
           <h6>The user agrees:</h6>
           <ul>
             <li>
-              not to use shared resources to re-identify or re-contact individual participants. 
+              not to use shared resources to re-identify or re-contact individual participants.
             </li>
             <li>
               to obtain required ethics or other approvals before using shared resources.
             </li>
             <li>
-              to respect any use restrictions and conditions based on consents or ethics approvals 
+              to respect any use restrictions and conditions based on consents or ethics approvals
               associated with shared resources.
             </li>
             <li>
-              to ensure the confidentiality of restricted access resources, and to establish appropriate 
+              to ensure the confidentiality of restricted access resources, and to establish appropriate
               security safeguards.
             </li>
             <li>
-              to cite any shared resource used to produce a scholarly publication or other publicly 
-              disclosed research output according to generally accepted practice, including respecting any 
-              preferred means of citation for the resource articulated on its landing page, and using any 
+              to cite any shared resource used to produce a scholarly publication or other publicly
+              disclosed research output according to generally accepted practice, including respecting any
+              preferred means of citation for the resource articulated on its landing page, and using any
               persistent digital identifier associated with the resource.
             </li>
             <li>
-              to respect any licensing terms associated with shared resources. 
+              to respect any licensing terms associated with shared resources.
             </li>
             <li>
-              not to claim intellectual property rights, or any other proprietary right, over shared 
-              resources in such a way that could interfere with the freedom of others to access and use 
+              not to claim intellectual property rights, or any other proprietary right, over shared
+              resources in such a way that could interfere with the freedom of others to access and use
               shared resources.
             </li>
             <li>
-              that the CONP has the right to change or update these Terms 
-              of Use at any time without prior notice to the user. It is the user’s responsibility to 
-              check the CONP platform’s website to ascertain whether the Terms of Use have been 
+              that the CONP has the right to change or update these Terms
+              of Use at any time without prior notice to the user. It is the user’s responsibility to
+              check the CONP platform’s website to ascertain whether the Terms of Use have been
               changed or updated.
             </li>
             <li>
-              that all resources available on the CONP are provided on an 
-              “as is” basis, and the Platform disclaims all warranties, express or implied, including but 
-              not limited to any warranty that the use of resources will not cause injury or infringe any 
+              that all resources available on the CONP are provided on an
+              “as is” basis, and the Platform disclaims all warranties, express or implied, including but
+              not limited to any warranty that the use of resources will not cause injury or infringe any
               third party rights.
             </li>
             <li>
-              that the CONP excludes all liability, to the greatest extent 
+              that the CONP excludes all liability, to the greatest extent
               permitted by applicable law, with respect to the use or distribution of resources.
             </li>
           </ul>
@@ -138,12 +123,15 @@ CONP Portal
   {% include "fragments/navigation_bar.html" %}
   {% endblock %}
 
-  <div id="page-content" class="d-flex">
-    {% block sidebar %}
-    {% include "fragments/sidebar.html" %}
-    {% endblock %}
+  <div id="page-content" class="container-fluid d-flex px-0 mx-0">
 
-    <div class="content-body container col-xs-12 col-sm-10">
+    <div class="px-0">
+      {% block sidebar %}
+      {% include "fragments/sidebar.html" %}
+      {% endblock %}
+    </div>
+
+    <div class="content-body container flex-grow-1">
       <div class="content-title">
         {% block contenttitle %}{% endblock %}
       </div>
@@ -155,6 +143,7 @@ CONP Portal
   </div>
   {% block footer %} {% include "/fragments/footer.html" %} {% endblock %}
 </div>
+
 {% endblock %}
 
 </html>

@@ -8,7 +8,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
 from flask_mail import Mail
-from flask_bootstrap import Bootstrap
 from config import DevelopmentConfig, ProductionConfig
 from app.threads import UpdatePipelineData
 
@@ -17,8 +16,6 @@ config = DevelopmentConfig()
 migrate = Migrate()
 csrf_protect = CSRFProtect()
 mail = Mail()
-bootstrap = Bootstrap()
-
 
 def create_app(config_settings=DevelopmentConfig):
 
@@ -29,7 +26,6 @@ def create_app(config_settings=DevelopmentConfig):
     migrate.init_app(app, db)
     csrf_protect.init_app(app)
     mail.init_app(app)
-    bootstrap.init_app(app)
 
     from app.main import main_bp  # noqa: E402
     app.register_blueprint(main_bp)
