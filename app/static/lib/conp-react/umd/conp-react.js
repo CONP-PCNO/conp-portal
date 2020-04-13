@@ -16696,7 +16696,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
 
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
-    { className: "card row flex-row", "data-type": "pipeline" },
+    { className: "card flex-row", "data-type": "pipeline" },
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
       { className: "col-sm-12 col-md-2 d-flex flex-column justify-content-between align-items-center p-4" },
