@@ -53,7 +53,7 @@ def share():
     }
     response = requests.post(url, json=body)
 
-    content = response.text
+    content = response.text.replace('user-content-','')
 
     return render_template('share.html', title='CONP | Share a Dataset', user=current_user, content=content)
 
@@ -84,6 +84,6 @@ def faq():
     }
     response = requests.post(url, json=body)
 
-    content = response.text
+    content = response.text.replace('user-content-','')
 
     return render_template('faq.html', title='CONP | FAQ', user=current_user, content=content)

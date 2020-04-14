@@ -16439,7 +16439,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
 
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
-    { className: "card row d-flex flex-row", "data-type": "dataset" },
+    { className: "card d-flex flex-row", "data-type": "dataset" },
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
       { className: "card-header d-flex flex-column justify-content-between" },
@@ -16475,7 +16475,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "col-8 card-body d-flex flex-wrap" },
+      { className: "col-7 card-body d-flex flex-wrap" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "a",
         { style: { color: "inherit" }, href: "dataset?id=" + element.id },
@@ -16608,13 +16608,14 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "col-2 d-flex flex-column justify-content-center" },
+      { className: "col-2 pr-1 d-flex flex-column justify-content-center align-items-end" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "a",
         {
           className: "card-button",
           style: {
-            pointerEvents: element.isPrivate && !authorized ? "none" : "all"
+            pointerEvents: element.isPrivate && !authorized ? "none" : "all",
+            maxWidth: "100px"
           },
           href: "download_metadata?dataset=" + element.id,
           download: true
@@ -16625,7 +16626,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
           "Please register for access."
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-          className: "img-fluid p-4",
+          className: "img-fluid",
           alt: "Download Metadata",
           src: element.isPrivate && !authorized ? downloadDisabled : downloadEnabled
         })
@@ -16695,7 +16696,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
 
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     "div",
-    { className: "card row flex-row", "data-type": "pipeline" },
+    { className: "card flex-row", "data-type": "pipeline" },
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
       { className: "col-sm-12 col-md-2 d-flex flex-column justify-content-between align-items-center p-4" },

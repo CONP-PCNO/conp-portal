@@ -28,7 +28,7 @@ const DatasetElement = props => {
   }
 
   return (
-    <div className="card row d-flex flex-row" data-type="dataset">
+    <div className="card d-flex flex-row" data-type="dataset">
       <div className="card-header d-flex flex-column justify-content-between">
         <div className="d-flex justify-content-center">
           {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP} />) : <div style={{ width: 32 }} />}
@@ -46,7 +46,7 @@ const DatasetElement = props => {
           src={element.thumbnailURL}
         />
       </div>
-      <div className="col-8 card-body d-flex flex-wrap">
+      <div className="col-7 card-body d-flex flex-wrap">
         <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>
           <h5 className="card-title text-card-title col-12 pl-2 pl-md-0">
             {element.title}
@@ -104,11 +104,12 @@ const DatasetElement = props => {
             </li> : null}
         </ul>
       </div>
-      <div className="col-2 d-flex flex-column justify-content-center">
+      <div className="col-2 pr-1 d-flex flex-column justify-content-center align-items-end">
         <a
           className="card-button"
           style={{
-            pointerEvents: element.isPrivate && !authorized ? "none" : "all"
+            pointerEvents: element.isPrivate && !authorized ? "none" : "all",
+            maxWidth: "100px"
           }}
           href={`download_metadata?dataset=${element.id}`}
           download
@@ -120,7 +121,7 @@ const DatasetElement = props => {
           )}
 
           <img
-            className="img-fluid p-4"
+            className="img-fluid"
             alt="Download Metadata"
             src={
               element.isPrivate && !authorized

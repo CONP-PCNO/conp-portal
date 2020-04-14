@@ -9,6 +9,7 @@ body {
   font-family: "Arial", sans-serif;
   font-size: 14px;
   color: #343434;
+  scroll-behavior: smooth;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -27,6 +28,13 @@ h5 { font-size: 1.6em; }
 h6 { font-size: 1.4em; }
 
 p { font-size: 1rem; }
+
+:target::before {
+  content: "";
+  display: block;
+  height: 4.5rem;
+  margin: -4.5rem 0 0;
+}
 
 button:focus {
   outline: 0;
@@ -214,9 +222,6 @@ Colour names courtesy of chir.ag/projects/name-that-color
   width: 100%;
   height: 4.5rem;
   border-bottom: 1px solid #ff0000;
-  border-radius: 0;
-  padding: 0;
-  z-index: 1;
 }
 
 .navigation-bar a,
@@ -344,11 +349,9 @@ Colour names courtesy of chir.ag/projects/name-that-color
 */
 
 #sidebar {
-  position: absolute;
-  width: 100%;
+  padding-top: 4rem;
   height: 100%;
-  bottom: 0;
-  left: 0;
+  max-width: 100%;
 }
 
 .sidebar-tab:hover {
