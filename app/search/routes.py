@@ -8,7 +8,7 @@ import os
 from datetime import datetime, timedelta
 
 import requests
-from flask import Response, abort, render_template, request, current_app, send_from_directory
+from flask import Response, abort, render_template, request, url_for, current_app, send_from_directory
 from flask_login import current_user
 from sqlalchemy import func, or_
 
@@ -62,6 +62,46 @@ def get_dataset_logo():
 
     with open(logopath, 'rb') as logofile:
         return logofile.read()
+
+
+@search_bp.route('/dataset_readme')
+def get_dataset_readme():
+    """
+        Gets dataset readme and returns html rendered by Github
+
+        Args:
+            dataset_id: the unique identifier of the dataset
+
+        Returns:
+            The dataset readme as html
+    """
+
+    dataset_id = request.args.get('id', '')
+    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
+    if dataset is None:
+        return 'Dataset Not Found', 404
+
+    datsdataset=DATSDataset(dataset.fspath)
+
+    readmeFilepath = datsdataset.ReadmeFilepath
+
+    f = open(readmeFilepath, 'r')
+    if f.mode != 'r':
+        return 'Readme Not Found', 404
+
+    readme = f.read()
+
+    url = 'https://api.github.com/markdown'
+    body = {
+        "text": readme,
+        "mode": "gfm",
+        "context": "github/gollum"
+    }
+    response = requests.post(url, json=body)
+
+    content = response.text
+
+    return content
 
 
 @search_bp.route('/dataset-search', methods=['GET'])
@@ -277,11 +317,16 @@ def dataset_info():
 
     metadata=get_dataset_metadata_information(d)
 
+    params = {'id': d.dataset_id}
+    r = requests.get(url_for('search.get_dataset_readme', _external=True), params=params)
+    readme = r.text
+
     return render_template(
         'dataset.html',
          title='CONP | Dataset',
          data=dataset,
          metadata=metadata,
+         readme=readme,
          user=current_user
     )
 
