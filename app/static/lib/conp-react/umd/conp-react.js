@@ -13558,7 +13558,7 @@ var DataTable_DataTable = function DataTable(_ref) {
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "select",
           {
-            className: "btn btn-outline-secondary dropdown-toggle dropdown-select px-4",
+            className: "btn btn-outline-secondary dropdown-toggle dropdown-select",
             value: query.sortKey,
             onChange: function onChange(e) {
               return setQuery(_extends({}, query, { sortKey: e.currentTarget.value, page: 1 }));
@@ -13577,9 +13577,9 @@ var DataTable_DataTable = function DataTable(_ref) {
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
-        { className: "input-group pt-2 pt-md-0" },
+        { className: "input-group m-2" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
-          className: "form-control",
+          className: "form-control p-2",
           type: "text",
           placeholder: "Search",
           "aria-label": "Search",
@@ -13688,7 +13688,7 @@ var DataTable_DataTable = function DataTable(_ref) {
         { className: "btn-group" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "btn btn-outline-dark btn-sm",
+          { className: "btn btn-outline-dark",
             onClick: function onClick(e) {
               return setQuery(_extends({}, query, { page: 1 }));
             } },
@@ -13696,7 +13696,7 @@ var DataTable_DataTable = function DataTable(_ref) {
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "btn btn-outline-dark btn-sm",
+          { className: "btn btn-outline-dark",
             onClick: function onClick(e) {
               return setQuery(_extends({}, query, { page: Math.max(1, query.page - 1) }));
             } },
@@ -13705,7 +13705,7 @@ var DataTable_DataTable = function DataTable(_ref) {
         es_range(1, Math.ceil(total / query.max_per_page) + 1).map(function (page, i) {
           return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
-            { className: page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm",
+            { className: page === query.page ? "btn btn-dark" : "btn btn-outline-dark",
               onClick: function onClick(e) {
                 return setQuery(_extends({}, query, { page: page }));
               },
@@ -13715,7 +13715,7 @@ var DataTable_DataTable = function DataTable(_ref) {
         }),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "btn btn-outline-dark btn-sm",
+          { className: "btn btn-outline-dark",
             onClick: function onClick(e) {
               return setQuery(_extends({}, query, { page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page)) }));
             }
@@ -13724,7 +13724,7 @@ var DataTable_DataTable = function DataTable(_ref) {
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "btn btn-outline-dark btn-sm",
+          { className: "btn btn-outline-dark",
             onClick: function onClick(e) {
               return setQuery(_extends({}, query, { page: Math.ceil(total / query.max_per_page) }));
             }

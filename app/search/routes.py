@@ -202,7 +202,7 @@ def dataset_search():
         elif(sort_key == "title"):
             paginated.sort(key=lambda o: o[sort_key].lower())
 
-        elif(sort_key == "size"):
+        elif(sort_key == "sizeDes" or sort_key == "sizeAsc"):
 
             def getAbsoluteSize(e):
                 if not e["size"]:
@@ -216,7 +216,8 @@ def dataset_search():
                     absoluteSize = float(size[0]) * unitScales[units.index(size[1])]
                 return absoluteSize
 
-            paginated.sort(key=lambda o: getAbsoluteSize(o), reverse=True)
+            reverse = (sort_key == 'sizeDes')
+            paginated.sort(key=lambda o: getAbsoluteSize(o), reverse=reverse)
 
         else:
             paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
@@ -236,7 +237,7 @@ def dataset_search():
             },
             {
                 "key": "title",
-                "label": "Title"
+                "label": "Dataset Name"
             },
             {
                 "key": "dateAdded",
@@ -247,16 +248,20 @@ def dataset_search():
                 "label": "Date Updated"
             },
             {
-                "key": "size",
-                "label": "Size"
+                "key": "sizeDes",
+                "label": "Disk Space Usage (Largest first)"
+            },
+            {
+                "key": "sizeAsc",
+                "label": "Disk Space Usage (Smallest first)"
             },
             {
                 "key": "files",
-                "label": "Files"
+                "label": "Number of Files"
             },
             {
                 "key": "subjects",
-                "label": "Subjects"
+                "label": "Number of Subjects"
             }
         ],
         "elements": paginated

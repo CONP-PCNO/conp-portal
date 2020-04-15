@@ -67,7 +67,7 @@ const DataTable = ({
         <div className="d-flex dropdown">
           <label className="dropdown-label m-2">Sort By: </label>
           <select
-            className="btn btn-outline-secondary dropdown-toggle dropdown-select px-4"
+            className="btn btn-outline-secondary dropdown-toggle dropdown-select"
             value={query.sortKey}
             onChange={e =>
               setQuery({ ...query, sortKey: e.currentTarget.value, page: 1 })
@@ -80,9 +80,9 @@ const DataTable = ({
             ))}
           </select>
         </div>
-        <div className="input-group pt-2 pt-md-0">
+        <div className="input-group m-2">
           <input
-            className="form-control"
+            className="form-control p-2"
             type="text"
             placeholder="Search"
             aria-label="Search"
@@ -144,17 +144,17 @@ const DataTable = ({
       ))}
       <div className="search-dataset-footer d-flex align-items-center p-2">
         <div className="btn-group">
-          <div className="btn btn-outline-dark btn-sm"
+          <div className="btn btn-outline-dark"
             onClick={e =>
               setQuery({ ...query, page: 1 })
             }>&lt;&lt;</div>
-          <div className="btn btn-outline-dark btn-sm"
+          <div className="btn btn-outline-dark"
             onClick={e =>
               setQuery({ ...query, page: Math.max(1, query.page - 1) })
             }> &lt; </div>
           {R.range(1, Math.ceil(total / query.max_per_page) + 1).map(
             (page, i) => (
-              <div className={page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm"}
+              <div className={page === query.page ? "btn btn-dark" : "btn btn-outline-dark"}
                 onClick={e =>
                   setQuery({ ...query, page: page })
                 }
@@ -163,14 +163,14 @@ const DataTable = ({
               </div>
             )
           )}
-          <div className="btn btn-outline-dark btn-sm"
+          <div className="btn btn-outline-dark"
             onClick={e =>
               setQuery({ ...query, page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page)) })
             }
           >
             &gt;
           </div>
-          <div className="btn btn-outline-dark btn-sm"
+          <div className="btn btn-outline-dark"
             onClick={e =>
               setQuery({ ...query, page: Math.ceil(total / query.max_per_page) })
             }
