@@ -13484,6 +13484,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 var DataTable_DataTable = function DataTable(_ref) {
   var authorized = _ref.authorized,
       sortKeys = _ref.sortKeys,
+      filterKeys = _ref.filterKeys,
       elements = _ref.elements,
       imagePath = _ref.imagePath,
       total = _ref.total,
@@ -13491,52 +13492,37 @@ var DataTable_DataTable = function DataTable(_ref) {
       query = _ref.query,
       setQuery = _ref.setQuery;
 
-  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
-    modalities: {
-      mri: false,
-      eeg: false,
-      qualityControlSubject: false,
-      basicDemographic: false,
-      genomics: false
-    },
-    formats: {
-      minc: false,
-      json: false,
-      nifti: false,
-      stl: false,
-      mif: false,
-      vcf: false,
-      fasta: false,
-      csv: false,
-      rnaSeq: false,
-      fastq: false,
-      gtf: false,
-      tsv: false,
-      bam: false,
-      bigwig: false,
-      cel: false,
-      jpg: false,
-      dicom: false,
-      gz: false,
-      txt: false
-    }
-  }),
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([{
+    key: "modalities",
+    values: []
+  }, {
+    key: "formats",
+    values: []
+  }]),
       filters = _useState[0],
       setFilters = _useState[1];
 
   var handleChange = function handleChange(event) {
     var e = event.target.value;
     var filter = e.split(".");
-    var newFilters = Object.assign({}, filters);
-    newFilters[filter[0]][filter[1]] = !newFilters[filter[0]][filter[1]];
+    var newFilters = filters;
+    newFilters.map(function (f) {
+      if (f.key === filter[0]) {
+        if (f.values.includes(filter[1])) {
+          f.values.splice(f.values.indexOf(filter[1]), 1);
+        } else {
+          f.values.push(filter[1]);
+        }
+      }
+    });
     setFilters(newFilters);
     setQuery(_extends({}, query, {
-      modalities: Object.keys(filters.modalities).filter(function (m) {
-        return filters.modalities[m] == true;
-      }),
-      formats: Object.keys(filters.formats).filter(function (f) {
-        return filters.formats[f] == true;
-      }),
+      modalities: filters.filter(function (f) {
+        return f["key"] == "modalities";
+      })[0].values,
+      formats: filters.filter(function (f) {
+        return f["key"] == "formats";
+      })[0].values,
       page: 1
     }));
   };
@@ -13632,7 +13618,11 @@ var DataTable_DataTable = function DataTable(_ref) {
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
             { className: "dropdown-menu", "aria-labelledby": "dropdownMenuButton" },
-            Object.keys(filters.modalities).map(function (modality) {
+            filterKeys.filter(function (f) {
+              return f["key"] == "modalities";
+            }).length > 0 ? filterKeys.filter(function (f) {
+              return f["key"] == "modalities";
+            })[0]["values"].map(function (modality) {
               return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
                 "div",
                 { key: modality.id, className: "dropdown-item ml-2" },
@@ -13643,7 +13633,7 @@ var DataTable_DataTable = function DataTable(_ref) {
                   modality
                 )
               );
-            })
+            }) : null
           )
         ),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -13657,7 +13647,11 @@ var DataTable_DataTable = function DataTable(_ref) {
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
             { className: "dropdown-menu", "aria-labelledby": "dropdownMenuButton" },
-            Object.keys(filters.formats).map(function (format) {
+            filterKeys.filter(function (f) {
+              return f["key"] == "formats";
+            }).length > 0 ? filterKeys.filter(function (f) {
+              return f["key"] == "formats";
+            })[0]["values"].map(function (format) {
               return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
                 "div",
                 { key: format.id, className: "dropdown-item ml-2" },
@@ -13668,7 +13662,7 @@ var DataTable_DataTable = function DataTable(_ref) {
                   format
                 )
               );
-            })
+            }) : null
           )
         )
       )
@@ -13757,6 +13751,13 @@ DataTable_DataTable.propTypes = {
 
 DataTable_DataTable.defaultProps = {
   sortKeys: [],
+  filterKeys: [{
+    key: "modalities",
+    values: []
+  }, {
+    key: "formats",
+    values: []
+  }],
   elements: [],
   total: 0,
   imagePath: 'static/img/'
@@ -16267,9 +16268,8 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       total = _ref.total,
       page = _ref.page,
       max_per_page = _ref.max_per_page,
-      sortKeys = _ref.sortKeys,
       elements = _ref.elements,
-      dataTableProps = DataTableContainer_objectWithoutProperties(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "sortKeys", "elements"]);
+      dataTableProps = DataTableContainer_objectWithoutProperties(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "elements"]);
 
   var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
       fetchedElements = _React$useState[0],
@@ -16293,13 +16293,17 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       totalState = _React$useState3[0],
       setTotalState = _React$useState3[1];
 
-  var _React$useState4 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(sortKeys),
+  var _React$useState4 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(),
       sortKeysState = _React$useState4[0],
       setSortKeysState = _React$useState4[1];
 
-  var _React$useState5 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(authorized),
-      authorizedState = _React$useState5[0],
-      setAuthorizedState = _React$useState5[1];
+  var _React$useState5 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(),
+      filterKeysState = _React$useState5[0],
+      setFilterKeysState = _React$useState5[1];
+
+  var _React$useState6 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(authorized),
+      authorizedState = _React$useState6[0],
+      setAuthorizedState = _React$useState6[1];
 
   external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useEffect(function () {
     setQuery(DataTableContainer_extends({}, query, { limit: limit }));
@@ -16338,23 +16342,24 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
               setFetchedElements(parsed.elements);
               setTotalState(parsed.total);
               setSortKeysState(parsed.sortKeys);
+              setFilterKeysState(parsed.filterKeys);
               setAuthorizedState(parsed.authorized);
-              _context.next = 20;
+              _context.next = 21;
               break;
 
-            case 16:
-              _context.prev = 16;
+            case 17:
+              _context.prev = 17;
               _context.t0 = _context["catch"](1);
 
               alert("There was an error retrieving the search results.");
               console.error(_context.t0);
 
-            case 20:
+            case 21:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, DataTableContainer_this, [[1, 16]]);
+      }, _callee, DataTableContainer_this, [[1, 17]]);
     }));
 
     return function fetchElements() {
@@ -16372,6 +16377,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
     imagePath: imagePath,
     total: totalState,
     sortKeys: sortKeysState,
+    filterKeys: filterKeysState,
     query: query,
     setQuery: setQuery
   }, dataTableProps));

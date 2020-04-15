@@ -176,17 +176,32 @@ def dataset_search():
         elements.append(dataset)
 
     queryAll = bool(request.args.get('elements') == 'all')
+    modalities = []
+    for e in elements:
+        if e['modalities'] is None:
+            continue
+        for m in e['modalities'].split(","):
+            modalities.append(m)
+    modalities = list(set(modalities))
+
+    formats = []
+    for e in elements:
+        if e['format'] is None:
+            continue
+        for m in e['format'].split(","):
+            formats.append(m)
+    formats = list(set(formats))
 
     if(not queryAll):
 
         if request.args.get('modalities'):
             filterModalities = request.args.get('modalities').split(",")
             elements = list(filter(lambda e: e['modalities'] is not None, elements))
-            elements = list(filter(lambda e: all(item in e['modalities'].lower() for item in filterModalities), elements))
+            elements = list(filter(lambda e: all(item in e['modalities'] for item in filterModalities), elements))
         if request.args.get('formats'):
-            filterFormats = request.args.get('formats')
+            filterFormats = request.args.get('formats').split(",")
             elements = list(filter(lambda e: e['format'] is not None, elements))
-            elements = list(filter(lambda e: all(item in e['format'].lower() for item in filterFormats), elements))
+            elements = list(filter(lambda e: all(item in e['format'] for item in filterFormats), elements))
 
         delta = int(request.args.get('max_per_page', 10)) * \
                     (int(request.args.get('page', 1)) - 1)
@@ -291,6 +306,16 @@ def dataset_search():
             {
                 "key": "subjectsAsc",
                 "label": "Number of Subjects (Smallest First)"
+            }
+        ],
+        "filterKeys": [
+            {
+                "key": "modalities",
+                "values": modalities
+            },
+            {
+                "key": "formats",
+                "values": formats
             }
         ],
         "elements": paginated
