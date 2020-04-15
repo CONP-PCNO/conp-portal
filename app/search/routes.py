@@ -219,6 +219,27 @@ def dataset_search():
             reverse = (sort_key == 'sizeDes')
             paginated.sort(key=lambda o: getAbsoluteSize(o), reverse=reverse)
 
+        elif(sort_key == "filesDes" or sort_key == "filesAsc"):
+
+            def getNumberOfFiles(e):
+                if not e["files"]:
+                    return 0
+
+                return int(e["files"])
+
+            reverse = (sort_key == 'filesDes')
+            paginated.sort(key=lambda o: getNumberOfFiles(o), reverse=reverse)
+
+        elif(sort_key == "subjectsDes" or sort_key == "subjectsAsc"):
+
+            def getNumberOfSubjects(e):
+                if not e["subjects"]:
+                    return 0
+
+                return int(e["subjects"])
+            reverse = (sort_key == 'subjectsDes')
+            paginated.sort(key=lambda o: getNumberOfSubjects(o), reverse=reverse)
+
         else:
             paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
 
@@ -256,12 +277,20 @@ def dataset_search():
                 "label": "Disk Space Usage (Smallest first)"
             },
             {
-                "key": "files",
-                "label": "Number of Files"
+                "key": "filesDes",
+                "label": "Number of Files (Largest First)"
             },
             {
-                "key": "subjects",
-                "label": "Number of Subjects"
+                "key": "filesAsc",
+                "label": "Number of Files (Smallest First)"
+            },
+            {
+                "key": "subjectsDes",
+                "label": "Number of Subjects (Largest First)"
+            },
+            {
+                "key": "subjectsAsc",
+                "label": "Number of Subjects (Smallest First)"
             }
         ],
         "elements": paginated

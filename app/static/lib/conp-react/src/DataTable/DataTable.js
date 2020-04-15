@@ -122,7 +122,7 @@ const DataTable = ({
             </div>
             <div className="dropdown">
               <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Format:
+                File Format:
           </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 {Object.keys(filters.formats).map(format => (

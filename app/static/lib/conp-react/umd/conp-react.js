@@ -13652,7 +13652,7 @@ var DataTable_DataTable = function DataTable(_ref) {
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "button",
             { className: "btn btn-light dropdown-toggle", type: "button", id: "dropdownMenuButton", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" },
-            "Format:"
+            "File Format:"
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
