@@ -181,7 +181,7 @@ def dataset_search():
         if e['modalities'] is None:
             continue
         for m in e['modalities'].split(","):
-            modalities.append(m)
+            modalities.append(m.lower())
     modalities = list(set(modalities))
 
     formats = []
@@ -189,7 +189,7 @@ def dataset_search():
         if e['format'] is None:
             continue
         for m in e['format'].split(","):
-            formats.append(m)
+            formats.append(m.lower())
     formats = list(set(formats))
 
     if(not queryAll):
@@ -197,11 +197,11 @@ def dataset_search():
         if request.args.get('modalities'):
             filterModalities = request.args.get('modalities').split(",")
             elements = list(filter(lambda e: e['modalities'] is not None, elements))
-            elements = list(filter(lambda e: all(item in e['modalities'] for item in filterModalities), elements))
+            elements = list(filter(lambda e: all(item in (m.lower() for m in e['modalities'].split(",")) for item in filterModalities), elements))
         if request.args.get('formats'):
             filterFormats = request.args.get('formats').split(",")
             elements = list(filter(lambda e: e['format'] is not None, elements))
-            elements = list(filter(lambda e: all(item in e['format'] for item in filterFormats), elements))
+            elements = list(filter(lambda e: all(item in (f.lower() for f in e['format'].split(",")) for item in filterFormats), elements))
 
         delta = int(request.args.get('max_per_page', 10)) * \
                     (int(request.args.get('page', 1)) - 1)
