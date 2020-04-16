@@ -255,6 +255,16 @@ def dataset_search():
             reverse = (sort_key == 'subjectsDes')
             paginated.sort(key=lambda o: getNumberOfSubjects(o), reverse=reverse)
 
+        elif(sort_key == "dateAddedDesc" or sort_key == "dateAddedAsc"):
+
+            reverse = (sort_key == 'dateAddedAsc')
+            paginated.sort(key=lambda o: (o["dateAdded"] is None, o["dateAdded"]), reverse=reverse)
+
+        elif(sort_key == "dateUpdatedDesc" or sort_key == "dateUpdatedAsc"):
+
+            reverse = (sort_key == 'dateUpdatedAsc')
+            paginated.sort(key=lambda o: (o["dateUpdated"] is None, o["dateUpdated"]), reverse=reverse)
+
         else:
             paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
 
@@ -276,20 +286,28 @@ def dataset_search():
                 "label": "Dataset Name"
             },
             {
-                "key": "dateAdded",
-                "label": "Date Added"
+                "key": "dateAddedAsc",
+                "label": "Date Added (Newest FIrst)"
             },
             {
-                "key": "dateUpdated",
-                "label": "Date Updated"
+                "key": "dateAddedDesc",
+                "label": "Date Added (Oldest First)"
+            },
+            {
+                "key": "dateUpdatedAsc",
+                "label": "Date Updated (Newest First)"
+            },
+            {
+                "key": "dateUpdatedDesc",
+                "label": "Date Updated (Oldest First)"
             },
             {
                 "key": "sizeDes",
-                "label": "Disk Space Usage (Largest first)"
+                "label": "Disk Space Usage (Largest First)"
             },
             {
                 "key": "sizeAsc",
-                "label": "Disk Space Usage (Smallest first)"
+                "label": "Disk Space Usage (Smallest First)"
             },
             {
                 "key": "filesDes",
