@@ -108,7 +108,9 @@
 
 <script type="text/javascript">
 
-  const reactElement = React.createElement(CONPReact.DatasetElement, {{ data| tojson }});
+  const element = {{data|tojson}};
+  element.showDownload = true;
+  const reactElement = React.createElement(CONPReact.DatasetElement, element);
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));
 
 </script>

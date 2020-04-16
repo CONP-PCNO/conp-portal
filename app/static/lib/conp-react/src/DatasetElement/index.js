@@ -4,12 +4,11 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserLock } from '@fortawesome/free-solid-svg-icons'
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
+import { faFileCode } from '@fortawesome/free-regular-svg-icons'
 
 const DatasetElement = props => {
   const { authorized, imagePath, ...element } = props;
 
-  const runOnCbrainEnabled = `${imagePath}/run_on_cbrain_green.png`;
-  const runOnCbrainDisabled = `${imagePath}/run_on_cbrain_gray.png`;
   const downloadEnabled = `${imagePath}/download_green.png`;
   const downloadDisabled = `${imagePath}/download_gray.png`;
 
@@ -104,12 +103,12 @@ const DatasetElement = props => {
             </li> : null}
         </ul>
       </div>
-      <div className="col-2 pr-1 d-flex flex-column justify-content-center align-items-end">
-        <a
+      <div className="col-2 d-flex flex-column justify-content-center align-items-end">
+        {element.showDownload ? <a
           className="card-button"
           style={{
             pointerEvents: element.isPrivate && !authorized ? "none" : "all",
-            maxWidth: "100px"
+            maxWidth: "160px"
           }}
           href={`download_metadata?dataset=${element.id}`}
           download
@@ -119,17 +118,11 @@ const DatasetElement = props => {
               Please register for access.
             </div>
           )}
-
-          <img
-            className="img-fluid"
-            alt="Download Metadata"
-            src={
-              element.isPrivate && !authorized
-                ? downloadDisabled
-                : downloadEnabled
-            }
-          />
-        </a>
+          <div className="d-flex flex-column align-items-center">
+            <FontAwesomeIcon icon={faFileCode} color="black" size="5x" />
+            <button className="btn btn-light text-nowrap my-1">Download Metadata</button>
+          </div>
+        </a> : null}
       </div>
     </div>
   );
