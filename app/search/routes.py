@@ -64,46 +64,6 @@ def get_dataset_logo():
         return logofile.read()
 
 
-@search_bp.route('/dataset_readme')
-def get_dataset_readme():
-    """
-        Gets dataset readme and returns html rendered by Github
-
-        Args:
-            dataset_id: the unique identifier of the dataset
-
-        Returns:
-            The dataset readme as html
-    """
-
-    dataset_id = request.args.get('id', '')
-    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
-    if dataset is None:
-        return 'Dataset Not Found', 404
-
-    datsdataset=DATSDataset(dataset.fspath)
-
-    readmeFilepath = datsdataset.ReadmeFilepath
-
-    f = open(readmeFilepath, 'r')
-    if f.mode != 'r':
-        return 'Readme Not Found', 404
-
-    readme = f.read()
-
-    url = 'https://api.github.com/markdown'
-    body = {
-        "text": readme,
-        "mode": "gfm",
-        "context": "github/gollum"
-    }
-    response = requests.post(url, json=body)
-
-    content = response.text
-
-    return content
-
-
 @search_bp.route('/dataset-search', methods=['GET'])
 def dataset_search():
     """ Dataset Search Route
@@ -317,9 +277,7 @@ def dataset_info():
 
     metadata=get_dataset_metadata_information(d)
 
-    params = {'id': d.dataset_id}
-    r = requests.get(url_for('search.get_dataset_readme', _external=True), params=params)
-    readme = r.text
+    readme = get_dataset_readme(d.dataset_id)
 
     return render_template(
         'dataset.html',
@@ -391,3 +349,32 @@ def get_dataset_metadata_information(dataset):
         "licenses": datsdataset.licenses,
         "sources": datsdataset.sources
     }
+
+
+def get_dataset_readme(dataset_id):
+   
+    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
+    if dataset is None:
+        return 'Dataset Not Found', 404
+
+    datsdataset=DATSDataset(dataset.fspath)
+
+    readmeFilepath = datsdataset.ReadmeFilepath
+
+    f = open(readmeFilepath, 'r')
+    if f.mode != 'r':
+        return 'Readme Not Found', 404
+
+    readme = f.read()
+
+    url = 'https://api.github.com/markdown'
+    body = {
+        "text": readme,
+        "mode": "gfm",
+        "context": "github/gollum"
+    }
+    response = requests.post(url, json=body)
+
+    content = response.text
+
+    return content
