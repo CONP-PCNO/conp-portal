@@ -13455,7 +13455,7 @@ var DataTable_DataTable = function DataTable(_ref) {
           { className: "dropdown" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "button",
-            { className: "btn btn-light dropdown-toggle", type: "button", id: "dropdownMenuButton", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" },
+            { className: "btn btn-light dropdown-toggle", type: "button", id: "dropdownMenuButton", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false", "data-display": "static" },
             "Modality:"
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -13484,7 +13484,7 @@ var DataTable_DataTable = function DataTable(_ref) {
           { className: "dropdown" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "button",
-            { className: "btn btn-light dropdown-toggle", type: "button", id: "dropdownMenuButton", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" },
+            { className: "btn btn-light dropdown-toggle", type: "button", id: "dropdownMenuButton", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false", "data-display": "static" },
             "File Format:"
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(

@@ -96,7 +96,7 @@ const DataTable = ({
           </div>
           <div className="d-flex p-2 justify-content-end">
             <div className="dropdown">
-              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                 Modality:
           </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -112,7 +112,7 @@ const DataTable = ({
               </div>
             </div>
             <div className="dropdown">
-              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                 File Format:
           </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
