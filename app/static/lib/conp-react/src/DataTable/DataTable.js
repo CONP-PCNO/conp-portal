@@ -9,6 +9,7 @@ import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
 const DataTable = ({
   authorized,
   sortKeys,
+  filterKeys,
   elements,
   imagePath,
   total,
@@ -16,47 +17,36 @@ const DataTable = ({
   query,
   setQuery
 }) => {
-  const [filters, setFilters] = useState({
-    modalities: {
-      mri: false,
-      eeg: false,
-      qualityControlSubject: false,
-      basicDemographic: false,
-      genomics: false
+  const [filters, setFilters] = useState([
+    {
+      key: "modalities",
+      values: []
     },
-    formats: {
-      minc: false,
-      json: false,
-      nifti: false,
-      stl: false,
-      mif: false,
-      vcf: false,
-      fasta: false,
-      csv: false,
-      rnaSeq: false,
-      fastq: false,
-      gtf: false,
-      tsv: false,
-      bam: false,
-      bigwig: false,
-      cel: false,
-      jpg: false,
-      dicom: false,
-      gz: false,
-      txt: false
+    {
+      key: "formats",
+      values: []
     }
-  });
+  ]);
 
   const handleChange = (event) => {
     const e = event.target.value;
     const filter = e.split(".");
-    const newFilters = Object.assign({}, filters);
-    newFilters[filter[0]][filter[1]] = !newFilters[filter[0]][filter[1]];
+    const newFilters = filters;
+    newFilters.map(f => {
+      if (f.key === filter[0]){
+        if(f.values.includes(filter[1])){
+          f.values.splice(f.values.indexOf(filter[1]), 1);
+        }
+        else {
+          f.values.push(filter[1])
+        }
+      }
+    })
     setFilters(newFilters);
     setQuery({
       ...query,
-      modalities: Object.keys(filters.modalities).filter(m => filters.modalities[m] == true),
-      formats: Object.keys(filters.formats).filter(f => filters.formats[f] == true),
+      modalities: filters.filter(f => f["key"] == "modalities")[0].values,
+      formats: filters.filter(f => f["key"] == "formats")[0].values,
       page: 1
     })
   }
@@ -67,7 +57,7 @@ const DataTable = ({
         <div className="d-flex dropdown">
           <label className="dropdown-label m-2">Sort By: </label>
           <select
-            className="btn btn-outline-secondary dropdown-toggle dropdown-select px-4"
+            className="btn btn-outline-secondary dropdown-toggle dropdown-select"
             value={query.sortKey}
             onChange={e =>
               setQuery({ ...query, sortKey: e.currentTarget.value, page: 1 })
@@ -80,9 +70,9 @@ const DataTable = ({
             ))}
           </select>
         </div>
-        <div className="input-group pt-2 pt-md-0">
+        <div className="input-group m-2">
           <input
-            className="form-control"
+            className="form-control p-2"
             type="text"
             placeholder="Search"
             aria-label="Search"
@@ -106,33 +96,35 @@ const DataTable = ({
           </div>
           <div className="d-flex p-2 justify-content-end">
             <div className="dropdown">
-              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                 Modality:
           </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {Object.keys(filters.modalities).map(modality => (
+                {filterKeys.filter(f => f["key"] == "modalities").length > 0 ?
+                filterKeys.filter(f => f["key"] == "modalities")[0]["values"].map(modality => (
                   <div key={modality.id} className="dropdown-item ml-2">
                     <input className="form-check-input" type="checkbox" value={"modalities." + modality} id={"filter" + modality} onChange={handleChange} />
                     <label className="form-check-label" htmlFor={"filter" + modality}>
                       {modality}
                     </label>
                   </div>
-                ))}
+                )): null}
               </div>
             </div>
             <div className="dropdown">
-              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Format:
+              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                File Format:
           </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {Object.keys(filters.formats).map(format => (
+                {filterKeys.filter(f => f["key"] == "formats").length > 0 ?
+                filterKeys.filter(f => f["key"] == "formats")[0]["values"].map(format => (
                   <div key={format.id} className="dropdown-item ml-2">
                     <input className="form-check-input" type="checkbox" value={"formats." + format} id={"filter" + format} onChange={handleChange} />
                     <label className="form-check-label" htmlFor={"filter" + format}>
                       {format}
                     </label>
                   </div>
-                ))}
+                )): null}
               </div>
             </div>
           </div>
@@ -144,17 +136,17 @@ const DataTable = ({
       ))}
       <div className="search-dataset-footer d-flex align-items-center p-2">
         <div className="btn-group">
-          <div className="btn btn-outline-dark btn-sm"
+          <div className="btn btn-outline-dark"
             onClick={e =>
               setQuery({ ...query, page: 1 })
             }>&lt;&lt;</div>
-          <div className="btn btn-outline-dark btn-sm"
+          <div className="btn btn-outline-dark"
             onClick={e =>
               setQuery({ ...query, page: Math.max(1, query.page - 1) })
             }> &lt; </div>
           {R.range(1, Math.ceil(total / query.max_per_page) + 1).map(
             (page, i) => (
-              <div className={page === query.page ? "btn btn-dark btn-sm" : "btn btn-outline-dark btn-sm"}
+              <div className={page === query.page ? "btn btn-dark" : "btn btn-outline-dark"}
                 onClick={e =>
                   setQuery({ ...query, page: page })
                 }
@@ -163,14 +155,14 @@ const DataTable = ({
               </div>
             )
           )}
-          <div className="btn btn-outline-dark btn-sm"
+          <div className="btn btn-outline-dark"
             onClick={e =>
               setQuery({ ...query, page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page)) })
             }
           >
             &gt;
           </div>
-          <div className="btn btn-outline-dark btn-sm"
+          <div className="btn btn-outline-dark"
             onClick={e =>
               setQuery({ ...query, page: Math.ceil(total / query.max_per_page) })
             }
@@ -207,6 +199,16 @@ DataTable.propTypes = {
 
 DataTable.defaultProps = {
   sortKeys: [],
+  filterKeys: [
+    {
+      key: "modalities",
+      values: []
+    },
+    {
+      key: "formats",
+      values: []
+    }
+  ],
   elements: [],
   total: 0,
   imagePath: 'static/img/'

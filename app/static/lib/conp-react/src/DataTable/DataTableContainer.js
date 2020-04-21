@@ -13,7 +13,6 @@ const DataTableContainer = ({
   total,
   page,
   max_per_page,
-  sortKeys,
   elements,
   ...dataTableProps
 }) => {
@@ -33,7 +32,8 @@ const DataTableContainer = ({
 
   const [totalState, setTotalState] = React.useState(total);
 
-  const [sortKeysState, setSortKeysState] = React.useState(sortKeys);
+  const [sortKeysState, setSortKeysState] = React.useState();
+  const [filterKeysState, setFilterKeysState] = React.useState();
   const [authorizedState, setAuthorizedState] = React.useState(authorized);
 
   React.useEffect(() => {
@@ -57,6 +57,7 @@ const DataTableContainer = ({
       setFetchedElements(parsed.elements);
       setTotalState(parsed.total);
       setSortKeysState(parsed.sortKeys);
+      setFilterKeysState(parsed.filterKeys);
       setAuthorizedState(parsed.authorized);
     } catch (err) {
       alert("There was an error retrieving the search results.");
@@ -73,6 +74,7 @@ const DataTableContainer = ({
       imagePath={imagePath}
       total={totalState}
       sortKeys={sortKeysState}
+      filterKeys={filterKeysState}
       query={query}
       setQuery={setQuery}
       {...dataTableProps}

@@ -136,17 +136,32 @@ def dataset_search():
         elements.append(dataset)
 
     queryAll = bool(request.args.get('elements') == 'all')
+    modalities = []
+    for e in elements:
+        if e['modalities'] is None:
+            continue
+        for m in e['modalities'].split(","):
+            modalities.append(m.lower())
+    modalities = list(set(modalities))
+
+    formats = []
+    for e in elements:
+        if e['format'] is None:
+            continue
+        for m in e['format'].split(","):
+            formats.append(m.lower())
+    formats = list(set(formats))
 
     if(not queryAll):
 
         if request.args.get('modalities'):
             filterModalities = request.args.get('modalities').split(",")
             elements = list(filter(lambda e: e['modalities'] is not None, elements))
-            elements = list(filter(lambda e: all(item in e['modalities'].lower() for item in filterModalities), elements))
+            elements = list(filter(lambda e: all(item in (m.lower() for m in e['modalities'].split(",")) for item in filterModalities), elements))
         if request.args.get('formats'):
-            filterFormats = request.args.get('formats')
+            filterFormats = request.args.get('formats').split(",")
             elements = list(filter(lambda e: e['format'] is not None, elements))
-            elements = list(filter(lambda e: all(item in e['format'].lower() for item in filterFormats), elements))
+            elements = list(filter(lambda e: all(item in (f.lower() for f in e['format'].split(",")) for item in filterFormats), elements))
 
         delta = int(request.args.get('max_per_page', 10)) * \
                     (int(request.args.get('page', 1)) - 1)
@@ -162,7 +177,7 @@ def dataset_search():
         elif(sort_key == "title"):
             paginated.sort(key=lambda o: o[sort_key].lower())
 
-        elif(sort_key == "size"):
+        elif(sort_key == "sizeDes" or sort_key == "sizeAsc"):
 
             def getAbsoluteSize(e):
                 if not e["size"]:
@@ -176,7 +191,39 @@ def dataset_search():
                     absoluteSize = float(size[0]) * unitScales[units.index(size[1])]
                 return absoluteSize
 
-            paginated.sort(key=lambda o: getAbsoluteSize(o), reverse=True)
+            reverse = (sort_key == 'sizeDes')
+            paginated.sort(key=lambda o: getAbsoluteSize(o), reverse=reverse)
+
+        elif(sort_key == "filesDes" or sort_key == "filesAsc"):
+
+            def getNumberOfFiles(e):
+                if not e["files"]:
+                    return 0
+
+                return int(e["files"])
+
+            reverse = (sort_key == 'filesDes')
+            paginated.sort(key=lambda o: getNumberOfFiles(o), reverse=reverse)
+
+        elif(sort_key == "subjectsDes" or sort_key == "subjectsAsc"):
+
+            def getNumberOfSubjects(e):
+                if not e["subjects"]:
+                    return 0
+
+                return int(e["subjects"])
+            reverse = (sort_key == 'subjectsDes')
+            paginated.sort(key=lambda o: getNumberOfSubjects(o), reverse=reverse)
+
+        elif(sort_key == "dateAddedDesc" or sort_key == "dateAddedAsc"):
+
+            reverse = (sort_key == 'dateAddedAsc')
+            paginated.sort(key=lambda o: (o["dateAdded"] is None, o["dateAdded"]), reverse=reverse)
+
+        elif(sort_key == "dateUpdatedDesc" or sort_key == "dateUpdatedAsc"):
+
+            reverse = (sort_key == 'dateUpdatedAsc')
+            paginated.sort(key=lambda o: (o["dateUpdated"] is None, o["dateUpdated"]), reverse=reverse)
 
         else:
             paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
@@ -196,27 +243,57 @@ def dataset_search():
             },
             {
                 "key": "title",
-                "label": "Title"
+                "label": "Dataset Name"
             },
             {
-                "key": "dateAdded",
-                "label": "Date Added"
+                "key": "dateAddedAsc",
+                "label": "Date Added (Newest FIrst)"
             },
             {
-                "key": "dateUpdated",
-                "label": "Date Updated"
+                "key": "dateAddedDesc",
+                "label": "Date Added (Oldest First)"
             },
             {
-                "key": "size",
-                "label": "Size"
+                "key": "dateUpdatedAsc",
+                "label": "Date Updated (Newest First)"
             },
             {
-                "key": "files",
-                "label": "Files"
+                "key": "dateUpdatedDesc",
+                "label": "Date Updated (Oldest First)"
             },
             {
-                "key": "subjects",
-                "label": "Subjects"
+                "key": "sizeDes",
+                "label": "Disk Space Usage (Largest First)"
+            },
+            {
+                "key": "sizeAsc",
+                "label": "Disk Space Usage (Smallest First)"
+            },
+            {
+                "key": "filesDes",
+                "label": "Number of Files (Largest First)"
+            },
+            {
+                "key": "filesAsc",
+                "label": "Number of Files (Smallest First)"
+            },
+            {
+                "key": "subjectsDes",
+                "label": "Number of Subjects (Largest First)"
+            },
+            {
+                "key": "subjectsAsc",
+                "label": "Number of Subjects (Smallest First)"
+            }
+        ],
+        "filterKeys": [
+            {
+                "key": "modalities",
+                "values": modalities
+            },
+            {
+                "key": "formats",
+                "values": formats
             }
         ],
         "elements": paginated
