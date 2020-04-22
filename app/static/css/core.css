@@ -349,7 +349,6 @@ Colour names courtesy of chir.ag/projects/name-that-color
 */
 
 #sidebar {
-  padding-top: 4rem;
   height: 100%;
   max-width: 100%;
 }
@@ -358,6 +357,10 @@ Colour names courtesy of chir.ag/projects/name-that-color
   background-color: #d8d8d8;
   color: #343434;
   cursor: pointer;
+}
+
+.sticky-offset {
+  top: 65px;
 }
 
 /*
