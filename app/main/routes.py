@@ -87,3 +87,19 @@ def faq():
     content = response.text.replace('user-content-','')
 
     return render_template('faq.html', title='CONP | FAQ', user=current_user, content=content)
+
+
+@main_bp.route('/contact_us')
+def contact_us():
+    """ Contact Us Route
+
+        Route to lead to the contact page
+
+        Args:
+            None
+
+        Returns:
+            rendered template for contact_us.html
+    """
+
+    return render_template('contact_us.html', title='CONP | Contact Us', user=current_user)
