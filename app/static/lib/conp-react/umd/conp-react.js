@@ -17349,13 +17349,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       { className: "card-body d-md-flex flex-wrap" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "a",
-        {
-          style: {
-            color: "inherit",
-            pointerEvents: element.descriptorurl == undefined ? "none" : "all"
-          },
-          href: element.descriptorurl
-        },
+        { style: { color: "inherit" }, href: "pipeline?id=" + element.id },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "h5",
           { className: "card-title text-card-title col-12 pl-2 pl-md-0" },

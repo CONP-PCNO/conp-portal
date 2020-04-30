@@ -1,0 +1,41 @@
+{% extends 'common/base_main.html' %}
+
+{% block scripts %}
+{{ super() }}
+<script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
+<script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
+<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block contenttitle %}
+<div class="search-header page-title">
+  <h2>CONP Portal | {{ pipeline.title }} </h2>
+</div>
+{% endblock %}
+
+{% block appcontent %}
+<div id="mount-display" class="pipeline"></div>
+
+<div class="d-flex flex-column p-4">
+  
+</div>
+
+<div class="d-flex flex-column p-2">
+  
+</div>
+<div class="d-flex flex-column p-2">
+  
+</div>
+
+<script type="text/javascript">
+
+  const element = {{pipeline|tojson}};
+  console.log(element)
+  const reactElement = React.createElement(CONPReact.PipelineElement, element);
+  ReactDOM.render(reactElement, document.querySelector("#mount-display"));
+
+</script>
+</div>
+<!--/span-->
+{% endblock %}

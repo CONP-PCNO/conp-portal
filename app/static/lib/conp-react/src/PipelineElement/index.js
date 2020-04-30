@@ -40,13 +40,7 @@ const PipelineElement = props => {
         </div>
       </div>
       <div className="card-body d-md-flex flex-wrap">
-        <a
-          style={{
-            color: "inherit",
-            pointerEvents: element.descriptorurl == undefined ? "none" : "all"
-          }}
-          href={element.descriptorurl}
-        >
+        <a style={{ color: "inherit" }} href={`pipeline?id=${element.id}`}>
           <h5 className="card-title text-card-title col-12 pl-2 pl-md-0">
             {element.title}
           </h5>
