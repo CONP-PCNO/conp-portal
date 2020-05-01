@@ -10,7 +10,7 @@
 
 {% block contenttitle %}
 <div class="search-header page-title">
-  <h2>CONP Portal | {{ pipeline.title }} </h2>
+    <h2>CONP Portal | {{ pipeline.title }} </h2>
 </div>
 {% endblock %}
 
@@ -18,24 +18,101 @@
 <div id="mount-display" class="pipeline"></div>
 
 <div class="d-flex flex-column p-4">
-  
+    <div class="row p-2">
+        <div class="col-2 text-right">
+            <p><strong>Author: </strong></p>
+        </div>
+        <div class="col-6">
+            <p>{{ pipeline.author }}</p>
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-2 text-right">
+            <p><strong>URL: </strong></p>
+        </div>
+        <div class="col-6">
+            <a target="_blank" rel="noopener noreferrer" href="{{ pipeline.url }}">{{ pipeline.url }}</a>
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-2 text-right">
+            <p><strong>Description: </strong></p>
+        </div>
+        <div class="col-6">
+            <p>{{ pipeline.description }}</p>
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-2 text-right">
+            <p><strong>Descriptor URL: </strong></p>
+        </div>
+        <div class="col-6">
+            <p>{{ pipeline["descriptor-url"] }}</p>
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-2 text-right">
+            <p><strong>Container Image: </strong></p>
+        </div>
+        <div class="col-6">
+            <p>{{ pipeline["container-image"] }}</p>
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-2 text-right">
+            <p><strong>Online Platform URL: </strong></p>
+        </div>
+        <div class="col-6">
+            <p>{{ pipeline["online-platform-url"] }}</p>
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-2 text-right">
+            <p><strong>Tool DOI: </strong></p>
+        </div>
+        <div class="col-6">
+            <p>{{ pipeline["tool-doi"] }}</p>
+        </div>
+    </div>
 </div>
 
 <div class="d-flex flex-column p-2">
-  
-</div>
-<div class="d-flex flex-column p-2">
-  
-</div>
+    <div class="row p-2">
+        <div class="col-2 text-right">
+            <h4>Instructions on how to run the tool locally</h4>
+        </div>
+        <div class="col-6">
+            <p>CONP pipelines can be easily installed and run on any computer wth a container engine. The preferred
+                container for the tool is available in the container-image field above. For detailed information on how
+                to use Boutiques, please visit this tutorial.</p>
+            <p class="ml-4">1. list the inputs/outputs needed for the pipeline to run</p>
+            <div class="alert alert-dark" role="alert">
+                bosh example {{ pipeline.id }}
+            </div>
+            <p>Note: this command will list only the required options to run the pipeline. To view the complete list of
+                options, use <code>bosh --complete {{ pipeline.id }}</code></p>
+            <p class="ml-4">2. create an invocation JSON file based on the output of the bosh example</p>
+            <p class="ml-4">3. run the pipeline with the invocation JSON file created in 2)</p>
+            <div class="alert alert-dark" role="alert">
+                bosh exec launch -s {{ pipeline.id }} ./invocation.json -v /data:/data
+            </div>
+            <p>Note: the option -s will show STDERR, STDOUT in the terminal. The option -v allows mounting a directory
+                from your system onto the container engine.</p>
+        </div>
 
-<script type="text/javascript">
+    </div>
+    <div class="d-flex flex-column p-2">
 
-  const element = {{pipeline|tojson}};
-  console.log(element)
-  const reactElement = React.createElement(CONPReact.PipelineElement, element);
-  ReactDOM.render(reactElement, document.querySelector("#mount-display"));
+    </div>
 
-</script>
+    <script type="text/javascript">
+
+        const element = {{ pipeline| tojson}};
+        console.log(element)
+        const reactElement = React.createElement(CONPReact.PipelineElement, element);
+        ReactDOM.render(reactElement, document.querySelector("#mount-display"));
+
+    </script>
 </div>
 <!--/span-->
 {% endblock %}
