@@ -244,8 +244,6 @@ def pipeline_info():
     # make all keys lowercase and without hyphen
     element =  {k.lower(): v for k, v in element.items()}
 
-    print(element)
-
     return render_template(
         'pipeline.html',
         title='CONP | Pipeline',

@@ -15,14 +15,66 @@
 {% endblock %}
 
 {% block appcontent %}
-<div id="mount-display" class="pipeline"></div>
+<div id="mount-display" class="pipeline p-4"></div>
+
+<div class="d-flex p-4">
+    <div class="col-4">
+        <div class="card h-100">
+            <div class="card-body d-flex flex-column align-items-center">
+                <h6 class="card-title text-center">Run Locally</h6>
+                <div class="row py-4 flex-grow-1">
+                    <div class="col-6">
+                        <img class="img-fluid" alt="Boutiques" src="/static/img/boutiques.png" />
+                    </div>
+                    <div class="col-6">
+                        <p class="card-text">This tool can be run from any system using Boutiques and a container engine</p>
+                    </div>
+                </div>
+                <a href="#boutiques" class="card-link">Click here for instructions</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card h-100">
+            <div class="card-body d-flex flex-column align-items-center">
+                <h6 class="card-title text-center">Run on CONP Cloud</h6>
+                <div class="row py-4 flex-grow-1">
+                    <div class="col-6">
+                        <img class="img-fluid" alt="Online platform" src="{{ pipeline.platforms[0].img }}" />
+                    </div>
+                    <div class="col-6">
+                        <p class="card-text">Run on CBRAIN platform</p>
+                    </div>
+                </div>
+                <a href="{{ pipeline.platforms[0].uri }}" class="card-link">Click here to begin</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card h-100">
+            <div class="card-body d-flex flex-column align-items-center">
+                <h6 class="card-title text-center">Run externally</h6>
+                <div class="row py-4 flex-grow-1">
+                    <div class="col-6">
+                        <img class="img-fluid" alt="Zenodo" src="/static/img/external-link-alt-solid.svg" />
+                    </div>
+                    <div class="col-6">
+                        <p class="card-text">Run on Zenodo platform</p>
+                    </div>
+                </div>
+                {% set zenodoUrl = "https://www.zenodo.org/record/" + pipeline.id.split('.')[1] %}
+                <a href="{{ zenodoUrl }}" class="card-link">Click here to go to the tool</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="d-flex flex-column p-4">
     <div class="row p-2">
         <div class="col-2 text-right">
             <p><strong>Author: </strong></p>
         </div>
-        <div class="col-6">
+        <div class="col-10">
             <p>{{ pipeline.author }}</p>
         </div>
     </div>
@@ -30,7 +82,7 @@
         <div class="col-2 text-right">
             <p><strong>URL: </strong></p>
         </div>
-        <div class="col-6">
+        <div class="col-10">
             <a target="_blank" rel="noopener noreferrer" href="{{ pipeline.url }}">{{ pipeline.url }}</a>
         </div>
     </div>
@@ -38,7 +90,7 @@
         <div class="col-2 text-right">
             <p><strong>Description: </strong></p>
         </div>
-        <div class="col-6">
+        <div class="col-10">
             <p>{{ pipeline.description }}</p>
         </div>
     </div>
@@ -46,7 +98,7 @@
         <div class="col-2 text-right">
             <p><strong>Descriptor URL: </strong></p>
         </div>
-        <div class="col-6">
+        <div class="col-10">
             <p>{{ pipeline["descriptor-url"] }}</p>
         </div>
     </div>
@@ -54,15 +106,15 @@
         <div class="col-2 text-right">
             <p><strong>Container Image: </strong></p>
         </div>
-        <div class="col-6">
-            <p>{{ pipeline["container-image"] }}</p>
+        <div class="col-10">
+            <p>{{ pipeline["container-image"]["type"] }}</p>
         </div>
     </div>
     <div class="row p-2">
         <div class="col-2 text-right">
             <p><strong>Online Platform URL: </strong></p>
         </div>
-        <div class="col-6">
+        <div class="col-10">
             <p>{{ pipeline["online-platform-url"] }}</p>
         </div>
     </div>
@@ -70,7 +122,7 @@
         <div class="col-2 text-right">
             <p><strong>Tool DOI: </strong></p>
         </div>
-        <div class="col-6">
+        <div class="col-10">
             <p>{{ pipeline["tool-doi"] }}</p>
         </div>
     </div>
@@ -79,9 +131,9 @@
 <div class="d-flex flex-column p-2">
     <div class="row p-2">
         <div class="col-2 text-right">
-            <h4>Instructions on how to run the tool locally</h4>
+            <h4 id="boutiques">Instructions on how to run the tool locally</h4>
         </div>
-        <div class="col-6">
+        <div class="col-10">
             <p>CONP pipelines can be easily installed and run on any computer wth a container engine. The preferred
                 container for the tool is available in the container-image field above. For detailed information on how
                 to use Boutiques, please visit this tutorial.</p>
