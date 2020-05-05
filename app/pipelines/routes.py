@@ -95,10 +95,10 @@ def pipeline_search():
         sort_key = 'downloads-desc'
 
     real_key = sort_key
-    if sort_key == "downloads-asc":
-        real_key = "downloads"
-    elif sort_key == "downloads-desc":
-        real_key = "downloads"
+    if sort_key.endswith("-desc"):
+        real_key = sort_key[:-5]
+    elif sort_key.endswith("-asc"):
+        real_key = sort_key[:-4]
     reverse = sort_key.endswith("-desc")
 
     if (real_key == 'title'):
@@ -153,20 +153,28 @@ def pipeline_search():
         "sortKeys": [
             {
                 "key": "downloads-desc",
-                "label": "Downloads: High to Low"
+                "label": "Downloads (High to Low)"
             },
             {
                 "key": "downloads-asc",
-                "label": "Downloads: Low to High"
+                "label": "Downloads (Low to High)"
             },
             {
-                "key": "title",
-                "label": "Title"
+                "key": "title-desc",
+                "label": "Title (Descending)"
             },
             {
-                "key": "id",
-                "label": "Pipeline ID"
+                "key": "title-asc",
+                "label": "Title (Ascending)"
             },
+            {
+                "key": "id-desc",
+                "label": "Pipeline ID (Descending)"
+            },
+            {
+                "key": "id-asc",
+                "label": "Pipeline ID (Ascending)"
+            }
         ],
         "elements": elements_on_page
     }
