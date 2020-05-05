@@ -117,7 +117,6 @@ def pipeline_search():
     if len(elements) > max_per_page:
         start_index = (page-1)*max_per_page
         end_index = start_index + max_per_page
-        print("!!!! indexes: {} {}".format(start_index, end_index))
         if end_index > len(elements):
             end_index = len(elements)
         elements_on_page = elements[start_index:end_index]
@@ -160,20 +159,20 @@ def pipeline_search():
                 "label": "Downloads (Low to High)"
             },
             {
-                "key": "title-desc",
-                "label": "Title (Descending)"
-            },
-            {
                 "key": "title-asc",
                 "label": "Title (Ascending)"
             },
             {
-                "key": "id-desc",
-                "label": "Pipeline ID (Descending)"
+                "key": "title-desc",
+                "label": "Title (Descending)"
             },
             {
                 "key": "id-asc",
                 "label": "Pipeline ID (Ascending)"
+            },
+            {
+                "key": "id-desc",
+                "label": "Pipeline ID (Descending)"
             }
         ],
         "elements": elements_on_page

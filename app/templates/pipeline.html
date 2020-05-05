@@ -27,10 +27,11 @@
                         <img class="img-fluid" alt="Boutiques" src="/static/img/boutiques.png" />
                     </div>
                     <div class="col-6">
-                        <p class="card-text">This tool can be run from any system using Boutiques and a container engine</p>
+                        <p class="card-text">This tool can be run from any system using Boutiques and a container engine
+                        </p>
                     </div>
                 </div>
-                <a href="#boutiques" class="card-link">Click here for instructions</a>
+                <a href="#boutiques" class="btn-link">Click here for instructions</a>
             </div>
         </div>
     </div>
@@ -40,13 +41,21 @@
                 <h6 class="card-title text-center">Run on CONP Cloud</h6>
                 <div class="row py-4 flex-grow-1">
                     <div class="col-6">
-                        <img class="img-fluid" alt="Online platform" src="{{ pipeline.platforms[0].img }}" />
+                        {% if pipeline.platforms[0].uri == "" %}
+                        <img class="img-fluid" alt="Online platform" src="/static/img/cbrain-icon-grey.png" />
+                        {% else %}
+                        <img class="img-fluid" alt="Online platform" src="/static/img/cbrain-icon-blue.png" />
+                        {% endif %}
                     </div>
                     <div class="col-6">
                         <p class="card-text">Run on CBRAIN platform</p>
                     </div>
                 </div>
-                <a href="{{ pipeline.platforms[0].uri }}" class="card-link">Click here to begin</a>
+                {% if pipeline.platforms[0].uri == "" %}
+                <a href="{{ pipeline.platforms[0].uri }}" class="btn-link disabled">Not Available</a>
+                {% else %}
+                <a href="{{ pipeline.platforms[0].uri }}" class="btn-link">Click here to begin</a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -54,16 +63,17 @@
         <div class="card h-100">
             <div class="card-body d-flex flex-column align-items-center">
                 <h6 class="card-title text-center">Run externally</h6>
-                <div class="row py-4 flex-grow-1">
+                <div class="row py-4 flex-grow-1 w-100 justify-content-center">
                     <div class="col-6">
                         <img class="img-fluid" alt="Zenodo" src="/static/img/external-link-alt-solid.svg" />
                     </div>
-                    <div class="col-6">
-                        <p class="card-text">Run on Zenodo platform</p>
-                    </div>
                 </div>
+                {% if "zenodo" in pipeline.id %}
                 {% set zenodoUrl = "https://www.zenodo.org/record/" + pipeline.id.split('.')[1] %}
-                <a href="{{ zenodoUrl }}" class="card-link">Click here to go to the tool</a>
+                <a href="{{ zenodoUrl }}" class="btn-link">Click here to go to the tool</a>
+                {% else %}
+                <a href="" class="btn-link disabled">Not Available</a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -75,7 +85,11 @@
             <p><strong>Author: </strong></p>
         </div>
         <div class="col-10">
+            {% if pipeline.author is defined and pipeline.author|length %}
             <p>{{ pipeline.author }}</p>
+            {% else %}
+            <p>N/A</p>
+            {% endif %}
         </div>
     </div>
     <div class="row p-2">
@@ -83,7 +97,11 @@
             <p><strong>URL: </strong></p>
         </div>
         <div class="col-10">
+            {% if pipeline.url is defined and pipeline.url|length %}
             <a target="_blank" rel="noopener noreferrer" href="{{ pipeline.url }}">{{ pipeline.url }}</a>
+            {% else %}
+            <p>N/A</p>
+            {% endif %}
         </div>
     </div>
     <div class="row p-2">
@@ -91,7 +109,11 @@
             <p><strong>Description: </strong></p>
         </div>
         <div class="col-10">
+            {% if pipeline.description is defined and pipeline.description|length %}
             <p>{{ pipeline.description }}</p>
+            {% else %}
+            <p>N/A</p>
+            {% endif %}
         </div>
     </div>
     <div class="row p-2">
@@ -99,7 +121,11 @@
             <p><strong>Descriptor URL: </strong></p>
         </div>
         <div class="col-10">
+            {% if pipeline["descriptor-url"] is defined and pipeline["descriptor-url"]|length %}
             <p>{{ pipeline["descriptor-url"] }}</p>
+            {% else %}
+            <p>N/A</p>
+            {% endif %}
         </div>
     </div>
     <div class="row p-2">
@@ -107,7 +133,11 @@
             <p><strong>Container Image: </strong></p>
         </div>
         <div class="col-10">
+            {% if pipeline["container-image"]["type"] is defined and pipeline["container-image"]["type"]|length %}
             <p>{{ pipeline["container-image"]["type"] }}</p>
+            {% else %}
+            <p>N/A</p>
+            {% endif %}
         </div>
     </div>
     <div class="row p-2">
@@ -115,7 +145,11 @@
             <p><strong>Online Platform URL: </strong></p>
         </div>
         <div class="col-10">
+            {% if pipeline["online-platform-url"] is defined and pipeline["online-platform-url"]|length %}
             <p>{{ pipeline["online-platform-url"] }}</p>
+            {% else %}
+            <p>N/A</p>
+            {% endif %}
         </div>
     </div>
     <div class="row p-2">
@@ -123,7 +157,11 @@
             <p><strong>Tool DOI: </strong></p>
         </div>
         <div class="col-10">
+            {% if pipeline["tool-doi"] is defined and pipeline["tool-doi"]|length %}
             <p>{{ pipeline["tool-doi"] }}</p>
+            {% else %}
+            <p>N/A</p>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -136,20 +174,22 @@
         <div class="col-9 py-1">
             <h6>How to run the tool locally</h6>
             <p>CONP pipelines can be easily installed and run on any computer wth a container engine. The preferred
-                container for the tool is available in the container-image field above. For detailed information on how
-                to use Boutiques, please visit this tutorial.</p>
-            <p class="ml-4">1. list the inputs/outputs needed for the pipeline to run</p>
+                container for the tool is available in the Container Image field above. For detailed information on how
+                to use Boutiques, please visit this <a
+                    href="https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb">tutorial</a>.
+            </p>
+            <p class="font-italic ml-4">1. List the inputs/outputs needed for the pipeline to run</p>
             <div class="alert alert-dark" role="alert">
                 bosh example {{ pipeline.id }}
             </div>
             <p>Note: this command will list only the required options to run the pipeline. To view the complete list of
                 options, use <code>bosh --complete {{ pipeline.id }}</code></p>
-            <p class="ml-4">2. create an invocation JSON file based on the output of the bosh example</p>
-            <p class="ml-4">3. run the pipeline with the invocation JSON file created in 2)</p>
+            <p class="font-italic ml-4">2. Create an invocation JSON file based on the output of the <code>bosh example</code></p>
+            <p class="font-italic ml-4">3. Run the pipeline with the invocation JSON file created in 2.</p>
             <div class="alert alert-dark" role="alert">
                 bosh exec launch -s {{ pipeline.id }} ./invocation.json -v /data:/data
             </div>
-            <p>Note: the option -s will show STDERR, STDOUT in the terminal. The option -v allows mounting a directory
+            <p>Note: the option <code>-s</code> will show <code>STDERR</code>, <code>STDOUT</code> in the terminal. The option <code>-v</code> allows mounting a directory
                 from your system onto the container engine.</p>
         </div>
 

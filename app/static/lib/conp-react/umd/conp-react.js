@@ -17360,18 +17360,14 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
         "div",
         { className: "d-flex col-md-12" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "p",
-          { className: "card-text text-capitalize pr-1" },
+          "div",
+          { className: "card-description" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "strong",
             null,
-            "Pipeline ID: "
+            "Tags: "
           ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "a",
-            { target: "_blank", rel: "noopener noreferrer", href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
-            element.id
-          )
+          element.tags.domain.toString()
         )
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -17386,6 +17382,24 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
             "Description: "
           ),
           element.description
+        )
+      ),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "d-flex col-md-12" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "p",
+          { className: "card-text text-capitalize pr-1" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "strong",
+            null,
+            "Pipeline ID: "
+          ),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "a",
+            { target: "_blank", rel: "noopener noreferrer", href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
+            element.id
+          )
         )
       )
     ),

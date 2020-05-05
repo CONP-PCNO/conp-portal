@@ -46,14 +46,18 @@ const PipelineElement = props => {
           </h5>
         </a>
         <div className="d-flex col-md-12">
-          <p className="card-text text-capitalize pr-1">
-            <strong>Pipeline ID: </strong>
-            <a target="_blank" rel="noopener noreferrer" href={"https://www.zenodo.org/record/" + element.id.split(".")[1]}>{element.id}</a>
-          </p>
+          <div className="card-description">
+          <strong>Tags: </strong>{element.tags.domain.toString()}</div>
         </div>
         <div className="d-flex col-md-12">
           <div className="card-description">
           <strong>Description: </strong>{element.description}</div>
+        </div>
+        <div className="d-flex col-md-12">
+          <p className="card-text text-capitalize pr-1">
+            <strong>Pipeline ID: </strong>
+            <a target="_blank" rel="noopener noreferrer" href={"https://www.zenodo.org/record/" + element.id.split(".")[1]}>{element.id}</a>
+          </p>
         </div>
       </div>
       <div className="col-sm-12 col-md-4 d-flex align-items-center justify-content-end">
