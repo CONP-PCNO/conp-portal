@@ -17361,13 +17361,21 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
         { className: "d-flex col-md-12" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "card-description" },
+          { className: "card-description d-flex py-1 w-100" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "strong",
-            null,
-            "Tags: "
+            "div",
+            { className: "col-3" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Tags: "
+            )
           ),
-          element.tags.domain.toString()
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "col-9" },
+            element.tags && element.tags.domain ? element.tags.domain.toString() : "N/A"
+          )
         )
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -17375,37 +17383,53 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
         { className: "d-flex col-md-12" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "card-description" },
+          { className: "card-description d-flex py-1 w-100" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "strong",
-            null,
-            "Description: "
+            "div",
+            { className: "col-3" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Description: "
+            )
           ),
-          element.description
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "col-9" },
+            element.description
+          )
         )
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
         { className: "d-flex col-md-12" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "p",
-          { className: "card-text text-capitalize pr-1" },
+          "div",
+          { className: "card-description text-capitalize d-flex py-1 w-100" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "strong",
-            null,
-            "Pipeline ID: "
+            "div",
+            { className: "col-3" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Pipeline ID: "
+            )
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "a",
-            { target: "_blank", rel: "noopener noreferrer", href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
-            element.id
+            "div",
+            { className: "col-9" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "a",
+              { target: "_blank", rel: "noopener noreferrer", href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
+              element.id
+            )
           )
         )
       )
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "col-sm-12 col-md-4 d-flex align-items-center justify-content-end" },
+      { className: "col-sm-12 col-md-3 d-flex align-items-center justify-content-end" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
         { className: "d-flex justify-content-end align-items-center" },
