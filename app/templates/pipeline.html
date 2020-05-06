@@ -70,7 +70,8 @@
                 </div>
                 {% if "zenodo" in pipeline.id %}
                 {% set zenodoUrl = "https://www.zenodo.org/record/" + pipeline.id.split('.')[1] %}
-                <a href="{{ zenodoUrl }}" class="btn-link">Click here to go to the tool</a>
+                <a target="_blank" rel="noopener noreferrer" href="{{ zenodoUrl }}" class="btn-link">Click here to go to
+                    the tool</a>
                 {% else %}
                 <a href="" class="btn-link disabled">Not Available</a>
                 {% endif %}
@@ -122,7 +123,7 @@
         </div>
         <div class="col-10">
             {% if pipeline["descriptor-url"] is defined and pipeline["descriptor-url"]|length %}
-            <p>{{ pipeline["descriptor-url"] }}</p>
+            <a target="_blank" rel="noopener noreferrer" href="{{ pipeline['descriptor-url'] }}">{{ pipeline["descriptor-url"] }}</a>
             {% else %}
             <p>N/A</p>
             {% endif %}
@@ -146,7 +147,7 @@
         </div>
         <div class="col-10">
             {% if pipeline["online-platform-url"] is defined and pipeline["online-platform-url"]|length %}
-            <p>{{ pipeline["online-platform-url"] }}</p>
+            <a target="_blank" rel="noopener noreferrer" href="{{ pipeline['online-platform-url'] }}">{{ pipeline["online-platform-url"] }}</a>
             {% else %}
             <p>N/A</p>
             {% endif %}
@@ -175,7 +176,7 @@
             <h6>How to run the tool locally</h6>
             <p>CONP pipelines can be easily installed and run on any computer wth a container engine. The preferred
                 container for the tool is available in the Container Image field above. For detailed information on how
-                to use Boutiques, please visit this <a
+                to use Boutiques, please visit this <a target="_blank" rel="noopener noreferrer"
                     href="https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb">tutorial</a>.
             </p>
             <p class="font-italic ml-4">1. List the inputs/outputs needed for the pipeline to run</p>
@@ -183,13 +184,16 @@
                 bosh example {{ pipeline.id }}
             </div>
             <p>Note: this command will list only the required options to run the pipeline. To view the complete list of
-                options, use <code>bosh --complete {{ pipeline.id }}</code></p>
-            <p class="font-italic ml-4">2. Create an invocation JSON file based on the output of the <code>bosh example</code></p>
+                options, use</p>
+            <p><code>bosh --complete {{ pipeline.id }}</code></p>
+            <p class="font-italic ml-4">2. Create an invocation JSON file based on the output of the
+                <code>bosh example</code></p>
             <p class="font-italic ml-4">3. Run the pipeline with the invocation JSON file created in 2.</p>
             <div class="alert alert-dark" role="alert">
                 bosh exec launch -s {{ pipeline.id }} ./invocation.json -v /data:/data
             </div>
-            <p>Note: the option <code>-s</code> will show <code>STDERR</code>, <code>STDOUT</code> in the terminal. The option <code>-v</code> allows mounting a directory
+            <p>Note: the option <code>-s</code> will show <code>STDERR</code>, <code>STDOUT</code> in the terminal. The
+                option <code>-v</code> allows mounting a directory
                 from your system onto the container engine.</p>
         </div>
 
