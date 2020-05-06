@@ -40,28 +40,42 @@ const PipelineElement = props => {
         </div>
       </div>
       <div className="card-body d-md-flex flex-wrap">
-        <a
-          style={{
-            color: "inherit",
-            pointerEvents: element.descriptorurl == undefined ? "none" : "all"
-          }}
-          href={element.descriptorurl}
-        >
+        <a style={{ color: "inherit" }} href={`pipeline?id=${element.id}`}>
           <h5 className="card-title text-card-title col-12 pl-2 pl-md-0">
             {element.title}
           </h5>
         </a>
         <div className="d-flex col-md-12">
-          <p className="card-text text-capitalize pr-1">
-            <strong>Pipeline Id: </strong>
-            <a target="_blank" rel="noopener noreferrer" href={"https://www.zenodo.org/record/" + element.id.split(".")[1]}>{element.id}</a>
-          </p>
+          <div className="card-description d-flex py-1 w-100">
+            <div className="col-3">
+              <strong>Tags: </strong>
+            </div>
+            <div className="col-9">{element.tags && element.tags.domain ?
+              element.tags.domain.toString() : "N/A"}
+            </div>
+          </div>
         </div>
         <div className="d-flex col-md-12">
-          <div className="card-description">{element.description}</div>
+          <div className="card-description d-flex py-1 w-100">
+            <div className="col-3">
+              <strong>Description: </strong>
+            </div>
+            <div className="col-9">{element.description}
+            </div>
+          </div>
+        </div>
+        <div className="d-flex col-md-12">
+          <div className="card-description text-capitalize d-flex py-1 w-100">
+            <div className="col-3">
+              <strong>Pipeline ID: </strong>
+            </div>
+            <div className="col-9">
+              <a target="_blank" rel="noopener noreferrer" href={"https://www.zenodo.org/record/" + element.id.split(".")[1]}>{element.id}</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="col-sm-12 col-md-4 d-flex align-items-center justify-content-end">
+      <div className="col-sm-12 col-md-3 d-flex align-items-center justify-content-end">
         <div className="d-flex justify-content-end align-items-center">
           {platforms}
         </div>

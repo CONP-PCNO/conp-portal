@@ -13,7 +13,6 @@ from flask_login import current_user
 from app.pipelines import pipelines_bp
 
 
-
 @pipelines_bp.route('/pipelines', methods=['GET'])
 def pipelines():
     """ Pipelines Route
@@ -31,9 +30,9 @@ def pipelines():
     max_per_page = int(request.args.get('max_per_page') or 10)
 
     return render_template('pipelines.html',
-                            title='CONP | Tools & Pipelines',
-                            page=page,
-                            max_per_page=max_per_page)
+                           title='CONP | Tools & Pipelines',
+                           page=page,
+                           max_per_page=max_per_page)
 
 
 @pipelines_bp.route('/pipeline-search', methods=['GET'])
@@ -52,13 +51,16 @@ def pipeline_search():
     authorized = True if current_user.is_authenticated else False
 
     # get request variables
-    search_query = request.args.get("search").lower() if request.args.get("search") else ''
+    search_query = request.args.get(
+        "search").lower() if request.args.get("search") else ''
     sort_key = request.args.get("sortKey") or "downloads-desc"
     max_per_page = int(request.args.get("max_per_page") or 999999)
     page = int(request.args.get("page") or 1)
-    cache_dir = os.path.join(os.path.expanduser('~'), ".cache", "boutiques", "production")
+    cache_dir = os.path.join(os.path.expanduser(
+        '~'), ".cache", "boutiques", "production")
     all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
-    all_detailed_desc_path = os.path.join(cache_dir, "detailed_all_descriptors.json")
+    all_detailed_desc_path = os.path.join(
+        cache_dir, "detailed_all_descriptors.json")
 
     # fetch data from cache
     with open(all_desc_path, "r") as f:
@@ -93,10 +95,10 @@ def pipeline_search():
         sort_key = 'downloads-desc'
 
     real_key = sort_key
-    if sort_key == "downloads-asc":
-        real_key = "downloads"
-    elif sort_key == "downloads-desc":
-        real_key = "downloads"
+    if sort_key.endswith("-desc"):
+        real_key = sort_key[:-5]
+    elif sort_key.endswith("-asc"):
+        real_key = sort_key[:-4]
     reverse = sort_key.endswith("-desc")
 
     if (real_key == 'title'):
@@ -113,9 +115,8 @@ def pipeline_search():
     # extract the appropriate page
     elements_on_page = elements
     if len(elements) > max_per_page:
-        start_index = (page-1)*max_per_page;
-        end_index = start_index + max_per_page;
-        print("!!!! indexes: {} {}".format(start_index,end_index))
+        start_index = (page-1)*max_per_page
+        end_index = start_index + max_per_page
         if end_index > len(elements):
             end_index = len(elements)
         elements_on_page = elements[start_index:end_index]
@@ -125,19 +126,21 @@ def pipeline_search():
     # TODO right now, this handles CBRAIN and one other platform
 
     for element in elements_on_page:
-        element["platforms"] = [{} for x in range(0,1)]
-        element["platforms"][0]["img"] = url_for('static',filename="img/run_on_cbrain_gray.png")
+        element["platforms"] = [{} for x in range(0, 1)]
+        element["platforms"][0]["img"] = url_for(
+            'static', filename="img/run_on_cbrain_gray.png")
         element["platforms"][0]["uri"] = ""
 
         if "onlineplatformurls" in element:
-            ## Check CBRAIN
+            # Check CBRAIN
             for url in element["onlineplatformurls"]:
                 if "cbrain" in url:
-                    element["platforms"][0]["img"] = url_for('static',filename="img/run_on_cbrain_green.png")
+                    element["platforms"][0]["img"] = url_for(
+                        'static', filename="img/run_on_cbrain_green.png")
                     element["platforms"][0]["uri"] = "https://portal.cbrain.mcgill.ca"
                 else:
-                    platform_dict = {"img":url_for('static',filename="img/globe-solid-green.png"),
-                                     "uri":url}
+                    platform_dict = {"img": url_for('static', filename="img/globe-solid-green.png"),
+                                     "uri": url}
                     element["platforms"].append(platform_dict)
 
     # construct payload
@@ -145,29 +148,38 @@ def pipeline_search():
         "authorized": authorized,
         "total": len(elements),
         "page": page,
-        'num_pages':math.ceil(len(elements)/max_per_page),
+        'num_pages': math.ceil(len(elements)/max_per_page),
         "sortKeys": [
             {
                 "key": "downloads-desc",
-                "label": "Downloads: High to Low"
+                "label": "Downloads (High to Low)"
             },
             {
                 "key": "downloads-asc",
-                "label": "Downloads: Low to High"
+                "label": "Downloads (Low to High)"
             },
             {
-                "key": "title",
-                "label": "Title"
+                "key": "title-asc",
+                "label": "Title (Ascending)"
             },
             {
-                "key": "id",
-                "label": "Pipeline ID"
+                "key": "title-desc",
+                "label": "Title (Descending)"
             },
+            {
+                "key": "id-asc",
+                "label": "Pipeline ID (Ascending)"
+            },
+            {
+                "key": "id-desc",
+                "label": "Pipeline ID (Descending)"
+            }
         ],
         "elements": elements_on_page
     }
 
     return json.dumps(payload)
+
 
 @pipelines_bp.route('/tools')
 def tools():
@@ -182,3 +194,65 @@ def tools():
             rendered template for tools.html for current_user
     """
     return render_template('tools.html', title='CONP | Tools & Pipelines', user=current_user)
+
+
+@pipelines_bp.route('/pipeline', methods=['GET'])
+def pipeline_info():
+    """ Pipeline Route
+
+        Route to get the page for one pipeline
+
+        Args:
+            id (REQ ARG): the id of the pipeline to display
+
+        Returns:
+            rendered pipeline.html for the pipeline
+
+    """
+
+    pipeline_id = request.args.get('id')
+
+    # fetch data from cache
+    cache_dir = os.path.join(os.path.expanduser(
+        '~'), ".cache", "boutiques", "production")
+    all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
+    all_detailed_desc_path = os.path.join(
+        cache_dir, "detailed_all_descriptors.json")
+    with open(all_desc_path, "r") as f:
+        all_descriptors = json.load(f)
+
+    with open(all_detailed_desc_path, "r") as f:
+        detailed_all_descriptors = json.load(f)
+
+    elements = [
+        {**descriptor, **detailed_all_descriptors[d_index]}
+        for d_index, descriptor in enumerate(all_descriptors)
+    ]
+
+    element = list(filter(lambda e: e['ID'] == pipeline_id, elements))[0]
+
+    element["platforms"] = [{} for x in range(0, 1)]
+    element["platforms"][0]["img"] = url_for(
+        'static', filename="img/run_on_cbrain_gray.png")
+    element["platforms"][0]["uri"] = ""
+
+    if "onlineplatformurls" in element:
+        # Check CBRAIN
+        for url in element["onlineplatformurls"]:
+            if "cbrain" in url:
+                element["platforms"][0]["img"] = url_for(
+                    'static', filename="img/run_on_cbrain_green.png")
+                element["platforms"][0]["uri"] = "https://portal.cbrain.mcgill.ca"
+            else:
+                platform_dict = {"img": url_for('static', filename="img/globe-solid-green.png"),
+                                    "uri": url}
+                element["platforms"].append(platform_dict)
+
+    # make all keys lowercase and without hyphen
+    element =  {k.lower(): v for k, v in element.items()}
+
+    return render_template(
+        'pipeline.html',
+        title='CONP | Pipeline',
+        pipeline=element
+    )

@@ -17349,13 +17349,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       { className: "card-body d-md-flex flex-wrap" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "a",
-        {
-          style: {
-            color: "inherit",
-            pointerEvents: element.descriptorurl == undefined ? "none" : "all"
-          },
-          href: element.descriptorurl
-        },
+        { style: { color: "inherit" }, href: "pipeline?id=" + element.id },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "h5",
           { className: "card-title text-card-title col-12 pl-2 pl-md-0" },
@@ -17366,17 +17360,21 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
         "div",
         { className: "d-flex col-md-12" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "p",
-          { className: "card-text text-capitalize pr-1" },
+          "div",
+          { className: "card-description d-flex py-1 w-100" },
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "strong",
-            null,
-            "Pipeline Id: "
+            "div",
+            { className: "col-3" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Tags: "
+            )
           ),
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "a",
-            { target: "_blank", rel: "noopener noreferrer", href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
-            element.id
+            "div",
+            { className: "col-9" },
+            element.tags && element.tags.domain ? element.tags.domain.toString() : "N/A"
           )
         )
       ),
@@ -17385,14 +17383,53 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
         { className: "d-flex col-md-12" },
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "div",
-          { className: "card-description" },
-          element.description
+          { className: "card-description d-flex py-1 w-100" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "col-3" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Description: "
+            )
+          ),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "col-9" },
+            element.description
+          )
+        )
+      ),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "d-flex col-md-12" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "card-description text-capitalize d-flex py-1 w-100" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "col-3" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Pipeline ID: "
+            )
+          ),
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "div",
+            { className: "col-9" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "a",
+              { target: "_blank", rel: "noopener noreferrer", href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
+              element.id
+            )
+          )
         )
       )
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       "div",
-      { className: "col-sm-12 col-md-4 d-flex align-items-center justify-content-end" },
+      { className: "col-sm-12 col-md-3 d-flex align-items-center justify-content-end" },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "div",
         { className: "d-flex justify-content-end align-items-center" },
