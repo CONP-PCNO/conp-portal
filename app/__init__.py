@@ -14,7 +14,7 @@ from app.threads import UpdatePipelineData
 
 db = SQLAlchemy()
 config = DevelopmentConfig()
-migrate = Migrate()
+migrate = Migrate(compare_type=True)
 csrf_protect = CSRFProtect()
 mail = Mail()
 bootstrap = Bootstrap()

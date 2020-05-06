@@ -201,7 +201,7 @@ class Dataset(db.Model):
     __tablename__ = 'datasets'
 
     id = db.Column(db.Integer, primary_key=True)
-    dataset_id = db.Column(db.String(64), index=True, unique=True)
+    dataset_id = db.Column(db.String(256), index=True, unique=True)
     description = db.Column(db.Text, index=True)
     name = db.Column(db.String(256), index=True)
     fspath = db.Column(db.Text)
