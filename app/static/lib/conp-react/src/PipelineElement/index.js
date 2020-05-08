@@ -52,7 +52,7 @@ const PipelineElement = props => {
             </div>
             <div className="col-9">{element.tags && element.tags.domain ?
               Array.isArray(element.tags.domain) ?
-              element.tags.domain.map(tag => <span><a href={"/pipelines?tags=" + tag} className="badge badge-primary">{tag}</a></span>)
+              element.tags.domain.map(tag => <span key={"tag" + tag}><a href={"/pipelines?tags=" + tag} className="badge badge-primary">{tag}</a></span>)
               : <span><a href={"/pipelines?tags=" + element.tags.domain} className="badge badge-primary">{element.tags.domain}</a></span>
               : null}
             </div>
