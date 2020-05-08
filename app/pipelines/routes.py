@@ -28,11 +28,15 @@ def pipelines():
     """
     page = int(request.args.get('page') or 1)
     max_per_page = int(request.args.get('max_per_page') or 10)
+    search = request.args.get('search') or ""
+    tags = request.args.get('tags') or ""
 
     return render_template('pipelines.html',
                            title='CONP | Tools & Pipelines',
                            page=page,
-                           max_per_page=max_per_page)
+                           max_per_page=max_per_page,
+                           search=search,
+                           tags=tags)
 
 
 @pipelines_bp.route('/pipeline-search', methods=['GET'])
@@ -53,6 +57,8 @@ def pipeline_search():
     # get request variables
     search_query = request.args.get(
         "search").lower() if request.args.get("search") else ''
+    tags = request.args.get(
+        "tags").lower().split(',') if request.args.get("tags") else []
     sort_key = request.args.get("sortKey") or "downloads-desc"
     max_per_page = int(request.args.get("max_per_page") or 999999)
     page = int(request.args.get("page") or 1)
@@ -86,6 +92,12 @@ def pipeline_search():
             {**descriptor, **detailed_all_descriptors[d_index]}
             for d_index, descriptor in enumerate(all_descriptors)
         ]
+
+    # filter by tags
+    if len(tags) > 0:
+        elements = list(filter(lambda e: ("tags" in e and "domain" in e["tags"]), elements))
+        elements = list(filter(lambda e: all(
+            t in e["tags"]["domain"] for t in tags), elements))
 
     # sort, make all keys lowercase and without hyphen
     elements = [{k.lower().replace("-", ""): v for k, v in element.items()}
@@ -245,11 +257,11 @@ def pipeline_info():
                 element["platforms"][0]["uri"] = "https://portal.cbrain.mcgill.ca"
             else:
                 platform_dict = {"img": url_for('static', filename="img/globe-solid-green.png"),
-                                    "uri": url}
+                                 "uri": url}
                 element["platforms"].append(platform_dict)
 
     # make all keys lowercase and without hyphen
-    element =  {k.lower(): v for k, v in element.items()}
+    element = {k.lower(): v for k, v in element.items()}
 
     return render_template(
         'pipeline.html',

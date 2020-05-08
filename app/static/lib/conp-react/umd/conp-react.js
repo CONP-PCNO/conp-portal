@@ -15959,15 +15959,18 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       total = _ref.total,
       page = _ref.page,
       max_per_page = _ref.max_per_page,
+      search = _ref.search,
+      tags = _ref.tags,
       elements = _ref.elements,
-      dataTableProps = DataTableContainer_objectWithoutProperties(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "elements"]);
+      dataTableProps = DataTableContainer_objectWithoutProperties(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "search", "tags", "elements"]);
 
   var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
       fetchedElements = _React$useState[0],
       setFetchedElements = _React$useState[1];
 
   var _React$useState2 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState({
-    search: "",
+    search: search,
+    tags: tags,
     modalities: [],
     formats: [],
     sortKey: "conpStatus",
@@ -17374,7 +17377,25 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
             { className: "col-9" },
-            element.tags && element.tags.domain ? element.tags.domain.toString() : "N/A"
+            element.tags && element.tags.domain ? Array.isArray(element.tags.domain) ? element.tags.domain.map(function (tag) {
+              return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "span",
+                null,
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                  "a",
+                  { href: "/pipelines?tags=" + tag, className: "badge badge-primary" },
+                  tag
+                )
+              );
+            }) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "span",
+              null,
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "a",
+                { href: "/pipelines?tags=" + element.tags.domain, className: "badge badge-primary" },
+                element.tags.domain
+              )
+            ) : null
           )
         )
       ),

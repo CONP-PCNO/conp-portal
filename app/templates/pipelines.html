@@ -35,6 +35,8 @@
       const reactElement = React.createElement(CONPReact.DataTableContainer, {
         endpointURL: "{{ url_for('pipelines.pipeline_search') }}",
         imagePath: "/static/img",
+        search: "{{ search }}",
+        tags: "{{ tags }}",
         renderElement: CONPReact.PipelineElement
       });
       ReactDOM.render(reactElement, document.querySelector("#pipelines-datatable-mount"));
