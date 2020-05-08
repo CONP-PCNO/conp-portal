@@ -65,16 +65,17 @@
                 <h6 class="card-title text-center">Run externally</h6>
                 <div class="row py-4 flex-grow-1 w-100 justify-content-center">
                     <div class="col-6">
-                        <img class="img-fluid" alt="Zenodo" src="/static/img/external-link-alt-solid.svg" />
+                        <img class="img-fluid" alt="External Tool" src="/static/img/external-link-alt-solid.svg" />
                     </div>
                 </div>
-                {% if "zenodo" in pipeline.id %}
-                {% set zenodoUrl = "https://www.zenodo.org/record/" + pipeline.id.split('.')[1] %}
-                <a target="_blank" rel="noopener noreferrer" href="{{ zenodoUrl }}" class="btn-link">Click here to go to
-                    the tool</a>
-                {% else %}
-                <a href="" class="btn-link disabled">Not Available</a>
-                {% endif %}
+                {% for platform in pipeline.platforms %}
+                    {% if "cbrain" not in platform.img %}
+                    <a target="_blank" rel="noopener noreferrer" href="{{ platform.uri }}" class="btn-link">Click here to go to
+                        the tool</a>
+                    {% else %}
+                    <a href="" class="btn-link disabled">Not Available</a>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -123,7 +124,8 @@
         </div>
         <div class="col-10">
             {% if pipeline["descriptor-url"] is defined and pipeline["descriptor-url"]|length %}
-            <a target="_blank" rel="noopener noreferrer" href="{{ pipeline['descriptor-url'] }}">{{ pipeline["descriptor-url"] }}</a>
+            <a target="_blank" rel="noopener noreferrer"
+                href="{{ pipeline['descriptor-url'] }}">{{ pipeline["descriptor-url"] }}</a>
             {% else %}
             <p>N/A</p>
             {% endif %}
@@ -147,7 +149,8 @@
         </div>
         <div class="col-10">
             {% if pipeline["online-platform-url"] is defined and pipeline["online-platform-url"]|length %}
-            <a target="_blank" rel="noopener noreferrer" href="{{ pipeline['online-platform-url'] }}">{{ pipeline["online-platform-url"] }}</a>
+            <a target="_blank" rel="noopener noreferrer"
+                href="{{ pipeline['online-platform-url'] }}">{{ pipeline["online-platform-url"] }}</a>
             {% else %}
             <p>N/A</p>
             {% endif %}
