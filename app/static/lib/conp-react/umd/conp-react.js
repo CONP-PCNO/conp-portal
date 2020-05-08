@@ -17380,7 +17380,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
             element.tags && element.tags.domain ? Array.isArray(element.tags.domain) ? element.tags.domain.map(function (tag) {
               return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
                 "span",
-                { key: "tag" + tag },
+                { key: "tag" + tag, className: "mr-1" },
                 external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
                   "a",
                   { href: "/pipelines?tags=" + tag, className: "badge badge-primary" },
