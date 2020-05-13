@@ -202,7 +202,7 @@ class Dataset(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     dataset_id = db.Column(db.String(256), index=True, unique=True)
-    description = db.Column(db.Text, index=True)
+    description = db.Column(db.Text)
     name = db.Column(db.String(256), index=True)
     fspath = db.Column(db.Text)
     version = db.Column(db.String(6), index=True)
