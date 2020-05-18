@@ -243,14 +243,17 @@ def pipeline_info():
 
     element = list(filter(lambda e: e['ID'] == pipeline_id, elements))[0]
 
+    # make all keys lowercase
+    element = {k.lower(): v for k, v in element.items()}
+
     element["platforms"] = [{} for x in range(0, 1)]
     element["platforms"][0]["img"] = url_for(
         'static', filename="img/run_on_cbrain_gray.png")
     element["platforms"][0]["uri"] = ""
 
-    if "onlineplatformurls" in element:
+    if "online-platform-urls" in element:
         # Check CBRAIN
-        for url in element["onlineplatformurls"]:
+        for url in element["online-platform-urls"]:
             if "cbrain" in url:
                 element["platforms"][0]["img"] = url_for(
                     'static', filename="img/run_on_cbrain_green.png")
@@ -259,9 +262,6 @@ def pipeline_info():
                 platform_dict = {"img": url_for('static', filename="img/globe-solid-green.png"),
                                  "uri": url}
                 element["platforms"].append(platform_dict)
-
-    # make all keys lowercase and without hyphen
-    element = {k.lower(): v for k, v in element.items()}
 
     return render_template(
         'pipeline.html',
