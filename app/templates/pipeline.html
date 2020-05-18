@@ -124,13 +124,15 @@
         </div>
     </div>
     {% endif %}
-    {% if pipeline["container-image"]["type"] is defined and pipeline["container-image"]["type"]|length %}
+    {% if pipeline["container-image"] is defined and pipeline["container-image"]|length %}
     <div class="row p-2">
         <div class="col-2 text-right">
             <p><strong>Container Image: </strong></p>
         </div>
         <div class="col-10">
-            <p>{{ pipeline["container-image"]["type"] }}</p>
+            {% for key in pipeline["container-image"].keys() %}
+                <p><strong>{{ key + ": "}}</strong>{{ pipeline["container-image"][key] }}</p>
+            {% endfor %}
         </div>
     </div>
     {% endif %}
