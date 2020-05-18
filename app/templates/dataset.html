@@ -18,14 +18,28 @@
 <div id="mount-display" class="dataset"></div>
 
 <div class="d-flex flex-column p-4">
+  {% if metadata.version is defined and metadata.version is not none %}
   <p><strong>Version: </strong> {{ metadata.version }} </p>
+  {% endif %}
+  {% if metadata.sources is defined and metadata.sources is not none %}
   <p><strong>Source: </strong><a target="_blank" rel="noopener noreferrer"
       href="{{ metadata.sources }}">{{ metadata.sources }}</a></p>
+  {% endif %}
+  {% if metadata.authors is defined and metadata.authors is not none %}
   <p><strong>Authors: </strong>{{ metadata.authors }}</p>
+  {% endif %}
+  {% if data.principalInvestigators is defined and data.principalInvestigators is not none %}
   <p><strong>Principal Investigator: </strong>{{ data.principalInvestigators }}</p>
+  {% endif %}
+  {% if metadata.contact is defined and metadata.contact is not none %}
   <p><strong>Contact: </strong> {{ metadata.contact }}</p>
+  {% endif %}
+  {% if metadata.description is defined and metadata.description is not none %}
   <p><strong>Description: </strong> {{ metadata.description|safe }}</p>
+  {% endif %}
+  {% if metadata.licenses is defined and metadata.licenses is not none %}
   <p><strong>Licenses: </strong> {{ metadata.licenses }}</p>
+  {% endif %}
 </div>
 
 <div class="d-flex flex-column p-2">
@@ -111,7 +125,7 @@
 
 <script type="text/javascript">
 
-  const element = {{data|tojson}};
+  const element = {{ data| tojson}};
   element.showDownload = true;
   const reactElement = React.createElement(CONPReact.DatasetElement, element);
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));
