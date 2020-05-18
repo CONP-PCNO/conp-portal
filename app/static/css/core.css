@@ -40,6 +40,10 @@ button:focus {
   outline: 0;
 }
 
+.badge {
+  font-size: 100%;
+}
+
 .modal-dialog{
   overflow-y: initial;
 }
