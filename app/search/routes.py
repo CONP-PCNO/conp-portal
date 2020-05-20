@@ -132,7 +132,8 @@ def dataset_search():
             "sources": datsdataset.sources,
             "conpStatus": datsdataset.conpStatus,
             "authorizations": datsdataset.authorizations,
-            "principalInvestigators": datsdataset.principalInvestigators
+            "principalInvestigators": datsdataset.principalInvestigators,
+            "status": datsdataset.status,
         }
         elements.append(dataset)
 
@@ -351,7 +352,8 @@ def dataset_info():
         "sources": datsdataset.sources,
         "conpStatus": datsdataset.conpStatus,
         "authorizations": datsdataset.authorizations,
-        "principalInvestigators": datsdataset.principalInvestigators
+        "principalInvestigators": datsdataset.principalInvestigators,
+        "status": datsdataset.status,
     }
 
     metadata=get_dataset_metadata_information(d)

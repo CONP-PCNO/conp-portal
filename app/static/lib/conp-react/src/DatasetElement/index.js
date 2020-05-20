@@ -26,6 +26,29 @@ const DatasetElement = props => {
       break;
   }
 
+  var ciBadges = [];
+  var color;
+  switch (element.status) {
+    case "Working":
+      color = "success";
+      break;
+    case "Warning":
+      color = "important";
+      break;
+    default:
+      color = "critical";
+      break;
+  }
+  let url =
+    "https://img.shields.io/badge/circleci-" +
+    element.status +
+    "-" +
+    color +
+    "?style=flat-square&logo=circleci" +
+    "&link=" +
+    element.latest_build_url;
+  ciBadges.push(<img src={url} alt="CircleCI status" />);
+
   return (
     <div className="card d-flex flex-row" data-type="dataset">
       <div className="card-header d-flex flex-column justify-content-between">
@@ -43,7 +66,7 @@ const DatasetElement = props => {
       <div className="col-7 card-body d-flex flex-wrap">
         <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>
           <h5 className="card-title text-card-title col-12 pl-2 pl-md-0">
-            {element.title}
+            {element.title} {ciBadges.map(badge => badge)}
           </h5>
         </a>
         <ul className="d-flex">

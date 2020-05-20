@@ -7346,7 +7346,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       }
     });
     setFilters(newFilters);
-    setQuery(_extends({}, query, {
+    setQuery(_extends(_extends({}, query), {}, {
       modalities: filters.filter(function (f) {
         return f["key"] == "modalities";
       })[0].values,
@@ -7360,7 +7360,7 @@ var DataTable_DataTable = function DataTable(_ref) {
   var handleMaxPerPageChange = function handleMaxPerPageChange(event) {
     var value = event.target.value;
     console.log(value);
-    setQuery(_extends({}, query, {
+    setQuery(_extends(_extends({}, query), {}, {
       max_per_page: value,
       limit: value,
       page: 1
@@ -7380,7 +7380,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     className: "btn btn-outline-secondary dropdown-toggle dropdown-select",
     value: query.sortKey,
     onChange: function onChange(e) {
-      return setQuery(_extends({}, query, {
+      return setQuery(_extends(_extends({}, query), {}, {
         sortKey: e.currentTarget.value,
         page: 1
       }));
@@ -7402,7 +7402,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     "aria-label": "Search",
     value: query.search,
     onChange: function onChange(e) {
-      return setQuery(_extends({}, query, {
+      return setQuery(_extends(_extends({}, query), {}, {
         search: e.currentTarget.value,
         page: 1
       }));
@@ -7536,7 +7536,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       key: "" + element.id,
       className: "container"
-    }, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, {
+    }, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends(_extends({}, element), {}, {
       authorized: authorized,
       imagePath: imagePath
     })));
@@ -7547,14 +7547,14 @@ var DataTable_DataTable = function DataTable(_ref) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn btn-outline-dark",
     onClick: function onClick(e) {
-      return setQuery(_extends({}, query, {
+      return setQuery(_extends(_extends({}, query), {}, {
         page: 1
       }));
     }
   }, "<<"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn btn-outline-dark",
     onClick: function onClick(e) {
-      return setQuery(_extends({}, query, {
+      return setQuery(_extends(_extends({}, query), {}, {
         page: Math.max(1, query.page - 1)
       }));
     }
@@ -7562,7 +7562,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: page === query.page ? "btn btn-dark" : "btn btn-outline-dark",
       onClick: function onClick(e) {
-        return setQuery(_extends({}, query, {
+        return setQuery(_extends(_extends({}, query), {}, {
           page: page
         }));
       },
@@ -7571,14 +7571,14 @@ var DataTable_DataTable = function DataTable(_ref) {
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn btn-outline-dark",
     onClick: function onClick(e) {
-      return setQuery(_extends({}, query, {
+      return setQuery(_extends(_extends({}, query), {}, {
         page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page))
       }));
     }
   }, ">"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn btn-outline-dark",
     onClick: function onClick(e) {
-      return setQuery(_extends({}, query, {
+      return setQuery(_extends(_extends({}, query), {}, {
         page: Math.ceil(total / query.max_per_page)
       }));
     }
@@ -10012,7 +10012,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       setAuthorizedState = _React$useState6[1];
 
   external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useEffect(function () {
-    setQuery(DataTableContainer_extends({}, query, {
+    setQuery(DataTableContainer_extends(DataTableContainer_extends({}, query), {}, {
       limit: limit
     }));
   }, [limit]);
@@ -17057,6 +17057,28 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       break;
   }
 
+  var ciBadges = [];
+  var color;
+
+  switch (element.status) {
+    case "Working":
+      color = "success";
+      break;
+
+    case "Warning":
+      color = "important";
+      break;
+
+    default:
+      color = "critical";
+      break;
+  }
+
+  var url = "https://img.shields.io/badge/circleci-" + element.status + "-" + color + "?style=flat-square&logo=circleci" + "&link=" + element.latest_build_url;
+  ciBadges.push( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    src: url,
+    alt: "CircleCI status"
+  }));
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card d-flex flex-row",
     "data-type": "dataset"
@@ -17087,7 +17109,9 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     href: "dataset?id=" + element.id
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
     className: "card-title text-card-title col-12 pl-2 pl-md-0"
-  }, element.title)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
+  }, element.title, " ", ciBadges.map(function (badge) {
+    return badge;
+  }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
     className: "d-flex"
   }, element.principalInvestigators ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
     className: "card-list-item"
