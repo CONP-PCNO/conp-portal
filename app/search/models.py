@@ -36,7 +36,6 @@ class DATSDataset(object):
 
         return descriptor
 
-
     @property
     def LogoFilepath(self):
         logopath = "app/static/img/default_dataset.jpeg"
@@ -82,6 +81,30 @@ class DATSDataset(object):
             authors.append(creators)
 
         return ", ".join(authors) if len(authors) > 0 else None
+
+
+    @property
+    def principalInvestigators(self):
+        principalInvestigators = []
+        creators = self.descriptor.get('creators', '')
+        if type(creators) == list:
+            for x in creators:
+                if 'roles' in x:
+                    for role in x['roles']:
+                        if role['value'] == 'Principal Investigator':
+                            if 'name' in x:
+                                principalInvestigators.append(x['name'])
+                            elif 'fullname' in x:
+                                principalInvestigators.append(x['fullname'])
+        elif 'roles' in creators:
+            for role in creators['roles']:
+                if role['value'] == 'Principal Investigator':
+                    if 'name' in x:
+                        principalInvestigators.append(x['name'])
+                    elif 'fullname' in x:
+                        principalInvestigators.append(x['fullname'])
+
+        return ", ".join(principalInvestigators) if len(principalInvestigators) > 0 else None
 
 
     @property
@@ -192,6 +215,7 @@ class DATSDataset(object):
                 modalities.append(modality)
 
         return ", ".join(modalities) if len(modalities) > 0 else None
+
 
     @property
     def size(self):
