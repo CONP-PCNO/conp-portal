@@ -17514,6 +17514,9 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
             });
         });
 
+        /* Only show pipeline data for the months we have dataset data */
+        var yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
+
         highcharts_default.a.chart('dashboard-chart-container', {
 
             chart: {
@@ -17526,7 +17529,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
             },
 
             title: {
-                text: 'Cumulative Number of Datasets'
+                text: 'Cumulative Number of Datasets and Pipelines'
             },
 
             yAxis: [{
@@ -17551,7 +17554,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                 data: yAxisDatasets
             }, {
                 name: 'Pipelines',
-                data: yAxisPipelines
+                data: yAxisPipelinesExtract
             }]
 
         });
@@ -17559,7 +17562,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
     var fetchElements = function () {
         var _ref2 = DashboardChart_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-            var datasetsFetch, datasetsRes, pipelinesFetch, pipelinesRes, chartData;
+            var datasetsFetch, datasetsRes, pipelinesFetch, pipelinesRes, chartData, months, i, today;
             return regenerator_default.a.wrap(function _callee$(_context) {
                 while (1) {
                     switch (_context.prev = _context.next) {
@@ -17623,7 +17626,30 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                                 }
                             });
 
-                            console.log(pipelinesRes);
+                            /* check if we've skipped months */
+
+                            months = [];
+
+
+                            for (i = 1; i <= 12; i++) {
+                                months.push(i);
+                            }
+
+                            today = new Date();
+
+
+                            Object.keys(chartData.datasets).map(function (year) {
+                                for (var i = 1; i <= 12; i++) {
+                                    if (year == today.getFullYear() && i == today.getMonth() + 1) {
+                                        break;
+                                    }
+                                    if (!Object.keys(chartData.datasets[year]).includes("" + i)) {
+                                        chartData.datasets[year][i] = 0;
+                                    }
+                                }
+                            });
+
+                            console.log(chartData);
 
                             pipelinesRes.elements.map(function (element) {
                                 var dateAdded = new Date(element.publicationdate);
@@ -17641,22 +17667,22 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
                             drawChart(chartData);
 
-                            _context.next = 28;
+                            _context.next = 32;
                             break;
 
-                        case 24:
-                            _context.prev = 24;
+                        case 28:
+                            _context.prev = 28;
                             _context.t0 = _context["catch"](0);
 
                             alert("There was an error retrieving the search results.");
                             console.error(_context.t0);
 
-                        case 28:
+                        case 32:
                         case "end":
                             return _context.stop();
                     }
                 }
-            }, _callee, DashboardChart_this, [[0, 24]]);
+            }, _callee, DashboardChart_this, [[0, 28]]);
         }));
 
         return function fetchElements() {

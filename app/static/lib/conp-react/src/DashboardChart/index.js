@@ -31,6 +31,9 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             });
         });
 
+        /* Only show pipeline data for the months we have dataset data */
+        const yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
+
         Highcharts.chart('dashboard-chart-container', {
 
             chart: {
@@ -43,7 +46,7 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             },
 
             title: {
-                text: 'Cumulative Number of Datasets'
+                text: 'Cumulative Number of Datasets and Pipelines'
             },
 
             yAxis: [{
@@ -69,7 +72,7 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             },
             {
                 name: 'Pipelines',
-                data: yAxisPipelines
+                data: yAxisPipelinesExtract
             }]
 
         })
@@ -106,7 +109,7 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             datasetsRes.elements.map(element => {
                 const dateAdded = new Date(element.dateAdded);
 
-                if(!chartData.datasets[dateAdded.getFullYear()]){
+                if (!chartData.datasets[dateAdded.getFullYear()]) {
                     chartData.datasets[dateAdded.getFullYear()] = {}
                 }
 
@@ -118,10 +121,33 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
                 }
             });
 
+            /* check if we've skipped months */
+
+            var months = [];
+
+            for (var i = 1; i <= 12; i++) {
+                months.push(i);
+            }
+
+            const today = new Date();
+
+            Object.keys(chartData.datasets).map(year => {
+                for (var i = 1; i <= 12; i++) {
+                    if(year == today.getFullYear() && i == today.getMonth()+1){
+                        break;
+                    }
+                    if (!Object.keys(chartData.datasets[year]).includes(`${i}`)) {
+                        chartData.datasets[year][i] = 0;
+                    }
+                }
+            })
+
+            console.log(chartData);
+
             pipelinesRes.elements.map(element => {
                 const dateAdded = new Date(element.publicationdate);
 
-                if(!chartData.pipelines[dateAdded.getFullYear()]){
+                if (!chartData.pipelines[dateAdded.getFullYear()]) {
                     chartData.pipelines[dateAdded.getFullYear()] = {}
                 }
 
