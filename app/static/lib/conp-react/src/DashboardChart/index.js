@@ -51,8 +51,21 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
 
             yAxis: [{
                 title: {
-                    text: 'Number of Datasets'
+                    text: 'Number of Datasets',
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
                 },
+                allowDecimals: false,
+            },
+            {
+                title: {
+                    text: 'Number of Pipelines',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                opposite: true,
                 allowDecimals: false,
             }],
 
@@ -68,11 +81,13 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
 
             series: [{
                 name: 'Datasets',
-                data: yAxisDatasets
+                data: yAxisDatasets,
+                yAxis: 0
             },
             {
                 name: 'Pipelines',
-                data: yAxisPipelinesExtract
+                data: yAxisPipelinesExtract,
+                yAxis: 1
             }]
 
         })
