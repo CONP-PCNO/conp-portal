@@ -17663,8 +17663,6 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                                 }
                             });
 
-                            console.log(chartData);
-
                             pipelinesRes.elements.map(function (element) {
                                 var dateAdded = new Date(element.publicationdate);
 
@@ -17681,22 +17679,22 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
                             drawChart(chartData);
 
-                            _context.next = 32;
+                            _context.next = 31;
                             break;
 
-                        case 28:
-                            _context.prev = 28;
+                        case 27:
+                            _context.prev = 27;
                             _context.t0 = _context["catch"](0);
 
                             alert("There was an error retrieving the search results.");
                             console.error(_context.t0);
 
-                        case 32:
+                        case 31:
                         case "end":
                             return _context.stop();
                     }
                 }
-            }, _callee, DashboardChart_this, [[0, 28]]);
+            }, _callee, DashboardChart_this, [[0, 27]]);
         }));
 
         return function fetchElements() {

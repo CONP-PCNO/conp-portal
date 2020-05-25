@@ -157,8 +157,6 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
                 }
             })
 
-            console.log(chartData);
-
             pipelinesRes.elements.map(element => {
                 const dateAdded = new Date(element.publicationdate);
 
