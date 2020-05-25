@@ -9,7 +9,7 @@ Babel==2.6.0
 bcrypt==3.1.7
 blinker==1.4
 boto==2.49.0
-boutiques==0.5.24
+boutiques==0.5.25
 certifi==2018.11.29
 cffi==1.12.3
 chardet==3.0.4

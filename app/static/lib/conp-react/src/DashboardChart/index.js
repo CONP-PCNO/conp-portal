@@ -11,14 +11,23 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
 
         const xAxis = [];
         const yAxisDatasets = [];
+        const yAxisPipelines = [];
 
         var countDatasets = 0;
+        var countPipelines = 0;
 
         Object.keys(data.datasets).forEach(year => {
             Object.keys(data.datasets[year]).forEach(month => {
                 countDatasets += data.datasets[year][month];
                 xAxis.push(`${month}/${year}`);
                 yAxisDatasets.push(countDatasets);
+            });
+        });
+
+        Object.keys(data.pipelines).forEach(year => {
+            Object.keys(data.pipelines[year]).forEach(month => {
+                countPipelines += data.pipelines[year][month];
+                yAxisPipelines.push(countPipelines);
             });
         });
 
@@ -54,11 +63,13 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
                 }
             },
 
-
-
             series: [{
                 name: 'Datasets',
                 data: yAxisDatasets
+            },
+            {
+                name: 'Pipelines',
+                data: yAxisPipelines
             }]
 
         })
@@ -67,18 +78,29 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
     const fetchElements = async () => {
 
         try {
-            const res = await fetch(datasetsURL + '?elements=all');
+            const datasetsFetch = await fetch(datasetsURL + '?elements=all');
 
-            if (!res.ok) {
+            if (!datasetsFetch.ok) {
                 throw new Error(
-                    `Request failed with status: ${res.status} (${res.statusText})`
+                    `Request failed with status: ${datasetsFetch.status} (${datasetsFetch.statusText})`
                 );
             }
 
-            const datasetsRes = await res.json();
+            const datasetsRes = await datasetsFetch.json();
+
+            const pipelinesFetch = await fetch(pipelinesURL);
+
+            if (!pipelinesFetch.ok) {
+                throw new Error(
+                    `Request failed with status: ${pipelinesFetch.status} (${pipelinesFetch.statusText})`
+                );
+            }
+
+            const pipelinesRes = await pipelinesFetch.json();
 
             const chartData = {
-                datasets: {}
+                datasets: {},
+                pipelines: {}
             };
 
             datasetsRes.elements.map(element => {
@@ -93,6 +115,21 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
                 }
                 else {
                     chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1
+                }
+            });
+
+            pipelinesRes.elements.map(element => {
+                const dateAdded = new Date(element.publicationdate);
+
+                if(!chartData.pipelines[dateAdded.getFullYear()]){
+                    chartData.pipelines[dateAdded.getFullYear()] = {}
+                }
+
+                if (!chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
+                    chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+                }
+                else {
+                    chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1
                 }
             })
 

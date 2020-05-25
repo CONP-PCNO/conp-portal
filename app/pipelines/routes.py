@@ -87,8 +87,8 @@ def pipeline_search():
             for d_index, descriptor in enumerate(all_descriptors)
         ]
 
-    # sort, make all keys lowercase and without hyphen
-    elements = [{k.lower().replace("-", ""): v for k, v in element.items()}
+    # sort, make all keys lowercase and without hyphens or spaces
+    elements = [{k.lower().replace("-", "").replace(" ", ""): v for k, v in element.items()}
                 for element in elements]
 
     if sort_key == 'conpStatus':
@@ -248,8 +248,8 @@ def pipeline_info():
                                     "uri": url}
                 element["platforms"].append(platform_dict)
 
-    # make all keys lowercase and without hyphen
-    element =  {k.lower(): v for k, v in element.items()}
+    # make all keys lowercase and without spaces
+    element =  {k.lower().replace(" ", ""): v for k, v in element.items()}
 
     return render_template(
         'pipeline.html',
