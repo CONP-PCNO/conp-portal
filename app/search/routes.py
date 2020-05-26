@@ -166,7 +166,7 @@ def dataset_search():
         delta = int(request.args.get('max_per_page', 10)) * \
                     (int(request.args.get('page', 1)) - 1)
         cursor = max(min(int(request.args.get('cursor') or 0), 0), 0) + delta
-        limit = max(min(int(request.args.get('limit') or 10), 10), 0)
+        limit = int(request.args.get('limit') or 10)
         sort_key = request.args.get('sortKey') or "conpStatus"
         paginated = elements
 
