@@ -17103,6 +17103,38 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "ul",
         { className: "d-flex" },
+        element.principalInvestigators ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "li",
+          { className: "card-list-item" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "p",
+            { className: "card-text pr-1" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Principal Investigator: "
+            ),
+            element.principalInvestigators.toString()
+          )
+        ) : null,
+        element.sources ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "li",
+          { className: "card-list-item" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "p",
+            { className: "card-text pr-1" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Sources: "
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "a",
+              { target: "_blank", rel: "noopener noreferrer", href: element.sources },
+              element.sources
+            )
+          )
+        ) : null,
         element.files ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "li",
           { className: "card-list-item" },
@@ -17143,24 +17175,6 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "Subjects: "
             ),
             element.subjects
-          )
-        ) : null,
-        element.sources ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "li",
-          { className: "card-list-item" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text pr-1" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
-              "Sources: "
-            ),
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "a",
-              { target: "_blank", rel: "noopener noreferrer", href: element.sources },
-              element.sources
-            )
           )
         ) : null,
         element.format ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
