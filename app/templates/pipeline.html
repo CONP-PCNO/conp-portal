@@ -54,7 +54,7 @@
                 {% if pipeline.platforms[0].uri == "" %}
                 <a href="{{ pipeline.platforms[0].uri }}" class="btn-link disabled">Not Available</a>
                 {% else %}
-                <a href="{{ pipeline.platforms[0].uri }}" class="btn-link">Click here to begin</a>
+                <a target="_blank" rel="noopener noreferrer" href="{{ pipeline.platforms[0].uri }}" class="btn-link">Click here to begin</a>
                 {% endif %}
             </div>
         </div>
@@ -69,12 +69,13 @@
                     </div>
                 </div>
                 {% for platform in pipeline.platforms %}
-                    {% if "cbrain" not in platform.img %}
-                    <a target="_blank" rel="noopener noreferrer" href="{{ platform.uri }}" class="btn-link">Click here to go to
-                        the tool</a>
-                    {% else %}
-                    <a href="" class="btn-link disabled">Not Available</a>
-                    {% endif %}
+                {% if "cbrain" not in platform.img %}
+                <a target="_blank" rel="noopener noreferrer" href="{{ platform.uri }}" class="btn-link">Click here to go
+                    to
+                    the tool</a>
+                {% else %}
+                <a href="" class="btn-link disabled">Not Available</a>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -82,92 +83,69 @@
 </div>
 
 <div class="d-flex flex-column p-4">
+    {% if pipeline.author is defined and pipeline.author|length %}
     <div class="row p-2">
         <div class="col-2 text-right">
             <p><strong>Author: </strong></p>
         </div>
         <div class="col-10">
-            {% if pipeline.author is defined and pipeline.author|length %}
             <p>{{ pipeline.author }}</p>
-            {% else %}
-            <p>N/A</p>
-            {% endif %}
         </div>
     </div>
+    {% endif %}
+    {% if pipeline.url is defined and pipeline.url|length %}
     <div class="row p-2">
         <div class="col-2 text-right">
             <p><strong>URL: </strong></p>
         </div>
         <div class="col-10">
-            {% if pipeline.url is defined and pipeline.url|length %}
             <a target="_blank" rel="noopener noreferrer" href="{{ pipeline.url }}">{{ pipeline.url }}</a>
-            {% else %}
-            <p>N/A</p>
-            {% endif %}
         </div>
     </div>
+    {% endif %}
+    {% if pipeline.description is defined and pipeline.description|length %}
     <div class="row p-2">
         <div class="col-2 text-right">
             <p><strong>Description: </strong></p>
         </div>
         <div class="col-10">
-            {% if pipeline.description is defined and pipeline.description|length %}
             <p>{{ pipeline.description }}</p>
-            {% else %}
-            <p>N/A</p>
-            {% endif %}
         </div>
     </div>
+    {% endif %}
+    {% if pipeline["descriptor-url"] is defined and pipeline["descriptor-url"]|length %}
     <div class="row p-2">
         <div class="col-2 text-right">
             <p><strong>Descriptor URL: </strong></p>
         </div>
         <div class="col-10">
-            {% if pipeline["descriptor-url"] is defined and pipeline["descriptor-url"]|length %}
             <a target="_blank" rel="noopener noreferrer"
                 href="{{ pipeline['descriptor-url'] }}">{{ pipeline["descriptor-url"] }}</a>
-            {% else %}
-            <p>N/A</p>
-            {% endif %}
         </div>
     </div>
+    {% endif %}
+    {% if pipeline["container-image"] is defined and pipeline["container-image"]|length %}
     <div class="row p-2">
         <div class="col-2 text-right">
             <p><strong>Container Image: </strong></p>
         </div>
         <div class="col-10">
-            {% if pipeline["container-image"]["type"] is defined and pipeline["container-image"]["type"]|length %}
-            <p>{{ pipeline["container-image"]["type"] }}</p>
-            {% else %}
-            <p>N/A</p>
-            {% endif %}
+            {% for key in pipeline["container-image"].keys() %}
+                <p><strong>{{ key + ": "}}</strong>{{ pipeline["container-image"][key] }}</p>
+            {% endfor %}
         </div>
     </div>
-    <div class="row p-2">
-        <div class="col-2 text-right">
-            <p><strong>Online Platform URL: </strong></p>
-        </div>
-        <div class="col-10">
-            {% if pipeline["online-platform-url"] is defined and pipeline["online-platform-url"]|length %}
-            <a target="_blank" rel="noopener noreferrer"
-                href="{{ pipeline['online-platform-url'] }}">{{ pipeline["online-platform-url"] }}</a>
-            {% else %}
-            <p>N/A</p>
-            {% endif %}
-        </div>
-    </div>
+    {% endif %}
+    {% if pipeline["tool-doi"] is defined and pipeline["tool-doi"]|length %}
     <div class="row p-2">
         <div class="col-2 text-right">
             <p><strong>Tool DOI: </strong></p>
         </div>
         <div class="col-10">
-            {% if pipeline["tool-doi"] is defined and pipeline["tool-doi"]|length %}
             <p>{{ pipeline["tool-doi"] }}</p>
-            {% else %}
-            <p>N/A</p>
-            {% endif %}
         </div>
     </div>
+    {% endif %}
 </div>
 
 <div class="d-flex flex-column p-2">
