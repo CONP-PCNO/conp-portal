@@ -52,6 +52,19 @@ const DatasetElement = props => {
           </h5>
         </a>
         <ul className="d-flex">
+          {element.principalInvestigators ?
+            <li className="card-list-item">
+              <p className="card-text pr-1">
+                <strong>Principal Investigator: </strong>{element.principalInvestigators.toString()}
+              </p>
+            </li> : null}
+          {element.sources ?
+            <li className="card-list-item">
+              <p className="card-text pr-1">
+                <strong>Sources: </strong>
+                <a target="_blank" rel="noopener noreferrer" href={element.sources}>{element.sources}</a>
+              </p>
+            </li> : null}
           {element.files ?
             <li className="card-list-item">
               <p className="card-text text-capitalize pr-1">
@@ -70,18 +83,11 @@ const DatasetElement = props => {
                 <strong>Subjects: </strong>{element.subjects}
               </p>
             </li> : null}
-          {element.sources ?
-            <li className="card-list-item">
-              <p className="card-text pr-1">
-                <strong>Sources: </strong>
-                <a target="_blank" rel="noopener noreferrer" href={element.sources}>{element.sources}</a>
-              </p>
-            </li> : null}
           {element.format ?
             <li className="card-list-item">
               <p className="card-text text-capitalize pr-1">
-                <strong>Format: </strong>{element.format.toString()
-                }</p>
+                <strong>Format: </strong>{element.format.toString()}
+              </p>
             </li> : null}
           {element.modalities ?
             <li className="card-list-item">
