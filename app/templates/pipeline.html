@@ -54,7 +54,7 @@
                 {% if pipeline.platforms[0].uri == "" %}
                 <a href="{{ pipeline.platforms[0].uri }}" class="btn-link disabled">Not Available</a>
                 {% else %}
-                <a href="{{ pipeline.platforms[0].uri }}" class="btn-link">Click here to begin</a>
+                <a target="_blank" rel="noopener noreferrer" href="{{ pipeline.platforms[0].uri }}" class="btn-link">Click here to begin</a>
                 {% endif %}
             </div>
         </div>
