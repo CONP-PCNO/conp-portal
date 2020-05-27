@@ -182,7 +182,7 @@ class DATSDataset(object):
             if dists.get('@type', '') == 'DatasetDistribution':
                 formats = ", ".join([x['description'] for x in dists.get('formats', [])])
         else:
-            formats = ", ".join([", ".join(x['formats']) for x in dists])
+            formats = ", ".join([", ".join(x.get('formats', [])) for x in dists])
 
         return formats
 
@@ -232,7 +232,7 @@ class DATSDataset(object):
             # Taking the first distribution size. (arbitrary choice)
             dist = dists[0]
         
-        size = dist.get('size', 0)
+        size = float(dist.get('size', 0))
         unit = dist.get('unit', {}).get('value', '')
 
         # Some data values from the DATS are not user friendly so
