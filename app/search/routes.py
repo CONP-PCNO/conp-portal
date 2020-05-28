@@ -131,7 +131,8 @@ def dataset_search():
             "modalities": datsdataset.modalities,
             "sources": datsdataset.sources,
             "conpStatus": datsdataset.conpStatus,
-            "authorizations": datsdataset.authorizations
+            "authorizations": datsdataset.authorizations,
+            "principalInvestigators": datsdataset.principalInvestigators
         }
         elements.append(dataset)
 
@@ -349,7 +350,8 @@ def dataset_info():
         "modalities": datsdataset.modalities,
         "sources": datsdataset.sources,
         "conpStatus": datsdataset.conpStatus,
-        "authorizations": datsdataset.authorizations
+        "authorizations": datsdataset.authorizations,
+        "principalInvestigators": datsdataset.principalInvestigators
     }
 
     metadata=get_dataset_metadata_information(d)

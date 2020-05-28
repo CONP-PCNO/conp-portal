@@ -10,7 +10,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from config import DevelopmentConfig, ProductionConfig
-from app.threads import UpdatePipelineData
+
 
 db = SQLAlchemy()
 config = DevelopmentConfig()

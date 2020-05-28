@@ -36,7 +36,6 @@ class DATSDataset(object):
 
         return descriptor
 
-
     @property
     def LogoFilepath(self):
         logopath = "app/static/img/default_dataset.jpeg"
@@ -82,6 +81,30 @@ class DATSDataset(object):
             authors.append(creators)
 
         return ", ".join(authors) if len(authors) > 0 else None
+
+
+    @property
+    def principalInvestigators(self):
+        principalInvestigators = []
+        creators = self.descriptor.get('creators', '')
+        if type(creators) == list:
+            for x in creators:
+                if 'roles' in x:
+                    for role in x['roles']:
+                        if role['value'] == 'Principal Investigator':
+                            if 'name' in x:
+                                principalInvestigators.append(x['name'])
+                            elif 'fullname' in x:
+                                principalInvestigators.append(x['fullname'])
+        elif 'roles' in creators:
+            for role in creators['roles']:
+                if role['value'] == 'Principal Investigator':
+                    if 'name' in x:
+                        principalInvestigators.append(x['name'])
+                    elif 'fullname' in x:
+                        principalInvestigators.append(x['fullname'])
+
+        return ", ".join(principalInvestigators) if len(principalInvestigators) > 0 else None
 
 
     @property
@@ -159,7 +182,7 @@ class DATSDataset(object):
             if dists.get('@type', '') == 'DatasetDistribution':
                 formats = ", ".join([x['description'] for x in dists.get('formats', [])])
         else:
-            formats = ", ".join([", ".join(x['formats']) for x in dists])
+            formats = ", ".join([", ".join(x.get('formats', [])) for x in dists])
 
         return formats
 
@@ -193,6 +216,7 @@ class DATSDataset(object):
 
         return ", ".join(modalities) if len(modalities) > 0 else None
 
+
     @property
     def size(self):
         dists = self.descriptor.get('distributions', None)
@@ -208,7 +232,7 @@ class DATSDataset(object):
             # Taking the first distribution size. (arbitrary choice)
             dist = dists[0]
         
-        size = dist.get('size', 0)
+        size = float(dist.get('size', 0))
         unit = dist.get('unit', {}).get('value', '')
 
         # Some data values from the DATS are not user friendly so

@@ -11,8 +11,10 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
 
         const xAxis = [];
         const yAxisDatasets = [];
+        const yAxisPipelines = [];
 
         var countDatasets = 0;
+        var countPipelines = 0;
 
         Object.keys(data.datasets).forEach(year => {
             Object.keys(data.datasets[year]).forEach(month => {
@@ -21,6 +23,16 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
                 yAxisDatasets.push(countDatasets);
             });
         });
+
+        Object.keys(data.pipelines).forEach(year => {
+            Object.keys(data.pipelines[year]).forEach(month => {
+                countPipelines += data.pipelines[year][month];
+                yAxisPipelines.push(countPipelines);
+            });
+        });
+
+        /* Only show pipeline data for the months we have dataset data */
+        const yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
 
         Highcharts.chart('dashboard-chart-container', {
 
@@ -34,12 +46,15 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
             },
 
             title: {
-                text: 'Cumulative Number of Datasets'
+                text: 'Cumulative Number of Datasets and Pipelines'
             },
 
             yAxis: [{
                 title: {
-                    text: 'Number of Datasets'
+                    text: '',
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
                 },
                 allowDecimals: false,
             }],
@@ -54,11 +69,15 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
                 }
             },
 
-
-
             series: [{
                 name: 'Datasets',
-                data: yAxisDatasets
+                data: yAxisDatasets,
+                yAxis: 0
+            },
+            {
+                name: 'Pipelines',
+                data: yAxisPipelinesExtract,
+                yAxis: 0
             }]
 
         })
@@ -67,24 +86,35 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
     const fetchElements = async () => {
 
         try {
-            const res = await fetch(datasetsURL + '?elements=all');
+            const datasetsFetch = await fetch(datasetsURL + '?elements=all');
 
-            if (!res.ok) {
+            if (!datasetsFetch.ok) {
                 throw new Error(
-                    `Request failed with status: ${res.status} (${res.statusText})`
+                    `Request failed with status: ${datasetsFetch.status} (${datasetsFetch.statusText})`
                 );
             }
 
-            const datasetsRes = await res.json();
+            const datasetsRes = await datasetsFetch.json();
+
+            const pipelinesFetch = await fetch(pipelinesURL);
+
+            if (!pipelinesFetch.ok) {
+                throw new Error(
+                    `Request failed with status: ${pipelinesFetch.status} (${pipelinesFetch.statusText})`
+                );
+            }
+
+            const pipelinesRes = await pipelinesFetch.json();
 
             const chartData = {
-                datasets: {}
+                datasets: {},
+                pipelines: {}
             };
 
             datasetsRes.elements.map(element => {
                 const dateAdded = new Date(element.dateAdded);
 
-                if(!chartData.datasets[dateAdded.getFullYear()]){
+                if (!chartData.datasets[dateAdded.getFullYear()]) {
                     chartData.datasets[dateAdded.getFullYear()] = {}
                 }
 
@@ -93,6 +123,42 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
                 }
                 else {
                     chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1
+                }
+            });
+
+            /* check if we've skipped months */
+
+            var months = [];
+
+            for (var i = 1; i <= 12; i++) {
+                months.push(i);
+            }
+
+            const today = new Date();
+
+            Object.keys(chartData.datasets).map(year => {
+                for (var i = 1; i <= 12; i++) {
+                    if(year == today.getFullYear() && i == today.getMonth()+1){
+                        break;
+                    }
+                    if (!Object.keys(chartData.datasets[year]).includes(`${i}`)) {
+                        chartData.datasets[year][i] = 0;
+                    }
+                }
+            })
+
+            pipelinesRes.elements.map(element => {
+                const dateAdded = new Date(element.publicationdate);
+
+                if (!chartData.pipelines[dateAdded.getFullYear()]) {
+                    chartData.pipelines[dateAdded.getFullYear()] = {}
+                }
+
+                if (!chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
+                    chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+                }
+                else {
+                    chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1
                 }
             })
 

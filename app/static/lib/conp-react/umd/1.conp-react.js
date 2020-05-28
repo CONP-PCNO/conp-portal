@@ -686,7 +686,7 @@ Keyboard.prototype._handleCommandBug = function(event, platform) {
 
 module.exports = Keyboard;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(6)))
 
 /***/ }),
 

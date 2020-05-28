@@ -706,32 +706,6 @@ exports.parseUrl = (input, options) => {
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1, eval)("this");
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1227,6 +1201,32 @@ H(q.maxWidth,Number.MAX_VALUE)&&this.chartHeight<=H(q.maxHeight,Number.MAX_VALUE
 u={};e(c,this.options,u,0);return u}});M(J,"masters/highcharts.src.js",[J["parts/Globals.js"],J["parts/Utilities.js"]],function(c,e){var F=e.extend;F(c,{animObject:e.animObject,arrayMax:e.arrayMax,arrayMin:e.arrayMin,attr:e.attr,correctFloat:e.correctFloat,defined:e.defined,destroyObjectProperties:e.destroyObjectProperties,discardElement:e.discardElement,erase:e.erase,extend:e.extend,extendClass:e.extendClass,isArray:e.isArray,isClass:e.isClass,isDOMElement:e.isDOMElement,isNumber:e.isNumber,isObject:e.isObject,
 isString:e.isString,numberFormat:e.numberFormat,objectEach:e.objectEach,offset:e.offset,pad:e.pad,pick:e.pick,pInt:e.pInt,relativeLength:e.relativeLength,setAnimation:e.setAnimation,splat:e.splat,syncTimeout:e.syncTimeout,wrap:e.wrap});return c});J["masters/highcharts.src.js"]._modules=J;return J["masters/highcharts.src.js"]});
 //# sourceMappingURL=highcharts.js.map
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1, eval)("this");
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
 
 /***/ }),
 /* 7 */
@@ -3671,7 +3671,7 @@ var autoReplace = function autoReplace() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5), __webpack_require__(8).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(6), __webpack_require__(8).setImmediate))
 
 /***/ }),
 /* 8 */
@@ -3741,7 +3741,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(6)))
 
 /***/ }),
 /* 9 */
@@ -5909,7 +5909,7 @@ module.exports = ReactPropTypesSecret;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5), __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(6), __webpack_require__(9)))
 
 /***/ }),
 /* 20 */
@@ -10028,15 +10028,18 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       total = _ref.total,
       page = _ref.page,
       max_per_page = _ref.max_per_page,
+      search = _ref.search,
+      tags = _ref.tags,
       elements = _ref.elements,
-      dataTableProps = DataTableContainer_objectWithoutProperties(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "elements"]);
+      dataTableProps = DataTableContainer_objectWithoutProperties(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "search", "tags", "elements"]);
 
   var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
       fetchedElements = _React$useState[0],
       setFetchedElements = _React$useState[1];
 
   var _React$useState2 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState({
-    search: "",
+    search: search,
+    tags: tags,
     modalities: [],
     formats: [],
     sortKey: "conpStatus",
@@ -17156,6 +17159,38 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         "ul",
         { className: "d-flex" },
+        element.principalInvestigators ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "li",
+          { className: "card-list-item" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "p",
+            { className: "card-text pr-1" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Principal Investigator: "
+            ),
+            element.principalInvestigators.toString()
+          )
+        ) : null,
+        element.sources ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "li",
+          { className: "card-list-item" },
+          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+            "p",
+            { className: "card-text pr-1" },
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "strong",
+              null,
+              "Sources: "
+            ),
+            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "a",
+              { target: "_blank", rel: "noopener noreferrer", href: element.sources },
+              element.sources
+            )
+          )
+        ) : null,
         element.files ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
           "li",
           { className: "card-list-item" },
@@ -17196,24 +17231,6 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
               "Subjects: "
             ),
             element.subjects
-          )
-        ) : null,
-        element.sources ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "li",
-          { className: "card-list-item" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text pr-1" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
-              "Sources: "
-            ),
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "a",
-              { target: "_blank", rel: "noopener noreferrer", href: element.sources },
-              element.sources
-            )
           )
         ) : null,
         element.format ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -17427,7 +17444,25 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
           external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
             "div",
             { className: "col-9" },
-            element.tags && element.tags.domain ? element.tags.domain.toString() : "N/A"
+            element.tags && element.tags.domain ? Array.isArray(element.tags.domain) ? element.tags.domain.map(function (tag) {
+              return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "span",
+                { key: "tag" + tag, className: "mr-1" },
+                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                  "a",
+                  { href: "/pipelines?tags=" + tag, className: "badge badge-primary" },
+                  tag
+                )
+              );
+            }) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "span",
+              null,
+              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+                "a",
+                { href: "/pipelines?tags=" + element.tags.domain, className: "badge badge-primary" },
+                element.tags.domain
+              )
+            ) : null
           )
         )
       ),
@@ -17519,7 +17554,7 @@ PipelineElement_PipelineElement.propTypes = {
 
 /* harmony default export */ var src_PipelineElement = (PipelineElement_PipelineElement);
 // EXTERNAL MODULE: ./node_modules/highcharts/highcharts.js
-var highcharts = __webpack_require__(6);
+var highcharts = __webpack_require__(5);
 var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
 
 // CONCATENATED MODULE: ./src/DashboardChart/index.js
@@ -17547,8 +17582,10 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
         var xAxis = [];
         var yAxisDatasets = [];
+        var yAxisPipelines = [];
 
         var countDatasets = 0;
+        var countPipelines = 0;
 
         Object.keys(data.datasets).forEach(function (year) {
             Object.keys(data.datasets[year]).forEach(function (month) {
@@ -17557,6 +17594,16 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                 yAxisDatasets.push(countDatasets);
             });
         });
+
+        Object.keys(data.pipelines).forEach(function (year) {
+            Object.keys(data.pipelines[year]).forEach(function (month) {
+                countPipelines += data.pipelines[year][month];
+                yAxisPipelines.push(countPipelines);
+            });
+        });
+
+        /* Only show pipeline data for the months we have dataset data */
+        var yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
 
         highcharts_default.a.chart('dashboard-chart-container', {
 
@@ -17570,12 +17617,15 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
             },
 
             title: {
-                text: 'Cumulative Number of Datasets'
+                text: 'Cumulative Number of Datasets and Pipelines'
             },
 
             yAxis: [{
                 title: {
-                    text: 'Number of Datasets'
+                    text: '',
+                    style: {
+                        color: highcharts_default.a.getOptions().colors[0]
+                    }
                 },
                 allowDecimals: false
             }],
@@ -17592,7 +17642,12 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
             series: [{
                 name: 'Datasets',
-                data: yAxisDatasets
+                data: yAxisDatasets,
+                yAxis: 0
+            }, {
+                name: 'Pipelines',
+                data: yAxisPipelinesExtract,
+                yAxis: 0
             }]
 
         });
@@ -17600,7 +17655,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
 
     var fetchElements = function () {
         var _ref2 = DashboardChart_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-            var res, datasetsRes, chartData;
+            var datasetsFetch, datasetsRes, pipelinesFetch, pipelinesRes, chartData, months, i, today;
             return regenerator_default.a.wrap(function _callee$(_context) {
                 while (1) {
                     switch (_context.prev = _context.next) {
@@ -17610,23 +17665,43 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                             return fetch(datasetsURL + '?elements=all');
 
                         case 3:
-                            res = _context.sent;
+                            datasetsFetch = _context.sent;
 
-                            if (res.ok) {
+                            if (datasetsFetch.ok) {
                                 _context.next = 6;
                                 break;
                             }
 
-                            throw new Error("Request failed with status: " + res.status + " (" + res.statusText + ")");
+                            throw new Error("Request failed with status: " + datasetsFetch.status + " (" + datasetsFetch.statusText + ")");
 
                         case 6:
                             _context.next = 8;
-                            return res.json();
+                            return datasetsFetch.json();
 
                         case 8:
                             datasetsRes = _context.sent;
+                            _context.next = 11;
+                            return fetch(pipelinesURL);
+
+                        case 11:
+                            pipelinesFetch = _context.sent;
+
+                            if (pipelinesFetch.ok) {
+                                _context.next = 14;
+                                break;
+                            }
+
+                            throw new Error("Request failed with status: " + pipelinesFetch.status + " (" + pipelinesFetch.statusText + ")");
+
+                        case 14:
+                            _context.next = 16;
+                            return pipelinesFetch.json();
+
+                        case 16:
+                            pipelinesRes = _context.sent;
                             chartData = {
-                                datasets: {}
+                                datasets: {},
+                                pipelines: {}
                             };
 
 
@@ -17644,24 +17719,61 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                                 }
                             });
 
+                            /* check if we've skipped months */
+
+                            months = [];
+
+
+                            for (i = 1; i <= 12; i++) {
+                                months.push(i);
+                            }
+
+                            today = new Date();
+
+
+                            Object.keys(chartData.datasets).map(function (year) {
+                                for (var i = 1; i <= 12; i++) {
+                                    if (year == today.getFullYear() && i == today.getMonth() + 1) {
+                                        break;
+                                    }
+                                    if (!Object.keys(chartData.datasets[year]).includes("" + i)) {
+                                        chartData.datasets[year][i] = 0;
+                                    }
+                                }
+                            });
+
+                            pipelinesRes.elements.map(function (element) {
+                                var dateAdded = new Date(element.publicationdate);
+
+                                if (!chartData.pipelines[dateAdded.getFullYear()]) {
+                                    chartData.pipelines[dateAdded.getFullYear()] = {};
+                                }
+
+                                if (!chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
+                                    chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+                                } else {
+                                    chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
+                                }
+                            });
+
                             drawChart(chartData);
 
-                            _context.next = 18;
+                            _context.next = 31;
                             break;
 
-                        case 14:
-                            _context.prev = 14;
+                        case 27:
+                            _context.prev = 27;
                             _context.t0 = _context["catch"](0);
 
                             alert("There was an error retrieving the search results.");
                             console.error(_context.t0);
 
-                        case 18:
+                        case 31:
                         case "end":
                             return _context.stop();
                     }
                 }
-            }, _callee, DashboardChart_this, [[0, 14]]);
+            }, _callee, DashboardChart_this, [[0, 27]]);
         }));
 
         return function fetchElements() {

@@ -13,13 +13,16 @@ const DataTableContainer = ({
   total,
   page,
   max_per_page,
+  search,
+  tags,
   elements,
   ...dataTableProps
 }) => {
   const [fetchedElements, setFetchedElements] = React.useState(elements);
 
   const [query, setQuery] = React.useState({
-    search: "",
+    search,
+    tags,
     modalities: [],
     formats: [],
     sortKey: "conpStatus",
