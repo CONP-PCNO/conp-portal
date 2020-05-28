@@ -99,8 +99,8 @@ def pipeline_search():
         elements = list(filter(lambda e: all(
             t in e["tags"]["domain"] for t in tags), elements))
 
-    # sort, make all keys lowercase and without hyphen
-    elements = [{k.lower().replace("-", ""): v for k, v in element.items()}
+    # sort, make all keys lowercase and without hyphens or spaces
+    elements = [{k.lower().replace("-", "").replace(" ", ""): v for k, v in element.items()}
                 for element in elements]
 
     if sort_key == 'conpStatus':
@@ -262,6 +262,9 @@ def pipeline_info():
                 platform_dict = {"img": url_for('static', filename="img/globe-solid-green.png"),
                                  "uri": url}
                 element["platforms"].append(platform_dict)
+
+    # make all keys lowercase and without spaces
+    element =  {k.lower().replace(" ", ""): v for k, v in element.items()}
 
     return render_template(
         'pipeline.html',

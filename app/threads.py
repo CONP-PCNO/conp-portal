@@ -31,7 +31,7 @@ class UpdatePipelineData(threading.Thread):
                 "production"
             )
             # first search for all descriptors
-            searcher = Searcher(query=None, max_results=100, no_trunc=True)
+            searcher = Searcher(query=None, max_results=100, no_trunc=True, verbose=True)
             all_descriptors = searcher.search()
             # then pull every single descriptor
             all_descriptor_ids = list(map(lambda x: x["ID"], all_descriptors))
