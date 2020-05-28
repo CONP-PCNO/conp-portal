@@ -17,10 +17,10 @@ const DatasetElement = props => {
 
   switch (element.authorizations) {
     case 'restricted':
-      authIcons.push(<FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg" />);
+      authIcons.push(<span><FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg" /> - CONP account required</span>);
       break;
     case 'private':
-      authIcons.push(<FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg" />);
+      authIcons.push(<span><FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg" /> - Third-party account required</span>);
       break;
     default:
       break;
@@ -31,11 +31,6 @@ const DatasetElement = props => {
       <div className="card-header d-flex flex-column justify-content-between">
         <div className="d-flex justify-content-center">
           {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP} />) : <div style={{ width: 32 }} />}
-        </div>
-        <div className="d-flex justify-content-center">
-          <div className="d-flex">
-            {authIcons.map(icon => <div className="p-1">{icon}</div>)}
-          </div>
         </div>
       </div>
       <div className="col-2 d-flex align-items-center">
@@ -108,6 +103,11 @@ const DatasetElement = props => {
               </p>
             </li> : null}
         </ul>
+        <div className="d-flex justify-content-center">
+          <div className="d-flex">
+            {authIcons.map(icon => <div className="p-1">{icon}</div>)}
+          </div>
+        </div>
       </div>
       <div className="col-2 d-flex flex-column justify-content-center align-items-end">
         {element.showDownload ? <a

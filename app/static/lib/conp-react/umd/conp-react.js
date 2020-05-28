@@ -17099,10 +17099,20 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
 
   switch (element.authorizations) {
     case 'restricted':
-      authIcons.push(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserAlt, color: "dimgray", size: "lg" }));
+      authIcons.push(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "span",
+        null,
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserAlt, color: "dimgray", size: "lg" }),
+        " - CONP account required"
+      ));
       break;
     case 'private':
-      authIcons.push(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserLock, color: "dimgray", size: "lg" }));
+      authIcons.push(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "span",
+        null,
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserLock, color: "dimgray", size: "lg" }),
+        " - Third-party account required"
+      ));
       break;
     default:
       break;
@@ -17118,21 +17128,6 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
         "div",
         { className: "d-flex justify-content-center" },
         element.conpStatus !== 'external' ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { height: "32", width: "32", src: statusCONP }) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", { style: { width: 32 } })
-      ),
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "d-flex justify-content-center" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "d-flex" },
-          authIcons.map(function (icon) {
-            return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "div",
-              { className: "p-1" },
-              icon
-            );
-          })
-        )
       )
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
@@ -17289,6 +17284,21 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
             element.dateUpdated
           )
         ) : null
+      ),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        "div",
+        { className: "d-flex justify-content-center" },
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          "div",
+          { className: "d-flex" },
+          authIcons.map(function (icon) {
+            return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+              "div",
+              { className: "p-1" },
+              icon
+            );
+          })
+        )
       )
     ),
     external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
