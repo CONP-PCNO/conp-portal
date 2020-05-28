@@ -99,73 +99,80 @@ const DataTable = ({
           </span>
         </div>
       </div>
-      {renderElement.name == "DatasetElement" ?
-        <div className="d-flex justify-content-between">
-          <div className="d-flex p-2 justify-content-start align-items-center">
-            {query.max_per_page} rows displayed of {total}. (Maximum rows per page
-              <span className="dropdown">
-              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {query.max_per_page}
-              </button>
-              <div className="dropdown-menu">
-                <div key="max_per_page_5" className="dropdown-item ml-2">
-                  <button type="button" className="btn btn-light btn-sm" value={5} id={"max_per_page." + 5} onClick={handleMaxPerPageChange}>
-                    5
+      <div className="d-flex justify-content-between">
+        <div className="d-flex p-2 justify-content-start align-items-center">
+          {elements.length} results displayed of {total}. (Maximum results per page
+              <span className="dropdown p-2">
+            <button className="btn btn-secondary dropdown-toggle p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {query.max_per_page}
+            </button>
+            <div className="dropdown-menu" style={{ minWidth: '5rem' }}>
+              <div key="max_per_page_5" className="dropdown-item p-0">
+                <button type="button" className="btn btn-light p-1" value={5} id={"max_per_page." + 5} onClick={handleMaxPerPageChange}>
+                  5
                     </button>
-                </div>
-                <div key="max_per_page_10" className="dropdown-item ml-2">
-                  <button type="button" className="btn btn-light btn-sm" value={10} id={"max_per_page." + 10} onClick={handleMaxPerPageChange}>
-                    10
-                    </button>
-                </div>
-                <div key="max_per_page_15" className="dropdown-item ml-2">
-                  <button type="button" className="btn btn-light btn-sm" value={15} id={"max_per_page." + 15} onClick={handleMaxPerPageChange}>
-                    15
-                    </button>
-                </div>
-                <div key="max_per_page_20" className="dropdown-item ml-2">
-                  <button type="button" className="btn btn-light btn-sm" value={20} id={"max_per_page." + 20} onClick={handleMaxPerPageChange}>
-                    20
-                    </button>
-                </div>
               </div>
-            </span>)
+              <div key="max_per_page_10" className="dropdown-item p-0">
+                <button type="button" className="btn btn-light p-1" value={10} id={"max_per_page." + 10} onClick={handleMaxPerPageChange}>
+                  10
+                    </button>
+              </div>
+              <div key="max_per_page_15" className="dropdown-item p-0">
+                <button type="button" className="btn btn-light p-1" value={15} id={"max_per_page." + 15} onClick={handleMaxPerPageChange}>
+                  15
+                    </button>
+              </div>
+              <div key="max_per_page_20" className="dropdown-item p-0">
+                <button type="button" className="btn btn-light p-1" value={20} id={"max_per_page." + 20} onClick={handleMaxPerPageChange}>
+                  20
+                    </button>
+              </div>
+            </div>
+          </span>)
           </div>
+        {renderElement.name == "DatasetElement" ?
           <div className="d-flex p-2 justify-content-end">
-            <div className="dropdown">
-              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <div className="dropdown p-2">
+              <button className="btn btn-secondary dropdown-toggle p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                 Modality:
-          </button>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              </button>
+              <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                 {filterKeys.filter(f => f["key"] == "modalities").length > 0 ?
                   filterKeys.filter(f => f["key"] == "modalities")[0]["values"].map(modality => (
-                    <div key={modality.id} className="dropdown-item ml-2">
-                      <input className="form-check-input" type="checkbox" value={"modalities." + modality} id={"filter" + modality} onChange={handleChange} />
-                      <label className="form-check-label" htmlFor={"filter" + modality}>
-                        {modality}
-                      </label>
-                    </div>
-                  )) : null}
+                    modality !== '' ?
+                      <div key={modality.id} className="dropdown-item ml-2">
+                        <input className="form-check-input" type="checkbox" value={"modalities." + modality} id={"filter" + modality} onChange={handleChange} />
+                        <label className="form-check-label" htmlFor={"filter" + modality}>
+                          {modality}
+                        </label>
+                      </div>
+                      : null
+                  ))
+                  : null}
               </div>
             </div>
-            <div className="dropdown">
-              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <div className="dropdown p-2">
+              <button className="btn btn-secondary dropdown-toggle p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                 File Format:
-          </button>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              </button>
+              <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                 {filterKeys.filter(f => f["key"] == "formats").length > 0 ?
                   filterKeys.filter(f => f["key"] == "formats")[0]["values"].map(format => (
-                    <div key={format.id} className="dropdown-item ml-2">
-                      <input className="form-check-input" type="checkbox" value={"formats." + format} id={"filter" + format} onChange={handleChange} />
-                      <label className="form-check-label" htmlFor={"filter" + format}>
-                        {format}
-                      </label>
-                    </div>
-                  )) : null}
+                    format !== '' ?
+                      <div key={format.id} className="dropdown-item ml-2">
+                        <input className="form-check-input" type="checkbox" value={"formats." + format} id={"filter" + format} onChange={handleChange} />
+                        <label className="form-check-label" htmlFor={"filter" + format}>
+                          {format}
+                        </label>
+                      </div>
+                      : null
+                  ))
+                  : null}
               </div>
             </div>
           </div>
-        </div> : null}
+          : null}
+      </div>
       {elements.map((element, i) => (
         <div key={"" + element.id} className="container">
           {React.createElement(renderElement, { ...element, authorized, imagePath })}
