@@ -47,7 +47,7 @@ const Spotlight = ({ datasetURL, ...props }) => {
                       />
                     </div>
                     <p className="card-description-subtitle">
-                        Prevent-AD
+                        PREVENT-AD
                 </p>
                     <p>
 The PREVENT-AD (Pre-symptomatic Evaluation of Experimental or Novel Treatments for Alzheimer's Disease) cohort is composed of cognitively healthy participants over 55 years old, at risk of developing Alzheimer's Disease (AD) as their parents and/or siblings were/are affected by the disease. These ‘at-risk’ participants have been followed for a naturalistic study of the presymptomatic phase of AD since 2011 using multimodal measurements of various disease indicators. Two clinical trials intended to test pharmaco-preventive agents have also been conducted.
