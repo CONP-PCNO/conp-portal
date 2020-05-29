@@ -17746,7 +17746,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                                     if (year == today.getFullYear() && i == today.getMonth() + 1) {
                                         break;
                                     }
-                                    if (!Object.keys(chartData.datasets[year]).includes("" + i)) {
+                                    if (Object.keys(chartData.datasets[year]).includes("" + (i - 1)) && !Object.keys(chartData.datasets[year]).includes("" + i)) {
                                         chartData.datasets[year][i] = 0;
                                     }
                                 }
