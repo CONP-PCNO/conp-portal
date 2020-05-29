@@ -7676,7 +7676,7 @@ DataTable_DataTable.defaultProps = {
 };
 
 /* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
-// EXTERNAL MODULE: /usr/local/lib/node_modules/nwb/node_modules/babel-runtime/regenerator/index.js
+// EXTERNAL MODULE: ./node_modules/babel-runtime/regenerator/index.js
 var regenerator = __webpack_require__(3);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
