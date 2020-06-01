@@ -17610,68 +17610,37 @@ var Spotlight_Spotlight = function Spotlight(_ref) {
       }, _callee, null, [[0, 12]]);
     }));
 
-        return function fetchElements() {
-            return _ref2.apply(this, arguments);
-        };
-    }();
+    return function fetchElements() {
+      return _ref2.apply(this, arguments);
+    };
+  }(); //useDebounce(() => void fetchElements(), 300, [datasetURL]);
 
-    //useDebounce(() => void fetchElements(), 300, [datasetURL]);
 
-    return (
-        //fetchedElements.length > 0 ?
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "card-description" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "h3",
-                { className: "card-description-title" },
-                "STUDY SPOTLIGHT"
-            ),
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("hr", null),
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "div",
-                { className: "card-description-text" },
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "div",
-                    { className: "col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social" },
-                    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-                        alt: "Project image",
-                        className: "card-img-top card-social-img",
-                        src: "/dataset_logo?id=projects/preventad-open"
-                    })
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "p",
-                    { className: "card-description-subtitle" },
-                    "PREVENT-AD"
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "p",
-                    null,
-                    "The PREVENT-AD (Pre-symptomatic Evaluation of Experimental or Novel Treatments for Alzheimer's Disease) cohort is composed of cognitively healthy participants over 55 years old, at risk of developing Alzheimer's Disease (AD) as their parents and/or siblings were/are affected by the disease. These \u2018at-risk\u2019 participants have been followed for a naturalistic study of the presymptomatic phase of AD since 2011 using multimodal measurements of various disease indicators. Two clinical trials intended to test pharmaco-preventive agents have also been conducted. The PREVENT-AD research group is now releasing data openly with the intention of contributing to the community\u2019s growing understanding of AD pathogenesis."
-                ),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "p",
-                    null,
-                    "Authors: StoP-AD Center - Douglas Mental Health University Institute"
-                )
-            ),
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "div",
-                { className: "d-flex mt-4 justify-content-end" },
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                    "a",
-                    { href: "/dataset?id=projects/preventad-open" },
-                    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                        "button",
-                        { className: "btn btn-outline-secondary",
-                            type: "button" },
-                        "Read More"
-                    )
-                )
-            )
-        )
-        //: null
+  return (
+    /*#__PURE__*/
+    //fetchedElements.length > 0 ?
+    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "card-description"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h3", {
+      className: "card-description-title"
+    }, "STUDY SPOTLIGHT"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("hr", null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "card-description-text"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+      alt: "Project image",
+      className: "card-img-top card-social-img",
+      src: "/dataset_logo?id=projects/preventad-open"
+    })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+      className: "card-description-subtitle"
+    }, "PREVENT-AD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "The PREVENT-AD (Pre-symptomatic Evaluation of Experimental or Novel Treatments for Alzheimer's Disease) cohort is composed of cognitively healthy participants over 55 years old, at risk of developing Alzheimer's Disease (AD) as their parents and/or siblings were/are affected by the disease. These \u2018at-risk\u2019 participants have been followed for a naturalistic study of the presymptomatic phase of AD since 2011 using multimodal measurements of various disease indicators. Two clinical trials intended to test pharmaco-preventive agents have also been conducted. The PREVENT-AD research group is now releasing data openly with the intention of contributing to the community\u2019s growing understanding of AD pathogenesis."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Authors: StoP-AD Center - Douglas Mental Health University Institute")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "d-flex mt-4 justify-content-end"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+      href: "/dataset?id=projects/preventad-open"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+      className: "btn btn-outline-secondary",
+      type: "button"
+    }, "Read More")))) //: null
 
   );
 };
