@@ -138,10 +138,11 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
 
             Object.keys(chartData.datasets).map(year => {
                 for (var i = 1; i <= 12; i++) {
-                    if(year == today.getFullYear() && i == today.getMonth()+1){
+                    if (year == today.getFullYear() && i == today.getMonth() + 1) {
                         break;
                     }
-                    if (!Object.keys(chartData.datasets[year]).includes(`${i}`)) {
+                    if (Object.keys(chartData.datasets[year]).includes(`${i - 1}`) &&
+                        !Object.keys(chartData.datasets[year]).includes(`${i}`)) {
                         chartData.datasets[year][i] = 0;
                     }
                 }
