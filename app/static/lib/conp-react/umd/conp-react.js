@@ -24,7 +24,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		var moduleId, chunkId, i = 0, resolves = [];
 /******/ 		for(;i < chunkIds.length; i++) {
 /******/ 			chunkId = chunkIds[i];
-/******/ 			if(installedChunks[chunkId]) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
 /******/ 				resolves.push(installedChunks[chunkId][0]);
 /******/ 			}
 /******/ 			installedChunks[chunkId] = 0;
@@ -106,7 +106,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 				promises.push(installedChunkData[2] = promise);
 /******/
 /******/ 				// start chunk loading
-/******/ 				var head = document.getElementsByTagName('head')[0];
 /******/ 				var script = document.createElement('script');
 /******/ 				var onScriptComplete;
 /******/
@@ -117,6 +116,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 				}
 /******/ 				script.src = jsonpScriptSrc(chunkId);
 /******/
+/******/ 				// create error before stack unwound to get useful stacktrace later
+/******/ 				var error = new Error();
 /******/ 				onScriptComplete = function (event) {
 /******/ 					// avoid mem leaks in IE.
 /******/ 					script.onerror = script.onload = null;
@@ -126,7 +127,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 						if(chunk) {
 /******/ 							var errorType = event && (event.type === 'load' ? 'missing' : event.type);
 /******/ 							var realSrc = event && event.target && event.target.src;
-/******/ 							var error = new Error('Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')');
+/******/ 							error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
+/******/ 							error.name = 'ChunkLoadError';
 /******/ 							error.type = errorType;
 /******/ 							error.request = realSrc;
 /******/ 							chunk[1](error);
@@ -138,7 +140,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 					onScriptComplete({ type: 'timeout', target: script });
 /******/ 				}, 120000);
 /******/ 				script.onerror = script.onload = onScriptComplete;
-/******/ 				head.appendChild(script);
+/******/ 				document.head.appendChild(script);
 /******/ 			}
 /******/ 		}
 /******/ 		return Promise.all(promises);
@@ -237,7 +239,7 @@ if (false) { var throwOnDirectAccess, ReactIs; } else {
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 /*!
 * screenfull
@@ -248,7 +250,7 @@ if (false) { var throwOnDirectAccess, ReactIs; } else {
 	'use strict';
 
 	var document = typeof window !== 'undefined' && typeof window.document !== 'undefined' ? window.document : {};
-	var isCommonjs = typeof module !== 'undefined' && module.exports;
+	var isCommonjs =  true && module.exports;
 	var keyboardAllowed = typeof Element !== 'undefined' && 'ALLOW_KEYBOARD_INPUT' in Element;
 
 	var fn = (function () {
@@ -443,9 +445,9 @@ module.exports = __webpack_require__(20);
 
 "use strict";
 
-const strictUriEncode = __webpack_require__(23);
-const decodeComponent = __webpack_require__(24);
-const splitOnFirst = __webpack_require__(25);
+const strictUriEncode = __webpack_require__(22);
+const decodeComponent = __webpack_require__(23);
+const splitOnFirst = __webpack_require__(24);
 
 function encoderForArrayFormat(options) {
 	switch (options.arrayFormat) {
@@ -715,7 +717,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*
 
  License: www.highcharts.com/license
 */
-(function(S,M){"object"===typeof module&&module.exports?(M["default"]=M,module.exports=S.document?M(S):M): true?!(__WEBPACK_AMD_DEFINE_RESULT__ = (function(){return M(S)}).call(exports, __webpack_require__, exports, module),
+(function(S,M){ true&&module.exports?(M["default"]=M,module.exports=S.document?M(S):M): true?!(__WEBPACK_AMD_DEFINE_RESULT__ = (function(){return M(S)}).call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):(undefined)})("undefined"!==typeof window?window:this,function(S){function M(c,e,F,I){c.hasOwnProperty(e)||(c[e]=I.apply(null,F))}var J={};M(J,"parts/Globals.js",[],function(){var c="undefined"!==typeof S?S:"undefined"!==typeof window?window:{},e=c.document,
 F=c.navigator&&c.navigator.userAgent||"",I=e&&e.createElementNS&&!!e.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect,G=/(edge|msie|trident)/i.test(F)&&!c.opera,H=-1!==F.indexOf("Firefox"),v=-1!==F.indexOf("Chrome"),q=H&&4>parseInt(F.split("Firefox/")[1],10);return{product:"Highcharts",version:"8.0.0",deg2rad:2*Math.PI/360,doc:e,hasBidiBug:q,hasTouch:!!c.TouchEvent,isMS:G,isWebKit:-1!==F.indexOf("AppleWebKit"),isFirefox:H,isChrome:v,isSafari:!v&&-1!==F.indexOf("Safari"),isTouchDevice:/(Mobile|Android|Windows Phone)/.test(F),
 SVG_NS:"http://www.w3.org/2000/svg",chartCount:0,seriesTypes:{},symbolSizes:{},svg:I,win:c,marginNames:["plotTop","marginRight","marginBottom","plotLeft"],noop:function(){},charts:[],dateFormats:{}}});M(J,"parts/Utilities.js",[J["parts/Globals.js"]],function(c){function e(d,a){return parseInt(d,a||10)}function F(d){return"string"===typeof d}function I(d){d=Object.prototype.toString.call(d);return"[object Array]"===d||"[object Array Iterator]"===d}function G(d,a){return!!d&&"object"===typeof d&&(!a||
@@ -1215,7 +1217,7 @@ g = (function() {
 
 try {
 	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1, eval)("this");
+	g = g || new Function("return this")();
 } catch (e) {
 	// This works if the window reference is available
 	if (typeof window === "object") g = window;
@@ -4093,7 +4095,7 @@ exports.addon = function (renderer) {
 "use strict";
 
 
-var removeRule = __webpack_require__(22).removeRule;
+var removeRule = __webpack_require__(21).removeRule;
 
 exports.addon = function (renderer) {
     // VCSSOM support only browser environment.
@@ -5625,7 +5627,7 @@ exports.easing = {
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(26);
+module.exports = __webpack_require__(25);
 
 
 /***/ }),
@@ -5922,48 +5924,7 @@ module.exports = ReactPropTypesSecret;
  * LICENSE file in the root directory of this source tree.
  */
 
-// This method of obtaining a reference to the global object needs to be
-// kept identical to the way it is obtained in runtime.js
-var g = (function() { return this })() || Function("return this")();
-
-// Use `getOwnPropertyNames` because not all browsers support calling
-// `hasOwnProperty` on the global `self` object in a worker. See #183.
-var hadRuntime = g.regeneratorRuntime &&
-  Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
-
-// Save the old regeneratorRuntime in case it needs to be restored later.
-var oldRuntime = hadRuntime && g.regeneratorRuntime;
-
-// Force reevalutation of runtime.js.
-g.regeneratorRuntime = undefined;
-
-module.exports = __webpack_require__(21);
-
-if (hadRuntime) {
-  // Restore the original runtime.
-  g.regeneratorRuntime = oldRuntime;
-} else {
-  // Remove the global property added by runtime.js.
-  try {
-    delete g.regeneratorRuntime;
-  } catch(e) {
-    g.regeneratorRuntime = undefined;
-  }
-}
-
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-!(function(global) {
+var runtime = (function (exports) {
   "use strict";
 
   var Op = Object.prototype;
@@ -5973,23 +5934,6 @@ if (hadRuntime) {
   var iteratorSymbol = $Symbol.iterator || "@@iterator";
   var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
   var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  var inModule = typeof module === "object";
-  var runtime = global.regeneratorRuntime;
-  if (runtime) {
-    if (inModule) {
-      // If regeneratorRuntime is defined globally and we're in a module,
-      // make the exports object identical to regeneratorRuntime.
-      module.exports = runtime;
-    }
-    // Don't bother evaluating the rest of this file if the runtime was
-    // already defined globally.
-    return;
-  }
-
-  // Define the runtime globally (as expected by generated code) as either
-  // module.exports (if we're in a module) or a new, empty object.
-  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
 
   function wrap(innerFn, outerFn, self, tryLocsList) {
     // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
@@ -6003,7 +5947,7 @@ if (hadRuntime) {
 
     return generator;
   }
-  runtime.wrap = wrap;
+  exports.wrap = wrap;
 
   // Try/catch helper to minimize deoptimizations. Returns a completion
   // record like context.tryEntries[i].completion. This interface could
@@ -6074,7 +6018,7 @@ if (hadRuntime) {
     });
   }
 
-  runtime.isGeneratorFunction = function(genFun) {
+  exports.isGeneratorFunction = function(genFun) {
     var ctor = typeof genFun === "function" && genFun.constructor;
     return ctor
       ? ctor === GeneratorFunction ||
@@ -6084,7 +6028,7 @@ if (hadRuntime) {
       : false;
   };
 
-  runtime.mark = function(genFun) {
+  exports.mark = function(genFun) {
     if (Object.setPrototypeOf) {
       Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
     } else {
@@ -6101,11 +6045,11 @@ if (hadRuntime) {
   // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
   // `hasOwn.call(value, "__await")` to determine if the yielded value is
   // meant to be awaited.
-  runtime.awrap = function(arg) {
+  exports.awrap = function(arg) {
     return { __await: arg };
   };
 
-  function AsyncIterator(generator) {
+  function AsyncIterator(generator, PromiseImpl) {
     function invoke(method, arg, resolve, reject) {
       var record = tryCatch(generator[method], generator, arg);
       if (record.type === "throw") {
@@ -6116,32 +6060,24 @@ if (hadRuntime) {
         if (value &&
             typeof value === "object" &&
             hasOwn.call(value, "__await")) {
-          return Promise.resolve(value.__await).then(function(value) {
+          return PromiseImpl.resolve(value.__await).then(function(value) {
             invoke("next", value, resolve, reject);
           }, function(err) {
             invoke("throw", err, resolve, reject);
           });
         }
 
-        return Promise.resolve(value).then(function(unwrapped) {
+        return PromiseImpl.resolve(value).then(function(unwrapped) {
           // When a yielded Promise is resolved, its final value becomes
           // the .value of the Promise<{value,done}> result for the
-          // current iteration. If the Promise is rejected, however, the
-          // result for this iteration will be rejected with the same
-          // reason. Note that rejections of yielded Promises are not
-          // thrown back into the generator function, as is the case
-          // when an awaited Promise is rejected. This difference in
-          // behavior between yield and await is important, because it
-          // allows the consumer to decide what to do with the yielded
-          // rejection (swallow it and continue, manually .throw it back
-          // into the generator, abandon iteration, whatever). With
-          // await, by contrast, there is no opportunity to examine the
-          // rejection reason outside the generator function, so the
-          // only option is to throw it from the await expression, and
-          // let the generator function handle the exception.
+          // current iteration.
           result.value = unwrapped;
           resolve(result);
-        }, reject);
+        }, function(error) {
+          // If a rejected Promise was yielded, throw the rejection back
+          // into the async generator function so it can be handled there.
+          return invoke("throw", error, resolve, reject);
+        });
       }
     }
 
@@ -6149,7 +6085,7 @@ if (hadRuntime) {
 
     function enqueue(method, arg) {
       function callInvokeWithMethodAndArg() {
-        return new Promise(function(resolve, reject) {
+        return new PromiseImpl(function(resolve, reject) {
           invoke(method, arg, resolve, reject);
         });
       }
@@ -6184,17 +6120,20 @@ if (hadRuntime) {
   AsyncIterator.prototype[asyncIteratorSymbol] = function () {
     return this;
   };
-  runtime.AsyncIterator = AsyncIterator;
+  exports.AsyncIterator = AsyncIterator;
 
   // Note that simple async functions are implemented on top of
   // AsyncIterator objects; they just return a Promise for the value of
   // the final result produced by the iterator.
-  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
+  exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+    if (PromiseImpl === void 0) PromiseImpl = Promise;
+
     var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList)
+      wrap(innerFn, outerFn, self, tryLocsList),
+      PromiseImpl
     );
 
-    return runtime.isGeneratorFunction(outerFn)
+    return exports.isGeneratorFunction(outerFn)
       ? iter // If outerFn is a generator, return the full iterator.
       : iter.next().then(function(result) {
           return result.done ? result.value : iter.next();
@@ -6291,7 +6230,8 @@ if (hadRuntime) {
       context.delegate = null;
 
       if (context.method === "throw") {
-        if (delegate.iterator.return) {
+        // Note: ["return"] must be used for ES3 parsing compatibility.
+        if (delegate.iterator["return"]) {
           // If the delegate iterator has a return method, give it a
           // chance to clean up.
           context.method = "return";
@@ -6411,7 +6351,7 @@ if (hadRuntime) {
     this.reset(true);
   }
 
-  runtime.keys = function(object) {
+  exports.keys = function(object) {
     var keys = [];
     for (var key in object) {
       keys.push(key);
@@ -6472,7 +6412,7 @@ if (hadRuntime) {
     // Return an iterator with no values.
     return { next: doneResult };
   }
-  runtime.values = values;
+  exports.values = values;
 
   function doneResult() {
     return { value: undefined, done: true };
@@ -6677,16 +6617,39 @@ if (hadRuntime) {
       return ContinueSentinel;
     }
   };
-})(
-  // In sloppy mode, unbound `this` refers to the global object, fallback to
-  // Function constructor if we're in global strict mode. That is sadly a form
-  // of indirect eval which violates Content Security Policy.
-  (function() { return this })() || Function("return this")()
-);
+
+  // Regardless of whether this script is executing as a CommonJS module
+  // or not, return the runtime object so that we can declare the variable
+  // regeneratorRuntime in the outer scope, which allows this module to be
+  // injected easily by `bin/regenerator --include-runtime script.js`.
+  return exports;
+
+}(
+  // If this script is executing as a CommonJS module, use module.exports
+  // as the regeneratorRuntime namespace. Otherwise create a new empty
+  // object. Either way, the resulting object will be used to initialize
+  // the regeneratorRuntime variable at the top of this file.
+   true ? module.exports : undefined
+));
+
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  // This module should not be running in strict mode, so the above
+  // assignment should always work unless something is misconfigured. Just
+  // in case runtime.js accidentally runs in strict mode, we can escape
+  // strict mode using a global Function call. This could conceivably fail
+  // if a Content Security Policy forbids using Function, but in that case
+  // the proper solution is to fix the accidental strict mode problem. If
+  // you've misconfigured your bundler to force strict mode and applied a
+  // CSP to forbid Function, and you're not willing to fix either of those
+  // problems, please detail your unique predicament in a GitHub issue.
+  Function("r", "regeneratorRuntime = r")(runtime);
+}
 
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports) {
 
 function removeRule (rule) {
@@ -6707,7 +6670,7 @@ exports.removeRule = removeRule;
 
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6716,7 +6679,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6817,7 +6780,7 @@ module.exports = function (encodedURI) {
 
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6846,11 +6809,19 @@ module.exports = (string, separator) => {
 
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "DataTable", function() { return /* reexport */ src_DataTable_DataTable; });
+__webpack_require__.d(__webpack_exports__, "DataTableContainer", function() { return /* reexport */ DataTable_DataTableContainer; });
+__webpack_require__.d(__webpack_exports__, "DatasetElement", function() { return /* reexport */ src_DatasetElement; });
+__webpack_require__.d(__webpack_exports__, "PipelineElement", function() { return /* reexport */ src_PipelineElement; });
+__webpack_require__.d(__webpack_exports__, "DashboardChart", function() { return /* reexport */ src_DashboardChart; });
 
 // CONCATENATED MODULE: ./node_modules/ramda/es/internal/_isPlaceholder.js
 function _isPlaceholder(a) {
@@ -7331,8 +7302,7 @@ var convertCurry = convert.bind(null, external_root_React_commonjs2_react_common
 
 
 // CONCATENATED MODULE: ./src/DataTable/DataTable.js
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 
 
@@ -7397,254 +7367,230 @@ var DataTable_DataTable = function DataTable(_ref) {
     }));
   };
 
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-    "div",
-    { className: "search-dataset-table container", cellSpacing: 0 },
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "searchbar col-12 d-flex p-2" },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "d-flex dropdown" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "label",
-          { className: "dropdown-label m-2" },
-          "Sort By: "
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "select",
-          {
-            className: "btn btn-outline-secondary dropdown-toggle dropdown-select",
-            value: query.sortKey,
-            onChange: function onChange(e) {
-              return setQuery(_extends({}, query, { sortKey: e.currentTarget.value, page: 1 }));
-            }
-          },
-          sortKeys.map(function (_ref2, i) {
-            var sortKey = _ref2.key,
-                label = _ref2.label;
-            return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "option",
-              { className: "dropdown-item", key: i, value: sortKey },
-              label
-            );
-          })
-        )
-      ),
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "input-group m-2" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
-          className: "form-control p-2",
-          type: "text",
-          placeholder: "Search",
-          "aria-label": "Search",
-          value: query.search,
-          onChange: function onChange(e) {
-            return setQuery(_extends({}, query, { search: e.currentTarget.value, page: 1 }));
-          }
-        }),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "span",
-          { className: "input-group-append" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "span",
-            { className: "input-group-text", id: "basic-addon2" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-search" })
-          )
-        )
-      )
-    ),
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "d-flex justify-content-between" },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "d-flex p-2 justify-content-start align-items-center" },
-        elements.length,
-        " results displayed of ",
-        total,
-        ". (Maximum results per page",
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "span",
-          { className: "dropdown p-2" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "button",
-            { className: "btn btn-secondary dropdown-toggle p-2", type: "button", id: "dropdownMenuButton", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" },
-            query.max_per_page
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dropdown-menu", style: { minWidth: '5rem' } },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "div",
-              { key: "max_per_page_5", className: "dropdown-item p-0" },
-              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "button",
-                { type: "button", className: "btn btn-light p-1", value: 5, id: "max_per_page." + 5, onClick: handleMaxPerPageChange },
-                "5"
-              )
-            ),
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "div",
-              { key: "max_per_page_10", className: "dropdown-item p-0" },
-              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "button",
-                { type: "button", className: "btn btn-light p-1", value: 10, id: "max_per_page." + 10, onClick: handleMaxPerPageChange },
-                "10"
-              )
-            ),
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "div",
-              { key: "max_per_page_15", className: "dropdown-item p-0" },
-              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "button",
-                { type: "button", className: "btn btn-light p-1", value: 15, id: "max_per_page." + 15, onClick: handleMaxPerPageChange },
-                "15"
-              )
-            ),
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "div",
-              { key: "max_per_page_20", className: "dropdown-item p-0" },
-              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "button",
-                { type: "button", className: "btn btn-light p-1", value: 20, id: "max_per_page." + 20, onClick: handleMaxPerPageChange },
-                "20"
-              )
-            )
-          )
-        ),
-        ")"
-      ),
-      renderElement.name == "DatasetElement" ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "d-flex p-2 justify-content-end" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "dropdown p-2" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "button",
-            { className: "btn btn-secondary dropdown-toggle p-2", type: "button", id: "dropdownMenuButton", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false", "data-display": "static" },
-            "Modality:"
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dropdown-menu dropdown-menu-right", "aria-labelledby": "dropdownMenuButton" },
-            filterKeys.filter(function (f) {
-              return f["key"] == "modalities";
-            }).length > 0 ? filterKeys.filter(function (f) {
-              return f["key"] == "modalities";
-            })[0]["values"].map(function (modality) {
-              return modality !== '' ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "div",
-                { key: modality.id, className: "dropdown-item ml-2" },
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", { className: "form-check-input", type: "checkbox", value: "modalities." + modality, id: "filter" + modality, onChange: handleChange }),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "label",
-                  { className: "form-check-label", htmlFor: "filter" + modality },
-                  modality
-                )
-              ) : null;
-            }) : null
-          )
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "dropdown p-2" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "button",
-            { className: "btn btn-secondary dropdown-toggle p-2", type: "button", id: "dropdownMenuButton", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false", "data-display": "static" },
-            "File Format:"
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "dropdown-menu dropdown-menu-right", "aria-labelledby": "dropdownMenuButton" },
-            filterKeys.filter(function (f) {
-              return f["key"] == "formats";
-            }).length > 0 ? filterKeys.filter(function (f) {
-              return f["key"] == "formats";
-            })[0]["values"].map(function (format) {
-              return format !== '' ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "div",
-                { key: format.id, className: "dropdown-item ml-2" },
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", { className: "form-check-input", type: "checkbox", value: "formats." + format, id: "filter" + format, onChange: handleChange }),
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "label",
-                  { className: "form-check-label", htmlFor: "filter" + format },
-                  format
-                )
-              ) : null;
-            }) : null
-          )
-        )
-      ) : null
-    ),
-    elements.map(function (element, i) {
-      return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { key: "" + element.id, className: "container" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, { authorized: authorized, imagePath: imagePath }))
-      );
-    }),
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "search-dataset-footer d-flex align-items-center p-2" },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "btn-group" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "btn btn-outline-dark",
-            onClick: function onClick(e) {
-              return setQuery(_extends({}, query, { page: 1 }));
-            } },
-          "<<"
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "btn btn-outline-dark",
-            onClick: function onClick(e) {
-              return setQuery(_extends({}, query, { page: Math.max(1, query.page - 1) }));
-            } },
-          " < "
-        ),
-        es_range(1, Math.ceil(total / query.max_per_page) + 1).map(function (page, i) {
-          return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: page === query.page ? "btn btn-dark" : "btn btn-outline-dark",
-              onClick: function onClick(e) {
-                return setQuery(_extends({}, query, { page: page }));
-              },
-              key: i },
-            page
-          );
-        }),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "btn btn-outline-dark",
-            onClick: function onClick(e) {
-              return setQuery(_extends({}, query, { page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page)) }));
-            }
-          },
-          ">"
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "btn btn-outline-dark",
-            onClick: function onClick(e) {
-              return setQuery(_extends({}, query, { page: Math.ceil(total / query.max_per_page) }));
-            }
-          },
-          ">>"
-        )
-      )
-    )
-  );
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "search-dataset-table container",
+    cellSpacing: 0
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "searchbar col-12 d-flex p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex dropdown"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+    className: "dropdown-label m-2"
+  }, "Sort By: "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("select", {
+    className: "btn btn-outline-secondary dropdown-toggle dropdown-select",
+    value: query.sortKey,
+    onChange: function onChange(e) {
+      return setQuery(_extends({}, query, {
+        sortKey: e.currentTarget.value,
+        page: 1
+      }));
+    }
+  }, sortKeys.map(function (_ref2, i) {
+    var sortKey = _ref2.key,
+        label = _ref2.label;
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
+      className: "dropdown-item",
+      key: i,
+      value: sortKey
+    }, label);
+  }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "input-group m-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+    className: "form-control p-2",
+    type: "text",
+    placeholder: "Search",
+    "aria-label": "Search",
+    value: query.search,
+    onChange: function onChange(e) {
+      return setQuery(_extends({}, query, {
+        search: e.currentTarget.value,
+        page: 1
+      }));
+    }
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    className: "input-group-append"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    className: "input-group-text",
+    id: "basic-addon2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", {
+    className: "fa fa-search"
+  }))))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex justify-content-between"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex p-2 justify-content-start align-items-center"
+  }, elements.length, " results displayed of ", total, ". (Maximum results per page", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    className: "dropdown p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-secondary dropdown-toggle p-2",
+    type: "button",
+    id: "dropdownMenuButton",
+    "data-toggle": "dropdown",
+    "aria-haspopup": "true",
+    "aria-expanded": "false"
+  }, query.max_per_page), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown-menu",
+    style: {
+      minWidth: '5rem'
+    }
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    key: "max_per_page_5",
+    className: "dropdown-item p-0"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-light p-1",
+    value: 5,
+    id: "max_per_page." + 5,
+    onClick: handleMaxPerPageChange
+  }, "5")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    key: "max_per_page_10",
+    className: "dropdown-item p-0"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-light p-1",
+    value: 10,
+    id: "max_per_page." + 10,
+    onClick: handleMaxPerPageChange
+  }, "10")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    key: "max_per_page_15",
+    className: "dropdown-item p-0"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-light p-1",
+    value: 15,
+    id: "max_per_page." + 15,
+    onClick: handleMaxPerPageChange
+  }, "15")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    key: "max_per_page_20",
+    className: "dropdown-item p-0"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-light p-1",
+    value: 20,
+    id: "max_per_page." + 20,
+    onClick: handleMaxPerPageChange
+  }, "20")))), ")"), renderElement.name == "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex p-2 justify-content-end"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-secondary dropdown-toggle p-2",
+    type: "button",
+    id: "dropdownMenuButton",
+    "data-toggle": "dropdown",
+    "aria-haspopup": "true",
+    "aria-expanded": "false",
+    "data-display": "static"
+  }, "Modality:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown-menu dropdown-menu-right",
+    "aria-labelledby": "dropdownMenuButton"
+  }, filterKeys.filter(function (f) {
+    return f["key"] == "modalities";
+  }).length > 0 ? filterKeys.filter(function (f) {
+    return f["key"] == "modalities";
+  })[0]["values"].map(function (modality) {
+    return modality !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      key: modality.id,
+      className: "dropdown-item ml-2"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+      className: "form-check-input",
+      type: "checkbox",
+      value: "modalities." + modality,
+      id: "filter" + modality,
+      onChange: handleChange
+    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+      className: "form-check-label",
+      htmlFor: "filter" + modality
+    }, modality)) : null;
+  }) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-secondary dropdown-toggle p-2",
+    type: "button",
+    id: "dropdownMenuButton",
+    "data-toggle": "dropdown",
+    "aria-haspopup": "true",
+    "aria-expanded": "false",
+    "data-display": "static"
+  }, "File Format:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown-menu dropdown-menu-right",
+    "aria-labelledby": "dropdownMenuButton"
+  }, filterKeys.filter(function (f) {
+    return f["key"] == "formats";
+  }).length > 0 ? filterKeys.filter(function (f) {
+    return f["key"] == "formats";
+  })[0]["values"].map(function (format) {
+    return format !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      key: format.id,
+      className: "dropdown-item ml-2"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+      className: "form-check-input",
+      type: "checkbox",
+      value: "formats." + format,
+      id: "filter" + format,
+      onChange: handleChange
+    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+      className: "form-check-label",
+      htmlFor: "filter" + format
+    }, format)) : null;
+  }) : null))) : null), elements.map(function (element, i) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      key: "" + element.id,
+      className: "container"
+    }, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, {
+      authorized: authorized,
+      imagePath: imagePath
+    })));
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "search-dataset-footer d-flex align-items-center p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "btn-group"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "btn btn-outline-dark",
+    onClick: function onClick(e) {
+      return setQuery(_extends({}, query, {
+        page: 1
+      }));
+    }
+  }, "<<"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "btn btn-outline-dark",
+    onClick: function onClick(e) {
+      return setQuery(_extends({}, query, {
+        page: Math.max(1, query.page - 1)
+      }));
+    }
+  }, " < "), es_range(1, Math.ceil(total / query.max_per_page) + 1).map(function (page, i) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: page === query.page ? "btn btn-dark" : "btn btn-outline-dark",
+      onClick: function onClick(e) {
+        return setQuery(_extends({}, query, {
+          page: page
+        }));
+      },
+      key: i
+    }, page);
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "btn btn-outline-dark",
+    onClick: function onClick(e) {
+      return setQuery(_extends({}, query, {
+        page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page))
+      }));
+    }
+  }, ">"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "btn btn-outline-dark",
+    onClick: function onClick(e) {
+      return setQuery(_extends({}, query, {
+        page: Math.ceil(total / query.max_per_page)
+      }));
+    }
+  }, ">>"))));
 };
 
 DataTable_DataTable.propTypes = {
   authorized: prop_types_default.a.bool,
-  sortKeys: prop_types_default.a.arrayOf(prop_types_default.a.shape({ key: prop_types_default.a.string, label: prop_types_default.a.string })),
+  sortKeys: prop_types_default.a.arrayOf(prop_types_default.a.shape({
+    key: prop_types_default.a.string,
+    label: prop_types_default.a.string
+  })),
   elements: prop_types_default.a.arrayOf(prop_types_default.a.object),
   imagePath: prop_types_default.a.string,
   total: prop_types_default.a.number,
@@ -7660,7 +7606,6 @@ DataTable_DataTable.propTypes = {
   }),
   setQuery: prop_types_default.a.func
 };
-
 DataTable_DataTable.defaultProps = {
   sortKeys: [],
   filterKeys: [{
@@ -7674,9 +7619,8 @@ DataTable_DataTable.defaultProps = {
   total: 0,
   imagePath: 'static/img/'
 };
-
 /* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
-// EXTERNAL MODULE: ./node_modules/babel-runtime/regenerator/index.js
+// EXTERNAL MODULE: ./node_modules/nwb/node_modules/@babel/runtime/regenerator/index.js
 var regenerator = __webpack_require__(3);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
@@ -8805,7 +8749,7 @@ var useKeyboardJs = function (combination) {
     var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([false, null]), state = _a[0], set = _a[1];
     var _b = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null), keyboardJs = _b[0], setKeyboardJs = _b[1];
     esm_useMount(function () {
-        __webpack_require__.e(/* import() */ 1).then(__webpack_require__.t.bind(null, 32, 7)).then(setKeyboardJs);
+        __webpack_require__.e(/* import() */ 1).then(__webpack_require__.t.bind(null, 31, 7)).then(setKeyboardJs);
     });
     Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
         if (!keyboardJs)
@@ -10005,14 +9949,13 @@ var query_string = __webpack_require__(4);
 // CONCATENATED MODULE: ./src/DataTable/DataTableContainer.js
 
 
-var _this = undefined;
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-var DataTableContainer_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+function DataTableContainer_extends() { DataTableContainer_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return DataTableContainer_extends.apply(this, arguments); }
 
-function DataTableContainer_objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
+function DataTableContainer_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 
 
@@ -10031,7 +9974,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       search = _ref.search,
       tags = _ref.tags,
       elements = _ref.elements,
-      dataTableProps = DataTableContainer_objectWithoutProperties(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "search", "tags", "elements"]);
+      dataTableProps = DataTableContainer_objectWithoutPropertiesLoose(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "search", "tags", "elements"]);
 
   var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
       fetchedElements = _React$useState[0],
@@ -10069,17 +10012,21 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       setAuthorizedState = _React$useState6[1];
 
   external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useEffect(function () {
-    setQuery(DataTableContainer_extends({}, query, { limit: limit }));
+    setQuery(DataTableContainer_extends({}, query, {
+      limit: limit
+    }));
   }, [limit]);
 
-  var fetchElements = function () {
+  var fetchElements = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
       var url, res, parsed;
       return regenerator_default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              url = endpointURL + "?" + query_string["stringify"](query, { arrayFormat: 'comma' });
+              url = endpointURL + "?" + query_string["stringify"](query, {
+                arrayFormat: 'comma'
+              });
               _context.prev = 1;
               _context.next = 4;
               return fetch(url);
@@ -10100,8 +10047,6 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
 
             case 9:
               parsed = _context.sent;
-
-
               console.log("returned " + parsed.elements.length + " elements");
               setFetchedElements(parsed.elements);
               setTotalState(parsed.total);
@@ -10114,7 +10059,6 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
             case 18:
               _context.prev = 18;
               _context.t0 = _context["catch"](1);
-
               alert("There was an error retrieving the search results.");
               console.error(_context.t0);
 
@@ -10123,7 +10067,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
               return _context.stop();
           }
         }
-      }, _callee, _this, [[1, 18]]);
+      }, _callee, null, [[1, 18]]);
     }));
 
     return function fetchElements() {
@@ -10134,8 +10078,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   esm_useDebounce(function () {
     return void fetchElements();
   }, 300, [endpointURL, query]);
-
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_DataTable_DataTable, DataTableContainer_extends({
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_DataTable_DataTable, DataTableContainer_extends({
     authorized: authorizedState,
     elements: fetchedElements,
     imagePath: imagePath,
@@ -10157,7 +10100,6 @@ DataTableContainer_DataTableContainer.propTypes = {
   max_per_page: prop_types_default.a.number,
   elements: prop_types_default.a.arrayOf(prop_types_default.a.object)
 };
-
 DataTableContainer_DataTableContainer.defaultProps = {
   authorized: false,
   endpointURL: "",
@@ -10168,7 +10110,6 @@ DataTableContainer_DataTableContainer.defaultProps = {
   max_per_page: 10,
   elements: []
 };
-
 /* harmony default export */ var DataTable_DataTableContainer = (DataTableContainer_DataTableContainer);
 // CONCATENATED MODULE: ./src/DataTable/index.js
 
@@ -17076,8 +17017,7 @@ var index_es_iconsCache = {
 
 
 // CONCATENATED MODULE: ./src/DatasetElement/index.js
-function DatasetElement_objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
+function DatasetElement_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 
 
@@ -17089,250 +17029,135 @@ function DatasetElement_objectWithoutProperties(obj, keys) { var target = {}; fo
 var DatasetElement_DatasetElement = function DatasetElement(props) {
   var authorized = props.authorized,
       imagePath = props.imagePath,
-      element = DatasetElement_objectWithoutProperties(props, ["authorized", "imagePath"]);
+      element = DatasetElement_objectWithoutPropertiesLoose(props, ["authorized", "imagePath"]);
 
   var downloadEnabled = imagePath + "/download_green.png";
   var downloadDisabled = imagePath + "/download_gray.png";
-
   var statusCONP = imagePath + "/canada.svg";
   var authIcons = [];
 
   switch (element.authorizations) {
     case 'restricted':
-      authIcons.push(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "span",
-        null,
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserAlt, color: "dimgray", size: "lg" }),
-        " - CONP account required"
-      ));
+      authIcons.push( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
+        icon: faUserAlt,
+        color: "dimgray",
+        size: "lg"
+      }), " - CONP account required"));
       break;
+
     case 'private':
-      authIcons.push(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "span",
-        null,
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: faUserLock, color: "dimgray", size: "lg" }),
-        " - Third-party account required"
-      ));
+      authIcons.push( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
+        icon: faUserLock,
+        color: "dimgray",
+        size: "lg"
+      }), " - Third-party account required"));
       break;
+
     default:
       break;
   }
 
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-    "div",
-    { className: "card d-flex flex-row", "data-type": "dataset" },
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "card-header d-flex flex-column justify-content-between" },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "d-flex justify-content-center" },
-        element.conpStatus !== 'external' ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { height: "32", width: "32", src: statusCONP }) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", { style: { width: 32 } })
-      )
-    ),
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "col-2 d-flex align-items-center" },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-        alt: "dataset format",
-        className: "img-fluid",
-        src: element.thumbnailURL
-      })
-    ),
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "col-7 card-body d-flex flex-wrap" },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "a",
-        { style: { color: "inherit" }, href: "dataset?id=" + element.id },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "h5",
-          { className: "card-title text-card-title col-12 pl-2 pl-md-0" },
-          element.title
-        )
-      ),
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "ul",
-        { className: "d-flex" },
-        element.principalInvestigators ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "li",
-          { className: "card-list-item" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text pr-1" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
-              "Principal Investigator: "
-            ),
-            element.principalInvestigators.toString()
-          )
-        ) : null,
-        element.sources ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "li",
-          { className: "card-list-item" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text pr-1" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
-              "Sources: "
-            ),
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "a",
-              { target: "_blank", rel: "noopener noreferrer", href: element.sources },
-              element.sources
-            )
-          )
-        ) : null,
-        element.files ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "li",
-          { className: "card-list-item" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-capitalize pr-1" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
-              "Files: "
-            ),
-            element.files
-          )
-        ) : null,
-        element.size ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "li",
-          { className: "card-list-item" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-capitalize pr-1" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
-              "Size: "
-            ),
-            element.size
-          )
-        ) : null,
-        element.subjects ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "li",
-          { className: "card-list-item" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-capitalize pr-1" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
-              "Subjects: "
-            ),
-            element.subjects
-          )
-        ) : null,
-        element.format ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "li",
-          { className: "card-list-item" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-capitalize pr-1" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
-              "Format: "
-            ),
-            element.format.toString()
-          )
-        ) : null,
-        element.modalities ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "li",
-          { className: "card-list-item" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-capitalize pr-1" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
-              "Modalities: "
-            ),
-            element.modalities
-          )
-        ) : null,
-        element.dateAdded ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "li",
-          { className: "card-list-item" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-capitalize pr-1" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
-              "Date Added: "
-            ),
-            element.dateAdded
-          )
-        ) : null,
-        element.dateUpdated ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "li",
-          { className: "card-list-item" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "p",
-            { className: "card-text text-capitalize pr-1" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
-              "Date Updated: "
-            ),
-            element.dateUpdated
-          )
-        ) : null
-      ),
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "d-flex justify-content-center" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "d-flex" },
-          authIcons.map(function (icon) {
-            return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "div",
-              { className: "p-1" },
-              icon
-            );
-          })
-        )
-      )
-    ),
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "col-2 d-flex flex-column justify-content-center align-items-end" },
-      element.showDownload ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "a",
-        {
-          className: "card-button",
-          style: {
-            pointerEvents: element.isPrivate && !authorized ? "none" : "all",
-            maxWidth: "160px"
-          },
-          href: "download_metadata?dataset=" + element.id,
-          download: true
-        },
-        element.isPrivate && !authorized && external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "card-button-tooltip" },
-          "Please register for access."
-        ),
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "d-flex flex-column align-items-center" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, { icon: index_es_faFileCode, color: "black", size: "5x" }),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "button",
-            { className: "btn btn-light text-nowrap my-1" },
-            "Download Metadata"
-          )
-        )
-      ) : null
-    )
-  );
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card d-flex flex-row",
+    "data-type": "dataset"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-header d-flex flex-column justify-content-between"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex justify-content-center"
+  }, element.conpStatus !== 'external' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    height: "32",
+    width: "32",
+    src: statusCONP
+  }) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    style: {
+      width: 32
+    }
+  }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-2 d-flex align-items-center"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    alt: "dataset format",
+    className: "img-fluid",
+    src: element.thumbnailURL
+  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-7 card-body d-flex flex-wrap"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    style: {
+      color: "inherit"
+    },
+    href: "dataset?id=" + element.id
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
+    className: "card-title text-card-title col-12 pl-2 pl-md-0"
+  }, element.title)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
+    className: "d-flex"
+  }, element.principalInvestigators ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Principal Investigator: "), element.principalInvestigators.toString())) : null, element.sources ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Sources: "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    target: "_blank",
+    rel: "noopener noreferrer",
+    href: element.sources
+  }, element.sources))) : null, element.files ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text text-capitalize pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Files: "), element.files)) : null, element.size ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text text-capitalize pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Size: "), element.size)) : null, element.subjects ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text text-capitalize pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Subjects: "), element.subjects)) : null, element.format ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text text-capitalize pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Format: "), element.format.toString())) : null, element.modalities ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text text-capitalize pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Modalities: "), element.modalities)) : null, element.dateAdded ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text text-capitalize pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Date Added: "), element.dateAdded)) : null, element.dateUpdated ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text text-capitalize pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Date Updated: "), element.dateUpdated)) : null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex justify-content-center"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex"
+  }, authIcons.map(function (icon) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "p-1"
+    }, icon);
+  })))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-2 d-flex flex-column justify-content-center align-items-end"
+  }, element.showDownload ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    className: "card-button",
+    style: {
+      pointerEvents: element.isPrivate && !authorized ? "none" : "all",
+      maxWidth: "160px"
+    },
+    href: "download_metadata?dataset=" + element.id,
+    download: true
+  }, element.isPrivate && !authorized && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-button-tooltip"
+  }, "Please register for access."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex flex-column align-items-center"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
+    icon: index_es_faFileCode,
+    color: "black",
+    size: "5x"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-light text-nowrap my-1"
+  }, "Download Metadata"))) : null));
 };
 
 DatasetElement_DatasetElement.propTypes = {
@@ -17357,184 +17182,123 @@ DatasetElement_DatasetElement.propTypes = {
   modalities: prop_types_default.a.string,
   sources: prop_types_default.a.number
 };
-
 DatasetElement_DatasetElement.defaultProps = {
   imagePath: "",
   downloadPath: ""
 };
-
 /* harmony default export */ var src_DatasetElement = (DatasetElement_DatasetElement);
 // CONCATENATED MODULE: ./src/PipelineElement/index.js
-function PipelineElement_objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+function PipelineElement_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 
 
 
 var PipelineElement_PipelineElement = function PipelineElement(props) {
   var authorized = props.authorized,
-      element = PipelineElement_objectWithoutProperties(props, ["authorized"]);
+      element = PipelineElement_objectWithoutPropertiesLoose(props, ["authorized"]);
 
   var platforms = element.platforms.map(function (item, key) {
-    return item.uri ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "span",
-      { key: key, "data-toggle": "tooltip", title: "Run Pipeline", style: { maxWidth: "140px" } },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "a",
-        { className: "btn", href: item.uri },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { className: "img-fluid", alt: "Online platform", src: item.img })
-      )
-    ) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "span",
-      { key: key, "data-toggle": "tooltip", title: "Unavailable", style: { maxWidth: "140px" } },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "a",
-        { className: "btn disabled", href: item.uri, disabled: true },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", { className: "img-fluid", alt: "Online platform", src: item.img })
-      )
-    );
+    return item.uri ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+      key: key,
+      "data-toggle": "tooltip",
+      title: "Run Pipeline",
+      style: {
+        maxWidth: "140px"
+      }
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+      className: "btn",
+      href: item.uri
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+      className: "img-fluid",
+      alt: "Online platform",
+      src: item.img
+    }))) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+      key: key,
+      "data-toggle": "tooltip",
+      title: "Unavailable",
+      style: {
+        maxWidth: "140px"
+      }
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+      className: "btn disabled",
+      href: item.uri,
+      disabled: true
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+      className: "img-fluid",
+      alt: "Online platform",
+      src: item.img
+    })));
   });
-
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-    "div",
-    { className: "card flex-row", "data-type": "pipeline" },
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "col-sm-12 col-md-2 d-flex flex-column justify-content-between align-items-center p-4" },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "a",
-        { href: element.url },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-          alt: "dataset format",
-          className: "img-fluid",
-          src: element.url == undefined ? "static/img/cogs-solid-grey.png" : "static/img/cogs-solid-green.png"
-        })
-      ),
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "d-flex" },
-        element.downloads ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "d-flex flex-column align-items-center" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", { className: "fa fa-download my-2" }),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            null,
-            element.downloads
-          )
-        ) : null
-      )
-    ),
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "card-body d-md-flex flex-wrap" },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "a",
-        { style: { color: "inherit" }, href: "pipeline?id=" + element.id },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "h5",
-          { className: "card-title text-card-title col-12 pl-2 pl-md-0" },
-          element.title
-        )
-      ),
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "d-flex col-md-12" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "card-description d-flex py-1 w-100" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "col-3" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
-              "Tags: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "col-9" },
-            element.tags && element.tags.domain ? Array.isArray(element.tags.domain) ? element.tags.domain.map(function (tag) {
-              return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "span",
-                { key: "tag" + tag, className: "mr-1" },
-                external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                  "a",
-                  { href: "/pipelines?tags=" + tag, className: "badge badge-primary" },
-                  tag
-                )
-              );
-            }) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "span",
-              null,
-              external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-                "a",
-                { href: "/pipelines?tags=" + element.tags.domain, className: "badge badge-primary" },
-                element.tags.domain
-              )
-            ) : null
-          )
-        )
-      ),
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "d-flex col-md-12" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "card-description d-flex py-1 w-100" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "col-3" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
-              "Description: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "col-9" },
-            element.description
-          )
-        )
-      ),
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "d-flex col-md-12" },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-          "div",
-          { className: "card-description text-capitalize d-flex py-1 w-100" },
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "col-3" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "strong",
-              null,
-              "Pipeline ID: "
-            )
-          ),
-          external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-            "div",
-            { className: "col-9" },
-            external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-              "a",
-              { target: "_blank", rel: "noopener noreferrer", href: "https://www.zenodo.org/record/" + element.id.split(".")[1] },
-              element.id
-            )
-          )
-        )
-      )
-    ),
-    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      "div",
-      { className: "col-sm-12 col-md-3 d-flex align-items-center justify-content-end" },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        "div",
-        { className: "d-flex justify-content-end align-items-center" },
-        platforms
-      )
-    )
-  );
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card flex-row",
+    "data-type": "pipeline"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-sm-12 col-md-2 d-flex flex-column justify-content-between align-items-center p-4"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    href: element.url
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    alt: "dataset format",
+    className: "img-fluid",
+    src: element.url == undefined ? "static/img/cogs-solid-grey.png" : "static/img/cogs-solid-green.png"
+  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex"
+  }, element.downloads ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex flex-column align-items-center"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", {
+    className: "fa fa-download my-2"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, element.downloads)) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-body d-md-flex flex-wrap"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    style: {
+      color: "inherit"
+    },
+    href: "pipeline?id=" + element.id
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
+    className: "card-title text-card-title col-12 pl-2 pl-md-0"
+  }, element.title)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex col-md-12"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-description d-flex py-1 w-100"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-3"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Tags: ")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-9"
+  }, element.tags && element.tags.domain ? Array.isArray(element.tags.domain) ? element.tags.domain.map(function (tag) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+      key: "tag" + tag,
+      className: "mr-1"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+      href: "/pipelines?tags=" + tag,
+      className: "badge badge-primary"
+    }, tag));
+  }) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    href: "/pipelines?tags=" + element.tags.domain,
+    className: "badge badge-primary"
+  }, element.tags.domain)) : null))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex col-md-12"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-description d-flex py-1 w-100"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-3"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Description: ")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-9"
+  }, element.description))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex col-md-12"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-description text-capitalize d-flex py-1 w-100"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-3"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Pipeline ID: ")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-9"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    target: "_blank",
+    rel: "noopener noreferrer",
+    href: "https://www.zenodo.org/record/" + element.id.split(".")[1]
+  }, element.id))))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-sm-12 col-md-3 d-flex align-items-center justify-content-end"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex justify-content-end align-items-center"
+  }, platforms)));
 };
 
 PipelineElement_PipelineElement.propTypes = {
@@ -17556,9 +17320,7 @@ PipelineElement_PipelineElement.propTypes = {
   url: prop_types_default.a.string,
   img: prop_types_default.a.string,
   imagePath: prop_types_default.a.string
-};
-
-//PipelineElement.defaultProps = {
+}; //PipelineElement.defaultProps = {
 //  imagePath: ""
 //};
 
@@ -17570,12 +17332,11 @@ var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
 // CONCATENATED MODULE: ./src/DashboardChart/index.js
 
 
-var DashboardChart_this = undefined;
+function DashboardChart_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-function DashboardChart_asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+function DashboardChart_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { DashboardChart_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { DashboardChart_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function DashboardChart_objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
+function DashboardChart_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 
 
@@ -17584,234 +17345,211 @@ function DashboardChart_objectWithoutProperties(obj, keys) { var target = {}; fo
 
 
 var DashboardChart_DashboardChart = function DashboardChart(_ref) {
-    var datasetsURL = _ref.datasetsURL,
-        pipelinesURL = _ref.pipelinesURL,
-        props = DashboardChart_objectWithoutProperties(_ref, ["datasetsURL", "pipelinesURL"]);
+  var datasetsURL = _ref.datasetsURL,
+      pipelinesURL = _ref.pipelinesURL,
+      props = DashboardChart_objectWithoutPropertiesLoose(_ref, ["datasetsURL", "pipelinesURL"]);
 
-    var drawChart = function drawChart(data) {
+  var drawChart = function drawChart(data) {
+    var xAxis = [];
+    var yAxisDatasets = [];
+    var yAxisPipelines = [];
+    var countDatasets = 0;
+    var countPipelines = 0;
+    Object.keys(data.datasets).forEach(function (year) {
+      Object.keys(data.datasets[year]).forEach(function (month) {
+        countDatasets += data.datasets[year][month];
+        xAxis.push(month + "/" + year);
+        yAxisDatasets.push(countDatasets);
+      });
+    });
+    Object.keys(data.pipelines).forEach(function (year) {
+      Object.keys(data.pipelines[year]).forEach(function (month) {
+        countPipelines += data.pipelines[year][month];
+        yAxisPipelines.push(countPipelines);
+      });
+    });
+    /* Only show pipeline data for the months we have dataset data */
 
-        var xAxis = [];
-        var yAxisDatasets = [];
-        var yAxisPipelines = [];
+    var yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
+    highcharts_default.a.chart('dashboard-chart-container', {
+      chart: {
+        type: 'column',
+        styledMode: true,
+        backgroundColor: '#FFF'
+      },
+      credits: {
+        enabled: false
+      },
+      title: {
+        text: 'Cumulative Number of Datasets and Pipelines'
+      },
+      yAxis: [{
+        title: {
+          text: '',
+          style: {
+            color: highcharts_default.a.getOptions().colors[0]
+          }
+        },
+        allowDecimals: false
+      }],
+      xAxis: {
+        categories: xAxis
+      },
+      plotOptions: {
+        column: {
+          borderRadius: 5
+        }
+      },
+      series: [{
+        name: 'Datasets',
+        data: yAxisDatasets,
+        yAxis: 0
+      }, {
+        name: 'Pipelines',
+        data: yAxisPipelinesExtract,
+        yAxis: 0
+      }]
+    });
+  };
 
-        var countDatasets = 0;
-        var countPipelines = 0;
+  var fetchElements = /*#__PURE__*/function () {
+    var _ref2 = DashboardChart_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      var datasetsFetch, datasetsRes, pipelinesFetch, pipelinesRes, chartData, months, i, today;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return fetch(datasetsURL + '?elements=all');
 
-        Object.keys(data.datasets).forEach(function (year) {
-            Object.keys(data.datasets[year]).forEach(function (month) {
-                countDatasets += data.datasets[year][month];
-                xAxis.push(month + "/" + year);
-                yAxisDatasets.push(countDatasets);
-            });
-        });
+            case 3:
+              datasetsFetch = _context.sent;
 
-        Object.keys(data.pipelines).forEach(function (year) {
-            Object.keys(data.pipelines[year]).forEach(function (month) {
-                countPipelines += data.pipelines[year][month];
-                yAxisPipelines.push(countPipelines);
-            });
-        });
+              if (datasetsFetch.ok) {
+                _context.next = 6;
+                break;
+              }
 
-        /* Only show pipeline data for the months we have dataset data */
-        var yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
+              throw new Error("Request failed with status: " + datasetsFetch.status + " (" + datasetsFetch.statusText + ")");
 
-        highcharts_default.a.chart('dashboard-chart-container', {
+            case 6:
+              _context.next = 8;
+              return datasetsFetch.json();
 
-            chart: {
-                type: 'column',
-                styledMode: true,
-                backgroundColor: '#FFF'
-            },
-            credits: {
-                enabled: false
-            },
+            case 8:
+              datasetsRes = _context.sent;
+              _context.next = 11;
+              return fetch(pipelinesURL);
 
-            title: {
-                text: 'Cumulative Number of Datasets and Pipelines'
-            },
+            case 11:
+              pipelinesFetch = _context.sent;
 
-            yAxis: [{
-                title: {
-                    text: '',
-                    style: {
-                        color: highcharts_default.a.getOptions().colors[0]
-                    }
-                },
-                allowDecimals: false
-            }],
+              if (pipelinesFetch.ok) {
+                _context.next = 14;
+                break;
+              }
 
-            xAxis: {
-                categories: xAxis
-            },
+              throw new Error("Request failed with status: " + pipelinesFetch.status + " (" + pipelinesFetch.statusText + ")");
 
-            plotOptions: {
-                column: {
-                    borderRadius: 5
+            case 14:
+              _context.next = 16;
+              return pipelinesFetch.json();
+
+            case 16:
+              pipelinesRes = _context.sent;
+              chartData = {
+                datasets: {},
+                pipelines: {}
+              };
+              datasetsRes.elements.map(function (element) {
+                var dateAdded = new Date(element.dateAdded);
+
+                if (!chartData.datasets[dateAdded.getFullYear()]) {
+                  chartData.datasets[dateAdded.getFullYear()] = {};
                 }
-            },
 
-            series: [{
-                name: 'Datasets',
-                data: yAxisDatasets,
-                yAxis: 0
-            }, {
-                name: 'Pipelines',
-                data: yAxisPipelinesExtract,
-                yAxis: 0
-            }]
+                if (!chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
+                  chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+                } else {
+                  chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
+                }
+              });
+              /* check if we've skipped months */
 
-        });
+              months = [];
+
+              for (i = 1; i <= 12; i++) {
+                months.push(i);
+              }
+
+              today = new Date();
+              Object.keys(chartData.datasets).map(function (year) {
+                for (var i = 1; i <= 12; i++) {
+                  if (year == today.getFullYear() && i == today.getMonth() + 1) {
+                    break;
+                  }
+
+                  if (!Object.keys(chartData.datasets[year]).includes("" + i)) {
+                    chartData.datasets[year][i] = 0;
+                  }
+                }
+              });
+              pipelinesRes.elements.map(function (element) {
+                var dateAdded = new Date(element.publicationdate);
+
+                if (!chartData.pipelines[dateAdded.getFullYear()]) {
+                  chartData.pipelines[dateAdded.getFullYear()] = {};
+                }
+
+                if (!chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
+                  chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+                } else {
+                  chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
+                }
+              });
+              drawChart(chartData);
+              _context.next = 31;
+              break;
+
+            case 27:
+              _context.prev = 27;
+              _context.t0 = _context["catch"](0);
+              alert("There was an error retrieving the search results.");
+              console.error(_context.t0);
+
+            case 31:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 27]]);
+    }));
+
+    return function fetchElements() {
+      return _ref2.apply(this, arguments);
     };
+  }();
 
-    var fetchElements = function () {
-        var _ref2 = DashboardChart_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-            var datasetsFetch, datasetsRes, pipelinesFetch, pipelinesRes, chartData, months, i, today;
-            return regenerator_default.a.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            _context.prev = 0;
-                            _context.next = 3;
-                            return fetch(datasetsURL + '?elements=all');
-
-                        case 3:
-                            datasetsFetch = _context.sent;
-
-                            if (datasetsFetch.ok) {
-                                _context.next = 6;
-                                break;
-                            }
-
-                            throw new Error("Request failed with status: " + datasetsFetch.status + " (" + datasetsFetch.statusText + ")");
-
-                        case 6:
-                            _context.next = 8;
-                            return datasetsFetch.json();
-
-                        case 8:
-                            datasetsRes = _context.sent;
-                            _context.next = 11;
-                            return fetch(pipelinesURL);
-
-                        case 11:
-                            pipelinesFetch = _context.sent;
-
-                            if (pipelinesFetch.ok) {
-                                _context.next = 14;
-                                break;
-                            }
-
-                            throw new Error("Request failed with status: " + pipelinesFetch.status + " (" + pipelinesFetch.statusText + ")");
-
-                        case 14:
-                            _context.next = 16;
-                            return pipelinesFetch.json();
-
-                        case 16:
-                            pipelinesRes = _context.sent;
-                            chartData = {
-                                datasets: {},
-                                pipelines: {}
-                            };
-
-
-                            datasetsRes.elements.map(function (element) {
-                                var dateAdded = new Date(element.dateAdded);
-
-                                if (!chartData.datasets[dateAdded.getFullYear()]) {
-                                    chartData.datasets[dateAdded.getFullYear()] = {};
-                                }
-
-                                if (!chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
-                                    chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
-                                } else {
-                                    chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
-                                }
-                            });
-
-                            /* check if we've skipped months */
-
-                            months = [];
-
-
-                            for (i = 1; i <= 12; i++) {
-                                months.push(i);
-                            }
-
-                            today = new Date();
-
-
-                            Object.keys(chartData.datasets).map(function (year) {
-                                for (var i = 1; i <= 12; i++) {
-                                    if (year == today.getFullYear() && i == today.getMonth() + 1) {
-                                        break;
-                                    }
-                                    if (!Object.keys(chartData.datasets[year]).includes("" + i)) {
-                                        chartData.datasets[year][i] = 0;
-                                    }
-                                }
-                            });
-
-                            pipelinesRes.elements.map(function (element) {
-                                var dateAdded = new Date(element.publicationdate);
-
-                                if (!chartData.pipelines[dateAdded.getFullYear()]) {
-                                    chartData.pipelines[dateAdded.getFullYear()] = {};
-                                }
-
-                                if (!chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
-                                    chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
-                                } else {
-                                    chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
-                                }
-                            });
-
-                            drawChart(chartData);
-
-                            _context.next = 31;
-                            break;
-
-                        case 27:
-                            _context.prev = 27;
-                            _context.t0 = _context["catch"](0);
-
-                            alert("There was an error retrieving the search results.");
-                            console.error(_context.t0);
-
-                        case 31:
-                        case "end":
-                            return _context.stop();
-                    }
-                }
-            }, _callee, DashboardChart_this, [[0, 27]]);
-        }));
-
-        return function fetchElements() {
-            return _ref2.apply(this, arguments);
-        };
-    }();
-
-    esm_useDebounce(function () {
-        return void fetchElements();
-    }, 300, [datasetsURL]);
-
-    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", { id: "dashboard-chart" });
+  esm_useDebounce(function () {
+    return void fetchElements();
+  }, 300, [datasetsURL]);
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    id: "dashboard-chart"
+  });
 };
 
 DashboardChart_DashboardChart.propTypes = {};
-
 DashboardChart_DashboardChart.defaultProps = {};
-
 /* harmony default export */ var src_DashboardChart = (DashboardChart_DashboardChart);
 // CONCATENATED MODULE: ./src/Spotlight/index.js
 
 
-var Spotlight_this = undefined;
+function Spotlight_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-function Spotlight_asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+function Spotlight_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { Spotlight_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { Spotlight_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function Spotlight_objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
+function Spotlight_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 
 
@@ -17820,61 +17558,57 @@ function Spotlight_objectWithoutProperties(obj, keys) { var target = {}; for (va
 
 
 var Spotlight_Spotlight = function Spotlight(_ref) {
-    var datasetURL = _ref.datasetURL,
-        props = Spotlight_objectWithoutProperties(_ref, ["datasetURL"]);
+  var datasetURL = _ref.datasetURL,
+      props = Spotlight_objectWithoutPropertiesLoose(_ref, ["datasetURL"]);
 
-    var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState([]),
-        fetchedElements = _React$useState[0],
-        setFetchedElements = _React$useState[1];
+  var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState([]),
+      fetchedElements = _React$useState[0],
+      setFetchedElements = _React$useState[1];
 
-    var fetchElements = function () {
-        var _ref2 = Spotlight_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-            var res, datasetRes;
-            return regenerator_default.a.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            _context.prev = 0;
-                            _context.next = 3;
-                            return fetch(datasetURL);
+  var fetchElements = /*#__PURE__*/function () {
+    var _ref2 = Spotlight_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      var res, datasetRes;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return fetch(datasetURL);
 
-                        case 3:
-                            res = _context.sent;
+            case 3:
+              res = _context.sent;
 
-                            if (res.ok) {
-                                _context.next = 6;
-                                break;
-                            }
+              if (res.ok) {
+                _context.next = 6;
+                break;
+              }
 
-                            throw new Error("Request failed with status: " + res.status + " (" + res.statusText + ")");
+              throw new Error("Request failed with status: " + res.status + " (" + res.statusText + ")");
 
-                        case 6:
-                            _context.next = 8;
-                            return res.json();
+            case 6:
+              _context.next = 8;
+              return res.json();
 
-                        case 8:
-                            datasetRes = _context.sent;
+            case 8:
+              datasetRes = _context.sent;
+              setFetchedElements(datasetRes.elements);
+              _context.next = 16;
+              break;
 
+            case 12:
+              _context.prev = 12;
+              _context.t0 = _context["catch"](0);
+              alert("There was an error retrieving the search results.");
+              console.error(_context.t0);
 
-                            setFetchedElements(datasetRes.elements);
-
-                            _context.next = 16;
-                            break;
-
-                        case 12:
-                            _context.prev = 12;
-                            _context.t0 = _context["catch"](0);
-
-                            alert("There was an error retrieving the search results.");
-                            console.error(_context.t0);
-
-                        case 16:
-                        case "end":
-                            return _context.stop();
-                    }
-                }
-            }, _callee, Spotlight_this, [[0, 12]]);
-        }));
+            case 16:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 12]]);
+    }));
 
         return function fetchElements() {
             return _ref2.apply(this, arguments);
@@ -17939,22 +17673,13 @@ var Spotlight_Spotlight = function Spotlight(_ref) {
         )
         //: null
 
-    );
+  );
 };
 
 Spotlight_Spotlight.propTypes = {};
-
 Spotlight_Spotlight.defaultProps = {};
-
 /* harmony default export */ var src_Spotlight = (Spotlight_Spotlight);
 // CONCATENATED MODULE: ./src/index.js
-/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "DataTable", function() { return src_DataTable_DataTable; });
-/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "DataTableContainer", function() { return DataTable_DataTableContainer; });
-/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "DatasetElement", function() { return src_DatasetElement; });
-/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "PipelineElement", function() { return src_PipelineElement; });
-/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "DashboardChart", function() { return src_DashboardChart; });
-
-
 
 
 
