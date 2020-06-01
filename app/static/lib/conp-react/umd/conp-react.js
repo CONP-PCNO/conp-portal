@@ -17490,7 +17490,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                     break;
                   }
 
-                  if (!Object.keys(chartData.datasets[year]).includes("" + i)) {
+                  if (Object.keys(chartData.datasets[year]).includes("" + (i - 1)) && !Object.keys(chartData.datasets[year]).includes("" + i)) {
                     chartData.datasets[year][i] = 0;
                   }
                 }
