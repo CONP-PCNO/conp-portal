@@ -1,6 +1,46 @@
+import datetime as dt
+from functools import lru_cache
 import os
 import json
+import re
+
 import fnmatch
+import dateutil
+import requests
+
+from app.models import Dataset
+
+
+@lru_cache(maxsize=1)
+def _get_latest_test_results(date):
+    url = "https://circleci.com/api/v1.1/" \
+        + "project/github/CONP-PCNO/conp-dataset/" \
+        + "latest/artifacts" \
+        + "?branch=master&filter=completed"
+
+    artifacts = requests.get(url).json()
+
+    previous_test_results = {}
+    for artifact in artifacts:
+        # Merge dictionnaries together.
+        previous_test_results = {
+            **previous_test_results,
+            **requests.get(artifact["url"]).json(),
+        }
+
+    return previous_test_results
+
+
+def get_latest_test_results():
+    current_date = dt.datetime.now().astimezone(tz=dateutil.tz.UTC)
+    normalized_date = current_date.replace(
+        hour=(current_date.hour // 4 * 4 + 1),  # Round the date to the lowest 4hour
+        minute=0,                               # range and give an extra hour gap
+        second=0,                               # for tests execution.
+        microsecond=0
+    )
+
+    return _get_latest_test_results(normalized_date)
 
 
 class DATSDataset(object):
@@ -353,3 +393,24 @@ class DATSDataset(object):
 
         except Exception:
             return None
+
+
+    @property
+    def status(self):
+        
+        test_results = get_latest_test_results()
+        tests_status = [
+            results["status"]
+            for test, results in test_results.items()
+            if test.startswith(re.sub("/", "_", self.name)+":")
+        ]
+
+        if tests_status == []:
+            # Problem occured during the test suite.
+            return "Warning"
+        if any(map(lambda x: x == "Failure", tests_status)):
+            return "Broken"
+        if all(map(lambda x: x == "Success", tests_status)):
+            return "Working"
+        
+        return "Warning"
