@@ -133,6 +133,7 @@ def dataset_search():
             "conpStatus": datsdataset.conpStatus,
             "authorizations": datsdataset.authorizations,
             "principalInvestigators": datsdataset.principalInvestigators,
+            "logoFilepath": datsdataset.LogoFilepath,
             "status": datsdataset.status,
         }
         elements.append(dataset)
@@ -353,6 +354,7 @@ def dataset_info():
         "conpStatus": datsdataset.conpStatus,
         "authorizations": datsdataset.authorizations,
         "principalInvestigators": datsdataset.principalInvestigators,
+        "logoFilepath": datsdataset.LogoFilepath,
         "status": datsdataset.status,
     }
 
