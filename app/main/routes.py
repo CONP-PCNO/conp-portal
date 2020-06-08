@@ -103,3 +103,19 @@ def contact_us():
     """
 
     return render_template('contact_us.html', title='CONP | Contact Us', user=current_user)
+
+@main_bp.route('/about')
+def about():
+    """ About Route
+
+        Route to lead to the about page
+
+        Args:
+            None
+
+        Returns:
+            rendered template for about.html
+    """
+
+    return render_template('about.html', title='CONP | About', user=current_user)
+
