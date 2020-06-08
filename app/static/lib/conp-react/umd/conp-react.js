@@ -7346,7 +7346,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       }
     });
     setFilters(newFilters);
-    setQuery(_extends(_extends({}, query), {}, {
+    setQuery(_extends({}, query, {
       modalities: filters.filter(function (f) {
         return f["key"] == "modalities";
       })[0].values,
@@ -7360,7 +7360,7 @@ var DataTable_DataTable = function DataTable(_ref) {
   var handleMaxPerPageChange = function handleMaxPerPageChange(event) {
     var value = event.target.value;
     console.log(value);
-    setQuery(_extends(_extends({}, query), {}, {
+    setQuery(_extends({}, query, {
       max_per_page: value,
       limit: value,
       page: 1
@@ -7380,7 +7380,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     className: "btn btn-outline-secondary dropdown-toggle dropdown-select",
     value: query.sortKey,
     onChange: function onChange(e) {
-      return setQuery(_extends(_extends({}, query), {}, {
+      return setQuery(_extends({}, query, {
         sortKey: e.currentTarget.value,
         page: 1
       }));
@@ -7402,7 +7402,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     "aria-label": "Search",
     value: query.search,
     onChange: function onChange(e) {
-      return setQuery(_extends(_extends({}, query), {}, {
+      return setQuery(_extends({}, query, {
         search: e.currentTarget.value,
         page: 1
       }));
@@ -7536,7 +7536,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       key: "" + element.id,
       className: "container"
-    }, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends(_extends({}, element), {}, {
+    }, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, {
       authorized: authorized,
       imagePath: imagePath
     })));
@@ -7547,14 +7547,14 @@ var DataTable_DataTable = function DataTable(_ref) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn btn-outline-dark",
     onClick: function onClick(e) {
-      return setQuery(_extends(_extends({}, query), {}, {
+      return setQuery(_extends({}, query, {
         page: 1
       }));
     }
   }, "<<"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn btn-outline-dark",
     onClick: function onClick(e) {
-      return setQuery(_extends(_extends({}, query), {}, {
+      return setQuery(_extends({}, query, {
         page: Math.max(1, query.page - 1)
       }));
     }
@@ -7562,7 +7562,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: page === query.page ? "btn btn-dark" : "btn btn-outline-dark",
       onClick: function onClick(e) {
-        return setQuery(_extends(_extends({}, query), {}, {
+        return setQuery(_extends({}, query, {
           page: page
         }));
       },
@@ -7571,14 +7571,14 @@ var DataTable_DataTable = function DataTable(_ref) {
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn btn-outline-dark",
     onClick: function onClick(e) {
-      return setQuery(_extends(_extends({}, query), {}, {
+      return setQuery(_extends({}, query, {
         page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page))
       }));
     }
   }, ">"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn btn-outline-dark",
     onClick: function onClick(e) {
-      return setQuery(_extends(_extends({}, query), {}, {
+      return setQuery(_extends({}, query, {
         page: Math.ceil(total / query.max_per_page)
       }));
     }
@@ -10012,7 +10012,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       setAuthorizedState = _React$useState6[1];
 
   external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useEffect(function () {
-    setQuery(DataTableContainer_extends(DataTableContainer_extends({}, query), {}, {
+    setQuery(DataTableContainer_extends({}, query, {
       limit: limit
     }));
   }, [limit]);
@@ -10047,27 +10047,26 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
 
             case 9:
               parsed = _context.sent;
-              console.log("returned " + parsed.elements.length + " elements");
               setFetchedElements(parsed.elements);
               setTotalState(parsed.total);
               setSortKeysState(parsed.sortKeys);
               setFilterKeysState(parsed.filterKeys);
               setAuthorizedState(parsed.authorized);
-              _context.next = 22;
+              _context.next = 21;
               break;
 
-            case 18:
-              _context.prev = 18;
+            case 17:
+              _context.prev = 17;
               _context.t0 = _context["catch"](1);
               alert("There was an error retrieving the search results.");
               console.error(_context.t0);
 
-            case 22:
+            case 21:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 18]]);
+      }, _callee, null, [[1, 17]]);
     }));
 
     return function fetchElements() {
@@ -17099,7 +17098,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     alt: "dataset format",
     className: "img-fluid",
-    src: element.thumbnailURL
+    src: element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-7 card-body d-flex flex-wrap"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
@@ -17180,7 +17179,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     color: "black",
     size: "5x"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-    className: "btn btn-light text-nowrap my-1"
+    className: "btn btn-secondary text-nowrap my-1"
   }, "Download Metadata"))) : null));
 };
 

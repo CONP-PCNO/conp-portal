@@ -83,12 +83,14 @@ class DATSDataset(object):
         for prop in extraprops:
             if prop.get('category') == 'logo':
                 logofilename = prop.get('values').pop().get('value', '')
-                logofilepath = os.path.join(
-                    self.datasetpath,
-                    logofilename
-                )
-                if os.path.isfile(logofilepath):
+                if not logofilename.lower().startswith("http"):
+                    logofilepath = os.path.join(
+                        self.datasetpath,
+                        logofilename
+                    )
                     logopath = logofilepath
+                else :
+                    logopath = logofilename
 
         return logopath
 
