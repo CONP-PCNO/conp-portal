@@ -7346,7 +7346,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       }
     });
     setFilters(newFilters);
-    setQuery(_extends(_extends({}, query), {}, {
+    setQuery(_extends({}, query, {
       modalities: filters.filter(function (f) {
         return f["key"] == "modalities";
       })[0].values,
@@ -7360,7 +7360,7 @@ var DataTable_DataTable = function DataTable(_ref) {
   var handleMaxPerPageChange = function handleMaxPerPageChange(event) {
     var value = event.target.value;
     console.log(value);
-    setQuery(_extends(_extends({}, query), {}, {
+    setQuery(_extends({}, query, {
       max_per_page: value,
       limit: value,
       page: 1
@@ -7380,7 +7380,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     className: "btn btn-outline-secondary dropdown-toggle dropdown-select",
     value: query.sortKey,
     onChange: function onChange(e) {
-      return setQuery(_extends(_extends({}, query), {}, {
+      return setQuery(_extends({}, query, {
         sortKey: e.currentTarget.value,
         page: 1
       }));
@@ -7402,7 +7402,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     "aria-label": "Search",
     value: query.search,
     onChange: function onChange(e) {
-      return setQuery(_extends(_extends({}, query), {}, {
+      return setQuery(_extends({}, query, {
         search: e.currentTarget.value,
         page: 1
       }));
@@ -7536,7 +7536,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       key: "" + element.id,
       className: "container"
-    }, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends(_extends({}, element), {}, {
+    }, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, {
       authorized: authorized,
       imagePath: imagePath
     })));
@@ -7547,14 +7547,14 @@ var DataTable_DataTable = function DataTable(_ref) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn btn-outline-dark",
     onClick: function onClick(e) {
-      return setQuery(_extends(_extends({}, query), {}, {
+      return setQuery(_extends({}, query, {
         page: 1
       }));
     }
   }, "<<"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn btn-outline-dark",
     onClick: function onClick(e) {
-      return setQuery(_extends(_extends({}, query), {}, {
+      return setQuery(_extends({}, query, {
         page: Math.max(1, query.page - 1)
       }));
     }
@@ -7562,7 +7562,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: page === query.page ? "btn btn-dark" : "btn btn-outline-dark",
       onClick: function onClick(e) {
-        return setQuery(_extends(_extends({}, query), {}, {
+        return setQuery(_extends({}, query, {
           page: page
         }));
       },
@@ -7571,14 +7571,14 @@ var DataTable_DataTable = function DataTable(_ref) {
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn btn-outline-dark",
     onClick: function onClick(e) {
-      return setQuery(_extends(_extends({}, query), {}, {
+      return setQuery(_extends({}, query, {
         page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page))
       }));
     }
   }, ">"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn btn-outline-dark",
     onClick: function onClick(e) {
-      return setQuery(_extends(_extends({}, query), {}, {
+      return setQuery(_extends({}, query, {
         page: Math.ceil(total / query.max_per_page)
       }));
     }
@@ -10012,7 +10012,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       setAuthorizedState = _React$useState6[1];
 
   external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useEffect(function () {
-    setQuery(DataTableContainer_extends(DataTableContainer_extends({}, query), {}, {
+    setQuery(DataTableContainer_extends({}, query, {
       limit: limit
     }));
   }, [limit]);
@@ -17394,7 +17394,14 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
     });
     /* Only show pipeline data for the months we have dataset data */
 
-    var yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
+    var yAxisPipelinesExtract = yAxisPipelines;
+
+    if (yAxisDatasets.length > yAxisPipelines.length) {
+      yAxisPipelinesExtract = new Array(yAxisDatasets.length - yAxisPipelines.length).fill(0).concat(yAxisPipelines);
+    } else if (yAxisDatasets.length < yAxisPipelines.length) {
+      yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
+    }
+
     highcharts_default.a.chart('dashboard-chart-container', {
       chart: {
         type: 'column',
@@ -17510,8 +17517,12 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
               today = new Date();
               Object.keys(chartData.datasets).map(function (year) {
                 for (var i = 1; i <= 12; i++) {
-                  if (year == today.getFullYear() && i == today.getMonth() + 1) {
+                  if (year == today.getFullYear() && i == today.getMonth() + 2) {
                     break;
+                  }
+
+                  if (Object.keys(chartData.datasets).includes((year - 1).toString()) && !Object.keys(chartData.datasets[year]).includes("" + i) && i == 1) {
+                    chartData.datasets[year][i] = 0;
                   }
 
                   if (Object.keys(chartData.datasets[year]).includes("" + (i - 1)) && !Object.keys(chartData.datasets[year]).includes("" + i)) {

@@ -32,7 +32,13 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
         });
 
         /* Only show pipeline data for the months we have dataset data */
-        const yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
+        var yAxisPipelinesExtract = yAxisPipelines;
+        if (yAxisDatasets.length > yAxisPipelines.length) {
+            yAxisPipelinesExtract = new Array(yAxisDatasets.length - yAxisPipelines.length).fill(0).concat(yAxisPipelines);
+        }
+        else if (yAxisDatasets.length < yAxisPipelines.length) {
+            yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
+        }
 
         Highcharts.chart('dashboard-chart-container', {
 
@@ -138,8 +144,12 @@ const DashboardChart = ({ datasetsURL, pipelinesURL, ...props }) => {
 
             Object.keys(chartData.datasets).map(year => {
                 for (var i = 1; i <= 12; i++) {
-                    if (year == today.getFullYear() && i == today.getMonth() + 1) {
+                    if (year == today.getFullYear() && i == today.getMonth() + 2) {
                         break;
+                    }
+                    if (Object.keys(chartData.datasets).includes((year - 1).toString()) &&
+                        !Object.keys(chartData.datasets[year]).includes(`${i}`) && i == 1) {
+                        chartData.datasets[year][i] = 0;
                     }
                     if (Object.keys(chartData.datasets[year]).includes(`${i - 1}`) &&
                         !Object.keys(chartData.datasets[year]).includes(`${i}`)) {

@@ -7,3 +7,4 @@ venv
 env
 logs
 .flaskenv
+*.db

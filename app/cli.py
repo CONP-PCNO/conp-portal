@@ -230,10 +230,21 @@ def _update_datasets(app):
         # use dats.json data to fill the datasets table
         # avoid duplication / REPLACE instead of insert
         dataset = DBDataset.query.filter_by(dataset_id=ds['gitmodule_name']).first()
+
+        # pull the timestamp of the first commit in the git log for the dataset
+        createTimeStamp = os.popen("git -C {} log --pretty=format:%ct --reverse | head -1".format(ds['path'])).read()
+        try:
+            createDate = datetime.fromtimestamp(int(createTimeStamp))
+        except ValueError:
+            createDate = datetime.utcnow()
+        
         if dataset is None:
             dataset = DBDataset()
             dataset.dataset_id = ds['gitmodule_name']
-            dataset.date_created = datetime.utcnow()
+            dataset.date_created = createDate
+
+        if(dataset.date_created != createDate):
+            dataset.date_created = createDate
 
         dataset.date_updated = datetime.utcnow()
         dataset.fspath = ds['path']
