@@ -9,18 +9,9 @@
   position: relative;
 }
 
-#page #page-content .content-body {
-  padding: 2rem;
-}
-
-#page #page-content .content-body .content-main {
-  padding: 2rem 0;
-}
-
 #page #page-content .content-body .content-title {
   width: 100%;
   text-align: center;
-  padding: 2rem;
   font-weight: 700;
 }
 
@@ -31,18 +22,13 @@
   }
 
   #page #page-content .content-body {
-    padding: 2rem;
-    padding-top: 4rem;
-  }
-
-  #page #page-content .content-body .content-main {
-    padding: 2rem 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem
   }
 
   #page #page-content .content-body .content-title {
     width: 100%;
     text-align: center;
-    padding: 2rem;
     font-weight: 700;
   }
 }
