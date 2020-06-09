@@ -10047,27 +10047,26 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
 
             case 9:
               parsed = _context.sent;
-              console.log("returned " + parsed.elements.length + " elements");
               setFetchedElements(parsed.elements);
               setTotalState(parsed.total);
               setSortKeysState(parsed.sortKeys);
               setFilterKeysState(parsed.filterKeys);
               setAuthorizedState(parsed.authorized);
-              _context.next = 22;
+              _context.next = 21;
               break;
 
-            case 18:
-              _context.prev = 18;
+            case 17:
+              _context.prev = 17;
               _context.t0 = _context["catch"](1);
               alert("There was an error retrieving the search results.");
               console.error(_context.t0);
 
-            case 22:
+            case 21:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 18]]);
+      }, _callee, null, [[1, 17]]);
     }));
 
     return function fetchElements() {
@@ -17099,7 +17098,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     alt: "dataset format",
     className: "img-fluid",
-    src: element.thumbnailURL
+    src: element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-7 card-body d-flex flex-wrap"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
@@ -17180,7 +17179,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     color: "black",
     size: "5x"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-    className: "btn btn-light text-nowrap my-1"
+    className: "btn btn-secondary text-nowrap my-1"
   }, "Download Metadata"))) : null));
 };
 

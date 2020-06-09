@@ -13,8 +13,8 @@ const DatasetElement = props => {
   const downloadDisabled = `${imagePath}/download_gray.png`;
 
   const statusCONP = `${imagePath}/canada.svg`;
-  let authIcons = [];
 
+  let authIcons = [];
   switch (element.authorizations) {
     case 'restricted':
       authIcons.push(<span><FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg" /> - CONP account required</span>);
@@ -60,7 +60,7 @@ const DatasetElement = props => {
         <img
           alt="dataset format"
           className="img-fluid"
-          src={element.thumbnailURL}
+          src={element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL}
         />
       </div>
       <div className="col-7 card-body d-flex flex-wrap">
@@ -149,7 +149,7 @@ const DatasetElement = props => {
           )}
           <div className="d-flex flex-column align-items-center">
             <FontAwesomeIcon icon={faFileCode} color="black" size="5x" />
-            <button className="btn btn-light text-nowrap my-1">Download Metadata</button>
+            <button className="btn btn-secondary text-nowrap my-1">Download Metadata</button>
           </div>
         </a> : null}
       </div>
