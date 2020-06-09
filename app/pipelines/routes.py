@@ -93,7 +93,7 @@ def pipeline_search():
             for d_index, descriptor in enumerate(all_descriptors)
         ]
 
-    # filter our the deprecated pipelines
+    # filter out the deprecated pipelines
     elements = list(filter(lambda e: (not e["DEPRECATED"]), elements))
 
     # filter by tags

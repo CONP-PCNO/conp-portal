@@ -3,9 +3,12 @@
 
     Currently this module contains all of the routes for the main blueprint
 """
+import os
+import json
 from flask import render_template, request
 from flask_login import current_user, login_required
 from app.main import main_bp
+from app.models import Dataset
 import requests
 
 
@@ -53,9 +56,10 @@ def share():
     }
     response = requests.post(url, json=body)
 
-    content = response.text.replace('user-content-','')
+    content = response.text.replace('user-content-', '')
 
     return render_template('share.html', title='CONP | Share a Dataset', user=current_user, content=content)
+
 
 @main_bp.route('/faq')
 def faq():
@@ -84,7 +88,7 @@ def faq():
     }
     response = requests.post(url, json=body)
 
-    content = response.text.replace('user-content-','')
+    content = response.text.replace('user-content-', '')
 
     return render_template('faq.html', title='CONP | FAQ', user=current_user, content=content)
 
@@ -104,6 +108,7 @@ def contact_us():
 
     return render_template('contact_us.html', title='CONP | Contact Us', user=current_user)
 
+
 @main_bp.route('/about')
 def about():
     """ About Route
@@ -117,5 +122,32 @@ def about():
             rendered template for about.html
     """
 
-    return render_template('about.html', title='CONP | About', user=current_user)
+    # count number of datasets
+    datasets = Dataset.query.order_by(Dataset.id).all()
+    countDatasets = len(datasets)
 
+    # count number of pipelines
+    cache_dir = os.path.join(os.path.expanduser(
+        '~'), ".cache", "boutiques", "production")
+    all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
+    all_detailed_desc_path = os.path.join(
+        cache_dir, "detailed_all_descriptors.json")
+
+    with open(all_desc_path, "r") as f:
+        all_descriptors = json.load(f)
+
+    with open(all_detailed_desc_path, "r") as f:
+        detailed_all_descriptors = json.load(f)
+
+    elements = [
+        {**descriptor, **detailed_all_descriptors[d_index]}
+        for d_index, descriptor in enumerate(all_descriptors)
+    ]
+
+    # filter out the deprecated pipelines
+    elements = list(filter(lambda e: (not e["DEPRECATED"]), elements))
+
+    countPipelines = len(elements)
+
+    return render_template('about.html', title='CONP | About', user=current_user,
+                           countDatasets=countDatasets, countPipelines=countPipelines)
