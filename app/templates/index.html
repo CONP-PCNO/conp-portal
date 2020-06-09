@@ -30,6 +30,27 @@
 <div class="d-flex flex-column">
   <div class="p-2 flex-fill">
     <div class="card" data-type="dashboard">
+      <div class="dashboard-about-container">
+        <p>
+          This portal is a web interface for the
+          <a target="_blank" rel="noopener noreferrer" href="https://conp.ca">
+            Canadian Open Neuroscience Platform (CONP)
+          </a>
+          to facilitate open science in the neuroscience community. CONP simplifies global
+          researcher access and sharing of datasets and tools. The portal internalizes the
+          cycle of a typical research project: starting with data acquisition, followed by
+          processing using already existing/published tools, and ultimately publication of
+          the obtained results including a link to the original dataset.
+          <a href="{{url_for('main.about')}}">
+            Read more
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-2 flex-fill">
+    <div class="card" data-type="dashboard">
       <div id="dashboard-chart-container">
 
         <script type="text/javascript">
@@ -57,7 +78,6 @@
       </div>
     </div>
   </div>
-</div>
 </div>
 
 {% endblock %}
