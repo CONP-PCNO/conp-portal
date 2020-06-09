@@ -17380,8 +17380,8 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
     var countPipelines = 0;
     Object.keys(data.datasets).forEach(function (year) {
       Object.keys(data.datasets[year]).forEach(function (month) {
-        countDatasets += data.datasets[year][month];
         xAxis.push(month + "/" + year);
+        countDatasets += data.datasets[year][month];
         yAxisDatasets.push(countDatasets);
       });
     });
@@ -17542,22 +17542,37 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                   chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
                 }
               });
+              Object.keys(chartData.pipelines).map(function (year) {
+                for (var i = 1; i <= 12; i++) {
+                  if (year == today.getFullYear() && i == today.getMonth() + 2) {
+                    break;
+                  }
+
+                  if (Object.keys(chartData.pipelines).includes((year - 1).toString()) && !Object.keys(chartData.pipelines[year]).includes("" + i) && i == 1) {
+                    chartData.pipelines[year][i] = 0;
+                  }
+
+                  if (Object.keys(chartData.pipelines[year]).includes("" + (i - 1)) && !Object.keys(chartData.pipelines[year]).includes("" + i)) {
+                    chartData.pipelines[year][i] = 0;
+                  }
+                }
+              });
               drawChart(chartData);
-              _context.next = 31;
+              _context.next = 32;
               break;
 
-            case 27:
-              _context.prev = 27;
+            case 28:
+              _context.prev = 28;
               _context.t0 = _context["catch"](0);
               alert("There was an error retrieving the search results.");
               console.error(_context.t0);
 
-            case 31:
+            case 32:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 27]]);
+      }, _callee, null, [[0, 28]]);
     }));
 
     return function fetchElements() {
