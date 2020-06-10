@@ -333,8 +333,7 @@ class DATSDataset(object):
         for prop in extraprops:
             if prop.get('category') == 'derivedFrom':
                 for x in prop.get('values', []):
-                    if isinstance(x['value'], str):
-                        derivedFrom.append(x['value'])
+                    derivedFrom.append(x)
 
         return derivedFrom if len(derivedFrom) > 0 else None
 
