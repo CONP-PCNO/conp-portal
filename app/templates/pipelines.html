@@ -13,23 +13,13 @@
 <!-- Title Block -->
 
 {% block contenttitle %}
-  <h2><span style="color:red;">CONP Portal </span> | Tools & Pipelines</h2>
+  <h2><span style="color:red;">CONP Portal </span> | Tools & Pipelines Search</h2>
 {% endblock %}
 
 <!-- Content Block -->
 
 {% block appcontent %}
   <div>
-    <div class="container mb-4">
-      <p>
-        CONP pipelines can be easily installed and run on any computer with a container engine. For more information see our tutorial
-        <a target="_blank" rel="noopener noreferrer" href="https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb#reusing_tools" target=_blank>
-          here</a>.
-      You can also add your own tool by following the instructions <a target="_blank" rel="noopener noreferrer" href="https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb#publishing_tools"
-      target=_blank>here</a>.
-      </p>
-    </div>
-
     <div id="pipelines-datatable-mount"></div>
     <script type="text/javascript">
       const reactElement = React.createElement(CONPReact.DataTableContainer, {
