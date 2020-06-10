@@ -467,12 +467,7 @@ Colour names courtesy of chir.ag/projects/name-that-color
 }
 
 .card .card-social {
-  padding: 1rem;
   margin: 0 auto;
-}
-
-.card .card-social img {
-  margin-bottom: 2rem;
 }
 
 .card .card-social .card-social-icons {
@@ -553,10 +548,6 @@ Colour names courtesy of chir.ag/projects/name-that-color
     flex-wrap: nowrap;
   }
 
-  .card .card-social {
-    padding: 1rem 2rem;
-  }
-
   .card .card-buttons {
     margin: 0.5rem;
     min-width: 10rem;
@@ -625,7 +616,6 @@ Colour names courtesy of chir.ag/projects/name-that-color
 
 @media (min-width: 576px) {
   .card[data-type="dashboard"] .card-description {
-    padding: 2rem;
     flex: 1;
   }
 }
