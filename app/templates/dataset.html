@@ -44,8 +44,9 @@
   <p><strong>Parent Datasets: </strong>
     {% for d in metadata.derivedFrom %}
     {% if d.parent_dataset_id is defined %}
-    <span class="mr-1"><a target="_blank" rel="noopener noreferrer" class="badge badge-primary"
-        href="{{ d.value }}">{{ d.parent_dataset_id }}</a></span>
+    {% set href = "/dataset?id=projects/" ~ d.parent_dataset_id %}
+    <span class="mr-1"><a class="badge badge-primary"
+        href="{{ href }}">{{ d.parent_dataset_id }}</a></span>
     {% endif %}
     {% endfor %}</p>
   {% endif %}
