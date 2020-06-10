@@ -151,3 +151,34 @@ def about():
 
     return render_template('about.html', title='CONP | About', user=current_user,
                            countDatasets=countDatasets, countPipelines=countPipelines)
+
+@main_bp.route('/tutorial')
+def tutorial():
+    """ Tutorial Route
+
+        Route to lead to the tutorial page
+
+        Args:
+            None
+
+        Returns:
+            rendered template for tutorial.html
+    """
+
+    url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/CONP_portal_tutorial.md'
+    headers = {'Content-type': 'text/html; charset=UTF-8'}
+    response = requests.get(url, headers=headers)
+
+    tutorialRaw = response.text
+
+    url = 'https://api.github.com/markdown'
+    body = {
+        "text"   : tutorialRaw,
+        "mode"   : "gfm",
+        "context": "github/gollum"
+    }
+    response = requests.post(url, json=body)
+
+    content = response.text.replace('user-content-', '')
+
+    return render_template('tutorial.html', title='CONP | Tutorial', user=current_user, content=content)
