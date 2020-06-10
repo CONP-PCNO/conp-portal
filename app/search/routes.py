@@ -430,7 +430,8 @@ def get_dataset_metadata_information(dataset):
         "contact": datsdataset.contacts,
         "version": datsdataset.version,
         "licenses": datsdataset.licenses,
-        "sources": datsdataset.sources
+        "sources": datsdataset.sources,
+        "derivedFrom": datsdataset.derivedFrom
     }
 
 

@@ -40,6 +40,12 @@
   {% if metadata.licenses is defined and metadata.licenses is not none %}
   <p><strong>Licenses: </strong> {{ metadata.licenses }}</p>
   {% endif %}
+  {% if metadata.derivedFrom is defined and metadata.derivedFrom is not none %}
+  <p><strong>Parent Datasets: </strong>
+    {% for url in metadata.derivedFrom %}
+    <span class="mr-1"><a target="_blank" rel="noopener noreferrer" href="{{ url }}">{{ url }}</a></span>
+    {% endfor %}</p>
+  {% endif %}
 </div>
 
 <div class="d-flex flex-column p-2">

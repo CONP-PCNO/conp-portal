@@ -325,6 +325,20 @@ class DATSDataset(object):
 
         return count if count > 0 else None
 
+    
+    @property
+    def derivedFrom(self):
+        derivedFrom = []
+        extraprops = self.descriptor.get('extraProperties', {})
+        for prop in extraprops:
+            if prop.get('category') == 'derivedFrom':
+                for x in prop.get('values', []):
+                    if isinstance(x['value'], str):
+                        derivedFrom.append(x['value'])
+
+        return derivedFrom if len(derivedFrom) > 0 else None
+
+
     @property
     def version(self):
         return self.descriptor.get('version', None)
