@@ -40,6 +40,16 @@
   {% if metadata.licenses is defined and metadata.licenses is not none %}
   <p><strong>Licenses: </strong> {{ metadata.licenses }}</p>
   {% endif %}
+  {% if metadata.derivedFrom is defined and metadata.derivedFrom is not none %}
+  <p><strong>Parent Datasets: </strong>
+    {% for d in metadata.derivedFrom %}
+    {% if d.parent_dataset_id is defined %}
+    {% set href = "/dataset?id=projects/" ~ d.parent_dataset_id %}
+    <span class="mr-1"><a class="badge badge-primary"
+        href="{{ href }}">{{ d.parent_dataset_id }}</a></span>
+    {% endif %}
+    {% endfor %}</p>
+  {% endif %}
 </div>
 
 <div class="d-flex flex-column p-2">
