@@ -63,7 +63,7 @@ const DataTable = ({
   }
 
   return (
-    <div className="search-dataset-table container" cellSpacing={0}>
+    <div className="search-dataset-table" cellSpacing={0}>
       <div className="searchbar col-12 d-flex p-2">
         <div className="d-flex dropdown">
           <label className="dropdown-label m-2">Sort By: </label>
@@ -174,7 +174,7 @@ const DataTable = ({
           : null}
       </div>
       {elements.map((element, i) => (
-        <div key={"" + element.id} className="container">
+        <div key={"" + element.id}>
           {React.createElement(renderElement, { ...element, authorized, imagePath })}
         </div>
       ))}

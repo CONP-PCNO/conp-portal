@@ -7368,7 +7368,7 @@ var DataTable_DataTable = function DataTable(_ref) {
   };
 
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "search-dataset-table container",
+    className: "search-dataset-table",
     cellSpacing: 0
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "searchbar col-12 d-flex p-2"
@@ -7534,8 +7534,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     }, format)) : null;
   }) : null))) : null), elements.map(function (element, i) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      key: "" + element.id,
-      className: "container"
+      key: "" + element.id
     }, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, {
       authorized: authorized,
       imagePath: imagePath
@@ -17075,6 +17074,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
 
   var url = "https://img.shields.io/badge/circleci-" + element.status + "-" + color + "?style=flat-square&logo=circleci" + "&link=" + element.latest_build_url;
   ciBadges.push( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    key: "badge_" + color,
     src: url,
     alt: "CircleCI status"
   }));
@@ -17098,6 +17098,9 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     alt: "dataset format",
     className: "img-fluid",
+    style: {
+      maxWidth: '160px'
+    },
     src: element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-7 card-body d-flex flex-wrap"
@@ -17156,8 +17159,9 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "d-flex justify-content-center"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex"
-  }, authIcons.map(function (icon) {
+  }, authIcons.map(function (icon, index) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      key: "authIcon_" + index,
       className: "p-1"
     }, icon);
   })))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -17262,6 +17266,9 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     alt: "dataset format",
     className: "img-fluid",
+    style: {
+      maxWidth: '160px'
+    },
     src: element.url == undefined ? "static/img/cogs-solid-grey.png" : "static/img/cogs-solid-green.png"
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex"

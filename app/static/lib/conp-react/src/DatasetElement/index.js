@@ -47,7 +47,7 @@ const DatasetElement = props => {
     "?style=flat-square&logo=circleci" +
     "&link=" +
     element.latest_build_url;
-  ciBadges.push(<img src={url} alt="CircleCI status" />);
+  ciBadges.push(<img key={"badge_" + color} src={url} alt="CircleCI status" />);
 
   return (
     <div className="card d-flex flex-row" data-type="dataset">
@@ -60,6 +60,7 @@ const DatasetElement = props => {
         <img
           alt="dataset format"
           className="img-fluid"
+          style={{maxWidth: '160px'}}
           src={element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL}
         />
       </div>
@@ -128,7 +129,7 @@ const DatasetElement = props => {
         </ul>
         <div className="d-flex justify-content-center">
           <div className="d-flex">
-            {authIcons.map(icon => <div className="p-1">{icon}</div>)}
+            {authIcons.map((icon, index) => <div key={"authIcon_" + index} className="p-1">{icon}</div>)}
           </div>
         </div>
       </div>
