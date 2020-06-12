@@ -47,10 +47,10 @@ const DatasetElement = props => {
     "?style=flat-square&logo=circleci" +
     "&link=" +
     element.latest_build_url;
-  ciBadges.push(<img src={url} alt="CircleCI status" />);
+  ciBadges.push(<img key={"badge_" + color} src={url} alt="CircleCI status" />);
 
   return (
-    <div className="card d-flex flex-row" data-type="dataset">
+    <div className="card d-flex flex-row" style={{minHeight: '220px'}} data-type="dataset">
       <div className="card-header d-flex flex-column justify-content-between">
         <div className="d-flex justify-content-center">
           {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP} />) : <div style={{ width: 32 }} />}
@@ -60,6 +60,7 @@ const DatasetElement = props => {
         <img
           alt="dataset format"
           className="img-fluid"
+          style={{maxWidth: '160px'}}
           src={element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL}
         />
       </div>
@@ -128,7 +129,7 @@ const DatasetElement = props => {
         </ul>
         <div className="d-flex justify-content-center">
           <div className="d-flex">
-            {authIcons.map(icon => <div className="p-1">{icon}</div>)}
+            {authIcons.map((icon, index) => <div key={"authIcon_" + index} className="p-1">{icon}</div>)}
           </div>
         </div>
       </div>
@@ -148,8 +149,8 @@ const DatasetElement = props => {
             </div>
           )}
           <div className="d-flex flex-column align-items-center">
-            <FontAwesomeIcon icon={faFileCode} color="black" size="5x" />
-            <button className="btn btn-secondary text-nowrap my-1">Download Metadata</button>
+            <FontAwesomeIcon icon={faFileCode} color="black" size="6x" />
+            <button className="btn btn-link text-nowrap">Download Metadata</button>
           </div>
         </a> : null}
       </div>
