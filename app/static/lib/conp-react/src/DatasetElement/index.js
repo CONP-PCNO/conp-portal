@@ -50,7 +50,7 @@ const DatasetElement = props => {
   ciBadges.push(<img key={"badge_" + color} src={url} alt="CircleCI status" />);
 
   return (
-    <div className="card d-flex flex-row" data-type="dataset">
+    <div className="card d-flex flex-row" style={{minHeight: '220px'}} data-type="dataset">
       <div className="card-header d-flex flex-column justify-content-between">
         <div className="d-flex justify-content-center">
           {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP} />) : <div style={{ width: 32 }} />}

@@ -18,7 +18,7 @@ const PipelineElement = props => {
   );
 
   return (
-    <div className="card flex-row" data-type="pipeline">
+    <div className="card flex-row" style={{minHeight: '220px'}} data-type="pipeline">
       <div className="col-sm-12 col-md-2 d-flex flex-column justify-content-between align-items-center p-4">
         <a href={element.url}>
           <img

@@ -17080,6 +17080,9 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }));
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card d-flex flex-row",
+    style: {
+      minHeight: '200px'
+    },
     "data-type": "dataset"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-header d-flex flex-column justify-content-between"
@@ -17258,6 +17261,9 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
   });
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card flex-row",
+    style: {
+      minHeight: '220px'
+    },
     "data-type": "pipeline"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-sm-12 col-md-2 d-flex flex-column justify-content-between align-items-center p-4"
