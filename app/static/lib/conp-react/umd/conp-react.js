@@ -17177,9 +17177,9 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
     icon: index_es_faFileCode,
     color: "black",
-    size: "5x"
+    size: "6x"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-    className: "btn btn-secondary text-nowrap my-1"
+    className: "btn btn-link text-nowrap"
   }, "Download Metadata"))) : null));
 };
 
@@ -17675,10 +17675,10 @@ var Spotlight_Spotlight = function Spotlight(_ref) {
     }, "STUDY SPOTLIGHT"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("hr", null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: "card-description-text"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      className: "col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social"
+      className: "card-img d-flex justify-content-center"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
       alt: "Project image",
-      className: "card-img-top card-social-img",
+      className: "img-fluid",
       src: "/dataset_logo?id=projects/preventad-open"
     })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
       className: "card-description-subtitle"

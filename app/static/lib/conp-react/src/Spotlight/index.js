@@ -39,10 +39,10 @@ const Spotlight = ({ datasetURL, ...props }) => {
                 <hr />
 
                 <div className="card-description-text">
-                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-2 card-img card-social">
+                    <div className="card-img d-flex justify-content-center">
                       <img
                         alt="Project image"
-                        className="card-img-top card-social-img"
+                        className="img-fluid"
                         src="/dataset_logo?id=projects/preventad-open"
                       />
                     </div>

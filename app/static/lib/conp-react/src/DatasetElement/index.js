@@ -148,8 +148,8 @@ const DatasetElement = props => {
             </div>
           )}
           <div className="d-flex flex-column align-items-center">
-            <FontAwesomeIcon icon={faFileCode} color="black" size="5x" />
-            <button className="btn btn-secondary text-nowrap my-1">Download Metadata</button>
+            <FontAwesomeIcon icon={faFileCode} color="black" size="6x" />
+            <button className="btn btn-link text-nowrap">Download Metadata</button>
           </div>
         </a> : null}
       </div>
