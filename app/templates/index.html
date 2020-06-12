@@ -43,20 +43,17 @@
           the obtained results including a link to the original dataset.
           <a href="{{url_for('main.about')}}">
             Read more
-          </a> |
-          <a target="_blank", rel="noopener noreferrer" href="{{url_for('main.tutorial')}}">
-            Portal tutorial
           </a>
         </p>
         <p>
           Thanks to our
-          <a target="_blank", rel="noopener noreferrer" href="https://conp.ca/discover/#Sponsors">
+          <a target="_blank" , rel="noopener noreferrer" href="https://conp.ca/discover/#Sponsors">
             sponsors
           </a>,
-          <a target="_blank", rel="noopener noreferrer" href="https://conp.ca/discover/#PartnersNational">
+          <a target="_blank" , rel="noopener noreferrer" href="https://conp.ca/discover/#PartnersNational">
             national partners
           </a> and
-          <a target="_blank", rel="noopener noreferrer" href="https://conp.ca/discover/#PartnersInternational">
+          <a target="_blank" , rel="noopener noreferrer" href="https://conp.ca/discover/#PartnersInternational">
             international partners.
           </a>
         </p>
@@ -79,8 +76,8 @@
       </div>
     </div>
   </div>
-  <div class="p-2 flex-fill">
-    <div class="card" data-type="dashboard">
+  <div class="p-2 d-flex flex-wrap">
+    <div class="card w-100 mx-1" data-type="dashboard">
       <div id="spotlight-container">
 
         <script type="text/javascript">
@@ -90,6 +87,22 @@
           ReactDOM.render(spotlightElement, document.querySelector("#spotlight-container"));
         </script>
 
+      </div>
+    </div>
+    <div class="card w-100 mx-1" data-type="dashboard">
+      <div class="card-description flex-grow-0">
+        <h3 class="card-description-title">TUTORIALS</h3>
+        <hr />
+      </div>
+      <p>Learn how the CONP portal works. Read the
+        <a target="_blank" , rel="noopener noreferrer" href="{{url_for('main.tutorial')}}">
+          Portal tutorial
+        </a>
+        or watch the tutorial video below.
+      </p>
+      <div class="d-flex justify-content-center">
+        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/yT7JxuWZeII" frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
     </div>
   </div>
