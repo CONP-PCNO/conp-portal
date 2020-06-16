@@ -12,7 +12,7 @@ from flask import Response, abort, render_template, request, url_for, current_ap
 from flask_login import current_user
 from sqlalchemy import func, or_
 
-from app.models import Dataset, User
+from app.models import Dataset, DatasetAncestry, User
 from app.search import search_bp
 from app.search.models import DATSDataset
 
@@ -159,15 +159,19 @@ def dataset_search():
 
         if request.args.get('modalities'):
             filterModalities = request.args.get('modalities').split(",")
-            elements = list(filter(lambda e: e['modalities'] is not None, elements))
-            elements = list(filter(lambda e: all(item in (m.lower() for m in e['modalities'].split(",")) for item in filterModalities), elements))
+            elements = list(
+                filter(lambda e: e['modalities'] is not None, elements))
+            elements = list(filter(lambda e: all(item in (m.lower(
+            ) for m in e['modalities'].split(",")) for item in filterModalities), elements))
         if request.args.get('formats'):
             filterFormats = request.args.get('formats').split(",")
-            elements = list(filter(lambda e: e['format'] is not None, elements))
-            elements = list(filter(lambda e: all(item in (f.lower() for f in e['format'].split(",")) for item in filterFormats), elements))
+            elements = list(
+                filter(lambda e: e['format'] is not None, elements))
+            elements = list(filter(lambda e: all(item in (
+                f.lower() for f in e['format'].split(",")) for item in filterFormats), elements))
 
         delta = int(request.args.get('max_per_page', 10)) * \
-                    (int(request.args.get('page', 1)) - 1)
+            (int(request.args.get('page', 1)) - 1)
         cursor = max(min(int(request.args.get('cursor') or 0), 0), 0) + delta
         limit = int(request.args.get('limit') or 10)
         sort_key = request.args.get('sortKey') or "conpStatus"
@@ -191,7 +195,8 @@ def dataset_search():
                 size = e["size"].split(" ")
                 absoluteSize = size[0]
                 if(size[1] in units):
-                    absoluteSize = float(size[0]) * unitScales[units.index(size[1])]
+                    absoluteSize = float(size[0]) * \
+                        unitScales[units.index(size[1])]
                 return absoluteSize
 
             reverse = (sort_key == 'sizeDes')
@@ -216,27 +221,30 @@ def dataset_search():
 
                 return int(e["subjects"])
             reverse = (sort_key == 'subjectsDes')
-            paginated.sort(key=lambda o: getNumberOfSubjects(o), reverse=reverse)
+            paginated.sort(key=lambda o: getNumberOfSubjects(o),
+                           reverse=reverse)
 
         elif(sort_key == "dateAddedDesc" or sort_key == "dateAddedAsc"):
 
             reverse = (sort_key == 'dateAddedAsc')
-            paginated.sort(key=lambda o: (o["dateAdded"] is None, o["dateAdded"]), reverse=reverse)
+            paginated.sort(key=lambda o: (
+                o["dateAdded"] is None, o["dateAdded"]), reverse=reverse)
 
         elif(sort_key == "dateUpdatedDesc" or sort_key == "dateUpdatedAsc"):
 
             reverse = (sort_key == 'dateUpdatedAsc')
-            paginated.sort(key=lambda o: (o["dateUpdated"] is None, o["dateUpdated"]), reverse=reverse)
+            paginated.sort(key=lambda o: (
+                o["dateUpdated"] is None, o["dateUpdated"]), reverse=reverse)
 
         else:
             paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
 
-        paginated=paginated[(cursor):(cursor + limit)]
+        paginated = paginated[(cursor):(cursor + limit)]
     else:
-        paginated=elements
+        paginated = elements
 
     # Construct payload
-    payload={
+    payload = {
         "authorized": authorized,
         "total": len(elements),
         "sortKeys": [
@@ -319,18 +327,18 @@ def dataset_info():
 
     """
 
-    dataset_id=request.args.get('id')
+    dataset_id = request.args.get('id')
 
     # Query dataset
-    d=Dataset.query.filter_by(dataset_id=dataset_id).first()
-    datsdataset=DATSDataset(d.fspath)
+    d = Dataset.query.filter_by(dataset_id=dataset_id).first()
+    datsdataset = DATSDataset(d.fspath)
 
     if current_user.is_authenticated:
-        authorized=True
+        authorized = True
     else:
-        authorized=False
+        authorized = False
 
-    dataset={
+    dataset = {
         "authorized": authorized,
         "name": datsdataset.name,
         "id": d.dataset_id,
@@ -358,17 +366,17 @@ def dataset_info():
         "status": datsdataset.status,
     }
 
-    metadata=get_dataset_metadata_information(d)
+    metadata = get_dataset_metadata_information(d)
 
     readme = get_dataset_readme(d.dataset_id)
 
     return render_template(
         'dataset.html',
-         title='CONP | Dataset',
-         data=dataset,
-         metadata=metadata,
-         readme=readme,
-         user=current_user
+        title='CONP | Dataset',
+        data=dataset,
+        metadata=metadata,
+        readme=readme,
+        user=current_user
     )
 
 
@@ -387,19 +395,19 @@ def download_metadata():
         Raises:
             HTML error if this fails
     """
-    dataset_id=request.args.get('dataset', '')
-    dataset=Dataset.query.filter_by(dataset_id=dataset_id).first()
+    dataset_id = request.args.get('dataset', '')
+    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
     if dataset is None:
         # This shoud return a 404 not found
         return 'Not Found', 400
 
-    datasetrootdir=os.path.join(
+    datasetrootdir = os.path.join(
         current_app.config['DATA_PATH'],
         'conp-dataset',
         dataset.fspath
     )
 
-    datspath=DATSDataset(datasetrootdir).DatsFilepath
+    datspath = DATSDataset(datasetrootdir).DatsFilepath
     return send_from_directory(
         os.path.dirname(datspath),
         os.path.basename(datspath),
@@ -422,7 +430,22 @@ def get_dataset_metadata_information(dataset):
 
     """
 
-    datsdataset=DATSDataset(dataset.fspath)
+    datsdataset = DATSDataset(dataset.fspath)
+
+    # check for child datasets
+    childDatasets = []
+    datasetAncestries = DatasetAncestry.query.all()
+    for da in datasetAncestries:
+        if da.parent_dataset_id == dataset.dataset_id:
+            print('dataset ' + da.parent_dataset_id +
+                  ' has child ' + da.child_dataset_id)
+
+            name = da.child_dataset_id[9:]
+            childDataset = {
+                "child_dataset_id": da.child_dataset_id,
+                "name": name
+            }
+            childDatasets.append(childDataset)
 
     return {
         "authors": datsdataset.authors,
@@ -431,17 +454,18 @@ def get_dataset_metadata_information(dataset):
         "version": datsdataset.version,
         "licenses": datsdataset.licenses,
         "sources": datsdataset.sources,
-        "derivedFrom": datsdataset.derivedFrom
+        "parentDatasets": datsdataset.derivedFrom,
+        "childDatasets": childDatasets
     }
 
 
 def get_dataset_readme(dataset_id):
-   
+
     dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
     if dataset is None:
         return 'Dataset Not Found', 404
 
-    datsdataset=DATSDataset(dataset.fspath)
+    datsdataset = DATSDataset(dataset.fspath)
 
     readmeFilepath = datsdataset.ReadmeFilepath
 
