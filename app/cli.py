@@ -261,7 +261,8 @@ def _update_datasets(app):
                         continue
                     datasetAncestry = DBDatasetAncestry()
                     datasetAncestry.id = str(uuid.uuid4())
-                    datasetAncestry.parent_dataset_id = 'projects/' + x.get('parent_dataset_id', None)
+                    datasetAncestry.parent_dataset_id = 'projects/' + \
+                        x.get('parent_dataset_id', None)
                     datasetAncestry.child_dataset_id = dataset.dataset_id
                     try:
                         db.session.merge(datasetAncestry)
