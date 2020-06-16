@@ -1,96 +1,113 @@
-{% extends 'base.html' %}
+{% extends 'common/base_main.html' %}
 
 <!-- Head Block -->
-{% block head %}
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
+{% block scripts %}
+{{ super() }}
+<script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
+<script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
+<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
 {% endblock %}
 
-<!-- Brand Block -->
-{% block brand_link %}
-<a class="navbar-brand" href="/index">
-  <img class="custom-logo-link" src="./static/img/conp.png">
-</a>
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="https://code.highcharts.com/css/highcharts.css" />
 {% endblock %}
 
-<!-- Login Block -->
-<li class="login">
-    <a href="/logout">
-        <span class="glyphicon glyphicon-log-out"></span> Logout
-    </a>
-</li>
-
-<!-- Sidebar Block -->
-{% block sidebar %}
-{% include "/fragments/sidebar.html" %}
+{% block contenttitle %}
+<h2><span style="color:red;">CONP</span> Portal</h2>
 {% endblock %}
+
 
 <!-- Content Block -->
-{% block content %}
+{% block appcontent %}
 
 <!-- Display Username Login -->
+{% if not current_user.is_anonymous %}
 <div class="display-user">
-Welcome <strong>{{ user.username }}</strong>
+  Welcome <strong>{{ user.username }}</strong>
 </div>
-
-<!-- Title -->
-<div style="text-align: center; padding-bottom: 15px;">
-    <h2>CONP Public Portal</h2>
-</div>
-
-<div class="row">
-    <div class="col-sm-8 col-border" style="padding-right:30px;">
-        <div id="chart"></div>
-        <script type="text/javascript" src="/static/js/charts.js"></script>
-        <div class="row" style="padding: 20px; ">
-            <h3>CONP Data Statistics</h3>
-            <hr class="hr-border">
-            <p>The CONP is constructing a resilient network of platforms, where some data
-                (when of reasonable size) could be mirrored across Canadian infrastructures.
-                We also are working on how to describe pipelines in a standard way and see how metadata of datasets
-                can be used to suggest pipelines with standard descriptors. The CONP is proposing a place for scientists
-                to search for tools adapted to a specific type of data.</p>
-        </div>
-        <div class="row" style="padding: 20px; ">
-        <div class="col-xs-6">
-            <a href="/search" class="a-link"><button class="btn btn-success btn-block btn-lg">Browse Datasets <i class="fa fa-search"></i></button></a>
-        </div>
-        <div class="col-xs-6">
-            <a href="/share" class="a-link"><button class="btn btn-warning btn-block btn-lg">Share a Dataset <i class="fa fa-arrow-circle-up"></i></button></a>
-        </div>
-        </div>
+{% endif %}
+<div class="d-flex flex-column">
+  <div class="p-2 flex-fill">
+    <div class="card" data-type="dashboard">
+      <div class="dashboard-about-container">
+        <p>
+          This portal is a web interface for the
+          <a target="_blank" rel="noopener noreferrer" href="https://conp.ca">
+            Canadian Open Neuroscience Platform (CONP)
+          </a>
+          to facilitate open science in the neuroscience community. CONP simplifies global
+          researcher access and sharing of datasets and tools. The portal internalizes the
+          cycle of a typical research project: starting with data acquisition, followed by
+          processing using already existing/published tools, and ultimately publication of
+          the obtained results including a link to the original dataset.
+          <a href="{{url_for('main.about')}}">
+            Read more
+          </a>
+        </p>
+        <p>
+          Thanks to our
+          <a target="_blank" , rel="noopener noreferrer" href="https://conp.ca/discover/#Sponsors">
+            sponsors
+          </a>,
+          <a target="_blank" , rel="noopener noreferrer" href="https://conp.ca/discover/#PartnersNational">
+            national partners
+          </a> and
+          <a target="_blank" , rel="noopener noreferrer" href="https://conp.ca/discover/#PartnersInternational">
+            international partners.
+          </a>
+        </p>
+      </div>
     </div>
-    <div class="col-sm-4">
-        <div class="row row-border">
-        <!--/span-->
-        <div>
-            <h3>NEWEST DATASET RELEASE</h3>
-            <hr class="hr-border">
-            <strong>PREVENT-AD Open</strong>
-            <br/>
-            <p><i>Longitudinal multimodal study of pre-symptomatic Alzheimer Disease.</i> <br> Data used in preparation of this article
-                were obtained from the Pre-symptomatic Evaluation of Novel or Experimental Treatments for Alzheimer’s Disease (PREVENT-AD) program.
-                (Breitner et al., 2016 & Tremblay-Mercier, Madjar, et al., 2019)</p>
-            <p><a class="btn btn-default" href="/dataset?id=0ea345b4-62cf-11e9-b202-52545e9add8e" style="float: right;">Go to Dataset »</a></p>
-        </div>
-        </div>
-        <div class="row row-border" style="margin-top: 20px;">
-        <div>
-            <h3>STUDY SPOTLIGHT</h3>
-            <hr class="hr-border">
-            <strong>Multicenter Single Human MRI Phantom</strong>
-            <br/>
-              <p>Human Brain phantom scans, Multiple MRI scans of a single human phantom over 11 years,
-                T1 weighted images and others on 13 scanner in 6 sites accross North America.</p>
-            <p><i>McGill Center for Integrative Neuroscience (MCIN)</i></p>
-            <p><a class="btn btn-default" href="/dataset?id=8de99b0e-5f94-11e9-9e05-52545e9add8e" style="float: right;">Read More »</a></p>
-        </div>
-        </div>
-        <!--/span-->
+  </div>
+
+  <div class="p-2 flex-fill">
+    <div class="card" data-type="dashboard">
+      <div id="dashboard-chart-container">
+
+        <script type="text/javascript">
+          const dashboardChartElement = React.createElement(CONPReact.DashboardChart, {
+            datasetsURL: "{{ url_for('search.dataset_search') }}",
+            pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
+          });
+          ReactDOM.render(dashboardChartElement, document.querySelector("#dashboard-chart-container"));
+        </script>
+
+      </div>
     </div>
-</div>
-<hr>
-<!--/row-->
+  </div>
+  <div class="p-2 d-flex flex-wrap">
+    <div class="card w-100 mx-1" data-type="dashboard">
+      <div id="spotlight-container">
+
+        <script type="text/javascript">
+          const spotlightElement = React.createElement(CONPReact.Spotlight, {
+            datasetURL: "{{ url_for('search.dataset_search') }}" + "?id=projects/preventad-open",
+          });
+          ReactDOM.render(spotlightElement, document.querySelector("#spotlight-container"));
+        </script>
+
+      </div>
+    </div>
+    <div class="card w-100 mx-1" data-type="dashboard">
+      <div class="card-description flex-grow-0">
+        <h3 class="card-description-title">TUTORIALS</h3>
+        <hr />
+      </div>
+      <div class="p-2">
+        <p>Learn how the CONP portal works. Read the
+          <a target="_blank" , rel="noopener noreferrer" href="{{url_for('main.tutorial')}}">
+            Portal tutorial
+          </a>
+          or watch the tutorial video below.
+        </p>
+      </div>
+      <div class="d-flex justify-content-center">
+        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/yT7JxuWZeII" frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

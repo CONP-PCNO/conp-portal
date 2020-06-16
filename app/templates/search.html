@@ -1,86 +1,34 @@
-{% if current_user.is_authenticated %}
-{% extends 'base.html' %}
-{% else %}
-{% extends 'base_public.html' %}
-{% endif %}
+{% extends 'common/base_main.html' %}
 
 <!-- Head Block -->
-{% block head %}
-<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+{% block scripts %}
+{{ super() }}
+<script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
+<script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
 <script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 {% endblock %}
 
-<!-- Brand Block -->
-{% block brand_link %}
-{% if current_user.is_authenticated %}
-    <a class="navbar-brand" href="/index">
-        <img class="custom-logo-link" src="./static/img/conp.png">
+<!-- Title Block -->
 
-    </a>
-{% else %}
-     <a class="navbar-brand" href="/">
-        <img class="custom-logo-link" src="./static/img/conp.png">
-     </a>
-{% endif %}
+{% block contenttitle %}
+<h2><span style="color:red;">CONP Portal </span> | Data Search</h2>
 {% endblock %}
 
-<!-- Login Block -->
-{% block login %}
-{% if current_user.is_authenticated %}
-    <li class="login">
-        <a href="/logout">
-            <span class="glyphicon glyphicon-log-out"></span> Logout
-        </a>
-    </li>
-{% else %}
-    <li class="login">
-        <a href="/login">
-            <span class="glyphicon glyphicon-log-in"></span> Login
-        </a>
-    </li>
-{% endif %}
-{% endblock %}
+<!-- Content Block -->
 
-<!-- Sidebar Block -->
-{% block sidebar %}
-{% if current_user.is_authenticated %}
-{% include "/fragments/sidebar.html" %}
-{% else %}
-{% include "/fragments/public_sidebar.html" %}
-{% endif %}
-{% endblock %}
+{% block appcontent %}
+<div>
+  <div id="search-datatable-mount"></div>
 
-{% block content %}
-
-<!-- Space reserved for username when logged in -->
-{% if current_user.is_authenticated %}
-    <div class="display-user">
-    Welcome <strong>{{ user.username }}</strong>
-    </div>
-{% else %}
-    <div class="display-user"></div>
-{% endif %}
-
-<div class="search-header page-title">
-  <h2>CONP Portal | Dataset Search</h2>
+  <script type="text/javascript">
+    const reactElement = React.createElement(CONPReact.DataTableContainer, {
+      endpointURL: "{{ url_for('search.dataset_search') }}",
+      imagePath: "/static/img",
+      renderElement: CONPReact.DatasetElement
+    });
+    ReactDOM.render(reactElement, document.querySelector("#search-datatable-mount"));
+  </script>
 </div>
-
-<div id="search-datatable-mount" >
-</div>
-
-<script type="text/javascript">
-  const reactElement = React.createElement(CONPReact.DataTableContainer, {
-    endpointURL: "/dataset-search",
-    limit: 10,
-    imagePath: "/static/img",
-    renderElement: CONPReact.DatasetElement
-  });
-
-  ReactDOM.render(reactElement, document.querySelector("#search-datatable-mount"));
-</script>
-</div>
-<!--/span-->
 {% endblock %}
-

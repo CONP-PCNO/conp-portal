@@ -1,0 +1,36 @@
+<nav class="navbar sticky-top navbar-expand navbar-light bg-white navigation-bar">
+  <a class="navbar-brand" href="https://conp.ca/"><img src="/static/img/conp.png" alt="conp logo" /></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+      {% if not current_user.is_anonymous %}
+      <li class="nav-item px-3">
+        <a class="nav-link" href="{{ url_for('profile.current_user_profile_page') }}">Profile</a>
+      </li>
+      <li class="nav-item px-3">
+        <a class="nav-link" href="/#/">Settings</a>
+      </li>
+      {% endif %}
+      <li class="nav-item px-3">
+        <a class="nav-link" href="{{url_for('main.about')}}">About</a>
+      </li>
+      <li class="nav-item px-3">
+        <a class="nav-link" href="#" id="btnShowTerms">Terms of Use</a>
+      </li>
+      <li class="nav-item px-3">
+        <a class="nav-link" href="{{ url_for('main.contact_us') }}">Contact Us</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  $(function () {
+    $('#btnShowTerms').on('click', function (event) {
+      $('#termsModal').modal('show')
+    });
+  });
+</script>

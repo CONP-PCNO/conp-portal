@@ -1,0 +1,65 @@
+/*
+=============================================================
+| Base Page Layout
+=============================================================
+*/
+
+#page #page-content {
+  width: 100%;
+  position: relative;
+}
+
+#page #page-content .content-body .content-title {
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  #page #page-content {
+    width: 100%;
+    position: relative;
+  }
+
+  #page #page-content .content-body {
+    padding-top: 2rem;
+    padding-bottom: 2rem
+  }
+
+  #page #page-content .content-body .content-title {
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+  }
+}
+
+/*
+=============================================================
+| Dashboard
+=============================================================
+*/
+
+.highcharts-color-0 {
+  fill: #7cb5ec;
+  stroke: #7cb5ec;
+}
+.highcharts-axis.highcharts-color-0 .highcharts-axis-line {
+  stroke: #7cb5ec;
+}
+.highcharts-axis.highcharts-color-0 text {
+  fill: #7cb5ec;
+}
+.highcharts-color-1 {
+  fill: #90ed7d;
+  stroke: #90ed7d;
+}
+.highcharts-axis.highcharts-color-1 .highcharts-axis-line {
+  stroke: #90ed7d;
+}
+.highcharts-axis.highcharts-color-1 text {
+  fill: #90ed7d;
+}
+
+.highcharts-yaxis .highcharts-axis-line {
+  stroke-width: 2px;
+}

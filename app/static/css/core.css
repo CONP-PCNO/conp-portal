@@ -1,0 +1,628 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  color: #343434;
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	clear: both;
+  line-height: 1.3em;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+h1 { font-size: 2.4em; }
+h2 { font-size: 2.2em; }
+h3 { font-size: 2em; }
+h4 { font-size: 1.8em; }
+h5 { font-size: 1.6em; }
+h6 { font-size: 1.4em; }
+
+p { font-size: 1rem; }
+
+:target::before {
+  content: "";
+  display: block;
+  height: 4.5rem;
+  margin: -4.5rem 0 0;
+}
+
+button:focus {
+  outline: 0;
+}
+
+.badge {
+  font-size: 100%;
+}
+
+.modal-dialog{
+  overflow-y: initial;
+}
+
+.modal-body {
+  padding: 20px;
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+
+.terms-body p {
+  margin-left: 50px;
+  margin-bottom: 20px;
+}
+
+.terms-list p {
+  margin-left: 75px;
+  margin-bottom: 10px;
+}
+
+.iframe-container {
+  overflow: hidden;
+  padding-top: 56.25%;
+  position: relative;
+}
+ 
+.iframe-container iframe {
+   border: 0;
+   height: 100%;
+   left: 0;
+   position: absolute;
+   top: 0;
+   width: 100%;
+}
+
+/*
+=============================================================
+| PALETTE
+=============================================================
+Colour names courtesy of chir.ag/projects/name-that-color
+*/
+
+.bg-alto {
+  background-color: #d8d8d8;
+}
+
+.bg-dusty-grey {
+  background-color: #979797;
+}
+
+.bg-mineshaft {
+  background-color: #343434;
+}
+
+.bg-pastel-green {
+  background-color: #88d368;
+}
+
+.bg-red {
+  background-color: #ff0000;
+}
+
+.bg-sea-buckthorn {
+  background-color: #f6a032;
+}
+
+.bg-silver {
+  background-color: #c2c2c2;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+/*
+=============================================================
+| FONTS
+=============================================================
+*/
+
+.text-card-title {
+  font-family: "arial", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #343434;
+}
+
+.text-body {
+  font-family: "arial", sans-serif;
+  font-size: 1rem;
+  color: #343434;
+}
+
+.text-logo {
+  font-family: "quicksand";
+  font-size: 1rem;
+  color: #404040;
+}
+
+.text-link {
+  text-decoration: underline;
+}
+
+.text-link:hover {
+  color: #ff0000;
+  text-decoration: underline;
+}
+
+/*
+=============================================================
+| BUTTONS
+=============================================================
+*/
+
+.btn {
+  padding: 1rem;
+  width: 100%;
+}
+
+.btn-green {
+  background-color: #88d368;
+  color: white;
+}
+
+.btn-green:hover {
+  background-color: #70ad56;
+  color: white;
+}
+
+.btn-orange {
+  background-color: #f6a032;
+  color: white;
+}
+
+.btn-orange:hover {
+  background-color: #c5822b;
+}
+
+.btn-cbrain,
+.btn-cbrain.disabled,
+.btn-download-metadata,
+.btn-download-metadata.disabled {
+  min-width: 5rem;
+  min-height: 5rem;
+  transition: transform 0.2s linear;
+}
+
+.btn-cbrain:not(.disabled):hover,
+.btn-download-metadata:not(.disabled):hover {
+  transform: translate(0px, -1px);
+  transition: transform 0.2s linear;
+}
+
+.btn-cbrain {
+  background: url(../img/run_on_cbrain_green.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.btn-cbrain.disabled {
+  background: url(../img/run_on_cbrain_gray.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.btn-download-metadata {
+  background: url(../img/download_green.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.btn-download-metadata.disabled {
+  background: url(../img/download_gray.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+@media (min-width: 786px) {
+  .btn-cbrain,
+  .btn-cbrain.disabled,
+  .btn-download-metadata,
+  .btn-download-metadata.disabled {
+    min-width: 6rem;
+    min-height: 6rem;
+  }
+}
+
+/*
+=============================================================
+| Navigation Bar
+=============================================================
+*/
+
+.navigation-bar {
+  width: 100%;
+  height: 4.5rem;
+  border-bottom: 1px solid #ff0000;
+}
+
+.navigation-bar a,
+.navigation-bar a img,
+.navigation-bar div ul {
+  height: 100%;
+  flex: 1;
+}
+
+.navigation-bar div .nav-item:hover {
+  background-color: #d8d8d8;
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-collapse {
+  width: 100%;
+  background: white;
+}
+
+.navbar-nav {
+  border-bottom: 1px solid #ff0000;
+}
+
+.navbar-nav .active,
+.navbar-light .navbar-nav .active > .nav-link {
+  background-color: #ff0000;
+  color: white;
+}
+
+.navigation-bar div .active:hover {
+  background-color: #ff0000;
+}
+
+.navigation-bar .show {
+  width: 100%;
+  background: red;
+}
+
+.navigation-bar .dropdown,
+.navigation-bar .dropdown-menu {
+  width: 100%;
+  background: white;
+  border: none;
+  box-shadow: none;
+}
+
+.navigation-bar .dropdown-menu a {
+  color: rgba(0, 0, 0, 0.5);
+  padding-top: inherit;
+  padding-bottom: inherit;
+}
+
+.navigation-bar .dropdown-menu a:hover {
+  color: rgba(0, 0, 0, 1);
+}
+
+@media (min-width: 768px) {
+  .navigation-bar a,
+  .navigation-bar a img,
+  .navigation-bar div ul {
+    flex: none;
+  }
+
+  .navigation-bar .show {
+    width: auto;
+    background: red;
+  }
+
+  .navbar-collapse.collapse {
+    height: 100% !important;
+    margin-bottom: 1px;
+  }
+
+  .navbar-collapse {
+    height: 100%;
+    background-color: transparent;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .navbar-nav {
+    border-bottom: none;
+  }
+
+  .navbar-nav .nav-item a {
+    display: flex;
+    align-items: center;
+  }
+
+  .navigation-bar .dropdown-menu {
+    background: white;
+    border: 1px solid #ff0000;
+    padding: 0;
+    margin-top: 0;
+  }
+
+  .navigation-bar .dropdown-menu a {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    white-space: inherit;
+  }
+}
+
+/*
+=============================================================
+| Footer
+=============================================================
+*/
+
+#footer .footer-link {
+  color: white;
+}
+
+#footer .footer-link:hover span {
+  color: #ff0000;
+}
+
+/*
+=============================================================
+| Sidebar
+=============================================================
+*/
+
+#sidebar {
+  height: 100%;
+  max-width: 100%;
+}
+
+.sidebar-tab:hover {
+  background-color: #d8d8d8;
+  color: #343434;
+  cursor: pointer;
+}
+
+.sticky-offset {
+  top: 65px;
+}
+
+/*
+=============================================================
+| Searchbar
+=============================================================
+*/
+
+.searchbar,
+.search-dataset-footer {
+  background-color: #ffffff;
+  box-shadow: 0px 2px 4px #979797;
+  flex-direction: column;
+}
+
+.searchbar a:hover {
+  text-decoration: underline;
+}
+
+.searchbar .input-group input {
+  border-color: #c2c2c2;
+}
+
+.searchbar .dropdown {
+  min-height: 2rem;
+}
+
+.searchbar .dropdown .dropdown-label {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  min-width: fit-content;
+  white-space: nowrap;
+}
+
+.searchbar .dropdown .dropdown-select {
+  -webkit-border-radius: 0.25rem;
+  -moz-border-radius: 0.25rem;
+  -ms-border-radius: 0.25rem;
+  -o-border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  border-color: #c2c2c2;
+  cursor: pointer;
+}
+
+.searchbar .dropdown .dropdown-select:focus {
+  outline: 0 !important;
+  box-shadow: 0 0 0 0;
+}
+
+.searchbar .input-group .input-group-append .input-group-text {
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .searchbar {
+    flex-direction: row;
+  }
+
+  .searchbar .dropdown {
+    margin-right: 1rem;
+  }
+
+  .searchbar .dropdown .dropdown-select {
+    width: auto;
+  }
+}
+
+/*
+=============================================================
+| Cards
+=============================================================
+  NOTE: I've used more custom classes here instead of bootstrap 
+  classes to facilitate style changed since these classes are 
+  applied to react components.
+  If no longer using react, revert to using bootstrap classes for 
+  consistency.
+*/
+
+/* Base Card Styles */
+
+.card {
+  box-shadow: 0px 2px 4px #979797;
+  flex-wrap: wrap;
+}
+
+.card .card-social {
+  margin: 0 auto;
+}
+
+.card .card-social .card-social-icons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card .card-social .card-social-icons .card-social-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card .card-body {
+  padding: 0.5rem;
+}
+
+.card .card-body ul {
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.card .card-buttons {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.card .card-buttons .card-button {
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+.card .card-buttons .card-button img {
+  width: 4rem;
+  height: 4rem;
+}
+
+.card .card-buttons .card-button .card-button-tooltip {
+  background-color: white;
+  padding: 5px;
+  border: solid black;
+  color: black;
+  border-width: 1px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.card .card-body .card-list .card-list-item {
+  display: flex;
+}
+
+@media (min-width: 576px) {
+  .card .card-buttons {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .card .card-buttons .card-button img {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  .card .card-body {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 786px) {
+  .card {
+    flex-wrap: nowrap;
+  }
+
+  .card .card-buttons {
+    margin: 0.5rem;
+    min-width: 10rem;
+  }
+
+  .card .card-body ul {
+    justify-content: start;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .card .card-body ul li {
+    padding: 0.5rem;
+    padding-right: 2rem;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+/* Dataset Cards */
+
+.card[data-type="dataset"] .card-buttons {
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+@media (min-width: 576px) {
+  .card[data-type="dataset"] .card-buttons {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+}
+
+@media (min-width: 786px) {
+  .card[data-type="dataset"] .card-buttons {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* Pipeline Cards */
+.card[data-type="pipeline"] .card-social .card-social-icons {
+  justify-content: center;
+}
+
+/* Dashboard Cards */
+
+.card[data-type="dashboard"] {
+  padding: 2rem;
+  margin-bottom: 1rem;
+}
+
+.card[data-type="dashboard"] .highcharts-container svg {
+  width: 100%;
+}
+
+.card[data-type="dashboard"] .card-description {
+  padding: 0.5rem;
+}
+
+.card[data-type="dashboard"] .card-description .card-description-subtitle {
+  font-weight: 700;
+  padding: 1rem 0;
+}
+
+@media (min-width: 576px) {
+  .card[data-type="dashboard"] .card-description {
+    flex: 1;
+  }
+}
+
+@media (min-width: 992px) {
+  .card[data-type="dashboard"] {
+    flex: 1;
+    margin-bottom: 0rem;
+  }
+}

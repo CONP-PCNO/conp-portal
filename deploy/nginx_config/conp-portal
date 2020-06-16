@@ -1,0 +1,53 @@
+  upstream app_server {
+    # fail_timeout=0 means we always retry an upstream even if it failed
+    # to return a good HTTP response
+
+    # for UNIX domain socket setups
+    server unix:/run/gunicorn.socket fail_timeout=0;
+
+    # for a TCP configuration
+    # server 192.168.0.7:8000 fail_timeout=0;
+  }
+
+  server {
+    listen 80;
+    listen 443;
+    client_max_body_size 4G;
+
+    # set the correct host(s) for your site
+    server_name portal.conp.ca www.portal.conp.ca;
+
+    #ssl on;
+    ssl_certificate /home/conp-admin/conp-portal/certs/cert.pem;
+    ssl_certificate_key /home/conp-admin/conp-portal/certs/key.pem;
+
+    access_log /var/log/conp-access.log;
+    error_log /var/log/conp-error.log;
+
+    keepalive_timeout 5;
+
+    root /home/conp-admin/conp-portal/app;
+    index index.html;
+
+    location ~* \.(gif|ico|jpeg|jpg|pict|png|svg|swf|tif)$ {
+	try_files $uri =404;
+    }
+    
+    location ~* \.(class|css|csv|doc|docx|ejs|eot|eps|jar|js|mid|midi|otf|pdf|pls|ppt|pptx|ps|svgz|tiff|ttf|txt|webp|woff|woff2|xls|xlsx)$ {
+        try_files $uri =404;
+    }
+
+    location / {
+      # checks for static file, if not found proxy to app
+      try_files $uri @proxy_to_app;
+    }
+
+    location @proxy_to_app {
+	proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        ### use localhost:8080 and firewall for public network to port 8080 to disable access from internet;
+        proxy_pass http://unix:/run/gunicorn.socket;      
+    }
+  }

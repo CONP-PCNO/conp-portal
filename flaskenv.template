@@ -1,0 +1,20 @@
+FLASK_APP=conp.py
+FLASK_ENV=development
+FLASK_DEBUG=0
+DATABASE_URL=sqlite:///<ENTER FLASK TOP DIR>/app.db
+SECRET_KEY=you-will-never-guess
+DATA_PATH=${HOME}
+SQLALCHEMY_TRACK_MODIFICATIONS=False
+MAIL_SERVER=smtp.googlemail.com
+MAIL_PORT=587
+MAIL_USE_TLS=1
+MAIL_USERNAME=<Your gmail user name>
+MAIL_PASSWORD=<Your gmail app specific password, not your normal one>
+OAUTHLIB_INSECURE_TRANSPORT=1
+USE_ORCID_OAUTH_SANDBOX=<1 if testing 0 if not>
+ORCID_OAUTH_CLIENT_ID=<ORCID CLIENT ID>
+ORCID_OAUTH_CLIENT_SECRET=<ORCID SECRET ID>
+ORCID_TOKEN_URL=https://orcid.org/oauth/token
+ADMIN_EMAIL = <Your gmail>
+WEBHOOKS_SECRET=<github webhook secret>
+~

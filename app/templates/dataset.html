@@ -1,164 +1,146 @@
-{% extends 'base_public.html' %}
+{% extends 'common/base_main.html' %}
 
-{% block head %}
-
-<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+{% block scripts %}
+{{ super() }}
+<script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
+<script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
 <script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<title>{{ title }}</title>
 {% endblock %}
 
-<!-- Brand Block -->
-{% block brand_link %}
-{% if current_user.is_authenticated %}
-    <a class="navbar-brand" href="/index">
-        <img class="custom-logo-link" src="./static/img/conp.png">
-
-    </a>
-{% else %}
-     <a class="navbar-brand" href="/">
-        <img class="custom-logo-link" src="./static/img/conp.png">
-     </a>
-{% endif %}
-{% endblock %}
-
-<!-- Login Block -->
-{% block login %}
-{% if current_user.is_authenticated %}
-    <li class="login">
-        <a href="/logout">
-            <span class="glyphicon glyphicon-log-out"></span> Logout
-        </a>
-    </li>
-{% else %}
-    <li class="login">
-        <a href="/login">
-            <span class="glyphicon glyphicon-log-in"></span> Login
-        </a>
-    </li>
-{% endif %}
-{% endblock %}
-
-<!-- Sidebar Block -->
-{% block sidebar %}
-{% if current_user.is_authenticated %}
-{% include "/fragments/sidebar.html" %}
-{% else %}
-{% include "/fragments/public_sidebar.html" %}
-{% endif %}
-{% endblock %}
-
-{% block content %}
-
-<!-- Space reserved for username when logged in -->
-{% if current_user.is_authenticated %}
-    <div class="display-user">
-    Welcome <strong>{{ user.username }}</strong>
-    </div>
-{% else %}
-    <div class="display-user"></div>
-{% endif %}
-
+{% block contenttitle %}
 <div class="search-header page-title">
   <h2>CONP Portal | {{ data.title }} </h2>
 </div>
+{% endblock %}
 
- <div id="mount-display" class="dataset" style="border-top: 1px solid black"></div>
+{% block appcontent %}
+<div id="mount-display" class="dataset"></div>
 
- <div class="dataset-metadata">
-     <div class="dataset-version col-md-2">
-        <p><strong>Version</strong></p>
-         {% if metadata %}
-            {{ metadata.version }}
-         {% else %}
-             <p>No information available</p>
-         {% endif %}
-     </div>
-     <div class="dataset-information col-md-10">
-         {% if metadata %}
-             <div class="row" style="padding: 20px;">
-                 <div class="col-xs-2">
-                    <strong>Authors:</strong>
-                 </div>
-                 <div class="col-xs-6">
-                     {{ metadata.authors }}
-                 </div>
-             </div>
-             <div class="row" style="padding: 20px;">
-                <div class="col-xs-2">
-                    <strong>Contact:</strong>
-                </div>
-                <div class="col-xs-6">
-                 {{ metadata.contact }}
-                </div>
-             </div>
-             <div class="row" style="padding: 20px;">
-                <div class="col-xs-2">
-                    <strong>Description:</strong>
-                </div>
-                <div class="col-xs-6">
-                 {{ metadata.description }}
-                </div>
-             </div>
-             <div class="row" style="padding: 20px;">
-                <div class="col-xs-2">
-                  <strong>Licenses:</strong>
-                </div>
-                <div class="col-xs-6">
-                  {{ metadata.licenses }}
-                </div>
-             </div>
-             <div class="row" style="padding: 20px;">
-                <div class="col-xs-2">
-                  <span style="padding-top: 5px;"><strong>Download Dataset:</strong></span>
-                </div>
-                <div class="col-xs-3">
-                   {% if current_user.is_authenticated or data.isPrivate == false  %}
-                   <a href="{{ data.URL }}" class="a-link"><button class="btn btn-success btn-block">Download <i class="fa fa-arrow-circle-down"></i></button></a>
-                   {% else %}
+<div class="d-flex flex-column p-4">
+  {% if metadata.version is defined and metadata.version is not none %}
+  <p><strong>Version: </strong> {{ metadata.version }} </p>
+  {% endif %}
+  {% if metadata.sources is defined and metadata.sources is not none %}
+  <p><strong>Source: </strong><a target="_blank" rel="noopener noreferrer"
+      href="{{ metadata.sources }}">{{ metadata.sources }}</a></p>
+  {% endif %}
+  {% if metadata.authors is defined and metadata.authors is not none %}
+  <p><strong>Authors: </strong>{{ metadata.authors }}</p>
+  {% endif %}
+  {% if data.principalInvestigators is defined and data.principalInvestigators is not none %}
+  <p><strong>Principal Investigator: </strong>{{ data.principalInvestigators }}</p>
+  {% endif %}
+  {% if metadata.contact is defined and metadata.contact is not none %}
+  <p><strong>Contact: </strong> {{ metadata.contact }}</p>
+  {% endif %}
+  {% if metadata.description is defined and metadata.description is not none %}
+  <p><strong>Description: </strong> {{ metadata.description|safe }}</p>
+  {% endif %}
+  {% if metadata.licenses is defined and metadata.licenses is not none %}
+  <p><strong>Licenses: </strong> {{ metadata.licenses }}</p>
+  {% endif %}
+  {% if metadata.derivedFrom is defined and metadata.derivedFrom is not none %}
+  <p><strong>Parent Datasets: </strong>
+    {% for d in metadata.derivedFrom %}
+    {% if d.parent_dataset_id is defined %}
+    {% set href = "/dataset?id=projects/" ~ d.parent_dataset_id %}
+    <span class="mr-1"><a class="badge badge-primary"
+        href="{{ href }}">{{ d.parent_dataset_id }}</a></span>
+    {% endif %}
+    {% endfor %}</p>
+  {% endif %}
+</div>
 
-                   <a href="/login" class="a-link"><button class="btn btn-default btn-block">Download <i class="fa fa-arrow-circle-down"></i></button></a>
-                   {% endif %}
-                </div>
-             </div>
-             <div class="row" style="padding:20px;">
-                 {% if data.id == '0ea345b4-62cf-11e9-b202-52545e9add8e' %}
-                {% include "/fragments/preventad.html" %}
-                {% endif %}
-             </div>
-         {% else %}
-             <p>No information available</p>
-         {% endif %}
+<div class="d-flex flex-column p-2">
+  <h2>Dataset Download Instructions</h2>
+  {% if data.authorizations == "private" %}
+  <div class="alert alert-info" role="alert">
+    <strong>Note: </strong>an account is required to access this dataset. Please follow the Source URL and request an
+    account on the source page.</div>
+  {% endif %}
+  <p>
+    The following instructions require a basic understanding of UNIX/LINUX command lines. Future portal functionality
+    may
+    include downloads directly from the web browser. Dataset download is currently enabled through
+    <a target="_blank" rel="noopener noreferrer" href="https://www.datalad.org/">DataLad</a>.
+  </p>
+  <p>
+    To install DataLad on your system, please refer to the
+    <a target="_blank" rel="noopener noreferrer"
+      href="http://handbook.datalad.org/en/latest/intro/installation.html#install">
+      install section of the DataLad Handbook
+    </a>
+    (installation via miniconda is recommended in order to obtain the latest version of DataLad).
+  </p>
+  <h6>1) Initiate the CONP dataset</h6>
+  <p>To initiate the CONP dataset (<code>conp-dataset</code>), run the following command in the directory where you want
+    CONP datasets to be installed:</p>
+  <div class="card">
+    <div class="card-body">
+      <pre class="card-text"
+        style="white-space: pre-wrap;">datalad install https://github.com/CONP-PCNO/conp-dataset.git</pre>
     </div>
- </div>
+  </div>
+  <p></p>
+  <h6>2) Install the {{data.name}} dataset</h6>
+  <p>To install the dataset, go into the created conp-dataset directory and run <code>datalad install</code> on the
+    dataset <code>{{data.name}}</code>:</p>
+  <div class="card">
+    <div class="card-body">
+      <pre class="card-text"
+        style="white-space: pre-wrap;">cd conp-dataset<br>datalad install projects/{{data.name}}</pre>
+    </div>
+  </div>
+  <p></p>
+  <h6>3) Download the {{data.name}} dataset</h6>
+  <p>Now that the DataLad dataset has been installed, go into the dataset directory under
+    <code>projects/{{data.name}}</code>.</p>
+  <div class="card">
+    <div class="card-body">
+      <pre class="card-text" style="white-space: pre-wrap;">cd projects/{{data.name}}</pre>
+    </div>
+  </div>
+  <p></p>
+  <p>
+    Note that files visible in the dataset are symlinks and will need to be downloaded manually using the
+    <code>datalad get</code>
+    command in the dataset directory:
+  </p>
+  <div class="card">
+    <div class="card-body">
+      <pre class="card-text" style="white-space: pre-wrap;">datalad get &ltfilepath&gt</pre>
+    </div>
+  </div>
+  <p></p>
+  <p>Note, if you run <code>datalad get *</code> command, all the files present in the dataset directory will be
+    downloaded.</p>
+  <h6>For more information on how DataLad works, please visit the
+    <a target="_blank" rel="noopener noreferrer" href="http://handbook.datalad.org/en/latest/">
+      DataLad Handbook documentation
+    </a>.
+  </h6>
+</div>
+<div class="d-flex flex-column p-2">
+  <h2>Dataset README information</h2>
+  <div class="card">
+    <div class="card-header">
+      README.md
+    </div>
+    <div class="card-body">
+      {{readme|safe}}
+    </div>
+  </div>
+</div>
 
 <script type="text/javascript">
-  const reactElement = React.createElement(CONPReact.DatasetElement, {
-    authorized: {{ "true" if data.authorized else "false" }},
-    id: '{{ data.id }}',
-    title: '{{ data.title }}',
-    isPrivate: {{ "true" if data.isPrivate else "false" }},
-    thumbnailURL: '{{ data.thumbnailURL }}',
-    downloads: {{ data.downloads }},
-    views: '{{ data.views  }}',
-    likes: '{{ data.likes }}',
-    dateAdded: '{{ data.dateAdded }}',
-    dateUpdated: '{{ data.dateUpdated }}',
-    size: '{{ data.size }}',
-    files: '{{ data.files }}',
-    subjects: '{{ data.subjects }}',
-    format: '{{ data.format }}',
-    modalities: '{{ data.modalities }}',
-    sources: '{{ data.sources }}',
-    imagePath: "/static/img",
-    downloadPath : '{{ data.downloadPath }}'
 
-  });
-
+  const element = {{ data| tojson}};
+  element.showDownload = true;
+  const reactElement = React.createElement(CONPReact.DatasetElement, element);
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));
+
 </script>
 </div>
 <!--/span-->
 {% endblock %}
-

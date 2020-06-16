@@ -7,26 +7,36 @@ import DataTable from "./DataTable";
 
 const DataTableContainer = ({
   endpointURL,
+  imagePath,
   limit,
   authorized,
   total,
-  sortKeys,
+  page,
+  max_per_page,
+  search,
+  tags,
   elements,
   ...dataTableProps
 }) => {
   const [fetchedElements, setFetchedElements] = React.useState(elements);
 
   const [query, setQuery] = React.useState({
-    search: "",
-    sortKey: "title",
+    search,
+    tags,
+    modalities: [],
+    formats: [],
+    sortKey: "conpStatus",
     sortComparitor: "asc",
+    page,
+    max_per_page,
     cursor: 0,
     limit
   });
 
   const [totalState, setTotalState] = React.useState(total);
 
-  const [sortKeysState, setSortKeysState] = React.useState(sortKeys);
+  const [sortKeysState, setSortKeysState] = React.useState();
+  const [filterKeysState, setFilterKeysState] = React.useState();
   const [authorizedState, setAuthorizedState] = React.useState(authorized);
 
   React.useEffect(() => {
@@ -34,9 +44,7 @@ const DataTableContainer = ({
   }, [limit]);
 
   const fetchElements = async () => {
-    const url = `${endpointURL}?${qs.stringify(query)}`;
-
-    console.log(`Fetching from: ${url}`);
+    const url = `${endpointURL}?${qs.stringify(query, {arrayFormat: 'comma'})}`;
 
     try {
       const res = await fetch(url);
@@ -52,6 +60,7 @@ const DataTableContainer = ({
       setFetchedElements(parsed.elements);
       setTotalState(parsed.total);
       setSortKeysState(parsed.sortKeys);
+      setFilterKeysState(parsed.filterKeys);
       setAuthorizedState(parsed.authorized);
     } catch (err) {
       alert("There was an error retrieving the search results.");
@@ -65,8 +74,10 @@ const DataTableContainer = ({
     <DataTable
       authorized={authorizedState}
       elements={fetchedElements}
+      imagePath={imagePath}
       total={totalState}
       sortKeys={sortKeysState}
+      filterKeys={filterKeysState}
       query={query}
       setQuery={setQuery}
       {...dataTableProps}
@@ -76,17 +87,23 @@ const DataTableContainer = ({
 
 DataTableContainer.propTypes = {
   authorized: PropTypes.bool,
-  endpointURL: PropTypes.string,
+  endpointURL: PropTypes.string.isRequired,
+  imagePath: PropTypes.string,
   limit: PropTypes.number,
   total: PropTypes.number,
+  page: PropTypes.number,
+  max_per_page: PropTypes.number,
   elements: PropTypes.arrayOf(PropTypes.object)
 };
 
 DataTableContainer.defaultProps = {
   authorized: false,
   endpointURL: "",
+  imagePath: 'static/img/',
   limit: 10,
   total: 0,
+  page: 1,
+  max_per_page: 10,
   elements: []
 };
 

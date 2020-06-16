@@ -1,8 +1,4 @@
-{% if current_user.is_authenticated %}
-{% extends 'base.html' %}
-{% else %}
-{% extends 'base_public.html' %}
-{% endif %}
+{% extends 'common/base_main.html' %}
 
 <!-- Head Block -->
 {% block head %}
@@ -45,11 +41,7 @@
 
 <!-- Sidebar Block -->
 {% block sidebar %}
-{% if current_user.is_authenticated %}
 {% include "/fragments/sidebar.html" %}
-{% else %}
-{% include "/fragments/public_sidebar.html" %}
-{% endif %}
 {% endblock %}
 
 {% block content %}
