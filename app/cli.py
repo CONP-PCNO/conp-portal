@@ -144,6 +144,7 @@ def _update_datasets(app):
     from app import db, config
     from app.models import Dataset as DBDataset
     from app.models import DatasetAncestry as DBDatasetAncestry
+    from sqlalchemy import exc
     from datalad import api
     from datalad.api import Dataset as DataladDataset
     import fnmatch
@@ -262,7 +263,12 @@ def _update_datasets(app):
                     datasetAncestry.id = str(uuid.uuid4())
                     datasetAncestry.parent_dataset_id = 'projects/' + x.get('parent_dataset_id', None)
                     datasetAncestry.child_dataset_id = dataset.dataset_id
-                    db.session.merge(datasetAncestry)
+                    try:
+                        db.session.merge(datasetAncestry)
+                        db.session.commit()
+                    except exc.IntegrityError:
+                        # we already have a record of this ancestry
+                        db.session.rollback()
 
         dataset.date_updated = datetime.utcnow()
         dataset.fspath = ds['path']

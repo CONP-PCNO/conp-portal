@@ -226,7 +226,7 @@ class DatasetAncestry(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.now())
     date_updated = db.Column(db.DateTime, default=datetime.now())
 
-    db.UniqueConstraint('parent_dataset_id', 'child_dataset_id', name='uix_1')
+    __table_args__ = (db.UniqueConstraint('parent_dataset_id', 'child_dataset_id', name='uix_1'),)
 
     def __repr__(self):
         return '<DatasetAncestry {}>'.format(self.id)
