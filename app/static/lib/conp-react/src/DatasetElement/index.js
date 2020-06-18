@@ -65,11 +65,14 @@ const DatasetElement = props => {
         />
       </div>
       <div className="col-7 card-body d-flex flex-wrap">
-        <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>
-          <h5 className="card-title text-card-title col-12 pl-2 pl-md-0">
-            {element.title} {ciBadges.map(badge => badge)}
-          </h5>
-        </a>
+        <h5 className="card-title text-card-title col-12 pl-2 pl-md-0">
+          <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>
+            {element.title}
+          </a>
+          <a style={{ color: "inherit" }} href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master">
+            {ciBadges.map(badge => badge)}
+          </a>
+        </h5>
         <ul className="d-flex">
           {element.principalInvestigators ?
             <li className="card-list-item">
