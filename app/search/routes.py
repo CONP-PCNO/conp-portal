@@ -174,8 +174,14 @@ def dataset_search():
         paginated = elements
 
         if(sort_key == "conpStatus"):
-            order = {'conp': 0, 'canadian': 1, 'external': 2}
-            paginated.sort(key=lambda o: order[o[sort_key].lower()])
+
+            def determine_order(element):
+                order = {'conp': 0, 'canadian': 1, 'external': 2}
+                if sort_key not in order:
+                    return 3
+                return order[element[sort_key].lower()]
+
+            paginated.sort(key=lambda o: determine_order(o))
 
         elif(sort_key == "title"):
             paginated.sort(key=lambda o: o[sort_key].lower())
