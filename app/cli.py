@@ -255,14 +255,14 @@ def _update_datasets(app):
         # check for dataset ancestry
         extraprops = dats.get('extraProperties', [])
         for prop in extraprops:
-            if prop.get('category') == 'derivedFrom':
+            if prop.get('category') == 'parent_dataset_id':
                 for x in prop.get('values', []):
-                    if x.get('parent_dataset_id', None) is None:
+                    if x.get('value', None) is None:
                         continue
                     datasetAncestry = DBDatasetAncestry()
                     datasetAncestry.id = str(uuid.uuid4())
                     datasetAncestry.parent_dataset_id = 'projects/' + \
-                        x.get('parent_dataset_id', None)
+                        x.get('value', None)
                     datasetAncestry.child_dataset_id = dataset.dataset_id
                     try:
                         db.session.merge(datasetAncestry)

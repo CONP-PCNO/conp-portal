@@ -43,10 +43,10 @@
   {% if metadata.parentDatasets is defined and metadata.parentDatasets is not none %}
   <p><strong>Parent Datasets: </strong>
     {% for d in metadata.parentDatasets %}
-    {% if d.parent_dataset_id is defined %}
-    {% set href = "/dataset?id=projects/" ~ d.parent_dataset_id %}
+    {% if d is defined %}
+    {% set href = "/dataset?id=projects/" ~ d %}
     <span class="mr-1"><a class="badge badge-primary"
-        href="{{ href }}">{{ d.parent_dataset_id }}</a></span>
+        href="{{ href }}">{{ d }}</a></span>
     {% endif %}
     {% endfor %}</p>
   {% endif %}

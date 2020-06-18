@@ -339,6 +339,19 @@ class DATSDataset(object):
 
 
     @property
+    def parentDatasetId(self):
+        parentDatasetId = []
+        extraprops = self.descriptor.get('extraProperties', {})
+        for prop in extraprops:
+            if prop.get('category') == 'parent_dataset_id':
+                for x in prop.get('values', []):
+                    if x.get('value', None) is not None:
+                        parentDatasetId.append(x.get('value'))
+
+        return parentDatasetId if len(parentDatasetId) > 0 else None
+
+
+    @property
     def version(self):
         return self.descriptor.get('version', None)
 
