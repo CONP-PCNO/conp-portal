@@ -39,6 +39,7 @@ const DatasetElement = props => {
       color = "critical";
       break;
   }
+  const leftMargin = "10px";
   let url =
     "https://img.shields.io/badge/circleci-" +
     element.status +
@@ -69,7 +70,9 @@ const DatasetElement = props => {
           <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>
             {element.title}
           </a>
-          <a style={{ color: "inherit" }} href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master">
+          <a style={{ color: "inherit", 'margin-left' : "10px" }}
+             href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master"
+          >
             {ciBadges.map(badge => badge)}
           </a>
         </h5>
