@@ -39,7 +39,6 @@ const DatasetElement = props => {
       color = "critical";
       break;
   }
-  const leftMargin = "10px";
   let url =
     "https://img.shields.io/badge/circleci-" +
     element.status +

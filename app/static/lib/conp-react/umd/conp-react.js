@@ -17072,7 +17072,6 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       break;
   }
 
-  var leftMargin = "10px";
   var url = "https://img.shields.io/badge/circleci-" + element.status + "-" + color + "?style=flat-square&logo=circleci" + "&link=" + element.latest_build_url;
   ciBadges.push( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     key: "badge_" + color,
