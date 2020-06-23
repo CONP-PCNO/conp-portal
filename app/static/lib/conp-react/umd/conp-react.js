@@ -17081,7 +17081,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card d-flex flex-row",
     style: {
-      minHeight: '200px'
+      minHeight: '220px'
     },
     "data-type": "dataset"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -17107,14 +17107,20 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     src: element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-7 card-body d-flex flex-wrap"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
+    className: "card-title text-card-title col-12 pl-2 pl-md-0"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     style: {
       color: "inherit"
     },
     href: "dataset?id=" + element.id
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
-    className: "card-title text-card-title col-12 pl-2 pl-md-0"
-  }, element.title, " ", ciBadges.map(function (badge) {
+  }, element.title), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    style: {
+      color: "inherit",
+      'margin-left': "10px"
+    },
+    href: "https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master"
+  }, ciBadges.map(function (badge) {
     return badge;
   }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
     className: "d-flex"
