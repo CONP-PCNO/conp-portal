@@ -10,14 +10,17 @@ class ChartContainer extends React.Component {
         super(props);
         this.state = {
             datasets: null,
-            pipelines: null
+            pipelines: null,
+            toggle: 1
         };
+
+        this.toggleChart = this.toggleChart.bind(this);
     }
 
     componentDidMount() {
         this.fetchElements();
-      }
-    
+    }
+
     async fetchElements() {
 
         try {
@@ -55,17 +58,49 @@ class ChartContainer extends React.Component {
         }
     };
 
-    render () {
+    renderChart(toggle) {
+        if (!this.state.datasets || !this.state.pipelines) {
+            return null;
+        }
+        switch (toggle) {
+            case 1:
+                return <TotalDatasetsPipelines
+                    datasets={this.state.datasets}
+                    pipelines={this.state.pipelines} />;
+            default:
+                return <TotalDatasetsPipelines
+                    datasets={this.state.datasets}
+                    pipelines={this.state.pipelines} />;
+        }
+    }
+
+    toggleChart(event, number) {
+        event.preventDefault();
+        this.setState({
+            toggle: number
+        });
+    }
+
+    render() {
         return (
-            this.state.datasets && this.state.pipelines ?
-            <TotalDatasetsPipelines
-                datasets={this.state.datasets}
-                pipelines={this.state.pipelines}
-            />
-            : null
+            <div>
+                <div className="d-flex flex-row-reverse">
+                    <div className="dropdown show" style={{ zIndex: 1 }}>
+                        <a className="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Select Chart
+                        </a>
+
+                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                            <button className="dropdown-item" type="button" onClick={(e) => {this.toggleChart(e, 1)}}>Total Datasets and Pipelines</button>
+                            <button className="dropdown-item" type="button" onClick={(e) => {this.toggleChart(e, 2)}}>Another</button>
+                        </div>
+                    </div>
+                </div>
+                {this.renderChart(this.state.toggle)}
+            </div>
         );
     }
-    
+
 };
 
 ChartContainer.propTypes = {

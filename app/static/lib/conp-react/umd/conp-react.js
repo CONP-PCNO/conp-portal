@@ -17420,7 +17420,7 @@ var TotalDatasetsPipelines_DashboardChart = function DashboardChart(_ref) {
       yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
     }
 
-    highcharts_default.a.chart('dashboard-chart-container', {
+    highcharts_default.a.chart('dashboard-chart', {
       chart: {
         type: 'column',
         styledMode: true,
@@ -17570,6 +17570,8 @@ function ChartContainer_asyncGeneratorStep(gen, resolve, reject, _next, _throw, 
 
 function ChartContainer_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { ChartContainer_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { ChartContainer_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 
@@ -17587,8 +17589,10 @@ var ChartContainer_ChartContainer = /*#__PURE__*/function (_React$Component) {
     _this = _React$Component.call(this, props) || this;
     _this.state = {
       datasets: null,
-      pipelines: null
+      pipelines: null,
+      toggle: 1
     };
+    _this.toggleChart = _this.toggleChart.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -17674,11 +17678,67 @@ var ChartContainer_ChartContainer = /*#__PURE__*/function (_React$Component) {
     return fetchElements;
   }();
 
+  _proto.renderChart = function renderChart(toggle) {
+    if (!this.state.datasets || !this.state.pipelines) {
+      return null;
+    }
+
+    switch (toggle) {
+      case 1:
+        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(TotalDatasetsPipelines, {
+          datasets: this.state.datasets,
+          pipelines: this.state.pipelines
+        });
+
+      default:
+        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(TotalDatasetsPipelines, {
+          datasets: this.state.datasets,
+          pipelines: this.state.pipelines
+        });
+    }
+  };
+
+  _proto.toggleChart = function toggleChart(event, number) {
+    event.preventDefault();
+    this.setState({
+      toggle: number
+    });
+  };
+
   _proto.render = function render() {
-    return this.state.datasets && this.state.pipelines ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(TotalDatasetsPipelines, {
-      datasets: this.state.datasets,
-      pipelines: this.state.pipelines
-    }) : null;
+    var _this2 = this;
+
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "d-flex flex-row-reverse"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "dropdown show",
+      style: {
+        zIndex: 1
+      }
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+      className: "btn btn-secondary btn-sm dropdown-toggle",
+      href: "#",
+      role: "button",
+      id: "dropdownMenuLink",
+      "data-toggle": "dropdown",
+      "aria-haspopup": "true",
+      "aria-expanded": "false"
+    }, "Select Chart"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "dropdown-menu dropdown-menu-right",
+      "aria-labelledby": "dropdownMenuLink"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+      className: "dropdown-item",
+      type: "button",
+      onClick: function onClick(e) {
+        _this2.toggleChart(e, 1);
+      }
+    }, "Total Datasets and Pipelines"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+      className: "dropdown-item",
+      type: "button",
+      onClick: function onClick(e) {
+        _this2.toggleChart(e, 2);
+      }
+    }, "Another")))), this.renderChart(this.state.toggle));
   };
 
   return ChartContainer;

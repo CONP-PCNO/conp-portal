@@ -40,7 +40,7 @@ const DashboardChart = ({ datasets, pipelines, ...props }) => {
             yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
         }
 
-        Highcharts.chart('dashboard-chart-container', {
+        Highcharts.chart('dashboard-chart', {
 
             chart: {
                 type: 'column',
