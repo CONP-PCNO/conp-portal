@@ -241,6 +241,13 @@ if (false) { var throwOnDirectAccess, ReactIs; } else {
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(20);
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
 /*!
 * screenfull
 * v4.2.0 - 2019-04-01
@@ -430,13 +437,6 @@ if (false) { var throwOnDirectAccess, ReactIs; } else {
 		window.screenfull = screenfull;
 	}
 })();
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(20);
 
 
 /***/ }),
@@ -6821,7 +6821,7 @@ __webpack_require__.d(__webpack_exports__, "DataTable", function() { return /* r
 __webpack_require__.d(__webpack_exports__, "DataTableContainer", function() { return /* reexport */ DataTable_DataTableContainer; });
 __webpack_require__.d(__webpack_exports__, "DatasetElement", function() { return /* reexport */ src_DatasetElement; });
 __webpack_require__.d(__webpack_exports__, "PipelineElement", function() { return /* reexport */ src_PipelineElement; });
-__webpack_require__.d(__webpack_exports__, "DashboardChart", function() { return /* reexport */ src_DashboardChart; });
+__webpack_require__.d(__webpack_exports__, "ChartContainer", function() { return /* reexport */ src_ChartContainer; });
 
 // CONCATENATED MODULE: ./node_modules/ramda/es/internal/_isPlaceholder.js
 function _isPlaceholder(a) {
@@ -7620,7 +7620,7 @@ DataTable_DataTable.defaultProps = {
 };
 /* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
 // EXTERNAL MODULE: ./node_modules/nwb/node_modules/@babel/runtime/regenerator/index.js
-var regenerator = __webpack_require__(3);
+var regenerator = __webpack_require__(2);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/createMemo.js
@@ -8271,7 +8271,7 @@ var useFavicon = function (href) {
 /* harmony default export */ var esm_useFavicon = (useFavicon);
 
 // EXTERNAL MODULE: ./node_modules/screenfull/dist/screenfull.js
-var screenfull = __webpack_require__(2);
+var screenfull = __webpack_require__(3);
 var screenfull_default = /*#__PURE__*/__webpack_require__.n(screenfull);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useFullscreen.js
@@ -17371,25 +17371,25 @@ PipelineElement_PipelineElement.propTypes = {
 var highcharts = __webpack_require__(5);
 var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
 
-// CONCATENATED MODULE: ./src/DashboardChart/index.js
+// CONCATENATED MODULE: ./src/charts/TotalDatasetsPipelines/index.js
 
 
-function DashboardChart_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function TotalDatasetsPipelines_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-function DashboardChart_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { DashboardChart_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { DashboardChart_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function TotalDatasetsPipelines_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { TotalDatasetsPipelines_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { TotalDatasetsPipelines_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function DashboardChart_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-
-
+function TotalDatasetsPipelines_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 
 
 
-var DashboardChart_DashboardChart = function DashboardChart(_ref) {
-  var datasetsURL = _ref.datasetsURL,
-      pipelinesURL = _ref.pipelinesURL,
-      props = DashboardChart_objectWithoutPropertiesLoose(_ref, ["datasetsURL", "pipelinesURL"]);
+
+
+
+var TotalDatasetsPipelines_DashboardChart = function DashboardChart(_ref) {
+  var datasets = _ref.datasets,
+      pipelines = _ref.pipelines,
+      props = TotalDatasetsPipelines_objectWithoutPropertiesLoose(_ref, ["datasets", "pipelines"]);
 
   var drawChart = function drawChart(data) {
     var xAxis = [];
@@ -17461,57 +17461,18 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
     });
   };
 
-  var fetchElements = /*#__PURE__*/function () {
-    var _ref2 = DashboardChart_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-      var datasetsFetch, datasetsRes, pipelinesFetch, pipelinesRes, chartData, months, i, today;
+  var contructData = /*#__PURE__*/function () {
+    var _ref2 = TotalDatasetsPipelines_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      var chartData, months, i, today;
       return regenerator_default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.prev = 0;
-              _context.next = 3;
-              return fetch(datasetsURL + '?elements=all');
-
-            case 3:
-              datasetsFetch = _context.sent;
-
-              if (datasetsFetch.ok) {
-                _context.next = 6;
-                break;
-              }
-
-              throw new Error("Request failed with status: " + datasetsFetch.status + " (" + datasetsFetch.statusText + ")");
-
-            case 6:
-              _context.next = 8;
-              return datasetsFetch.json();
-
-            case 8:
-              datasetsRes = _context.sent;
-              _context.next = 11;
-              return fetch(pipelinesURL);
-
-            case 11:
-              pipelinesFetch = _context.sent;
-
-              if (pipelinesFetch.ok) {
-                _context.next = 14;
-                break;
-              }
-
-              throw new Error("Request failed with status: " + pipelinesFetch.status + " (" + pipelinesFetch.statusText + ")");
-
-            case 14:
-              _context.next = 16;
-              return pipelinesFetch.json();
-
-            case 16:
-              pipelinesRes = _context.sent;
               chartData = {
                 datasets: {},
                 pipelines: {}
               };
-              datasetsRes.elements.map(function (element) {
+              datasets.elements.map(function (element) {
                 var dateAdded = new Date(element.dateAdded);
 
                 if (!chartData.datasets[dateAdded.getFullYear()]) {
@@ -17548,7 +17509,7 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                   }
                 }
               });
-              pipelinesRes.elements.map(function (element) {
+              pipelines.elements.map(function (element) {
                 var dateAdded = new Date(element.publicationdate);
 
                 if (!chartData.pipelines[dateAdded.getFullYear()]) {
@@ -17577,39 +17538,156 @@ var DashboardChart_DashboardChart = function DashboardChart(_ref) {
                 }
               });
               drawChart(chartData);
-              _context.next = 32;
-              break;
 
-            case 28:
-              _context.prev = 28;
-              _context.t0 = _context["catch"](0);
-              alert("There was an error retrieving the search results.");
-              console.error(_context.t0);
-
-            case 32:
+            case 9:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 28]]);
+      }, _callee);
     }));
 
-    return function fetchElements() {
+    return function contructData() {
       return _ref2.apply(this, arguments);
     };
   }();
 
   esm_useDebounce(function () {
-    return void fetchElements();
-  }, 300, [datasetsURL]);
+    return void contructData();
+  }, 300);
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     id: "dashboard-chart"
   });
 };
 
-DashboardChart_DashboardChart.propTypes = {};
-DashboardChart_DashboardChart.defaultProps = {};
-/* harmony default export */ var src_DashboardChart = (DashboardChart_DashboardChart);
+TotalDatasetsPipelines_DashboardChart.propTypes = {};
+TotalDatasetsPipelines_DashboardChart.defaultProps = {};
+/* harmony default export */ var TotalDatasetsPipelines = (TotalDatasetsPipelines_DashboardChart);
+// CONCATENATED MODULE: ./src/ChartContainer/index.js
+
+
+function ChartContainer_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function ChartContainer_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { ChartContainer_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { ChartContainer_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+var ChartContainer_ChartContainer = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(ChartContainer, _React$Component);
+
+  function ChartContainer(props) {
+    var _this;
+
+    _this = _React$Component.call(this, props) || this;
+    _this.state = {
+      datasets: null,
+      pipelines: null
+    };
+    return _this;
+  }
+
+  var _proto = ChartContainer.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {
+    this.fetchElements();
+  };
+
+  _proto.fetchElements = /*#__PURE__*/function () {
+    var _fetchElements = ChartContainer_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      var datasetsFetch, datasetsRes, pipelinesFetch, pipelinesRes;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return fetch(this.props.datasetsURL + '?elements=all');
+
+            case 3:
+              datasetsFetch = _context.sent;
+
+              if (datasetsFetch.ok) {
+                _context.next = 6;
+                break;
+              }
+
+              throw new Error("Request failed with status: " + datasetsFetch.status + " (" + datasetsFetch.statusText + ")");
+
+            case 6:
+              _context.next = 8;
+              return datasetsFetch.json();
+
+            case 8:
+              datasetsRes = _context.sent;
+              this.setState({
+                datasets: datasetsRes
+              });
+              _context.next = 12;
+              return fetch(this.props.pipelinesURL);
+
+            case 12:
+              pipelinesFetch = _context.sent;
+
+              if (pipelinesFetch.ok) {
+                _context.next = 15;
+                break;
+              }
+
+              throw new Error("Request failed with status: " + pipelinesFetch.status + " (" + pipelinesFetch.statusText + ")");
+
+            case 15:
+              _context.next = 17;
+              return pipelinesFetch.json();
+
+            case 17:
+              pipelinesRes = _context.sent;
+              this.setState({
+                pipelines: pipelinesRes
+              });
+              _context.next = 25;
+              break;
+
+            case 21:
+              _context.prev = 21;
+              _context.t0 = _context["catch"](0);
+              alert("There was an error retrieving the search results.");
+              console.error(_context.t0);
+
+            case 25:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this, [[0, 21]]);
+    }));
+
+    function fetchElements() {
+      return _fetchElements.apply(this, arguments);
+    }
+
+    return fetchElements;
+  }();
+
+  _proto.render = function render() {
+    return this.state.datasets && this.state.pipelines ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(TotalDatasetsPipelines, {
+      datasets: this.state.datasets,
+      pipelines: this.state.pipelines
+    }) : null;
+  };
+
+  return ChartContainer;
+}(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Component);
+
+;
+ChartContainer_ChartContainer.propTypes = {};
+ChartContainer_ChartContainer.defaultProps = {};
+/* harmony default export */ var src_ChartContainer = (ChartContainer_ChartContainer);
 // CONCATENATED MODULE: ./src/Spotlight/index.js
 
 
@@ -17728,7 +17806,7 @@ Spotlight_Spotlight.defaultProps = {};
   DataTableContainer: DataTable_DataTableContainer,
   DatasetElement: src_DatasetElement,
   PipelineElement: src_PipelineElement,
-  DashboardChart: src_DashboardChart,
+  ChartContainer: src_ChartContainer,
   Spotlight: src_Spotlight
 });
 
