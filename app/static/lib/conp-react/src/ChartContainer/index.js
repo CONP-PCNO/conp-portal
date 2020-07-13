@@ -97,7 +97,7 @@ class ChartContainer extends React.Component {
 
                         <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
                             <button className="dropdown-item" type="button" onClick={(e) => {this.toggleChart(e, 1)}}>Total Datasets and Pipelines</button>
-                            <button className="dropdown-item" type="button" onClick={(e) => {this.toggleChart(e, 2)}}>Another</button>
+                            <button className="dropdown-item" type="button" onClick={(e) => {this.toggleChart(e, 2)}}>Popular Modalities</button>
                         </div>
                     </div>
                 </div>

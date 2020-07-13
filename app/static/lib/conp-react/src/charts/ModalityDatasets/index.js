@@ -4,6 +4,7 @@ import { useDebounce } from "react-use";
 import * as qs from "query-string";
 
 import Highcharts from "highcharts";
+require('highcharts/highcharts-more.js')(Highcharts);
 
 const ModalityDatasets = ({ datasets, pipelines, ...props }) => {
 
@@ -13,51 +14,82 @@ const ModalityDatasets = ({ datasets, pipelines, ...props }) => {
 
         const xAxis = [];
 
+        const datasetData = Object.keys(data.datasets).map(d => {
+            return {
+                name: d,
+                value: data.datasets[d]
+            };
+        });
+
+        console.log(JSON.stringify(datasetData));
+
+        const pipelineData = Object.keys(data.pipelines).map(p => {
+            return {
+                name: p,
+                value: data.pipelines[p]
+            };
+        });
+
+        console.log(JSON.stringify(pipelineData));
+
         Highcharts.chart('dashboard-chart', {
 
             chart: {
-                type: 'column',
-                styledMode: true,
-                backgroundColor: '#FFF'
+                type: 'packedbubble',
+                //styledMode: true,
+                backgroundColor: '#FFF',
+                height: '60%'
             },
             credits: {
                 enabled: false
             },
 
             title: {
-                text: 'Most Popular Dataset Types'
+                text: 'Popular Modalities'
             },
 
-            yAxis: [{
-                title: {
-                    text: '',
-                    style: {
-                        color: Highcharts.getOptions().colors[0]
-                    }
-                },
-                allowDecimals: false,
-            }],
-
-            /*
-            xAxis: {
-                categories: xAxis
-            }, */
+            tooltip: {
+                useHTML: true,
+                pointFormat: '<b>{point.name}:</b> {point.value}'
+            },
 
             plotOptions: {
-                column: {
-                    borderRadius: 5
+                packedbubble: {
+                    minSize: '10%',
+                    maxSize: '100%',
+                    zMin: 0,
+                    zMax: 30,
+                    layoutAlgorithm: {
+                        gravitationalConstant: 0.1,
+                        splitSeries: true,
+                        seriesInteraction: false,
+                        dragBetweenSeries: true,
+                        parentNodeLimit: true
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}',
+                        filter: {
+                            property: 'y',
+                            operator: '>',
+                            value: 2
+                        },
+                        style: {
+                            color: 'black',
+                            textOutline: 'none',
+                            fontWeight: 'normal'
+                        }
+                    }
                 }
             },
 
             series: [{
                 name: 'Datasets',
-                data: Object.values(data.datasets),
-                yAxis: 0
+                data: datasetData
             },
             {
                 name: 'Pipelines',
-                data: Object.values(data.pipelines),
-                yAxis: 0
+                data: pipelineData
             }]
 
         })
