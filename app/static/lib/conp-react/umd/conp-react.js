@@ -443,273 +443,6 @@ module.exports = __webpack_require__(20);
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-const strictUriEncode = __webpack_require__(22);
-const decodeComponent = __webpack_require__(23);
-const splitOnFirst = __webpack_require__(24);
-
-function encoderForArrayFormat(options) {
-	switch (options.arrayFormat) {
-		case 'index':
-			return key => (result, value) => {
-				const index = result.length;
-				if (value === undefined) {
-					return result;
-				}
-
-				if (value === null) {
-					return [...result, [encode(key, options), '[', index, ']'].join('')];
-				}
-
-				return [
-					...result,
-					[encode(key, options), '[', encode(index, options), ']=', encode(value, options)].join('')
-				];
-			};
-
-		case 'bracket':
-			return key => (result, value) => {
-				if (value === undefined) {
-					return result;
-				}
-
-				if (value === null) {
-					return [...result, [encode(key, options), '[]'].join('')];
-				}
-
-				return [...result, [encode(key, options), '[]=', encode(value, options)].join('')];
-			};
-
-		case 'comma':
-			return key => (result, value, index) => {
-				if (!value) {
-					return result;
-				}
-
-				if (index === 0) {
-					return [[encode(key, options), '=', encode(value, options)].join('')];
-				}
-
-				return [[result, encode(value, options)].join(',')];
-			};
-
-		default:
-			return key => (result, value) => {
-				if (value === undefined) {
-					return result;
-				}
-
-				if (value === null) {
-					return [...result, encode(key, options)];
-				}
-
-				return [...result, [encode(key, options), '=', encode(value, options)].join('')];
-			};
-	}
-}
-
-function parserForArrayFormat(options) {
-	let result;
-
-	switch (options.arrayFormat) {
-		case 'index':
-			return (key, value, accumulator) => {
-				result = /\[(\d*)\]$/.exec(key);
-
-				key = key.replace(/\[\d*\]$/, '');
-
-				if (!result) {
-					accumulator[key] = value;
-					return;
-				}
-
-				if (accumulator[key] === undefined) {
-					accumulator[key] = {};
-				}
-
-				accumulator[key][result[1]] = value;
-			};
-
-		case 'bracket':
-			return (key, value, accumulator) => {
-				result = /(\[\])$/.exec(key);
-				key = key.replace(/\[\]$/, '');
-
-				if (!result) {
-					accumulator[key] = value;
-					return;
-				}
-
-				if (accumulator[key] === undefined) {
-					accumulator[key] = [value];
-					return;
-				}
-
-				accumulator[key] = [].concat(accumulator[key], value);
-			};
-
-		case 'comma':
-			return (key, value, accumulator) => {
-				const isArray = typeof value === 'string' && value.split('').indexOf(',') > -1;
-				const newValue = isArray ? value.split(',') : value;
-				accumulator[key] = newValue;
-			};
-
-		default:
-			return (key, value, accumulator) => {
-				if (accumulator[key] === undefined) {
-					accumulator[key] = value;
-					return;
-				}
-
-				accumulator[key] = [].concat(accumulator[key], value);
-			};
-	}
-}
-
-function encode(value, options) {
-	if (options.encode) {
-		return options.strict ? strictUriEncode(value) : encodeURIComponent(value);
-	}
-
-	return value;
-}
-
-function decode(value, options) {
-	if (options.decode) {
-		return decodeComponent(value);
-	}
-
-	return value;
-}
-
-function keysSorter(input) {
-	if (Array.isArray(input)) {
-		return input.sort();
-	}
-
-	if (typeof input === 'object') {
-		return keysSorter(Object.keys(input))
-			.sort((a, b) => Number(a) - Number(b))
-			.map(key => input[key]);
-	}
-
-	return input;
-}
-
-function extract(input) {
-	const queryStart = input.indexOf('?');
-	if (queryStart === -1) {
-		return '';
-	}
-
-	return input.slice(queryStart + 1);
-}
-
-function parse(input, options) {
-	options = Object.assign({
-		decode: true,
-		arrayFormat: 'none'
-	}, options);
-
-	const formatter = parserForArrayFormat(options);
-
-	// Create an object with no prototype
-	const ret = Object.create(null);
-
-	if (typeof input !== 'string') {
-		return ret;
-	}
-
-	input = input.trim().replace(/^[?#&]/, '');
-
-	if (!input) {
-		return ret;
-	}
-
-	for (const param of input.split('&')) {
-		let [key, value] = splitOnFirst(param.replace(/\+/g, ' '), '=');
-
-		// Missing `=` should be `null`:
-		// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
-		value = value === undefined ? null : decode(value, options);
-
-		formatter(decode(key, options), value, ret);
-	}
-
-	return Object.keys(ret).sort().reduce((result, key) => {
-		const value = ret[key];
-		if (Boolean(value) && typeof value === 'object' && !Array.isArray(value)) {
-			// Sort object keys, not values
-			result[key] = keysSorter(value);
-		} else {
-			result[key] = value;
-		}
-
-		return result;
-	}, Object.create(null));
-}
-
-exports.extract = extract;
-exports.parse = parse;
-
-exports.stringify = (object, options) => {
-	if (!object) {
-		return '';
-	}
-
-	options = Object.assign({
-		encode: true,
-		strict: true,
-		arrayFormat: 'none'
-	}, options);
-
-	const formatter = encoderForArrayFormat(options);
-	const keys = Object.keys(object);
-
-	if (options.sort !== false) {
-		keys.sort(options.sort);
-	}
-
-	return keys.map(key => {
-		const value = object[key];
-
-		if (value === undefined) {
-			return '';
-		}
-
-		if (value === null) {
-			return encode(key, options);
-		}
-
-		if (Array.isArray(value)) {
-			return value
-				.reduce(formatter(key), [])
-				.join('&');
-		}
-
-		return encode(key, options) + '=' + encode(value, options);
-	}).filter(x => x.length > 0).join('&');
-};
-
-exports.parseUrl = (input, options) => {
-	const hashStart = input.indexOf('#');
-	if (hashStart !== -1) {
-		input = input.slice(0, hashStart);
-	}
-
-	return {
-		url: input.split('?')[0] || '',
-		query: parse(extract(input), options)
-	};
-};
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
  Highcharts JS v8.0.0 (2019-12-10)
 
@@ -1203,6 +936,273 @@ H(q.maxWidth,Number.MAX_VALUE)&&this.chartHeight<=H(q.maxHeight,Number.MAX_VALUE
 u={};e(c,this.options,u,0);return u}});M(J,"masters/highcharts.src.js",[J["parts/Globals.js"],J["parts/Utilities.js"]],function(c,e){var F=e.extend;F(c,{animObject:e.animObject,arrayMax:e.arrayMax,arrayMin:e.arrayMin,attr:e.attr,correctFloat:e.correctFloat,defined:e.defined,destroyObjectProperties:e.destroyObjectProperties,discardElement:e.discardElement,erase:e.erase,extend:e.extend,extendClass:e.extendClass,isArray:e.isArray,isClass:e.isClass,isDOMElement:e.isDOMElement,isNumber:e.isNumber,isObject:e.isObject,
 isString:e.isString,numberFormat:e.numberFormat,objectEach:e.objectEach,offset:e.offset,pad:e.pad,pick:e.pick,pInt:e.pInt,relativeLength:e.relativeLength,setAnimation:e.setAnimation,splat:e.splat,syncTimeout:e.syncTimeout,wrap:e.wrap});return c});J["masters/highcharts.src.js"]._modules=J;return J["masters/highcharts.src.js"]});
 //# sourceMappingURL=highcharts.js.map
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+const strictUriEncode = __webpack_require__(22);
+const decodeComponent = __webpack_require__(23);
+const splitOnFirst = __webpack_require__(24);
+
+function encoderForArrayFormat(options) {
+	switch (options.arrayFormat) {
+		case 'index':
+			return key => (result, value) => {
+				const index = result.length;
+				if (value === undefined) {
+					return result;
+				}
+
+				if (value === null) {
+					return [...result, [encode(key, options), '[', index, ']'].join('')];
+				}
+
+				return [
+					...result,
+					[encode(key, options), '[', encode(index, options), ']=', encode(value, options)].join('')
+				];
+			};
+
+		case 'bracket':
+			return key => (result, value) => {
+				if (value === undefined) {
+					return result;
+				}
+
+				if (value === null) {
+					return [...result, [encode(key, options), '[]'].join('')];
+				}
+
+				return [...result, [encode(key, options), '[]=', encode(value, options)].join('')];
+			};
+
+		case 'comma':
+			return key => (result, value, index) => {
+				if (!value) {
+					return result;
+				}
+
+				if (index === 0) {
+					return [[encode(key, options), '=', encode(value, options)].join('')];
+				}
+
+				return [[result, encode(value, options)].join(',')];
+			};
+
+		default:
+			return key => (result, value) => {
+				if (value === undefined) {
+					return result;
+				}
+
+				if (value === null) {
+					return [...result, encode(key, options)];
+				}
+
+				return [...result, [encode(key, options), '=', encode(value, options)].join('')];
+			};
+	}
+}
+
+function parserForArrayFormat(options) {
+	let result;
+
+	switch (options.arrayFormat) {
+		case 'index':
+			return (key, value, accumulator) => {
+				result = /\[(\d*)\]$/.exec(key);
+
+				key = key.replace(/\[\d*\]$/, '');
+
+				if (!result) {
+					accumulator[key] = value;
+					return;
+				}
+
+				if (accumulator[key] === undefined) {
+					accumulator[key] = {};
+				}
+
+				accumulator[key][result[1]] = value;
+			};
+
+		case 'bracket':
+			return (key, value, accumulator) => {
+				result = /(\[\])$/.exec(key);
+				key = key.replace(/\[\]$/, '');
+
+				if (!result) {
+					accumulator[key] = value;
+					return;
+				}
+
+				if (accumulator[key] === undefined) {
+					accumulator[key] = [value];
+					return;
+				}
+
+				accumulator[key] = [].concat(accumulator[key], value);
+			};
+
+		case 'comma':
+			return (key, value, accumulator) => {
+				const isArray = typeof value === 'string' && value.split('').indexOf(',') > -1;
+				const newValue = isArray ? value.split(',') : value;
+				accumulator[key] = newValue;
+			};
+
+		default:
+			return (key, value, accumulator) => {
+				if (accumulator[key] === undefined) {
+					accumulator[key] = value;
+					return;
+				}
+
+				accumulator[key] = [].concat(accumulator[key], value);
+			};
+	}
+}
+
+function encode(value, options) {
+	if (options.encode) {
+		return options.strict ? strictUriEncode(value) : encodeURIComponent(value);
+	}
+
+	return value;
+}
+
+function decode(value, options) {
+	if (options.decode) {
+		return decodeComponent(value);
+	}
+
+	return value;
+}
+
+function keysSorter(input) {
+	if (Array.isArray(input)) {
+		return input.sort();
+	}
+
+	if (typeof input === 'object') {
+		return keysSorter(Object.keys(input))
+			.sort((a, b) => Number(a) - Number(b))
+			.map(key => input[key]);
+	}
+
+	return input;
+}
+
+function extract(input) {
+	const queryStart = input.indexOf('?');
+	if (queryStart === -1) {
+		return '';
+	}
+
+	return input.slice(queryStart + 1);
+}
+
+function parse(input, options) {
+	options = Object.assign({
+		decode: true,
+		arrayFormat: 'none'
+	}, options);
+
+	const formatter = parserForArrayFormat(options);
+
+	// Create an object with no prototype
+	const ret = Object.create(null);
+
+	if (typeof input !== 'string') {
+		return ret;
+	}
+
+	input = input.trim().replace(/^[?#&]/, '');
+
+	if (!input) {
+		return ret;
+	}
+
+	for (const param of input.split('&')) {
+		let [key, value] = splitOnFirst(param.replace(/\+/g, ' '), '=');
+
+		// Missing `=` should be `null`:
+		// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
+		value = value === undefined ? null : decode(value, options);
+
+		formatter(decode(key, options), value, ret);
+	}
+
+	return Object.keys(ret).sort().reduce((result, key) => {
+		const value = ret[key];
+		if (Boolean(value) && typeof value === 'object' && !Array.isArray(value)) {
+			// Sort object keys, not values
+			result[key] = keysSorter(value);
+		} else {
+			result[key] = value;
+		}
+
+		return result;
+	}, Object.create(null));
+}
+
+exports.extract = extract;
+exports.parse = parse;
+
+exports.stringify = (object, options) => {
+	if (!object) {
+		return '';
+	}
+
+	options = Object.assign({
+		encode: true,
+		strict: true,
+		arrayFormat: 'none'
+	}, options);
+
+	const formatter = encoderForArrayFormat(options);
+	const keys = Object.keys(object);
+
+	if (options.sort !== false) {
+		keys.sort(options.sort);
+	}
+
+	return keys.map(key => {
+		const value = object[key];
+
+		if (value === undefined) {
+			return '';
+		}
+
+		if (value === null) {
+			return encode(key, options);
+		}
+
+		if (Array.isArray(value)) {
+			return value
+				.reduce(formatter(key), [])
+				.join('&');
+		}
+
+		return encode(key, options) + '=' + encode(value, options);
+	}).filter(x => x.length > 0).join('&');
+};
+
+exports.parseUrl = (input, options) => {
+	const hashStart = input.indexOf('#');
+	if (hashStart !== -1) {
+		input = input.slice(0, hashStart);
+	}
+
+	return {
+		url: input.split('?')[0] || '',
+		query: parse(extract(input), options)
+	};
+};
+
 
 /***/ }),
 /* 6 */
@@ -9943,7 +9943,7 @@ react_wait_esm_s.Waiter = react_wait_esm_f;
 
 
 // EXTERNAL MODULE: ./node_modules/query-string/index.js
-var query_string = __webpack_require__(4);
+var query_string = __webpack_require__(5);
 
 // CONCATENATED MODULE: ./src/DataTable/DataTableContainer.js
 
@@ -17368,7 +17368,7 @@ PipelineElement_PipelineElement.propTypes = {
 
 /* harmony default export */ var src_PipelineElement = (PipelineElement_PipelineElement);
 // EXTERNAL MODULE: ./node_modules/highcharts/highcharts.js
-var highcharts = __webpack_require__(5);
+var highcharts = __webpack_require__(4);
 var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
 
 // CONCATENATED MODULE: ./src/charts/TotalDatasetsPipelines/index.js
@@ -17386,7 +17386,7 @@ function TotalDatasetsPipelines_objectWithoutPropertiesLoose(source, excluded) {
 
 
 
-var TotalDatasetsPipelines_DashboardChart = function DashboardChart(_ref) {
+var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipelines(_ref) {
   var datasets = _ref.datasets,
       pipelines = _ref.pipelines,
       props = TotalDatasetsPipelines_objectWithoutPropertiesLoose(_ref, ["datasets", "pipelines"]);
@@ -17560,9 +17560,122 @@ var TotalDatasetsPipelines_DashboardChart = function DashboardChart(_ref) {
   });
 };
 
-TotalDatasetsPipelines_DashboardChart.propTypes = {};
-TotalDatasetsPipelines_DashboardChart.defaultProps = {};
-/* harmony default export */ var TotalDatasetsPipelines = (TotalDatasetsPipelines_DashboardChart);
+TotalDatasetsPipelines_TotalDatasetsPipelines.propTypes = {};
+TotalDatasetsPipelines_TotalDatasetsPipelines.defaultProps = {};
+/* harmony default export */ var charts_TotalDatasetsPipelines = (TotalDatasetsPipelines_TotalDatasetsPipelines);
+// CONCATENATED MODULE: ./src/charts/ModalityDatasets/index.js
+function ModalityDatasets_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+
+
+
+
+
+var ModalityDatasets_ModalityDatasets = function ModalityDatasets(_ref) {
+  var datasets = _ref.datasets,
+      pipelines = _ref.pipelines,
+      props = ModalityDatasets_objectWithoutPropertiesLoose(_ref, ["datasets", "pipelines"]);
+
+  var drawChart = function drawChart(data) {
+    console.log(JSON.stringify(data));
+    var xAxis = [];
+    highcharts_default.a.chart('dashboard-chart', {
+      chart: {
+        type: 'column',
+        styledMode: true,
+        backgroundColor: '#FFF'
+      },
+      credits: {
+        enabled: false
+      },
+      title: {
+        text: 'Most Popular Dataset Types'
+      },
+      yAxis: [{
+        title: {
+          text: '',
+          style: {
+            color: highcharts_default.a.getOptions().colors[0]
+          }
+        },
+        allowDecimals: false
+      }],
+
+      /*
+      xAxis: {
+          categories: xAxis
+      }, */
+      plotOptions: {
+        column: {
+          borderRadius: 5
+        }
+      },
+      series: [{
+        name: 'Datasets',
+        data: Object.values(data.datasets),
+        yAxis: 0
+      }, {
+        name: 'Pipelines',
+        data: Object.values(data.pipelines),
+        yAxis: 0
+      }]
+    });
+  };
+
+  var contructData = function contructData() {
+    var chartData = {
+      datasets: {},
+      pipelines: {}
+    };
+    datasets.elements.forEach(function (dataset) {
+      console.log(dataset.modalities);
+      if (!dataset.modalities) return;
+      var modalitiesArr = dataset.modalities.split(", ");
+      modalitiesArr.map(function (modality) {
+        console.log(modality);
+        addOrIncreaseDatapoint(chartData.datasets, modality);
+      });
+    });
+    pipelines.elements.forEach(function (pipeline) {
+      console.log(pipeline.tags.domain);
+      if (!pipeline.tags.domain) return;
+
+      if (!Array.isArray(pipeline.tags.domain)) {
+        addOrIncreaseDatapoint(chartData.pipelines, pipeline.tags.domain);
+        return;
+      }
+
+      var tagsArr = pipeline.tags.domain;
+      tagsArr.map(function (tag) {
+        console.log(tag);
+        addOrIncreaseDatapoint(chartData.pipelines, tag);
+      });
+    });
+    drawChart(chartData);
+  };
+
+  var addOrIncreaseDatapoint = function addOrIncreaseDatapoint(data, point) {
+    if (!Object.keys(data).includes(point)) {
+      console.log(point + " does not exist");
+      data[point] = 1;
+    } else {
+      data[point] += 1;
+      console.log(point + " is now " + data[point]);
+    }
+  };
+
+  esm_useDebounce(function () {
+    return void contructData();
+  }, 300);
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    id: "dashboard-chart"
+  });
+};
+
+ModalityDatasets_ModalityDatasets.propTypes = {};
+ModalityDatasets_ModalityDatasets.defaultProps = {};
+/* harmony default export */ var charts_ModalityDatasets = (ModalityDatasets_ModalityDatasets);
 // CONCATENATED MODULE: ./src/ChartContainer/index.js
 
 
@@ -17573,6 +17686,7 @@ function ChartContainer_asyncToGenerator(fn) { return function () { var self = t
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
 
 
 
@@ -17685,13 +17799,19 @@ var ChartContainer_ChartContainer = /*#__PURE__*/function (_React$Component) {
 
     switch (toggle) {
       case 1:
-        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(TotalDatasetsPipelines, {
+        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_TotalDatasetsPipelines, {
+          datasets: this.state.datasets,
+          pipelines: this.state.pipelines
+        });
+
+      case 2:
+        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_ModalityDatasets, {
           datasets: this.state.datasets,
           pipelines: this.state.pipelines
         });
 
       default:
-        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(TotalDatasetsPipelines, {
+        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_TotalDatasetsPipelines, {
           datasets: this.state.datasets,
           pipelines: this.state.pipelines
         });

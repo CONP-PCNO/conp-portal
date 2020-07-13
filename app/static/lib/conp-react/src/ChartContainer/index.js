@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useDebounce } from "react-use";
 import * as qs from "query-string";
-import TotalDatasetsPipelines from '../charts/TotalDatasetsPipelines'
+import TotalDatasetsPipelines from '../charts/TotalDatasetsPipelines';
+import ModalityDatasets from '../charts/ModalityDatasets';
 
 class ChartContainer extends React.Component {
 
@@ -65,6 +66,10 @@ class ChartContainer extends React.Component {
         switch (toggle) {
             case 1:
                 return <TotalDatasetsPipelines
+                    datasets={this.state.datasets}
+                    pipelines={this.state.pipelines} />;
+            case 2:
+                return <ModalityDatasets
                     datasets={this.state.datasets}
                     pipelines={this.state.pipelines} />;
             default:

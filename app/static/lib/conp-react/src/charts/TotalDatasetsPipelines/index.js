@@ -5,7 +5,7 @@ import * as qs from "query-string";
 
 import Highcharts from "highcharts";
 
-const DashboardChart = ({ datasets, pipelines, ...props }) => {
+const TotalDatasetsPipelines = ({ datasets, pipelines, ...props }) => {
 
     const drawChart = (data) => {
 
@@ -179,12 +179,12 @@ const DashboardChart = ({ datasets, pipelines, ...props }) => {
     );
 };
 
-DashboardChart.propTypes = {
+TotalDatasetsPipelines.propTypes = {
 
 };
 
-DashboardChart.defaultProps = {
+TotalDatasetsPipelines.defaultProps = {
 
 };
 
-export default DashboardChart;
+export default TotalDatasetsPipelines;
