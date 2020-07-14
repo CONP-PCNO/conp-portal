@@ -37,6 +37,9 @@ def create_app(config_settings=DevelopmentConfig):
     from app.admin import admin_bp  # noqa: E402
     app.register_blueprint(admin_bp)
 
+    from app.analytics import analytics_bp  # noqa: E402
+    app.register_blueprint(analytics_bp)
+
     from app.auth import auth_bp  # noqa: E402
     app.register_blueprint(auth_bp)
 
