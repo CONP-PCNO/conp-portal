@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import { useDebounce } from "react-use";
 import * as qs from "query-string";
 import TotalDatasetsPipelines from '../charts/TotalDatasetsPipelines';
-import ModalityDatasets from '../charts/ModalityDatasets';
+import DatasetModalities from '../charts/DatasetModalities';
+import PipelineTags from '../charts/PipelineTags'
 
 class ChartContainer extends React.Component {
 
@@ -69,8 +70,11 @@ class ChartContainer extends React.Component {
                     datasets={this.state.datasets}
                     pipelines={this.state.pipelines} />;
             case 2:
-                return <ModalityDatasets
+                return <DatasetModalities
                     datasets={this.state.datasets}
+                    pipelines={this.state.pipelines} />;
+            case 3:
+                return <PipelineTags
                     pipelines={this.state.pipelines} />;
             default:
                 return <TotalDatasetsPipelines
@@ -97,7 +101,8 @@ class ChartContainer extends React.Component {
 
                         <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
                             <button className="dropdown-item" type="button" onClick={(e) => {this.toggleChart(e, 1)}}>Total Datasets and Pipelines</button>
-                            <button className="dropdown-item" type="button" onClick={(e) => {this.toggleChart(e, 2)}}>Popular Modalities</button>
+                            <button className="dropdown-item" type="button" onClick={(e) => {this.toggleChart(e, 2)}}>Dataset Modalities</button>
+                            <button className="dropdown-item" type="button" onClick={(e) => {this.toggleChart(e, 3)}}>Pipeline Tags</button>
                         </div>
                     </div>
                 </div>

@@ -6,22 +6,11 @@ import * as qs from "query-string";
 import Highcharts from "highcharts";
 require('highcharts/highcharts-more.js')(Highcharts);
 
-const ModalityDatasets = ({ datasets, pipelines, ...props }) => {
+const PipelineTags = ({ datasets, pipelines, ...props }) => {
 
     const drawChart = (data) => {
 
         console.log(JSON.stringify(data));
-
-        const xAxis = [];
-
-        const datasetData = Object.keys(data.datasets).map(d => {
-            return {
-                name: d,
-                value: data.datasets[d]
-            };
-        });
-
-        console.log(JSON.stringify(datasetData));
 
         const pipelineData = Object.keys(data.pipelines).map(p => {
             return {
@@ -38,14 +27,14 @@ const ModalityDatasets = ({ datasets, pipelines, ...props }) => {
                 type: 'packedbubble',
                 //styledMode: true,
                 backgroundColor: '#FFF',
-                height: '60%'
+                height: '40%'
             },
             credits: {
                 enabled: false
             },
 
             title: {
-                text: 'Popular Modalities'
+                text: 'Pipeline Tags'
             },
 
             tooltip: {
@@ -55,7 +44,7 @@ const ModalityDatasets = ({ datasets, pipelines, ...props }) => {
 
             plotOptions: {
                 packedbubble: {
-                    minSize: '10%',
+                    minSize: '20%',
                     maxSize: '100%',
                     zMin: 0,
                     zMax: 30,
@@ -84,10 +73,6 @@ const ModalityDatasets = ({ datasets, pipelines, ...props }) => {
             },
 
             series: [{
-                name: 'Datasets',
-                data: datasetData
-            },
-            {
                 name: 'Pipelines',
                 data: pipelineData
             }]
@@ -98,24 +83,8 @@ const ModalityDatasets = ({ datasets, pipelines, ...props }) => {
     const contructData = () => {
 
         const chartData = {
-            datasets: {},
             pipelines: {}
         };
-
-        datasets.elements.forEach(dataset => {
-
-            console.log(dataset.modalities);
-
-            if (!dataset.modalities)
-                return;
-
-            const modalitiesArr = dataset.modalities.split(", ");
-
-            modalitiesArr.map(modality => {
-                console.log(modality);
-                addOrIncreaseDatapoint(chartData.datasets, modality);
-            })
-        })
 
         pipelines.elements.forEach(pipeline => {
 
@@ -159,12 +128,12 @@ const ModalityDatasets = ({ datasets, pipelines, ...props }) => {
     );
 };
 
-ModalityDatasets.propTypes = {
+PipelineTags.propTypes = {
 
 };
 
-ModalityDatasets.defaultProps = {
+PipelineTags.defaultProps = {
 
 };
 
-export default ModalityDatasets;
+export default PipelineTags;
