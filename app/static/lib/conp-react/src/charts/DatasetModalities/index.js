@@ -1,16 +1,74 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useDebounce } from "react-use";
 import * as qs from "query-string";
 
 import Highcharts from "highcharts";
 require('highcharts/highcharts-more.js')(Highcharts);
+import HighchartsReact from 'highcharts-react-official'
+
+const defaultOptions = {
+
+    chart: {
+        type: 'packedbubble',
+        //styledMode: true,
+        backgroundColor: '#FFF',
+        height: '40%'
+    },
+    credits: {
+        enabled: false
+    },
+
+    title: {
+        text: 'Dataset Modalities'
+    },
+
+    tooltip: {
+        useHTML: true,
+        pointFormat: '<b>{point.name}:</b> {point.value}'
+    },
+
+    plotOptions: {
+        packedbubble: {
+            color: Highcharts.getOptions().colors[0],
+            minSize: '20%',
+            maxSize: '100%',
+            zMin: 0,
+            zMax: 30,
+            layoutAlgorithm: {
+                gravitationalConstant: 0.1,
+                splitSeries: true,
+                seriesInteraction: false,
+                dragBetweenSeries: true,
+                parentNodeLimit: true
+            },
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}',
+                filter: {
+                    property: 'y',
+                    operator: '>',
+                    value: 2
+                },
+                style: {
+                    color: 'black',
+                    textOutline: 'none',
+                    fontWeight: 'normal'
+                }
+            }
+        }
+    },
+
+    series: []
+
+};
 
 const DatasetModalities = ({ datasets, pipelines, ...props }) => {
 
-    const drawChart = (data) => {
+    const [options, setOptions] = useState(defaultOptions);
+    const [isDrawn, setIsDrawn] = useState(false);
 
-        const xAxis = [];
+    const updateChart = (data) => {
 
         const datasetData = Object.keys(data.datasets).map(d => {
             return {
@@ -19,66 +77,18 @@ const DatasetModalities = ({ datasets, pipelines, ...props }) => {
             };
         });
 
-        Highcharts.chart('dashboard-chart', {
+        const series = [{
+            name: 'Datasets',
+            data: datasetData
+        }];
 
-            chart: {
-                type: 'packedbubble',
-                //styledMode: true,
-                backgroundColor: '#FFF',
-                height: '40%'
-            },
-            credits: {
-                enabled: false
-            },
-
-            title: {
-                text: 'Popular Modalities'
-            },
-
-            tooltip: {
-                useHTML: true,
-                pointFormat: '<b>{point.name}:</b> {point.value}'
-            },
-
-            plotOptions: {
-                packedbubble: {
-                    minSize: '20%',
-                    maxSize: '100%',
-                    zMin: 0,
-                    zMax: 30,
-                    layoutAlgorithm: {
-                        gravitationalConstant: 0.1,
-                        splitSeries: true,
-                        seriesInteraction: false,
-                        dragBetweenSeries: true,
-                        parentNodeLimit: true
-                    },
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.name}',
-                        filter: {
-                            property: 'y',
-                            operator: '>',
-                            value: 2
-                        },
-                        style: {
-                            color: 'black',
-                            textOutline: 'none',
-                            fontWeight: 'normal'
-                        }
-                    }
-                }
-            },
-
-            series: [{
-                name: 'Datasets',
-                data: datasetData
-            }]
-
-        })
+        setOptions(prevOptions => ({
+            ...prevOptions,
+            series: series,
+        }));
     };
 
-    const contructData = () => {
+    const constructData = () => {
 
         const chartData = {
             datasets: {}
@@ -86,38 +96,39 @@ const DatasetModalities = ({ datasets, pipelines, ...props }) => {
 
         datasets.elements.forEach(dataset => {
 
-            console.log(dataset.modalities);
-
             if (!dataset.modalities)
                 return;
 
             const modalitiesArr = dataset.modalities.split(", ");
 
             modalitiesArr.map(modality => {
-                console.log(modality);
                 addOrIncreaseDatapoint(chartData.datasets, modality);
             })
         })
 
-        drawChart(chartData);
+        updateChart(chartData);
 
     };
 
     const addOrIncreaseDatapoint = (data, point) => {
         if (!Object.keys(data).includes(point)) {
-            console.log(point + " does not exist");
             data[point] = 1;
         }
         else {
             data[point] += 1;
-            console.log(point + " is now " + data[point]);
         }
     }
 
-    useDebounce(() => void contructData(), 300);
+    if (datasets && pipelines && !isDrawn) {
+        constructData();
+        setIsDrawn(true);
+    }
 
     return (
-        <div id="dashboard-chart" />
+        <HighchartsReact
+            highcharts={Highcharts}
+            options={options}
+        />
     );
 };
 

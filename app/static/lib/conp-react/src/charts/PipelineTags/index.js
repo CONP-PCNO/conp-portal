@@ -1,16 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useDebounce } from "react-use";
 import * as qs from "query-string";
 
 import Highcharts from "highcharts";
 require('highcharts/highcharts-more.js')(Highcharts);
+import HighchartsReact from 'highcharts-react-official'
+import { pipe } from "ramda";
 
-const PipelineTags = ({ datasets, pipelines, ...props }) => {
+const defaultOptions = {
 
-    const drawChart = (data) => {
+    chart: {
+        type: 'packedbubble',
+        //styledMode: true,
+        backgroundColor: '#FFF',
+        height: '40%'
+    },
+    credits: {
+        enabled: false
+    },
 
-        console.log(JSON.stringify(data));
+    title: {
+        text: 'Pipeline Tags'
+    },
+
+    tooltip: {
+        useHTML: true,
+        pointFormat: '<b>{point.name}:</b> {point.value}'
+    },
+
+    plotOptions: {
+        packedbubble: {
+            color: Highcharts.getOptions().colors[1],
+            minSize: '20%',
+            maxSize: '100%',
+            zMin: 0,
+            zMax: 30,
+            layoutAlgorithm: {
+                gravitationalConstant: 0.1,
+                splitSeries: true,
+                seriesInteraction: false,
+                dragBetweenSeries: true,
+                parentNodeLimit: true
+            },
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}',
+                filter: {
+                    property: 'y',
+                    operator: '>',
+                    value: 2
+                },
+                style: {
+                    color: 'black',
+                    textOutline: 'none',
+                    fontWeight: 'normal'
+                }
+            }
+        }
+    },
+
+    series: []
+
+};
+
+const PipelineTags = ({ pipelines, ...props }) => {
+
+    const [options, setOptions] = useState(defaultOptions);
+    const [isDrawn, setIsDrawn] = useState(false);
+
+    const updateChart = (data) => {
 
         const pipelineData = Object.keys(data.pipelines).map(p => {
             return {
@@ -19,68 +78,18 @@ const PipelineTags = ({ datasets, pipelines, ...props }) => {
             };
         });
 
-        console.log(JSON.stringify(pipelineData));
+        const series = [{
+            name: 'Pipelines',
+            data: pipelineData
+        }];
 
-        Highcharts.chart('dashboard-chart', {
-
-            chart: {
-                type: 'packedbubble',
-                //styledMode: true,
-                backgroundColor: '#FFF',
-                height: '40%'
-            },
-            credits: {
-                enabled: false
-            },
-
-            title: {
-                text: 'Pipeline Tags'
-            },
-
-            tooltip: {
-                useHTML: true,
-                pointFormat: '<b>{point.name}:</b> {point.value}'
-            },
-
-            plotOptions: {
-                packedbubble: {
-                    minSize: '20%',
-                    maxSize: '100%',
-                    zMin: 0,
-                    zMax: 30,
-                    layoutAlgorithm: {
-                        gravitationalConstant: 0.1,
-                        splitSeries: true,
-                        seriesInteraction: false,
-                        dragBetweenSeries: true,
-                        parentNodeLimit: true
-                    },
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.name}',
-                        filter: {
-                            property: 'y',
-                            operator: '>',
-                            value: 2
-                        },
-                        style: {
-                            color: 'black',
-                            textOutline: 'none',
-                            fontWeight: 'normal'
-                        }
-                    }
-                }
-            },
-
-            series: [{
-                name: 'Pipelines',
-                data: pipelineData
-            }]
-
-        })
+        setOptions(prevOptions => ({
+            ...prevOptions,
+            series: series,
+        }));
     };
 
-    const contructData = () => {
+    const constructData = () => {
 
         const chartData = {
             pipelines: {}
@@ -88,43 +97,44 @@ const PipelineTags = ({ datasets, pipelines, ...props }) => {
 
         pipelines.elements.forEach(pipeline => {
 
-            console.log(pipeline.tags.domain);
-
             if (!pipeline.tags.domain)
                 return;
 
-            if(!Array.isArray(pipeline.tags.domain)) {
+            if (!Array.isArray(pipeline.tags.domain)) {
                 addOrIncreaseDatapoint(chartData.pipelines, pipeline.tags.domain);
                 return;
             }
             const tagsArr = pipeline.tags.domain;
 
             tagsArr.map(tag => {
-                console.log(tag);
                 addOrIncreaseDatapoint(chartData.pipelines, tag);
             })
 
         })
 
-        drawChart(chartData);
+        updateChart(chartData);
 
     };
 
     const addOrIncreaseDatapoint = (data, point) => {
         if (!Object.keys(data).includes(point)) {
-            console.log(point + " does not exist");
             data[point] = 1;
         }
         else {
             data[point] += 1;
-            console.log(point + " is now " + data[point]);
         }
     }
 
-    useDebounce(() => void contructData(), 300);
+    if (pipelines && !isDrawn) {
+        constructData();
+        setIsDrawn(true);
+    }
 
     return (
-        <div id="dashboard-chart" />
+        <HighchartsReact
+            highcharts={Highcharts}
+            options={options}
+        />
     );
 };
 

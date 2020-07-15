@@ -210,7 +210,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -233,19 +233,12 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__0__;
 if (false) { var throwOnDirectAccess, ReactIs; } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(18)();
+  module.exports = __webpack_require__(20)();
 }
 
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(21);
-
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -743,7 +736,7 @@ isString:e.isString,numberFormat:e.numberFormat,objectEach:e.objectEach,offset:e
 //# sourceMappingURL=highcharts.js.map
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -938,14 +931,21 @@ isString:e.isString,numberFormat:e.numberFormat,objectEach:e.objectEach,offset:e
 
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(23);
+
+
+/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-const strictUriEncode = __webpack_require__(23);
-const decodeComponent = __webpack_require__(24);
-const splitOnFirst = __webpack_require__(25);
+const strictUriEncode = __webpack_require__(25);
+const decodeComponent = __webpack_require__(26);
+const splitOnFirst = __webpack_require__(27);
 
 function encoderForArrayFormat(options) {
 	switch (options.arrayFormat) {
@@ -1206,6 +1206,13 @@ exports.parseUrl = (input, options) => {
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(e,t){ true?module.exports=t(__webpack_require__(0),__webpack_require__(2)):undefined}("undefined"!=typeof self?self:this,function(e,t){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,r){"use strict";function n(){return n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},n.apply(this,arguments)}function o(e){return i(e)||u(e)||c()}function c(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function u(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function i(e){if(Array.isArray(e)){for(var t=0,r=new Array(e.length);t<e.length;t++)r[t]=e[t];return r}}Object.defineProperty(t,"__esModule",{value:!0});var a=r(1),s=r.n(a),f=r(2),p=r.n(f),l="undefined"!=typeof window?a.useLayoutEffect:a.useEffect,d=Object(a.forwardRef)(function(e,t){var r=Object(a.useRef)(),c=Object(a.useRef)();return l(function(){function t(){var t=e.highcharts||p.a,n=e.constructorType||"chart";t?t[n]?e.options?c.current=t[n](r.current,e.options,e.callback?e.callback:void 0):console.warn('The "options" property was not passed.'):console.warn('The "constructorType" property is incorrect or some required module is not imported.'):console.warn('The "highcharts" property was not passed.')}if(c.current){if(!1!==e.allowChartUpdate)if(!e.immutable&&c.current){var n;(n=c.current).update.apply(n,[e.options].concat(o(e.updateArgs||[!0,!0])))}else t()}else t()}),l(function(){return function(){c.current&&(c.current.destroy(),c.current=null)}},[]),Object(a.useImperativeHandle)(t,function(){return{get chart(){return c.current},container:r}},[]),s.a.createElement("div",n({},e.containerProps,{ref:r}))});t.default=Object(a.memo)(d)},function(t,r){t.exports=e},function(e,r){e.exports=t}])});
+//# sourceMappingURL=highcharts-react.min.js.map
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports) {
 
 var g;
@@ -1231,7 +1238,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3673,10 +3680,10 @@ var autoReplace = function autoReplace() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(6), __webpack_require__(8).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(7), __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -3732,7 +3739,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(20);
+__webpack_require__(22);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -3743,10 +3750,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(7)))
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -3936,7 +3943,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -3946,7 +3953,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
  License: www.highcharts.com/license
 */
-(function(t){ true&&module.exports?(t["default"]=t,module.exports=t): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(3)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(A){t(A);t.Highcharts=A;return t}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+(function(t){ true&&module.exports?(t["default"]=t,module.exports=t): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(A){t(A);t.Highcharts=A;return t}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):undefined})(function(t){function A(b,a,r,g){b.hasOwnProperty(a)||(b[a]=g.apply(null,r))}t=t?t._modules:{};A(t,"parts-more/Pane.js",[t["parts/Globals.js"],t["parts/Utilities.js"]],function(b,a){function r(a,e){this.init(a,e)}var g=a.extend,
 m=a.splat,k=b.CenteredSeriesMixin,w=b.merge;b.Chart.prototype.collectionsWithUpdate.push("pane");g(r.prototype,{coll:"pane",init:function(a,e){this.chart=e;this.background=[];e.pane.push(this);this.setOptions(a)},setOptions:function(a){this.options=w(this.defaultOptions,this.chart.angular?{background:{}}:void 0,a)},render:function(){var a=this.options,e=this.options.background,l=this.chart.renderer;this.group||(this.group=l.g("pane-group").attr({zIndex:a.zIndex||0}).add());this.updateCenter();if(e)for(e=
 m(e),a=Math.max(e.length,this.background.length||0),l=0;l<a;l++)e[l]&&this.axis?this.renderBackground(w(this.defaultBackgroundOptions,e[l]),l):this.background[l]&&(this.background[l]=this.background[l].destroy(),this.background.splice(l,1))},renderBackground:function(a,e){var l="animate",b={"class":"highcharts-pane "+(a.className||"")};this.chart.styledMode||g(b,{fill:a.backgroundColor,stroke:a.borderColor,"stroke-width":a.borderWidth});this.background[e]||(this.background[e]=this.chart.renderer.path().add(this.group),
@@ -4102,7 +4109,7 @@ this)},this)});b.addEvent(b.Chart,"afterDrawChartBox",function(){this.pane.forEa
 //# sourceMappingURL=highcharts-more.js.map
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4214,7 +4221,7 @@ exports.create = function (config) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4255,13 +4262,13 @@ exports.addon = function (renderer) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var removeRule = __webpack_require__(22).removeRule;
+var removeRule = __webpack_require__(24).removeRule;
 
 exports.addon = function (renderer) {
     // VCSSOM support only browser environment.
@@ -4357,7 +4364,7 @@ exports.addon = function (renderer) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 function cssToTree (tree, css, selector, prelude) {
@@ -4405,7 +4412,7 @@ exports.cssToTree = cssToTree;
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, setImmediate) {/**
@@ -5711,10 +5718,10 @@ return index;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(9), __webpack_require__(8).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(10), __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5790,14 +5797,15 @@ exports.easing = {
 
 
 /***/ }),
-/* 17 */
+/* 18 */,
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(26);
+module.exports = __webpack_require__(28);
 
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5810,7 +5818,7 @@ module.exports = __webpack_require__(26);
 
 
 
-var ReactPropTypesSecret = __webpack_require__(19);
+var ReactPropTypesSecret = __webpack_require__(21);
 
 function emptyFunction() {}
 function emptyFunctionWithReset() {}
@@ -5868,7 +5876,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5887,7 +5895,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -6077,10 +6085,10 @@ module.exports = ReactPropTypesSecret;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(6), __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(7), __webpack_require__(10)))
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -6815,7 +6823,7 @@ try {
 
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports) {
 
 function removeRule (rule) {
@@ -6836,7 +6844,7 @@ exports.removeRule = removeRule;
 
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6845,7 +6853,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6946,7 +6954,7 @@ module.exports = function (encodedURI) {
 
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6975,7 +6983,7 @@ module.exports = (string, separator) => {
 
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7089,7 +7097,7 @@ var prop_types = __webpack_require__(1);
 var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
 
 // EXTERNAL MODULE: ./node_modules/@fortawesome/fontawesome-svg-core/index.es.js
-var index_es = __webpack_require__(7);
+var index_es = __webpack_require__(8);
 
 // CONCATENATED MODULE: ./node_modules/@fortawesome/react-fontawesome/index.es.js
 
@@ -7786,7 +7794,7 @@ DataTable_DataTable.defaultProps = {
 };
 /* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
 // EXTERNAL MODULE: ./node_modules/nwb/node_modules/@babel/runtime/regenerator/index.js
-var regenerator = __webpack_require__(2);
+var regenerator = __webpack_require__(4);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/createMemo.js
@@ -8344,16 +8352,16 @@ var useCounter = function (initialValue) {
 /* harmony default export */ var esm_useCounter = (useCounter);
 
 // EXTERNAL MODULE: ./node_modules/nano-css/index.js
-var nano_css = __webpack_require__(11);
+var nano_css = __webpack_require__(12);
 
 // EXTERNAL MODULE: ./node_modules/nano-css/addon/cssom.js
-var cssom = __webpack_require__(12);
+var cssom = __webpack_require__(13);
 
 // EXTERNAL MODULE: ./node_modules/nano-css/addon/vcssom.js
-var vcssom = __webpack_require__(13);
+var vcssom = __webpack_require__(14);
 
 // EXTERNAL MODULE: ./node_modules/nano-css/addon/vcssom/cssToTree.js
-var cssToTree = __webpack_require__(14);
+var cssToTree = __webpack_require__(15);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useCss.js
 
@@ -8437,7 +8445,7 @@ var useFavicon = function (href) {
 /* harmony default export */ var esm_useFavicon = (useFavicon);
 
 // EXTERNAL MODULE: ./node_modules/screenfull/dist/screenfull.js
-var screenfull = __webpack_require__(4);
+var screenfull = __webpack_require__(3);
 var screenfull_default = /*#__PURE__*/__webpack_require__.n(screenfull);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useFullscreen.js
@@ -8914,7 +8922,7 @@ var useKeyboardJs = function (combination) {
     var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([false, null]), state = _a[0], set = _a[1];
     var _b = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null), keyboardJs = _b[0], setKeyboardJs = _b[1];
     esm_useMount(function () {
-        __webpack_require__.e(/* import() */ 1).then(__webpack_require__.t.bind(null, 32, 7)).then(setKeyboardJs);
+        __webpack_require__.e(/* import() */ 1).then(__webpack_require__.t.bind(null, 33, 7)).then(setKeyboardJs);
     });
     Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
         if (!keyboardJs)
@@ -9738,7 +9746,7 @@ var useSpeech = function (text, opts) {
 /* harmony default export */ var esm_useSpeech = (useSpeech);
 
 // EXTERNAL MODULE: ./node_modules/rebound/dist/rebound.js
-var rebound = __webpack_require__(15);
+var rebound = __webpack_require__(16);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useSpring.js
 
@@ -9883,7 +9891,7 @@ var useTitle = function (title) {
 /* harmony default export */ var esm_useTitle = (useTitle);
 
 // EXTERNAL MODULE: ./node_modules/ts-easing/lib/index.js
-var lib = __webpack_require__(16);
+var lib = __webpack_require__(17);
 
 // CONCATENATED MODULE: ./node_modules/react-use/esm/useTween.js
 
@@ -17534,15 +17542,15 @@ PipelineElement_PipelineElement.propTypes = {
 
 /* harmony default export */ var src_PipelineElement = (PipelineElement_PipelineElement);
 // EXTERNAL MODULE: ./node_modules/highcharts/highcharts.js
-var highcharts = __webpack_require__(3);
+var highcharts = __webpack_require__(2);
 var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
 
+// EXTERNAL MODULE: ./node_modules/highcharts-react-official/dist/highcharts-react.min.js
+var highcharts_react_min = __webpack_require__(6);
+var highcharts_react_min_default = /*#__PURE__*/__webpack_require__.n(highcharts_react_min);
+
 // CONCATENATED MODULE: ./src/charts/TotalDatasetsPipelines/index.js
-
-
-function TotalDatasetsPipelines_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function TotalDatasetsPipelines_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { TotalDatasetsPipelines_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { TotalDatasetsPipelines_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function TotalDatasetsPipelines_extends() { TotalDatasetsPipelines_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return TotalDatasetsPipelines_extends.apply(this, arguments); }
 
 function TotalDatasetsPipelines_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
@@ -17552,12 +17560,60 @@ function TotalDatasetsPipelines_objectWithoutPropertiesLoose(source, excluded) {
 
 
 
+var defaultOptions = {
+  chart: {
+    type: 'column',
+    styledMode: true,
+    backgroundColor: '#FFF'
+  },
+  credits: {
+    enabled: false
+  },
+  title: {
+    text: 'Cumulative Number of Datasets and Pipelines'
+  },
+  yAxis: [{
+    title: {
+      text: '',
+      style: {
+        color: highcharts_default.a.getOptions().colors[0]
+      }
+    },
+    allowDecimals: false
+  }],
+  xAxis: {
+    categories: []
+  },
+  plotOptions: {
+    column: {
+      borderRadius: 5
+    }
+  },
+  series: [{
+    name: 'Datasets',
+    data: [],
+    yAxis: 0
+  }, {
+    name: 'Pipelines',
+    data: [],
+    yAxis: 0
+  }]
+};
+
 var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipelines(_ref) {
   var datasets = _ref.datasets,
       pipelines = _ref.pipelines,
       props = TotalDatasetsPipelines_objectWithoutPropertiesLoose(_ref, ["datasets", "pipelines"]);
 
-  var drawChart = function drawChart(data) {
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(defaultOptions),
+      options = _useState[0],
+      setOptions = _useState[1];
+
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
+      isDrawn = _useState2[0],
+      setIsDrawn = _useState2[1];
+
+  var updateChart = function updateChart(data) {
     var xAxis = [];
     var yAxisDatasets = [];
     var yAxisPipelines = [];
@@ -17586,143 +17642,106 @@ var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipeli
       yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
     }
 
-    highcharts_default.a.chart('dashboard-chart', {
-      chart: {
-        type: 'column',
-        styledMode: true,
-        backgroundColor: '#FFF'
-      },
-      credits: {
-        enabled: false
-      },
-      title: {
-        text: 'Cumulative Number of Datasets and Pipelines'
-      },
-      yAxis: [{
-        title: {
-          text: '',
-          style: {
-            color: highcharts_default.a.getOptions().colors[0]
-          }
-        },
-        allowDecimals: false
-      }],
-      xAxis: {
-        categories: xAxis
-      },
-      plotOptions: {
-        column: {
-          borderRadius: 5
+    var series = [{
+      name: 'Datasets',
+      data: yAxisDatasets,
+      yAxis: 0
+    }, {
+      name: 'Pipelines',
+      data: yAxisPipelinesExtract,
+      yAxis: 0
+    }];
+    setOptions(function (prevOptions) {
+      return TotalDatasetsPipelines_extends({}, prevOptions, {
+        series: series,
+        xAxis: {
+          categories: xAxis
         }
-      },
-      series: [{
-        name: 'Datasets',
-        data: yAxisDatasets,
-        yAxis: 0
-      }, {
-        name: 'Pipelines',
-        data: yAxisPipelinesExtract,
-        yAxis: 0
-      }]
+      });
     });
   };
 
-  var contructData = /*#__PURE__*/function () {
-    var _ref2 = TotalDatasetsPipelines_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-      var chartData, months, i, today;
-      return regenerator_default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              chartData = {
-                datasets: {},
-                pipelines: {}
-              };
-              datasets.elements.map(function (element) {
-                var dateAdded = new Date(element.dateAdded);
-
-                if (!chartData.datasets[dateAdded.getFullYear()]) {
-                  chartData.datasets[dateAdded.getFullYear()] = {};
-                }
-
-                if (!chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
-                  chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
-                } else {
-                  chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
-                }
-              });
-              /* check if we've skipped months */
-
-              months = [];
-
-              for (i = 1; i <= 12; i++) {
-                months.push(i);
-              }
-
-              today = new Date();
-              Object.keys(chartData.datasets).map(function (year) {
-                for (var i = 1; i <= 12; i++) {
-                  if (year == today.getFullYear() && i == today.getMonth() + 2) {
-                    break;
-                  }
-
-                  if (Object.keys(chartData.datasets).includes((year - 1).toString()) && !Object.keys(chartData.datasets[year]).includes("" + i) && i == 1) {
-                    chartData.datasets[year][i] = 0;
-                  }
-
-                  if (Object.keys(chartData.datasets[year]).includes("" + (i - 1)) && !Object.keys(chartData.datasets[year]).includes("" + i)) {
-                    chartData.datasets[year][i] = 0;
-                  }
-                }
-              });
-              pipelines.elements.map(function (element) {
-                var dateAdded = new Date(element.publicationdate);
-
-                if (!chartData.pipelines[dateAdded.getFullYear()]) {
-                  chartData.pipelines[dateAdded.getFullYear()] = {};
-                }
-
-                if (!chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
-                  chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
-                } else {
-                  chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
-                }
-              });
-              Object.keys(chartData.pipelines).map(function (year) {
-                for (var i = 1; i <= 12; i++) {
-                  if (year == today.getFullYear() && i == today.getMonth() + 2) {
-                    break;
-                  }
-
-                  if (Object.keys(chartData.pipelines).includes((year - 1).toString()) && !Object.keys(chartData.pipelines[year]).includes("" + i) && i == 1) {
-                    chartData.pipelines[year][i] = 0;
-                  }
-
-                  if (Object.keys(chartData.pipelines[year]).includes("" + (i - 1)) && !Object.keys(chartData.pipelines[year]).includes("" + i)) {
-                    chartData.pipelines[year][i] = 0;
-                  }
-                }
-              });
-              drawChart(chartData);
-
-            case 9:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function contructData() {
-      return _ref2.apply(this, arguments);
+  var constructData = function constructData() {
+    var chartData = {
+      datasets: {},
+      pipelines: {}
     };
-  }();
+    datasets.elements.map(function (element) {
+      var dateAdded = new Date(element.dateAdded);
 
-  esm_useDebounce(function () {
-    return void contructData();
-  }, 300);
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    id: "dashboard-chart"
+      if (!chartData.datasets[dateAdded.getFullYear()]) {
+        chartData.datasets[dateAdded.getFullYear()] = {};
+      }
+
+      if (!chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
+        chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+      } else {
+        chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
+      }
+    });
+    /* check if we've skipped months */
+
+    var months = [];
+
+    for (var i = 1; i <= 12; i++) {
+      months.push(i);
+    }
+
+    var today = new Date();
+    Object.keys(chartData.datasets).map(function (year) {
+      for (var i = 1; i <= 12; i++) {
+        if (year == today.getFullYear() && i == today.getMonth() + 2) {
+          break;
+        }
+
+        if (Object.keys(chartData.datasets).includes((year - 1).toString()) && !Object.keys(chartData.datasets[year]).includes("" + i) && i == 1) {
+          chartData.datasets[year][i] = 0;
+        }
+
+        if (Object.keys(chartData.datasets[year]).includes("" + (i - 1)) && !Object.keys(chartData.datasets[year]).includes("" + i)) {
+          chartData.datasets[year][i] = 0;
+        }
+      }
+    });
+    pipelines.elements.map(function (element) {
+      var dateAdded = new Date(element.publicationdate);
+
+      if (!chartData.pipelines[dateAdded.getFullYear()]) {
+        chartData.pipelines[dateAdded.getFullYear()] = {};
+      }
+
+      if (!chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
+        chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+      } else {
+        chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
+      }
+    });
+    Object.keys(chartData.pipelines).map(function (year) {
+      for (var i = 1; i <= 12; i++) {
+        if (year == today.getFullYear() && i == today.getMonth() + 2) {
+          break;
+        }
+
+        if (Object.keys(chartData.pipelines).includes((year - 1).toString()) && !Object.keys(chartData.pipelines[year]).includes("" + i) && i == 1) {
+          chartData.pipelines[year][i] = 0;
+        }
+
+        if (Object.keys(chartData.pipelines[year]).includes("" + (i - 1)) && !Object.keys(chartData.pipelines[year]).includes("" + i)) {
+          chartData.pipelines[year][i] = 0;
+        }
+      }
+    });
+    updateChart(chartData);
+  };
+
+  if (datasets && pipelines && !isDrawn) {
+    constructData();
+    setIsDrawn(true);
+  }
+
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(highcharts_react_min_default.a, {
+    highcharts: highcharts_default.a,
+    options: options
   });
 };
 
@@ -17730,6 +17749,8 @@ TotalDatasetsPipelines_TotalDatasetsPipelines.propTypes = {};
 TotalDatasetsPipelines_TotalDatasetsPipelines.defaultProps = {};
 /* harmony default export */ var charts_TotalDatasetsPipelines = (TotalDatasetsPipelines_TotalDatasetsPipelines);
 // CONCATENATED MODULE: ./src/charts/DatasetModalities/index.js
+function DatasetModalities_extends() { DatasetModalities_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return DatasetModalities_extends.apply(this, arguments); }
+
 function DatasetModalities_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 
@@ -17738,105 +17759,120 @@ function DatasetModalities_objectWithoutPropertiesLoose(source, excluded) { if (
 
 
 
-__webpack_require__(10)(highcharts_default.a);
+__webpack_require__(11)(highcharts_default.a);
+
+
+var DatasetModalities_defaultOptions = {
+  chart: {
+    type: 'packedbubble',
+    //styledMode: true,
+    backgroundColor: '#FFF',
+    height: '40%'
+  },
+  credits: {
+    enabled: false
+  },
+  title: {
+    text: 'Dataset Modalities'
+  },
+  tooltip: {
+    useHTML: true,
+    pointFormat: '<b>{point.name}:</b> {point.value}'
+  },
+  plotOptions: {
+    packedbubble: {
+      color: highcharts_default.a.getOptions().colors[0],
+      minSize: '20%',
+      maxSize: '100%',
+      zMin: 0,
+      zMax: 30,
+      layoutAlgorithm: {
+        gravitationalConstant: 0.1,
+        splitSeries: true,
+        seriesInteraction: false,
+        dragBetweenSeries: true,
+        parentNodeLimit: true
+      },
+      dataLabels: {
+        enabled: true,
+        format: '{point.name}',
+        filter: {
+          property: 'y',
+          operator: '>',
+          value: 2
+        },
+        style: {
+          color: 'black',
+          textOutline: 'none',
+          fontWeight: 'normal'
+        }
+      }
+    }
+  },
+  series: []
+};
 
 var DatasetModalities_DatasetModalities = function DatasetModalities(_ref) {
   var datasets = _ref.datasets,
       pipelines = _ref.pipelines,
       props = DatasetModalities_objectWithoutPropertiesLoose(_ref, ["datasets", "pipelines"]);
 
-  var drawChart = function drawChart(data) {
-    var xAxis = [];
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(DatasetModalities_defaultOptions),
+      options = _useState[0],
+      setOptions = _useState[1];
+
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
+      isDrawn = _useState2[0],
+      setIsDrawn = _useState2[1];
+
+  var updateChart = function updateChart(data) {
     var datasetData = Object.keys(data.datasets).map(function (d) {
       return {
         name: d,
         value: data.datasets[d]
       };
     });
-    highcharts_default.a.chart('dashboard-chart', {
-      chart: {
-        type: 'packedbubble',
-        //styledMode: true,
-        backgroundColor: '#FFF',
-        height: '40%'
-      },
-      credits: {
-        enabled: false
-      },
-      title: {
-        text: 'Popular Modalities'
-      },
-      tooltip: {
-        useHTML: true,
-        pointFormat: '<b>{point.name}:</b> {point.value}'
-      },
-      plotOptions: {
-        packedbubble: {
-          minSize: '20%',
-          maxSize: '100%',
-          zMin: 0,
-          zMax: 30,
-          layoutAlgorithm: {
-            gravitationalConstant: 0.1,
-            splitSeries: true,
-            seriesInteraction: false,
-            dragBetweenSeries: true,
-            parentNodeLimit: true
-          },
-          dataLabels: {
-            enabled: true,
-            format: '{point.name}',
-            filter: {
-              property: 'y',
-              operator: '>',
-              value: 2
-            },
-            style: {
-              color: 'black',
-              textOutline: 'none',
-              fontWeight: 'normal'
-            }
-          }
-        }
-      },
-      series: [{
-        name: 'Datasets',
-        data: datasetData
-      }]
+    var series = [{
+      name: 'Datasets',
+      data: datasetData
+    }];
+    setOptions(function (prevOptions) {
+      return DatasetModalities_extends({}, prevOptions, {
+        series: series
+      });
     });
   };
 
-  var contructData = function contructData() {
+  var constructData = function constructData() {
     var chartData = {
       datasets: {}
     };
     datasets.elements.forEach(function (dataset) {
-      console.log(dataset.modalities);
       if (!dataset.modalities) return;
       var modalitiesArr = dataset.modalities.split(", ");
       modalitiesArr.map(function (modality) {
-        console.log(modality);
         addOrIncreaseDatapoint(chartData.datasets, modality);
       });
     });
-    drawChart(chartData);
+    updateChart(chartData);
   };
 
   var addOrIncreaseDatapoint = function addOrIncreaseDatapoint(data, point) {
     if (!Object.keys(data).includes(point)) {
-      console.log(point + " does not exist");
       data[point] = 1;
     } else {
       data[point] += 1;
-      console.log(point + " is now " + data[point]);
     }
   };
 
-  esm_useDebounce(function () {
-    return void contructData();
-  }, 300);
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    id: "dashboard-chart"
+  if (datasets && pipelines && !isDrawn) {
+    constructData();
+    setIsDrawn(true);
+  }
+
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(highcharts_react_min_default.a, {
+    highcharts: highcharts_default.a,
+    options: options
   });
 };
 
@@ -17844,6 +17880,8 @@ DatasetModalities_DatasetModalities.propTypes = {};
 DatasetModalities_DatasetModalities.defaultProps = {};
 /* harmony default export */ var charts_DatasetModalities = (DatasetModalities_DatasetModalities);
 // CONCATENATED MODULE: ./src/charts/PipelineTags/index.js
+function PipelineTags_extends() { PipelineTags_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return PipelineTags_extends.apply(this, arguments); }
+
 function PipelineTags_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 
@@ -17852,81 +17890,95 @@ function PipelineTags_objectWithoutPropertiesLoose(source, excluded) { if (sourc
 
 
 
-__webpack_require__(10)(highcharts_default.a);
+__webpack_require__(11)(highcharts_default.a);
+
+
+
+var PipelineTags_defaultOptions = {
+  chart: {
+    type: 'packedbubble',
+    //styledMode: true,
+    backgroundColor: '#FFF',
+    height: '40%'
+  },
+  credits: {
+    enabled: false
+  },
+  title: {
+    text: 'Pipeline Tags'
+  },
+  tooltip: {
+    useHTML: true,
+    pointFormat: '<b>{point.name}:</b> {point.value}'
+  },
+  plotOptions: {
+    packedbubble: {
+      color: highcharts_default.a.getOptions().colors[1],
+      minSize: '20%',
+      maxSize: '100%',
+      zMin: 0,
+      zMax: 30,
+      layoutAlgorithm: {
+        gravitationalConstant: 0.1,
+        splitSeries: true,
+        seriesInteraction: false,
+        dragBetweenSeries: true,
+        parentNodeLimit: true
+      },
+      dataLabels: {
+        enabled: true,
+        format: '{point.name}',
+        filter: {
+          property: 'y',
+          operator: '>',
+          value: 2
+        },
+        style: {
+          color: 'black',
+          textOutline: 'none',
+          fontWeight: 'normal'
+        }
+      }
+    }
+  },
+  series: []
+};
 
 var PipelineTags_PipelineTags = function PipelineTags(_ref) {
-  var datasets = _ref.datasets,
-      pipelines = _ref.pipelines,
-      props = PipelineTags_objectWithoutPropertiesLoose(_ref, ["datasets", "pipelines"]);
+  var pipelines = _ref.pipelines,
+      props = PipelineTags_objectWithoutPropertiesLoose(_ref, ["pipelines"]);
 
-  var drawChart = function drawChart(data) {
-    console.log(JSON.stringify(data));
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(PipelineTags_defaultOptions),
+      options = _useState[0],
+      setOptions = _useState[1];
+
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
+      isDrawn = _useState2[0],
+      setIsDrawn = _useState2[1];
+
+  var updateChart = function updateChart(data) {
     var pipelineData = Object.keys(data.pipelines).map(function (p) {
       return {
         name: p,
         value: data.pipelines[p]
       };
     });
-    console.log(JSON.stringify(pipelineData));
-    highcharts_default.a.chart('dashboard-chart', {
-      chart: {
-        type: 'packedbubble',
-        //styledMode: true,
-        backgroundColor: '#FFF',
-        height: '40%'
-      },
-      credits: {
-        enabled: false
-      },
-      title: {
-        text: 'Pipeline Tags'
-      },
-      tooltip: {
-        useHTML: true,
-        pointFormat: '<b>{point.name}:</b> {point.value}'
-      },
-      plotOptions: {
-        packedbubble: {
-          minSize: '20%',
-          maxSize: '100%',
-          zMin: 0,
-          zMax: 30,
-          layoutAlgorithm: {
-            gravitationalConstant: 0.1,
-            splitSeries: true,
-            seriesInteraction: false,
-            dragBetweenSeries: true,
-            parentNodeLimit: true
-          },
-          dataLabels: {
-            enabled: true,
-            format: '{point.name}',
-            filter: {
-              property: 'y',
-              operator: '>',
-              value: 2
-            },
-            style: {
-              color: 'black',
-              textOutline: 'none',
-              fontWeight: 'normal'
-            }
-          }
-        }
-      },
-      series: [{
-        name: 'Pipelines',
-        data: pipelineData
-      }]
+    var series = [{
+      name: 'Pipelines',
+      data: pipelineData
+    }];
+    setOptions(function (prevOptions) {
+      return PipelineTags_extends({}, prevOptions, {
+        series: series
+      });
     });
   };
 
-  var contructData = function contructData() {
+  var constructData = function constructData() {
     var chartData = {
       pipelines: {}
     };
     pipelines.elements.forEach(function (pipeline) {
-      console.log(pipeline.tags.domain);
       if (!pipeline.tags.domain) return;
 
       if (!Array.isArray(pipeline.tags.domain)) {
@@ -17936,28 +17988,28 @@ var PipelineTags_PipelineTags = function PipelineTags(_ref) {
 
       var tagsArr = pipeline.tags.domain;
       tagsArr.map(function (tag) {
-        console.log(tag);
         addOrIncreaseDatapoint(chartData.pipelines, tag);
       });
     });
-    drawChart(chartData);
+    updateChart(chartData);
   };
 
   var addOrIncreaseDatapoint = function addOrIncreaseDatapoint(data, point) {
     if (!Object.keys(data).includes(point)) {
-      console.log(point + " does not exist");
       data[point] = 1;
     } else {
       data[point] += 1;
-      console.log(point + " is now " + data[point]);
     }
   };
 
-  esm_useDebounce(function () {
-    return void contructData();
-  }, 300);
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    id: "dashboard-chart"
+  if (pipelines && !isDrawn) {
+    constructData();
+    setIsDrawn(true);
+  }
+
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(highcharts_react_min_default.a, {
+    highcharts: highcharts_default.a,
+    options: options
   });
 };
 
@@ -18032,46 +18084,44 @@ var ChartContainer_ChartContainer = /*#__PURE__*/function (_React$Component) {
 
             case 8:
               datasetsRes = _context.sent;
-              this.setState({
-                datasets: datasetsRes
-              });
-              _context.next = 12;
+              _context.next = 11;
               return fetch(this.props.pipelinesURL);
 
-            case 12:
+            case 11:
               pipelinesFetch = _context.sent;
 
               if (pipelinesFetch.ok) {
-                _context.next = 15;
+                _context.next = 14;
                 break;
               }
 
               throw new Error("Request failed with status: " + pipelinesFetch.status + " (" + pipelinesFetch.statusText + ")");
 
-            case 15:
-              _context.next = 17;
+            case 14:
+              _context.next = 16;
               return pipelinesFetch.json();
 
-            case 17:
+            case 16:
               pipelinesRes = _context.sent;
               this.setState({
+                datasets: datasetsRes,
                 pipelines: pipelinesRes
               });
-              _context.next = 25;
+              _context.next = 24;
               break;
 
-            case 21:
-              _context.prev = 21;
+            case 20:
+              _context.prev = 20;
               _context.t0 = _context["catch"](0);
               alert("There was an error retrieving the search results.");
               console.error(_context.t0);
 
-            case 25:
+            case 24:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, this, [[0, 21]]);
+      }, _callee, this, [[0, 20]]);
     }));
 
     function fetchElements() {
@@ -18082,10 +18132,6 @@ var ChartContainer_ChartContainer = /*#__PURE__*/function (_React$Component) {
   }();
 
   _proto.renderChart = function renderChart(toggle) {
-    if (!this.state.datasets || !this.state.pipelines) {
-      return null;
-    }
-
     switch (toggle) {
       case 1:
         return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_TotalDatasetsPipelines, {

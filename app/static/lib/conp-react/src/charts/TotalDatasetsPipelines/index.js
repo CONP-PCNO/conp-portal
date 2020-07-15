@@ -1,13 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useDebounce } from "react-use";
 import * as qs from "query-string";
 
 import Highcharts from "highcharts";
+import HighchartsReact from 'highcharts-react-official'
+
+const defaultOptions = {
+
+    chart: {
+        type: 'column',
+        styledMode: true,
+        backgroundColor: '#FFF'
+    },
+    credits: {
+        enabled: false
+    },
+
+    title: {
+        text: 'Cumulative Number of Datasets and Pipelines'
+    },
+
+    yAxis: [{
+        title: {
+            text: '',
+            style: {
+                color: Highcharts.getOptions().colors[0]
+            }
+        },
+        allowDecimals: false,
+    }],
+
+    xAxis: {
+        categories: []
+    },
+
+    plotOptions: {
+        column: {
+            borderRadius: 5
+        }
+    },
+
+    series: [{
+        name: 'Datasets',
+        data: [],
+        yAxis: 0
+    },
+    {
+        name: 'Pipelines',
+        data: [],
+        yAxis: 0
+    }]
+
+};
 
 const TotalDatasetsPipelines = ({ datasets, pipelines, ...props }) => {
 
-    const drawChart = (data) => {
+    const [options, setOptions] = useState(defaultOptions);
+    const [isDrawn, setIsDrawn] = useState(false);
+
+    const updateChart = (data) => {
 
         const xAxis = [];
         const yAxisDatasets = [];
@@ -40,56 +92,28 @@ const TotalDatasetsPipelines = ({ datasets, pipelines, ...props }) => {
             yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
         }
 
-        Highcharts.chart('dashboard-chart', {
+        const series = [{
+            name: 'Datasets',
+            data: yAxisDatasets,
+            yAxis: 0
+        },
+        {
+            name: 'Pipelines',
+            data: yAxisPipelinesExtract,
+            yAxis: 0
+        }];
 
-            chart: {
-                type: 'column',
-                styledMode: true,
-                backgroundColor: '#FFF'
-            },
-            credits: {
-                enabled: false
-            },
-
-            title: {
-                text: 'Cumulative Number of Datasets and Pipelines'
-            },
-
-            yAxis: [{
-                title: {
-                    text: '',
-                    style: {
-                        color: Highcharts.getOptions().colors[0]
-                    }
-                },
-                allowDecimals: false,
-            }],
-
+        setOptions(prevOptions => ({
+            ...prevOptions,
+            series: series,
             xAxis: {
                 categories: xAxis
-            },
+            }
+        }));
 
-            plotOptions: {
-                column: {
-                    borderRadius: 5
-                }
-            },
-
-            series: [{
-                name: 'Datasets',
-                data: yAxisDatasets,
-                yAxis: 0
-            },
-            {
-                name: 'Pipelines',
-                data: yAxisPipelinesExtract,
-                yAxis: 0
-            }]
-
-        })
     };
 
-    const contructData = async () => {
+    const constructData = () => {
 
         const chartData = {
             datasets: {},
@@ -168,14 +192,20 @@ const TotalDatasetsPipelines = ({ datasets, pipelines, ...props }) => {
             }
         });
 
-        drawChart(chartData);
+        updateChart(chartData);
 
     };
 
-    useDebounce(() => void contructData(), 300);
+    if (datasets && pipelines && !isDrawn) {
+        constructData();
+        setIsDrawn(true);
+    }
 
     return (
-        <div id="dashboard-chart" />
+        <HighchartsReact
+            highcharts={Highcharts}
+            options={options}
+        />
     );
 };
 

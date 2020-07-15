@@ -36,10 +36,6 @@ class ChartContainer extends React.Component {
 
             const datasetsRes = await datasetsFetch.json();
 
-            this.setState({
-                datasets: datasetsRes
-            })
-
             const pipelinesFetch = await fetch(this.props.pipelinesURL);
 
             if (!pipelinesFetch.ok) {
@@ -51,6 +47,7 @@ class ChartContainer extends React.Component {
             const pipelinesRes = await pipelinesFetch.json();
 
             this.setState({
+                datasets: datasetsRes,
                 pipelines: pipelinesRes
             })
 
@@ -61,9 +58,6 @@ class ChartContainer extends React.Component {
     };
 
     renderChart(toggle) {
-        if (!this.state.datasets || !this.state.pipelines) {
-            return null;
-        }
         switch (toggle) {
             case 1:
                 return <TotalDatasetsPipelines
