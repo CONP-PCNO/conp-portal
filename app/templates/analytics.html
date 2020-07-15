@@ -24,30 +24,53 @@
 <div class="d-flex flex-column">
   <div class="p-2 flex-fill">
     <div class="card" data-type="dashboard">
-      <div class="dashboard-about-container">
+      <div id="analytics-chart-1">
         
+        <script type="text/javascript">
+          const analyticsChart1 = React.createElement(CONPReact.ChartContainer, {
+            datasetsURL: "{{ url_for('search.dataset_search') }}",
+            pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
+            toggleState: 1
+          });
+          ReactDOM.render(analyticsChart1, document.querySelector("#analytics-chart-1"));
+        </script>
+
       </div>
     </div>
   </div>
 
   <div class="p-2 flex-fill">
     <div class="card w-100 mx-1" data-type="dashboard">
-      <div id="dashboard-chart-container">
+      <div id="analytics-chart-2">
+
+        <script type="text/javascript">
+          const analyticsChart2 = React.createElement(CONPReact.ChartContainer, {
+            datasetsURL: "{{ url_for('search.dataset_search') }}",
+            pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
+            toggleState: 2
+          });
+          ReactDOM.render(analyticsChart2, document.querySelector("#analytics-chart-2"));
+        </script>
 
         </div>
     </div>
   </div>
   <div class="p-2 d-flex flex-wrap">
     <div class="card w-100 mx-1" data-type="dashboard">
-      <div id="spotlight-container">
+      <div id="analytics-chart-3">
+
+        <script type="text/javascript">
+          const analyticsChart3 = React.createElement(CONPReact.ChartContainer, {
+            datasetsURL: "{{ url_for('search.dataset_search') }}",
+            pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
+            toggleState: 3
+          });
+          ReactDOM.render(analyticsChart3, document.querySelector("#analytics-chart-3"));
+        </script>
 
       </div>
     </div>
-    <div class="card w-100 mx-1" data-type="dashboard">
-        <div id="spotlight-container">
 
-        </div>
-    </div>
   </div>
 </div>
 

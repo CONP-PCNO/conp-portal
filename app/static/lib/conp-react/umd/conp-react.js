@@ -18045,7 +18045,7 @@ var ChartContainer_ChartContainer = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       datasets: null,
       pipelines: null,
-      toggle: 1
+      toggle: props.toggleState
     };
     _this.toggleChart = _this.toggleChart.bind(_assertThisInitialized(_this));
     return _this;
@@ -18168,7 +18168,7 @@ var ChartContainer_ChartContainer = /*#__PURE__*/function (_React$Component) {
   _proto.render = function render() {
     var _this2 = this;
 
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, this.props.showToggle ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: "d-flex flex-row-reverse"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: "dropdown show",
@@ -18204,15 +18204,21 @@ var ChartContainer_ChartContainer = /*#__PURE__*/function (_React$Component) {
       onClick: function onClick(e) {
         _this2.toggleChart(e, 3);
       }
-    }, "Pipeline Tags")))), this.renderChart(this.state.toggle));
+    }, "Pipeline Tags")))) : null, this.renderChart(this.state.toggle));
   };
 
   return ChartContainer;
 }(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Component);
 
 ;
-ChartContainer_ChartContainer.propTypes = {};
-ChartContainer_ChartContainer.defaultProps = {};
+ChartContainer_ChartContainer.propTypes = {
+  showToggle: prop_types_default.a.bool,
+  toggleState: prop_types_default.a.number
+};
+ChartContainer_ChartContainer.defaultProps = {
+  showToggle: false,
+  toggleState: 1
+};
 /* harmony default export */ var src_ChartContainer = (ChartContainer_ChartContainer);
 // CONCATENATED MODULE: ./src/Spotlight/index.js
 

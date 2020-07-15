@@ -13,7 +13,7 @@ class ChartContainer extends React.Component {
         this.state = {
             datasets: null,
             pipelines: null,
-            toggle: 1
+            toggle: props.toggleState
         };
 
         this.toggleChart = this.toggleChart.bind(this);
@@ -87,7 +87,7 @@ class ChartContainer extends React.Component {
     render() {
         return (
             <div>
-                <div className="d-flex flex-row-reverse">
+                {this.props.showToggle ? <div className="d-flex flex-row-reverse">
                     <div className="dropdown show" style={{ zIndex: 1 }}>
                         <a className="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Select Chart
@@ -99,7 +99,8 @@ class ChartContainer extends React.Component {
                             <button className="dropdown-item" type="button" onClick={(e) => {this.toggleChart(e, 3)}}>Pipeline Tags</button>
                         </div>
                     </div>
-                </div>
+                </div> : null}
+                
                 {this.renderChart(this.state.toggle)}
             </div>
         );
@@ -108,11 +109,13 @@ class ChartContainer extends React.Component {
 };
 
 ChartContainer.propTypes = {
-
+    showToggle: PropTypes.bool,
+    toggleState: PropTypes.number
 };
 
 ChartContainer.defaultProps = {
-
+    showToggle: false,
+    toggleState: 1
 };
 
 export default ChartContainer;
