@@ -21,7 +21,7 @@ const defaultOptions = {
     },
 
     title: {
-        text: 'Pipeline Tags'
+        text: 'Most Popular Pipeline Tags'
     },
 
     tooltip: {
@@ -49,7 +49,7 @@ const defaultOptions = {
                 filter: {
                     property: 'y',
                     operator: '>',
-                    value: 2
+                    value: 0
                 },
                 style: {
                     color: 'black',
@@ -79,7 +79,7 @@ const PipelineTags = ({ pipelines, ...props }) => {
         });
 
         const series = [{
-            name: 'Pipelines',
+            name: 'Pipeline Tags',
             data: pipelineData
         }];
 

@@ -20,7 +20,7 @@ const defaultOptions = {
     },
 
     title: {
-        text: 'Dataset Modalities'
+        text: 'Most Popular Dataset Modalities'
     },
 
     tooltip: {
@@ -48,7 +48,7 @@ const defaultOptions = {
                 filter: {
                     property: 'y',
                     operator: '>',
-                    value: 2
+                    value: 0
                 },
                 style: {
                     color: 'black',
@@ -78,7 +78,7 @@ const DatasetModalities = ({ datasets, pipelines, ...props }) => {
         });
 
         const series = [{
-            name: 'Datasets',
+            name: 'Dataset Modalities',
             data: datasetData
         }];
 

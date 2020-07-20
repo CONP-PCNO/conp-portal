@@ -17773,7 +17773,7 @@ var DatasetModalities_defaultOptions = {
     enabled: false
   },
   title: {
-    text: 'Dataset Modalities'
+    text: 'Most Popular Dataset Modalities'
   },
   tooltip: {
     useHTML: true,
@@ -17799,7 +17799,7 @@ var DatasetModalities_defaultOptions = {
         filter: {
           property: 'y',
           operator: '>',
-          value: 2
+          value: 0
         },
         style: {
           color: 'black',
@@ -17833,7 +17833,7 @@ var DatasetModalities_DatasetModalities = function DatasetModalities(_ref) {
       };
     });
     var series = [{
-      name: 'Datasets',
+      name: 'Dataset Modalities',
       data: datasetData
     }];
     setOptions(function (prevOptions) {
@@ -17905,7 +17905,7 @@ var PipelineTags_defaultOptions = {
     enabled: false
   },
   title: {
-    text: 'Pipeline Tags'
+    text: 'Most Popular Pipeline Tags'
   },
   tooltip: {
     useHTML: true,
@@ -17931,7 +17931,7 @@ var PipelineTags_defaultOptions = {
         filter: {
           property: 'y',
           operator: '>',
-          value: 2
+          value: 0
         },
         style: {
           color: 'black',
@@ -17964,7 +17964,7 @@ var PipelineTags_PipelineTags = function PipelineTags(_ref) {
       };
     });
     var series = [{
-      name: 'Pipelines',
+      name: 'Pipeline Tags',
       data: pipelineData
     }];
     setOptions(function (prevOptions) {
