@@ -133,6 +133,7 @@ def dataset_search():
             "conpStatus": datsdataset.conpStatus,
             "authorizations": datsdataset.authorizations,
             "principalInvestigators": datsdataset.principalInvestigators,
+            "primaryPublications": datsdataset.primaryPublications,
             "logoFilepath": datsdataset.LogoFilepath,
             "status": datsdataset.status,
         }
@@ -361,6 +362,7 @@ def dataset_info():
         "conpStatus": datsdataset.conpStatus,
         "authorizations": datsdataset.authorizations,
         "principalInvestigators": datsdataset.principalInvestigators,
+        "primaryPublications": datsdataset.primaryPublications,
         "logoFilepath": datsdataset.LogoFilepath,
         "status": datsdataset.status,
     }
@@ -454,6 +456,7 @@ def get_dataset_metadata_information(dataset):
         "licenses": datsdataset.licenses,
         "sources": datsdataset.sources,
         "parentDatasets": datsdataset.parentDatasetId,
+        "primaryPublications": datsdataset.primaryPublications,
         "childDatasets": childDatasets
     }
 

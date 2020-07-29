@@ -58,7 +58,39 @@
         href="{{ href }}">{{ d.name }}</a></span>
     {% endfor %}</p>
   {% endif %}
+
+  {% if metadata.primaryPublications is defined and metadata.primaryPublications is not none %}
+  {% if metadata.primaryPublications|length > 1 %}
+    <p>
+      <strong>Primary Publications: </strong>
+      {% for p in metadata.primaryPublications %}
+        <ul>
+          <li>
+            {{p.title}} {{p.author}} <em>{{p.journal}}</em>
+            {% if p.doi is defined %}
+              <a target="_blank" rel="noopener noreferrer" href="{{ p.doi }}">{{ p.doi }}</a>
+            {% endif %}
+          </li>
+        </ul>
+      {% endfor %}
+    </p>
+  {% elif metadata.primaryPublications|length == 1 %}
+    <p>
+      <strong>Primary Publication: </strong>
+      {{metadata.primaryPublications[0].title}}
+      {{metadata.primaryPublications[0].author}}
+      <em>{{metadata.primaryPublications[0].journal}}</em>
+      {% if metadata.primaryPublications[0].doi is defined %}
+        <a target="_blank" rel="noopener noreferrer"
+           href="{{ metadata.primaryPublications[0].doi }}">
+          {{ metadata.primaryPublications[0].doi }}
+        </a>
+      {% endif %}
+    </p>
+  {% endif %}
+  {% endif %}
 </div>
+
 
 <div class="d-flex flex-column p-2">
   <h2>Dataset Download Instructions</h2>
