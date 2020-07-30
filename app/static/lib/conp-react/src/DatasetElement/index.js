@@ -32,8 +32,8 @@ const DatasetElement = props => {
     case "Working":
       color = "success";
       break;
-    case "Warning":
-      color = "important";
+    case "Unknown":
+      color = "lightgrey";
       break;
     default:
       color = "critical";
