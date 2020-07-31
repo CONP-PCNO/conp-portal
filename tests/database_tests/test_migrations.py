@@ -43,6 +43,7 @@ def test_seed_db_test(app, session, runner):
     """
     cli.register(app)
     result = runner.invoke(args=["seed_test_db"])
+    print(result)
     assert result.exit_code == 0, result.output
 
     d = session.query(Dataset).all()
