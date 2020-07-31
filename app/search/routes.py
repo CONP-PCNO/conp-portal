@@ -12,7 +12,7 @@ from flask import Response, abort, render_template, request, url_for, current_ap
 from flask_login import current_user
 from sqlalchemy import func, or_
 
-from app.models import Dataset, User
+from app.models import Dataset, DatasetAncestry, User
 from app.search import search_bp
 from app.search.models import DATSDataset
 
@@ -159,15 +159,19 @@ def dataset_search():
 
         if request.args.get('modalities'):
             filterModalities = request.args.get('modalities').split(",")
-            elements = list(filter(lambda e: e['modalities'] is not None, elements))
-            elements = list(filter(lambda e: all(item in (m.lower() for m in e['modalities'].split(",")) for item in filterModalities), elements))
+            elements = list(
+                filter(lambda e: e['modalities'] is not None, elements))
+            elements = list(filter(lambda e: all(item in (m.lower(
+            ) for m in e['modalities'].split(",")) for item in filterModalities), elements))
         if request.args.get('formats'):
             filterFormats = request.args.get('formats').split(",")
-            elements = list(filter(lambda e: e['format'] is not None, elements))
-            elements = list(filter(lambda e: all(item in (f.lower() for f in e['format'].split(",")) for item in filterFormats), elements))
+            elements = list(
+                filter(lambda e: e['format'] is not None, elements))
+            elements = list(filter(lambda e: all(item in (
+                f.lower() for f in e['format'].split(",")) for item in filterFormats), elements))
 
         delta = int(request.args.get('max_per_page', 10)) * \
-                    (int(request.args.get('page', 1)) - 1)
+            (int(request.args.get('page', 1)) - 1)
         cursor = max(min(int(request.args.get('cursor') or 0), 0), 0) + delta
         limit = int(request.args.get('limit') or 10)
         sort_key = request.args.get('sortKey') or "conpStatus"
@@ -175,7 +179,7 @@ def dataset_search():
 
         if(sort_key == "conpStatus"):
             order = {'conp': 0, 'canadian': 1, 'external': 2}
-            paginated.sort(key=lambda o: order[o[sort_key].lower()])
+            paginated.sort(key=lambda o: (o[sort_key].lower() not in order, order.get(o[sort_key].lower(), None)))
 
         elif(sort_key == "title"):
             paginated.sort(key=lambda o: o[sort_key].lower())
@@ -186,15 +190,15 @@ def dataset_search():
                 if not e["size"]:
                     return 0.0
 
-                units = ["KB", "MB", "GB", "TB"]
-                unitScales = [1000, 1000**2, 1000**3, 1000**4]
-                size = e["size"].split(" ")
-                absoluteSize = size[0]
+                units=["KB", "MB", "GB", "TB"]
+                unitScales=[1000, 1000**2, 1000**3, 1000**4]
+                size=e["size"].split(" ")
+                absoluteSize=size[0]
                 if(size[1] in units):
-                    absoluteSize = float(size[0]) * unitScales[units.index(size[1])]
+                    absoluteSize=float(size[0]) * unitScales[units.index(size[1])]
                 return absoluteSize
 
-            reverse = (sort_key == 'sizeDes')
+            reverse=(sort_key == 'sizeDes')
             paginated.sort(key=lambda o: getAbsoluteSize(o), reverse=reverse)
 
         elif(sort_key == "filesDes" or sort_key == "filesAsc"):
@@ -205,7 +209,7 @@ def dataset_search():
 
                 return int(e["files"])
 
-            reverse = (sort_key == 'filesDes')
+            reverse=(sort_key == 'filesDes')
             paginated.sort(key=lambda o: getNumberOfFiles(o), reverse=reverse)
 
         elif(sort_key == "subjectsDes" or sort_key == "subjectsAsc"):
@@ -215,18 +219,21 @@ def dataset_search():
                     return 0
 
                 return int(e["subjects"])
-            reverse = (sort_key == 'subjectsDes')
-            paginated.sort(key=lambda o: getNumberOfSubjects(o), reverse=reverse)
+            reverse=(sort_key == 'subjectsDes')
+            paginated.sort(key=lambda o: getNumberOfSubjects(o),
+                           reverse=reverse)
 
         elif(sort_key == "dateAddedDesc" or sort_key == "dateAddedAsc"):
 
-            reverse = (sort_key == 'dateAddedAsc')
-            paginated.sort(key=lambda o: (o["dateAdded"] is None, o["dateAdded"]), reverse=reverse)
+            reverse=(sort_key == 'dateAddedAsc')
+            paginated.sort(key=lambda o: (
+                o["dateAdded"] is None, o["dateAdded"]), reverse=reverse)
 
         elif(sort_key == "dateUpdatedDesc" or sort_key == "dateUpdatedAsc"):
 
-            reverse = (sort_key == 'dateUpdatedAsc')
-            paginated.sort(key=lambda o: (o["dateUpdated"] is None, o["dateUpdated"]), reverse=reverse)
+            reverse=(sort_key == 'dateUpdatedAsc')
+            paginated.sort(key=lambda o: (
+                o["dateUpdated"] is None, o["dateUpdated"]), reverse=reverse)
 
         else:
             paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
@@ -360,15 +367,15 @@ def dataset_info():
 
     metadata=get_dataset_metadata_information(d)
 
-    readme = get_dataset_readme(d.dataset_id)
+    readme=get_dataset_readme(d.dataset_id)
 
     return render_template(
         'dataset.html',
-         title='CONP | Dataset',
-         data=dataset,
-         metadata=metadata,
-         readme=readme,
-         user=current_user
+        title='CONP | Dataset',
+        data=dataset,
+        metadata=metadata,
+        readme=readme,
+        user=current_user
     )
 
 
@@ -424,6 +431,21 @@ def get_dataset_metadata_information(dataset):
 
     datsdataset=DATSDataset(dataset.fspath)
 
+    # check for child datasets
+    childDatasets=[]
+    datasetAncestries=DatasetAncestry.query.all()
+    for da in datasetAncestries:
+        if da.parent_dataset_id == dataset.dataset_id:
+            print('dataset ' + da.parent_dataset_id +
+                  ' has child ' + da.child_dataset_id)
+
+            name=da.child_dataset_id[9:]
+            childDataset={
+                "child_dataset_id": da.child_dataset_id,
+                "name": name
+            }
+            childDatasets.append(childDataset)
+
     return {
         "authors": datsdataset.authors,
         "description": datsdataset.description,
@@ -431,34 +453,35 @@ def get_dataset_metadata_information(dataset):
         "version": datsdataset.version,
         "licenses": datsdataset.licenses,
         "sources": datsdataset.sources,
-        "derivedFrom": datsdataset.derivedFrom
+        "parentDatasets": datsdataset.parentDatasetId,
+        "childDatasets": childDatasets
     }
 
 
 def get_dataset_readme(dataset_id):
-   
-    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
+
+    dataset=Dataset.query.filter_by(dataset_id=dataset_id).first()
     if dataset is None:
         return 'Dataset Not Found', 404
 
     datsdataset=DATSDataset(dataset.fspath)
 
-    readmeFilepath = datsdataset.ReadmeFilepath
+    readmeFilepath=datsdataset.ReadmeFilepath
 
-    f = open(readmeFilepath, 'r')
+    f=open(readmeFilepath, 'r')
     if f.mode != 'r':
         return 'Readme Not Found', 404
 
-    readme = f.read()
+    readme=f.read()
 
-    url = 'https://api.github.com/markdown'
-    body = {
+    url='https://api.github.com/markdown'
+    body={
         "text": readme,
         "mode": "gfm",
         "context": "github/gollum"
     }
-    response = requests.post(url, json=body)
+    response=requests.post(url, json=body)
 
-    content = response.text
+    content=response.text
 
     return content

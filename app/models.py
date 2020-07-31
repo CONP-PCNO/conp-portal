@@ -214,6 +214,24 @@ class Dataset(db.Model):
         return '<Dataset {}>'.format(self.name)
 
 
+class DatasetAncestry(db.Model):
+    """
+        Provides DatasetAncestry Model
+    """
+    __tablename__ = 'dataset_ancestry'
+
+    id = db.Column(db.String(36), primary_key=True, unique=True)
+    parent_dataset_id = db.Column(db.String(256), index=True)
+    child_dataset_id = db.Column(db.String(256), index=True)
+    date_created = db.Column(db.DateTime, default=datetime.now())
+    date_updated = db.Column(db.DateTime, default=datetime.now())
+
+    __table_args__ = (db.UniqueConstraint('parent_dataset_id', 'child_dataset_id', name='uix_1'),)
+
+    def __repr__(self):
+        return '<DatasetAncestry {}>'.format(self.id)
+
+
 class Pipeline(db.Model):
     """
         Provides Pipeline Model for describing metadata for an execution pipeline

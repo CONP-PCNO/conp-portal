@@ -7,6 +7,7 @@ Module that contains the special command line tools
 import os
 import click
 import csv
+import uuid
 from datetime import datetime, timedelta
 from pytz import timezone
 from app.threads import UpdatePipelineData
@@ -142,6 +143,8 @@ def _update_datasets(app):
     """
     from app import db, config
     from app.models import Dataset as DBDataset
+    from app.models import DatasetAncestry as DBDatasetAncestry
+    from sqlalchemy import exc
     from datalad import api
     from datalad.api import Dataset as DataladDataset
     import fnmatch
@@ -248,6 +251,25 @@ def _update_datasets(app):
 
         if(dataset.date_created != createDate):
             dataset.date_created = createDate
+
+        # check for dataset ancestry
+        extraprops = dats.get('extraProperties', [])
+        for prop in extraprops:
+            if prop.get('category') == 'parent_dataset_id':
+                for x in prop.get('values', []):
+                    if x.get('value', None) is None:
+                        continue
+                    datasetAncestry = DBDatasetAncestry()
+                    datasetAncestry.id = str(uuid.uuid4())
+                    datasetAncestry.parent_dataset_id = 'projects/' + \
+                        x.get('value', None)
+                    datasetAncestry.child_dataset_id = dataset.dataset_id
+                    try:
+                        db.session.merge(datasetAncestry)
+                        db.session.commit()
+                    except exc.IntegrityError:
+                        # we already have a record of this ancestry
+                        db.session.rollback()
 
         dataset.date_updated = datetime.utcnow()
         dataset.fspath = ds['path']
