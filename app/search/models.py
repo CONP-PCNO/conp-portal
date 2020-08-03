@@ -435,10 +435,10 @@ class DATSDataset(object):
 
         if tests_status == []:
             # Problem occured during the test suite.
-            return "Warning"
+            return "Unknown"
         if any(map(lambda x: x == "Failure", tests_status)):
             return "Broken"
         if all(map(lambda x: x == "Success", tests_status)):
             return "Working"
         
-        return "Warning"
+        return "Unknown"
