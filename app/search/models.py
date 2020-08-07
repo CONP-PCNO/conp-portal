@@ -148,6 +148,47 @@ class DATSDataset(object):
 
         return ", ".join(principalInvestigators) if len(principalInvestigators) > 0 else None
 
+    @property
+    def primaryPublications(self):
+        primaryPublications = []
+        publications = self.descriptor.get('primaryPublications', {})
+        if type(publications) == list:
+            for publi in publications:
+                title = publi.get('title', '')
+                if not title.endswith('.'):
+                    title += '.'
+                journal = publi.get('publicationVenue', '')
+                if not journal.endswith('.'):
+                    journal += '.'
+                author  = publi.get('authors', [])[0].get('fullName', '') if 'authors' in publi else ''
+                if len(publi.get('authors', [])) > 1:
+                    author += ' et al.'
+                doi = publi.get('identifier', {}).get('identifier', '')
+                primaryPublications.append(
+                    {
+                        'title': title,
+                        'author': author,
+                        'journal': journal,
+                        'doi': doi
+                    }
+                )
+        elif 'title' in publications:
+            title = publications.get('title', '')
+            journal = publications.get('publicationVenue', '')
+            doi = publications.get('identifier', {}).get('identifier', '')
+            author = publications.get('authors', [])[0].get('fullName', '')  if 'authors' in publications else ''
+            if len(publications.get('authors', [])) > 1:
+                author += ' et al.'
+            primaryPublications.append(
+                {
+                    'title': title,
+                    'author': author,
+                    'journal': journal,
+                    'doi': doi
+                }
+            )
+
+        return primaryPublications if len(primaryPublications) > 0 else None
 
     @property
     def authorizations(self):
