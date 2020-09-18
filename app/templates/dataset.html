@@ -21,6 +21,7 @@
   {% if metadata.version is defined and metadata.version is not none %}
   <p><strong>Version: </strong> {{ metadata.version }} </p>
   {% endif %}
+  <p><a href="/download_content?id={{ data.id }}&version={{ metadata.get('version', 'latest') }}" target="_blank">Download this version</a></p>
   {% if metadata.sources is defined and metadata.sources is not none %}
   <p><strong>Source: </strong><a target="_blank" rel="noopener noreferrer"
       href="{{ metadata.sources }}">{{ metadata.sources }}</a></p>
