@@ -437,6 +437,25 @@ def download_metadata():
         mimetype='application/json'
     )
 
+@search_bp.route('/download_content', methods=['GET'])
+def download_content():
+    """ Download dataset content
+
+        route to allow downloading of files from a dataset
+
+        Args:
+            dataset (REQ ARG): the dataset
+
+        Returns:
+            Response to the zipped data for the browser to download
+
+        Raises:
+            HTML error if this fails
+    """
+    dataset_id=request.args.get('id', '')
+    return dataset_id
+    
+    
 
 def get_dataset_metadata_information(dataset):
     """
