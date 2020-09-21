@@ -4,6 +4,7 @@ FLASK_DEBUG=0
 DATABASE_URL=sqlite:///<ENTER FLASK TOP DIR>/app.db
 SECRET_KEY=you-will-never-guess
 DATA_PATH=${HOME}
+DATASET_CACHE_PATH=${HOME}/.cache/conp-dataset
 SQLALCHEMY_TRACK_MODIFICATIONS=False
 MAIL_SERVER=smtp.googlemail.com
 MAIL_PORT=587

@@ -1,5 +1,5 @@
 import datetime as dt
-from functools import lru_cache
+from functools import lru_cache, reduce
 import os
 import json
 import re
@@ -9,6 +9,8 @@ import dateutil
 import requests
 
 from app.models import Dataset
+from datalad import api
+from datalad.api import Dataset as DataladDataset
 
 
 @lru_cache(maxsize=1)
@@ -43,6 +45,51 @@ def get_latest_test_results():
 
     return _get_latest_test_results(normalized_date)
 
+class DatasetCache(object):
+    def __init__(self, current_app):
+        """
+          Store datasets content up to a maximun size. 
+          1. Server checks if a zip file already exists for this version (DV).
+          2. If zip file doesn't exist: 
+              2.1 Check for available storage space (AST) on partition holding the dataset.
+              2.2 If AST < size(DV) + margin: # margin is a config param of the portal, defined to avoid completely saturating disk partitions
+                2.2.1 Delete files (datalad and zip) from least-recently used datasets untill ASST is enough
+              2.3 Download DV using Datalad
+              2.4 Create zip file, name it after DV
+          3. Return zip file
+        """
+        self.current_app = current_app
+        dataset_cache_dir = current_app.config['DATASET_CACHE_PATH']
+        if not os.path.exists(dataset_cache_dir):
+            os.makedirs(dataset_cache_dir)
+
+    def getZippedContent(self, dataset):
+
+        # still need to check if zip file already exists.
+
+        # download the file content
+        datasetrootdir = os.path.join(
+            self.current_app.config['DATA_PATH'],
+            'conp-dataset',
+            dataset.fspath
+        )
+        d = DataladDataset(path=datasetrootdir)
+
+        if not d.is_installed():
+            raise RuntimeError('The dataset is not installed')
+
+        api.get(d.path, dataset=d, recursive=True)
+
+        # create zip file
+        zipped = d.export_archive(
+            filename=self.current_app.config['DATASET_CACHE_PATH']
+        )[0].get('path')
+
+        # Clean dataset space but force redownlaod... to be reworked
+        super_d = DataladDataset(path=os.path.join(self.current_app.config['DATA_PATH'],'conp-dataset'))
+        super_d.drop() 
+
+        return zipped
 
 class DATSDataset(object):
     def __init__(self, datasetpath):

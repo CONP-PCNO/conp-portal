@@ -14,7 +14,7 @@ from sqlalchemy import func, or_
 
 from app.models import Dataset, DatasetAncestry, User
 from app.search import search_bp
-from app.search.models import DATSDataset
+from app.search.models import DATSDataset, DatasetCache
 
 
 @search_bp.route('/search')
@@ -452,10 +452,24 @@ def download_content():
         Raises:
             HTML error if this fails
     """
-    dataset_id=request.args.get('id', '')
-    return dataset_id
+    dataset_id = request.args.get('id', '')
+    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
+    if dataset is None:
+        # This shoud return a 404 not found
+        return 'Not Found', 400
     
+    try:
+        zipped = DatasetCache(current_app).getZippedContent(dataset)
+    except RuntimeError as err:
+        return "Runtime error: {0}".format(err), 500
+    except IOError as err:
+        return "IO error: {0}".format(err), 500
     
+    return send_from_directory(
+        os.path.dirname(zipped),
+        os.path.basename(zipped),
+        as_attachment=True
+    )
 
 def get_dataset_metadata_information(dataset):
     """
