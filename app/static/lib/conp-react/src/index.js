@@ -3,6 +3,7 @@ import { default as DatasetElement } from "./DatasetElement";
 import { default as PipelineElement } from "./PipelineElement";
 import DashboardChart from "./DashboardChart"
 import Spotlight from "./Spotlight"
+import { DatsEditorForm } from "conp-dats-editor"
 
 export { DataTable, DataTableContainer, DatasetElement, PipelineElement, DashboardChart };
 
@@ -12,5 +13,6 @@ export default {
   DatasetElement,
   PipelineElement,
   DashboardChart,
-  Spotlight
+  Spotlight,
+  DatsEditorForm
 };
