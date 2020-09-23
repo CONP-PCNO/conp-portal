@@ -21,6 +21,7 @@ class Config(object):
         basedir, "app/static/data")
     DATASET_CACHE_PATH = os.environ.get('DATASET_CACHE_PATH') or os.path.join(
         basedir, "app/static/data/.cache/conp-dataset")
+    DATASET_CACHE_MAX_SIZE = os.environ.get('DATASET_CACHE_MAX_SIZE') or 0
     SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get(
         'SQLALCHEMY_TRACK_MODIFICATIONS') or False
 
