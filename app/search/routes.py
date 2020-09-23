@@ -460,10 +460,12 @@ def download_content():
     
     try:
         zipped = DatasetCache(current_app).getZippedContent(dataset)
-    except RuntimeError as err:
-        return "Runtime error: {0}".format(err), 500
     except IOError as err:
         return "IO error: {0}".format(err), 500
+    except RuntimeError as err:
+        return "Runtime error: {0}".format(err), 500
+    except:
+        return "Unexpected error", 500
     
     return send_from_directory(
         os.path.dirname(zipped),
