@@ -65,8 +65,6 @@ class DatasetCache(object):
 
     @property
     def freeSpace(self):
-        print('max size is ' + str(self.maxSize))
-        print('used space is ' + str(self.usedSpace))
         return self.maxSize - self.usedSpace
         
     @property
@@ -96,7 +94,6 @@ class DatasetCache(object):
            'gz'
         ])
 
-        print(self.cachedDatasets)
         cached = self.cachedDatasets.get(zipFilename)
         zipped = cached.path if cached is not None else None
         
@@ -137,20 +134,23 @@ class DatasetCache(object):
 
             # Clean dataset space but force redownload. It is fine because we keep the zip in cache.
             super_d = DataladDataset(path=os.path.join(self.current_app.config['DATA_PATH'],'conp-dataset'))
-            super_d.drop() 
+            super_d.drop(dataset='.', recursive=True, check=False) 
 
         os.system('touch -a ' + zipped)
         return zipped
 
     def _makeSureThereIsSpace(self, requestedSize):
+        """
+           This is relying on dataset size from DATS.json; not the compressed size.
+           This should also check if DATA_PATH has sufficient space to download the dataset.
+        """
+
         if requestedSize > self.maxSize:
             print('requesting ' + str(requestedSize) + ' bytes' )
             print(str(self.freeSpace) + ' bytes available')
             raise RuntimeError('Insufficient Storage Available')
 
         while requestedSize > self.freeSpace:
-            print('requesting ' + str(requestedSize) + ' bytes' )
-            print(str(self.freeSpace) + ' bytes available')
             self._deleteLeastRecettlyUsed()
         
         return None
