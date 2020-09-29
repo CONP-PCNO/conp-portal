@@ -238,113 +238,7 @@ Colour names courtesy of chir.ag/projects/name-that-color
 */
 
 .navigation-bar {
-  width: 100%;
-  height: 4.5rem;
   border-bottom: 1px solid #ff0000;
-}
-
-.navigation-bar a,
-.navigation-bar a img,
-.navigation-bar div ul {
-  height: 100%;
-  flex: 1;
-}
-
-.navigation-bar div .nav-item:hover {
-  background-color: #d8d8d8;
-}
-
-.navbar-toggler {
-  border: none;
-}
-
-.navbar-collapse {
-  width: 100%;
-  background: white;
-}
-
-.navbar-nav {
-  border-bottom: 1px solid #ff0000;
-}
-
-.navbar-nav .active,
-.navbar-light .navbar-nav .active > .nav-link {
-  background-color: #ff0000;
-  color: white;
-}
-
-.navigation-bar div .active:hover {
-  background-color: #ff0000;
-}
-
-.navigation-bar .show {
-  width: 100%;
-  background: red;
-}
-
-.navigation-bar .dropdown,
-.navigation-bar .dropdown-menu {
-  width: 100%;
-  background: white;
-  border: none;
-  box-shadow: none;
-}
-
-.navigation-bar .dropdown-menu a {
-  color: rgba(0, 0, 0, 0.5);
-  padding-top: inherit;
-  padding-bottom: inherit;
-}
-
-.navigation-bar .dropdown-menu a:hover {
-  color: rgba(0, 0, 0, 1);
-}
-
-@media (min-width: 768px) {
-  .navigation-bar a,
-  .navigation-bar a img,
-  .navigation-bar div ul {
-    flex: none;
-  }
-
-  .navigation-bar .show {
-    width: auto;
-    background: red;
-  }
-
-  .navbar-collapse.collapse {
-    height: 100% !important;
-    margin-bottom: 1px;
-  }
-
-  .navbar-collapse {
-    height: 100%;
-    background-color: transparent;
-    padding-right: 0;
-    padding-left: 0;
-  }
-
-  .navbar-nav {
-    border-bottom: none;
-  }
-
-  .navbar-nav .nav-item a {
-    display: flex;
-    align-items: center;
-  }
-
-  .navigation-bar .dropdown-menu {
-    background: white;
-    border: 1px solid #ff0000;
-    padding: 0;
-    margin-top: 0;
-  }
-
-  .navigation-bar .dropdown-menu a {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-    white-space: inherit;
-  }
 }
 
 /*
@@ -555,8 +449,6 @@ Colour names courtesy of chir.ag/projects/name-that-color
 
   .card .card-body ul {
     justify-content: start;
-
-    flex-direction: row;
     flex-wrap: wrap;
   }
 

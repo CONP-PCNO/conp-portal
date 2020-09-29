@@ -83,17 +83,7 @@ def dataset_search():
     else:
         authorized = False
 
-    if request.args.get('search'):
-        term = '%' + request.args.get('search') + '%'
-        # Query datasets
-        datasets = Dataset.query.filter(
-            or_(func.lower(Dataset.name)
-                .like(func.lower(term)),
-                func.lower(Dataset.description)
-                .like(func.lower(term)))
-        )
-
-    elif request.args.get('id'):
+    if request.args.get('id'):
         # Query datasets
         datasets = Dataset.query.filter_by(
             dataset_id=request.args.get('id')).all()
@@ -114,6 +104,18 @@ def dataset_search():
             # There should be an error message in the logs/update_datsets.log
             continue
 
+        # If search term exists filter results here
+        if request.args.get('search'):
+            searchTerm = request.args.get('search')
+            with open(datsdataset.DatsFilepath, 'r') as dats:
+                match = False
+                for line in dats.readlines():
+                    if searchTerm.lower() in line.lower():
+                        match = True
+                        break
+                if(not match):
+                    continue
+
         dataset = {
             "authorized": authorized,
             "id": d.dataset_id,
@@ -133,12 +135,13 @@ def dataset_search():
             "conpStatus": datsdataset.conpStatus,
             "authorizations": datsdataset.authorizations,
             "principalInvestigators": datsdataset.principalInvestigators,
+            "primaryPublications": datsdataset.primaryPublications,
             "logoFilepath": datsdataset.LogoFilepath,
             "status": datsdataset.status,
         }
+
         elements.append(dataset)
 
-    queryAll = bool(request.args.get('elements') == 'all')
     modalities = []
     for e in elements:
         if e['modalities'] is None:
@@ -155,6 +158,7 @@ def dataset_search():
             formats.append(m.lower())
     formats = list(set(formats))
 
+    queryAll = bool(request.args.get('elements') == 'all')
     if(not queryAll):
 
         if request.args.get('modalities'):
@@ -361,6 +365,7 @@ def dataset_info():
         "conpStatus": datsdataset.conpStatus,
         "authorizations": datsdataset.authorizations,
         "principalInvestigators": datsdataset.principalInvestigators,
+        "primaryPublications": datsdataset.primaryPublications,
         "logoFilepath": datsdataset.LogoFilepath,
         "status": datsdataset.status,
     }
@@ -454,6 +459,7 @@ def get_dataset_metadata_information(dataset):
         "licenses": datsdataset.licenses,
         "sources": datsdataset.sources,
         "parentDatasets": datsdataset.parentDatasetId,
+        "primaryPublications": datsdataset.primaryPublications,
         "childDatasets": childDatasets
     }
 
