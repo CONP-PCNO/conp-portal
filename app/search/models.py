@@ -1,5 +1,5 @@
 import datetime as dt
-from functools import lru_cache, reduce
+from functools import lru_cache
 import os
 import shutil
 import json
