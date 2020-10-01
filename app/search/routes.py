@@ -441,9 +441,6 @@ def get_dataset_metadata_information(dataset):
     datasetAncestries=DatasetAncestry.query.all()
     for da in datasetAncestries:
         if da.parent_dataset_id == dataset.dataset_id:
-            print('dataset ' + da.parent_dataset_id +
-                  ' has child ' + da.child_dataset_id)
-
             name=da.child_dataset_id[9:]
             childDataset={
                 "child_dataset_id": da.child_dataset_id,
@@ -452,6 +449,7 @@ def get_dataset_metadata_information(dataset):
             childDatasets.append(childDataset)
 
     return {
+        "schema_org_metadata": datsdataset.schema_org_metadata,
         "authors": datsdataset.authors,
         "description": datsdataset.description,
         "contact": datsdataset.contacts,
