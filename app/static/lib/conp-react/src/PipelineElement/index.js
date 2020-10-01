@@ -26,7 +26,7 @@ const PipelineElement = props => {
             className="img-fluid"
             style={{maxWidth: '140px'}}
             src={
-              element.url == undefined
+              element.url === undefined
                 ? "static/img/cogs-solid-grey.png"
                 : "static/img/cogs-solid-green.png"
             }

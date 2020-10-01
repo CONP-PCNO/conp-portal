@@ -103,7 +103,7 @@
           download can expected to succeed. In some cases, however, status may flicker due to temporary network glitches,
           transient misconfiguration or other issues. In any case, the CONP team is working hard to ensure the
           high-availability of the datasets present in the platform!">
-        <i class="fa fa-question"></i>
+          <span style="font-size: 1em; color: Gray;"><i class="fa fa-question"></i></span>
       </button>
     </div>
   </div>
@@ -194,7 +194,7 @@
 
 <script type="text/javascript">
 
-  const element = {{ data| tojson}};
+  const element = {{ data | tojson }};
   element.showDownload = true;
   const reactElement = React.createElement(CONPReact.DatasetElement, element);
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));

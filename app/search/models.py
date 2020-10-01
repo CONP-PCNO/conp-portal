@@ -34,7 +34,8 @@ def _get_latest_test_results(date):
 def get_latest_test_results():
     current_date = dt.datetime.now().astimezone(tz=dateutil.tz.UTC)
     normalized_date = current_date.replace(
-        hour=(current_date.hour // 4 * 4 + 1),  # Round the date to the lowest 4hour
+        # Round the date to the lowest 4hour
+        hour=(current_date.hour // 4 * 4 + 1),
         minute=0,                               # range and give an extra hour gap
         second=0,                               # for tests execution.
         microsecond=0
@@ -89,7 +90,7 @@ class DATSDataset(object):
                         logofilename
                     )
                     logopath = logofilepath
-                else :
+                else:
                     logopath = logofilename
 
         return logopath
@@ -123,7 +124,6 @@ class DATSDataset(object):
             authors.append(creators)
 
         return ", ".join(authors) if len(authors) > 0 else None
-
 
     @property
     def principalInvestigators(self):
@@ -160,7 +160,8 @@ class DATSDataset(object):
                 journal = publi.get('publicationVenue', '')
                 if not journal.endswith('.'):
                     journal += '.'
-                author  = publi.get('authors', [])[0].get('fullName', '') if 'authors' in publi else ''
+                author = publi.get('authors', [])[0].get(
+                    'fullName', '') if 'authors' in publi else ''
                 if len(publi.get('authors', [])) > 1:
                     author += ' et al.'
                 doi = publi.get('identifier', {}).get('identifier', '')
@@ -176,7 +177,8 @@ class DATSDataset(object):
             title = publications.get('title', '')
             journal = publications.get('publicationVenue', '')
             doi = publications.get('identifier', {}).get('identifier', '')
-            author = publications.get('authors', [])[0].get('fullName', '')  if 'authors' in publications else ''
+            author = publications.get('authors', [])[0].get(
+                'fullName', '') if 'authors' in publications else ''
             if len(publications.get('authors', [])) > 1:
                 author += ' et al.'
             primaryPublications.append(
@@ -197,13 +199,13 @@ class DATSDataset(object):
             return None
 
         if not type(dists) == list:
-            if dists.get('@type', '') == 'DatasetDistribution': 
+            if dists.get('@type', '') == 'DatasetDistribution':
                 dist = dists
             else:
-               dist = {}
+                dist = {}
         else:
             dist = dists[0]
-        
+
         authorizations = dist.get('access', {}).get('authorizations', '')
 
         if type(authorizations) == list:
@@ -223,7 +225,6 @@ class DATSDataset(object):
 
         return contacts
 
-
     @property
     def conpStatus(self):
         conpStatus = 'external'
@@ -234,11 +235,9 @@ class DATSDataset(object):
 
         return conpStatus
 
-
     @property
     def description(self):
         return self.descriptor.get('description', None)
-
 
     @property
     def fileCount(self):
@@ -263,9 +262,11 @@ class DATSDataset(object):
 
         if not type(dists) == list:
             if dists.get('@type', '') == 'DatasetDistribution':
-                formats = ", ".join([x['description'] for x in dists.get('formats', [])])
+                formats = ", ".join([x['description']
+                                     for x in dists.get('formats', [])])
         else:
-            formats = ", ".join([", ".join(x.get('formats', [])) for x in dists])
+            formats = ", ".join([", ".join(x.get('formats', []))
+                                 for x in dists])
 
         return formats
 
@@ -287,7 +288,6 @@ class DATSDataset(object):
 
         return licenses
 
-
     @property
     def modalities(self):
         modalities = []
@@ -299,7 +299,6 @@ class DATSDataset(object):
 
         return ", ".join(modalities) if len(modalities) > 0 else None
 
-
     @property
     def size(self):
         dists = self.descriptor.get('distributions', None)
@@ -307,14 +306,14 @@ class DATSDataset(object):
             return None
 
         if not type(dists) == list:
-            if dists.get('@type', '') == 'DatasetDistribution': 
+            if dists.get('@type', '') == 'DatasetDistribution':
                 dist = dists
             else:
-               dist = {}
+                dist = {}
         else:
             # Taking the first distribution size. (arbitrary choice)
             dist = dists[0]
-        
+
         size = float(dist.get('size', 0))
         unit = dist.get('unit', {}).get('value', '')
 
@@ -332,7 +331,6 @@ class DATSDataset(object):
 
         return "{} {}".format(size, unit)
 
-
     @property
     def sources(self):
         dists = self.descriptor.get('distributions', None)
@@ -340,17 +338,16 @@ class DATSDataset(object):
             return None
 
         if not type(dists) == list:
-            if dists.get('@type', '') == 'DatasetDistribution': 
+            if dists.get('@type', '') == 'DatasetDistribution':
                 dist = dists
             else:
-               dist = {}
+                dist = {}
         else:
             dist = dists[0]
-        
+
         sources = dist.get('access', {}).get('landingPage', '')
 
         return "{}".format(sources)
-
 
     @property
     def subjectCount(self):
@@ -366,7 +363,6 @@ class DATSDataset(object):
 
         return count if count > 0 else None
 
-    
     @property
     def derivedFrom(self):
         derivedFrom = []
@@ -377,7 +373,6 @@ class DATSDataset(object):
                     derivedFrom.append(x)
 
         return derivedFrom if len(derivedFrom) > 0 else None
-
 
     @property
     def parentDatasetId(self):
@@ -391,11 +386,9 @@ class DATSDataset(object):
 
         return parentDatasetId if len(parentDatasetId) > 0 else None
 
-
     @property
     def version(self):
         return self.descriptor.get('version', None)
-
 
     @property
     def schema_org_metadata(self):
@@ -419,7 +412,8 @@ class DATSDataset(object):
                     license_creative_work["name"] = license["name"]
                     licenses.append(license_creative_work)
             jsonld_obj["license"] = licenses
-            jsonld_obj["keywords"] = [keyword["value"] for keyword in self.descriptor["keywords"]]
+            jsonld_obj["keywords"] = [keyword["value"]
+                                      for keyword in self.descriptor["keywords"]]
             creators = []
             for creator in self.descriptor["creators"]:
                 if "name" in creator:
@@ -444,7 +438,8 @@ class DATSDataset(object):
                     if "fullName" in creator:
                         person["name"] = creator["fullName"]
                     elif all(k in creator for k in ("firstName", "lastName")):
-                        person["name"] = creator["firstName"] + " " + creator["lastName"]
+                        person["name"] = creator["firstName"] + \
+                            " " + creator["lastName"]
                     else:
                         person["name"] = "Name is not provided"
                     # check for person affiliations
@@ -463,10 +458,9 @@ class DATSDataset(object):
         except Exception:
             return None
 
-
     @property
     def status(self):
-        
+
         test_results = get_latest_test_results()
         tests_status = [
             results["status"]
@@ -481,5 +475,5 @@ class DATSDataset(object):
             return "Broken"
         if all(map(lambda x: x == "Success", tests_status)):
             return "Working"
-        
+
         return "Unknown"

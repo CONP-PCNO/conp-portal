@@ -383,7 +383,8 @@ def dataset_info():
     else:
         color = "critical"
 
-    ciBadgeUrl = "https://img.shields.io/badge/circleci-" + dataset["status"] + "-" + color + "?style=flat-square&logo=circleci"
+    ciBadgeUrl = "https://img.shields.io/badge/circleci-" + \
+        dataset["status"] + "-" + color + "?style=flat-square&logo=circleci"
 
     return render_template(
         'dataset.html',
