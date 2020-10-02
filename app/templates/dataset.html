@@ -6,6 +6,13 @@
 <script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
 <script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
+<script type="text/javascript">
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
 {% endblock %}
 
 {% block contenttitle %}
@@ -94,8 +101,8 @@
     <a class="px-2" href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master">
       <img src="{{ ciBadgeUrl }}" alt="CircleCI status" />
     </a>
-    <div class="px-2">
-      <button type="button" class="btn btn-default p-0" data-toggle="tooltip" data-placement="bottom" title="The CONP integrates datasets stored in multiple platforms, to accommodate the various governance models adopted by
+    <div>
+      <button type="button" class="btn btn-default p-0" data-toggle="tooltip" data-placement="right" title="The CONP integrates datasets stored in multiple platforms, to accommodate the various governance models adopted by
           diverse research groups. While this decentralized architecture nicely fits with open-science goals, it also has
           challenges, as the availability of dataset storage locations may fluctuate. For this reason, CONP datasets are
           periodically tested (every few hours), to ensure a satisfying user experience. This status badge shows the status of
@@ -103,7 +110,7 @@
           download can expected to succeed. In some cases, however, status may flicker due to temporary network glitches,
           transient misconfiguration or other issues. In any case, the CONP team is working hard to ensure the
           high-availability of the datasets present in the platform!">
-          <span style="font-size: 1em; color: Gray;"><i class="fa fa-question"></i></span>
+        <span style="font-size: 1em; color: Gray;"><i class="fa fa-question"></i></span>
       </button>
     </div>
   </div>
