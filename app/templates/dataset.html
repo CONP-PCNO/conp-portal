@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 
 <!-- ADD JSON-LD DESCRIPTOR -->
-<script type="application/ld+json">{{ metadata.schema_org_metadata | safe }}</script>
+<script type="application/ld+json">{{ metadata.schema_org_metadata | tojson }}</script>
 
 <script type="text/javascript">
   $(function () {
