@@ -9,9 +9,6 @@ import { faFileCode } from '@fortawesome/free-regular-svg-icons'
 const DatasetElement = props => {
   const { authorized, imagePath, ...element } = props;
 
-  const downloadEnabled = `${imagePath}/download_green.png`;
-  const downloadDisabled = `${imagePath}/download_gray.png`;
-
   const statusCONP = `${imagePath}/canada.svg`;
 
   let authIcons = [];
@@ -26,34 +23,11 @@ const DatasetElement = props => {
       break;
   }
 
-  var ciBadges = [];
-  var color;
-  switch (element.status) {
-    case "Working":
-      color = "success";
-      break;
-    case "Unknown":
-      color = "lightgrey";
-      break;
-    default:
-      color = "critical";
-      break;
-  }
-  let url =
-    "https://img.shields.io/badge/circleci-" +
-    element.status +
-    "-" +
-    color +
-    "?style=flat-square&logo=circleci" +
-    "&link=" +
-    element.latest_build_url;
-  ciBadges.push(<img key={"badge_" + color} src={url} alt="CircleCI status" />);
-
   return (
     <div className="card d-flex flex-row" style={{ minHeight: '220px' }} data-type="dataset">
       <div className="card-header d-flex flex-column justify-content-between">
         <div className="d-flex justify-content-center">
-          {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP} />) : <div style={{ width: 32 }} />}
+          {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP} alt="CONP status" />) : <div style={{ width: 32 }} />}
         </div>
       </div>
       <div className="d-flex flex-row flex-wrap flex-lg-nowrap w-100">
@@ -72,11 +46,6 @@ const DatasetElement = props => {
             <h5 className="card-title text-card-title pl-2">
               <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>
                 {element.title}
-              </a>
-              <a style={{ color: "inherit", marginLeft: "10px" }}
-                href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master"
-              >
-                {ciBadges.map(badge => badge)}
               </a>
             </h5>
             <ul className="d-flex flex-nowrap flex-lg-wrap align-items-start">
