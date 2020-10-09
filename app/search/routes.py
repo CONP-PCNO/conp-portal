@@ -183,7 +183,8 @@ def dataset_search():
 
         if(sort_key == "conpStatus"):
             order = {'conp': 0, 'canadian': 1, 'external': 2}
-            paginated.sort(key=lambda o: (o[sort_key].lower() not in order, order.get(o[sort_key].lower(), None)))
+            paginated.sort(key=lambda o: (
+                o[sort_key].lower() not in order, order.get(o[sort_key].lower(), None)))
 
         elif(sort_key == "title"):
             paginated.sort(key=lambda o: o[sort_key].lower())
@@ -194,15 +195,16 @@ def dataset_search():
                 if not e["size"]:
                     return 0.0
 
-                units=["KB", "MB", "GB", "TB"]
-                unitScales=[1000, 1000**2, 1000**3, 1000**4]
-                size=e["size"].split(" ")
-                absoluteSize=size[0]
+                units = ["KB", "MB", "GB", "TB"]
+                unitScales = [1000, 1000**2, 1000**3, 1000**4]
+                size = e["size"].split(" ")
+                absoluteSize = size[0]
                 if(size[1] in units):
-                    absoluteSize=float(size[0]) * unitScales[units.index(size[1])]
+                    absoluteSize = float(size[0]) * \
+                        unitScales[units.index(size[1])]
                 return absoluteSize
 
-            reverse=(sort_key == 'sizeDes')
+            reverse = (sort_key == 'sizeDes')
             paginated.sort(key=lambda o: getAbsoluteSize(o), reverse=reverse)
 
         elif(sort_key == "filesDes" or sort_key == "filesAsc"):
@@ -213,7 +215,7 @@ def dataset_search():
 
                 return int(e["files"])
 
-            reverse=(sort_key == 'filesDes')
+            reverse = (sort_key == 'filesDes')
             paginated.sort(key=lambda o: getNumberOfFiles(o), reverse=reverse)
 
         elif(sort_key == "subjectsDes" or sort_key == "subjectsAsc"):
@@ -223,31 +225,31 @@ def dataset_search():
                     return 0
 
                 return int(e["subjects"])
-            reverse=(sort_key == 'subjectsDes')
+            reverse = (sort_key == 'subjectsDes')
             paginated.sort(key=lambda o: getNumberOfSubjects(o),
                            reverse=reverse)
 
         elif(sort_key == "dateAddedDesc" or sort_key == "dateAddedAsc"):
 
-            reverse=(sort_key == 'dateAddedAsc')
+            reverse = (sort_key == 'dateAddedAsc')
             paginated.sort(key=lambda o: (
                 o["dateAdded"] is None, o["dateAdded"]), reverse=reverse)
 
         elif(sort_key == "dateUpdatedDesc" or sort_key == "dateUpdatedAsc"):
 
-            reverse=(sort_key == 'dateUpdatedAsc')
+            reverse = (sort_key == 'dateUpdatedAsc')
             paginated.sort(key=lambda o: (
                 o["dateUpdated"] is None, o["dateUpdated"]), reverse=reverse)
 
         else:
             paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
 
-        paginated=paginated[(cursor):(cursor + limit)]
+        paginated = paginated[(cursor):(cursor + limit)]
     else:
-        paginated=elements
+        paginated = elements
 
     # Construct payload
-    payload={
+    payload = {
         "authorized": authorized,
         "total": len(elements),
         "sortKeys": [
@@ -330,18 +332,18 @@ def dataset_info():
 
     """
 
-    dataset_id=request.args.get('id')
+    dataset_id = request.args.get('id')
 
     # Query dataset
-    d=Dataset.query.filter_by(dataset_id=dataset_id).first()
-    datsdataset=DATSDataset(d.fspath)
+    d = Dataset.query.filter_by(dataset_id=dataset_id).first()
+    datsdataset = DATSDataset(d.fspath)
 
     if current_user.is_authenticated:
-        authorized=True
+        authorized = True
     else:
-        authorized=False
+        authorized = False
 
-    dataset={
+    dataset = {
         "authorized": authorized,
         "name": datsdataset.name,
         "id": d.dataset_id,
@@ -370,9 +372,19 @@ def dataset_info():
         "status": datsdataset.status,
     }
 
-    metadata=get_dataset_metadata_information(d)
+    metadata = get_dataset_metadata_information(d)
 
-    readme=get_dataset_readme(d.dataset_id)
+    readme = get_dataset_readme(d.dataset_id)
+
+    if dataset["status"] == "Working":
+        color = "success"
+    elif dataset["status"] == "Unknown":
+        color = "lightgrey"
+    else:
+        color = "critical"
+
+    ciBadgeUrl = "https://img.shields.io/badge/circleci-" + \
+        dataset["status"] + "-" + color + "?style=flat-square&logo=circleci"
 
     return render_template(
         'dataset.html',
@@ -380,6 +392,7 @@ def dataset_info():
         data=dataset,
         metadata=metadata,
         readme=readme,
+        ciBadgeUrl=ciBadgeUrl,
         user=current_user
     )
 
@@ -399,19 +412,19 @@ def download_metadata():
         Raises:
             HTML error if this fails
     """
-    dataset_id=request.args.get('dataset', '')
-    dataset=Dataset.query.filter_by(dataset_id=dataset_id).first()
+    dataset_id = request.args.get('dataset', '')
+    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
     if dataset is None:
         # This shoud return a 404 not found
         return 'Not Found', 400
 
-    datasetrootdir=os.path.join(
+    datasetrootdir = os.path.join(
         current_app.config['DATA_PATH'],
         'conp-dataset',
         dataset.fspath
     )
 
-    datspath=DATSDataset(datasetrootdir).DatsFilepath
+    datspath = DATSDataset(datasetrootdir).DatsFilepath
     return send_from_directory(
         os.path.dirname(datspath),
         os.path.basename(datspath),
@@ -434,11 +447,11 @@ def get_dataset_metadata_information(dataset):
 
     """
 
-    datsdataset=DATSDataset(dataset.fspath)
+    datsdataset = DATSDataset(dataset.fspath)
 
     # check for child datasets
-    childDatasets=[]
-    datasetAncestries=DatasetAncestry.query.all()
+    childDatasets = []
+    datasetAncestries = DatasetAncestry.query.all()
     for da in datasetAncestries:
         if da.parent_dataset_id == dataset.dataset_id:
             name=da.child_dataset_id[9:]
@@ -464,28 +477,28 @@ def get_dataset_metadata_information(dataset):
 
 def get_dataset_readme(dataset_id):
 
-    dataset=Dataset.query.filter_by(dataset_id=dataset_id).first()
+    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
     if dataset is None:
         return 'Dataset Not Found', 404
 
-    datsdataset=DATSDataset(dataset.fspath)
+    datsdataset = DATSDataset(dataset.fspath)
 
-    readmeFilepath=datsdataset.ReadmeFilepath
+    readmeFilepath = datsdataset.ReadmeFilepath
 
-    f=open(readmeFilepath, 'r')
+    f = open(readmeFilepath, 'r')
     if f.mode != 'r':
         return 'Readme Not Found', 404
 
-    readme=f.read()
+    readme = f.read()
 
-    url='https://api.github.com/markdown'
-    body={
+    url = 'https://api.github.com/markdown'
+    body = {
         "text": readme,
         "mode": "gfm",
         "context": "github/gollum"
     }
-    response=requests.post(url, json=body)
+    response = requests.post(url, json=body)
 
-    content=response.text
+    content = response.text
 
     return content

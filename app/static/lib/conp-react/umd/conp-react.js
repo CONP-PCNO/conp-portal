@@ -42379,6 +42379,1399 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       break;
   }
 
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card d-flex flex-row",
+    style: {
+      minHeight: '220px'
+    },
+    "data-type": "dataset"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-header d-flex flex-column justify-content-between"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex justify-content-center"
+  }, element.conpStatus !== 'external' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    height: "32",
+    width: "32",
+    src: statusCONP
+  }) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    style: {
+      width: 32
+    }
+  }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex flex-row flex-wrap flex-lg-nowrap w-100"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex flex-row justify-content-center align-items-center w-50 m-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    alt: "dataset format",
+    className: "img-fluid",
+    style: {
+      maxWidth: '160px'
+    },
+    src: element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL
+  }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-body d-flex flex-wrap justify-content-between w-100"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex flex-column"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
+    className: "card-title text-card-title pl-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    style: {
+      color: "inherit"
+    },
+    href: "dataset?id=" + element.id
+  }, element.title)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
+    className: "d-flex flex-nowrap flex-lg-wrap align-items-start"
+  }, element.principalInvestigators ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Principal Investigator: "), element.principalInvestigators.toString())) : null, element.sources ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Sources: "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    target: "_blank",
+    rel: "noopener noreferrer",
+    href: element.sources
+  }, element.sources))) : null, element.files ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text text-capitalize pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Files: "), element.files)) : null, element.size ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text text-capitalize pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Size: "), element.size)) : null, element.subjects ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text text-capitalize pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Subjects: "), element.subjects)) : null, element.format ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text text-capitalize pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Format: "), element.format.toString())) : null, element.modalities ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text text-capitalize pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Modalities: "), element.modalities)) : null, element.dateAdded ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text text-capitalize pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Date Added: "), element.dateAdded)) : null, element.dateUpdated ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text text-capitalize pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Date Updated: "), element.dateUpdated)) : null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex"
+  }, authIcons.map(function (icon, index) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      key: "authIcon_" + index,
+      className: "p-1"
+    }, icon);
+  })))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex flex-column justify-content-center align-items-center w-50"
+  }, element.showDownload ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    className: "card-button",
+    style: {
+      pointerEvents: element.isPrivate && !authorized ? "none" : "all",
+      maxWidth: "120px"
+    },
+    href: "download_metadata?dataset=" + element.id,
+    download: true
+  }, element.isPrivate && !authorized && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-button-tooltip"
+  }, "Please register for access."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex flex-column align-items-center"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
+    icon: index_es_faFileCode,
+    color: "black",
+    size: "5x"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-link"
+  }, "Download Metadata"))) : null)));
+};
+
+DatasetElement_DatasetElement.propTypes = {
+  authorized: prop_types_default.a.bool,
+  onRunWithCBRAIN: prop_types_default.a.func,
+  // element proptypes
+  id: prop_types_default.a.string,
+  title: prop_types_default.a.string,
+  isPrivate: prop_types_default.a.bool,
+  thumbnailURL: prop_types_default.a.string,
+  imagePath: prop_types_default.a.string,
+  downloadPath: prop_types_default.a.string,
+  downloads: prop_types_default.a.number,
+  views: prop_types_default.a.number,
+  likes: prop_types_default.a.number,
+  dateAdded: prop_types_default.a.string,
+  dateUpdated: prop_types_default.a.string,
+  size: prop_types_default.a.string,
+  files: prop_types_default.a.number,
+  subjects: prop_types_default.a.number,
+  format: prop_types_default.a.string,
+  modalities: prop_types_default.a.string,
+  sources: prop_types_default.a.number
+};
+DatasetElement_DatasetElement.defaultProps = {
+  imagePath: "",
+  downloadPath: ""
+};
+/* harmony default export */ var src_DatasetElement = (DatasetElement_DatasetElement);
+// CONCATENATED MODULE: ./src/PipelineElement/index.js
+function PipelineElement_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+
+
+var PipelineElement_PipelineElement = function PipelineElement(props) {
+  var authorized = props.authorized,
+      element = PipelineElement_objectWithoutPropertiesLoose(props, ["authorized"]);
+
+  var platforms = element.platforms.map(function (item, key) {
+    return item.uri ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+      key: key,
+      "data-toggle": "tooltip",
+      title: "Run Pipeline",
+      style: {
+        maxWidth: "140px"
+      }
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+      className: "btn",
+      href: item.uri
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+      className: "img-fluid",
+      alt: "Online platform",
+      src: item.img
+    }))) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+      key: key,
+      "data-toggle": "tooltip",
+      title: "Unavailable",
+      style: {
+        maxWidth: "140px"
+      }
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+      className: "btn disabled",
+      href: item.uri,
+      disabled: true
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+      className: "img-fluid",
+      alt: "Online platform",
+      src: item.img
+    })));
+  });
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card flex-row",
+    style: {
+      minHeight: '220px'
+    },
+    "data-type": "pipeline"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-sm-12 col-md-2 d-flex flex-column justify-content-between align-items-center p-4"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    href: element.url
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    alt: "dataset format",
+    className: "img-fluid",
+    style: {
+      maxWidth: '140px'
+    },
+    src: element.url == undefined ? "static/img/cogs-solid-grey.png" : "static/img/cogs-solid-green.png"
+  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex"
+  }, element.downloads ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex flex-column align-items-center"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", {
+    className: "fa fa-download my-2"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, element.downloads)) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-body d-md-flex flex-wrap"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    style: {
+      color: "inherit"
+    },
+    href: "pipeline?id=" + element.id
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
+    className: "card-title text-card-title col-12 pl-2 pl-md-0"
+  }, element.title)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex col-md-12"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-description d-flex py-1 w-100"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-3"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Tags: ")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-9"
+  }, element.tags && element.tags.domain ? Array.isArray(element.tags.domain) ? element.tags.domain.map(function (tag) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+      key: "tag" + tag,
+      className: "mr-1"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+      href: "/pipelines?tags=" + tag,
+      className: "badge badge-primary"
+    }, tag));
+  }) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    href: "/pipelines?tags=" + element.tags.domain,
+    className: "badge badge-primary"
+  }, element.tags.domain)) : null))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex col-md-12"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-description d-flex py-1 w-100"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-3"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Description: ")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-9"
+  }, element.description))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex col-md-12"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-description text-capitalize d-flex py-1 w-100"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-3"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Pipeline ID: ")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-9"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    target: "_blank",
+    rel: "noopener noreferrer",
+    href: "https://www.zenodo.org/record/" + element.id.split(".")[1]
+  }, element.id))))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-sm-12 col-md-3 d-flex align-items-center justify-content-end"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex justify-content-end align-items-center"
+  }, platforms)));
+};
+
+PipelineElement_PipelineElement.propTypes = {
+  id: prop_types_default.a.string,
+  title: prop_types_default.a.string,
+  description: prop_types_default.a.string,
+  downloads: prop_types_default.a.number,
+  descriptorurl: prop_types_default.a.string,
+  platforms: prop_types_default.a.arrayOf(prop_types_default.a.object),
+  name: prop_types_default.a.string,
+  commandline: prop_types_default.a.string,
+  author: prop_types_default.a.string,
+  inputs: prop_types_default.a.arrayOf(prop_types_default.a.object),
+  outputfiles: prop_types_default.a.arrayOf(prop_types_default.a.object),
+  toolversion: prop_types_default.a.string,
+  schemaversion: prop_types_default.a.string,
+  containerimage: prop_types_default.a.object,
+  tags: prop_types_default.a.object,
+  url: prop_types_default.a.string,
+  img: prop_types_default.a.string,
+  imagePath: prop_types_default.a.string
+}; //PipelineElement.defaultProps = {
+//  imagePath: ""
+//};
+
+/* harmony default export */ var src_PipelineElement = (PipelineElement_PipelineElement);
+// EXTERNAL MODULE: ./node_modules/highcharts/highcharts.js
+var highcharts = __webpack_require__(45);
+var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
+
+// CONCATENATED MODULE: ./src/DashboardChart/index.js
+
+
+function DashboardChart_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function DashboardChart_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { DashboardChart_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { DashboardChart_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function DashboardChart_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+
+
+
+
+
+var DashboardChart_DashboardChart = function DashboardChart(_ref) {
+  var datasetsURL = _ref.datasetsURL,
+      pipelinesURL = _ref.pipelinesURL,
+      props = DashboardChart_objectWithoutPropertiesLoose(_ref, ["datasetsURL", "pipelinesURL"]);
+
+  var drawChart = function drawChart(data) {
+    var xAxis = [];
+    var yAxisDatasets = [];
+    var yAxisPipelines = [];
+    var countDatasets = 0;
+    var countPipelines = 0;
+    Object.keys(data.datasets).forEach(function (year) {
+      Object.keys(data.datasets[year]).forEach(function (month) {
+        xAxis.push(month + "/" + year);
+        countDatasets += data.datasets[year][month];
+        yAxisDatasets.push(countDatasets);
+      });
+    });
+    Object.keys(data.pipelines).forEach(function (year) {
+      Object.keys(data.pipelines[year]).forEach(function (month) {
+        countPipelines += data.pipelines[year][month];
+        yAxisPipelines.push(countPipelines);
+      });
+    });
+    /* Only show pipeline data for the months we have dataset data */
+
+    var yAxisPipelinesExtract = yAxisPipelines;
+
+    if (yAxisDatasets.length > yAxisPipelines.length) {
+      yAxisPipelinesExtract = new Array(yAxisDatasets.length - yAxisPipelines.length).fill(0).concat(yAxisPipelines);
+    } else if (yAxisDatasets.length < yAxisPipelines.length) {
+      yAxisPipelinesExtract = yAxisPipelines.slice(Math.max(yAxisPipelines.length - xAxis.length, 0));
+    }
+
+    highcharts_default.a.chart('dashboard-chart-container', {
+      chart: {
+        type: 'column',
+        styledMode: true,
+        backgroundColor: '#FFF'
+      },
+      credits: {
+        enabled: false
+      },
+      title: {
+        text: 'Cumulative Number of Datasets and Pipelines'
+      },
+      yAxis: [{
+        title: {
+          text: '',
+          style: {
+            color: highcharts_default.a.getOptions().colors[0]
+          }
+        },
+        allowDecimals: false
+      }],
+      xAxis: {
+        categories: xAxis
+      },
+      plotOptions: {
+        column: {
+          borderRadius: 5
+        }
+      },
+      series: [{
+        name: 'Datasets',
+        data: yAxisDatasets,
+        yAxis: 0
+      }, {
+        name: 'Pipelines',
+        data: yAxisPipelinesExtract,
+        yAxis: 0
+      }]
+    });
+  };
+
+  var fetchElements = /*#__PURE__*/function () {
+    var _ref2 = DashboardChart_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      var datasetsFetch, datasetsRes, pipelinesFetch, pipelinesRes, chartData, months, i, today;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return fetch(datasetsURL + '?elements=all');
+
+            case 3:
+              datasetsFetch = _context.sent;
+
+              if (datasetsFetch.ok) {
+                _context.next = 6;
+                break;
+              }
+
+              throw new Error("Request failed with status: " + datasetsFetch.status + " (" + datasetsFetch.statusText + ")");
+
+            case 6:
+              _context.next = 8;
+              return datasetsFetch.json();
+
+            case 8:
+              datasetsRes = _context.sent;
+              _context.next = 11;
+              return fetch(pipelinesURL);
+
+            case 11:
+              pipelinesFetch = _context.sent;
+
+              if (pipelinesFetch.ok) {
+                _context.next = 14;
+                break;
+              }
+
+              throw new Error("Request failed with status: " + pipelinesFetch.status + " (" + pipelinesFetch.statusText + ")");
+
+            case 14:
+              _context.next = 16;
+              return pipelinesFetch.json();
+
+            case 16:
+              pipelinesRes = _context.sent;
+              chartData = {
+                datasets: {},
+                pipelines: {}
+              };
+              datasetsRes.elements.map(function (element) {
+                var dateAdded = new Date(element.dateAdded);
+
+                if (!chartData.datasets[dateAdded.getFullYear()]) {
+                  chartData.datasets[dateAdded.getFullYear()] = {};
+                }
+
+                if (!chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
+                  chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+                } else {
+                  chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
+                }
+              });
+              /* check if we've skipped months */
+
+              months = [];
+
+              for (i = 1; i <= 12; i++) {
+                months.push(i);
+              }
+
+              today = new Date();
+              Object.keys(chartData.datasets).map(function (year) {
+                for (var i = 1; i <= 12; i++) {
+                  if (year == today.getFullYear() && i == today.getMonth() + 2) {
+                    break;
+                  }
+
+                  if (Object.keys(chartData.datasets).includes((year - 1).toString()) && !Object.keys(chartData.datasets[year]).includes("" + i) && i == 1) {
+                    chartData.datasets[year][i] = 0;
+                  }
+
+                  if (Object.keys(chartData.datasets[year]).includes("" + (i - 1)) && !Object.keys(chartData.datasets[year]).includes("" + i)) {
+                    chartData.datasets[year][i] = 0;
+                  }
+                }
+              });
+              pipelinesRes.elements.map(function (element) {
+                var dateAdded = new Date(element.publicationdate);
+
+                if (!chartData.pipelines[dateAdded.getFullYear()]) {
+                  chartData.pipelines[dateAdded.getFullYear()] = {};
+                }
+
+                if (!chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
+                  chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+                } else {
+                  chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
+                }
+              });
+              Object.keys(chartData.pipelines).map(function (year) {
+                for (var i = 1; i <= 12; i++) {
+                  if (year == today.getFullYear() && i == today.getMonth() + 2) {
+                    break;
+                  }
+
+                  if (Object.keys(chartData.pipelines).includes((year - 1).toString()) && !Object.keys(chartData.pipelines[year]).includes("" + i) && i == 1) {
+                    chartData.pipelines[year][i] = 0;
+                  }
+
+                  if (Object.keys(chartData.pipelines[year]).includes("" + (i - 1)) && !Object.keys(chartData.pipelines[year]).includes("" + i)) {
+                    chartData.pipelines[year][i] = 0;
+                  }
+                }
+              });
+              drawChart(chartData);
+              _context.next = 32;
+              break;
+
+            case 28:
+              _context.prev = 28;
+              _context.t0 = _context["catch"](0);
+              alert("There was an error retrieving the search results.");
+              console.error(_context.t0);
+
+            case 32:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 28]]);
+    }));
+
+    return function fetchElements() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  esm_useDebounce(function () {
+    return void fetchElements();
+  }, 300, [datasetsURL]);
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    id: "dashboard-chart"
+  });
+};
+
+DashboardChart_DashboardChart.propTypes = {};
+DashboardChart_DashboardChart.defaultProps = {};
+/* harmony default export */ var src_DashboardChart = (DashboardChart_DashboardChart);
+// CONCATENATED MODULE: ./src/Spotlight/index.js
+
+
+function Spotlight_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function Spotlight_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { Spotlight_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { Spotlight_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function Spotlight_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+
+
+
+
+
+var Spotlight_Spotlight = function Spotlight(_ref) {
+  var datasetURL = _ref.datasetURL,
+      props = Spotlight_objectWithoutPropertiesLoose(_ref, ["datasetURL"]);
+
+  var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState([]),
+      fetchedElements = _React$useState[0],
+      setFetchedElements = _React$useState[1];
+
+  var fetchElements = /*#__PURE__*/function () {
+    var _ref2 = Spotlight_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      var res, datasetRes;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return fetch(datasetURL);
+
+            case 3:
+              res = _context.sent;
+
+              if (res.ok) {
+                _context.next = 6;
+                break;
+              }
+
+              throw new Error("Request failed with status: " + res.status + " (" + res.statusText + ")");
+
+            case 6:
+              _context.next = 8;
+              return res.json();
+
+            case 8:
+              datasetRes = _context.sent;
+              setFetchedElements(datasetRes.elements);
+              _context.next = 16;
+              break;
+
+            case 12:
+              _context.prev = 12;
+              _context.t0 = _context["catch"](0);
+              alert("There was an error retrieving the search results.");
+              console.error(_context.t0);
+
+            case 16:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 12]]);
+    }));
+
+    return function fetchElements() {
+      return _ref2.apply(this, arguments);
+    };
+  }(); //useDebounce(() => void fetchElements(), 300, [datasetURL]);
+
+
+  return (
+    /*#__PURE__*/
+    //fetchedElements.length > 0 ?
+    external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "card-description"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h3", {
+      className: "card-description-title"
+    }, "STUDY SPOTLIGHT"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("hr", null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "card-description-text"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "card-img d-flex justify-content-center"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+      alt: "Project image",
+      className: "img-fluid",
+      src: "/dataset_logo?id=projects/preventad-open"
+    })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+      className: "card-description-subtitle"
+    }, "PREVENT-AD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "The PREVENT-AD (Pre-symptomatic Evaluation of Experimental or Novel Treatments for Alzheimer's Disease) cohort is composed of cognitively healthy participants over 55 years old, at risk of developing Alzheimer's Disease (AD) as their parents and/or siblings were/are affected by the disease. These \u2018at-risk\u2019 participants have been followed for a naturalistic study of the presymptomatic phase of AD since 2011 using multimodal measurements of various disease indicators. Two clinical trials intended to test pharmaco-preventive agents have also been conducted. The PREVENT-AD research group is now releasing data openly with the intention of contributing to the community\u2019s growing understanding of AD pathogenesis."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Authors: StoP-AD Center - Douglas Mental Health University Institute")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "d-flex mt-4 justify-content-end"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+      href: "/dataset?id=projects/preventad-open"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+      className: "btn btn-outline-secondary",
+      type: "button"
+    }, "Read More")))) //: null
+
+  );
+};
+
+Spotlight_Spotlight.propTypes = {};
+Spotlight_Spotlight.defaultProps = {};
+/* harmony default export */ var src_Spotlight = (Spotlight_Spotlight);
+// EXTERNAL MODULE: ./node_modules/react-fast-compare/index.js
+var react_fast_compare = __webpack_require__(21);
+var react_fast_compare_default = /*#__PURE__*/__webpack_require__.n(react_fast_compare);
+
+// CONCATENATED MODULE: ./node_modules/deepmerge/dist/es.js
+var isMergeableObject = function isMergeableObject(value) {
+	return isNonNullObject(value)
+		&& !isSpecial(value)
+};
+
+function isNonNullObject(value) {
+	return !!value && typeof value === 'object'
+}
+
+function isSpecial(value) {
+	var stringValue = Object.prototype.toString.call(value);
+
+	return stringValue === '[object RegExp]'
+		|| stringValue === '[object Date]'
+		|| isReactElement(value)
+}
+
+// see https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25
+var canUseSymbol = typeof Symbol === 'function' && Symbol.for;
+var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for('react.element') : 0xeac7;
+
+function isReactElement(value) {
+	return value.$$typeof === REACT_ELEMENT_TYPE
+}
+
+function emptyTarget(val) {
+	return Array.isArray(val) ? [] : {}
+}
+
+function cloneUnlessOtherwiseSpecified(value, options) {
+	return (options.clone !== false && options.isMergeableObject(value))
+		? deepmerge(emptyTarget(value), value, options)
+		: value
+}
+
+function defaultArrayMerge(target, source, options) {
+	return target.concat(source).map(function(element) {
+		return cloneUnlessOtherwiseSpecified(element, options)
+	})
+}
+
+function mergeObject(target, source, options) {
+	var destination = {};
+	if (options.isMergeableObject(target)) {
+		Object.keys(target).forEach(function(key) {
+			destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
+		});
+	}
+	Object.keys(source).forEach(function(key) {
+		if (!options.isMergeableObject(source[key]) || !target[key]) {
+			destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
+		} else {
+			destination[key] = deepmerge(target[key], source[key], options);
+		}
+	});
+	return destination
+}
+
+function deepmerge(target, source, options) {
+	options = options || {};
+	options.arrayMerge = options.arrayMerge || defaultArrayMerge;
+	options.isMergeableObject = options.isMergeableObject || isMergeableObject;
+
+	var sourceIsArray = Array.isArray(source);
+	var targetIsArray = Array.isArray(target);
+	var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
+
+	if (!sourceAndTargetTypesMatch) {
+		return cloneUnlessOtherwiseSpecified(source, options)
+	} else if (sourceIsArray) {
+		return options.arrayMerge(target, source, options)
+	} else {
+		return mergeObject(target, source, options)
+	}
+}
+
+deepmerge.all = function deepmergeAll(array, options) {
+	if (!Array.isArray(array)) {
+		throw new Error('first argument should be an array')
+	}
+
+	return array.reduce(function(prev, next) {
+		return deepmerge(prev, next, options)
+	}, {})
+};
+
+var deepmerge_1 = deepmerge;
+
+/* harmony default export */ var es = (deepmerge_1);
+
+// EXTERNAL MODULE: ./node_modules/lodash-es/_root.js
+var _root = __webpack_require__(13);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_Symbol.js
+
+
+/** Built-in value references. */
+var _Symbol_Symbol = _root["a" /* default */].Symbol;
+
+/* harmony default export */ var _Symbol = (_Symbol_Symbol);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_getRawTag.js
+
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var _getRawTag_hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/** Built-in value references. */
+var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
+
+/**
+ * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the raw `toStringTag`.
+ */
+function getRawTag(value) {
+  var isOwn = _getRawTag_hasOwnProperty.call(value, symToStringTag),
+      tag = value[symToStringTag];
+
+  try {
+    value[symToStringTag] = undefined;
+    var unmasked = true;
+  } catch (e) {}
+
+  var result = nativeObjectToString.call(value);
+  if (unmasked) {
+    if (isOwn) {
+      value[symToStringTag] = tag;
+    } else {
+      delete value[symToStringTag];
+    }
+  }
+  return result;
+}
+
+/* harmony default export */ var _getRawTag = (getRawTag);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_objectToString.js
+/** Used for built-in method references. */
+var _objectToString_objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var _objectToString_nativeObjectToString = _objectToString_objectProto.toString;
+
+/**
+ * Converts `value` to a string using `Object.prototype.toString`.
+ *
+ * @private
+ * @param {*} value The value to convert.
+ * @returns {string} Returns the converted string.
+ */
+function objectToString(value) {
+  return _objectToString_nativeObjectToString.call(value);
+}
+
+/* harmony default export */ var _objectToString = (objectToString);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_baseGetTag.js
+
+
+
+
+/** `Object#toString` result references. */
+var nullTag = '[object Null]',
+    undefinedTag = '[object Undefined]';
+
+/** Built-in value references. */
+var _baseGetTag_symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
+
+/**
+ * The base implementation of `getTag` without fallbacks for buggy environments.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+function baseGetTag(value) {
+  if (value == null) {
+    return value === undefined ? undefinedTag : nullTag;
+  }
+  return (_baseGetTag_symToStringTag && _baseGetTag_symToStringTag in Object(value))
+    ? _getRawTag(value)
+    : _objectToString(value);
+}
+
+/* harmony default export */ var _baseGetTag = (baseGetTag);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_overArg.js
+/**
+ * Creates a unary function that invokes `func` with its argument transformed.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {Function} transform The argument transform.
+ * @returns {Function} Returns the new function.
+ */
+function overArg(func, transform) {
+  return function(arg) {
+    return func(transform(arg));
+  };
+}
+
+/* harmony default export */ var _overArg = (overArg);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_getPrototype.js
+
+
+/** Built-in value references. */
+var getPrototype = _overArg(Object.getPrototypeOf, Object);
+
+/* harmony default export */ var _getPrototype = (getPrototype);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/isObjectLike.js
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return value != null && typeof value == 'object';
+}
+
+/* harmony default export */ var lodash_es_isObjectLike = (isObjectLike);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/isPlainObject.js
+
+
+
+
+/** `Object#toString` result references. */
+var objectTag = '[object Object]';
+
+/** Used for built-in method references. */
+var funcProto = Function.prototype,
+    isPlainObject_objectProto = Object.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var isPlainObject_hasOwnProperty = isPlainObject_objectProto.hasOwnProperty;
+
+/** Used to infer the `Object` constructor. */
+var objectCtorString = funcToString.call(Object);
+
+/**
+ * Checks if `value` is a plain object, that is, an object created by the
+ * `Object` constructor or one with a `[[Prototype]]` of `null`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.8.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ * }
+ *
+ * _.isPlainObject(new Foo);
+ * // => false
+ *
+ * _.isPlainObject([1, 2, 3]);
+ * // => false
+ *
+ * _.isPlainObject({ 'x': 0, 'y': 0 });
+ * // => true
+ *
+ * _.isPlainObject(Object.create(null));
+ * // => true
+ */
+function isPlainObject(value) {
+  if (!lodash_es_isObjectLike(value) || _baseGetTag(value) != objectTag) {
+    return false;
+  }
+  var proto = _getPrototype(value);
+  if (proto === null) {
+    return true;
+  }
+  var Ctor = isPlainObject_hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
+    funcToString.call(Ctor) == objectCtorString;
+}
+
+/* harmony default export */ var lodash_es_isPlainObject = (isPlainObject);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_listCacheClear.js
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+  this.size = 0;
+}
+
+/* harmony default export */ var _listCacheClear = (listCacheClear);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/eq.js
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+/* harmony default export */ var lodash_es_eq = (eq);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_assocIndexOf.js
+
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (lodash_es_eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+/* harmony default export */ var _assocIndexOf = (assocIndexOf);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_listCacheDelete.js
+
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype;
+
+/** Built-in value references. */
+var splice = arrayProto.splice;
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = _assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  --this.size;
+  return true;
+}
+
+/* harmony default export */ var _listCacheDelete = (listCacheDelete);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_listCacheGet.js
+
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = _assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+/* harmony default export */ var _listCacheGet = (listCacheGet);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_listCacheHas.js
+
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return _assocIndexOf(this.__data__, key) > -1;
+}
+
+/* harmony default export */ var _listCacheHas = (listCacheHas);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_listCacheSet.js
+
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = _assocIndexOf(data, key);
+
+  if (index < 0) {
+    ++this.size;
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+/* harmony default export */ var _listCacheSet = (listCacheSet);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_ListCache.js
+
+
+
+
+
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = _listCacheClear;
+ListCache.prototype['delete'] = _listCacheDelete;
+ListCache.prototype.get = _listCacheGet;
+ListCache.prototype.has = _listCacheHas;
+ListCache.prototype.set = _listCacheSet;
+
+/* harmony default export */ var _ListCache = (ListCache);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_stackClear.js
+
+
+/**
+ * Removes all key-value entries from the stack.
+ *
+ * @private
+ * @name clear
+ * @memberOf Stack
+ */
+function stackClear() {
+  this.__data__ = new _ListCache;
+  this.size = 0;
+}
+
+/* harmony default export */ var _stackClear = (stackClear);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_stackDelete.js
+/**
+ * Removes `key` and its value from the stack.
+ *
+ * @private
+ * @name delete
+ * @memberOf Stack
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function stackDelete(key) {
+  var data = this.__data__,
+      result = data['delete'](key);
+
+  this.size = data.size;
+  return result;
+}
+
+/* harmony default export */ var _stackDelete = (stackDelete);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_stackGet.js
+/**
+ * Gets the stack value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Stack
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function stackGet(key) {
+  return this.__data__.get(key);
+}
+
+/* harmony default export */ var _stackGet = (stackGet);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_stackHas.js
+/**
+ * Checks if a stack value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Stack
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function stackHas(key) {
+  return this.__data__.has(key);
+}
+
+/* harmony default export */ var _stackHas = (stackHas);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/isObject.js
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
+}
+
+/* harmony default export */ var lodash_es_isObject = (isObject);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/isFunction.js
+
+
+
+/** `Object#toString` result references. */
+var asyncTag = '[object AsyncFunction]',
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    proxyTag = '[object Proxy]';
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  if (!lodash_es_isObject(value)) {
+    return false;
+  }
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 9 which returns 'object' for typed arrays and other constructors.
+  var tag = _baseGetTag(value);
+  return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
+}
+
+/* harmony default export */ var lodash_es_isFunction = (isFunction);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_coreJsData.js
+
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = _root["a" /* default */]['__core-js_shared__'];
+
+/* harmony default export */ var _coreJsData = (coreJsData);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_isMasked.js
+
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(_coreJsData && _coreJsData.keys && _coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+/* harmony default export */ var _isMasked = (isMasked);
+
+// CONCATENATED MODULE: ./node_modules/lodash-es/_toSource.js
+/** Used for built-in method references. */
+var _toSource_funcProto = Function.prototype;
+
+
+
+// CONCATENATED MODULE: ./src/DatasetElement/index.js
+function DatasetElement_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+
+
+
+
+
+
+var DatasetElement_DatasetElement = function DatasetElement(props) {
+  var authorized = props.authorized,
+      imagePath = props.imagePath,
+      element = DatasetElement_objectWithoutPropertiesLoose(props, ["authorized", "imagePath"]);
+
+  var downloadEnabled = imagePath + "/download_green.png";
+  var downloadDisabled = imagePath + "/download_gray.png";
+  var statusCONP = imagePath + "/canada.svg";
+  var authIcons = [];
+
+  switch (element.authorizations) {
+    case 'restricted':
+      authIcons.push( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
+        icon: faUserAlt,
+        color: "dimgray",
+        size: "lg"
+      }), " - CONP account required"));
+      break;
+
+    case 'private':
+      authIcons.push( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
+        icon: faUserLock,
+        color: "dimgray",
+        size: "lg"
+      }), " - Third-party account required"));
+      break;
+
+    default:
+      break;
+  }
+
   var ciBadges = [];
   var color;
 

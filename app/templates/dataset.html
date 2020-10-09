@@ -9,6 +9,12 @@
 
 <!-- ADD JSON-LD DESCRIPTOR -->
 <script type="application/ld+json">{{ metadata.schema_org_metadata | tojson }}</script>
+
+<script type="text/javascript">
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
 {% endblock %}
 
 {% block contenttitle %}
@@ -48,8 +54,7 @@
     {% for d in metadata.parentDatasets %}
     {% if d is defined %}
     {% set href = "/dataset?id=projects/" ~ d %}
-    <span class="mr-1"><a class="badge badge-primary"
-        href="{{ href }}">{{ d }}</a></span>
+    <span class="mr-1"><a class="badge badge-primary" href="{{ href }}">{{ d }}</a></span>
     {% endif %}
     {% endfor %}</p>
   {% endif %}
@@ -57,46 +62,60 @@
   <p><strong>Derived Datasets: </strong>
     {% for d in metadata.childDatasets %}
     {% set href = "/dataset?id=" ~ d.child_dataset_id %}
-    <span class="mr-1"><a class="badge badge-primary"
-        href="{{ href }}">{{ d.name }}</a></span>
+    <span class="mr-1"><a class="badge badge-primary" href="{{ href }}">{{ d.name }}</a></span>
     {% endfor %}</p>
   {% endif %}
 
   {% if metadata.primaryPublications is defined and metadata.primaryPublications is not none %}
   {% if metadata.primaryPublications|length > 1 %}
-    <p>
-      <strong>Primary Publications: </strong>
-      {% for p in metadata.primaryPublications %}
-        <ul>
-          <li>
-            {{p.title}} {{p.author}} <em>{{p.journal}}</em>
-            {% if p.doi is defined %}
-              <a target="_blank" rel="noopener noreferrer" href="{{ p.doi }}">{{ p.doi }}</a>
-            {% endif %}
-          </li>
-        </ul>
-      {% endfor %}
-    </p>
-  {% elif metadata.primaryPublications|length == 1 %}
-    <p>
-      <strong>Primary Publication: </strong>
-      {{metadata.primaryPublications[0].title}}
-      {{metadata.primaryPublications[0].author}}
-      <em>{{metadata.primaryPublications[0].journal}}</em>
-      {% if metadata.primaryPublications[0].doi is defined %}
-        <a target="_blank" rel="noopener noreferrer"
-           href="{{ metadata.primaryPublications[0].doi }}">
-          {{ metadata.primaryPublications[0].doi }}
-        </a>
+  <p>
+    <strong>Primary Publications: </strong>
+    {% for p in metadata.primaryPublications %}
+  <ul>
+    <li>
+      {{p.title}} {{p.author}} <em>{{p.journal}}</em>
+      {% if p.doi is defined %}
+      <a target="_blank" rel="noopener noreferrer" href="{{ p.doi }}">{{ p.doi }}</a>
       {% endif %}
-    </p>
+    </li>
+  </ul>
+  {% endfor %}
+  </p>
+  {% elif metadata.primaryPublications|length == 1 %}
+  <p>
+    <strong>Primary Publication: </strong>
+    {{metadata.primaryPublications[0].title}}
+    {{metadata.primaryPublications[0].author}}
+    <em>{{metadata.primaryPublications[0].journal}}</em>
+    {% if metadata.primaryPublications[0].doi is defined %}
+    <a target="_blank" rel="noopener noreferrer" href="{{ metadata.primaryPublications[0].doi }}">
+      {{ metadata.primaryPublications[0].doi }}
+    </a>
+    {% endif %}
+  </p>
   {% endif %}
   {% endif %}
 </div>
 
-
 <div class="d-flex flex-column p-2">
-  <h2>Dataset Download Instructions</h2>
+  <div class="d-flex flex-row align-items-center">
+    <h2 class="px-2">Dataset Download Instructions</h2>
+    <a class="px-2" target="_blank" rel="noopener noreferrer" href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master">
+      <img src="{{ ciBadgeUrl }}" alt="CircleCI status" />
+    </a>
+    <div>
+      <button type="button" class="btn btn-default p-0" data-toggle="tooltip" data-placement="right" title="The CONP integrates datasets stored in multiple platforms, to accommodate the various governance models adopted by
+          diverse research groups. While this decentralized architecture nicely fits with open-science goals, it also has
+          challenges, as the availability of dataset storage locations may fluctuate. For this reason, CONP datasets are
+          periodically tested (every few hours), to ensure a satisfying user experience. This status badge shows the status of
+          the dataset as returned by the latest iteration of the tests. In general, it gives a good indication whether data
+          download can expected to succeed. In some cases, however, status may flicker due to temporary network glitches,
+          transient misconfiguration or other issues. In any case, the CONP team is working hard to ensure the
+          high-availability of the datasets present in the platform!">
+        <span style="font-size: 1em; color: Gray;"><i class="fa fa-question"></i></span>
+      </button>
+    </div>
+  </div>
   {% if data.authorizations == "private" %}
   <div class="alert alert-info" role="alert">
     <strong>Note: </strong>an account is required to access this dataset. Please follow the Source URL and request an
@@ -184,7 +203,7 @@
 
 <script type="text/javascript">
 
-  const element = {{ data| tojson}};
+  const element = {{ data | tojson }};
   element.showDownload = true;
   const reactElement = React.createElement(CONPReact.DatasetElement, element);
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));
