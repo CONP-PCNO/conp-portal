@@ -1,26 +1,24 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { useDebounce } from "react-use";
-import * as qs from "query-string";
 
 import Highcharts from "highcharts";
-require('highcharts/highcharts-more.js')(Highcharts);
 import HighchartsReact from 'highcharts-react-official'
+require('highcharts/highcharts-more.js')(Highcharts);
 
 const defaultOptions = {
 
     chart: {
         type: 'packedbubble',
-        //styledMode: true,
         backgroundColor: '#FFF',
-        height: '40%'
+        height: '50%',
+        spacing: [0, 0, 0, 0],
+        margin: [0, 0, 0, 0]
     },
     credits: {
         enabled: false
     },
 
     title: {
-        text: 'Most Popular Dataset Modalities'
+        text: 'Dataset Modalities by Keyword'
     },
 
     tooltip: {
@@ -31,16 +29,13 @@ const defaultOptions = {
     plotOptions: {
         packedbubble: {
             color: Highcharts.getOptions().colors[0],
-            minSize: '20%',
+            minSize: '10%',
             maxSize: '100%',
             zMin: 0,
-            zMax: 30,
+            zMax: 20,
             layoutAlgorithm: {
-                gravitationalConstant: 0.1,
-                splitSeries: true,
-                seriesInteraction: false,
-                dragBetweenSeries: true,
-                parentNodeLimit: true
+                gravitationalConstant: 0.02,
+                splitSeries: false,
             },
             dataLabels: {
                 enabled: true,
@@ -101,7 +96,7 @@ const DatasetModalities = ({ datasets, pipelines, ...props }) => {
 
             const modalitiesArr = dataset.modalities.split(", ");
 
-            modalitiesArr.map(modality => {
+            modalitiesArr.forEach(modality => {
                 addOrIncreaseDatapoint(chartData.datasets, modality);
             })
         })

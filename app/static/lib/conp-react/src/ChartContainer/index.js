@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useDebounce } from "react-use";
-import * as qs from "query-string";
 import TotalDatasetsPipelines from '../charts/TotalDatasetsPipelines';
 import DatasetModalities from '../charts/DatasetModalities';
 import PipelineTags from '../charts/PipelineTags'
@@ -89,9 +87,9 @@ class ChartContainer extends React.Component {
             <div>
                 {this.props.showToggle ? <div className="d-flex flex-row-reverse">
                     <div className="dropdown show" style={{ zIndex: 1 }}>
-                        <a className="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button className="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Select Chart
-                        </a>
+                        </button>
 
                         <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
                             <button className="dropdown-item" type="button" onClick={(e) => {this.toggleChart(e, 1)}}>Total Datasets and Pipelines</button>

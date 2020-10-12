@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { useDebounce } from "react-use";
-import * as qs from "query-string";
 
 import Highcharts from "highcharts";
 import HighchartsReact from 'highcharts-react-official'
@@ -120,7 +117,7 @@ const TotalDatasetsPipelines = ({ datasets, pipelines, ...props }) => {
             pipelines: {}
         };
 
-        datasets.elements.map(element => {
+        datasets.elements.forEach(element => {
             const dateAdded = new Date(element.dateAdded);
 
             if (!chartData.datasets[dateAdded.getFullYear()]) {
@@ -145,13 +142,13 @@ const TotalDatasetsPipelines = ({ datasets, pipelines, ...props }) => {
 
         const today = new Date();
 
-        Object.keys(chartData.datasets).map(year => {
+        Object.keys(chartData.datasets).forEach(year => {
             for (var i = 1; i <= 12; i++) {
-                if (year == today.getFullYear() && i == today.getMonth() + 2) {
+                if (year === today.getFullYear() && i === today.getMonth() + 2) {
                     break;
                 }
                 if (Object.keys(chartData.datasets).includes((year - 1).toString()) &&
-                    !Object.keys(chartData.datasets[year]).includes(`${i}`) && i == 1) {
+                    !Object.keys(chartData.datasets[year]).includes(`${i}`) && i === 1) {
                     chartData.datasets[year][i] = 0;
                 }
                 if (Object.keys(chartData.datasets[year]).includes(`${i - 1}`) &&
@@ -161,7 +158,7 @@ const TotalDatasetsPipelines = ({ datasets, pipelines, ...props }) => {
             }
         });
 
-        pipelines.elements.map(element => {
+        pipelines.elements.forEach(element => {
             const dateAdded = new Date(element.publicationdate);
 
             if (!chartData.pipelines[dateAdded.getFullYear()]) {
@@ -176,13 +173,13 @@ const TotalDatasetsPipelines = ({ datasets, pipelines, ...props }) => {
             }
         });
 
-        Object.keys(chartData.pipelines).map(year => {
+        Object.keys(chartData.pipelines).forEach(year => {
             for (var i = 1; i <= 12; i++) {
-                if (year == today.getFullYear() && i == today.getMonth() + 2) {
+                if (year === today.getFullYear() && i === today.getMonth() + 2) {
                     break;
                 }
                 if (Object.keys(chartData.pipelines).includes((year - 1).toString()) &&
-                    !Object.keys(chartData.pipelines[year]).includes(`${i}`) && i == 1) {
+                    !Object.keys(chartData.pipelines[year]).includes(`${i}`) && i === 1) {
                     chartData.pipelines[year][i] = 0;
                 }
                 if (Object.keys(chartData.pipelines[year]).includes(`${i - 1}`) &&
