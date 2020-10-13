@@ -4,14 +4,28 @@ import Highcharts from "highcharts";
 import HighchartsReact from 'highcharts-react-official'
 require('highcharts/highcharts-more.js')(Highcharts);
 
+const getCircularReplacer = () => {
+    const seen = new WeakSet();
+    return (key, value) => {
+      if (typeof value === "object" && value !== null) {
+        if (seen.has(value)) {
+          return;
+        }
+        seen.add(value);
+      }
+      return value;
+    };
+  };
+  
 const defaultOptions = {
 
     chart: {
         type: 'packedbubble',
         backgroundColor: '#FFF',
-        height: '50%',
+        height: '100%',
         spacing: [0, 0, 0, 0],
-        margin: [0, 0, 0, 0]
+        margin: [0, 0, 0, 0],
+        colors: ["#EA2627", "#A5A5A5", "#FFC000", "#207EA0", "#898989", "#5E5E5E"]
     },
     credits: {
         enabled: false
@@ -28,7 +42,7 @@ const defaultOptions = {
 
     plotOptions: {
         packedbubble: {
-            color: Highcharts.getOptions().colors[0],
+            color: "#EA2627",
             minSize: '10%',
             maxSize: '100%',
             zMin: 0,
@@ -50,7 +64,8 @@ const defaultOptions = {
                     textOutline: 'none',
                     fontWeight: 'normal'
                 }
-            }
+            },
+            allowPointSelect: true
         }
     },
 

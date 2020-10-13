@@ -22,25 +22,23 @@
 {% block appcontent %}
 
 <div class="d-flex flex-column">
-  <div class="p-2 flex-fill">
-    <div class="card" data-type="dashboard">
-      <div id="analytics-chart-1">
-        
-        <script type="text/javascript">
-          const analyticsChart1 = React.createElement(CONPReact.ChartContainer, {
-            datasetsURL: "{{ url_for('search.dataset_search') }}",
-            pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
-            toggleState: 1
-          });
-          ReactDOM.render(analyticsChart1, document.querySelector("#analytics-chart-1"));
-        </script>
+  <div class="card m-2" data-type="dashboard">
+    <div id="analytics-chart-1">
 
-      </div>
+      <script type="text/javascript">
+        const analyticsChart1 = React.createElement(CONPReact.ChartContainer, {
+          datasetsURL: "{{ url_for('search.dataset_search') }}",
+          pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
+          toggleState: 1
+        });
+        ReactDOM.render(analyticsChart1, document.querySelector("#analytics-chart-1"));
+      </script>
+
     </div>
   </div>
 
-  <div class="p-2 flex-fill">
-    <div class="card w-100 mx-1" data-type="dashboard">
+  <div class="d-flex flex-row">
+    <div class="card flex-grow-1 m-2" data-type="dashboard">
       <div id="analytics-chart-2">
 
         <script type="text/javascript">
@@ -52,11 +50,9 @@
           ReactDOM.render(analyticsChart2, document.querySelector("#analytics-chart-2"));
         </script>
 
-        </div>
+      </div>
     </div>
-  </div>
-  <div class="p-2 d-flex flex-wrap">
-    <div class="card w-100 mx-1" data-type="dashboard">
+    <div class="card flex-grow-1 m-2" data-type="dashboard">
       <div id="analytics-chart-3">
 
         <script type="text/javascript">

@@ -9,7 +9,7 @@ const defaultOptions = {
     chart: {
         type: 'packedbubble',
         backgroundColor: '#FFF',
-        height: '50%',
+        height: '100%',
         spacing: [0, 0, 0, 0],
         margin: [0, 0, 0, 0]
     },
@@ -28,7 +28,7 @@ const defaultOptions = {
 
     plotOptions: {
         packedbubble: {
-            color: Highcharts.getOptions().colors[1],
+            color: "#FFC000",
             minSize: '10%',
             maxSize: '100%',
             zMin: 0,

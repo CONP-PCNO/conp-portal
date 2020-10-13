@@ -43059,13 +43059,29 @@ function DatasetModalities_objectWithoutPropertiesLoose(source, excluded) { if (
 
 __webpack_require__(67)(highcharts_default.a);
 
+var getCircularReplacer = function getCircularReplacer() {
+  var seen = new WeakSet();
+  return function (key, value) {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+
+      seen.add(value);
+    }
+
+    return value;
+  };
+};
+
 var DatasetModalities_defaultOptions = {
   chart: {
     type: 'packedbubble',
     backgroundColor: '#FFF',
-    height: '50%',
+    height: '100%',
     spacing: [0, 0, 0, 0],
-    margin: [0, 0, 0, 0]
+    margin: [0, 0, 0, 0],
+    colors: ["#EA2627", "#A5A5A5", "#FFC000", "#207EA0", "#898989", "#5E5E5E"]
   },
   credits: {
     enabled: false
@@ -43079,7 +43095,7 @@ var DatasetModalities_defaultOptions = {
   },
   plotOptions: {
     packedbubble: {
-      color: highcharts_default.a.getOptions().colors[0],
+      color: "#EA2627",
       minSize: '10%',
       maxSize: '100%',
       zMin: 0,
@@ -43101,7 +43117,8 @@ var DatasetModalities_defaultOptions = {
           textOutline: 'none',
           fontWeight: 'normal'
         }
-      }
+      },
+      allowPointSelect: true
     }
   },
   series: []
@@ -43189,7 +43206,7 @@ var PipelineTags_defaultOptions = {
   chart: {
     type: 'packedbubble',
     backgroundColor: '#FFF',
-    height: '50%',
+    height: '100%',
     spacing: [0, 0, 0, 0],
     margin: [0, 0, 0, 0]
   },
@@ -43205,7 +43222,7 @@ var PipelineTags_defaultOptions = {
   },
   plotOptions: {
     packedbubble: {
-      color: highcharts_default.a.getOptions().colors[1],
+      color: "#FFC000",
       minSize: '10%',
       maxSize: '100%',
       zMin: 0,
