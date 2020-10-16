@@ -41,6 +41,19 @@ const defaultOptions = {
     },
 
     plotOptions: {
+        series:{
+            allowPointSelect: true,
+            point:{
+                events:{
+                  select: function(e){
+                    console.log(e)
+                    // eslint-disable-next-line no-restricted-globals
+                    location.assign(`${location.protocol}${location.host}/search?modalities=[${e.target.name}]`)
+                  }
+                }
+              }
+          },
+
         packedbubble: {
             color: "#EA2627",
             minSize: '10%',
