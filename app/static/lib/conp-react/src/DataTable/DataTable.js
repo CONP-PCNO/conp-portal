@@ -2,10 +2,6 @@ import * as R from "ramda";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserLock } from '@fortawesome/free-solid-svg-icons'
-import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
-
 const DataTable = ({
   authorized,
   sortKeys,
@@ -20,11 +16,11 @@ const DataTable = ({
   const [filters, setFilters] = useState([
     {
       key: "modalities",
-      values: []
+      values: query.modalities || []
     },
     {
       key: "formats",
-      values: []
+      values: query.formats || []
     }
   ]);
 
@@ -32,7 +28,7 @@ const DataTable = ({
     const e = event.target.value;
     const filter = e.split(".");
     const newFilters = filters;
-    newFilters.map(f => {
+    newFilters.forEach(f => {
       if (f.key === filter[0]) {
         if (f.values.includes(filter[1])) {
           f.values.splice(f.values.indexOf(filter[1]), 1);
@@ -45,8 +41,8 @@ const DataTable = ({
     setFilters(newFilters);
     setQuery({
       ...query,
-      modalities: filters.filter(f => f["key"] == "modalities")[0].values,
-      formats: filters.filter(f => f["key"] == "formats")[0].values,
+      modalities: filters.filter(f => f["key"] === "modalities")[0].values,
+      formats: filters.filter(f => f["key"] === "formats")[0].values,
       page: 1
     })
   }
@@ -130,18 +126,18 @@ const DataTable = ({
             </div>
           </span>)
           </div>
-        {renderElement.name == "DatasetElement" ?
+        {renderElement.name === "DatasetElement" ?
           <div className="d-flex p-2 justify-content-end">
             <div className="dropdown p-2">
               <button className="btn btn-secondary dropdown-toggle p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                 Modality:
               </button>
               <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                {filterKeys.filter(f => f["key"] == "modalities").length > 0 ?
-                  filterKeys.filter(f => f["key"] == "modalities")[0]["values"].map(modality => (
+                {filterKeys.filter(f => f["key"] === "modalities").length > 0 ?
+                  filterKeys.filter(f => f["key"] === "modalities")[0]["values"].map(modality => (
                     modality !== '' ?
                       <div key={modality.id} className="dropdown-item ml-2">
-                        <input className="form-check-input" type="checkbox" value={"modalities." + modality} id={"filter" + modality} onChange={handleChange} />
+                        <input className="form-check-input" type="checkbox" checked={filters.filter(f=>f["key"] === "modalities")[0]["values"].includes(modality)} value={"modalities." + modality} id={"filter" + modality} onChange={handleChange} />
                         <label className="form-check-label" htmlFor={"filter" + modality}>
                           {modality}
                         </label>
@@ -156,11 +152,11 @@ const DataTable = ({
                 File Format:
               </button>
               <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                {filterKeys.filter(f => f["key"] == "formats").length > 0 ?
-                  filterKeys.filter(f => f["key"] == "formats")[0]["values"].map(format => (
+                {filterKeys.filter(f => f["key"] === "formats").length > 0 ?
+                  filterKeys.filter(f => f["key"] === "formats")[0]["values"].map(format => (
                     format !== '' ?
                       <div key={format.id} className="dropdown-item ml-2">
-                        <input className="form-check-input" type="checkbox" value={"formats." + format} id={"filter" + format} onChange={handleChange} />
+                        <input className="form-check-input" type="checkbox" checked={filters.filter(f=>f["key"] === "formats")[0]["values"].includes(format)} value={"formats." + format} id={"filter" + format} onChange={handleChange} />
                         <label className="form-check-label" htmlFor={"filter" + format}>
                           {format}
                         </label>

@@ -7574,7 +7574,7 @@ function _typeof(obj) {
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(238);
+module.exports = __webpack_require__(237);
 
 
 /***/ }),
@@ -12400,7 +12400,7 @@ var autoReplace = function autoReplace() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(41), __webpack_require__(65).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(41), __webpack_require__(66).setImmediate))
 
 /***/ }),
 /* 63 */
@@ -12417,76 +12417,6 @@ if (true) {
 /***/ }),
 /* 64 */,
 /* 65 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
-            (typeof self !== "undefined" && self) ||
-            window;
-var apply = Function.prototype.apply;
-
-// DOM APIs, for completeness
-
-exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
-};
-exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
-};
-exports.clearTimeout =
-exports.clearInterval = function(timeout) {
-  if (timeout) {
-    timeout.close();
-  }
-};
-
-function Timeout(id, clearFn) {
-  this._id = id;
-  this._clearFn = clearFn;
-}
-Timeout.prototype.unref = Timeout.prototype.ref = function() {};
-Timeout.prototype.close = function() {
-  this._clearFn.call(scope, this._id);
-};
-
-// Does not start the time, just sets up the members needed.
-exports.enroll = function(item, msecs) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = msecs;
-};
-
-exports.unenroll = function(item) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = -1;
-};
-
-exports._unrefActive = exports.active = function(item) {
-  clearTimeout(item._idleTimeoutId);
-
-  var msecs = item._idleTimeout;
-  if (msecs >= 0) {
-    item._idleTimeoutId = setTimeout(function onTimeout() {
-      if (item._onTimeout)
-        item._onTimeout();
-    }, msecs);
-  }
-};
-
-// setimmediate attaches itself to the global object
-__webpack_require__(237);
-// On some exotic environments, it's not clear which object `setimmediate` was
-// able to install onto.  Search each possibility in the same order as the
-// `setimmediate` library.
-exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
-                       (typeof global !== "undefined" && global.setImmediate) ||
-                       (this && this.setImmediate);
-exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
-                         (typeof global !== "undefined" && global.clearImmediate) ||
-                         (this && this.clearImmediate);
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(41)))
-
-/***/ }),
-/* 66 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -12674,6 +12604,76 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
+            (typeof self !== "undefined" && self) ||
+            window;
+var apply = Function.prototype.apply;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) {
+  if (timeout) {
+    timeout.close();
+  }
+};
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(scope, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// setimmediate attaches itself to the global object
+__webpack_require__(241);
+// On some exotic environments, it's not clear which object `setimmediate` was
+// able to install onto.  Search each possibility in the same order as the
+// `setimmediate` library.
+exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
+                       (typeof global !== "undefined" && global.setImmediate) ||
+                       (this && this.setImmediate);
+exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
+                         (typeof global !== "undefined" && global.clearImmediate) ||
+                         (this && this.clearImmediate);
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(41)))
 
 /***/ }),
 /* 67 */
@@ -28047,7 +28047,7 @@ exports.addon = function (renderer) {
 "use strict";
 
 
-var removeRule = __webpack_require__(241).removeRule;
+var removeRule = __webpack_require__(240).removeRule;
 
 exports.addon = function (renderer) {
     // VCSSOM support only browser environment.
@@ -29653,7 +29653,7 @@ return index;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(66), __webpack_require__(65).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(65), __webpack_require__(66).setImmediate))
 
 /***/ }),
 /* 211 */
@@ -30131,199 +30131,6 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 /* 237 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
-    "use strict";
-
-    if (global.setImmediate) {
-        return;
-    }
-
-    var nextHandle = 1; // Spec says greater than zero
-    var tasksByHandle = {};
-    var currentlyRunningATask = false;
-    var doc = global.document;
-    var registerImmediate;
-
-    function setImmediate(callback) {
-      // Callback can either be a function or a string
-      if (typeof callback !== "function") {
-        callback = new Function("" + callback);
-      }
-      // Copy function arguments
-      var args = new Array(arguments.length - 1);
-      for (var i = 0; i < args.length; i++) {
-          args[i] = arguments[i + 1];
-      }
-      // Store and register the task
-      var task = { callback: callback, args: args };
-      tasksByHandle[nextHandle] = task;
-      registerImmediate(nextHandle);
-      return nextHandle++;
-    }
-
-    function clearImmediate(handle) {
-        delete tasksByHandle[handle];
-    }
-
-    function run(task) {
-        var callback = task.callback;
-        var args = task.args;
-        switch (args.length) {
-        case 0:
-            callback();
-            break;
-        case 1:
-            callback(args[0]);
-            break;
-        case 2:
-            callback(args[0], args[1]);
-            break;
-        case 3:
-            callback(args[0], args[1], args[2]);
-            break;
-        default:
-            callback.apply(undefined, args);
-            break;
-        }
-    }
-
-    function runIfPresent(handle) {
-        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
-        // So if we're currently running a task, we'll need to delay this invocation.
-        if (currentlyRunningATask) {
-            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
-            // "too much recursion" error.
-            setTimeout(runIfPresent, 0, handle);
-        } else {
-            var task = tasksByHandle[handle];
-            if (task) {
-                currentlyRunningATask = true;
-                try {
-                    run(task);
-                } finally {
-                    clearImmediate(handle);
-                    currentlyRunningATask = false;
-                }
-            }
-        }
-    }
-
-    function installNextTickImplementation() {
-        registerImmediate = function(handle) {
-            process.nextTick(function () { runIfPresent(handle); });
-        };
-    }
-
-    function canUsePostMessage() {
-        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
-        // where `global.postMessage` means something completely different and can't be used for this purpose.
-        if (global.postMessage && !global.importScripts) {
-            var postMessageIsAsynchronous = true;
-            var oldOnMessage = global.onmessage;
-            global.onmessage = function() {
-                postMessageIsAsynchronous = false;
-            };
-            global.postMessage("", "*");
-            global.onmessage = oldOnMessage;
-            return postMessageIsAsynchronous;
-        }
-    }
-
-    function installPostMessageImplementation() {
-        // Installs an event handler on `global` for the `message` event: see
-        // * https://developer.mozilla.org/en/DOM/window.postMessage
-        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
-
-        var messagePrefix = "setImmediate$" + Math.random() + "$";
-        var onGlobalMessage = function(event) {
-            if (event.source === global &&
-                typeof event.data === "string" &&
-                event.data.indexOf(messagePrefix) === 0) {
-                runIfPresent(+event.data.slice(messagePrefix.length));
-            }
-        };
-
-        if (global.addEventListener) {
-            global.addEventListener("message", onGlobalMessage, false);
-        } else {
-            global.attachEvent("onmessage", onGlobalMessage);
-        }
-
-        registerImmediate = function(handle) {
-            global.postMessage(messagePrefix + handle, "*");
-        };
-    }
-
-    function installMessageChannelImplementation() {
-        var channel = new MessageChannel();
-        channel.port1.onmessage = function(event) {
-            var handle = event.data;
-            runIfPresent(handle);
-        };
-
-        registerImmediate = function(handle) {
-            channel.port2.postMessage(handle);
-        };
-    }
-
-    function installReadyStateChangeImplementation() {
-        var html = doc.documentElement;
-        registerImmediate = function(handle) {
-            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
-            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
-            var script = doc.createElement("script");
-            script.onreadystatechange = function () {
-                runIfPresent(handle);
-                script.onreadystatechange = null;
-                html.removeChild(script);
-                script = null;
-            };
-            html.appendChild(script);
-        };
-    }
-
-    function installSetTimeoutImplementation() {
-        registerImmediate = function(handle) {
-            setTimeout(runIfPresent, 0, handle);
-        };
-    }
-
-    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
-    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
-    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
-
-    // Don't get fooled by e.g. browserify environments.
-    if ({}.toString.call(global.process) === "[object process]") {
-        // For Node.js before 0.9
-        installNextTickImplementation();
-
-    } else if (canUsePostMessage()) {
-        // For non-IE10 modern browsers
-        installPostMessageImplementation();
-
-    } else if (global.MessageChannel) {
-        // For web workers, where supported
-        installMessageChannelImplementation();
-
-    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
-        // For IE 6–8
-        installReadyStateChangeImplementation();
-
-    } else {
-        // For older browsers
-        installSetTimeoutImplementation();
-    }
-
-    attachTo.setImmediate = setImmediate;
-    attachTo.clearImmediate = clearImmediate;
-}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(41), __webpack_require__(66)))
-
-/***/ }),
-/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -31077,13 +30884,13 @@ try {
 
 
 /***/ }),
-/* 239 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var deselectCurrent = __webpack_require__(240);
+var deselectCurrent = __webpack_require__(239);
 
 var clipboardToIE11Formatting = {
   "text/plain": "Text",
@@ -31197,7 +31004,7 @@ module.exports = copy;
 
 
 /***/ }),
-/* 240 */
+/* 239 */
 /***/ (function(module, exports) {
 
 
@@ -31242,7 +31049,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 241 */
+/* 240 */
 /***/ (function(module, exports) {
 
 function removeRule (rule) {
@@ -31261,6 +31068,199 @@ function removeRule (rule) {
 
 exports.removeRule = removeRule;
 
+
+/***/ }),
+/* 241 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
+    "use strict";
+
+    if (global.setImmediate) {
+        return;
+    }
+
+    var nextHandle = 1; // Spec says greater than zero
+    var tasksByHandle = {};
+    var currentlyRunningATask = false;
+    var doc = global.document;
+    var registerImmediate;
+
+    function setImmediate(callback) {
+      // Callback can either be a function or a string
+      if (typeof callback !== "function") {
+        callback = new Function("" + callback);
+      }
+      // Copy function arguments
+      var args = new Array(arguments.length - 1);
+      for (var i = 0; i < args.length; i++) {
+          args[i] = arguments[i + 1];
+      }
+      // Store and register the task
+      var task = { callback: callback, args: args };
+      tasksByHandle[nextHandle] = task;
+      registerImmediate(nextHandle);
+      return nextHandle++;
+    }
+
+    function clearImmediate(handle) {
+        delete tasksByHandle[handle];
+    }
+
+    function run(task) {
+        var callback = task.callback;
+        var args = task.args;
+        switch (args.length) {
+        case 0:
+            callback();
+            break;
+        case 1:
+            callback(args[0]);
+            break;
+        case 2:
+            callback(args[0], args[1]);
+            break;
+        case 3:
+            callback(args[0], args[1], args[2]);
+            break;
+        default:
+            callback.apply(undefined, args);
+            break;
+        }
+    }
+
+    function runIfPresent(handle) {
+        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
+        // So if we're currently running a task, we'll need to delay this invocation.
+        if (currentlyRunningATask) {
+            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
+            // "too much recursion" error.
+            setTimeout(runIfPresent, 0, handle);
+        } else {
+            var task = tasksByHandle[handle];
+            if (task) {
+                currentlyRunningATask = true;
+                try {
+                    run(task);
+                } finally {
+                    clearImmediate(handle);
+                    currentlyRunningATask = false;
+                }
+            }
+        }
+    }
+
+    function installNextTickImplementation() {
+        registerImmediate = function(handle) {
+            process.nextTick(function () { runIfPresent(handle); });
+        };
+    }
+
+    function canUsePostMessage() {
+        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
+        // where `global.postMessage` means something completely different and can't be used for this purpose.
+        if (global.postMessage && !global.importScripts) {
+            var postMessageIsAsynchronous = true;
+            var oldOnMessage = global.onmessage;
+            global.onmessage = function() {
+                postMessageIsAsynchronous = false;
+            };
+            global.postMessage("", "*");
+            global.onmessage = oldOnMessage;
+            return postMessageIsAsynchronous;
+        }
+    }
+
+    function installPostMessageImplementation() {
+        // Installs an event handler on `global` for the `message` event: see
+        // * https://developer.mozilla.org/en/DOM/window.postMessage
+        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
+
+        var messagePrefix = "setImmediate$" + Math.random() + "$";
+        var onGlobalMessage = function(event) {
+            if (event.source === global &&
+                typeof event.data === "string" &&
+                event.data.indexOf(messagePrefix) === 0) {
+                runIfPresent(+event.data.slice(messagePrefix.length));
+            }
+        };
+
+        if (global.addEventListener) {
+            global.addEventListener("message", onGlobalMessage, false);
+        } else {
+            global.attachEvent("onmessage", onGlobalMessage);
+        }
+
+        registerImmediate = function(handle) {
+            global.postMessage(messagePrefix + handle, "*");
+        };
+    }
+
+    function installMessageChannelImplementation() {
+        var channel = new MessageChannel();
+        channel.port1.onmessage = function(event) {
+            var handle = event.data;
+            runIfPresent(handle);
+        };
+
+        registerImmediate = function(handle) {
+            channel.port2.postMessage(handle);
+        };
+    }
+
+    function installReadyStateChangeImplementation() {
+        var html = doc.documentElement;
+        registerImmediate = function(handle) {
+            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
+            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
+            var script = doc.createElement("script");
+            script.onreadystatechange = function () {
+                runIfPresent(handle);
+                script.onreadystatechange = null;
+                html.removeChild(script);
+                script = null;
+            };
+            html.appendChild(script);
+        };
+    }
+
+    function installSetTimeoutImplementation() {
+        registerImmediate = function(handle) {
+            setTimeout(runIfPresent, 0, handle);
+        };
+    }
+
+    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
+    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
+    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
+
+    // Don't get fooled by e.g. browserify environments.
+    if ({}.toString.call(global.process) === "[object process]") {
+        // For Node.js before 0.9
+        installNextTickImplementation();
+
+    } else if (canUsePostMessage()) {
+        // For non-IE10 modern browsers
+        installPostMessageImplementation();
+
+    } else if (global.MessageChannel) {
+        // For web workers, where supported
+        installMessageChannelImplementation();
+
+    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
+        // For IE 6–8
+        installReadyStateChangeImplementation();
+
+    } else {
+        // For older browsers
+        installSetTimeoutImplementation();
+    }
+
+    attachTo.setImmediate = setImmediate;
+    attachTo.clearImmediate = clearImmediate;
+}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(41), __webpack_require__(65)))
 
 /***/ }),
 /* 242 */
@@ -32362,395 +32362,8 @@ var external_root_React_commonjs2_react_commonjs_react_amd_react_default = /*#__
 var prop_types = __webpack_require__(2);
 var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
 
-// EXTERNAL MODULE: ./node_modules/@fortawesome/fontawesome-svg-core/index.es.js
-var index_es = __webpack_require__(62);
-
-// CONCATENATED MODULE: ./node_modules/@fortawesome/react-fontawesome/index.es.js
-
-
-
-
-function _typeof(obj) {
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-
-  return target;
-}
-
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-
-  var target = _objectWithoutPropertiesLoose(source, excluded);
-
-  var key, i;
-
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
-    }
-  }
-
-  return target;
-}
-
-function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
-}
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-    return arr2;
-  }
-}
-
-function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
-}
-
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
-}
-
-// Get CSS class list from a props object
-function classList(props) {
-  var _classes;
-
-  var spin = props.spin,
-      pulse = props.pulse,
-      fixedWidth = props.fixedWidth,
-      inverse = props.inverse,
-      border = props.border,
-      listItem = props.listItem,
-      flip = props.flip,
-      size = props.size,
-      rotation = props.rotation,
-      pull = props.pull; // map of CSS class names to properties
-
-  var classes = (_classes = {
-    'fa-spin': spin,
-    'fa-pulse': pulse,
-    'fa-fw': fixedWidth,
-    'fa-inverse': inverse,
-    'fa-border': border,
-    'fa-li': listItem,
-    'fa-flip-horizontal': flip === 'horizontal' || flip === 'both',
-    'fa-flip-vertical': flip === 'vertical' || flip === 'both'
-  }, _defineProperty(_classes, "fa-".concat(size), typeof size !== 'undefined' && size !== null), _defineProperty(_classes, "fa-rotate-".concat(rotation), typeof rotation !== 'undefined' && rotation !== null && rotation !== 0), _defineProperty(_classes, "fa-pull-".concat(pull), typeof pull !== 'undefined' && pull !== null), _defineProperty(_classes, 'fa-swap-opacity', props.swapOpacity), _classes); // map over all the keys in the classes object
-  // return an array of the keys where the value for the key is not null
-
-  return Object.keys(classes).map(function (key) {
-    return classes[key] ? key : null;
-  }).filter(function (key) {
-    return key;
-  });
-}
-
-// Camelize taken from humps
-// humps is copyright © 2012+ Dom Christie
-// Released under the MIT license.
-// Performant way to determine if object coerces to a number
-function _isNumerical(obj) {
-  obj = obj - 0; // eslint-disable-next-line no-self-compare
-
-  return obj === obj;
-}
-
-function camelize(string) {
-  if (_isNumerical(string)) {
-    return string;
-  } // eslint-disable-next-line no-useless-escape
-
-
-  string = string.replace(/[\-_\s]+(.)?/g, function (match, chr) {
-    return chr ? chr.toUpperCase() : '';
-  }); // Ensure 1st char is always lowercase
-
-  return string.substr(0, 1).toLowerCase() + string.substr(1);
-}
-
-function capitalize(val) {
-  return val.charAt(0).toUpperCase() + val.slice(1);
-}
-
-function styleToObject(style) {
-  return style.split(';').map(function (s) {
-    return s.trim();
-  }).filter(function (s) {
-    return s;
-  }).reduce(function (acc, pair) {
-    var i = pair.indexOf(':');
-    var prop = camelize(pair.slice(0, i));
-    var value = pair.slice(i + 1).trim();
-    prop.startsWith('webkit') ? acc[capitalize(prop)] = value : acc[prop] = value;
-    return acc;
-  }, {});
-}
-
-function index_es_convert(createElement, element) {
-  var extraProps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-  if (typeof element === 'string') {
-    return element;
-  }
-
-  var children = (element.children || []).map(function (child) {
-    return index_es_convert(createElement, child);
-  });
-  /* eslint-disable dot-notation */
-
-  var mixins = Object.keys(element.attributes || {}).reduce(function (acc, key) {
-    var val = element.attributes[key];
-
-    switch (key) {
-      case 'class':
-        acc.attrs['className'] = val;
-        delete element.attributes['class'];
-        break;
-
-      case 'style':
-        acc.attrs['style'] = styleToObject(val);
-        break;
-
-      default:
-        if (key.indexOf('aria-') === 0 || key.indexOf('data-') === 0) {
-          acc.attrs[key.toLowerCase()] = val;
-        } else {
-          acc.attrs[camelize(key)] = val;
-        }
-
-    }
-
-    return acc;
-  }, {
-    attrs: {}
-  });
-
-  var _extraProps$style = extraProps.style,
-      existingStyle = _extraProps$style === void 0 ? {} : _extraProps$style,
-      remaining = _objectWithoutProperties(extraProps, ["style"]);
-
-  mixins.attrs['style'] = _objectSpread2({}, mixins.attrs['style'], {}, existingStyle);
-  /* eslint-enable */
-
-  return createElement.apply(void 0, [element.tag, _objectSpread2({}, mixins.attrs, {}, remaining)].concat(_toConsumableArray(children)));
-}
-
-var PRODUCTION = false;
-
-try {
-  PRODUCTION = "production" === 'production';
-} catch (e) {}
-
-function log () {
-  if (!PRODUCTION && console && typeof console.error === 'function') {
-    var _console;
-
-    (_console = console).error.apply(_console, arguments);
-  }
-}
-
-// Normalize icon arguments
-function normalizeIconArgs(icon) {
-  // if the icon is null, there's nothing to do
-  if (icon === null) {
-    return null;
-  } // if the icon is an object and has a prefix and an icon name, return it
-
-
-  if (_typeof(icon) === 'object' && icon.prefix && icon.iconName) {
-    return icon;
-  } // if it's an array with length of two
-
-
-  if (Array.isArray(icon) && icon.length === 2) {
-    // use the first item as prefix, second as icon name
-    return {
-      prefix: icon[0],
-      iconName: icon[1]
-    };
-  } // if it's a string, use it as the icon name
-
-
-  if (typeof icon === 'string') {
-    return {
-      prefix: 'fas',
-      iconName: icon
-    };
-  }
-}
-
-// creates an object with a key of key
-// and a value of value
-// if certain conditions are met
-function objectWithKey(key, value) {
-  // if the value is a non-empty array
-  // or it's not an array but it is truthy
-  // then create the object with the key and the value
-  // if not, return an empty array
-  return Array.isArray(value) && value.length > 0 || !Array.isArray(value) && value ? _defineProperty({}, key, value) : {};
-}
-
-function FontAwesomeIcon(_ref) {
-  var forwardedRef = _ref.forwardedRef,
-      props = _objectWithoutProperties(_ref, ["forwardedRef"]);
-
-  var iconArgs = props.icon,
-      maskArgs = props.mask,
-      symbol = props.symbol,
-      className = props.className,
-      title = props.title;
-  var iconLookup = normalizeIconArgs(iconArgs);
-  var classes = objectWithKey('classes', [].concat(_toConsumableArray(classList(props)), _toConsumableArray(className.split(' '))));
-  var transform = objectWithKey('transform', typeof props.transform === 'string' ? index_es["b" /* parse */].transform(props.transform) : props.transform);
-  var mask = objectWithKey('mask', normalizeIconArgs(maskArgs));
-  var renderedIcon = Object(index_es["a" /* icon */])(iconLookup, _objectSpread2({}, classes, {}, transform, {}, mask, {
-    symbol: symbol,
-    title: title
-  }));
-
-  if (!renderedIcon) {
-    log('Could not find icon', iconLookup);
-    return null;
-  }
-
-  var abstract = renderedIcon.abstract;
-  var extraProps = {
-    ref: forwardedRef
-  };
-  Object.keys(props).forEach(function (key) {
-    // eslint-disable-next-line no-prototype-builtins
-    if (!FontAwesomeIcon.defaultProps.hasOwnProperty(key)) {
-      extraProps[key] = props[key];
-    }
-  });
-  return convertCurry(abstract[0], extraProps);
-}
-FontAwesomeIcon.displayName = 'FontAwesomeIcon';
-FontAwesomeIcon.propTypes = {
-  border: prop_types_default.a.bool,
-  className: prop_types_default.a.string,
-  mask: prop_types_default.a.oneOfType([prop_types_default.a.object, prop_types_default.a.array, prop_types_default.a.string]),
-  fixedWidth: prop_types_default.a.bool,
-  inverse: prop_types_default.a.bool,
-  flip: prop_types_default.a.oneOf(['horizontal', 'vertical', 'both']),
-  icon: prop_types_default.a.oneOfType([prop_types_default.a.object, prop_types_default.a.array, prop_types_default.a.string]),
-  listItem: prop_types_default.a.bool,
-  pull: prop_types_default.a.oneOf(['right', 'left']),
-  pulse: prop_types_default.a.bool,
-  rotation: prop_types_default.a.oneOf([0, 90, 180, 270]),
-  size: prop_types_default.a.oneOf(['lg', 'xs', 'sm', '1x', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x']),
-  spin: prop_types_default.a.bool,
-  symbol: prop_types_default.a.oneOfType([prop_types_default.a.bool, prop_types_default.a.string]),
-  title: prop_types_default.a.string,
-  transform: prop_types_default.a.oneOfType([prop_types_default.a.string, prop_types_default.a.object]),
-  swapOpacity: prop_types_default.a.bool
-};
-FontAwesomeIcon.defaultProps = {
-  border: false,
-  className: '',
-  mask: null,
-  fixedWidth: false,
-  inverse: false,
-  flip: null,
-  icon: null,
-  listItem: false,
-  pull: null,
-  pulse: false,
-  rotation: null,
-  size: null,
-  spin: false,
-  symbol: false,
-  title: '',
-  transform: null,
-  swapOpacity: false
-};
-var convertCurry = index_es_convert.bind(null, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement);
-
-
-
 // CONCATENATED MODULE: ./src/DataTable/DataTable.js
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-
-
 
 
 
@@ -32769,10 +32382,10 @@ var DataTable_DataTable = function DataTable(_ref) {
 
   var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([{
     key: "modalities",
-    values: []
+    values: query.modalities || []
   }, {
     key: "formats",
-    values: []
+    values: query.formats || []
   }]),
       filters = _useState[0],
       setFilters = _useState[1];
@@ -32781,7 +32394,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     var e = event.target.value;
     var filter = e.split(".");
     var newFilters = filters;
-    newFilters.map(function (f) {
+    newFilters.forEach(function (f) {
       if (f.key === filter[0]) {
         if (f.values.includes(filter[1])) {
           f.values.splice(f.values.indexOf(filter[1]), 1);
@@ -32793,10 +32406,10 @@ var DataTable_DataTable = function DataTable(_ref) {
     setFilters(newFilters);
     setQuery(_extends({}, query, {
       modalities: filters.filter(function (f) {
-        return f["key"] == "modalities";
+        return f["key"] === "modalities";
       })[0].values,
       formats: filters.filter(function (f) {
-        return f["key"] == "formats";
+        return f["key"] === "formats";
       })[0].values,
       page: 1
     }));
@@ -32913,7 +32526,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     value: 20,
     id: "max_per_page." + 20,
     onClick: handleMaxPerPageChange
-  }, "20")))), ")"), renderElement.name == "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "20")))), ")"), renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex p-2 justify-content-end"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "dropdown p-2"
@@ -32929,9 +32542,9 @@ var DataTable_DataTable = function DataTable(_ref) {
     className: "dropdown-menu dropdown-menu-right",
     "aria-labelledby": "dropdownMenuButton"
   }, filterKeys.filter(function (f) {
-    return f["key"] == "modalities";
+    return f["key"] === "modalities";
   }).length > 0 ? filterKeys.filter(function (f) {
-    return f["key"] == "modalities";
+    return f["key"] === "modalities";
   })[0]["values"].map(function (modality) {
     return modality !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       key: modality.id,
@@ -32939,6 +32552,9 @@ var DataTable_DataTable = function DataTable(_ref) {
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
       className: "form-check-input",
       type: "checkbox",
+      checked: filters.filter(function (f) {
+        return f["key"] === "modalities";
+      })[0]["values"].includes(modality),
       value: "modalities." + modality,
       id: "filter" + modality,
       onChange: handleChange
@@ -32960,9 +32576,9 @@ var DataTable_DataTable = function DataTable(_ref) {
     className: "dropdown-menu dropdown-menu-right",
     "aria-labelledby": "dropdownMenuButton"
   }, filterKeys.filter(function (f) {
-    return f["key"] == "formats";
+    return f["key"] === "formats";
   }).length > 0 ? filterKeys.filter(function (f) {
-    return f["key"] == "formats";
+    return f["key"] === "formats";
   })[0]["values"].map(function (format) {
     return format !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       key: format.id,
@@ -32970,6 +32586,9 @@ var DataTable_DataTable = function DataTable(_ref) {
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
       className: "form-check-input",
       type: "checkbox",
+      checked: filters.filter(function (f) {
+        return f["key"] === "formats";
+      })[0]["values"].includes(format),
       value: "formats." + format,
       id: "filter" + format,
       onChange: handleChange
@@ -33486,7 +33105,7 @@ var useCopyToClipboard_this = undefined;
 
 
 
-var writeTextDefault = __webpack_require__(239);
+var writeTextDefault = __webpack_require__(238);
 var useCopyToClipboard = function (text, options) {
     if (text === void 0) { text = ''; }
     var _a = (options || {}), _b = _a.writeText, writeText = _b === void 0 ? writeTextDefault : _b, onCopy = _a.onCopy, onError = _a.onError;
@@ -35417,7 +35036,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 function DataTableContainer_extends() { DataTableContainer_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return DataTableContainer_extends.apply(this, arguments); }
 
-function DataTableContainer_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 
 
@@ -35436,7 +35055,9 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       search = _ref.search,
       tags = _ref.tags,
       elements = _ref.elements,
-      dataTableProps = DataTableContainer_objectWithoutPropertiesLoose(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "search", "tags", "elements"]);
+      modalities = _ref.modalities,
+      formats = _ref.formats,
+      dataTableProps = _objectWithoutPropertiesLoose(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "search", "tags", "elements", "modalities", "formats"]);
 
   var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
       fetchedElements = _React$useState[0],
@@ -35445,8 +35066,8 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   var _React$useState2 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState({
     search: search,
     tags: tags,
-    modalities: [],
-    formats: [],
+    modalities: modalities !== null ? modalities.split(",") : [],
+    formats: formats !== null ? formats.split(",") : [],
     sortKey: "conpStatus",
     sortComparitor: "asc",
     page: page,
@@ -35569,10 +35190,396 @@ DataTableContainer_DataTableContainer.defaultProps = {
   total: 0,
   page: 1,
   max_per_page: 10,
-  elements: []
+  elements: [],
+  modalities: "",
+  formats: ""
 };
 /* harmony default export */ var DataTable_DataTableContainer = (DataTableContainer_DataTableContainer);
 // CONCATENATED MODULE: ./src/DataTable/index.js
+
+
+// EXTERNAL MODULE: ./node_modules/@fortawesome/fontawesome-svg-core/index.es.js
+var index_es = __webpack_require__(62);
+
+// CONCATENATED MODULE: ./node_modules/@fortawesome/react-fontawesome/index.es.js
+
+
+
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+function index_es_objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+
+  var target = index_es_objectWithoutPropertiesLoose(source, excluded);
+
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+}
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+// Get CSS class list from a props object
+function classList(props) {
+  var _classes;
+
+  var spin = props.spin,
+      pulse = props.pulse,
+      fixedWidth = props.fixedWidth,
+      inverse = props.inverse,
+      border = props.border,
+      listItem = props.listItem,
+      flip = props.flip,
+      size = props.size,
+      rotation = props.rotation,
+      pull = props.pull; // map of CSS class names to properties
+
+  var classes = (_classes = {
+    'fa-spin': spin,
+    'fa-pulse': pulse,
+    'fa-fw': fixedWidth,
+    'fa-inverse': inverse,
+    'fa-border': border,
+    'fa-li': listItem,
+    'fa-flip-horizontal': flip === 'horizontal' || flip === 'both',
+    'fa-flip-vertical': flip === 'vertical' || flip === 'both'
+  }, _defineProperty(_classes, "fa-".concat(size), typeof size !== 'undefined' && size !== null), _defineProperty(_classes, "fa-rotate-".concat(rotation), typeof rotation !== 'undefined' && rotation !== null && rotation !== 0), _defineProperty(_classes, "fa-pull-".concat(pull), typeof pull !== 'undefined' && pull !== null), _defineProperty(_classes, 'fa-swap-opacity', props.swapOpacity), _classes); // map over all the keys in the classes object
+  // return an array of the keys where the value for the key is not null
+
+  return Object.keys(classes).map(function (key) {
+    return classes[key] ? key : null;
+  }).filter(function (key) {
+    return key;
+  });
+}
+
+// Camelize taken from humps
+// humps is copyright © 2012+ Dom Christie
+// Released under the MIT license.
+// Performant way to determine if object coerces to a number
+function _isNumerical(obj) {
+  obj = obj - 0; // eslint-disable-next-line no-self-compare
+
+  return obj === obj;
+}
+
+function camelize(string) {
+  if (_isNumerical(string)) {
+    return string;
+  } // eslint-disable-next-line no-useless-escape
+
+
+  string = string.replace(/[\-_\s]+(.)?/g, function (match, chr) {
+    return chr ? chr.toUpperCase() : '';
+  }); // Ensure 1st char is always lowercase
+
+  return string.substr(0, 1).toLowerCase() + string.substr(1);
+}
+
+function capitalize(val) {
+  return val.charAt(0).toUpperCase() + val.slice(1);
+}
+
+function styleToObject(style) {
+  return style.split(';').map(function (s) {
+    return s.trim();
+  }).filter(function (s) {
+    return s;
+  }).reduce(function (acc, pair) {
+    var i = pair.indexOf(':');
+    var prop = camelize(pair.slice(0, i));
+    var value = pair.slice(i + 1).trim();
+    prop.startsWith('webkit') ? acc[capitalize(prop)] = value : acc[prop] = value;
+    return acc;
+  }, {});
+}
+
+function index_es_convert(createElement, element) {
+  var extraProps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  if (typeof element === 'string') {
+    return element;
+  }
+
+  var children = (element.children || []).map(function (child) {
+    return index_es_convert(createElement, child);
+  });
+  /* eslint-disable dot-notation */
+
+  var mixins = Object.keys(element.attributes || {}).reduce(function (acc, key) {
+    var val = element.attributes[key];
+
+    switch (key) {
+      case 'class':
+        acc.attrs['className'] = val;
+        delete element.attributes['class'];
+        break;
+
+      case 'style':
+        acc.attrs['style'] = styleToObject(val);
+        break;
+
+      default:
+        if (key.indexOf('aria-') === 0 || key.indexOf('data-') === 0) {
+          acc.attrs[key.toLowerCase()] = val;
+        } else {
+          acc.attrs[camelize(key)] = val;
+        }
+
+    }
+
+    return acc;
+  }, {
+    attrs: {}
+  });
+
+  var _extraProps$style = extraProps.style,
+      existingStyle = _extraProps$style === void 0 ? {} : _extraProps$style,
+      remaining = _objectWithoutProperties(extraProps, ["style"]);
+
+  mixins.attrs['style'] = _objectSpread2({}, mixins.attrs['style'], {}, existingStyle);
+  /* eslint-enable */
+
+  return createElement.apply(void 0, [element.tag, _objectSpread2({}, mixins.attrs, {}, remaining)].concat(_toConsumableArray(children)));
+}
+
+var PRODUCTION = false;
+
+try {
+  PRODUCTION = "production" === 'production';
+} catch (e) {}
+
+function log () {
+  if (!PRODUCTION && console && typeof console.error === 'function') {
+    var _console;
+
+    (_console = console).error.apply(_console, arguments);
+  }
+}
+
+// Normalize icon arguments
+function normalizeIconArgs(icon) {
+  // if the icon is null, there's nothing to do
+  if (icon === null) {
+    return null;
+  } // if the icon is an object and has a prefix and an icon name, return it
+
+
+  if (_typeof(icon) === 'object' && icon.prefix && icon.iconName) {
+    return icon;
+  } // if it's an array with length of two
+
+
+  if (Array.isArray(icon) && icon.length === 2) {
+    // use the first item as prefix, second as icon name
+    return {
+      prefix: icon[0],
+      iconName: icon[1]
+    };
+  } // if it's a string, use it as the icon name
+
+
+  if (typeof icon === 'string') {
+    return {
+      prefix: 'fas',
+      iconName: icon
+    };
+  }
+}
+
+// creates an object with a key of key
+// and a value of value
+// if certain conditions are met
+function objectWithKey(key, value) {
+  // if the value is a non-empty array
+  // or it's not an array but it is truthy
+  // then create the object with the key and the value
+  // if not, return an empty array
+  return Array.isArray(value) && value.length > 0 || !Array.isArray(value) && value ? _defineProperty({}, key, value) : {};
+}
+
+function FontAwesomeIcon(_ref) {
+  var forwardedRef = _ref.forwardedRef,
+      props = _objectWithoutProperties(_ref, ["forwardedRef"]);
+
+  var iconArgs = props.icon,
+      maskArgs = props.mask,
+      symbol = props.symbol,
+      className = props.className,
+      title = props.title;
+  var iconLookup = normalizeIconArgs(iconArgs);
+  var classes = objectWithKey('classes', [].concat(_toConsumableArray(classList(props)), _toConsumableArray(className.split(' '))));
+  var transform = objectWithKey('transform', typeof props.transform === 'string' ? index_es["b" /* parse */].transform(props.transform) : props.transform);
+  var mask = objectWithKey('mask', normalizeIconArgs(maskArgs));
+  var renderedIcon = Object(index_es["a" /* icon */])(iconLookup, _objectSpread2({}, classes, {}, transform, {}, mask, {
+    symbol: symbol,
+    title: title
+  }));
+
+  if (!renderedIcon) {
+    log('Could not find icon', iconLookup);
+    return null;
+  }
+
+  var abstract = renderedIcon.abstract;
+  var extraProps = {
+    ref: forwardedRef
+  };
+  Object.keys(props).forEach(function (key) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (!FontAwesomeIcon.defaultProps.hasOwnProperty(key)) {
+      extraProps[key] = props[key];
+    }
+  });
+  return convertCurry(abstract[0], extraProps);
+}
+FontAwesomeIcon.displayName = 'FontAwesomeIcon';
+FontAwesomeIcon.propTypes = {
+  border: prop_types_default.a.bool,
+  className: prop_types_default.a.string,
+  mask: prop_types_default.a.oneOfType([prop_types_default.a.object, prop_types_default.a.array, prop_types_default.a.string]),
+  fixedWidth: prop_types_default.a.bool,
+  inverse: prop_types_default.a.bool,
+  flip: prop_types_default.a.oneOf(['horizontal', 'vertical', 'both']),
+  icon: prop_types_default.a.oneOfType([prop_types_default.a.object, prop_types_default.a.array, prop_types_default.a.string]),
+  listItem: prop_types_default.a.bool,
+  pull: prop_types_default.a.oneOf(['right', 'left']),
+  pulse: prop_types_default.a.bool,
+  rotation: prop_types_default.a.oneOf([0, 90, 180, 270]),
+  size: prop_types_default.a.oneOf(['lg', 'xs', 'sm', '1x', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x']),
+  spin: prop_types_default.a.bool,
+  symbol: prop_types_default.a.oneOfType([prop_types_default.a.bool, prop_types_default.a.string]),
+  title: prop_types_default.a.string,
+  transform: prop_types_default.a.oneOfType([prop_types_default.a.string, prop_types_default.a.object]),
+  swapOpacity: prop_types_default.a.bool
+};
+FontAwesomeIcon.defaultProps = {
+  border: false,
+  className: '',
+  mask: null,
+  fixedWidth: false,
+  inverse: false,
+  flip: null,
+  icon: null,
+  listItem: false,
+  pull: null,
+  pulse: false,
+  rotation: null,
+  size: null,
+  spin: false,
+  symbol: false,
+  title: '',
+  transform: null,
+  swapOpacity: false
+};
+var convertCurry = index_es_convert.bind(null, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement);
+
 
 
 // CONCATENATED MODULE: ./node_modules/@fortawesome/free-solid-svg-icons/index.es.js
@@ -43101,7 +43108,7 @@ var DatasetModalities_defaultOptions = {
           select: function select(e) {
             console.log(e); // eslint-disable-next-line no-restricted-globals
 
-            location.assign("" + location.protocol + location.host + "/search?modalities=[" + e.target.name + "]");
+            location.assign("/search?modalities=" + e.target.name);
           }
         }
       }

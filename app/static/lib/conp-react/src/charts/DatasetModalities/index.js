@@ -48,7 +48,7 @@ const defaultOptions = {
                   select: function(e){
                     console.log(e)
                     // eslint-disable-next-line no-restricted-globals
-                    location.assign(`${location.protocol}${location.host}/search?modalities=[${e.target.name}]`)
+                    location.assign(`/search?modalities=${e.target.name}`)
                   }
                 }
               }

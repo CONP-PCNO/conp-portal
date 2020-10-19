@@ -29,7 +29,10 @@ def search():
         Retuns:
             JSON containing the matching datasets
     """
-    return render_template('search.html', title='CONP | Search', user=current_user)
+
+    modalities = request.args.get('modalities')
+
+    return render_template('search.html', title='CONP | Search', user=current_user, modalities=modalities)
 
 
 @search_bp.route('/dataset_logo')
