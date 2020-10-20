@@ -11,7 +11,8 @@ const defaultOptions = {
         backgroundColor: '#FFF',
         height: '100%',
         spacing: [0, 0, 0, 0],
-        margin: [0, 0, 0, 0]
+        margin: [0, 0, 0, 0],
+        colors: ["#EA2627", "#A5A5A5", "#FFC000", "#207EA0", "#898989", "#5E5E5E"]
     },
     credits: {
         enabled: false
@@ -27,8 +28,20 @@ const defaultOptions = {
     },
 
     plotOptions: {
+        series:{
+            allowPointSelect: true,
+            point:{
+                events:{
+                  select: function(e){
+                    console.log(e)
+                    // eslint-disable-next-line no-restricted-globals
+                    location.assign(`/pipelines?tags=${e.target.name.toLowerCase()}`)
+                  }
+                }
+              }
+          },
         packedbubble: {
-            color: "#FFC000",
+            color: "#A5A5A5",
             minSize: '10%',
             maxSize: '100%',
             zMin: 0,

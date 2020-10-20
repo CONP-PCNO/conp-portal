@@ -149,7 +149,7 @@ def dataset_search():
     for e in elements:
         if e['modalities'] is None:
             continue
-        for m in e['modalities'].split(","):
+        for m in e['modalities'].split(", "):
             modalities.append(m.lower())
     modalities = list(set(modalities))
 
@@ -157,7 +157,7 @@ def dataset_search():
     for e in elements:
         if e['format'] is None:
             continue
-        for m in e['format'].split(","):
+        for m in e['format'].split(", "):
             formats.append(m.lower())
     formats = list(set(formats))
 
@@ -169,13 +169,13 @@ def dataset_search():
             elements = list(
                 filter(lambda e: e['modalities'] is not None, elements))
             elements = list(filter(lambda e: all(item in (m.lower(
-            ) for m in e['modalities'].split(",")) for item in filterModalities), elements))
+            ) for m in e['modalities'].split(", ")) for item in filterModalities), elements))
         if request.args.get('formats'):
             filterFormats = request.args.get('formats').split(",")
             elements = list(
                 filter(lambda e: e['format'] is not None, elements))
             elements = list(filter(lambda e: all(item in (
-                f.lower() for f in e['format'].split(",")) for item in filterFormats), elements))
+                f.lower() for f in e['format'].split(", ")) for item in filterFormats), elements))
 
         delta = int(request.args.get('max_per_page', 10)) * \
             (int(request.args.get('page', 1)) - 1)
@@ -457,8 +457,8 @@ def get_dataset_metadata_information(dataset):
     datasetAncestries = DatasetAncestry.query.all()
     for da in datasetAncestries:
         if da.parent_dataset_id == dataset.dataset_id:
-            name=da.child_dataset_id[9:]
-            childDataset={
+            name = da.child_dataset_id[9:]
+            childDataset = {
                 "child_dataset_id": da.child_dataset_id,
                 "name": name
             }
