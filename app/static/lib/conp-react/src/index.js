@@ -1,18 +1,18 @@
 import { DataTable, DataTableContainer } from "./DataTable";
 import { default as DatasetElement } from "./DatasetElement";
 import { default as PipelineElement } from "./PipelineElement";
-import DashboardChart from "./DashboardChart"
+import ChartContainer from "./ChartContainer"
 import Spotlight from "./Spotlight"
 import { DatsEditorForm } from "conp-dats-editor"
 
-export { DataTable, DataTableContainer, DatasetElement, PipelineElement, DashboardChart };
+export { DataTable, DataTableContainer, DatasetElement, PipelineElement, ChartContainer };
 
 export default {
   DataTable,
   DataTableContainer,
   DatasetElement,
   PipelineElement,
-  DashboardChart,
+  ChartContainer,
   Spotlight,
   DatsEditorForm
 };

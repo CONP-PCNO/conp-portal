@@ -26,7 +26,8 @@
     const reactElement = React.createElement(CONPReact.DataTableContainer, {
       endpointURL: "{{ url_for('search.dataset_search') }}",
       imagePath: "/static/img",
-      renderElement: CONPReact.DatasetElement
+      renderElement: CONPReact.DatasetElement,
+      modalities: {{ modalities|tojson }}
     });
     ReactDOM.render(reactElement, document.querySelector("#search-datatable-mount"));
   </script>

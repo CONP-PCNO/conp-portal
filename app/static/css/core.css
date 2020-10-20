@@ -1,5 +1,7 @@
-* {
-  box-sizing: border-box;
+.content-body {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1440px;
 }
 
 html,
