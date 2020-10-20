@@ -86,7 +86,7 @@ class ChartContainer extends React.Component {
         return (
             <div>
                 {this.props.showToggle ? <div className="d-flex flex-row-reverse">
-                    <div className="dropdown show" style={{ zIndex: 1 }}>
+                    <div className="dropdown show mt-2 mr-2" style={{ zIndex: 1 }}>
                         <button className="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Select Chart
                         </button>

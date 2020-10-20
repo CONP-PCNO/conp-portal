@@ -9,17 +9,18 @@ const defaultOptions = {
     chart: {
         type: 'packedbubble',
         backgroundColor: '#FFF',
-        height: '100%',
-        spacing: [0, 0, 0, 0],
-        margin: [0, 0, 0, 0],
+        height: (9 / 16 * 100) + '%',
+        margin: [-30, -30, -30, -30],
         colors: ["#EA2627", "#A5A5A5", "#FFC000", "#207EA0", "#898989", "#5E5E5E"]
     },
     credits: {
         enabled: false
     },
-
+    legend: {
+        enabled: false
+    },
     title: {
-        text: 'Pipeline Tags'
+        text: 'Pipeline Representation By Tags'
     },
 
     tooltip: {
@@ -114,7 +115,7 @@ const PipelineTags = ({ pipelines, ...props }) => {
             const tagsArr = pipeline.tags.domain;
 
             tagsArr.forEach(tag => {
-                addOrIncreaseDatapoint(chartData.pipelines, tag);
+                addOrIncreaseDatapoint(chartData.pipelines, tag.toLowerCase());
             })
 
         })

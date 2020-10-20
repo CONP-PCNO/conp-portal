@@ -43066,35 +43066,22 @@ function DatasetModalities_objectWithoutPropertiesLoose(source, excluded) { if (
 
 __webpack_require__(67)(highcharts_default.a);
 
-var getCircularReplacer = function getCircularReplacer() {
-  var seen = new WeakSet();
-  return function (key, value) {
-    if (typeof value === "object" && value !== null) {
-      if (seen.has(value)) {
-        return;
-      }
-
-      seen.add(value);
-    }
-
-    return value;
-  };
-};
-
 var DatasetModalities_defaultOptions = {
   chart: {
     type: 'packedbubble',
     backgroundColor: '#FFF',
-    height: '100%',
-    spacing: [0, 0, 0, 0],
-    margin: [0, 0, 0, 0],
+    height: 9 / 16 * 100 + '%',
+    margin: [-30, -30, -30, -30],
     colors: ["#EA2627", "#A5A5A5", "#FFC000", "#207EA0", "#898989", "#5E5E5E"]
   },
   credits: {
     enabled: false
   },
+  legend: {
+    enabled: false
+  },
   title: {
-    text: 'Dataset Modalities by Keyword'
+    text: 'Dataset Modalities Representation By Keywords'
   },
   tooltip: {
     useHTML: true,
@@ -43182,7 +43169,7 @@ var DatasetModalities_DatasetModalities = function DatasetModalities(_ref) {
       if (!dataset.modalities) return;
       var modalitiesArr = dataset.modalities.split(", ");
       modalitiesArr.forEach(function (modality) {
-        addOrIncreaseDatapoint(chartData.datasets, modality);
+        addOrIncreaseDatapoint(chartData.datasets, modality.toLowerCase());
       });
     });
     updateChart(chartData);
@@ -43225,16 +43212,18 @@ var PipelineTags_defaultOptions = {
   chart: {
     type: 'packedbubble',
     backgroundColor: '#FFF',
-    height: '100%',
-    spacing: [0, 0, 0, 0],
-    margin: [0, 0, 0, 0],
+    height: 9 / 16 * 100 + '%',
+    margin: [-30, -30, -30, -30],
     colors: ["#EA2627", "#A5A5A5", "#FFC000", "#207EA0", "#898989", "#5E5E5E"]
   },
   credits: {
     enabled: false
   },
+  legend: {
+    enabled: false
+  },
   title: {
-    text: 'Pipeline Tags'
+    text: 'Pipeline Representation By Tags'
   },
   tooltip: {
     useHTML: true,
@@ -43326,7 +43315,7 @@ var PipelineTags_PipelineTags = function PipelineTags(_ref) {
 
       var tagsArr = pipeline.tags.domain;
       tagsArr.forEach(function (tag) {
-        addOrIncreaseDatapoint(chartData.pipelines, tag);
+        addOrIncreaseDatapoint(chartData.pipelines, tag.toLowerCase());
       });
     });
     updateChart(chartData);
@@ -43507,7 +43496,7 @@ var ChartContainer_ChartContainer = /*#__PURE__*/function (_React$Component) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, this.props.showToggle ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: "d-flex flex-row-reverse"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      className: "dropdown show",
+      className: "dropdown show mt-2 mr-2",
       style: {
         zIndex: 1
       }

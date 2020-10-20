@@ -3,36 +3,24 @@ import React, { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from 'highcharts-react-official'
 require('highcharts/highcharts-more.js')(Highcharts);
-
-const getCircularReplacer = () => {
-    const seen = new WeakSet();
-    return (key, value) => {
-      if (typeof value === "object" && value !== null) {
-        if (seen.has(value)) {
-          return;
-        }
-        seen.add(value);
-      }
-      return value;
-    };
-  };
   
 const defaultOptions = {
 
     chart: {
         type: 'packedbubble',
         backgroundColor: '#FFF',
-        height: '100%',
-        spacing: [0, 0, 0, 0],
-        margin: [0, 0, 0, 0],
+        height: (9 / 16 * 100) + '%',
+        margin: [-30, -30, -30, -30],
         colors: ["#EA2627", "#A5A5A5", "#FFC000", "#207EA0", "#898989", "#5E5E5E"]
     },
     credits: {
         enabled: false
     },
-
+    legend: {
+        enabled: false
+    },
     title: {
-        text: 'Dataset Modalities by Keyword'
+        text: 'Dataset Modalities Representation By Keywords'
     },
 
     tooltip: {
@@ -125,7 +113,7 @@ const DatasetModalities = ({ datasets, pipelines, ...props }) => {
             const modalitiesArr = dataset.modalities.split(", ");
 
             modalitiesArr.forEach(modality => {
-                addOrIncreaseDatapoint(chartData.datasets, modality);
+                addOrIncreaseDatapoint(chartData.datasets, modality.toLowerCase());
             })
         })
 
