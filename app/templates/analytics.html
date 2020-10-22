@@ -1,0 +1,73 @@
+{% extends 'common/base_main.html' %}
+
+<!-- Head Block -->
+{% block scripts %}
+{{ super() }}
+<script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
+<script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
+<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="https://code.highcharts.com/css/highcharts.css" />
+{% endblock %}
+
+{% block contenttitle %}
+<h2><span style="color:red;">CONP</span> Portal | Analytics</h2>
+{% endblock %}
+
+
+<!-- Content Block -->
+{% block appcontent %}
+
+<div class="d-flex flex-column">
+  <div class="card m-2">
+    <div id="analytics-chart-1">
+
+      <script type="text/javascript">
+        const analyticsChart1 = React.createElement(CONPReact.ChartContainer, {
+          datasetsURL: "{{ url_for('search.dataset_search') }}",
+          pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
+          toggleState: 1
+        });
+        ReactDOM.render(analyticsChart1, document.querySelector("#analytics-chart-1"));
+      </script>
+
+    </div>
+  </div>
+
+  <div class="d-flex flex-row">
+    <div class="card m-2 w-100">
+      <div id="analytics-chart-2">
+
+        <script type="text/javascript">
+          const analyticsChart2 = React.createElement(CONPReact.ChartContainer, {
+            datasetsURL: "{{ url_for('search.dataset_search') }}",
+            pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
+            toggleState: 2
+          });
+          ReactDOM.render(analyticsChart2, document.querySelector("#analytics-chart-2"));
+        </script>
+
+      </div>
+    </div>
+    <div class="card m-2 w-100">
+      <div id="analytics-chart-3">
+
+        <script type="text/javascript">
+          const analyticsChart3 = React.createElement(CONPReact.ChartContainer, {
+            datasetsURL: "{{ url_for('search.dataset_search') }}",
+            pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
+            toggleState: 3
+          });
+          ReactDOM.render(analyticsChart3, document.querySelector("#analytics-chart-3"));
+        </script>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

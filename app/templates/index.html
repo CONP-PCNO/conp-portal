@@ -62,17 +62,25 @@
   </div>
 
   <div class="p-2 flex-fill">
-    <div class="card" data-type="dashboard">
+    <div class="card w-100 mx-1">
       <div id="dashboard-chart-container">
 
         <script type="text/javascript">
-          const dashboardChartElement = React.createElement(CONPReact.DashboardChart, {
+          const dashboardChartElement = React.createElement(CONPReact.ChartContainer, {
             datasetsURL: "{{ url_for('search.dataset_search') }}",
             pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
+            showToggle: true
           });
           ReactDOM.render(dashboardChartElement, document.querySelector("#dashboard-chart-container"));
         </script>
-
+      </div>
+      <div class="d-flex mb-2 mr-2 justify-content-end">
+        <a href="{{ url_for('analytics.analytics') }}">
+            <button class="btn btn-outline-secondary"
+                type="button">
+                View Analytics
+                </button>
+        </a>
       </div>
     </div>
   </div>

@@ -16,6 +16,8 @@ const DataTableContainer = ({
   search,
   tags,
   elements,
+  modalities,
+  formats,
   ...dataTableProps
 }) => {
   const [fetchedElements, setFetchedElements] = React.useState(elements);
@@ -23,8 +25,8 @@ const DataTableContainer = ({
   const [query, setQuery] = React.useState({
     search,
     tags,
-    modalities: [],
-    formats: [],
+    modalities: modalities !== null ? modalities.split(",") : [],
+    formats: formats !== null ? formats.split(",") : [],
     sortKey: "conpStatus",
     sortComparitor: "asc",
     page,
@@ -93,7 +95,7 @@ DataTableContainer.propTypes = {
   total: PropTypes.number,
   page: PropTypes.number,
   max_per_page: PropTypes.number,
-  elements: PropTypes.arrayOf(PropTypes.object)
+  elements: PropTypes.arrayOf(PropTypes.object),
 };
 
 DataTableContainer.defaultProps = {
@@ -104,7 +106,9 @@ DataTableContainer.defaultProps = {
   total: 0,
   page: 1,
   max_per_page: 10,
-  elements: []
+  elements: [],
+  modalities: "",
+  formats: ""
 };
 
 export default DataTableContainer;
