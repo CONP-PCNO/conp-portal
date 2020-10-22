@@ -65,6 +65,10 @@ class Config(object):
     # GitHub webhooks
     WEBHOOKS_SECRET = os.environ.get("WEBHOOKS_SECRET")
 
+    # Matomo
+    MATOMO_SERVER_URL = os.environ.get("MATOMO_SERVER_URL")
+    MATOMO_SITE_ID = os.environ.get("MATOMO_SITE_ID", "1")
+
 
 class DevelopmentConfig(Config):
     """This is the config for Development"""
