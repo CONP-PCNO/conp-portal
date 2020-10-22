@@ -66,7 +66,7 @@ class Config(object):
     WEBHOOKS_SECRET = os.environ.get("WEBHOOKS_SECRET")
 
     # Matomo
-    MATOMO_SERVER_URL = os.environ.get("MATOMO_SERVER_URL", "matomo-dev.acelab.ca")
+    MATOMO_SERVER_URL = os.environ.get("MATOMO_SERVER_URL")
     MATOMO_SITE_ID = os.environ.get("MATOMO_SITE_ID", "1")
 
 
