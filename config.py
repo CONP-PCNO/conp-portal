@@ -67,7 +67,7 @@ class Config(object):
 
     # Matomo
     MATOMO_SERVER_URL = os.environ.get("MATOMO_SERVER_URL")
-    MATOMO_SITE_ID = os.environ.get("MATOMO_SITE_ID", "1")
+    MATOMO_SITE_ID = os.environ.get("MATOMO_SITE_ID", "2")
 
 
 class DevelopmentConfig(Config):
