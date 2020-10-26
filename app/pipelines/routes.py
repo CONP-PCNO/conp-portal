@@ -94,7 +94,7 @@ def pipeline_search():
         ]
 
     # filter out the deprecated pipelines
-    elements = list(filter(lambda e: (not e["DEPRECATED"]), elements))
+    elements = list(filter(lambda e: (not e.get("DEPRECATED", None)), elements))
 
     # filter by tags
     if len(tags) > 0:
