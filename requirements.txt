@@ -16,7 +16,7 @@ chardet==3.0.4
 Click==7.0
 commonmark==0.8.1
 coverage==4.5.4
-cryptography==2.7
+cryptography==3.2
 datalad==0.12.0rc6
 Deprecated==1.2.7
 docopt==0.6.2
