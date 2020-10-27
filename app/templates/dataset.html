@@ -30,7 +30,10 @@
   {% if metadata.version is defined and metadata.version is not none %}
   <p><strong>Version: </strong> {{ metadata.version }} </p>
   {% endif %}
-  <p><a href="/download_content?id={{ data.id }}&version={{ metadata.get('version', 'latest') }}" target="_blank">Download this version</a></p>
+  <p>
+    <button type="button" class="btn btn-outline-primary" onClick="downloadVersion(event)">Download this
+      version</button>
+  </p>
   {% if metadata.sources is defined and metadata.sources is not none %}
   <p><strong>Source: </strong><a target="_blank" rel="noopener noreferrer"
       href="{{ metadata.sources }}">{{ metadata.sources }}</a></p>
@@ -101,7 +104,8 @@
 <div class="d-flex flex-column p-2">
   <div class="d-flex flex-row align-items-center">
     <h2 class="px-2">Dataset Download Instructions</h2>
-    <a class="px-2" target="_blank" rel="noopener noreferrer" href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master">
+    <a class="px-2" target="_blank" rel="noopener noreferrer"
+      href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master">
       <img src="{{ ciBadgeUrl }}" alt="CircleCI status" />
     </a>
     <div>
@@ -210,6 +214,25 @@
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));
 
 </script>
+
+<script type="text/javascript">
+
+  function downloadVersion(event) {
+    fetch(`${window.origin}/download_content?id={{ data.id }}&version={{ metadata.get('version', 'latest') }}`)
+      .then((response) => {
+        console.log(response);
+        return response.blob();
+      })
+      .then(function (blob) {
+        var file = window.URL.createObjectURL(blob);
+        window.location.assign(file);
+      })
+      .catch(function (error) {
+        alert(error)
+      });
+  }
+</script>
+
 </div>
 <!--/span-->
 {% endblock %}
