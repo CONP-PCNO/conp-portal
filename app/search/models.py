@@ -120,7 +120,7 @@ class DatasetCache(object):
                 raise RuntimeError('The dataset is not installed')
 
             try:
-                api.get(d.path, dataset=d, recursive=True)
+                api.get(d.path, dataset=d, recursive=False)
             except:
                 raise RuntimeError('Backend download failed')
 
@@ -129,11 +129,11 @@ class DatasetCache(object):
                 self.current_app.config['DATASET_CACHE_PATH'],
                 zipFilename
             )
-            zipped = d.export_archive(filename=filename, missing_content='continue')[0].get('path')
+            zipped = d.export_archive(filename=filename, missing_content='error')[0].get('path')
 
             # Clean dataset space but force redownload. It is fine because we keep the zip in cache.
             super_d = DataladDataset(path=os.path.join(self.current_app.config['DATA_PATH'],'conp-dataset'))
-            super_d.drop(dataset='.', recursive=True, check=False) 
+            super_d.drop(recursive=True, check=False) 
 
         os.system('touch -a ' + zipped)
         return zipped

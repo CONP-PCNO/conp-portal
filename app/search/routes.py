@@ -445,8 +445,6 @@ def download_content():
         return "IO error: {0}".format(err), 500
     except RuntimeError as err:
         return "Runtime error: {0}".format(err), 500
-    except:
-        return "Unexpected error", 500
     
     return send_from_directory(
         os.path.dirname(zipped),
