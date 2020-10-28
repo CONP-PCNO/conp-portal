@@ -34,14 +34,8 @@ def create_app(config_settings=DevelopmentConfig):
     from app.main import main_bp  # noqa: E402
     app.register_blueprint(main_bp)
 
-    from app.admin import admin_bp  # noqa: E402
-    app.register_blueprint(admin_bp)
-
     from app.analytics import analytics_bp  # noqa: E402
     app.register_blueprint(analytics_bp)
-
-    from app.auth import auth_bp  # noqa: E402
-    app.register_blueprint(auth_bp)
 
     from app.search import search_bp  # noqa: E402
     app.register_blueprint(search_bp)
@@ -58,15 +52,8 @@ def create_app(config_settings=DevelopmentConfig):
     from app.utils import utils_bp  # noqa: E402
     app.register_blueprint(utils_bp)
 
-    from app.oauth.orcid_blueprint import orcid_blueprint
-    app.register_blueprint(orcid_blueprint, url_prefix="/login")
-
     from app.styleguide import styleguide_bp
     app.register_blueprint(styleguide_bp)
-
-    from app.models import User
-    from app.auth.forms import CustomUserManager
-    user_manager = CustomUserManager(app, db, User)
 
     from app.webhooks import webhooks_bp
     csrf_protect.exempt(webhooks_bp)
@@ -74,10 +61,7 @@ def create_app(config_settings=DevelopmentConfig):
 
     @app.context_processor
     def context_processor():
-        return dict(user_manager=user_manager)
-
-    # Initialize Email and Logging
-    init_email_and_logs_error_handler(app)
+        return dict()
 
     return app
 

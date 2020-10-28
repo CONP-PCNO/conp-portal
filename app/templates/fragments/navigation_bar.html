@@ -5,14 +5,6 @@
   <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
   <a class="navbar-brand" href="https://conp.ca/"><img style="max-width:100px;" src="/static/img/conp.png" alt="conp logo" /></a>
     <ul class="navbar-nav">
-      {% if not current_user.is_anonymous %}
-      <li class="nav-item px-3">
-        <a class="nav-link" href="{{ url_for('profile.current_user_profile_page') }}">Profile</a>
-      </li>
-      <li class="nav-item px-3">
-        <a class="nav-link" href="/#/">Settings</a>
-      </li>
-      {% endif %}
       <li class="nav-item px-3">
         <a class="nav-link" href="{{url_for('main.about')}}">About</a>
       </li>

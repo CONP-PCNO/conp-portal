@@ -20,13 +20,6 @@
 
 <!-- Content Block -->
 {% block appcontent %}
-
-<!-- Display Username Login -->
-{% if not current_user.is_anonymous %}
-<div class="display-user">
-  Welcome <strong>{{ user.username }}</strong>
-</div>
-{% endif %}
 <div class="d-flex flex-column">
   <div class="p-2 flex-fill">
     <div class="card" data-type="dashboard">

@@ -3,7 +3,7 @@
 Main module that will call and create the flask app
 """
 from app import create_app, db, cli
-from app.models import User, Dataset, Pipeline, OAuth, AffiliationType
+from app.models import Dataset, Pipeline
 
 app = create_app()
 cli.register(app)
@@ -16,9 +16,6 @@ def make_shell_context():
     """
     return {
         'db': db,
-        'User': User,
         'Dataset': Dataset,
-        'OAuth': OAuth,
-        'AffiliationType': AffiliationType,
         'Pipeline': Pipeline
     }

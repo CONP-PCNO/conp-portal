@@ -52,8 +52,6 @@ def pipeline_search():
             JSON of the applicable pipelines
     """
 
-    authorized = True if current_user.is_authenticated else False
-
     # get request variables
     search_query = request.args.get(
         "search").lower() if request.args.get("search") else ''
@@ -94,7 +92,7 @@ def pipeline_search():
         ]
 
     # filter out the deprecated pipelines
-    elements = list(filter(lambda e: (not e["DEPRECATED"]), elements))
+    elements = list(filter(lambda e: (not e.get("DEPRECATED", None)), elements))
 
     # filter by tags
     if len(tags) > 0:
@@ -160,7 +158,6 @@ def pipeline_search():
 
     # construct payload
     payload = {
-        "authorized": authorized,
         "total": len(elements),
         "page": page,
         'num_pages': math.ceil(len(elements)/max_per_page),

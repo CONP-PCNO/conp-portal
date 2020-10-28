@@ -81,11 +81,6 @@ def dataset_search():
     """
     datasets = []
 
-    if current_user.is_authenticated:
-        authorized = True
-    else:
-        authorized = False
-
     if request.args.get('id'):
         # Query datasets
         datasets = Dataset.query.filter_by(
@@ -120,7 +115,6 @@ def dataset_search():
                     continue
 
         dataset = {
-            "authorized": authorized,
             "id": d.dataset_id,
             "title": d.name.replace("'", ""),
             "isPrivate": d.is_private,
@@ -253,7 +247,6 @@ def dataset_search():
 
     # Construct payload
     payload = {
-        "authorized": authorized,
         "total": len(elements),
         "sortKeys": [
             {
@@ -341,13 +334,7 @@ def dataset_info():
     d = Dataset.query.filter_by(dataset_id=dataset_id).first()
     datsdataset = DATSDataset(d.fspath)
 
-    if current_user.is_authenticated:
-        authorized = True
-    else:
-        authorized = False
-
     dataset = {
-        "authorized": authorized,
         "name": datsdataset.name,
         "id": d.dataset_id,
         "title": d.name.replace("'", ""),
