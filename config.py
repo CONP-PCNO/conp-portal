@@ -72,6 +72,10 @@ class Config(object):
     MATOMO_SERVER_URL = os.environ.get("MATOMO_SERVER_URL")
     MATOMO_SITE_ID = os.environ.get("MATOMO_SITE_ID", "2")
 
+    # Dataset cache
+    DATASET_CACHE_PATH = os.environ.get("DATASET_CACHE_PATH")
+    DATASET_CACHE_MAX_SIZE = os.environ.get("DATASET_CACHE_MAX_SIZE")
+
 
 class DevelopmentConfig(Config):
     """This is the config for Development"""

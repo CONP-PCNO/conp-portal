@@ -389,6 +389,14 @@ def dataset_info():
     ciBadgeUrl = "https://img.shields.io/badge/circleci-" + \
         dataset["status"] + "-" + color + "?style=flat-square&logo=circleci"
 
+    units = {"B": 1, "KB": 10**3, "MB": 10**6, "GB": 10**9, "TB": 10**12}
+
+    cacheSize = current_app.config['DATASET_CACHE_MAX_SIZE']
+    cacheSizeBytes = float(cacheSize.split()[0]) * float(units.get(cacheSize.split()[1], 0))
+    datasetSizeBytes = float(dataset.get("size").split()[0]) * float(units.get(dataset.get("size").split()[1], 0))
+
+    showDownloadButton = dataset.get("authorizations") != "private" and cacheSize != None and cacheSizeBytes > datasetSizeBytes
+
     return render_template(
         'dataset.html',
         title='CONP | Dataset',
@@ -396,6 +404,7 @@ def dataset_info():
         metadata=metadata,
         readme=readme,
         ciBadgeUrl=ciBadgeUrl,
+        showDownloadButton=showDownloadButton,
         user=current_user
     )
 
