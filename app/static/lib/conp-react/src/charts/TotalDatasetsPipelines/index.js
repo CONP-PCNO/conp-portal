@@ -7,8 +7,6 @@ const defaultOptions = {
 
     chart: {
         type: 'column',
-        styledMode: true,
-        backgroundColor: '#FFF'
     },
     credits: {
         enabled: false
@@ -21,9 +19,6 @@ const defaultOptions = {
     yAxis: [{
         title: {
             text: '',
-            style: {
-                color: Highcharts.getOptions().colors[0]
-            }
         },
         allowDecimals: false,
     }],
@@ -40,11 +35,13 @@ const defaultOptions = {
 
     series: [{
         name: 'Datasets',
+        color: '#EA2627B3',
         data: [],
         yAxis: 0
     },
     {
         name: 'Pipelines',
+        color: '#207EA0B3',
         data: [],
         yAxis: 0
     }]
@@ -91,11 +88,13 @@ const TotalDatasetsPipelines = ({ datasets, pipelines, ...props }) => {
 
         const series = [{
             name: 'Datasets',
+            color: '#EA2627B3',
             data: yAxisDatasets,
             yAxis: 0
         },
         {
             name: 'Pipelines',
+            color: '#207EA0B3',
             data: yAxisPipelinesExtract,
             yAxis: 0
         }];

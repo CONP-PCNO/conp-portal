@@ -42,7 +42,7 @@ const defaultOptions = {
               }
           },
         packedbubble: {
-            color: "#A5A5A5",
+            color: "#207EA0",
             minSize: '10%',
             maxSize: '100%',
             zMin: 0,

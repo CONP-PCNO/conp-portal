@@ -13,7 +13,6 @@
   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link href="{{ url_for('static',filename='img/conp.ico')}}" rel="shortcut icon" type="image/png" />
 <link href="{{ url_for('static', filename='css/core.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ url_for('static', filename='css/pages.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block scripts %}
@@ -155,7 +154,7 @@
     </div>
 
     <div class="content-body container-fluid">
-      <div class="content-title">
+      <div class="content-title text-center">
         {% block contenttitle %}{% endblock %}
       </div>
       <hr />
