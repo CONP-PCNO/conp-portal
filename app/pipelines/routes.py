@@ -149,10 +149,10 @@ def pipeline_search():
         if "onlineplatformurls" in element:
             # Check CBRAIN
             for url in element["onlineplatformurls"]:
-                if "cbrain" in url:
+                if url.startswith('https://portal.cbrain.mcgill.ca'):
                     element["platforms"][0]["img"] = url_for(
                         'static', filename="img/run_on_cbrain_green.png")
-                    element["platforms"][0]["uri"] = "https://portal.cbrain.mcgill.ca"
+                    element["platforms"][0]["uri"] = url
                 else:
                     platform_dict = {"img": url_for('static', filename="img/globe-solid-green.png"),
                                      "uri": url}
@@ -257,10 +257,10 @@ def pipeline_info():
     if "online-platform-urls" in element:
         # Check CBRAIN
         for url in element["online-platform-urls"]:
-            if "cbrain" in url:
+            if url.startswith('https://portal.cbrain.mcgill.ca'):
                 element["platforms"][0]["img"] = url_for(
                     'static', filename="img/run_on_cbrain_green.png")
-                element["platforms"][0]["uri"] = "https://portal.cbrain.mcgill.ca"
+                element["platforms"][0]["uri"] = url
             else:
                 platform_dict = {"img": url_for('static', filename="img/globe-solid-green.png"),
                                  "uri": url}
