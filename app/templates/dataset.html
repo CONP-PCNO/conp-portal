@@ -30,7 +30,12 @@
   {% if metadata.version is defined and metadata.version is not none %}
   <p><strong>Version: </strong> {{ metadata.version }} </p>
   {% endif %}
-  <p><a href="/download_content?id={{ data.id }}&version={{ metadata.get('version', 'latest') }}" target="_blank">Download this version</a></p>
+  {% if showDownloadButton %}
+  <p>
+    <button type="button" class="btn btn-outline-primary" onClick="downloadVersion(event)">Download this
+      version</button>
+  </p>
+  {% endif %}
   {% if metadata.sources is defined and metadata.sources is not none %}
   <p><strong>Source: </strong><a target="_blank" rel="noopener noreferrer"
       href="{{ metadata.sources }}">{{ metadata.sources }}</a></p>
@@ -98,21 +103,23 @@
   {% endif %}
 </div>
 
+{% if not showDownloadButton %}
 <div class="d-flex flex-column p-2">
   <div class="d-flex flex-row align-items-center">
     <h2 class="px-2">Dataset Download Instructions</h2>
-    <a class="px-2" target="_blank" rel="noopener noreferrer" href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master">
+    <a class="px-2" target="_blank" rel="noopener noreferrer"
+      href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master">
       <img src="{{ ciBadgeUrl }}" alt="CircleCI status" />
     </a>
     <div>
       <button type="button" class="btn btn-default p-0" data-toggle="tooltip" data-placement="right" title="The CONP integrates datasets stored in multiple platforms, to accommodate the various governance models adopted by
-          diverse research groups. While this decentralized architecture nicely fits with open-science goals, it also has
-          challenges, as the availability of dataset storage locations may fluctuate. For this reason, CONP datasets are
-          periodically tested (every few hours), to ensure a satisfying user experience. This status badge shows the status of
-          the dataset as returned by the latest iteration of the tests. In general, it gives a good indication whether data
-          download can expected to succeed. In some cases, however, status may flicker due to temporary network glitches,
-          transient misconfiguration or other issues. In any case, the CONP team is working hard to ensure the
-          high-availability of the datasets present in the platform!">
+            diverse research groups. While this decentralized architecture nicely fits with open-science goals, it also has
+            challenges, as the availability of dataset storage locations may fluctuate. For this reason, CONP datasets are
+            periodically tested (every few hours), to ensure a satisfying user experience. This status badge shows the status of
+            the dataset as returned by the latest iteration of the tests. In general, it gives a good indication whether data
+            download can expected to succeed. In some cases, however, status may flicker due to temporary network glitches,
+            transient misconfiguration or other issues. In any case, the CONP team is working hard to ensure the
+            high-availability of the datasets present in the platform!">
         <span style="font-size: 1em; color: Gray;"><i class="fa fa-question"></i></span>
       </button>
     </div>
@@ -190,6 +197,8 @@
     </a>.
   </h6>
 </div>
+{% endif %}
+
 <div class="d-flex flex-column p-2">
   <h2>Dataset README information</h2>
   <div class="card">
@@ -210,6 +219,29 @@
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));
 
 </script>
+
+<script type="text/javascript">
+
+  function downloadVersion(event) {
+    fetch(`${window.origin}/download_content?id={{ data.id }}&version={{ metadata.get('version', 'latest') }}`)
+      .then((response) => {
+        return response.blob();
+      })
+      .then(function (blob) {
+        var file = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = file;
+        a.download = "{{ data.title }}.{{ metadata.version }}.tar.gz";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      })
+      .catch(function (error) {
+        alert(error)
+      });
+  }
+</script>
+
 </div>
 <!--/span-->
 {% endblock %}
