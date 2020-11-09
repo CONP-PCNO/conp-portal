@@ -31,10 +31,17 @@
   <p><strong>Version: </strong> {{ metadata.version }} </p>
   {% endif %}
   {% if showDownloadButton %}
-  <p>
-    <button type="button" class="btn btn-outline-primary" onClick="downloadVersion(event)">Download this
-      version</button>
-  </p>
+  <div class="d-flex flex-row align-items-center mb-2">
+    <button type="button" class="btn btn-outline-primary" id="downloadButton" onClick="downloadVersion(event)">
+      Download this version
+    </button>
+    <div class="spinner-border text-primary m-2" role="status" id="downloadButtonSpinner" hidden>
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="alert alert-danger" role="alert" id="downloadButtonError" hidden>
+    This is a danger alert—check it out!
+  </div>
   {% endif %}
   {% if metadata.sources is defined and metadata.sources is not none %}
   <p><strong>Source: </strong><a target="_blank" rel="noopener noreferrer"
@@ -103,10 +110,13 @@
   {% endif %}
 </div>
 
-{% if not showDownloadButton %}
 <div class="d-flex flex-column p-2">
   <div class="d-flex flex-row align-items-center">
+    {% if not showDownloadButton %}
     <h2 class="px-2">Dataset Download Instructions</h2>
+    {% else %}
+    <h2 class="px-2">Dataset Download Instructions (Alternative using Datalad)</h2>
+    {% endif %}
     <a class="px-2" target="_blank" rel="noopener noreferrer"
       href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master">
       <img src="{{ ciBadgeUrl }}" alt="CircleCI status" />
@@ -197,7 +207,6 @@
     </a>.
   </h6>
 </div>
-{% endif %}
 
 <div class="d-flex flex-column p-2">
   <h2>Dataset README information</h2>
@@ -223,9 +232,27 @@
 <script type="text/javascript">
 
   function downloadVersion(event) {
+
+    let downloadButton = document.getElementById("downloadButton");
+    downloadButton.textContent = "Loading...";
+
+    let downloadButtonSpinner = document.getElementById("downloadButtonSpinner");
+    downloadButtonSpinner.hidden = false
+
+    let downloadButtonError = document.getElementById("downloadButtonError");
+    downloadButtonError.hidden = true
+
     fetch(`${window.origin}/download_content?id={{ data.id }}&version={{ metadata.get('version', 'latest') }}`)
       .then((response) => {
-        return response.blob();
+        console.log(response);
+        if (response.ok) {
+          return response.blob();
+        }
+        else {
+          return response.text().then(text => {
+            throw new Error(text)
+          })
+        }
       })
       .then(function (blob) {
         var file = window.URL.createObjectURL(blob);
@@ -237,8 +264,14 @@
         a.remove();
       })
       .catch(function (error) {
-        alert(error)
-      });
+        downloadButtonError.hidden = false
+        downloadButtonError.textContent = `Something went wrong when trying to download this dataset: ${error}`
+      })
+      .finally(function () {
+        downloadButton.textContent = "Download this version"
+        downloadButtonSpinner.hidden = true
+      }
+      );
   }
 </script>
 
