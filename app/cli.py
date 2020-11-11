@@ -216,7 +216,6 @@ def _update_datasets(app):
             continue
 
         dirs = os.listdir(ds['path'])
-        print(ds['path'])
         descriptor = ''
         for file in dirs:
             if fnmatch.fnmatch(file.lower(), 'dats.json'):
