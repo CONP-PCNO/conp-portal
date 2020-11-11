@@ -210,8 +210,9 @@ def _update_datasets(app):
                 print("\033[0m")
                 continue
 
-        # The folowing relates to the DATS.json files of the projects. Skip directories that aren't projects. 
-        if not fnmatch.fnmatch(ds['path'], app.config['DATA_PATH'] + '/conp-dataset/projects/*'):
+        # The folowing relates to the DATS.json files of the projects. Skip directories that aren't projects or investigators.
+        patterns = [app.config['DATA_PATH'] + '/conp-dataset/projects/*', app.config['DATA_PATH'] + '/conp-dataset/investigators/*']
+        if not any(fnmatch.fnmatch(ds['path'], pattern) for pattern in patterns):
             continue
 
         dirs = os.listdir(ds['path'])
