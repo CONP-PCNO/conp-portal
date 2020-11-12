@@ -9,6 +9,7 @@ from flask import render_template, request
 from flask_login import current_user, login_required
 from app.main import main_bp
 from app.models import Dataset
+from app.services import github
 import requests
 
 
@@ -42,22 +43,8 @@ def share():
             rendered template for share.html
     """
 
-    url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/datalad_dataset_addition_procedure.md'
-    headers = {'Content-type': 'text/html; charset=UTF-8'}
-    response = requests.get(url, headers=headers)
-
-    readmeRaw = response.text
-
-    url = 'https://api.github.com/markdown'
-    body = {
-        "text": readmeRaw,
-        "mode": "gfm",
-        "context": "github/gollum"
-    }
-    response = requests.post(url, json=body)
-
-    content = response.text.replace('user-content-', '')
-
+    content = github.get_share_content()
+    
     return render_template('share.html', title='CONP | Share a Dataset', user=current_user, content=content)
 
 
@@ -74,21 +61,7 @@ def faq():
             rendered template for faq.html
     """
 
-    url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/CONP_FAQ.md'
-    headers = {'Content-type': 'text/html; charset=UTF-8'}
-    response = requests.get(url, headers=headers)
-
-    faqRaw = response.text
-
-    url = 'https://api.github.com/markdown'
-    body = {
-        "text": faqRaw,
-        "mode": "gfm",
-        "context": "github/gollum"
-    }
-    response = requests.post(url, json=body)
-
-    content = response.text.replace('user-content-', '')
+    content = github.get_faq_content()
 
     return render_template('faq.html', title='CONP | FAQ', user=current_user, content=content)
 
@@ -165,20 +138,6 @@ def tutorial():
             rendered template for tutorial.html
     """
 
-    url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/CONP_portal_tutorial.md'
-    headers = {'Content-type': 'text/html; charset=UTF-8'}
-    response = requests.get(url, headers=headers)
-
-    tutorialRaw = response.text
-
-    url = 'https://api.github.com/markdown'
-    body = {
-        "text"   : tutorialRaw,
-        "mode"   : "gfm",
-        "context": "github/gollum"
-    }
-    response = requests.post(url, json=body)
-
-    content = response.text.replace('user-content-', '')
+    content = github.get_tutorial_content()
 
     return render_template('tutorial.html', title='CONP | Tutorial', user=current_user, content=content)

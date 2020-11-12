@@ -19,4 +19,6 @@ ADMIN_EMAIL = <Your gmail>
 WEBHOOKS_SECRET=<github webhook secret>
 MATOMO_SERVER_URL=<Your Matomo URL>
 MATOMO_SITE_ID=1
+GITHUB_USER=
+GITHUB_PAT=
 ~
