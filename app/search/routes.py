@@ -15,6 +15,7 @@ from sqlalchemy import func, or_
 from app.models import Dataset, DatasetAncestry, User
 from app.search import search_bp
 from app.search.models import DATSDataset
+from app.services import github
 
 
 @search_bp.route('/search')
@@ -494,14 +495,6 @@ def get_dataset_readme(dataset_id):
 
     readme = f.read()
 
-    url = 'https://api.github.com/markdown'
-    body = {
-        "text": readme,
-        "mode": "gfm",
-        "context": "github/gollum"
-    }
-    response = requests.post(url, json=body)
-
-    content = response.text
+    content = github.render_content(readme)
 
     return content
