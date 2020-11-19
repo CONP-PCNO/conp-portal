@@ -242,7 +242,6 @@
 
     fetch(`${window.origin}/download_content?id={{ data.id }}&version={{ metadata.get('version', 'latest') }}`)
       .then((response) => {
-        console.log(response);
         if (response.ok) {
           return response.blob();
         }
