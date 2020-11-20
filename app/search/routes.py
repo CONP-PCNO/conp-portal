@@ -537,14 +537,6 @@ def get_dataset_readme(dataset_id):
 
     readme = f.read()
 
-    url = 'https://api.github.com/markdown'
-    body = {
-        "text": readme,
-        "mode": "gfm",
-        "context": "github/gollum"
-    }
-    response = requests.post(url, json=body)
-
-    content = response.text
+    content = github.render_content(readme)
 
     return content
