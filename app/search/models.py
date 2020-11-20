@@ -134,7 +134,7 @@ class DatasetCache(object):
 
             # Clean dataset space but force redownload. It is fine because we keep the zip in cache.
             super_d = DataladDataset(path=os.path.join(self.current_app.config['DATA_PATH'],'conp-dataset'))
-            super_d.drop(recursive=True, check=False) 
+            super_d.drop(recursive=False, check=False) 
 
         os.system('touch -a ' + zipped)
         return zipped

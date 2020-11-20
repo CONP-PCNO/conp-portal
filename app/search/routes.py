@@ -15,6 +15,7 @@ from sqlalchemy import func, or_
 from app.models import Dataset, DatasetAncestry, User
 from app.search import search_bp
 from app.search.models import DATSDataset, DatasetCache
+from app.service import github
 
 
 @search_bp.route('/search')
