@@ -23,7 +23,6 @@
 {% block appcontent %}
 <div id="yasgui" style="padding:10px 0px;"></div>
 <script>
-
   const yasgui = new Yasgui(document.getElementById("yasgui"),
   {
     requestConfig:
@@ -34,10 +33,7 @@
     copyEndpointOnNewTab: true
   }
   );
-
 </script>
-
-
 <style>
   .yasgui .autocompleteWrapper {
     display: none !important;
@@ -48,7 +44,5 @@
   .yasr .yasr_results .CodeMirror {
     height: fit-content;
   }
-
 </style>
-
 {% endblock %}
