@@ -69,6 +69,11 @@ class Config(object):
     MATOMO_SERVER_URL = os.environ.get("MATOMO_SERVER_URL")
     MATOMO_SITE_ID = os.environ.get("MATOMO_SITE_ID", "2")
 
+    # Nexus SPARQL endpoint
+    # TODO remove hardcoded url
+    NEXUS_SPARQL_ENDPOINT = os.environ.get("NEXUS_SPARQL_ENDPOINT",
+                                           "https://reservoir.global/v1/views/Public/CONP/graph/sparql")
+
 
 class DevelopmentConfig(Config):
     """This is the config for Development"""
