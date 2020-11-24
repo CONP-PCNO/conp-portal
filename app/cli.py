@@ -8,6 +8,7 @@ import os
 import click
 import csv
 import uuid
+import fnmatch
 from datetime import datetime, timedelta
 from pytz import timezone
 from app.threads import UpdatePipelineData
@@ -208,6 +209,13 @@ def _update_datasets(app):
                 print(e.args)
                 print("\033[0m")
                 continue
+
+        # The following relates to the DATS.json files
+        # of the projects directory in the conp-dataset repo.
+        # Skip directories that aren't projects.
+        patterns = [app.config['DATA_PATH'] + '/conp-dataset/projects/*']
+        if not any(fnmatch.fnmatch(ds['path'], pattern) for pattern in patterns):
+            continue
 
         dirs = os.listdir(ds['path'])
         descriptor = ''
