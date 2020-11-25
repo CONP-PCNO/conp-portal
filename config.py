@@ -71,8 +71,10 @@ class Config(object):
 
     # Nexus SPARQL endpoint
     # TODO remove hardcoded url
-    NEXUS_SPARQL_ENDPOINT = os.environ.get("NEXUS_SPARQL_ENDPOINT",
-                            "https://reservoir.global/v1/views/Public/CONP/graph/sparql")
+    NEXUS_SPARQL_ENDPOINT = os.environ.get(
+        "NEXUS_SPARQL_ENDPOINT",
+        "https://reservoir.global/v1/views/Public/CONP/graph/sparql"
+    )
 
 
 class DevelopmentConfig(Config):
