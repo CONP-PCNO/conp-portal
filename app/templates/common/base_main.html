@@ -115,6 +115,143 @@
   </div>
 </div>
 
+<div class="modal fade" id="tutModal1" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+  aria-labelledby="modalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center" id="modalLongTitle">Help</h4>
+      </div>
+      <div class="modal-body">
+        <ul>
+           <h4>How can I access the portal?</h4>
+           <p>The CONP portal is accessible via the Portal link of the CONP main website or directly at portal.conp.ca.</p>
+            <img src="/static/img/Portal_access_from_conp.ca.png"alt="Portal_access_from_conp.ca" width="700px"> 
+           <p>No login is required to access the portal but you will be asked to agree to the "Terms of Use" of the portal on 
+           your first visit. These can always be re-consulted anytime by clicking on the "Terms of Use" link at the top right 
+           of the portal web page.</p>
+           <img src="/static/img/Terms_of_use.png"alt="Portal_access_from_conp.ca" width="700px"> 
+           <p>Upon agreement to the "Terms of Use", you will be able to filter through the various datasets or pipelines 
+           available on the portal.</p>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="btnAcceptTut1">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="tutModal2" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+  aria-labelledby="modalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center" id="modalLongTitle">Help</h4>
+      </div>
+      <div class="modal-body">
+        <ul>
+            <h4>How can I find and download datasets?</h4>
+            <h5>How to find datasets of interest?</h5>
+            <p>Datasets are listed in the Data search page of the portal. This search page 
+            lists all datasets available through the CONP with some basic information about 
+            the dataset. Results can be filtered or sorted easily.</p>
+            <img src="/static/img/Data_search_page.png"alt="Portal_access_from_conp.ca" width="700px">
+            <p>Edit the code in the window to the left, and click "Run" to view the result.</p>
+            <p>Clicking on a dataset row in the Data search page will bring the user to a more 
+            detailed dataset page that includes more description information pertinent to the 
+            dataset as well as download instructions to follow using DataLad.</p>
+            <img src="/static/img/Dataset_detailed_page.png"alt="Portal_access_from_conp.ca" width="700px">
+            <p>Note that some datasets may require a third-party account. Instructions on how to 
+            obtain an account for those datasets will be displayed on the dataset page if that is a requirement.</p>
+            <p>Below are two dataset examples, one that requires a third-party account (PREVENT-AD 
+            open data) and one that does not require any account to download it (BigBrain dataset).</p>
+            <img src="/static/img/Dataset_accounts.png"alt="Portal_access_from_conp.ca" width="700px">
+            <h5>How to download the data?</h5>
+            <p>Dataset download is available through DataLad. Each dataset page contains a detailed 
+            ‘Dataset Download Instructions’ section that lay out the different steps to perform in order 
+            to download the dataset.</p>
+            <img src="/static/img/Dataset_download_instructions.png"alt="Portal_access_from_conp.ca" width="700px">
+          </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="btnAcceptTut2">Help</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="tutModal3" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+  aria-labelledby="modalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center" id="modalLongTitle">Help</h4>
+      </div>
+      <div class="modal-body">
+        <ul>
+            <h4>How can I find and run tools/pipelines?</h4>
+            <h5>How to find a tool/pipeline?</h5>
+            <p>The Tools & Pipelines page lists all softwares registered in the portal. Each tool 
+            or pipeline present in that list page contains basic information about the tool/pipeline 
+            and its pipeline ID.</p>
+            <img src="/static/img/Pipeline_search_page.png"alt="Portal_access_from_conp.ca" width="700px">
+            <p>Clicking on a specific choice will bring the user to a more detailed page with links 
+            to instructions on how to run the tool locally, to HCPs or to external platforms.</p>
+            <img src="/static/img/Pipeline_detailed_page.png"alt="Portal_access_from_conp.ca" width="700px">
+            <h5>How to run the tool/pipeline?</h5>
+            <h6>Run the tool locally</h6>
+            <p>Tools and pipelines can be run locally on any system using Boutiques and a container engine 
+            (Docker or Singularity) based on the Zenodo ID of the tool. The container image for the tool is 
+            isted in the detailed page of the tool/pipeline.</p>
+            <p>At the bottom of the pipeline page, detailed instructions on how to run the tool locally 
+            are available to the user.</p>
+            <img src="/static/img/Boutiques_instructions.png"alt="Portal_access_from_conp.ca" width="700px">
+            <p>If you have never used Boutiques in the past, we recommend the following tutorial.</p>
+            <h6>Run the tool on HPCs</h6>
+            <p>Some tools and pipelines can also be run on HPCs via the CBRAIN infrastructure or in 
+            your Compute Canada account with Clowdr.</p>
+            <img src="/static/img/CBRAIN_link_highlighted.png"alt="Portal_access_from_conp.ca" width="700px">
+            <p>The 'Click here to begin' link under the 'Run on the CBRAIN Plateform' container will open a 
+            tab to the login page of CBRAIN or to your CBRAIN account if you are already logged in.</p>
+            <p>The 'Click here for instructions' link under the 'Run on HPCs with Clowdr' will open a 
+            new tab with the instructions to follow to deploy a tool/pipeline on your Compute Canada account.</p>
+          </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="btnAcceptTut3">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="tutModal4" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+  aria-labelledby="modalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center" id="modalLongTitle">Help</h4>
+      </div>
+      <div class="modal-body">
+        <h4>How can I upload my dataset?</h4>
+        <p>A dataset can be uploaded to CONP via the following mechanisms:</p>
+        <li>Through Zenodo by tagging your dataset with the keyword canadian-open-neuroscience-platform</li>
+        <li>Through the Open Science Framework (OSF) by tagging your dataset with the keyword canadian-open-neuroscience-platform
+         and setting the dataset to Public</li>
+         <li>Through DataLad within the context of CONP</li>
+         <p>Detailed technical instructions are available for all these options on the Share page of the portal.</p>
+         <h4>How can I upload my tool/pipeline?</h4>
+         <p>You can publish your tools/pipelines using Boutiques’ command bosh publish.</p>
+         <p>For more information on how to do that, please visit the ‘Publishing your own tool’ section of the 
+         Boutiques tutorial Python notebook.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="btnAcceptTut4">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Trigger modal -->
 <script type="text/javascript">
   cookies = document.cookie;
@@ -135,6 +272,42 @@
 
       $('#termsModal').modal('hide')
 
+    });
+
+  });
+</script>
+
+<script>
+  $(function () {
+    $('#btnAcceptTut1').on('click', function (event) {
+      $('#tutModal1').modal('hide')
+    });
+
+  });
+</script>
+
+<script>
+  $(function () {
+    $('#btnAcceptTut2').on('click', function (event) {
+      $('#tutModal2').modal('hide')
+    });
+
+  });
+</script>
+
+<script>
+  $(function () {
+    $('#btnAcceptTut3').on('click', function (event) {
+      $('#tutModal3').modal('hide')
+    });
+
+  });
+</script>
+
+<script>
+  $(function () {
+    $('#btnAcceptTut4').on('click', function (event) {
+      $('#tutModal4').modal('hide')
     });
 
   });
