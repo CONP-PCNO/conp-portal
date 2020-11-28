@@ -37,29 +37,44 @@
   });
 </script>
 <script>
-  var stringPathName = window.location.pathname
-  if (stringPathName=="/index" || stringPathName=="/index#" || stringPathName=="/" || stringPathName=="/#"){
+  var pathName = window.location.pathname
+  var href = window.location.href
+  if (pathName=="/index" || pathName=="/index#" || pathName=="/" || pathName=="/#"){
      $(function () {
     $('#btnShowTut').on('click', function (event) {
       $('#tutModal1').modal('show')
     });
   });
   }
-  else if (stringPathName=="/search" || stringPathName=="/search#"){
+  else if (href.includes("dataset?id=projects") == true){
+     $(function () {
+    $('#btnShowTut').on('click', function (event) {
+      $('#tutModal2-1').modal('show')
+    });
+  });
+  }
+  else if (pathName=="/search" || pathName=="/search#"){
      $(function () {
     $('#btnShowTut').on('click', function (event) {
       $('#tutModal2').modal('show')
     });
   });
   }
-  else if (stringPathName=="/pipelines" || stringPathName=="/pipelines#"){
+  else if (href.includes("pipeline?id") == true){
+     $(function () {
+    $('#btnShowTut').on('click', function (event) {
+      $('#tutModal3-1').modal('show')
+    });
+  });
+  }
+  else if (pathName=="/pipelines" || pathName=="/pipelines#"){
      $(function () {
     $('#btnShowTut').on('click', function (event) {
       $('#tutModal3').modal('show')
     });
   });
   }
-  else if (stringPathName=="/share" || stringPathName=="/share#"){
+  else if (pathName=="/share" || pathName=="/share#"){
      $(function () {
     $('#btnShowTut').on('click', function (event) {
       $('#tutModal4').modal('show')
