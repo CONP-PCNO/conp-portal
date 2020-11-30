@@ -43,28 +43,51 @@ const Spotlight = ({ datasetURL, ...props }) => {
                       <img
                         alt="Project image"
                         className="img-fluid"
-                        src="/dataset_logo?id=projects/preventad-open"
+                        src="/dataset_logo?id=projects/preventad-registered"
                       />
                     </div>
                     <p className="card-description-subtitle">
-                        PREVENT-AD
-                </p>
-                    <p>
-The PREVENT-AD (Pre-symptomatic Evaluation of Experimental or Novel Treatments for Alzheimer's Disease) cohort is composed of cognitively healthy participants over 55 years old, at risk of developing Alzheimer's Disease (AD) as their parents and/or siblings were/are affected by the disease. These ‘at-risk’ participants have been followed for a naturalistic study of the presymptomatic phase of AD since 2011 using multimodal measurements of various disease indicators. Two clinical trials intended to test pharmaco-preventive agents have also been conducted.
-
-The PREVENT-AD research group is now releasing data openly with the intention of contributing to the community’s growing understanding of AD pathogenesis. 
+                        PREVENT-AD Datasets
                     </p>
                     <p>
-                        Authors: StoP-AD Center - Douglas Mental Health University Institute
-                </p>
+The PREVENT-AD (Pre-symptomatic Evaluation of Experimental or Novel Treatments for Alzheimer's Disease) cohort is composed
+of cognitively healthy participants over 55 years old, at risk of developing Alzheimer's Disease (AD) as their parents
+and/or siblings were/are affected by the disease. These ‘at-risk’ participants have been followed for a naturalistic study
+of the presymptomatic phase of AD since 2011 using multimodal measurements of various disease indicators. One clinical
+trial intended to test a pharmaco-preventive agent has also been conducted.
+                    </p>
+                    <p>
+The PREVENT-AD dataset is available to researchers around the world with the intention to contribute to the community’s
+growing understanding of AD pathogenesis.
+                    </p>
                 </div>
-                <div className="d-flex mt-4 justify-content-end">
-                    <a href={`/dataset?id=projects/preventad-open`}>
-                        <button className="btn btn-outline-secondary"
-                            type="button">
-                            Read More
+                <div className="d-flex mt-4 justify-content-around">
+                    <div>
+                        <a href={`/dataset?id=projects/preventad-open`}>
+                            <button className="btn btn-outline-secondary" type="button">
+                              Open Dataset
                             </button>
-                    </a>
+                        </a>
+                    </div>
+                    <div>
+                        <a href={`/dataset?id=projects/preventad-open-bids`}>
+                            <button className="btn btn-outline-secondary" type="button">
+                              Open Dataset (BIDS)
+                            </button>
+                        </a>
+                    </div>
+                    <div>
+                        <a href={`/dataset?id=projects/preventad-registered`}>
+                            <button className="btn btn-outline-secondary" type="button">
+                                Registered Dataset
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div className="card-description-subtitle">
+                    <p>
+                        Authors: StoP-AD Center - Douglas Mental Health University Institute
+                    </p>
                 </div>
             </div>
             //: null
