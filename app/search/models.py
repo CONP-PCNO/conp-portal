@@ -1,7 +1,6 @@
 import datetime as dt
 from functools import lru_cache
 import os
-import shutil
 import json
 import re
 
@@ -10,8 +9,6 @@ import dateutil
 import requests
 
 from app.models import Dataset
-from datalad import api
-from datalad.api import Dataset as DataladDataset
 
 
 @lru_cache(maxsize=1)
@@ -54,20 +51,6 @@ class DatasetCache(object):
             os.makedirs(dataset_cache_dir)
 
     @property
-    def maxSize(self):
-        config_value = self._parseSize(self.current_app.config['DATASET_CACHE_MAX_SIZE'])
-        available_space = shutil.disk_usage(self.current_app.config['DATASET_CACHE_PATH']).used
-        return min(available_space - self.usedSpace , config_value)
-
-    @property
-    def usedSpace(self):
-        return sum(f.stat().st_size for f in os.scandir(self.current_app.config['DATASET_CACHE_PATH']) if (f.is_file))
-
-    @property
-    def freeSpace(self):
-        return self.maxSize - self.usedSpace
-        
-    @property
     def cachedDatasets(self):
         return dict(
             (f.name, f)
@@ -77,13 +60,7 @@ class DatasetCache(object):
     def getZippedContent(self, dataset):
         """
           1. Server checks if a zip file already exists for this version.
-          2. If zip file doesn't exist: 
-              2.1 Check for available storage space on partition holding the dataset.
-              2.2 If AST < size(DV) + margin 
-                2.2.1 Delete zip files from least-recently used datasets untill ASST is enough
-              2.3 Download using Datalad
-              2.4 Create zip file
-          3. Return zip file
+          2. Return zip file
         """
 
         datasetmeta = DATSDataset(dataset.fspath)
@@ -96,84 +73,12 @@ class DatasetCache(object):
 
         cached = self.cachedDatasets.get(zipFilename)
         zipped = cached.path if cached is not None else None
-        
 
         if zipped is None:
-            datasetsize = self._parseSize(datasetmeta.size)
-
-            # Question :: Can a dataset not have a size?
-            if datasetsize == 0:
-                raise RuntimeError('Dataset size property missing or invalid')
-
-            self._makeSureThereIsSpace(datasetsize)
-
-            # Download the file content
-            # The downloading is done in DATA_PATH
-            # Files content will be dropped after zip creation
-            datasetrootdir = os.path.join(
-                self.current_app.config['DATA_PATH'],
-                'conp-dataset',
-                dataset.fspath
-            )
-            d = DataladDataset(path=datasetrootdir)
-
-            if not d.is_installed():
-                raise RuntimeError('The dataset is not installed')
-
-            try:
-                api.get(d.path, dataset=d, recursive=False)
-            except:
-                raise RuntimeError('Backend download failed')
-
-            # create zip file
-            filename = os.path.join(
-                self.current_app.config['DATASET_CACHE_PATH'],
-                zipFilename
-            )
-            zipped = d.export_archive(filename=filename, missing_content='error')[0].get('path')
-
-            # Clean dataset space but force redownload. It is fine because we keep the zip in cache.
-            super_d = DataladDataset(path=os.path.join(self.current_app.config['DATA_PATH'],'conp-dataset'))
-            super_d.drop(recursive=False, check=False) 
+            raise RuntimeError('Not found')
 
         os.system('touch -a ' + zipped)
         return zipped
-
-    def _makeSureThereIsSpace(self, requestedSize):
-        """
-           This is relying on dataset size from DATS.json; not the compressed size.
-           This should also check if DATA_PATH has sufficient space to download the dataset.
-        """
-
-        if requestedSize > self.maxSize:
-            print('requesting ' + str(requestedSize) + ' bytes' )
-            print(str(self.freeSpace) + ' bytes available')
-            raise RuntimeError('Insufficient Storage Available')
-
-        while requestedSize > self.freeSpace:
-            self._deleteLeastRecettlyUsed()
-        
-        return None
-
-    def _deleteLeastRecettlyUsed(self):
-        list_of_files = sorted(
-            os.scandir(self.current_app.config['DATASET_CACHE_PATH']),
-            key=lambda f: f.stat().st_atime,
-            reverse=True
-        ) 
-
-        try:
-            latest_file = list_of_files.pop()
-        except IndexError:
-            # No file to delete
-            raise RuntimeError('Can`t make more space available')
-
-        os.remove(latest_file)
-
-    def _parseSize(self, size):
-        units = {"B": 1, "KB": 10**3, "MB": 10**6, "GB": 10**9, "TB": 10**12}
-        number, unit = [string.strip().upper() for string in size.split()]
-        return int(float(number)*units[unit])
 
 
 class DATSDataset(object):

@@ -8,11 +8,6 @@ DATA_PATH=${HOME}
 # DATASET_CACHE_PATH is the location where zipped datasets are kept.
 DATASET_CACHE_PATH=${HOME}/.cache/conp-dataset
 
-# DATASET_CACHE_MAX_SIZE is the maximum space allowed to be used in 
-# DATASET_CACHE_PATH directory It's value MUST be a string composed of 
-# a number, a space and a unit. Unit MUST be on of B, KB, MB, GB, TB. 
-DATASET_CACHE_MAX_SIZE='2 GB'
-
 SQLALCHEMY_TRACK_MODIFICATIONS=False
 MAIL_SERVER=smtp.googlemail.com
 MAIL_PORT=587

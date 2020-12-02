@@ -15,7 +15,7 @@ from sqlalchemy import func, or_
 from app.models import Dataset, DatasetAncestry, User
 from app.search import search_bp
 from app.search.models import DATSDataset, DatasetCache
-from app.service import github
+from app.services import github
 
 
 @search_bp.route('/search')
@@ -390,13 +390,14 @@ def dataset_info():
     ciBadgeUrl = "https://img.shields.io/badge/circleci-" + \
         dataset["status"] + "-" + color + "?style=flat-square&logo=circleci"
 
-    units = {"B": 1, "KB": 10**3, "MB": 10**6, "GB": 10**9, "TB": 10**12}
+    try:
+        zipped = DatasetCache(current_app).getZippedContent(d)
+    except IOError as err:
+        zipped = None
+    except RuntimeError as err:
+        zipped = None
 
-    cacheSize = current_app.config['DATASET_CACHE_MAX_SIZE']
-    cacheSizeBytes = float(cacheSize.split()[0]) * float(units.get(cacheSize.split()[1], 0))
-    datasetSizeBytes = float(dataset.get("size").split()[0]) * float(units.get(dataset.get("size").split()[1], 0))
-
-    showDownloadButton = dataset.get("authorizations") != "private" and cacheSize != None and cacheSizeBytes > datasetSizeBytes
+    showDownloadButton = zipped is not None
 
     return render_template(
         'dataset.html',
