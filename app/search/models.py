@@ -64,12 +64,8 @@ class DatasetCache(object):
         """
 
         datasetmeta = DATSDataset(dataset.fspath)
-        zipFilename = '.'.join([
-            datasetmeta.name.replace('/','__'),
-            datasetmeta.version,
-           'tar',
-           'gz'
-        ])
+        zipFilename = datasetmeta.name.replace('/','__') + '_version-' + \
+                        datasetmeta.version + '.tar.gz'
 
         cached = self.cachedDatasets.get(zipFilename)
         zipped = cached.path if cached is not None else None
