@@ -183,6 +183,10 @@ Colour names courtesy of chir.ag/projects/name-that-color
   background-color: #c5822b;
 }
 
+.btn-term {
+  width: 100%;
+}
+
 .btn-cbrain,
 .btn-cbrain.disabled,
 .btn-download-metadata,
