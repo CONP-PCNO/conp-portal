@@ -14,22 +14,41 @@ body {
   scroll-behavior: smooth;
 }
 
-h1, h2, h3, h4, h5, h6 {
-	clear: both;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  clear: both;
   line-height: 1.3em;
   margin-top: 1rem;
   margin-bottom: 1rem;
   font-weight: 400;
 }
 
-h1 { font-size: 2.4em; }
-h2 { font-size: 2.2em; }
-h3 { font-size: 2em; }
-h4 { font-size: 1.8em; }
-h5 { font-size: 1.6em; }
-h6 { font-size: 1.4em; }
+h1 {
+  font-size: 2.4em;
+}
+h2 {
+  font-size: 2.2em;
+}
+h3 {
+  font-size: 2em;
+}
+h4 {
+  font-size: 1.8em;
+}
+h5 {
+  font-size: 1.6em;
+}
+h6 {
+  font-size: 1.4em;
+}
 
-p { font-size: 1rem; }
+p {
+  font-size: 1rem;
+}
 
 :target::before {
   content: "";
@@ -46,7 +65,7 @@ button:focus {
   font-size: 100%;
 }
 
-.modal-dialog{
+.modal-dialog {
   overflow-y: initial;
 }
 
@@ -71,14 +90,14 @@ button:focus {
   padding-top: 56.25%;
   position: relative;
 }
- 
+
 .iframe-container iframe {
-   border: 0;
-   height: 100%;
-   left: 0;
-   position: absolute;
-   top: 0;
-   width: 100%;
+  border: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
 /*
@@ -269,13 +288,13 @@ Colour names courtesy of chir.ag/projects/name-that-color
 }
 
 .sidebar-tab:hover {
-  background-color: #d8d8d8;
+  background-color: #8a8a8a;
   color: #343434;
   cursor: pointer;
 }
 
 .sticky-offset {
-  top: 65px;
+  top: 80px;
 }
 
 /*
