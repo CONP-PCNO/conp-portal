@@ -140,7 +140,7 @@ def pipeline_search():
     # else take the first one and set logo
     # TODO right now, this handles CBRAIN and one other platform
 
-    #*************By Mandana
+    #Mandana, issue 378
     with open(os.path.join(cache_dir, "cbrain-conp-pipeline.json"), "r") as f:
         zenodoUrls = json.load(f)
             
@@ -163,7 +163,7 @@ def pipeline_search():
                                      "uri": url}
                     element["platforms"].append(platform_dict)
 '''
-        #*************By Mandana
+         #Mandana, issue 378
         if element["id"] in zenodoUrls.keys():
             element["platforms"][0]["img"] = url_for(
                 'static', filename="img/run_on_cbrain_green.png")
