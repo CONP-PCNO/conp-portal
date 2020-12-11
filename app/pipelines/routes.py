@@ -140,8 +140,8 @@ def pipeline_search():
     # else take the first one and set logo
     # TODO right now, this handles CBRAIN and one other platform
 
-    #Mandana, issue 378
-    with open(os.path.join(cache_dir, "cbrain-conp-pipeline.json"), "r") as f:
+    #Mandana issue 378
+    with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json"), "r") as f:
         zenodoUrls = json.load(f)
             
     for element in elements_on_page:
@@ -149,21 +149,8 @@ def pipeline_search():
         element["platforms"][0]["img"] = url_for(
             'static', filename="img/run_on_cbrain_gray.png")
         element["platforms"][0]["uri"] = ""
-'''
-        if "onlineplatformurls" in element:
-            # Check CBRAIN
-            for url in element["onlineplatformurls"]:
-                if url.startswith('https://portal.cbrain.mcgill.ca'):
-                #if element["id"] in zenodoUrls.keys():
-                    element["platforms"][0]["img"] = url_for(
-                        'static', filename="img/run_on_cbrain_green.png")
-                    element["platforms"][0]["uri"] = url
-                else:
-                    platform_dict = {"img": url_for('static', filename="img/globe-solid-green.png"),
-                                     "uri": url}
-                    element["platforms"].append(platform_dict)
-'''
-         #Mandana, issue 378
+
+        
         if element["id"] in zenodoUrls.keys():
             element["platforms"][0]["img"] = url_for(
                 'static', filename="img/run_on_cbrain_green.png")
