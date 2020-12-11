@@ -140,16 +140,21 @@ def pipeline_search():
     # else take the first one and set logo
     # TODO right now, this handles CBRAIN and one other platform
 
+    #*************By Mandana
+    with open(os.path.join(cache_dir, "cbrain-conp-pipeline.json"), "r") as f:
+        zenodoUrls = json.load(f)
+            
     for element in elements_on_page:
         element["platforms"] = [{} for x in range(0, 1)]
         element["platforms"][0]["img"] = url_for(
             'static', filename="img/run_on_cbrain_gray.png")
         element["platforms"][0]["uri"] = ""
-
+'''
         if "onlineplatformurls" in element:
             # Check CBRAIN
             for url in element["onlineplatformurls"]:
                 if url.startswith('https://portal.cbrain.mcgill.ca'):
+                #if element["id"] in zenodoUrls.keys():
                     element["platforms"][0]["img"] = url_for(
                         'static', filename="img/run_on_cbrain_green.png")
                     element["platforms"][0]["uri"] = url
@@ -157,7 +162,17 @@ def pipeline_search():
                     platform_dict = {"img": url_for('static', filename="img/globe-solid-green.png"),
                                      "uri": url}
                     element["platforms"].append(platform_dict)
-
+'''
+        #*************By Mandana
+        if element["id"] in zenodoUrls.keys():
+            element["platforms"][0]["img"] = url_for(
+                'static', filename="img/run_on_cbrain_green.png")
+            element["platforms"][0]["uri"] = zenodoUrls[element["id"]]
+        else:
+            element["platforms"][0]["img"] = url_for(
+                'static', filename="img/run_on_cbrain_gray.png")
+            element["platforms"][0]["uri"] = ""
+        
     # construct payload
     payload = {
         "authorized": authorized,
