@@ -13,20 +13,17 @@ const DataTableContainer = ({
   total,
   page,
   max_per_page,
-  search,
-  tags,
   elements,
-  modalities,
-  formats,
+  filters,
   ...dataTableProps
 }) => {
   const [fetchedElements, setFetchedElements] = React.useState(elements);
 
   const [query, setQuery] = React.useState({
-    search,
-    tags,
-    modalities: modalities !== null ? modalities.split(",") : [],
-    formats: formats !== null ? formats.split(",") : [],
+    search: filters.search ? filters.search : "",
+    tags: filters.tags ? filters.tags.split(",") : [],
+    modalities: filters.modalities ? filters.modalities.split(",") : [],
+    formats: filters.formats ? filters.formats.split(",") : [],
     sortKey: "conpStatus",
     sortComparitor: "asc",
     page,
@@ -45,8 +42,13 @@ const DataTableContainer = ({
     setQuery({ ...query, limit });
   }, [limit]);
 
+  React.useEffect(() => {
+    const queryString = new URLSearchParams(query).toString()
+    window.history.replaceState(null, null, `/search?${queryString}`)
+  }, [query])
+
   const fetchElements = async () => {
-    const url = `${endpointURL}?${qs.stringify(query, {arrayFormat: 'comma'})}`;
+    const url = `${endpointURL}?${qs.stringify(query, { arrayFormat: 'comma' })}`;
 
     try {
       const res = await fetch(url);

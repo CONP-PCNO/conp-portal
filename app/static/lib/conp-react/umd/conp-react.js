@@ -14108,22 +14108,19 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       total = _ref.total,
       page = _ref.page,
       max_per_page = _ref.max_per_page,
-      search = _ref.search,
-      tags = _ref.tags,
       elements = _ref.elements,
-      modalities = _ref.modalities,
-      formats = _ref.formats,
-      dataTableProps = _objectWithoutPropertiesLoose(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "search", "tags", "elements", "modalities", "formats"]);
+      filters = _ref.filters,
+      dataTableProps = _objectWithoutPropertiesLoose(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "elements", "filters"]);
 
   var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
       fetchedElements = _React$useState[0],
       setFetchedElements = _React$useState[1];
 
   var _React$useState2 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState({
-    search: search,
-    tags: tags,
-    modalities: modalities !== null ? modalities.split(",") : [],
-    formats: formats !== null ? formats.split(",") : [],
+    search: filters.search ? filters.search : "",
+    tags: filters.tags ? filters.tags.split(",") : [],
+    modalities: filters.modalities ? filters.modalities.split(",") : [],
+    formats: filters.formats ? filters.formats.split(",") : [],
     sortKey: "conpStatus",
     sortComparitor: "asc",
     page: page,
@@ -14155,6 +14152,10 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       limit: limit
     }));
   }, [limit]);
+  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useEffect(function () {
+    var queryString = new URLSearchParams(query).toString();
+    window.history.replaceState(null, null, "/search?" + queryString);
+  }, [query]);
 
   var fetchElements = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {

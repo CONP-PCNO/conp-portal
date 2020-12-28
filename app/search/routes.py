@@ -32,8 +32,22 @@ def search():
     """
 
     modalities = request.args.get('modalities')
+    formats = request.args.get('formats')
+    search = request.args.get('search')
+    tags = request.args.get('tags')
+    sortComparitor = request.args.get('sortComparitor')
+    sortKey = request.args.get('sortKey')
 
-    return render_template('search.html', title='CONP | Search', user=current_user, modalities=modalities)
+    filters = {
+        "modalities": modalities,
+        "formats": formats,
+        "search": search,
+        "tags": tags,
+        "sortComparitor": sortComparitor,
+        "sortKey": sortKey
+    }
+
+    return render_template('search.html', title='CONP | Search', user=current_user, filters=filters)
 
 
 @search_bp.route('/dataset_logo')
