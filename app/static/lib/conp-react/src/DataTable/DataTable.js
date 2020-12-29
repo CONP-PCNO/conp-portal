@@ -49,7 +49,6 @@ const DataTable = ({
 
   const handleMaxPerPageChange = (event) => {
     const value = event.target.value;
-    console.log(value);
     setQuery({
       ...query,
       max_per_page: value,
@@ -137,7 +136,7 @@ const DataTable = ({
                   filterKeys.filter(f => f["key"] === "modalities")[0]["values"].map(modality => (
                     modality !== '' ?
                       <div key={modality.id} className="dropdown-item ml-2">
-                        <input className="form-check-input" type="checkbox" checked={filters.filter(f=>f["key"] === "modalities")[0]["values"].includes(modality)} value={"modalities." + modality} id={"filter" + modality} onChange={handleChange} />
+                        <input className="form-check-input" type="checkbox" checked={filters.filter(f => f["key"] === "modalities")[0]["values"].includes(modality)} value={"modalities." + modality} id={"filter" + modality} onChange={handleChange} />
                         <label className="form-check-label" htmlFor={"filter" + modality}>
                           {modality}
                         </label>
@@ -156,7 +155,7 @@ const DataTable = ({
                   filterKeys.filter(f => f["key"] === "formats")[0]["values"].map(format => (
                     format !== '' ?
                       <div key={format.id} className="dropdown-item ml-2">
-                        <input className="form-check-input" type="checkbox" checked={filters.filter(f=>f["key"] === "formats")[0]["values"].includes(format)} value={"formats." + format} id={"filter" + format} onChange={handleChange} />
+                        <input className="form-check-input" type="checkbox" checked={filters.filter(f => f["key"] === "formats")[0]["values"].includes(format)} value={"formats." + format} id={"filter" + format} onChange={handleChange} />
                         <label className="form-check-label" htmlFor={"filter" + format}>
                           {format}
                         </label>

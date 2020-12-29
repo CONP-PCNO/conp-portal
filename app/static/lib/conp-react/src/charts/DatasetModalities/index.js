@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from 'highcharts-react-official'
 require('highcharts/highcharts-more.js')(Highcharts);
-  
+
 const defaultOptions = {
 
     chart: {
@@ -29,18 +29,17 @@ const defaultOptions = {
     },
 
     plotOptions: {
-        series:{
+        series: {
             allowPointSelect: true,
-            point:{
-                events:{
-                  select: function(e){
-                    console.log(e)
-                    // eslint-disable-next-line no-restricted-globals
-                    location.assign(`/search?modalities=${e.target.name.toLowerCase()}`)
-                  }
+            point: {
+                events: {
+                    select: function (e) {
+                        // eslint-disable-next-line no-restricted-globals
+                        location.assign(`/search?modalities=${e.target.name.toLowerCase()}`)
+                    }
                 }
-              }
-          },
+            }
+        },
 
         packedbubble: {
             color: "#EA2627",

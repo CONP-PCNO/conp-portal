@@ -43,7 +43,15 @@ const DataTableContainer = ({
   }, [limit]);
 
   React.useEffect(() => {
-    const queryString = new URLSearchParams(query).toString()
+    // Remove empty keys from query and set query object as query parameters
+    // Repeat this every time the query changes to ensure query state survives refresh / back navigation
+    const q = query
+    Object.keys(q).forEach(k => {
+      if (q[k] === '' || (Array.isArray(q[k]) && q[k].length === 0)) {
+        delete q[k]
+      }
+    })
+    const queryString = new URLSearchParams(q).toString()
     window.history.replaceState(null, null, `/search?${queryString}`)
   }, [query])
 

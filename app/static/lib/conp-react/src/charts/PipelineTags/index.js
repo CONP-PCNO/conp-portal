@@ -29,18 +29,17 @@ const defaultOptions = {
     },
 
     plotOptions: {
-        series:{
+        series: {
             allowPointSelect: true,
-            point:{
-                events:{
-                  select: function(e){
-                    console.log(e)
-                    // eslint-disable-next-line no-restricted-globals
-                    location.assign(`/pipelines?tags=${e.target.name.toLowerCase()}`)
-                  }
+            point: {
+                events: {
+                    select: function (e) {
+                        // eslint-disable-next-line no-restricted-globals
+                        location.assign(`/pipelines?tags=${e.target.name.toLowerCase()}`)
+                    }
                 }
-              }
-          },
+            }
+        },
         packedbubble: {
             color: "#207EA0",
             minSize: '10%',

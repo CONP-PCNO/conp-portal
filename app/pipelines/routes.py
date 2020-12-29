@@ -31,12 +31,16 @@ def pipelines():
     search = request.args.get('search') or ""
     tags = request.args.get('tags') or ""
 
+    filters = {
+        "page": page,
+        "max_per_page": max_per_page,
+        "search": search,
+        "tags": tags
+    }
+
     return render_template('pipelines.html',
                            title='CONP | Tools & Pipelines',
-                           page=page,
-                           max_per_page=max_per_page,
-                           search=search,
-                           tags=tags)
+                           filters=filters)
 
 
 @pipelines_bp.route('/pipeline-search', methods=['GET'])
@@ -94,11 +98,13 @@ def pipeline_search():
         ]
 
     # filter out the deprecated pipelines
-    elements = list(filter(lambda e: (not e.get("DEPRECATED", None)), elements))
+    elements = list(
+        filter(lambda e: (not e.get("DEPRECATED", None)), elements))
 
     # filter by tags
     if len(tags) > 0:
-        elements = list(filter(lambda e: ("tags" in e and "domain" in e["tags"]), elements))
+        elements = list(
+            filter(lambda e: ("tags" in e and "domain" in e["tags"]), elements))
         elements = list(filter(lambda e: all(
             t in e["tags"]["domain"] for t in tags), elements))
 
@@ -140,17 +146,16 @@ def pipeline_search():
     # else take the first one and set logo
     # TODO right now, this handles CBRAIN and one other platform
 
-    #Mandana issue 378
+    # Mandana issue 378
     with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json"), "r") as f:
         zenodoUrls = json.load(f)
-            
+
     for element in elements_on_page:
         element["platforms"] = [{} for x in range(0, 1)]
         element["platforms"][0]["img"] = url_for(
             'static', filename="img/run_on_cbrain_gray.png")
         element["platforms"][0]["uri"] = ""
 
-        
         if element["id"] in zenodoUrls.keys():
             element["platforms"][0]["img"] = url_for(
                 'static', filename="img/run_on_cbrain_green.png")
@@ -159,7 +164,7 @@ def pipeline_search():
             element["platforms"][0]["img"] = url_for(
                 'static', filename="img/run_on_cbrain_gray.png")
             element["platforms"][0]["uri"] = ""
-        
+
     # construct payload
     payload = {
         "authorized": authorized,
@@ -269,7 +274,7 @@ def pipeline_info():
                 element["platforms"].append(platform_dict)
 
     # make all keys lowercase and without spaces
-    element =  {k.lower().replace(" ", ""): v for k, v in element.items()}
+    element = {k.lower().replace(" ", ""): v for k, v in element.items()}
 
     return render_template(
         'pipeline.html',

@@ -11473,7 +11473,6 @@ var DataTable_DataTable = function DataTable(_ref) {
 
   var handleMaxPerPageChange = function handleMaxPerPageChange(event) {
     var value = event.target.value;
-    console.log(value);
     setQuery(_extends({}, query, {
       max_per_page: value,
       limit: value,
@@ -14153,7 +14152,15 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
     }));
   }, [limit]);
   external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useEffect(function () {
-    var queryString = new URLSearchParams(query).toString();
+    // Remove empty keys from query and set query object as query parameters
+    // Repeat this every time the query changes to ensure query state survives refresh / back navigation
+    var q = query;
+    Object.keys(q).forEach(function (k) {
+      if (q[k] === '' || Array.isArray(q[k]) && q[k].length === 0) {
+        delete q[k];
+      }
+    });
+    var queryString = new URLSearchParams(q).toString();
     window.history.replaceState(null, null, "/search?" + queryString);
   }, [query]);
 
@@ -22149,8 +22156,7 @@ var DatasetModalities_defaultOptions = {
       point: {
         events: {
           select: function select(e) {
-            console.log(e); // eslint-disable-next-line no-restricted-globals
-
+            // eslint-disable-next-line no-restricted-globals
             location.assign("/search?modalities=" + e.target.name.toLowerCase());
           }
         }
@@ -22291,8 +22297,7 @@ var PipelineTags_defaultOptions = {
       point: {
         events: {
           select: function select(e) {
-            console.log(e); // eslint-disable-next-line no-restricted-globals
-
+            // eslint-disable-next-line no-restricted-globals
             location.assign("/pipelines?tags=" + e.target.name.toLowerCase());
           }
         }
