@@ -11581,7 +11581,16 @@ var DataTable_DataTable = function DataTable(_ref) {
     value: 20,
     id: "max_per_page." + 20,
     onClick: handleMaxPerPageChange
-  }, "20")))), ")"), renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "20")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    key: "max_per_page_all",
+    className: "dropdown-item p-0"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-light p-1",
+    value: "all",
+    id: "max_per_page.all",
+    onClick: handleMaxPerPageChange
+  }, "View All")))), ")"), renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex p-2 justify-content-end"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "dropdown p-2"
@@ -11658,7 +11667,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       authorized: authorized,
       imagePath: imagePath
     })));
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }), query.max_per_page !== 'all' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "search-dataset-footer d-flex align-items-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn-group"
@@ -11700,7 +11709,7 @@ var DataTable_DataTable = function DataTable(_ref) {
         page: Math.ceil(total / query.max_per_page)
       }));
     }
-  }, ">>"))));
+  }, ">>"))) : null);
 };
 
 DataTable_DataTable.propTypes = {
@@ -14243,7 +14252,7 @@ DataTableContainer_DataTableContainer.propTypes = {
   limit: prop_types_default.a.number,
   total: prop_types_default.a.number,
   page: prop_types_default.a.number,
-  max_per_page: prop_types_default.a.number,
+  max_per_page: prop_types_default.a.oneOfType([prop_types_default.a.string, prop_types_default.a.number]),
   elements: prop_types_default.a.arrayOf(prop_types_default.a.object)
 };
 DataTableContainer_DataTableContainer.defaultProps = {
@@ -14255,8 +14264,8 @@ DataTableContainer_DataTableContainer.defaultProps = {
   page: 1,
   max_per_page: 10,
   elements: [],
-  modalities: "",
-  formats: ""
+  modalities: [],
+  formats: []
 };
 /* harmony default export */ var DataTable_DataTableContainer = (DataTableContainer_DataTableContainer);
 // CONCATENATED MODULE: ./src/DataTable/index.js

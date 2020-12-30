@@ -122,6 +122,11 @@ const DataTable = ({
                   20
                     </button>
               </div>
+              <div key="max_per_page_all" className="dropdown-item p-0">
+                <button type="button" className="btn btn-light p-1" value={"all"} id={"max_per_page.all"} onClick={handleMaxPerPageChange}>
+                  View All
+                    </button>
+              </div>
             </div>
           </span>)
           </div>
@@ -173,43 +178,46 @@ const DataTable = ({
           {React.createElement(renderElement, { ...element, authorized, imagePath })}
         </div>
       ))}
-      <div className="search-dataset-footer d-flex align-items-center p-2">
-        <div className="btn-group">
-          <div className="btn btn-outline-dark"
-            onClick={e =>
-              setQuery({ ...query, page: 1 })
-            }>&lt;&lt;</div>
-          <div className="btn btn-outline-dark"
-            onClick={e =>
-              setQuery({ ...query, page: Math.max(1, query.page - 1) })
-            }> &lt; </div>
-          {R.range(1, Math.ceil(total / query.max_per_page) + 1).map(
-            (page, i) => (
-              <div className={page === query.page ? "btn btn-dark" : "btn btn-outline-dark"}
-                onClick={e =>
-                  setQuery({ ...query, page: page })
-                }
-                key={i}>
-                {page}
-              </div>
-            )
-          )}
-          <div className="btn btn-outline-dark"
-            onClick={e =>
-              setQuery({ ...query, page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page)) })
-            }
-          >
-            &gt;
+      {query.max_per_page !== 'all' ?
+        <div className="search-dataset-footer d-flex align-items-center p-2">
+          <div className="btn-group">
+            <div className="btn btn-outline-dark"
+              onClick={e =>
+                setQuery({ ...query, page: 1 })
+              }>&lt;&lt;</div>
+            <div className="btn btn-outline-dark"
+              onClick={e =>
+                setQuery({ ...query, page: Math.max(1, query.page - 1) })
+              }> &lt; </div>
+            {R.range(1, Math.ceil(total / query.max_per_page) + 1).map(
+              (page, i) => (
+                <div className={page === query.page ? "btn btn-dark" : "btn btn-outline-dark"}
+                  onClick={e =>
+                    setQuery({ ...query, page: page })
+                  }
+                  key={i}>
+                  {page}
+                </div>
+              )
+            )}
+            <div className="btn btn-outline-dark"
+              onClick={e =>
+                setQuery({ ...query, page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page)) })
+              }
+            >
+              &gt;
           </div>
-          <div className="btn btn-outline-dark"
-            onClick={e =>
-              setQuery({ ...query, page: Math.ceil(total / query.max_per_page) })
-            }
-          >
-            &gt;&gt;
+            <div className="btn btn-outline-dark"
+              onClick={e =>
+                setQuery({ ...query, page: Math.ceil(total / query.max_per_page) })
+              }
+            >
+              &gt;&gt;
+          </div>
           </div>
         </div>
-      </div>
+        : null
+      }
     </div>
   );
 };

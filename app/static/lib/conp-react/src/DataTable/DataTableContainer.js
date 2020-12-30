@@ -104,7 +104,10 @@ DataTableContainer.propTypes = {
   limit: PropTypes.number,
   total: PropTypes.number,
   page: PropTypes.number,
-  max_per_page: PropTypes.number,
+  max_per_page: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   elements: PropTypes.arrayOf(PropTypes.object),
 };
 
@@ -117,8 +120,8 @@ DataTableContainer.defaultProps = {
   page: 1,
   max_per_page: 10,
   elements: [],
-  modalities: "",
-  formats: ""
+  modalities: [],
+  formats: []
 };
 
 export default DataTableContainer;
