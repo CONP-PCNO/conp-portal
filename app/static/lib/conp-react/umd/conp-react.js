@@ -11434,7 +11434,8 @@ var DataTable_DataTable = function DataTable(_ref) {
       total = _ref.total,
       renderElement = _ref.renderElement,
       query = _ref.query,
-      setQuery = _ref.setQuery;
+      setQuery = _ref.setQuery,
+      isLoading = _ref.isLoading;
 
   var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([{
     key: "modalities",
@@ -11446,7 +11447,8 @@ var DataTable_DataTable = function DataTable(_ref) {
       filters = _useState[0],
       setFilters = _useState[1];
 
-  var handleChange = function handleChange(event) {
+  var handleFiltersChange = function handleFiltersChange(event) {
+    event.preventDefault();
     var e = event.target.value;
     var filter = e.split(".");
     var newFilters = filters;
@@ -11472,6 +11474,7 @@ var DataTable_DataTable = function DataTable(_ref) {
   };
 
   var handleMaxPerPageChange = function handleMaxPerPageChange(event) {
+    event.preventDefault();
     var value = event.target.value;
     setQuery(_extends({}, query, {
       max_per_page: value,
@@ -11480,7 +11483,38 @@ var DataTable_DataTable = function DataTable(_ref) {
     }));
   };
 
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  var handlePageChange = function handlePageChange(event) {
+    event.preventDefault();
+    var page;
+    var value = event.target.value;
+
+    switch (value) {
+      case 'first':
+        page = 1;
+        break;
+
+      case 'back':
+        page = Math.max(1, query.page - 1);
+        break;
+
+      case 'forward':
+        page = Math.min(query.page + 1, Math.ceil(total / query.max_per_page));
+        break;
+
+      case 'last':
+        page = Math.ceil(total / query.max_per_page);
+        break;
+
+      default:
+        page = parseInt(value);
+    }
+
+    setQuery(_extends({}, query, {
+      page: page
+    }));
+  };
+
+  return isLoading ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "search-dataset-table",
     cellSpacing: 0
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -11531,7 +11565,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     className: "d-flex justify-content-between"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex p-2 justify-content-start align-items-center"
-  }, elements.length, " results displayed of ", total, ". (Maximum results per page", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+  }, query.max_per_page === 'all' ? "Displaying " + total + " results." : "Results " + (query.max_per_page * (query.page - 1) + 1) + " - " + Math.min(query.max_per_page * query.page, total) + " displayed of " + total + ".", " (Maximum results per page", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
     className: "dropdown p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-secondary dropdown-toggle p-2",
@@ -11621,7 +11655,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       })[0]["values"].includes(modality),
       value: "modalities." + modality,
       id: "filter" + modality,
-      onChange: handleChange
+      onChange: handleFiltersChange
     }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
       className: "form-check-label",
       htmlFor: "filter" + modality
@@ -11655,7 +11689,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       })[0]["values"].includes(format),
       value: "formats." + format,
       id: "filter" + format,
-      onChange: handleChange
+      onChange: handleFiltersChange
     }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
       className: "form-check-label",
       htmlFor: "filter" + format
@@ -11671,44 +11705,29 @@ var DataTable_DataTable = function DataTable(_ref) {
     className: "search-dataset-footer d-flex align-items-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn-group"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-outline-dark",
-    onClick: function onClick(e) {
-      return setQuery(_extends({}, query, {
-        page: 1
-      }));
-    }
-  }, "<<"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    value: "first",
+    onClick: handlePageChange
+  }, "<<"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-outline-dark",
-    onClick: function onClick(e) {
-      return setQuery(_extends({}, query, {
-        page: Math.max(1, query.page - 1)
-      }));
-    }
+    value: "back",
+    onClick: handlePageChange
   }, " < "), es_range(1, Math.ceil(total / query.max_per_page) + 1).map(function (page, i) {
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
       className: page === query.page ? "btn btn-dark" : "btn btn-outline-dark",
-      onClick: function onClick(e) {
-        return setQuery(_extends({}, query, {
-          page: page
-        }));
-      },
+      value: page,
+      onClick: handlePageChange,
       key: i
     }, page);
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-outline-dark",
-    onClick: function onClick(e) {
-      return setQuery(_extends({}, query, {
-        page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page))
-      }));
-    }
-  }, ">"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    value: "forward",
+    onClick: handlePageChange
+  }, ">"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-outline-dark",
-    onClick: function onClick(e) {
-      return setQuery(_extends({}, query, {
-        page: Math.ceil(total / query.max_per_page)
-      }));
-    }
+    value: "last",
+    onClick: handlePageChange
   }, ">>"))) : null);
 };
 
@@ -14155,6 +14174,10 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       authorizedState = _React$useState6[0],
       setAuthorizedState = _React$useState6[1];
 
+  var _React$useState7 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(false),
+      isLoading = _React$useState7[0],
+      setIsLoading = _React$useState7[1];
+
   external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useEffect(function () {
     setQuery(DataTableContainer_extends({}, query, {
       limit: limit
@@ -14180,49 +14203,58 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              setIsLoading(true);
               url = endpointURL + "?" + query_string["stringify"](query, {
                 arrayFormat: 'comma'
               });
-              _context.prev = 1;
-              _context.next = 4;
+              _context.prev = 2;
+              _context.next = 5;
               return fetch(url);
 
-            case 4:
+            case 5:
               res = _context.sent;
 
               if (res.ok) {
-                _context.next = 7;
+                _context.next = 8;
                 break;
               }
 
               throw new Error("Request failed with status: " + res.status + " (" + res.statusText + ")");
 
-            case 7:
-              _context.next = 9;
+            case 8:
+              _context.next = 10;
               return res.json();
 
-            case 9:
+            case 10:
               parsed = _context.sent;
               setFetchedElements(parsed.elements);
               setTotalState(parsed.total);
               setSortKeysState(parsed.sortKeys);
               setFilterKeysState(parsed.filterKeys);
               setAuthorizedState(parsed.authorized);
-              _context.next = 21;
+              _context.next = 22;
               break;
 
-            case 17:
-              _context.prev = 17;
-              _context.t0 = _context["catch"](1);
+            case 18:
+              _context.prev = 18;
+              _context.t0 = _context["catch"](2);
               alert("There was an error retrieving the search results.");
               console.error(_context.t0);
 
-            case 21:
+            case 22:
+              _context.prev = 22;
+              setIsLoading(false);
+              setTimeout(function () {
+                window.scrollTo(0, 0);
+              }, 500);
+              return _context.finish(22);
+
+            case 26:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 17]]);
+      }, _callee, null, [[2, 18, 22, 26]]);
     }));
 
     return function fetchElements() {
@@ -14230,9 +14262,9 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
     };
   }();
 
-  esm_useDebounce(function () {
-    return void fetchElements();
-  }, 300, [endpointURL, query]);
+  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useEffect(function () {
+    fetchElements();
+  }, [query]);
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_DataTable_DataTable, DataTableContainer_extends({
     authorized: authorizedState,
     elements: fetchedElements,
@@ -14241,7 +14273,8 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
     sortKeys: sortKeysState,
     filterKeys: filterKeysState,
     query: query,
-    setQuery: setQuery
+    setQuery: setQuery,
+    isLoading: isLoading
   }, dataTableProps));
 };
 

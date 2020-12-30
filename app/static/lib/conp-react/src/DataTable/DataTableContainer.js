@@ -38,6 +38,8 @@ const DataTableContainer = ({
   const [filterKeysState, setFilterKeysState] = React.useState();
   const [authorizedState, setAuthorizedState] = React.useState(authorized);
 
+  const [isLoading, setIsLoading] = React.useState(false)
+
   React.useEffect(() => {
     setQuery({ ...query, limit });
   }, [limit]);
@@ -56,6 +58,7 @@ const DataTableContainer = ({
   }, [query])
 
   const fetchElements = async () => {
+    setIsLoading(true);
     const url = `${endpointURL}?${qs.stringify(query, { arrayFormat: 'comma' })}`;
 
     try {
@@ -74,13 +77,22 @@ const DataTableContainer = ({
       setSortKeysState(parsed.sortKeys);
       setFilterKeysState(parsed.filterKeys);
       setAuthorizedState(parsed.authorized);
-    } catch (err) {
+    }
+    catch (err) {
       alert("There was an error retrieving the search results.");
       console.error(err);
     }
+    finally {
+      setIsLoading(false)
+      setTimeout(() => {
+        window.scrollTo(0, 0)
+      }, 500)
+    }
   };
 
-  useDebounce(() => void fetchElements(), 300, [endpointURL, query]);
+  React.useEffect(() => {
+    fetchElements()
+  }, [query])
 
   return (
     <DataTable
@@ -92,6 +104,7 @@ const DataTableContainer = ({
       filterKeys={filterKeysState}
       query={query}
       setQuery={setQuery}
+      isLoading={isLoading}
       {...dataTableProps}
     />
   );
