@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useDebounce } from "react-use";
 import * as qs from "query-string";
 
 import DataTable from "./DataTable";
@@ -17,9 +16,9 @@ const DataTableContainer = ({
   filters,
   ...dataTableProps
 }) => {
-  const [fetchedElements, setFetchedElements] = React.useState(elements);
+  const [fetchedElements, setFetchedElements] = useState(elements);
 
-  const [query, setQuery] = React.useState({
+  const [query, setQuery] = useState({
     search: filters.search ? filters.search : "",
     tags: filters.tags ? filters.tags.split(",") : [],
     modalities: filters.modalities ? filters.modalities.split(",") : [],
@@ -32,19 +31,19 @@ const DataTableContainer = ({
     limit
   });
 
-  const [totalState, setTotalState] = React.useState(total);
+  const [totalState, setTotalState] = useState(total);
 
-  const [sortKeysState, setSortKeysState] = React.useState();
-  const [filterKeysState, setFilterKeysState] = React.useState();
-  const [authorizedState, setAuthorizedState] = React.useState(authorized);
+  const [sortKeysState, setSortKeysState] = useState();
+  const [filterKeysState, setFilterKeysState] = useState();
+  const [authorizedState, setAuthorizedState] = useState(authorized);
 
-  const [isLoading, setIsLoading] = React.useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
-  React.useEffect(() => {
+  useEffect(() => {
     setQuery({ ...query, limit });
   }, [limit]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Remove empty keys from query and set query object as query parameters
     // Repeat this every time the query changes to ensure query state survives refresh / back navigation
     const q = query
@@ -54,11 +53,11 @@ const DataTableContainer = ({
       }
     })
     const queryString = new URLSearchParams(q).toString()
-    window.history.replaceState(null, null, `/search?${queryString}`)
+    const pathname = window.location.pathname
+    window.history.replaceState(null, null, `${pathname}?${queryString}`)
   }, [query])
 
   const fetchElements = async () => {
-    setIsLoading(true);
     const url = `${endpointURL}?${qs.stringify(query, { arrayFormat: 'comma' })}`;
 
     try {
@@ -83,14 +82,14 @@ const DataTableContainer = ({
       console.error(err);
     }
     finally {
-      setIsLoading(false)
+      isLoading && setIsLoading(false)
       setTimeout(() => {
         window.scrollTo(0, 0)
-      }, 500)
+      }, 100)
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchElements()
   }, [query])
 

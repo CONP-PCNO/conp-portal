@@ -194,7 +194,7 @@ def dataset_search():
 
         cursor = None
         limit = None
-        if(request.args.get('max_per_page') != 'all'):
+        if(request.args.get('max_per_page') != 'All'):
             delta = int(request.args.get('max_per_page', 10)) * \
                 (int(request.args.get('page', 1)) - 1)
             cursor = max(

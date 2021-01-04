@@ -146,7 +146,6 @@ def pipeline_search():
     # else take the first one and set logo
     # TODO right now, this handles CBRAIN and one other platform
 
-    # Mandana issue 378
     with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json"), "r") as f:
         zenodoUrls = json.load(f)
 

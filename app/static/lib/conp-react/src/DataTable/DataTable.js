@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 const DataTable = ({
@@ -153,8 +153,8 @@ const DataTable = ({
                     </button>
                 </div>
                 <div key="max_per_page_all" className="dropdown-item p-0">
-                  <button type="button" className="btn btn-light p-1" value={"all"} id={"max_per_page.all"} onClick={handleMaxPerPageChange}>
-                    View All
+                  <button type="button" className="btn btn-light p-1" value={"All"} id={"max_per_page.all"} onClick={handleMaxPerPageChange}>
+                    All
                     </button>
                 </div>
               </div>
