@@ -124,7 +124,7 @@ const DataTable = ({
         </div>
         <div className="d-flex justify-content-between">
           <div className="d-flex p-2 justify-content-start align-items-center">
-            {query.max_per_page === 'all' ?
+            {query.max_per_page === 'All' ?
               `Displaying ${total} results.` :
               `Results ${(query.max_per_page * (query.page - 1)) + 1} - ${Math.min((query.max_per_page * query.page), total)} displayed of ${total}.`} (Maximum results per page
               <span className="dropdown p-2">

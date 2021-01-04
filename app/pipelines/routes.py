@@ -27,7 +27,9 @@ def pipelines():
             Rendered template for pipelines.html
     """
     page = int(request.args.get('page') or 1)
-    max_per_page = int(request.args.get('max_per_page') or 10)
+    max_per_page = request.args.get('max_per_page') or 10
+    if max_per_page != 'All':
+        max_per_page = int(max_per_page)
     search = request.args.get('search') or ""
     tags = request.args.get('tags') or ""
 
@@ -64,8 +66,13 @@ def pipeline_search():
     tags = request.args.get(
         "tags").lower().split(',') if request.args.get("tags") else []
     sort_key = request.args.get("sortKey") or "downloads-desc"
-    max_per_page = int(request.args.get("max_per_page") or 999999)
+
+    max_per_page = None
+    if(request.args.get('max_per_page') != 'All'):
+        max_per_page = int(request.args.get("max_per_page") or 999999)
+
     page = int(request.args.get("page") or 1)
+
     cache_dir = os.path.join(os.path.expanduser(
         '~'), ".cache", "boutiques", "production")
     all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
@@ -135,12 +142,13 @@ def pipeline_search():
 
     # extract the appropriate page
     elements_on_page = elements
-    if len(elements) > max_per_page:
-        start_index = (page-1)*max_per_page
-        end_index = start_index + max_per_page
-        if end_index > len(elements):
-            end_index = len(elements)
-        elements_on_page = elements[start_index:end_index]
+    if max_per_page is not None:
+        if len(elements) > max_per_page:
+            start_index = (page-1)*max_per_page
+            end_index = start_index + max_per_page
+            if end_index > len(elements):
+                end_index = len(elements)
+            elements_on_page = elements[start_index:end_index]
 
     # if element has online platform url, retrieve the cbrain one,
     # else take the first one and set logo
@@ -168,8 +176,6 @@ def pipeline_search():
     payload = {
         "authorized": authorized,
         "total": len(elements),
-        "page": page,
-        'num_pages': math.ceil(len(elements)/max_per_page),
         "sortKeys": [
             {
                 "key": "downloads-desc",

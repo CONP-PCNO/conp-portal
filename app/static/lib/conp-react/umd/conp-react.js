@@ -9221,7 +9221,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     className: "d-flex justify-content-between"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex p-2 justify-content-start align-items-center"
-  }, query.max_per_page === 'all' ? "Displaying " + total + " results." : "Results " + (query.max_per_page * (query.page - 1) + 1) + " - " + Math.min(query.max_per_page * query.page, total) + " displayed of " + total + ".", " (Maximum results per page", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+  }, query.max_per_page === 'All' ? "Displaying " + total + " results." : "Results " + (query.max_per_page * (query.page - 1) + 1) + " - " + Math.min(query.max_per_page * query.page, total) + " displayed of " + total + ".", " (Maximum results per page", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
     className: "dropdown p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-secondary dropdown-toggle p-2",
