@@ -32,12 +32,16 @@ def pipelines():
         max_per_page = int(max_per_page)
     search = request.args.get('search') or ""
     tags = request.args.get('tags') or ""
+    sortComparitor = request.args.get('sortComparitor')
+    sortKey = request.args.get('sortKey')
 
     filters = {
         "page": page,
         "max_per_page": max_per_page,
         "search": search,
-        "tags": tags
+        "tags": tags,
+        "sortComparitor": sortComparitor,
+        "sortKey": sortKey,
     }
 
     return render_template('pipelines.html',

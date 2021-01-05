@@ -37,6 +37,8 @@ def search():
     tags = request.args.get('tags')
     sortComparitor = request.args.get('sortComparitor')
     sortKey = request.args.get('sortKey')
+    max_per_page = request.args.get('max_per_page')
+    page = request.args.get('page')
 
     filters = {
         "modalities": modalities,
@@ -44,7 +46,9 @@ def search():
         "search": search,
         "tags": tags,
         "sortComparitor": sortComparitor,
-        "sortKey": sortKey
+        "sortKey": sortKey,
+        "max_per_page": max_per_page,
+        "page": page
     }
 
     return render_template('search.html', title='CONP | Search', user=current_user, filters=filters)

@@ -9466,12 +9466,12 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
     tags: filters.tags ? filters.tags.split(",") : [],
     modalities: filters.modalities ? filters.modalities.split(",") : [],
     formats: filters.formats ? filters.formats.split(",") : [],
-    sortKey: "conpStatus",
-    sortComparitor: "asc",
-    page: page,
-    max_per_page: max_per_page,
-    cursor: 0,
-    limit: limit
+    sortKey: filters.sortKey ? filters.sortKey : "conpStatus",
+    sortComparitor: filters.sortComparitor ? filters.sortComparitor : "asc",
+    page: filters.page ? filters.page : 1,
+    max_per_page: filters.max_per_page ? filters.max_per_page : 10,
+    cursor: filters.cursor ? filters.cursor : 0,
+    limit: filters.limit ? filters.limit : 10
   }),
       query = _useState2[0],
       setQuery = _useState2[1];
