@@ -13,52 +13,8 @@
 		root["CONPReact"] = factory(root["React"]);
 })(window, function(__WEBPACK_EXTERNAL_MODULE__0__) {
 return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// install a JSONP callback for chunk loading
-/******/ 	function webpackJsonpCallback(data) {
-/******/ 		var chunkIds = data[0];
-/******/ 		var moreModules = data[1];
-/******/
-/******/
-/******/ 		// add "moreModules" to the modules object,
-/******/ 		// then flag all "chunkIds" as loaded and fire callback
-/******/ 		var moduleId, chunkId, i = 0, resolves = [];
-/******/ 		for(;i < chunkIds.length; i++) {
-/******/ 			chunkId = chunkIds[i];
-/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
-/******/ 				resolves.push(installedChunks[chunkId][0]);
-/******/ 			}
-/******/ 			installedChunks[chunkId] = 0;
-/******/ 		}
-/******/ 		for(moduleId in moreModules) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
-/******/ 				modules[moduleId] = moreModules[moduleId];
-/******/ 			}
-/******/ 		}
-/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
-/******/
-/******/ 		while(resolves.length) {
-/******/ 			resolves.shift()();
-/******/ 		}
-/******/
-/******/ 	};
-/******/
-/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
-/******/ 	// object to store loaded and loading chunks
-/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 	// Promise = chunk loading, 0 = chunk loaded
-/******/ 	var installedChunks = {
-/******/ 		0: 0
-/******/ 	};
-/******/
-/******/
-/******/
-/******/ 	// script path function
-/******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + chunkId + ".conp-react.js"
-/******/ 	}
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -84,67 +40,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		return module.exports;
 /******/ 	}
 /******/
-/******/ 	// This file contains only the entry chunk.
-/******/ 	// The chunk loading function for additional chunks
-/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
-/******/ 		var promises = [];
-/******/
-/******/
-/******/ 		// JSONP chunk loading for javascript
-/******/
-/******/ 		var installedChunkData = installedChunks[chunkId];
-/******/ 		if(installedChunkData !== 0) { // 0 means "already installed".
-/******/
-/******/ 			// a Promise means "currently loading".
-/******/ 			if(installedChunkData) {
-/******/ 				promises.push(installedChunkData[2]);
-/******/ 			} else {
-/******/ 				// setup Promise in chunk cache
-/******/ 				var promise = new Promise(function(resolve, reject) {
-/******/ 					installedChunkData = installedChunks[chunkId] = [resolve, reject];
-/******/ 				});
-/******/ 				promises.push(installedChunkData[2] = promise);
-/******/
-/******/ 				// start chunk loading
-/******/ 				var script = document.createElement('script');
-/******/ 				var onScriptComplete;
-/******/
-/******/ 				script.charset = 'utf-8';
-/******/ 				script.timeout = 120;
-/******/ 				if (__webpack_require__.nc) {
-/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
-/******/ 				}
-/******/ 				script.src = jsonpScriptSrc(chunkId);
-/******/
-/******/ 				// create error before stack unwound to get useful stacktrace later
-/******/ 				var error = new Error();
-/******/ 				onScriptComplete = function (event) {
-/******/ 					// avoid mem leaks in IE.
-/******/ 					script.onerror = script.onload = null;
-/******/ 					clearTimeout(timeout);
-/******/ 					var chunk = installedChunks[chunkId];
-/******/ 					if(chunk !== 0) {
-/******/ 						if(chunk) {
-/******/ 							var errorType = event && (event.type === 'load' ? 'missing' : event.type);
-/******/ 							var realSrc = event && event.target && event.target.src;
-/******/ 							error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
-/******/ 							error.name = 'ChunkLoadError';
-/******/ 							error.type = errorType;
-/******/ 							error.request = realSrc;
-/******/ 							chunk[1](error);
-/******/ 						}
-/******/ 						installedChunks[chunkId] = undefined;
-/******/ 					}
-/******/ 				};
-/******/ 				var timeout = setTimeout(function(){
-/******/ 					onScriptComplete({ type: 'timeout', target: script });
-/******/ 				}, 120000);
-/******/ 				script.onerror = script.onload = onScriptComplete;
-/******/ 				document.head.appendChild(script);
-/******/ 			}
-/******/ 		}
-/******/ 		return Promise.all(promises);
-/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -198,19 +93,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
-/******/ 	// on error function for async loading
-/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
-/******/
-/******/ 	var jsonpArray = window["webpackJsonpCONPReact"] = window["webpackJsonpCONPReact"] || [];
-/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
-/******/ 	jsonpArray.push = webpackJsonpCallback;
-/******/ 	jsonpArray = jsonpArray.slice();
-/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
-/******/ 	var parentJsonpFunction = oldJsonpFunction;
-/******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 97);
+/******/ 	return __webpack_require__(__webpack_require__.s = 87);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -257,7 +142,7 @@ function _extends() {
 if (false) { var throwOnDirectAccess, ReactIs; } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(98)();
+  module.exports = __webpack_require__(88)();
 }
 
 
@@ -355,17 +240,17 @@ var external_root_React_commonjs2_react_commonjs_react_amd_react_default = /*#__
 var prop_types = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
-var hoist_non_react_statics_cjs = __webpack_require__(30);
+var hoist_non_react_statics_cjs = __webpack_require__(29);
 var hoist_non_react_statics_cjs_default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics_cjs);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/makeStyles/makeStyles.js + 19 modules
-var makeStyles = __webpack_require__(151);
+var makeStyles = __webpack_require__(140);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/getThemeProps/getThemeProps.js
-var getThemeProps = __webpack_require__(150);
+var getThemeProps = __webpack_require__(139);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/useTheme/useTheme.js + 1 modules
-var useTheme = __webpack_require__(152);
+var useTheme = __webpack_require__(141);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/styles/esm/withStyles/withStyles.js
 
@@ -452,7 +337,7 @@ var withStyles_withStyles = function withStyles(stylesOrCreator) {
 
 /* harmony default export */ var esm_withStyles_withStyles = (withStyles_withStyles);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/defaultTheme.js + 16 modules
-var styles_defaultTheme = __webpack_require__(28);
+var styles_defaultTheme = __webpack_require__(27);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/withStyles.js
 
@@ -473,7 +358,7 @@ function styles_withStyles_withStyles(stylesOrCreator, options) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return capitalize; });
-/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(83);
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(73);
 
 // It should to be noted that this function isn't equivalent to `text-transform: capitalize`.
 //
@@ -525,7 +410,7 @@ function _defineProperty(obj, key, value) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return fade; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return darken; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return lighten; });
-/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(83);
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(73);
 
 
 /* eslint-disable no-use-before-define */
@@ -833,7 +718,7 @@ if (true) {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(109);
+  module.exports = __webpack_require__(98);
 } else {}
 
 
@@ -847,7 +732,7 @@ if (true) {
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ _slicedToArray; });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
-var arrayWithHoles = __webpack_require__(80);
+var arrayWithHoles = __webpack_require__(70);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
 function _iterableToArrayLimit(arr, i) {
@@ -877,10 +762,10 @@ function _iterableToArrayLimit(arr, i) {
   return _arr;
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-var unsupportedIterableToArray = __webpack_require__(48);
+var unsupportedIterableToArray = __webpack_require__(47);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
-var nonIterableRest = __webpack_require__(81);
+var nonIterableRest = __webpack_require__(71);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js
 
@@ -896,7 +781,7 @@ function _slicedToArray(arr, i) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47);
+/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(46);
 
 
 /** Detect free variable `self`. */
@@ -979,110 +864,9 @@ function warning(condition, message) {
 
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var isArray = Array.isArray;
-var keyList = Object.keys;
-var hasProp = Object.prototype.hasOwnProperty;
-var hasElementType = typeof Element !== 'undefined';
-
-function equal(a, b) {
-  // fast-deep-equal index.js 2.0.1
-  if (a === b) return true;
-
-  if (a && b && typeof a == 'object' && typeof b == 'object') {
-    var arrA = isArray(a)
-      , arrB = isArray(b)
-      , i
-      , length
-      , key;
-
-    if (arrA && arrB) {
-      length = a.length;
-      if (length != b.length) return false;
-      for (i = length; i-- !== 0;)
-        if (!equal(a[i], b[i])) return false;
-      return true;
-    }
-
-    if (arrA != arrB) return false;
-
-    var dateA = a instanceof Date
-      , dateB = b instanceof Date;
-    if (dateA != dateB) return false;
-    if (dateA && dateB) return a.getTime() == b.getTime();
-
-    var regexpA = a instanceof RegExp
-      , regexpB = b instanceof RegExp;
-    if (regexpA != regexpB) return false;
-    if (regexpA && regexpB) return a.toString() == b.toString();
-
-    var keys = keyList(a);
-    length = keys.length;
-
-    if (length !== keyList(b).length)
-      return false;
-
-    for (i = length; i-- !== 0;)
-      if (!hasProp.call(b, keys[i])) return false;
-    // end fast-deep-equal
-
-    // start react-fast-compare
-    // custom handling for DOM elements
-    if (hasElementType && a instanceof Element && b instanceof Element)
-      return a === b;
-
-    // custom handling for React
-    for (i = length; i-- !== 0;) {
-      key = keys[i];
-      if (key === '_owner' && a.$$typeof) {
-        // React-specific: avoid traversing React elements' _owner.
-        //  _owner contains circular references
-        // and is not needed when comparing the actual elements (and not their owners)
-        // .$$typeof and ._store on just reasonable markers of a react element
-        continue;
-      } else {
-        // all other properties should be traversed as usual
-        if (!equal(a[key], b[key])) return false;
-      }
-    }
-    // end react-fast-compare
-
-    // fast-deep-equal index.js 2.0.1
-    return true;
-  }
-
-  return a !== a && b !== b;
-}
-// end fast-deep-equal
-
-module.exports = function exportedEqual(a, b) {
-  try {
-    return equal(a, b);
-  } catch (error) {
-    if ((error.message && error.message.match(/stack|recursion/i)) || (error.number === -2146828260)) {
-      // warn on circular references, don't crash
-      // browsers give this different errors name and messages:
-      // chrome/safari: "RangeError", "Maximum call stack size exceeded"
-      // firefox: "InternalError", too much recursion"
-      // edge: "Error", "Out of stack space"
-      console.warn('Warning: react-fast-compare does not handle circular references.', error.name, error.message);
-      return false;
-    }
-    // some other error. we should definitely know about these
-    throw error;
-  }
-};
-
-
-/***/ }),
+/* 16 */,
 /* 17 */,
-/* 18 */,
-/* 19 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1094,206 +878,7 @@ function _inheritsLoose(subClass, superClass) {
 }
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*!
-* screenfull
-* v4.2.1 - 2019-07-27
-* (c) Sindre Sorhus; MIT License
-*/
-(function () {
-	'use strict';
-
-	var document = typeof window !== 'undefined' && typeof window.document !== 'undefined' ? window.document : {};
-	var isCommonjs =  true && module.exports;
-	var keyboardAllowed = typeof Element !== 'undefined' && 'ALLOW_KEYBOARD_INPUT' in Element;
-
-	var fn = (function () {
-		var val;
-
-		var fnMap = [
-			[
-				'requestFullscreen',
-				'exitFullscreen',
-				'fullscreenElement',
-				'fullscreenEnabled',
-				'fullscreenchange',
-				'fullscreenerror'
-			],
-			// New WebKit
-			[
-				'webkitRequestFullscreen',
-				'webkitExitFullscreen',
-				'webkitFullscreenElement',
-				'webkitFullscreenEnabled',
-				'webkitfullscreenchange',
-				'webkitfullscreenerror'
-
-			],
-			// Old WebKit (Safari 5.1)
-			[
-				'webkitRequestFullScreen',
-				'webkitCancelFullScreen',
-				'webkitCurrentFullScreenElement',
-				'webkitCancelFullScreen',
-				'webkitfullscreenchange',
-				'webkitfullscreenerror'
-
-			],
-			[
-				'mozRequestFullScreen',
-				'mozCancelFullScreen',
-				'mozFullScreenElement',
-				'mozFullScreenEnabled',
-				'mozfullscreenchange',
-				'mozfullscreenerror'
-			],
-			[
-				'msRequestFullscreen',
-				'msExitFullscreen',
-				'msFullscreenElement',
-				'msFullscreenEnabled',
-				'MSFullscreenChange',
-				'MSFullscreenError'
-			]
-		];
-
-		var i = 0;
-		var l = fnMap.length;
-		var ret = {};
-
-		for (; i < l; i++) {
-			val = fnMap[i];
-			if (val && val[1] in document) {
-				for (i = 0; i < val.length; i++) {
-					ret[fnMap[0][i]] = val[i];
-				}
-				return ret;
-			}
-		}
-
-		return false;
-	})();
-
-	var eventNameMap = {
-		change: fn.fullscreenchange,
-		error: fn.fullscreenerror
-	};
-
-	var screenfull = {
-		request: function (elem) {
-			return new Promise(function (resolve, reject) {
-				var request = fn.requestFullscreen;
-
-				var onFullScreenEntered = function () {
-					this.off('change', onFullScreenEntered);
-					resolve();
-				}.bind(this);
-
-				this.on('change', onFullScreenEntered);
-
-				elem = elem || document.documentElement;
-
-				var promise;
-
-				// Work around Safari 5.1 bug: reports support for
-				// keyboard in fullscreen even though it doesn't.
-				// Browser sniffing, since the alternative with
-				// setTimeout is even worse.
-				if (/ Version\/5\.1(?:\.\d+)? Safari\//.test(navigator.userAgent)) {
-					promise = elem[request]();
-				} else {
-					promise = elem[request](keyboardAllowed ? Element.ALLOW_KEYBOARD_INPUT : {});
-				}
-
-				Promise.resolve(promise).catch(reject);
-			}.bind(this));
-		},
-		exit: function () {
-			return new Promise(function (resolve) {
-				if (!this.isFullscreen) {
-					resolve();
-					return;
-				}
-
-				var onFullScreenExit = function () {
-					this.off('change', onFullScreenExit);
-					resolve();
-				}.bind(this);
-
-				document[fn.exitFullscreen]();
-
-				this.on('change', onFullScreenExit);
-			}.bind(this));
-		},
-		toggle: function (elem) {
-			return this.isFullscreen ? this.exit() : this.request(elem);
-		},
-		onchange: function (callback) {
-			this.on('change', callback);
-		},
-		onerror: function (callback) {
-			this.on('error', callback);
-		},
-		on: function (event, callback) {
-			var eventName = eventNameMap[event];
-			if (eventName) {
-				document.addEventListener(eventName, callback, false);
-			}
-		},
-		off: function (event, callback) {
-			var eventName = eventNameMap[event];
-			if (eventName) {
-				document.removeEventListener(eventName, callback, false);
-			}
-		},
-		raw: fn
-	};
-
-	if (!fn) {
-		if (isCommonjs) {
-			module.exports = false;
-		} else {
-			window.screenfull = false;
-		}
-
-		return;
-	}
-
-	Object.defineProperties(screenfull, {
-		isFullscreen: {
-			get: function () {
-				return Boolean(document[fn.fullscreenElement]);
-			}
-		},
-		element: {
-			enumerable: true,
-			get: function () {
-				return document[fn.fullscreenElement];
-			}
-		},
-		enabled: {
-			enumerable: true,
-			get: function () {
-				// Coerce to boolean in case of old WebKit
-				return Boolean(document[fn.fullscreenEnabled]);
-			}
-		}
-	});
-
-	if (isCommonjs) {
-		module.exports = screenfull;
-		// TODO: remove this in the next major version
-		module.exports.default = screenfull;
-	} else {
-		window.screenfull = screenfull;
-	}
-})();
-
-
-/***/ }),
-/* 21 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1844,7 +1429,7 @@ K(e,function(d,e){if(!v&&-1<h.collectionsWithUpdate.indexOf(e))for(d=y(d),m[e]=[
 //# sourceMappingURL=highcharts.js.map
 
 /***/ }),
-/* 22 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1853,7 +1438,7 @@ K(e,function(d,e){if(!v&&-1<h.collectionsWithUpdate.indexOf(e))for(d=y(d),m[e]=[
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ _toConsumableArray; });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
-var arrayLikeToArray = __webpack_require__(41);
+var arrayLikeToArray = __webpack_require__(40);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js
 
@@ -1861,10 +1446,10 @@ function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return Object(arrayLikeToArray["a" /* default */])(arr);
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
-var iterableToArray = __webpack_require__(79);
+var iterableToArray = __webpack_require__(69);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-var unsupportedIterableToArray = __webpack_require__(48);
+var unsupportedIterableToArray = __webpack_require__(47);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
 function _nonIterableSpread() {
@@ -1880,7 +1465,108 @@ function _toConsumableArray(arr) {
 }
 
 /***/ }),
-/* 23 */
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isArray = Array.isArray;
+var keyList = Object.keys;
+var hasProp = Object.prototype.hasOwnProperty;
+var hasElementType = typeof Element !== 'undefined';
+
+function equal(a, b) {
+  // fast-deep-equal index.js 2.0.1
+  if (a === b) return true;
+
+  if (a && b && typeof a == 'object' && typeof b == 'object') {
+    var arrA = isArray(a)
+      , arrB = isArray(b)
+      , i
+      , length
+      , key;
+
+    if (arrA && arrB) {
+      length = a.length;
+      if (length != b.length) return false;
+      for (i = length; i-- !== 0;)
+        if (!equal(a[i], b[i])) return false;
+      return true;
+    }
+
+    if (arrA != arrB) return false;
+
+    var dateA = a instanceof Date
+      , dateB = b instanceof Date;
+    if (dateA != dateB) return false;
+    if (dateA && dateB) return a.getTime() == b.getTime();
+
+    var regexpA = a instanceof RegExp
+      , regexpB = b instanceof RegExp;
+    if (regexpA != regexpB) return false;
+    if (regexpA && regexpB) return a.toString() == b.toString();
+
+    var keys = keyList(a);
+    length = keys.length;
+
+    if (length !== keyList(b).length)
+      return false;
+
+    for (i = length; i-- !== 0;)
+      if (!hasProp.call(b, keys[i])) return false;
+    // end fast-deep-equal
+
+    // start react-fast-compare
+    // custom handling for DOM elements
+    if (hasElementType && a instanceof Element && b instanceof Element)
+      return a === b;
+
+    // custom handling for React
+    for (i = length; i-- !== 0;) {
+      key = keys[i];
+      if (key === '_owner' && a.$$typeof) {
+        // React-specific: avoid traversing React elements' _owner.
+        //  _owner contains circular references
+        // and is not needed when comparing the actual elements (and not their owners)
+        // .$$typeof and ._store on just reasonable markers of a react element
+        continue;
+      } else {
+        // all other properties should be traversed as usual
+        if (!equal(a[key], b[key])) return false;
+      }
+    }
+    // end react-fast-compare
+
+    // fast-deep-equal index.js 2.0.1
+    return true;
+  }
+
+  return a !== a && b !== b;
+}
+// end fast-deep-equal
+
+module.exports = function exportedEqual(a, b) {
+  try {
+    return equal(a, b);
+  } catch (error) {
+    if ((error.message && error.message.match(/stack|recursion/i)) || (error.number === -2146828260)) {
+      // warn on circular references, don't crash
+      // browsers give this different errors name and messages:
+      // chrome/safari: "RangeError", "Maximum call stack size exceeded"
+      // firefox: "InternalError", too much recursion"
+      // edge: "Error", "Out of stack space"
+      console.warn('Warning: react-fast-compare does not handle circular references.', error.name, error.message);
+      return false;
+    }
+    // some other error. we should definitely know about these
+    throw error;
+  }
+};
+
+
+/***/ }),
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1902,11 +1588,11 @@ function _typeof(obj) {
 }
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47);
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(46);
 
 
 /** Detect free variable `exports`. */
@@ -1938,21 +1624,21 @@ var nodeUtil = (function() {
 
 /* harmony default export */ __webpack_exports__["a"] = (nodeUtil);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(59)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(58)(module)))
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(65);
+/* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(62);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _SvgIcon__WEBPACK_IMPORTED_MODULE_0__["a"]; });
 
 
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2117,11 +1803,11 @@ function shouldBeQuoted(part) {
 
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(116);
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(105);
 
 
 function merge(acc, item) {
@@ -2138,7 +1824,7 @@ function merge(acc, item) {
 /* harmony default export */ __webpack_exports__["a"] = (merge);
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2150,7 +1836,7 @@ var defineProperty = __webpack_require__(7);
 var objectWithoutProperties = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/utils/esm/deepmerge.js
-var deepmerge = __webpack_require__(116);
+var deepmerge = __webpack_require__(105);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
 var esm_extends = __webpack_require__(1);
@@ -2266,7 +1952,7 @@ function createMixins(breakpoints, spacing, mixins) {
   }, mixins);
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/utils/esm/formatMuiErrorMessage.js
-var formatMuiErrorMessage = __webpack_require__(83);
+var formatMuiErrorMessage = __webpack_require__(73);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/colors/common.js
 var common = {
@@ -2731,7 +2417,7 @@ var shape = {
 };
 /* harmony default export */ var styles_shape = (shape);
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/spacing.js + 1 modules
-var esm_spacing = __webpack_require__(153);
+var esm_spacing = __webpack_require__(142);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/createSpacing.js
 
@@ -2788,10 +2474,10 @@ function createSpacing() {
   return spacing;
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/transitions.js
-var transitions = __webpack_require__(29);
+var transitions = __webpack_require__(28);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/zIndex.js
-var zIndex = __webpack_require__(50);
+var zIndex = __webpack_require__(49);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/createMuiTheme.js
 
@@ -2861,7 +2547,7 @@ var defaultTheme = styles_createMuiTheme();
 /* harmony default export */ var styles_defaultTheme = __webpack_exports__["a"] = (defaultTheme);
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2944,13 +2630,13 @@ function formatMs(milliseconds) {
 });
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var reactIs = __webpack_require__(36);
+var reactIs = __webpack_require__(35);
 
 /**
  * Copyright 2015, Yahoo! Inc.
@@ -3054,12 +2740,12 @@ module.exports = hoistNonReactStatics;
 
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _root_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
-/* harmony import */ var _stubFalse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(75);
+/* harmony import */ var _stubFalse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(65);
 
 
 
@@ -3099,10 +2785,10 @@ var isBuffer = nativeIsBuffer || _stubFalse_js__WEBPACK_IMPORTED_MODULE_1__[/* d
 
 /* harmony default export */ __webpack_exports__["a"] = (isBuffer);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(59)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(58)(module)))
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3116,29 +2802,29 @@ function _assertThisInitialized(self) {
 }
 
 /***/ }),
+/* 32 */,
 /* 33 */,
 /* 34 */,
-/* 35 */,
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(108);
+  module.exports = __webpack_require__(97);
 } else {}
 
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-!function(e,t){ true?module.exports=t(__webpack_require__(0),__webpack_require__(21)):undefined}("undefined"!=typeof self?self:this,function(e,t){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,r){"use strict";function n(){return n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},n.apply(this,arguments)}function o(e){return i(e)||u(e)||c()}function c(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function u(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function i(e){if(Array.isArray(e)){for(var t=0,r=new Array(e.length);t<e.length;t++)r[t]=e[t];return r}}Object.defineProperty(t,"__esModule",{value:!0});var a=r(1),s=r.n(a),f=r(2),p=r.n(f),l="undefined"!=typeof window?a.useLayoutEffect:a.useEffect,d=Object(a.forwardRef)(function(e,t){var r=Object(a.useRef)(),c=Object(a.useRef)();return l(function(){function t(){var t=e.highcharts||p.a,n=e.constructorType||"chart";t?t[n]?e.options?c.current=t[n](r.current,e.options,e.callback?e.callback:void 0):console.warn('The "options" property was not passed.'):console.warn('The "constructorType" property is incorrect or some required module is not imported.'):console.warn('The "highcharts" property was not passed.')}if(c.current){if(!1!==e.allowChartUpdate)if(!e.immutable&&c.current){var n;(n=c.current).update.apply(n,[e.options].concat(o(e.updateArgs||[!0,!0])))}else t()}else t()}),l(function(){return function(){c.current&&(c.current.destroy(),c.current=null)}},[]),Object(a.useImperativeHandle)(t,function(){return{get chart(){return c.current},container:r}},[]),s.a.createElement("div",n({},e.containerProps,{ref:r}))});t.default=Object(a.memo)(d)},function(t,r){t.exports=e},function(e,r){e.exports=t}])});
+!function(e,t){ true?module.exports=t(__webpack_require__(0),__webpack_require__(19)):undefined}("undefined"!=typeof self?self:this,function(e,t){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,r){"use strict";function n(){return n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},n.apply(this,arguments)}function o(e){return i(e)||u(e)||c()}function c(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function u(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function i(e){if(Array.isArray(e)){for(var t=0,r=new Array(e.length);t<e.length;t++)r[t]=e[t];return r}}Object.defineProperty(t,"__esModule",{value:!0});var a=r(1),s=r.n(a),f=r(2),p=r.n(f),l="undefined"!=typeof window?a.useLayoutEffect:a.useEffect,d=Object(a.forwardRef)(function(e,t){var r=Object(a.useRef)(),c=Object(a.useRef)();return l(function(){function t(){var t=e.highcharts||p.a,n=e.constructorType||"chart";t?t[n]?e.options?c.current=t[n](r.current,e.options,e.callback?e.callback:void 0):console.warn('The "options" property was not passed.'):console.warn('The "constructorType" property is incorrect or some required module is not imported.'):console.warn('The "highcharts" property was not passed.')}if(c.current){if(!1!==e.allowChartUpdate)if(!e.immutable&&c.current){var n;(n=c.current).update.apply(n,[e.options].concat(o(e.updateArgs||[!0,!0])))}else t()}else t()}),l(function(){return function(){c.current&&(c.current.destroy(),c.current=null)}},[]),Object(a.useImperativeHandle)(t,function(){return{get chart(){return c.current},container:r}},[]),s.a.createElement("div",n({},e.containerProps,{ref:r}))});t.default=Object(a.memo)(d)},function(t,r){t.exports=e},function(e,r){e.exports=t}])});
 //# sourceMappingURL=highcharts-react.min.js.map
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3618,14 +3304,14 @@ module.exports = {
 
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(100);
+module.exports = __webpack_require__(90);
 
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports) {
 
 var g;
@@ -3651,7 +3337,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3667,12 +3353,12 @@ function _arrayLikeToArray(arr, len) {
 }
 
 /***/ }),
+/* 41 */,
 /* 42 */,
 /* 43 */,
 /* 44 */,
 /* 45 */,
-/* 46 */,
-/* 47 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3681,15 +3367,15 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 
 /* harmony default export */ __webpack_exports__["a"] = (freeGlobal);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(40)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(39)))
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _unsupportedIterableToArray; });
-/* harmony import */ var _babel_runtime_helpers_esm_arrayLikeToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(41);
+/* harmony import */ var _babel_runtime_helpers_esm_arrayLikeToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40);
 
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
@@ -3701,17 +3387,17 @@ function _unsupportedIterableToArray(o, minLen) {
 }
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return handleBreakpoints; });
-/* harmony import */ var _babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(22);
+/* harmony import */ var _babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20);
 /* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
-/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(23);
+/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _merge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(27);
+/* harmony import */ var _merge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(26);
 
 
 
@@ -3783,7 +3469,7 @@ function breakpoints(styleFunction) {
 /* unused harmony default export */ var _unused_webpack_default_export = (breakpoints);
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3801,6 +3487,7 @@ var zIndex = {
 /* harmony default export */ __webpack_exports__["a"] = (zIndex);
 
 /***/ }),
+/* 50 */,
 /* 51 */,
 /* 52 */,
 /* 53 */,
@@ -3808,8 +3495,7 @@ var zIndex = {
 /* 55 */,
 /* 56 */,
 /* 57 */,
-/* 58 */,
-/* 59 */
+/* 58 */
 /***/ (function(module, exports) {
 
 module.exports = function(originalModule) {
@@ -3839,7 +3525,7 @@ module.exports = function(originalModule) {
 
 
 /***/ }),
-/* 60 */
+/* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6346,271 +6032,11 @@ var autoReplace = function autoReplace() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(40), __webpack_require__(63).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(39), __webpack_require__(94).setImmediate))
 
 /***/ }),
-/* 61 */,
-/* 62 */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
-            (typeof self !== "undefined" && self) ||
-            window;
-var apply = Function.prototype.apply;
-
-// DOM APIs, for completeness
-
-exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
-};
-exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
-};
-exports.clearTimeout =
-exports.clearInterval = function(timeout) {
-  if (timeout) {
-    timeout.close();
-  }
-};
-
-function Timeout(id, clearFn) {
-  this._id = id;
-  this._clearFn = clearFn;
-}
-Timeout.prototype.unref = Timeout.prototype.ref = function() {};
-Timeout.prototype.close = function() {
-  this._clearFn.call(scope, this._id);
-};
-
-// Does not start the time, just sets up the members needed.
-exports.enroll = function(item, msecs) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = msecs;
-};
-
-exports.unenroll = function(item) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = -1;
-};
-
-exports._unrefActive = exports.active = function(item) {
-  clearTimeout(item._idleTimeoutId);
-
-  var msecs = item._idleTimeout;
-  if (msecs >= 0) {
-    item._idleTimeoutId = setTimeout(function onTimeout() {
-      if (item._onTimeout)
-        item._onTimeout();
-    }, msecs);
-  }
-};
-
-// setimmediate attaches itself to the global object
-__webpack_require__(104);
-// On some exotic environments, it's not clear which object `setimmediate` was
-// able to install onto.  Search each possibility in the same order as the
-// `setimmediate` library.
-exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
-                       (typeof global !== "undefined" && global.setImmediate) ||
-                       (this && this.setImmediate);
-exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
-                         (typeof global !== "undefined" && global.clearImmediate) ||
-                         (this && this.clearImmediate);
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(40)))
-
-/***/ }),
-/* 64 */
+/* 60 */,
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -6620,7 +6046,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
  License: www.highcharts.com/license
 */
-(function(c){ true&&module.exports?(c["default"]=c,module.exports=c): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(21)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(A){c(A);c.Highcharts=A;return c}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+(function(c){ true&&module.exports?(c["default"]=c,module.exports=c): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(19)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(A){c(A);c.Highcharts=A;return c}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):undefined})(function(c){function A(c,b,h,a){c.hasOwnProperty(b)||(c[b]=a.apply(null,h))}c=c?c._modules:{};A(c,"Extensions/Pane.js",[c["Core/Chart/Chart.js"],c["Core/Globals.js"],c["Core/Pointer.js"],c["Core/Utilities.js"],c["Mixins/CenteredSeries.js"]],
 function(c,b,h,a,f){function q(e,f,m){return Math.sqrt(Math.pow(e-m[0],2)+Math.pow(f-m[1],2))<=m[2]/2}var u=a.addEvent,z=a.extend,E=a.merge,B=a.pick,e=a.splat;c.prototype.collectionsWithUpdate.push("pane");a=function(){function b(e,m){this.options=this.chart=this.center=this.background=void 0;this.coll="pane";this.defaultOptions={center:["50%","50%"],size:"85%",innerSize:"0%",startAngle:0};this.defaultBackgroundOptions={shape:"circle",borderWidth:1,borderColor:"#cccccc",backgroundColor:{linearGradient:{x1:0,
 y1:0,x2:0,y2:1},stops:[[0,"#ffffff"],[1,"#e6e6e6"]]},from:-Number.MAX_VALUE,innerRadius:0,to:Number.MAX_VALUE,outerRadius:"105%"};this.init(e,m)}b.prototype.init=function(e,m){this.chart=m;this.background=[];m.pane.push(this);this.setOptions(e)};b.prototype.setOptions=function(e){this.options=E(this.defaultOptions,this.chart.angular?{background:{}}:void 0,e)};b.prototype.render=function(){var b=this.options,m=this.options.background,f=this.chart.renderer;this.group||(this.group=f.g("pane-group").attr({zIndex:b.zIndex||
@@ -6787,7 +6213,7 @@ a.isXAxis,f=a.center;if("colorAxis"!==a.coll){var g=b.chartX-f[0]-c.plotLeft;f=b
 //# sourceMappingURL=highcharts-more.js.map
 
 /***/ }),
-/* 65 */
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6898,7 +6324,7 @@ SvgIcon.muiName = 'SvgIcon';
 })(SvgIcon));
 
 /***/ }),
-/* 66 */
+/* 63 */
 /***/ (function(module, exports) {
 
 function _interopRequireDefault(obj) {
@@ -6910,1858 +6336,14 @@ function _interopRequireDefault(obj) {
 module.exports = _interopRequireDefault;
 
 /***/ }),
-/* 67 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-
-var KEBAB_REGEX = /[A-Z]/g;
-
-var hash = function (str) {
-    var hash = 5381, i = str.length;
-
-    while (i) hash = (hash * 33) ^ str.charCodeAt(--i);
-
-    return '_' + (hash >>> 0).toString(36);
-};
-
-exports.create = function (config) {
-    config = config || {};
-    var assign = config.assign || Object.assign;
-    var client = typeof window === 'object';
-
-    // Check if we are really in browser environment.
-    if (false) {}
-
-    var renderer = assign({
-        raw: '',
-        pfx: '_',
-        client: client,
-        assign: assign,
-        stringify: JSON.stringify,
-        kebab: function (prop) {
-            return prop.replace(KEBAB_REGEX, '-$&').toLowerCase();
-        },
-        decl: function (key, value) {
-            key = renderer.kebab(key);
-            return key + ':' + value + ';';
-        },
-        hash: function (obj) {
-            return hash(renderer.stringify(obj));
-        },
-        selector: function (parent, selector) {
-            return parent + (selector[0] === ':' ? ''  : ' ') + selector;
-        },
-        putRaw: function (rawCssRule) {
-            renderer.raw += rawCssRule;
-        },
-    }, config);
-
-    if (renderer.client) {
-        if (!renderer.sh)
-            document.head.appendChild(renderer.sh = document.createElement('style'));
-
-        if (false) {}
-
-        renderer.putRaw = function (rawCssRule) {
-            // .insertRule() is faster than .appendChild(), that's why we use it in PROD.
-            // But CSS injected using .insertRule() is not displayed in Chrome Devtools,
-            // that's why we use .appendChild in DEV.
-            if (true) {
-                var sheet = renderer.sh.sheet;
-
-                // Unknown pseudo-selectors will throw, this try/catch swallows all errors.
-                try {
-                    sheet.insertRule(rawCssRule, sheet.cssRules.length);
-                // eslint-disable-next-line no-empty
-                } catch (error) {}
-            } else {}
-        };
-    }
-
-    renderer.put = function (selector, decls, atrule) {
-        var str = '';
-        var prop, value;
-        var postponed = [];
-
-        for (prop in decls) {
-            value = decls[prop];
-
-            if ((value instanceof Object) && !(value instanceof Array)) {
-                postponed.push(prop);
-            } else {
-                if (false) {} else {
-                    str += renderer.decl(prop, value, selector, atrule);
-                }
-            }
-        }
-
-        if (str) {
-            if (false) {} else {
-                str = selector + '{' + str + '}';
-            }
-            renderer.putRaw(atrule ? atrule + '{' + str + '}' : str);
-        }
-
-        for (var i = 0; i < postponed.length; i++) {
-            prop = postponed[i];
-
-            if (prop[0] === "@" && prop !== "@font-face") {
-                renderer.putAt(selector, decls[prop], prop);
-            } else {
-                renderer.put(renderer.selector(selector, prop), decls[prop], atrule);
-            }
-        }
-    };
-
-    renderer.putAt = renderer.put;
-
-    return renderer;
-};
-
-
-/***/ }),
-/* 68 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.addon = function (renderer) {
-    // CSSOM support only browser environment.
-    if (!renderer.client) return;
-
-    if (false) {}
-
-    // Style sheet for media queries.
-    document.head.appendChild(renderer.msh = document.createElement('style'));
-
-    renderer.createRule = function (selector, prelude) {
-        var rawCss = selector + '{}';
-        if (prelude) rawCss = prelude + '{' + rawCss + '}';
-        var sheet = prelude ? renderer.msh.sheet : renderer.sh.sheet;
-        var index = sheet.insertRule(rawCss, sheet.cssRules.length);
-        var rule = (sheet.cssRules || sheet.rules)[index];
-
-        // Keep track of `index` where rule was inserted in the sheet. This is
-        // needed for rule deletion.
-        rule.index = index;
-
-        if (prelude) {
-            // If rule has media query (it has prelude), move style (CSSStyleDeclaration)
-            // object to the "top" to normalize it with a rule without the media
-            // query, so that both rules have `.style` property available.
-            var selectorRule = (rule.cssRules || rule.rules)[0];
-            rule.style = selectorRule.style;
-            rule.styleMap = selectorRule.styleMap;
-        }
-
-        return rule;
-    };
-};
-
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var removeRule = __webpack_require__(103).removeRule;
-
-exports.addon = function (renderer) {
-    // VCSSOM support only browser environment.
-    if (!renderer.client) return;
-
-    if (false) {}
-
-    var kebab = renderer.kebab;
-
-    function VRule (selector, prelude) {
-        this.rule = renderer.createRule(selector, prelude);
-        this.decl = {};
-    }
-    VRule.prototype.diff = function (newDecl) {
-        var oldDecl = this.decl;
-        var style = this.rule.style;
-        var property;
-        for (property in oldDecl)
-            if (newDecl[property] === undefined)
-                style.removeProperty(property);
-        for (property in newDecl)
-            if (newDecl[property] !== oldDecl[property])
-                style.setProperty(kebab(property), newDecl[property]);
-        this.decl = newDecl;
-    };
-    VRule.prototype.del = function () {
-        removeRule(this.rule);
-    };
-
-    function VSheet () {
-        /**
-         * {
-         *   '<at-rule-prelude>': {
-         *     '<selector>': {
-         *       color: 'red
-         *     }
-         *   }
-         * }
-         */
-        this.tree = {};
-    }
-    VSheet.prototype.diff = function (newTree) {
-        var oldTree = this.tree;
-
-        // Remove media queries not present in new tree.
-        for (var prelude in oldTree) {
-            if (newTree[prelude] === undefined) {
-                var rules = oldTree[prelude];
-                for (var selector in rules)
-                    rules[selector].del();
-            }
-        }
-
-        for (var prelude in newTree) {
-            if (oldTree[prelude] === undefined) {
-                // Whole media query is new.
-                for (var selector in newTree[prelude]) {
-                    var rule = new VRule(selector, prelude);
-                    rule.diff(newTree[prelude][selector]);
-                    newTree[prelude][selector] = rule;
-                }
-            } else {
-                // Old tree already has rules with this media query.
-                var oldRules = oldTree[prelude];
-                var newRules = newTree[prelude];
-
-                // Remove rules not present in new tree.
-                for (var selector in oldRules)
-                    if (!newRules[selector])
-                        oldRules[selector].del();
-
-                // Apply new rules.
-                for (var selector in newRules) {
-                    var rule = oldRules[selector];
-                    if (rule) {
-                        rule.diff(newRules[selector]);
-                        newRules[selector] = rule;
-                    } else {
-                        rule = new VRule(selector, prelude);
-                        rule.diff(newRules[selector]);
-                        newRules[selector] = rule;
-                    }
-                }
-            }
-        }
-
-        this.tree = newTree;
-    };
-
-    renderer.VRule = VRule;
-    renderer.VSheet = VSheet;
-};
-
-
-/***/ }),
-/* 70 */
-/***/ (function(module, exports) {
-
-function cssToTree (tree, css, selector, prelude) {
-    var declarations = {};
-    var hasDeclarations = false;
-    var key, value;
-
-    for (key in css) {
-        value = css[key];
-        if (typeof value !== 'object') {
-            hasDeclarations = true;
-            declarations[key] = value;
-        }
-    }
-
-    if (hasDeclarations) {
-        if (!tree[prelude]) tree[prelude] = {};
-        tree[prelude][selector] = declarations;
-    }
-
-    for (key in css) {
-        value = css[key];
-        if (typeof value === 'object') {
-            if (key[0] === '@') {
-                cssToTree(tree, value, selector, key);
-            } else {
-                var hasCurrentSymbol = key.indexOf('&') > -1;
-                var selectorParts = selector.split(',');
-                if (hasCurrentSymbol) {
-                    for (var i = 0; i < selectorParts.length; i++) {
-                        selectorParts[i] = key.replace(/&/g, selectorParts[i]);
-                    }
-                } else {
-                    for (var i = 0; i < selectorParts.length; i++) {
-                        selectorParts[i] = selectorParts[i] + ' ' + key;
-                    }
-                }
-                cssToTree(tree, value, selectorParts.join(','), prelude);
-            }
-        }
-    }
-};
-
-exports.cssToTree = cssToTree;
-
-
-/***/ }),
-/* 71 */
-/***/ (function(module, exports, __webpack_require__) {
-
-(function (global, factory) {
-	 true ? factory(exports) :
-	undefined;
-}(this, (function (exports) { 'use strict';
-
-	/* eslint-disable no-undefined,no-param-reassign,no-shadow */
-
-	/**
-	 * Throttle execution of a function. Especially useful for rate limiting
-	 * execution of handlers on events like resize and scroll.
-	 *
-	 * @param  {number}    delay -          A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
-	 * @param  {boolean}   [noTrailing] -   Optional, defaults to false. If noTrailing is true, callback will only execute every `delay` milliseconds while the
-	 *                                    throttled-function is being called. If noTrailing is false or unspecified, callback will be executed one final time
-	 *                                    after the last throttled-function call. (After the throttled-function has not been called for `delay` milliseconds,
-	 *                                    the internal counter is reset).
-	 * @param  {Function}  callback -       A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
-	 *                                    to `callback` when the throttled-function is executed.
-	 * @param  {boolean}   [debounceMode] - If `debounceMode` is true (at begin), schedule `clear` to execute after `delay` ms. If `debounceMode` is false (at end),
-	 *                                    schedule `callback` to execute after `delay` ms.
-	 *
-	 * @returns {Function}  A new, throttled, function.
-	 */
-	function throttle (delay, noTrailing, callback, debounceMode) {
-	  /*
-	   * After wrapper has stopped being called, this timeout ensures that
-	   * `callback` is executed at the proper times in `throttle` and `end`
-	   * debounce modes.
-	   */
-	  var timeoutID;
-	  var cancelled = false; // Keep track of the last time `callback` was executed.
-
-	  var lastExec = 0; // Function to clear existing timeout
-
-	  function clearExistingTimeout() {
-	    if (timeoutID) {
-	      clearTimeout(timeoutID);
-	    }
-	  } // Function to cancel next exec
-
-
-	  function cancel() {
-	    clearExistingTimeout();
-	    cancelled = true;
-	  } // `noTrailing` defaults to falsy.
-
-
-	  if (typeof noTrailing !== 'boolean') {
-	    debounceMode = callback;
-	    callback = noTrailing;
-	    noTrailing = undefined;
-	  }
-	  /*
-	   * The `wrapper` function encapsulates all of the throttling / debouncing
-	   * functionality and when executed will limit the rate at which `callback`
-	   * is executed.
-	   */
-
-
-	  function wrapper() {
-	    for (var _len = arguments.length, arguments_ = new Array(_len), _key = 0; _key < _len; _key++) {
-	      arguments_[_key] = arguments[_key];
-	    }
-
-	    var self = this;
-	    var elapsed = Date.now() - lastExec;
-
-	    if (cancelled) {
-	      return;
-	    } // Execute `callback` and update the `lastExec` timestamp.
-
-
-	    function exec() {
-	      lastExec = Date.now();
-	      callback.apply(self, arguments_);
-	    }
-	    /*
-	     * If `debounceMode` is true (at begin) this is used to clear the flag
-	     * to allow future `callback` executions.
-	     */
-
-
-	    function clear() {
-	      timeoutID = undefined;
-	    }
-
-	    if (debounceMode && !timeoutID) {
-	      /*
-	       * Since `wrapper` is being called for the first time and
-	       * `debounceMode` is true (at begin), execute `callback`.
-	       */
-	      exec();
-	    }
-
-	    clearExistingTimeout();
-
-	    if (debounceMode === undefined && elapsed > delay) {
-	      /*
-	       * In throttle mode, if `delay` time has been exceeded, execute
-	       * `callback`.
-	       */
-	      exec();
-	    } else if (noTrailing !== true) {
-	      /*
-	       * In trailing throttle mode, since `delay` time has not been
-	       * exceeded, schedule `callback` to execute `delay` ms after most
-	       * recent execution.
-	       *
-	       * If `debounceMode` is true (at begin), schedule `clear` to execute
-	       * after `delay` ms.
-	       *
-	       * If `debounceMode` is false (at end), schedule `callback` to
-	       * execute after `delay` ms.
-	       */
-	      timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
-	    }
-	  }
-
-	  wrapper.cancel = cancel; // Return the wrapper function.
-
-	  return wrapper;
-	}
-
-	/* eslint-disable no-undefined */
-	/**
-	 * Debounce execution of a function. Debouncing, unlike throttling,
-	 * guarantees that a function is only executed a single time, either at the
-	 * very beginning of a series of calls, or at the very end.
-	 *
-	 * @param  {number}   delay -         A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
-	 * @param  {boolean}  [atBegin] -     Optional, defaults to false. If atBegin is false or unspecified, callback will only be executed `delay` milliseconds
-	 *                                  after the last debounced-function call. If atBegin is true, callback will be executed only at the first debounced-function call.
-	 *                                  (After the throttled-function has not been called for `delay` milliseconds, the internal counter is reset).
-	 * @param  {Function} callback -      A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
-	 *                                  to `callback` when the debounced-function is executed.
-	 *
-	 * @returns {Function} A new, debounced function.
-	 */
-
-	function debounce (delay, atBegin, callback) {
-	  return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
-	}
-
-	exports.debounce = debounce;
-	exports.throttle = throttle;
-
-	Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-//# sourceMappingURL=index.umd.js.map
-
-
-/***/ }),
-/* 72 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process, setImmediate) {/**
- *  Copyright (c) 2013, Facebook, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant
- *  of patent rights can be found in the PATENTS file in the same directory.
- */
-(function (global, factory) {
-	 true ? module.exports = factory() :
-	undefined;
-}(this, (function () { 'use strict';
-
-var _onFrame = void 0;
-if (typeof window !== 'undefined') {
-  _onFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame;
-}
-
-if (!_onFrame && typeof process !== 'undefined' && process.title === 'node') {
-  _onFrame = setImmediate;
-}
-
-_onFrame = _onFrame || function (callback) {
-  window.setTimeout(callback, 1000 / 60);
-};
-
-var _onFrame$1 = _onFrame;
-
-/* eslint-disable flowtype/no-weak-types */
-
-var concat = Array.prototype.concat;
-var slice = Array.prototype.slice;
-
-// Bind a function to a context object.
-function bind(func, context) {
-  for (var _len = arguments.length, outerArgs = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-    outerArgs[_key - 2] = arguments[_key];
-  }
-
-  return function () {
-    for (var _len2 = arguments.length, innerArgs = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      innerArgs[_key2] = arguments[_key2];
-    }
-
-    func.apply(context, concat.call(outerArgs, slice.call(innerArgs)));
-  };
-}
-
-// Add all the properties in the source to the target.
-function extend(target, source) {
-  for (var key in source) {
-    if (source.hasOwnProperty(key)) {
-      target[key] = source[key];
-    }
-  }
-}
-
-// Cross browser/node timer functions.
-function onFrame(func) {
-  return _onFrame$1(func);
-}
-
-// Lop off the first occurence of the reference in the Array.
-function removeFirst(array, item) {
-  var idx = array.indexOf(item);
-  idx !== -1 && array.splice(idx, 1);
-}
-
-var colorCache = {};
-/**
- * Converts a hex-formatted color string to its rgb-formatted equivalent. Handy
- * when performing color tweening animations
- * @public
- * @param colorString A hex-formatted color string
- * @return An rgb-formatted color string
- */
-function hexToRGB(colorString) {
-  if (colorCache[colorString]) {
-    return colorCache[colorString];
-  }
-  var normalizedColor = colorString.replace('#', '');
-  if (normalizedColor.length === 3) {
-    normalizedColor = normalizedColor[0] + normalizedColor[0] + normalizedColor[1] + normalizedColor[1] + normalizedColor[2] + normalizedColor[2];
-  }
-  var parts = normalizedColor.match(/.{2}/g);
-  if (!parts || parts.length < 3) {
-    throw new Error('Expected a color string of format #rrggbb');
-  }
-
-  var ret = {
-    r: parseInt(parts[0], 16),
-    g: parseInt(parts[1], 16),
-    b: parseInt(parts[2], 16)
-  };
-
-  colorCache[colorString] = ret;
-  return ret;
-}
-
-/**
- * Converts a rgb-formatted color string to its hex-formatted equivalent. Handy
- * when performing color tweening animations
- * @public
- * @param colorString An rgb-formatted color string
- * @return A hex-formatted color string
- */
-function rgbToHex(rNum, gNum, bNum) {
-  var r = rNum.toString(16);
-  var g = gNum.toString(16);
-  var b = bNum.toString(16);
-  r = r.length < 2 ? '0' + r : r;
-  g = g.length < 2 ? '0' + g : g;
-  b = b.length < 2 ? '0' + b : b;
-  return '#' + r + g + b;
-}
-
-var util = Object.freeze({
-	bind: bind,
-	extend: extend,
-	onFrame: onFrame,
-	removeFirst: removeFirst,
-	hexToRGB: hexToRGB,
-	rgbToHex: rgbToHex
-});
-
-/**
- * This helper function does a linear interpolation of a value from
- * one range to another. This can be very useful for converting the
- * motion of a Spring to a range of UI property values. For example a
- * spring moving from position 0 to 1 could be interpolated to move a
- * view from pixel 300 to 350 and scale it from 0.5 to 1. The current
- * position of the `Spring` just needs to be run through this method
- * taking its input range in the _from_ parameters with the property
- * animation range in the _to_ parameters.
- * @public
- */
-function mapValueInRange(value, fromLow, fromHigh, toLow, toHigh) {
-  var fromRangeSize = fromHigh - fromLow;
-  var toRangeSize = toHigh - toLow;
-  var valueScale = (value - fromLow) / fromRangeSize;
-  return toLow + valueScale * toRangeSize;
-}
-
-/**
- * Interpolate two hex colors in a 0 - 1 range or optionally provide a
- * custom range with fromLow,fromHight. The output will be in hex by default
- * unless asRGB is true in which case it will be returned as an rgb string.
- *
- * @public
- * @param asRGB Whether to return an rgb-style string
- * @return A string in hex color format unless asRGB is true, in which case a string in rgb format
- */
-function interpolateColor(val, startColorStr, endColorStr) {
-  var fromLow = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
-  var fromHigh = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
-  var asRGB = arguments[5];
-
-  var startColor = hexToRGB(startColorStr);
-  var endColor = hexToRGB(endColorStr);
-  var r = Math.floor(mapValueInRange(val, fromLow, fromHigh, startColor.r, endColor.r));
-  var g = Math.floor(mapValueInRange(val, fromLow, fromHigh, startColor.g, endColor.g));
-  var b = Math.floor(mapValueInRange(val, fromLow, fromHigh, startColor.b, endColor.b));
-  if (asRGB) {
-    return 'rgb(' + r + ',' + g + ',' + b + ')';
-  } else {
-    return rgbToHex(r, g, b);
-  }
-}
-
-function degreesToRadians(deg) {
-  return deg * Math.PI / 180;
-}
-
-function radiansToDegrees(rad) {
-  return rad * 180 / Math.PI;
-}
-
-var MathUtil = Object.freeze({
-	mapValueInRange: mapValueInRange,
-	interpolateColor: interpolateColor,
-	degreesToRadians: degreesToRadians,
-	radiansToDegrees: radiansToDegrees
-});
-
-// Math for converting from
-// [Origami](http://facebook.github.io/origami/) to
-// [Rebound](http://facebook.github.io/rebound).
-// You mostly don't need to worry about this, just use
-// SpringConfig.fromOrigamiTensionAndFriction(v, v);
-
-function tensionFromOrigamiValue(oValue) {
-  return (oValue - 30.0) * 3.62 + 194.0;
-}
-
-function origamiValueFromTension(tension) {
-  return (tension - 194.0) / 3.62 + 30.0;
-}
-
-function frictionFromOrigamiValue(oValue) {
-  return (oValue - 8.0) * 3.0 + 25.0;
-}
-
-function origamiFromFriction(friction) {
-  return (friction - 25.0) / 3.0 + 8.0;
-}
-
-var OrigamiValueConverter = Object.freeze({
-	tensionFromOrigamiValue: tensionFromOrigamiValue,
-	origamiValueFromTension: origamiValueFromTension,
-	frictionFromOrigamiValue: frictionFromOrigamiValue,
-	origamiFromFriction: origamiFromFriction
-});
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-
-
-
-
-
-
-
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
-};
-
-/**
- * Plays each frame of the SpringSystem on animation
- * timing loop. This is the default type of looper for a new spring system
- * as it is the most common when developing UI.
- * @public
- */
-/**
- *  Copyright (c) 2013, Facebook, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- */
-
-var AnimationLooper = function () {
-  function AnimationLooper() {
-    classCallCheck(this, AnimationLooper);
-    this.springSystem = null;
-  }
-
-  AnimationLooper.prototype.run = function run() {
-    var springSystem = getSpringSystem.call(this);
-
-    onFrame(function () {
-      springSystem.loop(Date.now());
-    });
-  };
-
-  return AnimationLooper;
-}();
-
-/**
- * Resolves the SpringSystem to a resting state in a
- * tight and blocking loop. This is useful for synchronously generating
- * pre-recorded animations that can then be played on a timing loop later.
- * Sometimes this lead to better performance to pre-record a single spring
- * curve and use it to drive many animations; however, it can make dynamic
- * response to user input a bit trickier to implement.
- * @public
- */
-var SimulationLooper = function () {
-  function SimulationLooper(timestep) {
-    classCallCheck(this, SimulationLooper);
-    this.springSystem = null;
-    this.time = 0;
-    this.running = false;
-
-    this.timestep = timestep || 16.667;
-  }
-
-  SimulationLooper.prototype.run = function run() {
-    var springSystem = getSpringSystem.call(this);
-
-    if (this.running) {
-      return;
-    }
-    this.running = true;
-    while (!springSystem.getIsIdle()) {
-      springSystem.loop(this.time += this.timestep);
-    }
-    this.running = false;
-  };
-
-  return SimulationLooper;
-}();
-
-/**
- * Resolves the SpringSystem one step at a
- * time controlled by an outside loop. This is useful for testing and
- * verifying the behavior of a SpringSystem or if you want to control your own
- * timing loop for some reason e.g. slowing down or speeding up the
- * simulation.
- * @public
- */
-var SteppingSimulationLooper = function () {
-  function SteppingSimulationLooper() {
-    classCallCheck(this, SteppingSimulationLooper);
-    this.springSystem = null;
-    this.time = 0;
-    this.running = false;
-  }
-
-  SteppingSimulationLooper.prototype.run = function run() {}
-  // this.run is NOOP'd here to allow control from the outside using
-  // this.step.
-
-
-  // Perform one step toward resolving the SpringSystem.
-  ;
-
-  SteppingSimulationLooper.prototype.step = function step(timestep) {
-    var springSystem = getSpringSystem.call(this);
-    springSystem.loop(this.time += timestep);
-  };
-
-  return SteppingSimulationLooper;
-}();
-
-function getSpringSystem() {
-  if (this.springSystem == null) {
-    throw new Error('cannot run looper without a springSystem');
-  }
-  return this.springSystem;
-}
-
-
-
-var Loopers = Object.freeze({
-	AnimationLooper: AnimationLooper,
-	SimulationLooper: SimulationLooper,
-	SteppingSimulationLooper: SteppingSimulationLooper
-});
-
-/**
- * Provides math for converting from Origami PopAnimation
- * config values to regular Origami tension and friction values. If you are
- * trying to replicate prototypes made with PopAnimation patches in Origami,
- * then you should create your springs with
- * SpringSystem.createSpringWithBouncinessAndSpeed, which uses this Math
- * internally to create a spring to match the provided PopAnimation
- * configuration from Origami.
- */
-var BouncyConversion = function () {
-  function BouncyConversion(bounciness, speed) {
-    classCallCheck(this, BouncyConversion);
-
-    this.bounciness = bounciness;
-    this.speed = speed;
-
-    var b = this.normalize(bounciness / 1.7, 0, 20.0);
-    b = this.projectNormal(b, 0.0, 0.8);
-    var s = this.normalize(speed / 1.7, 0, 20.0);
-
-    this.bouncyTension = this.projectNormal(s, 0.5, 200);
-    this.bouncyFriction = this.quadraticOutInterpolation(b, this.b3Nobounce(this.bouncyTension), 0.01);
-  }
-
-  BouncyConversion.prototype.normalize = function normalize(value, startValue, endValue) {
-    return (value - startValue) / (endValue - startValue);
-  };
-
-  BouncyConversion.prototype.projectNormal = function projectNormal(n, start, end) {
-    return start + n * (end - start);
-  };
-
-  BouncyConversion.prototype.linearInterpolation = function linearInterpolation(t, start, end) {
-    return t * end + (1.0 - t) * start;
-  };
-
-  BouncyConversion.prototype.quadraticOutInterpolation = function quadraticOutInterpolation(t, start, end) {
-    return this.linearInterpolation(2 * t - t * t, start, end);
-  };
-
-  BouncyConversion.prototype.b3Friction1 = function b3Friction1(x) {
-    return 0.0007 * Math.pow(x, 3) - 0.031 * Math.pow(x, 2) + 0.64 * x + 1.28;
-  };
-
-  BouncyConversion.prototype.b3Friction2 = function b3Friction2(x) {
-    return 0.000044 * Math.pow(x, 3) - 0.006 * Math.pow(x, 2) + 0.36 * x + 2;
-  };
-
-  BouncyConversion.prototype.b3Friction3 = function b3Friction3(x) {
-    return 0.00000045 * Math.pow(x, 3) - 0.000332 * Math.pow(x, 2) + 0.1078 * x + 5.84;
-  };
-
-  BouncyConversion.prototype.b3Nobounce = function b3Nobounce(tension) {
-    var friction = 0;
-    if (tension <= 18) {
-      friction = this.b3Friction1(tension);
-    } else if (tension > 18 && tension <= 44) {
-      friction = this.b3Friction2(tension);
-    } else {
-      friction = this.b3Friction3(tension);
-    }
-    return friction;
-  };
-
-  return BouncyConversion;
-}();
-
-/**
- * Maintains a set of tension and friction constants
- * for a Spring. You can use fromOrigamiTensionAndFriction to convert
- * values from the [Origami](http://facebook.github.io/origami/)
- * design tool directly to Rebound spring constants.
- * @public
- */
-
-var SpringConfig = function () {
-
-  /**
-   * Convert an origami Spring tension and friction to Rebound spring
-   * constants. If you are prototyping a design with Origami, this
-   * makes it easy to make your springs behave exactly the same in
-   * Rebound.
-   * @public
-   */
-  SpringConfig.fromOrigamiTensionAndFriction = function fromOrigamiTensionAndFriction(tension, friction) {
-    return new SpringConfig(tensionFromOrigamiValue(tension), frictionFromOrigamiValue(friction));
-  };
-
-  /**
-   * Convert an origami PopAnimation Spring bounciness and speed to Rebound
-   * spring constants. If you are using PopAnimation patches in Origami, this
-   * utility will provide springs that match your prototype.
-   * @public
-   */
-
-
-  SpringConfig.fromBouncinessAndSpeed = function fromBouncinessAndSpeed(bounciness, speed) {
-    var bouncyConversion = new BouncyConversion(bounciness, speed);
-    return SpringConfig.fromOrigamiTensionAndFriction(bouncyConversion.bouncyTension, bouncyConversion.bouncyFriction);
-  };
-
-  /**
-   * Create a SpringConfig with no tension or a coasting spring with some
-   * amount of Friction so that it does not coast infininitely.
-   * @public
-   */
-
-
-  SpringConfig.coastingConfigWithOrigamiFriction = function coastingConfigWithOrigamiFriction(friction) {
-    return new SpringConfig(0, frictionFromOrigamiValue(friction));
-  };
-
-  function SpringConfig(tension, friction) {
-    classCallCheck(this, SpringConfig);
-
-    this.tension = tension;
-    this.friction = friction;
-  }
-
-  return SpringConfig;
-}();
-
-SpringConfig.DEFAULT_ORIGAMI_SPRING_CONFIG = SpringConfig.fromOrigamiTensionAndFriction(40, 7);
-
-/**
- * Consists of a position and velocity. A Spring uses
- * this internally to keep track of its current and prior position and
- * velocity values.
- */
-var PhysicsState = function PhysicsState() {
-  classCallCheck(this, PhysicsState);
-  this.position = 0;
-  this.velocity = 0;
-};
-
-/**
- * Provides a model of a classical spring acting to
- * resolve a body to equilibrium. Springs have configurable
- * tension which is a force multipler on the displacement of the
- * spring from its rest point or `endValue` as defined by [Hooke's
- * law](http://en.wikipedia.org/wiki/Hooke's_law). Springs also have
- * configurable friction, which ensures that they do not oscillate
- * infinitely. When a Spring is displaced by updating it's resting
- * or `currentValue`, the SpringSystems that contain that Spring
- * will automatically start looping to solve for equilibrium. As each
- * timestep passes, `SpringListener` objects attached to the Spring
- * will be notified of the updates providing a way to drive an
- * animation off of the spring's resolution curve.
- * @public
- */
-
-var Spring = function () {
-  function Spring(springSystem) {
-    classCallCheck(this, Spring);
-    this.listeners = [];
-    this._startValue = 0;
-    this._currentState = new PhysicsState();
-    this._displacementFromRestThreshold = 0.001;
-    this._endValue = 0;
-    this._overshootClampingEnabled = false;
-    this._previousState = new PhysicsState();
-    this._restSpeedThreshold = 0.001;
-    this._tempState = new PhysicsState();
-    this._timeAccumulator = 0;
-    this._wasAtRest = true;
-
-    this._id = 's' + Spring._ID++;
-    this._springSystem = springSystem;
-  }
-
-  /**
-   * Remove a Spring from simulation and clear its listeners.
-   * @public
-   */
-
-
-  Spring.prototype.destroy = function destroy() {
-    this.listeners = [];
-    this._springSystem.deregisterSpring(this);
-  };
-
-  /**
-   * Get the id of the spring, which can be used to retrieve it from
-   * the SpringSystems it participates in later.
-   * @public
-   */
-
-
-  Spring.prototype.getId = function getId() {
-    return this._id;
-  };
-
-  /**
-   * Set the configuration values for this Spring. A SpringConfig
-   * contains the tension and friction values used to solve for the
-   * equilibrium of the Spring in the physics loop.
-   * @public
-   */
-
-
-  Spring.prototype.setSpringConfig = function setSpringConfig(springConfig) {
-    this._springConfig = springConfig;
-    return this;
-  };
-
-  /**
-   * Retrieve the SpringConfig used by this Spring.
-   * @public
-   */
-
-
-  Spring.prototype.getSpringConfig = function getSpringConfig() {
-    return this._springConfig;
-  };
-
-  /**
-   * Set the current position of this Spring. Listeners will be updated
-   * with this value immediately. If the rest or `endValue` is not
-   * updated to match this value, then the spring will be dispalced and
-   * the SpringSystem will start to loop to restore the spring to the
-   * `endValue`.
-   *
-   * A common pattern is to move a Spring around without animation by
-   * calling.
-   *
-   * ```
-   * spring.setCurrentValue(n).setAtRest();
-   * ```
-   *
-   * This moves the Spring to a new position `n`, sets the endValue
-   * to `n`, and removes any velocity from the `Spring`. By doing
-   * this you can allow the `SpringListener` to manage the position
-   * of UI elements attached to the spring even when moving without
-   * animation. For example, when dragging an element you can
-   * update the position of an attached view through a spring
-   * by calling `spring.setCurrentValue(x)`. When
-   * the gesture ends you can update the Springs
-   * velocity and endValue
-   * `spring.setVelocity(gestureEndVelocity).setEndValue(flingTarget)`
-   * to cause it to naturally animate the UI element to the resting
-   * position taking into account existing velocity. The codepaths for
-   * synchronous movement and spring driven animation can
-   * be unified using this technique.
-   * @public
-   */
-
-
-  Spring.prototype.setCurrentValue = function setCurrentValue(currentValue, skipSetAtRest) {
-    this._startValue = currentValue;
-    this._currentState.position = currentValue;
-    if (!skipSetAtRest) {
-      this.setAtRest();
-    }
-    this.notifyPositionUpdated(false, false);
-    return this;
-  };
-
-  /**
-   * Get the position that the most recent animation started at. This
-   * can be useful for determining the number off oscillations that
-   * have occurred.
-   * @public
-   */
-
-
-  Spring.prototype.getStartValue = function getStartValue() {
-    return this._startValue;
-  };
-
-  /**
-   * Retrieve the current value of the Spring.
-   * @public
-   */
-
-
-  Spring.prototype.getCurrentValue = function getCurrentValue() {
-    return this._currentState.position;
-  };
-
-  /**
-   * Get the absolute distance of the Spring from its resting endValue
-   * position.
-   * @public
-   */
-
-
-  Spring.prototype.getCurrentDisplacementDistance = function getCurrentDisplacementDistance() {
-    return this.getDisplacementDistanceForState(this._currentState);
-  };
-
-  /**
-   * Get the absolute distance of the Spring from a given state value
-   */
-
-
-  Spring.prototype.getDisplacementDistanceForState = function getDisplacementDistanceForState(state) {
-    return Math.abs(this._endValue - state.position);
-  };
-
-  /**
-   * Set the endValue or resting position of the spring. If this
-   * value is different than the current value, the SpringSystem will
-   * be notified and will begin running its solver loop to resolve
-   * the Spring to equilibrium. Any listeners that are registered
-   * for onSpringEndStateChange will also be notified of this update
-   * immediately.
-   * @public
-   */
-
-
-  Spring.prototype.setEndValue = function setEndValue(endValue) {
-    if (this._endValue === endValue && this.isAtRest()) {
-      return this;
-    }
-    this._startValue = this.getCurrentValue();
-    this._endValue = endValue;
-    this._springSystem.activateSpring(this.getId());
-    for (var i = 0, len = this.listeners.length; i < len; i++) {
-      var listener = this.listeners[i];
-      var onChange = listener.onSpringEndStateChange;
-      onChange && onChange(this);
-    }
-    return this;
-  };
-
-  /**
-   * Retrieve the endValue or resting position of this spring.
-   * @public
-   */
-
-
-  Spring.prototype.getEndValue = function getEndValue() {
-    return this._endValue;
-  };
-
-  /**
-   * Set the current velocity of the Spring, in pixels per second. As
-   * previously mentioned, this can be useful when you are performing
-   * a direct manipulation gesture. When a UI element is released you
-   * may call setVelocity on its animation Spring so that the Spring
-   * continues with the same velocity as the gesture ended with. The
-   * friction, tension, and displacement of the Spring will then
-   * govern its motion to return to rest on a natural feeling curve.
-   * @public
-   */
-
-
-  Spring.prototype.setVelocity = function setVelocity(velocity) {
-    if (velocity === this._currentState.velocity) {
-      return this;
-    }
-    this._currentState.velocity = velocity;
-    this._springSystem.activateSpring(this.getId());
-    return this;
-  };
-
-  /**
-   * Get the current velocity of the Spring, in pixels per second.
-   * @public
-   */
-
-
-  Spring.prototype.getVelocity = function getVelocity() {
-    return this._currentState.velocity;
-  };
-
-  /**
-   * Set a threshold value for the movement speed of the Spring below
-   * which it will be considered to be not moving or resting.
-   * @public
-   */
-
-
-  Spring.prototype.setRestSpeedThreshold = function setRestSpeedThreshold(restSpeedThreshold) {
-    this._restSpeedThreshold = restSpeedThreshold;
-    return this;
-  };
-
-  /**
-   * Retrieve the rest speed threshold for this Spring.
-   * @public
-   */
-
-
-  Spring.prototype.getRestSpeedThreshold = function getRestSpeedThreshold() {
-    return this._restSpeedThreshold;
-  };
-
-  /**
-   * Set a threshold value for displacement below which the Spring
-   * will be considered to be not displaced i.e. at its resting
-   * `endValue`.
-   * @public
-   */
-
-
-  Spring.prototype.setRestDisplacementThreshold = function setRestDisplacementThreshold(displacementFromRestThreshold) {
-    this._displacementFromRestThreshold = displacementFromRestThreshold;
-  };
-
-  /**
-   * Retrieve the rest displacement threshold for this spring.
-   * @public
-   */
-
-
-  Spring.prototype.getRestDisplacementThreshold = function getRestDisplacementThreshold() {
-    return this._displacementFromRestThreshold;
-  };
-
-  /**
-   * Enable overshoot clamping. This means that the Spring will stop
-   * immediately when it reaches its resting position regardless of
-   * any existing momentum it may have. This can be useful for certain
-   * types of animations that should not oscillate such as a scale
-   * down to 0 or alpha fade.
-   * @public
-   */
-
-
-  Spring.prototype.setOvershootClampingEnabled = function setOvershootClampingEnabled(enabled) {
-    this._overshootClampingEnabled = enabled;
-    return this;
-  };
-
-  /**
-   * Check if overshoot clamping is enabled for this spring.
-   * @public
-   */
-
-
-  Spring.prototype.isOvershootClampingEnabled = function isOvershootClampingEnabled() {
-    return this._overshootClampingEnabled;
-  };
-
-  /**
-   * Check if the Spring has gone past its end point by comparing
-   * the direction it was moving in when it started to the current
-   * position and end value.
-   * @public
-   */
-
-
-  Spring.prototype.isOvershooting = function isOvershooting() {
-    var start = this._startValue;
-    var end = this._endValue;
-    return this._springConfig.tension > 0 && (start < end && this.getCurrentValue() > end || start > end && this.getCurrentValue() < end);
-  };
-
-  /**
-   * The main solver method for the Spring. It takes
-   * the current time and delta since the last time step and performs
-   * an RK4 integration to get the new position and velocity state
-   * for the Spring based on the tension, friction, velocity, and
-   * displacement of the Spring.
-   * @public
-   */
-
-
-  Spring.prototype.advance = function advance(time, realDeltaTime) {
-    var isAtRest = this.isAtRest();
-
-    if (isAtRest && this._wasAtRest) {
-      return;
-    }
-
-    var adjustedDeltaTime = realDeltaTime;
-    if (realDeltaTime > Spring.MAX_DELTA_TIME_SEC) {
-      adjustedDeltaTime = Spring.MAX_DELTA_TIME_SEC;
-    }
-
-    this._timeAccumulator += adjustedDeltaTime;
-
-    var tension = this._springConfig.tension;
-    var friction = this._springConfig.friction;
-    var position = this._currentState.position;
-    var velocity = this._currentState.velocity;
-    var tempPosition = this._tempState.position;
-    var tempVelocity = this._tempState.velocity;
-    var aVelocity = void 0;
-    var aAcceleration = void 0;
-    var bVelocity = void 0;
-    var bAcceleration = void 0;
-    var cVelocity = void 0;
-    var cAcceleration = void 0;
-    var dVelocity = void 0;
-    var dAcceleration = void 0;
-    var dxdt = void 0;
-    var dvdt = void 0;
-
-    while (this._timeAccumulator >= Spring.SOLVER_TIMESTEP_SEC) {
-      this._timeAccumulator -= Spring.SOLVER_TIMESTEP_SEC;
-
-      if (this._timeAccumulator < Spring.SOLVER_TIMESTEP_SEC) {
-        this._previousState.position = position;
-        this._previousState.velocity = velocity;
-      }
-
-      aVelocity = velocity;
-      aAcceleration = tension * (this._endValue - tempPosition) - friction * velocity;
-
-      tempPosition = position + aVelocity * Spring.SOLVER_TIMESTEP_SEC * 0.5;
-      tempVelocity = velocity + aAcceleration * Spring.SOLVER_TIMESTEP_SEC * 0.5;
-      bVelocity = tempVelocity;
-      bAcceleration = tension * (this._endValue - tempPosition) - friction * tempVelocity;
-
-      tempPosition = position + bVelocity * Spring.SOLVER_TIMESTEP_SEC * 0.5;
-      tempVelocity = velocity + bAcceleration * Spring.SOLVER_TIMESTEP_SEC * 0.5;
-      cVelocity = tempVelocity;
-      cAcceleration = tension * (this._endValue - tempPosition) - friction * tempVelocity;
-
-      tempPosition = position + cVelocity * Spring.SOLVER_TIMESTEP_SEC;
-      tempVelocity = velocity + cAcceleration * Spring.SOLVER_TIMESTEP_SEC;
-      dVelocity = tempVelocity;
-      dAcceleration = tension * (this._endValue - tempPosition) - friction * tempVelocity;
-
-      dxdt = 1.0 / 6.0 * (aVelocity + 2.0 * (bVelocity + cVelocity) + dVelocity);
-      dvdt = 1.0 / 6.0 * (aAcceleration + 2.0 * (bAcceleration + cAcceleration) + dAcceleration);
-
-      position += dxdt * Spring.SOLVER_TIMESTEP_SEC;
-      velocity += dvdt * Spring.SOLVER_TIMESTEP_SEC;
-    }
-
-    this._tempState.position = tempPosition;
-    this._tempState.velocity = tempVelocity;
-
-    this._currentState.position = position;
-    this._currentState.velocity = velocity;
-
-    if (this._timeAccumulator > 0) {
-      this._interpolate(this._timeAccumulator / Spring.SOLVER_TIMESTEP_SEC);
-    }
-
-    if (this.isAtRest() || this._overshootClampingEnabled && this.isOvershooting()) {
-      if (this._springConfig.tension > 0) {
-        this._startValue = this._endValue;
-        this._currentState.position = this._endValue;
-      } else {
-        this._endValue = this._currentState.position;
-        this._startValue = this._endValue;
-      }
-      this.setVelocity(0);
-      isAtRest = true;
-    }
-
-    var notifyActivate = false;
-    if (this._wasAtRest) {
-      this._wasAtRest = false;
-      notifyActivate = true;
-    }
-
-    var notifyAtRest = false;
-    if (isAtRest) {
-      this._wasAtRest = true;
-      notifyAtRest = true;
-    }
-
-    this.notifyPositionUpdated(notifyActivate, notifyAtRest);
-  };
-
-  Spring.prototype.notifyPositionUpdated = function notifyPositionUpdated(notifyActivate, notifyAtRest) {
-    for (var i = 0, len = this.listeners.length; i < len; i++) {
-      var listener = this.listeners[i];
-      if (notifyActivate && listener.onSpringActivate) {
-        listener.onSpringActivate(this);
-      }
-
-      if (listener.onSpringUpdate) {
-        listener.onSpringUpdate(this);
-      }
-
-      if (notifyAtRest && listener.onSpringAtRest) {
-        listener.onSpringAtRest(this);
-      }
-    }
-  };
-
-  /**
-   * Check if the SpringSystem should advance. Springs are advanced
-   * a final frame after they reach equilibrium to ensure that the
-   * currentValue is exactly the requested endValue regardless of the
-   * displacement threshold.
-   * @public
-   */
-
-
-  Spring.prototype.systemShouldAdvance = function systemShouldAdvance() {
-    return !this.isAtRest() || !this.wasAtRest();
-  };
-
-  Spring.prototype.wasAtRest = function wasAtRest() {
-    return this._wasAtRest;
-  };
-
-  /**
-   * Check if the Spring is atRest meaning that it's currentValue and
-   * endValue are the same and that it has no velocity. The previously
-   * described thresholds for speed and displacement define the bounds
-   * of this equivalence check. If the Spring has 0 tension, then it will
-   * be considered at rest whenever its absolute velocity drops below the
-   * restSpeedThreshold.
-   * @public
-   */
-
-
-  Spring.prototype.isAtRest = function isAtRest() {
-    return Math.abs(this._currentState.velocity) < this._restSpeedThreshold && (this.getDisplacementDistanceForState(this._currentState) <= this._displacementFromRestThreshold || this._springConfig.tension === 0);
-  };
-
-  /**
-   * Force the spring to be at rest at its current position. As
-   * described in the documentation for setCurrentValue, this method
-   * makes it easy to do synchronous non-animated updates to ui
-   * elements that are attached to springs via SpringListeners.
-   * @public
-   */
-
-
-  Spring.prototype.setAtRest = function setAtRest() {
-    this._endValue = this._currentState.position;
-    this._tempState.position = this._currentState.position;
-    this._currentState.velocity = 0;
-    return this;
-  };
-
-  Spring.prototype._interpolate = function _interpolate(alpha) {
-    this._currentState.position = this._currentState.position * alpha + this._previousState.position * (1 - alpha);
-    this._currentState.velocity = this._currentState.velocity * alpha + this._previousState.velocity * (1 - alpha);
-  };
-
-  Spring.prototype.getListeners = function getListeners() {
-    return this.listeners;
-  };
-
-  Spring.prototype.addListener = function addListener(newListener) {
-    this.listeners.push(newListener);
-    return this;
-  };
-
-  Spring.prototype.removeListener = function removeListener(listenerToRemove) {
-    removeFirst(this.listeners, listenerToRemove);
-    return this;
-  };
-
-  Spring.prototype.removeAllListeners = function removeAllListeners() {
-    this.listeners = [];
-    return this;
-  };
-
-  Spring.prototype.currentValueIsApproximately = function currentValueIsApproximately(value) {
-    return Math.abs(this.getCurrentValue() - value) <= this.getRestDisplacementThreshold();
-  };
-
-  return Spring;
-}();
-
-Spring._ID = 0;
-Spring.MAX_DELTA_TIME_SEC = 0.064;
-Spring.SOLVER_TIMESTEP_SEC = 0.001;
-
-/**
- * A set of Springs that all run on the same physics
- * timing loop. To get started with a Rebound animation, first
- * create a new SpringSystem and then add springs to it.
- * @public
- */
-
-var SpringSystem = function () {
-  function SpringSystem(looper) {
-    classCallCheck(this, SpringSystem);
-    this.listeners = [];
-    this._activeSprings = [];
-    this._idleSpringIndices = [];
-    this._isIdle = true;
-    this._lastTimeMillis = -1;
-    this._springRegistry = {};
-
-    this.looper = looper || new AnimationLooper();
-    this.looper.springSystem = this;
-  }
-
-  /**
-   * A SpringSystem is iterated by a looper. The looper is responsible
-   * for executing each frame as the SpringSystem is resolved to idle.
-   * There are three types of Loopers described below AnimationLooper,
-   * SimulationLooper, and SteppingSimulationLooper. AnimationLooper is
-   * the default as it is the most useful for common UI animations.
-   * @public
-   */
-
-
-  SpringSystem.prototype.setLooper = function setLooper(looper) {
-    this.looper = looper;
-    looper.springSystem = this;
-  };
-
-  /**
-   * Add a new spring to this SpringSystem. This Spring will now be solved for
-   * during the physics iteration loop. By default the spring will use the
-   * default Origami spring config with 40 tension and 7 friction, but you can
-   * also provide your own values here.
-   * @public
-   */
-
-
-  SpringSystem.prototype.createSpring = function createSpring(tension, friction) {
-    var springConfig = void 0;
-    if (tension === undefined || friction === undefined) {
-      springConfig = SpringConfig.DEFAULT_ORIGAMI_SPRING_CONFIG;
-    } else {
-      springConfig = SpringConfig.fromOrigamiTensionAndFriction(tension, friction);
-    }
-    return this.createSpringWithConfig(springConfig);
-  };
-
-  /**
-   * Add a spring with a specified bounciness and speed. To replicate Origami
-   * compositions based on PopAnimation patches, use this factory method to
-   * create matching springs.
-   * @public
-   */
-
-
-  SpringSystem.prototype.createSpringWithBouncinessAndSpeed = function createSpringWithBouncinessAndSpeed(bounciness, speed) {
-    var springConfig = void 0;
-    if (bounciness === undefined || speed === undefined) {
-      springConfig = SpringConfig.DEFAULT_ORIGAMI_SPRING_CONFIG;
-    } else {
-      springConfig = SpringConfig.fromBouncinessAndSpeed(bounciness, speed);
-    }
-    return this.createSpringWithConfig(springConfig);
-  };
-
-  /**
-   * Add a spring with the provided SpringConfig.
-   * @public
-   */
-
-
-  SpringSystem.prototype.createSpringWithConfig = function createSpringWithConfig(springConfig) {
-    var spring = new Spring(this);
-    this.registerSpring(spring);
-    spring.setSpringConfig(springConfig);
-    return spring;
-  };
-
-  /**
-   * Check if a SpringSystem is idle or active. If all of the Springs in the
-   * SpringSystem are at rest, i.e. the physics forces have reached equilibrium,
-   * then this method will return true.
-   * @public
-   */
-
-
-  SpringSystem.prototype.getIsIdle = function getIsIdle() {
-    return this._isIdle;
-  };
-
-  /**
-   * Retrieve a specific Spring from the SpringSystem by id. This
-   * can be useful for inspecting the state of a spring before
-   * or after an integration loop in the SpringSystem executes.
-   * @public
-   */
-
-
-  SpringSystem.prototype.getSpringById = function getSpringById(id) {
-    return this._springRegistry[id];
-  };
-
-  /**
-   * Get a listing of all the springs registered with this
-   * SpringSystem.
-   * @public
-   */
-
-
-  SpringSystem.prototype.getAllSprings = function getAllSprings() {
-    var vals = [];
-    for (var _id in this._springRegistry) {
-      if (this._springRegistry.hasOwnProperty(_id)) {
-        vals.push(this._springRegistry[_id]);
-      }
-    }
-    return vals;
-  };
-
-  /**
-   * Manually add a spring to this system. This is called automatically
-   * if a Spring is created with SpringSystem#createSpring.
-   *
-   * This method sets the spring up in the registry so that it can be solved
-   * in the solver loop.
-   * @public
-   */
-
-
-  SpringSystem.prototype.registerSpring = function registerSpring(spring) {
-    this._springRegistry[spring.getId()] = spring;
-  };
-
-  /**
-   * Deregister a spring with this SpringSystem. The SpringSystem will
-   * no longer consider this Spring during its integration loop once
-   * this is called. This is normally done automatically for you when
-   * you call Spring#destroy.
-   * @public
-   */
-
-
-  SpringSystem.prototype.deregisterSpring = function deregisterSpring(spring) {
-    removeFirst(this._activeSprings, spring);
-    delete this._springRegistry[spring.getId()];
-  };
-
-  SpringSystem.prototype.advance = function advance(time, deltaTime) {
-    while (this._idleSpringIndices.length > 0) {
-      this._idleSpringIndices.pop();
-    }
-    for (var i = 0, len = this._activeSprings.length; i < len; i++) {
-      var spring = this._activeSprings[i];
-      if (spring.systemShouldAdvance()) {
-        spring.advance(time / 1000.0, deltaTime / 1000.0);
-      } else {
-        this._idleSpringIndices.push(this._activeSprings.indexOf(spring));
-      }
-    }
-    while (this._idleSpringIndices.length > 0) {
-      var idx = this._idleSpringIndices.pop();
-      idx >= 0 && this._activeSprings.splice(idx, 1);
-    }
-  };
-
-  /**
-   * This is the main solver loop called to move the simulation
-   * forward through time. Before each pass in the solver loop
-   * onBeforeIntegrate is called on an any listeners that have
-   * registered themeselves with the SpringSystem. This gives you
-   * an opportunity to apply any constraints or adjustments to
-   * the springs that should be enforced before each iteration
-   * loop. Next the advance method is called to move each Spring in
-   * the systemShouldAdvance forward to the current time. After the
-   * integration step runs in advance, onAfterIntegrate is called
-   * on any listeners that have registered themselves with the
-   * SpringSystem. This gives you an opportunity to run any post
-   * integration constraints or adjustments on the Springs in the
-   * SpringSystem.
-   * @public
-   */
-
-
-  SpringSystem.prototype.loop = function loop(currentTimeMillis) {
-    var listener = void 0;
-    if (this._lastTimeMillis === -1) {
-      this._lastTimeMillis = currentTimeMillis - 1;
-    }
-    var ellapsedMillis = currentTimeMillis - this._lastTimeMillis;
-    this._lastTimeMillis = currentTimeMillis;
-
-    var i = 0;
-    var len = this.listeners.length;
-    for (i = 0; i < len; i++) {
-      listener = this.listeners[i];
-      listener.onBeforeIntegrate && listener.onBeforeIntegrate(this);
-    }
-
-    this.advance(currentTimeMillis, ellapsedMillis);
-    if (this._activeSprings.length === 0) {
-      this._isIdle = true;
-      this._lastTimeMillis = -1;
-    }
-
-    for (i = 0; i < len; i++) {
-      listener = this.listeners[i];
-      listener.onAfterIntegrate && listener.onAfterIntegrate(this);
-    }
-
-    if (!this._isIdle) {
-      this.looper.run();
-    }
-  };
-
-  /**
-   * Used to notify the SpringSystem that a Spring has become displaced.
-   * The system responds by starting its solver loop up if it is currently idle.
-   */
-
-
-  SpringSystem.prototype.activateSpring = function activateSpring(springId) {
-    var spring = this._springRegistry[springId];
-    if (this._activeSprings.indexOf(spring) === -1) {
-      this._activeSprings.push(spring);
-    }
-    if (this.getIsIdle()) {
-      this._isIdle = false;
-      this.looper.run();
-    }
-  };
-
-  /**
-   * Add a listener to the SpringSystem to receive before/after integration
-   * notifications allowing Springs to be constrained or adjusted.
-   * @public
-   */
-
-
-  SpringSystem.prototype.addListener = function addListener(listener) {
-    this.listeners.push(listener);
-  };
-
-  /**
-   * Remove a previously added listener on the SpringSystem.
-   * @public
-   */
-
-
-  SpringSystem.prototype.removeListener = function removeListener(listener) {
-    removeFirst(this.listeners, listener);
-  };
-
-  /**
-   * Remove all previously added listeners on the SpringSystem.
-   * @public
-   */
-
-
-  SpringSystem.prototype.removeAllListeners = function removeAllListeners() {
-    this.listeners = [];
-  };
-
-  return SpringSystem;
-}();
-
-var index = _extends({}, Loopers, {
-  OrigamiValueConverter: OrigamiValueConverter,
-  MathUtil: MathUtil,
-  Spring: Spring,
-  SpringConfig: SpringConfig,
-  SpringSystem: SpringSystem,
-  util: _extends({}, util, MathUtil)
-});
-
-return index;
-
-})));
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(62), __webpack_require__(63).setImmediate))
-
-/***/ }),
-/* 73 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.easing = {
-    // No easing, no acceleration
-    linear: function (t) { return t; },
-    // Accelerates fast, then slows quickly towards end.
-    quadratic: function (t) { return t * (-(t * t) * t + 4 * t * t - 6 * t + 4); },
-    // Overshoots over 1 and then returns to 1 towards end.
-    cubic: function (t) { return t * (4 * t * t - 9 * t + 6); },
-    // Overshoots over 1 multiple times - wiggles around 1.
-    elastic: function (t) { return t * (33 * t * t * t * t - 106 * t * t * t + 126 * t * t - 67 * t + 15); },
-    // Accelerating from zero velocity
-    inQuad: function (t) { return t * t; },
-    // Decelerating to zero velocity
-    outQuad: function (t) { return t * (2 - t); },
-    // Acceleration until halfway, then deceleration
-    inOutQuad: function (t) { return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t; },
-    // Accelerating from zero velocity
-    inCubic: function (t) { return t * t * t; },
-    // Decelerating to zero velocity
-    outCubic: function (t) { return (--t) * t * t + 1; },
-    // Acceleration until halfway, then deceleration
-    inOutCubic: function (t) { return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1; },
-    // Accelerating from zero velocity
-    inQuart: function (t) { return t * t * t * t; },
-    // Decelerating to zero velocity
-    outQuart: function (t) { return 1 - (--t) * t * t * t; },
-    // Acceleration until halfway, then deceleration
-    inOutQuart: function (t) { return t < .5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t; },
-    // Accelerating from zero velocity
-    inQuint: function (t) { return t * t * t * t * t; },
-    // Decelerating to zero velocity
-    outQuint: function (t) { return 1 + (--t) * t * t * t * t; },
-    // Acceleration until halfway, then deceleration
-    inOutQuint: function (t) { return t < .5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t; },
-    // Accelerating from zero velocity
-    inSine: function (t) { return -Math.cos(t * (Math.PI / 2)) + 1; },
-    // Decelerating to zero velocity
-    outSine: function (t) { return Math.sin(t * (Math.PI / 2)); },
-    // Accelerating until halfway, then decelerating
-    inOutSine: function (t) { return -(Math.cos(Math.PI * t) - 1) / 2; },
-    // Exponential accelerating from zero velocity
-    inExpo: function (t) { return Math.pow(2, 10 * (t - 1)); },
-    // Exponential decelerating to zero velocity
-    outExpo: function (t) { return -Math.pow(2, -10 * t) + 1; },
-    // Exponential accelerating until halfway, then decelerating
-    inOutExpo: function (t) {
-        t /= .5;
-        if (t < 1)
-            return Math.pow(2, 10 * (t - 1)) / 2;
-        t--;
-        return (-Math.pow(2, -10 * t) + 2) / 2;
-    },
-    // Circular accelerating from zero velocity
-    inCirc: function (t) { return -Math.sqrt(1 - t * t) + 1; },
-    // Circular decelerating to zero velocity Moves VERY fast at the beginning and
-    // then quickly slows down in the middle. This tween can actually be used
-    // in continuous transitions where target value changes all the time,
-    // because of the very quick start, it hides the jitter between target value changes.
-    outCirc: function (t) { return Math.sqrt(1 - (t = t - 1) * t); },
-    // Circular acceleration until halfway, then deceleration
-    inOutCirc: function (t) {
-        t /= .5;
-        if (t < 1)
-            return -(Math.sqrt(1 - t * t) - 1) / 2;
-        t -= 2;
-        return (Math.sqrt(1 - t * t) + 1) / 2;
-    }
-};
-
-
-/***/ }),
-/* 74 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-const strictUriEncode = __webpack_require__(105);
-const decodeComponent = __webpack_require__(106);
-const splitOnFirst = __webpack_require__(107);
+const strictUriEncode = __webpack_require__(91);
+const decodeComponent = __webpack_require__(92);
+const splitOnFirst = __webpack_require__(93);
 
 const isNullOrUndefined = value => value === null || value === undefined;
 
@@ -9141,7 +6723,7 @@ exports.stringifyUrl = (object, options) => {
 
 
 /***/ }),
-/* 75 */
+/* 65 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9166,7 +6748,7 @@ function stubFalse() {
 
 
 /***/ }),
-/* 76 */
+/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9207,10 +6789,10 @@ function cloneBuffer(buffer, isDeep) {
 
 /* harmony default export */ __webpack_exports__["a"] = (cloneBuffer);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(59)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(58)(module)))
 
 /***/ }),
-/* 77 */
+/* 67 */
 /***/ (function(module, exports) {
 
 
@@ -9314,7 +6896,7 @@ function makeNodesHash(arr){
 
 
 /***/ }),
-/* 78 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9346,7 +6928,7 @@ exports.default = function (file, acceptedFiles) {
 };
 
 /***/ }),
-/* 79 */
+/* 69 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9356,7 +6938,7 @@ function _iterableToArray(iter) {
 }
 
 /***/ }),
-/* 80 */
+/* 70 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9366,7 +6948,7 @@ function _arrayWithHoles(arr) {
 }
 
 /***/ }),
-/* 81 */
+/* 71 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9376,13 +6958,13 @@ function _nonIterableRest() {
 }
 
 /***/ }),
-/* 82 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(66);
+var _interopRequireDefault = __webpack_require__(63);
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -9391,7 +6973,7 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _createSvgIcon = _interopRequireDefault(__webpack_require__(113));
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(102));
 
 var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
   d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
@@ -9400,7 +6982,7 @@ var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", 
 exports.default = _default;
 
 /***/ }),
-/* 83 */
+/* 73 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9429,27 +7011,27 @@ function formatMuiErrorMessage(code) {
 }
 
 /***/ }),
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
 /* 84 */,
 /* 85 */,
 /* 86 */,
-/* 87 */,
-/* 88 */,
-/* 89 */,
-/* 90 */,
-/* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(115);
+module.exports = __webpack_require__(104);
 
 
 /***/ }),
-/* 98 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9462,7 +7044,7 @@ module.exports = __webpack_require__(115);
 
 
 
-var ReactPropTypesSecret = __webpack_require__(99);
+var ReactPropTypesSecret = __webpack_require__(89);
 
 function emptyFunction() {}
 function emptyFunctionWithReset() {}
@@ -9520,7 +7102,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 99 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9539,7 +7121,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 100 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -10293,193 +7875,216 @@ try {
 
 
 /***/ }),
-/* 101 */
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.charCodeAt(0).toString(16).toUpperCase()}`);
+
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var token = '%[a-f0-9]{2}';
+var singleMatcher = new RegExp(token, 'gi');
+var multiMatcher = new RegExp('(' + token + ')+', 'gi');
+
+function decodeComponents(components, split) {
+	try {
+		// Try to decode the entire string first
+		return decodeURIComponent(components.join(''));
+	} catch (err) {
+		// Do nothing
+	}
+
+	if (components.length === 1) {
+		return components;
+	}
+
+	split = split || 1;
+
+	// Split the array in 2 parts
+	var left = components.slice(0, split);
+	var right = components.slice(split);
+
+	return Array.prototype.concat.call([], decodeComponents(left), decodeComponents(right));
+}
+
+function decode(input) {
+	try {
+		return decodeURIComponent(input);
+	} catch (err) {
+		var tokens = input.match(singleMatcher);
+
+		for (var i = 1; i < tokens.length; i++) {
+			input = decodeComponents(tokens, i).join('');
+
+			tokens = input.match(singleMatcher);
+		}
+
+		return input;
+	}
+}
+
+function customDecodeURIComponent(input) {
+	// Keep track of all the replacements and prefill the map with the `BOM`
+	var replaceMap = {
+		'%FE%FF': '\uFFFD\uFFFD',
+		'%FF%FE': '\uFFFD\uFFFD'
+	};
+
+	var match = multiMatcher.exec(input);
+	while (match) {
+		try {
+			// Decode as big chunks as possible
+			replaceMap[match[0]] = decodeURIComponent(match[0]);
+		} catch (err) {
+			var result = decode(match[0]);
+
+			if (result !== match[0]) {
+				replaceMap[match[0]] = result;
+			}
+		}
+
+		match = multiMatcher.exec(input);
+	}
+
+	// Add `%C2` at the end of the map to make sure it does not replace the combinator before everything else
+	replaceMap['%C2'] = '\uFFFD';
+
+	var entries = Object.keys(replaceMap);
+
+	for (var i = 0; i < entries.length; i++) {
+		// Replace all decoded components
+		var key = entries[i];
+		input = input.replace(new RegExp(key, 'g'), replaceMap[key]);
+	}
+
+	return input;
+}
+
+module.exports = function (encodedURI) {
+	if (typeof encodedURI !== 'string') {
+		throw new TypeError('Expected `encodedURI` to be of type `string`, got `' + typeof encodedURI + '`');
+	}
+
+	try {
+		encodedURI = encodedURI.replace(/\+/g, ' ');
+
+		// Try the built in decoder first
+		return decodeURIComponent(encodedURI);
+	} catch (err) {
+		// Fallback to a more advanced decoder
+		return customDecodeURIComponent(encodedURI);
+	}
+};
+
+
+/***/ }),
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var deselectCurrent = __webpack_require__(102);
+module.exports = (string, separator) => {
+	if (!(typeof string === 'string' && typeof separator === 'string')) {
+		throw new TypeError('Expected the arguments to be of type `string`');
+	}
 
-var clipboardToIE11Formatting = {
-  "text/plain": "Text",
-  "text/html": "Url",
-  "default": "Text"
-}
+	if (separator === '') {
+		return [string];
+	}
 
-var defaultMessage = "Copy to clipboard: #{key}, Enter";
+	const separatorIndex = string.indexOf(separator);
 
-function format(message) {
-  var copyKey = (/mac os x/i.test(navigator.userAgent) ? "⌘" : "Ctrl") + "+C";
-  return message.replace(/#{\s*key\s*}/g, copyKey);
-}
+	if (separatorIndex === -1) {
+		return [string];
+	}
 
-function copy(text, options) {
-  var debug,
-    message,
-    reselectPrevious,
-    range,
-    selection,
-    mark,
-    success = false;
-  if (!options) {
-    options = {};
-  }
-  debug = options.debug || false;
-  try {
-    reselectPrevious = deselectCurrent();
-
-    range = document.createRange();
-    selection = document.getSelection();
-
-    mark = document.createElement("span");
-    mark.textContent = text;
-    // reset user styles for span element
-    mark.style.all = "unset";
-    // prevents scrolling to the end of the page
-    mark.style.position = "fixed";
-    mark.style.top = 0;
-    mark.style.clip = "rect(0, 0, 0, 0)";
-    // used to preserve spaces and line breaks
-    mark.style.whiteSpace = "pre";
-    // do not inherit user-select (it may be `none`)
-    mark.style.webkitUserSelect = "text";
-    mark.style.MozUserSelect = "text";
-    mark.style.msUserSelect = "text";
-    mark.style.userSelect = "text";
-    mark.addEventListener("copy", function(e) {
-      e.stopPropagation();
-      if (options.format) {
-        e.preventDefault();
-        if (typeof e.clipboardData === "undefined") { // IE 11
-          debug && console.warn("unable to use e.clipboardData");
-          debug && console.warn("trying IE specific stuff");
-          window.clipboardData.clearData();
-          var format = clipboardToIE11Formatting[options.format] || clipboardToIE11Formatting["default"]
-          window.clipboardData.setData(format, text);
-        } else { // all other browsers
-          e.clipboardData.clearData();
-          e.clipboardData.setData(options.format, text);
-        }
-      }
-      if (options.onCopy) {
-        e.preventDefault();
-        options.onCopy(e.clipboardData);
-      }
-    });
-
-    document.body.appendChild(mark);
-
-    range.selectNodeContents(mark);
-    selection.addRange(range);
-
-    var successful = document.execCommand("copy");
-    if (!successful) {
-      throw new Error("copy command was unsuccessful");
-    }
-    success = true;
-  } catch (err) {
-    debug && console.error("unable to copy using execCommand: ", err);
-    debug && console.warn("trying IE specific stuff");
-    try {
-      window.clipboardData.setData(options.format || "text", text);
-      options.onCopy && options.onCopy(window.clipboardData);
-      success = true;
-    } catch (err) {
-      debug && console.error("unable to copy using clipboardData: ", err);
-      debug && console.error("falling back to prompt");
-      message = format("message" in options ? options.message : defaultMessage);
-      window.prompt(message, text);
-    }
-  } finally {
-    if (selection) {
-      if (typeof selection.removeRange == "function") {
-        selection.removeRange(range);
-      } else {
-        selection.removeAllRanges();
-      }
-    }
-
-    if (mark) {
-      document.body.removeChild(mark);
-    }
-    reselectPrevious();
-  }
-
-  return success;
-}
-
-module.exports = copy;
-
-
-/***/ }),
-/* 102 */
-/***/ (function(module, exports) {
-
-
-module.exports = function () {
-  var selection = document.getSelection();
-  if (!selection.rangeCount) {
-    return function () {};
-  }
-  var active = document.activeElement;
-
-  var ranges = [];
-  for (var i = 0; i < selection.rangeCount; i++) {
-    ranges.push(selection.getRangeAt(i));
-  }
-
-  switch (active.tagName.toUpperCase()) { // .toUpperCase handles XHTML
-    case 'INPUT':
-    case 'TEXTAREA':
-      active.blur();
-      break;
-
-    default:
-      active = null;
-      break;
-  }
-
-  selection.removeAllRanges();
-  return function () {
-    selection.type === 'Caret' &&
-    selection.removeAllRanges();
-
-    if (!selection.rangeCount) {
-      ranges.forEach(function(range) {
-        selection.addRange(range);
-      });
-    }
-
-    active &&
-    active.focus();
-  };
+	return [
+		string.slice(0, separatorIndex),
+		string.slice(separatorIndex + separator.length)
+	];
 };
 
 
 /***/ }),
-/* 103 */
-/***/ (function(module, exports) {
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
 
-function removeRule (rule) {
-    var maxIndex = rule.index;
-    var sh = rule.parentStyleSheet;
-    var rules = sh.cssRules || sh.rules;
-    maxIndex = Math.max(maxIndex, rules.length - 1);
-    while (maxIndex >= 0) {
-        if (rules[maxIndex] === rule) {
-            sh.deleteRule(maxIndex);
-            break;
-        }
-        maxIndex--;
-    }
+/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
+            (typeof self !== "undefined" && self) ||
+            window;
+var apply = Function.prototype.apply;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) {
+  if (timeout) {
+    timeout.close();
+  }
+};
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
 }
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(scope, this._id);
+};
 
-exports.removeRule = removeRule;
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
 
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// setimmediate attaches itself to the global object
+__webpack_require__(95);
+// On some exotic environments, it's not clear which object `setimmediate` was
+// able to install onto.  Search each possibility in the same order as the
+// `setimmediate` library.
+exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
+                       (typeof global !== "undefined" && global.setImmediate) ||
+                       (this && this.setImmediate);
+exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
+                         (typeof global !== "undefined" && global.clearImmediate) ||
+                         (this && this.clearImmediate);
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(39)))
 
 /***/ }),
-/* 104 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -10669,149 +8274,200 @@ exports.removeRule = removeRule;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(40), __webpack_require__(62)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(39), __webpack_require__(96)))
 
 /***/ }),
-/* 105 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 96 */
+/***/ (function(module, exports) {
 
-"use strict";
+// shim for using process in browser
+var process = module.exports = {};
 
-module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.charCodeAt(0).toString(16).toUpperCase()}`);
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
 
 
-/***/ }),
-/* 106 */
-/***/ (function(module, exports, __webpack_require__) {
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
 
-"use strict";
 
-var token = '%[a-f0-9]{2}';
-var singleMatcher = new RegExp(token, 'gi');
-var multiMatcher = new RegExp('(' + token + ')+', 'gi');
 
-function decodeComponents(components, split) {
-	try {
-		// Try to decode the entire string first
-		return decodeURIComponent(components.join(''));
-	} catch (err) {
-		// Do nothing
-	}
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
 
-	if (components.length === 1) {
-		return components;
-	}
-
-	split = split || 1;
-
-	// Split the array in 2 parts
-	var left = components.slice(0, split);
-	var right = components.slice(split);
-
-	return Array.prototype.concat.call([], decodeComponents(left), decodeComponents(right));
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
 }
 
-function decode(input) {
-	try {
-		return decodeURIComponent(input);
-	} catch (err) {
-		var tokens = input.match(singleMatcher);
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
 
-		for (var i = 1; i < tokens.length; i++) {
-			input = decodeComponents(tokens, i).join('');
-
-			tokens = input.match(singleMatcher);
-		}
-
-		return input;
-	}
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
 }
 
-function customDecodeURIComponent(input) {
-	// Keep track of all the replacements and prefill the map with the `BOM`
-	var replaceMap = {
-		'%FE%FF': '\uFFFD\uFFFD',
-		'%FF%FE': '\uFFFD\uFFFD'
-	};
-
-	var match = multiMatcher.exec(input);
-	while (match) {
-		try {
-			// Decode as big chunks as possible
-			replaceMap[match[0]] = decodeURIComponent(match[0]);
-		} catch (err) {
-			var result = decode(match[0]);
-
-			if (result !== match[0]) {
-				replaceMap[match[0]] = result;
-			}
-		}
-
-		match = multiMatcher.exec(input);
-	}
-
-	// Add `%C2` at the end of the map to make sure it does not replace the combinator before everything else
-	replaceMap['%C2'] = '\uFFFD';
-
-	var entries = Object.keys(replaceMap);
-
-	for (var i = 0; i < entries.length; i++) {
-		// Replace all decoded components
-		var key = entries[i];
-		input = input.replace(new RegExp(key, 'g'), replaceMap[key]);
-	}
-
-	return input;
-}
-
-module.exports = function (encodedURI) {
-	if (typeof encodedURI !== 'string') {
-		throw new TypeError('Expected `encodedURI` to be of type `string`, got `' + typeof encodedURI + '`');
-	}
-
-	try {
-		encodedURI = encodedURI.replace(/\+/g, ' ');
-
-		// Try the built in decoder first
-		return decodeURIComponent(encodedURI);
-	} catch (err) {
-		// Fallback to a more advanced decoder
-		return customDecodeURIComponent(encodedURI);
-	}
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
 };
 
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
 
-/***/ }),
-/* 107 */
-/***/ (function(module, exports, __webpack_require__) {
+function noop() {}
 
-"use strict";
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
 
+process.listeners = function (name) { return [] }
 
-module.exports = (string, separator) => {
-	if (!(typeof string === 'string' && typeof separator === 'string')) {
-		throw new TypeError('Expected the arguments to be of type `string`');
-	}
-
-	if (separator === '') {
-		return [string];
-	}
-
-	const separatorIndex = string.indexOf(separator);
-
-	if (separatorIndex === -1) {
-		return [string];
-	}
-
-	return [
-		string.slice(0, separatorIndex),
-		string.slice(separatorIndex + separator.length)
-	];
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
 };
 
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
 
 /***/ }),
-/* 108 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10833,7 +8489,7 @@ exports.isValidElementType=function(a){return"string"===typeof a||"function"===t
 
 
 /***/ }),
-/* 109 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10849,7 +8505,7 @@ exports.isValidElementType=function(a){return"string"===typeof a||"function"===t
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),n=__webpack_require__(110),r=__webpack_require__(111);function ba(a,b,c,d,e,f,g,h){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var l=[c,d,e,f,g,h],k=0;a=Error(b.replace(/%s/g,function(){return l[k++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
+var aa=__webpack_require__(0),n=__webpack_require__(99),r=__webpack_require__(100);function ba(a,b,c,d,e,f,g,h){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var l=[c,d,e,f,g,h],k=0;a=Error(b.replace(/%s/g,function(){return l[k++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
 function x(a){for(var b=arguments.length-1,c="https://reactjs.org/docs/error-decoder.html?invariant="+a,d=0;d<b;d++)c+="&args[]="+encodeURIComponent(arguments[d+1]);ba(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",c)}aa?void 0:x("227");function ca(a,b,c,d,e,f,g,h,l){var k=Array.prototype.slice.call(arguments,3);try{b.apply(c,k)}catch(m){this.onError(m)}}
 var da=!1,ea=null,fa=!1,ha=null,ia={onError:function(a){da=!0;ea=a}};function ja(a,b,c,d,e,f,g,h,l){da=!1;ea=null;ca.apply(ia,arguments)}function ka(a,b,c,d,e,f,g,h,l){ja.apply(this,arguments);if(da){if(da){var k=ea;da=!1;ea=null}else x("198"),k=void 0;fa||(fa=!0,ha=k)}}var la=null,ma={};
 function na(){if(la)for(var a in ma){var b=ma[a],c=la.indexOf(a);-1<c?void 0:x("96",a);if(!oa[c]){b.extractEvents?void 0:x("97",a);oa[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],g=b,h=d;pa.hasOwnProperty(h)?x("99",h):void 0;pa[h]=f;var l=f.phasedRegistrationNames;if(l){for(e in l)l.hasOwnProperty(e)&&qa(l[e],g,h);e=!0}else f.registrationName?(qa(f.registrationName,g,h),e=!0):e=!1;e?void 0:x("98",d,a)}}}}
@@ -11109,7 +8765,7 @@ X;X=!0;try{ki(a)}finally{(X=b)||W||Yh(1073741823,!1)}},__SECRET_INTERNALS_DO_NOT
 
 
 /***/ }),
-/* 110 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11206,19 +8862,19 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 111 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(112);
+  module.exports = __webpack_require__(101);
 } else {}
 
 
 /***/ }),
-/* 112 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11244,27 +8900,27 @@ exports.unstable_scheduleCallback=function(a,b){var c=-1!==k?k:exports.unstable_
 b=c.previous;b.next=c.previous=a;a.next=c;a.previous=b}return a};exports.unstable_cancelCallback=function(a){var b=a.next;if(null!==b){if(b===a)d=null;else{a===d&&(d=b);var c=a.previous;c.next=b;b.previous=c}a.next=a.previous=null}};exports.unstable_wrapCallback=function(a){var b=g;return function(){var c=g,f=k;g=b;k=exports.unstable_now();try{return a.apply(this,arguments)}finally{g=c,k=f,v()}}};exports.unstable_getCurrentPriorityLevel=function(){return g};
 exports.unstable_shouldYield=function(){return!e&&(null!==d&&d.expirationTime<l||w())};exports.unstable_continueExecution=function(){null!==d&&p()};exports.unstable_pauseExecution=function(){};exports.unstable_getFirstCallbackNode=function(){return d};
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(40)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(39)))
 
 /***/ }),
-/* 113 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(66);
+var _interopRequireDefault = __webpack_require__(63);
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = createSvgIcon;
 
-var _extends2 = _interopRequireDefault(__webpack_require__(114));
+var _extends2 = _interopRequireDefault(__webpack_require__(103));
 
 var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _SvgIcon = _interopRequireDefault(__webpack_require__(25));
+var _SvgIcon = _interopRequireDefault(__webpack_require__(24));
 
 function createSvgIcon(path, displayName) {
   var Component = _react.default.memo(_react.default.forwardRef(function (props, ref) {
@@ -11280,7 +8936,7 @@ function createSvgIcon(path, displayName) {
 }
 
 /***/ }),
-/* 114 */
+/* 103 */
 /***/ (function(module, exports) {
 
 function _extends() {
@@ -11304,7 +8960,7 @@ function _extends() {
 module.exports = _extends;
 
 /***/ }),
-/* 115 */
+/* 104 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11434,7 +9090,8 @@ var DataTable_DataTable = function DataTable(_ref) {
       total = _ref.total,
       renderElement = _ref.renderElement,
       query = _ref.query,
-      setQuery = _ref.setQuery;
+      setQuery = _ref.setQuery,
+      isLoading = _ref.isLoading;
 
   var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([{
     key: "modalities",
@@ -11446,7 +9103,8 @@ var DataTable_DataTable = function DataTable(_ref) {
       filters = _useState[0],
       setFilters = _useState[1];
 
-  var handleChange = function handleChange(event) {
+  var handleFiltersChange = function handleFiltersChange(event) {
+    event.preventDefault();
     var e = event.target.value;
     var filter = e.split(".");
     var newFilters = filters;
@@ -11472,8 +9130,8 @@ var DataTable_DataTable = function DataTable(_ref) {
   };
 
   var handleMaxPerPageChange = function handleMaxPerPageChange(event) {
+    event.preventDefault();
     var value = event.target.value;
-    console.log(value);
     setQuery(_extends({}, query, {
       max_per_page: value,
       limit: value,
@@ -11481,7 +9139,38 @@ var DataTable_DataTable = function DataTable(_ref) {
     }));
   };
 
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  var handlePageChange = function handlePageChange(event) {
+    event.preventDefault();
+    var page;
+    var value = event.target.value;
+
+    switch (value) {
+      case 'first':
+        page = 1;
+        break;
+
+      case 'back':
+        page = Math.max(1, query.page - 1);
+        break;
+
+      case 'forward':
+        page = Math.min(query.page + 1, Math.ceil(total / query.max_per_page));
+        break;
+
+      case 'last':
+        page = Math.ceil(total / query.max_per_page);
+        break;
+
+      default:
+        page = parseInt(value);
+    }
+
+    setQuery(_extends({}, query, {
+      page: page
+    }));
+  };
+
+  return isLoading ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "search-dataset-table",
     cellSpacing: 0
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -11532,7 +9221,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     className: "d-flex justify-content-between"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex p-2 justify-content-start align-items-center"
-  }, elements.length, " results displayed of ", total, ". (Maximum results per page", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+  }, query.max_per_page === 'All' ? "Displaying " + total + " results." : "Results " + (query.max_per_page * (query.page - 1) + 1) + " - " + Math.min(query.max_per_page * query.page, total) + " displayed of " + total + ".", " (Maximum results per page", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
     className: "dropdown p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-secondary dropdown-toggle p-2",
@@ -11582,7 +9271,16 @@ var DataTable_DataTable = function DataTable(_ref) {
     value: 20,
     id: "max_per_page." + 20,
     onClick: handleMaxPerPageChange
-  }, "20")))), ")"), renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "20")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    key: "max_per_page_all",
+    className: "dropdown-item p-0"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-light p-1",
+    value: "All",
+    id: "max_per_page.all",
+    onClick: handleMaxPerPageChange
+  }, "All")))), ")"), renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex p-2 justify-content-end"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "dropdown p-2"
@@ -11613,7 +9311,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       })[0]["values"].includes(modality),
       value: "modalities." + modality,
       id: "filter" + modality,
-      onChange: handleChange
+      onChange: handleFiltersChange
     }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
       className: "form-check-label",
       htmlFor: "filter" + modality
@@ -11647,7 +9345,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       })[0]["values"].includes(format),
       value: "formats." + format,
       id: "filter" + format,
-      onChange: handleChange
+      onChange: handleFiltersChange
     }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
       className: "form-check-label",
       htmlFor: "filter" + format
@@ -11659,49 +9357,34 @@ var DataTable_DataTable = function DataTable(_ref) {
       authorized: authorized,
       imagePath: imagePath
     })));
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }), query.max_per_page !== 'all' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "search-dataset-footer d-flex align-items-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn-group"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-outline-dark",
-    onClick: function onClick(e) {
-      return setQuery(_extends({}, query, {
-        page: 1
-      }));
-    }
-  }, "<<"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    value: "first",
+    onClick: handlePageChange
+  }, "<<"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-outline-dark",
-    onClick: function onClick(e) {
-      return setQuery(_extends({}, query, {
-        page: Math.max(1, query.page - 1)
-      }));
-    }
+    value: "back",
+    onClick: handlePageChange
   }, " < "), es_range(1, Math.ceil(total / query.max_per_page) + 1).map(function (page, i) {
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
       className: page === query.page ? "btn btn-dark" : "btn btn-outline-dark",
-      onClick: function onClick(e) {
-        return setQuery(_extends({}, query, {
-          page: page
-        }));
-      },
+      value: page,
+      onClick: handlePageChange,
       key: i
     }, page);
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-outline-dark",
-    onClick: function onClick(e) {
-      return setQuery(_extends({}, query, {
-        page: Math.min(query.page + 1, Math.ceil(total / query.max_per_page))
-      }));
-    }
-  }, ">"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    value: "forward",
+    onClick: handlePageChange
+  }, ">"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-outline-dark",
-    onClick: function onClick(e) {
-      return setQuery(_extends({}, query, {
-        page: Math.ceil(total / query.max_per_page)
-      }));
-    }
-  }, ">>"))));
+    value: "last",
+    onClick: handlePageChange
+  }, ">>"))) : null);
 };
 
 DataTable_DataTable.propTypes = {
@@ -11740,2348 +9423,11 @@ DataTable_DataTable.defaultProps = {
 };
 /* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
 // EXTERNAL MODULE: ./node_modules/nwb/node_modules/@babel/runtime/regenerator/index.js
-var regenerator = __webpack_require__(39);
+var regenerator = __webpack_require__(38);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
-// CONCATENATED MODULE: ./node_modules/react-use/esm/createMemo.js
-
-var createMemo = function (fn) { return function () {
-    var args = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        args[_i] = arguments[_i];
-    }
-    return Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return fn.apply(void 0, args); }, args);
-}; };
-/* harmony default export */ var esm_createMemo = (createMemo);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useAsync.js
-
-var useAsync = function (fn, deps) {
-    if (deps === void 0) { deps = []; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
-        loading: true
-    }), state = _a[0], set = _a[1];
-    var memoized = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(fn, deps);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var mounted = true;
-        set({
-            loading: true
-        });
-        var promise = memoized();
-        promise.then(function (value) {
-            if (mounted) {
-                set({
-                    loading: false,
-                    value: value
-                });
-            }
-        }, function (error) {
-            if (mounted) {
-                set({
-                    loading: false,
-                    error: error
-                });
-            }
-        });
-        return function () {
-            mounted = false;
-        };
-    }, [memoized]);
-    return state;
-};
-/* harmony default export */ var esm_useAsync = (useAsync);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useAsyncRetry.js
-var __assign = (undefined && undefined.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-
-
-var useAsyncRetry = function (fn, deps) {
-    if (deps === void 0) { deps = []; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(0), attempt = _a[0], setAttempt = _a[1];
-    var state = esm_useAsync(fn, deps.concat([attempt]));
-    var stateLoading = state.loading;
-    var retry = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () {
-        if (stateLoading) {
-            if (false) {}
-            return;
-        }
-        setAttempt(function (attempt) { return attempt + 1; });
-    }, deps.concat([stateLoading, attempt]));
-    return __assign({}, state, { retry: retry });
-};
-/* harmony default export */ var esm_useAsyncRetry = (useAsyncRetry);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useSetState.js
-
-var useSetState = function (initialState) {
-    if (initialState === void 0) { initialState = {}; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], set = _a[1];
-    var setState = function (patch) {
-        set(function (prevState) { return Object.assign({}, prevState, patch instanceof Function ? patch(prevState) : patch); });
-    };
-    return [state, setState];
-};
-/* harmony default export */ var esm_useSetState = (useSetState);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/util/parseTimeRanges.js
-var parseTimeRanges = function (ranges) {
-    var result = [];
-    for (var i = 0; i < ranges.length; i++) {
-        result.push({
-            start: ranges.start(i),
-            end: ranges.end(i)
-        });
-    }
-    return result;
-};
-/* harmony default export */ var util_parseTimeRanges = (parseTimeRanges);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/util/createHTMLMediaHook.js
-var createHTMLMediaHook_assign = (undefined && undefined.__assign) || function () {
-    createHTMLMediaHook_assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return createHTMLMediaHook_assign.apply(this, arguments);
-};
-
-
-
-
-var createHTMLMediaHook = function (tag) {
-    var hook = function (elOrProps) {
-        var element;
-        var props;
-        if (external_root_React_commonjs2_react_commonjs_react_amd_react_["isValidElement"](elOrProps)) {
-            element = elOrProps;
-            props = element.props;
-        }
-        else {
-            props = elOrProps;
-        }
-        var _a = esm_useSetState({
-            buffered: [],
-            time: 0,
-            duration: 0,
-            isPlaying: false,
-            muted: false,
-            volume: 1,
-        }), state = _a[0], setState = _a[1];
-        var ref = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
-        var wrapEvent = function (userEvent, proxyEvent) {
-            return function (event) {
-                try {
-                    proxyEvent && proxyEvent(event);
-                }
-                finally {
-                    userEvent && userEvent(event);
-                }
-            };
-        };
-        var onPlay = function () { return setState({ isPlaying: true }); };
-        var onPause = function () { return setState({ isPlaying: false }); };
-        var onVolumeChange = function () {
-            var el = ref.current;
-            if (!el)
-                return;
-            setState({
-                muted: el.muted,
-                volume: el.volume,
-            });
-        };
-        var onDurationChange = function () {
-            var el = ref.current;
-            if (!el)
-                return;
-            var duration = el.duration, buffered = el.buffered;
-            setState({
-                duration: duration,
-                buffered: util_parseTimeRanges(buffered),
-            });
-        };
-        var onTimeUpdate = function () {
-            var el = ref.current;
-            if (!el)
-                return;
-            setState({ time: el.currentTime });
-        };
-        var onProgress = function () {
-            var el = ref.current;
-            if (!el)
-                return;
-            setState({ buffered: util_parseTimeRanges(el.buffered) });
-        };
-        if (element) {
-            element = external_root_React_commonjs2_react_commonjs_react_amd_react_["cloneElement"](element, createHTMLMediaHook_assign({ controls: false }, props, { ref: ref, onPlay: wrapEvent(props.onPlay, onPlay), onPause: wrapEvent(props.onPause, onPause), onVolumeChange: wrapEvent(props.onVolumeChange, onVolumeChange), onDurationChange: wrapEvent(props.onDurationChange, onDurationChange), onTimeUpdate: wrapEvent(props.onTimeUpdate, onTimeUpdate), onProgress: wrapEvent(props.onProgress, onProgress) }));
-        }
-        else {
-            element = external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"](tag, createHTMLMediaHook_assign({ controls: false }, props, { ref: ref, onPlay: wrapEvent(props.onPlay, onPlay), onPause: wrapEvent(props.onPause, onPause), onVolumeChange: wrapEvent(props.onVolumeChange, onVolumeChange), onDurationChange: wrapEvent(props.onDurationChange, onDurationChange), onTimeUpdate: wrapEvent(props.onTimeUpdate, onTimeUpdate), onProgress: wrapEvent(props.onProgress, onProgress) })); // TODO: fix this typing.
-        }
-        // Some browsers return `Promise` on `.play()` and may throw errors
-        // if one tries to execute another `.play()` or `.pause()` while that
-        // promise is resolving. So we prevent that with this lock.
-        // See: https://bugs.chromium.org/p/chromium/issues/detail?id=593273
-        var lockPlay = false;
-        var controls = {
-            play: function () {
-                var el = ref.current;
-                if (!el)
-                    return undefined;
-                if (!lockPlay) {
-                    var promise = el.play();
-                    var isPromise = typeof promise === 'object';
-                    if (isPromise) {
-                        lockPlay = true;
-                        var resetLock = function () {
-                            lockPlay = false;
-                        };
-                        promise.then(resetLock, resetLock);
-                    }
-                    return promise;
-                }
-                return undefined;
-            },
-            pause: function () {
-                var el = ref.current;
-                if (el && !lockPlay) {
-                    return el.pause();
-                }
-            },
-            seek: function (time) {
-                var el = ref.current;
-                if (!el || (state.duration === undefined))
-                    return;
-                time = Math.min(state.duration, Math.max(0, time));
-                el.currentTime = time;
-            },
-            volume: function (volume) {
-                var el = ref.current;
-                if (!el)
-                    return;
-                volume = Math.min(1, Math.max(0, volume));
-                el.volume = volume;
-                setState({ volume: volume });
-            },
-            mute: function () {
-                var el = ref.current;
-                if (!el)
-                    return;
-                el.muted = true;
-            },
-            unmute: function () {
-                var el = ref.current;
-                if (!el)
-                    return;
-                el.muted = false;
-            },
-        };
-        Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-            var el = ref.current;
-            if (!el) {
-                if (false) {}
-                return;
-            }
-            // Start media, if autoPlay requested.
-            if (props.autoPlay && el.paused) {
-                controls.play();
-            }
-            setState({
-                volume: el.volume,
-                muted: el.muted,
-            });
-        }, [props.src]);
-        return [element, state, controls, ref];
-    };
-    return hook;
-};
-/* harmony default export */ var util_createHTMLMediaHook = (createHTMLMediaHook);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useAudio.js
-
-var useAudio = util_createHTMLMediaHook('audio');
-/* harmony default export */ var esm_useAudio = (useAudio);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/util.js
-var isClient = typeof window === 'object';
-var util_on = function (obj) {
-    var args = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        args[_i - 1] = arguments[_i];
-    }
-    return obj.addEventListener.apply(obj, args);
-};
-var off = function (obj) {
-    var args = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        args[_i - 1] = arguments[_i];
-    }
-    return obj.removeEventListener.apply(obj, args);
-};
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useBattery.js
-
-
-var useBattery = function () {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}), state = _a[0], setState = _a[1];
-    var mounted = true;
-    var battery = null;
-    var onChange = function () {
-        var charging = battery.charging, level = battery.level, chargingTime = battery.chargingTime, dischargingTime = battery.dischargingTime;
-        setState({
-            charging: charging,
-            level: level,
-            chargingTime: chargingTime,
-            dischargingTime: dischargingTime
-        });
-    };
-    var onBattery = function () {
-        onChange();
-        util_on(battery, 'chargingchange', onChange);
-        util_on(battery, 'levelchange', onChange);
-        util_on(battery, 'chargingtimechange', onChange);
-        util_on(battery, 'dischargingtimechange', onChange);
-    };
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        navigator.getBattery().then(function (bat) {
-            if (mounted) {
-                battery = bat;
-                onBattery();
-            }
-        });
-        return function () {
-            mounted = false;
-            if (battery) {
-                off(battery, 'chargingchange', onChange);
-                off(battery, 'levelchange', onChange);
-                off(battery, 'chargingtimechange', onChange);
-                off(battery, 'dischargingtimechange', onChange);
-            }
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useBattery = (useBattery);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useToggle.js
-
-var useToggle = function (state) {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(state), value = _a[0], setValue = _a[1];
-    var toggle = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (nextValue) {
-        if (typeof nextValue !== 'undefined') {
-            setValue(!!nextValue);
-            return;
-        }
-        setValue(function (value) { return !value; });
-    }, [setValue]);
-    return [value, toggle];
-};
-/* harmony default export */ var esm_useToggle = (useToggle);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useBoolean.js
-
-/* harmony default export */ var useBoolean = (esm_useToggle);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useUpdateEffect.js
-
-var useUpdateEffect = function (effect, deps) {
-    var isInitialMount = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(true);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(isInitialMount.current
-        ? function () {
-            isInitialMount.current = false;
-        }
-        : effect, deps);
-};
-/* harmony default export */ var esm_useUpdateEffect = (useUpdateEffect);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useRefMounted.js
-
-var useRefMounted = function () {
-    var refMounted = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(false);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        refMounted.current = true;
-        return function () {
-            refMounted.current = false;
-        };
-    });
-    return refMounted;
-};
-/* harmony default export */ var esm_useRefMounted = (useRefMounted);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useCopyToClipboard.js
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var useCopyToClipboard_this = undefined;
-
-
-
-var writeTextDefault = __webpack_require__(101);
-var useCopyToClipboard = function (text, options) {
-    if (text === void 0) { text = ''; }
-    var _a = (options || {}), _b = _a.writeText, writeText = _b === void 0 ? writeTextDefault : _b, onCopy = _a.onCopy, onError = _a.onError;
-    if (false) {}
-    var mounted = esm_useRefMounted();
-    var latestText = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(text);
-    var _c = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false), copied = _c[0], setCopied = _c[1];
-    var copyToClipboard = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () { return __awaiter(useCopyToClipboard_this, void 0, void 0, function () {
-        var error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (latestText.current !== text) {
-                        if (false) {}
-                        return [2 /*return*/];
-                    }
-                    _a.label = 1;
-                case 1:
-                    _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, writeText(text)];
-                case 2:
-                    _a.sent();
-                    if (!mounted.current)
-                        return [2 /*return*/];
-                    setCopied(true);
-                    onCopy && onCopy(text);
-                    return [3 /*break*/, 4];
-                case 3:
-                    error_1 = _a.sent();
-                    if (!mounted.current)
-                        return [2 /*return*/];
-                    console.error(error_1);
-                    setCopied(false);
-                    onError && onError(error_1, text);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
-            }
-        });
-    }); }, [text]);
-    esm_useUpdateEffect(function () {
-        setCopied(false);
-        latestText.current = text;
-    }, [text]);
-    return [copied, copyToClipboard];
-};
-/* harmony default export */ var esm_useCopyToClipboard = (useCopyToClipboard);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useDrop.js
-
-
-var useDrop_useState = external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"], useMemo = external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"], useCallback = external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"], useEffect = external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"];
-var noop = function () { };
-var useDrop_defaultState = {
-    over: false,
-};
-var createProcess = function (options, mounted) { return function (dataTransfer, event) {
-    var uri = dataTransfer.getData('text/uri-list');
-    if (uri) {
-        (options.onUri || noop)(uri, event);
-        return;
-    }
-    if (dataTransfer.files && dataTransfer.files.length) {
-        (options.onFiles || noop)(Array.from(dataTransfer.files), event);
-        return;
-    }
-    if (dataTransfer.items && dataTransfer.items.length) {
-        dataTransfer.items[0].getAsString(function (text) {
-            if (mounted.current) {
-                (options.onText || noop)(text, event);
-            }
-        });
-    }
-}; };
-var useDrop = function (options, args) {
-    if (options === void 0) { options = {}; }
-    if (args === void 0) { args = []; }
-    var onFiles = options.onFiles, onText = options.onText, onUri = options.onUri;
-    var mounted = esm_useRefMounted();
-    var _a = useDrop_useState(false), over = _a[0], setOverRaw = _a[1];
-    var setOver = useCallback(setOverRaw, []);
-    var process = useMemo(function () { return createProcess(options, mounted); }, [onFiles, onText, onUri]);
-    useEffect(function () {
-        var onDragOver = function (event) {
-            event.preventDefault();
-            setOver(true);
-        };
-        var onDragEnter = function (event) {
-            event.preventDefault();
-            setOver(true);
-        };
-        var onDragLeave = function () {
-            setOver(false);
-        };
-        var onDragExit = function () {
-            setOver(false);
-        };
-        var onDrop = function (event) {
-            event.preventDefault();
-            setOver(false);
-            process(event.dataTransfer, event);
-        };
-        var onPaste = function (event) {
-            process(event.clipboardData, event);
-        };
-        document.addEventListener('dragover', onDragOver);
-        document.addEventListener('dragenter', onDragEnter);
-        document.addEventListener('dragleave', onDragLeave);
-        document.addEventListener('dragexit', onDragExit);
-        document.addEventListener('drop', onDrop);
-        if (onText)
-            document.addEventListener('paste', onPaste);
-        return function () {
-            document.removeEventListener('dragover', onDragOver);
-            document.removeEventListener('dragenter', onDragEnter);
-            document.removeEventListener('dragleave', onDragLeave);
-            document.removeEventListener('dragexit', onDragExit);
-            document.removeEventListener('drop', onDrop);
-            document.removeEventListener('paste', onPaste);
-        };
-    }, [process].concat(args));
-    return { over: over };
-};
-/* harmony default export */ var esm_useDrop = (useDrop);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useDropArea.js
-
-
-var useDropArea_noop = function () { };
-var useDropArea_defaultState = {
-    over: false,
-};
-var useDropArea_createProcess = function (options, mounted) { return function (dataTransfer, event) {
-    var uri = dataTransfer.getData('text/uri-list');
-    if (uri) {
-        (options.onUri || useDropArea_noop)(uri, event);
-        return;
-    }
-    if (dataTransfer.files && dataTransfer.files.length) {
-        (options.onFiles || useDropArea_noop)(Array.from(dataTransfer.files), event);
-        return;
-    }
-    if (dataTransfer.items && dataTransfer.items.length) {
-        dataTransfer.items[0].getAsString(function (text) {
-            if (mounted.current) {
-                (options.onText || useDropArea_noop)(text, event);
-            }
-        });
-    }
-}; };
-var createBond = function (process, setOver) { return ({
-    onDragOver: function (event) {
-        event.preventDefault();
-    },
-    onDragEnter: function (event) {
-        event.preventDefault();
-        setOver(true);
-    },
-    onDragLeave: function () {
-        setOver(false);
-    },
-    onDrop: function (event) {
-        event.preventDefault();
-        event.persist();
-        setOver(false);
-        process(event.dataTransfer, event);
-    },
-    onPaste: function (event) {
-        event.persist();
-        process(event.clipboardData, event);
-    },
-}); };
-var useDropArea = function (options) {
-    if (options === void 0) { options = {}; }
-    var onFiles = options.onFiles, onText = options.onText, onUri = options.onUri;
-    var mounted = esm_useRefMounted();
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false), over = _a[0], setOver = _a[1];
-    var process = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return useDropArea_createProcess(options, mounted); }, [onFiles, onText, onUri]);
-    var bond = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return createBond(process, setOver); }, [process, setOver]);
-    return [bond, { over: over }];
-};
-/* harmony default export */ var esm_useDropArea = (useDropArea);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useUpdate.js
-
-var useUpdate = function () {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(0), setState = _a[1];
-    return function () { return setState(function (cnt) { return cnt + 1; }); };
-};
-/* harmony default export */ var esm_useUpdate = (useUpdate);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useGetSet.js
-
-
-var useGetSet = function (initialValue) {
-    var state = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(initialValue);
-    var update = esm_useUpdate();
-    var get = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () { return state.current; }, []);
-    var set = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (value) {
-        state.current = value;
-        update();
-    }, []);
-    return [get, set];
-};
-/* harmony default export */ var esm_useGetSet = (useGetSet);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useCounter.js
-
-
-var useCounter = function (initialValue) {
-    if (initialValue === void 0) { initialValue = 0; }
-    var _a = esm_useGetSet(initialValue), get = _a[0], set = _a[1];
-    var inc = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (delta) {
-        if (delta === void 0) { delta = 1; }
-        return set(get() + delta);
-    }, []);
-    var dec = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (delta) {
-        if (delta === void 0) { delta = 1; }
-        return inc(-delta);
-    }, []);
-    var reset = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (value) {
-        if (value === void 0) { value = initialValue; }
-        initialValue = value;
-        set(value);
-    }, []);
-    var actions = {
-        inc: inc,
-        dec: dec,
-        get: get,
-        set: set,
-        reset: reset,
-    };
-    return [get(), actions];
-};
-/* harmony default export */ var esm_useCounter = (useCounter);
-
-// EXTERNAL MODULE: ./node_modules/nano-css/index.js
-var nano_css = __webpack_require__(67);
-
-// EXTERNAL MODULE: ./node_modules/nano-css/addon/cssom.js
-var cssom = __webpack_require__(68);
-
-// EXTERNAL MODULE: ./node_modules/nano-css/addon/vcssom.js
-var vcssom = __webpack_require__(69);
-
-// EXTERNAL MODULE: ./node_modules/nano-css/addon/vcssom/cssToTree.js
-var cssToTree = __webpack_require__(70);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useCss.js
-
-
-
-
-
-var nano = Object(nano_css["create"])();
-Object(cssom["addon"])(nano);
-Object(vcssom["addon"])(nano);
-var counter = 0;
-var useCss = function (css) {
-    var className = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return 'react-use-css-' + (counter++).toString(36); }, []);
-    var sheet = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () { return new nano.VSheet(); }, []);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useLayoutEffect"])(function () {
-        var tree = {};
-        Object(cssToTree["cssToTree"])(tree, css, '.' + className, '');
-        sheet.diff(tree);
-        return function () {
-            sheet.diff({});
-        };
-    });
-    return className;
-};
-/* harmony default export */ var esm_useCss = (useCss);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useDebounce.js
-
-var useDebounce = function (fn, ms, args) {
-    if (ms === void 0) { ms = 0; }
-    if (args === void 0) { args = []; }
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var handle = setTimeout(fn.bind(null, args), ms);
-        return function () {
-            // if args change then clear timeout
-            clearTimeout(handle);
-        };
-    }, args);
-};
-/* harmony default export */ var esm_useDebounce = (useDebounce);
-
-// EXTERNAL MODULE: ./node_modules/react-fast-compare/index.js
-var react_fast_compare = __webpack_require__(16);
-var react_fast_compare_default = /*#__PURE__*/__webpack_require__.n(react_fast_compare);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useDeepCompareEffect.js
-
-
-var isPrimitive = function (val) { return val !== Object(val); };
-var useDeepCompareEffect = function (effect, deps) {
-    if (false) {}
-    var ref = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(undefined);
-    if (!react_fast_compare(deps, ref.current)) {
-        ref.current = deps;
-    }
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(effect, ref.current);
-};
-/* harmony default export */ var esm_useDeepCompareEffect = (useDeepCompareEffect);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useEffectOnce.js
-
-var useEffectOnce = function (effect) {
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(effect, []);
-};
-/* harmony default export */ var esm_useEffectOnce = (useEffectOnce);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useEvent.js
-
-
-var defaultTarget = isClient ? window : null;
-var useEvent = function (name, handler, target, options) {
-    if (target === void 0) { target = defaultTarget; }
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (!handler)
-            return;
-        if (!target)
-            return;
-        var fn = (target.addEventListener || target.on);
-        fn.call(target, name, handler, options);
-        return function () {
-            var fn = (target.removeEventListener || target.off);
-            fn.call(target, name, handler, options);
-        };
-    }, [name, handler, target, JSON.stringify(options)]);
-};
-/* harmony default export */ var esm_useEvent = (useEvent);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useFavicon.js
-
-var useFavicon = function (href) {
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-        link.type = 'image/x-icon';
-        link.rel = 'shortcut icon';
-        link.href = href;
-        document.getElementsByTagName('head')[0].appendChild(link);
-    }, [href]);
-};
-/* harmony default export */ var esm_useFavicon = (useFavicon);
-
-// EXTERNAL MODULE: ./node_modules/screenfull/dist/screenfull.js
-var screenfull = __webpack_require__(20);
-var screenfull_default = /*#__PURE__*/__webpack_require__.n(screenfull);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useFullscreen.js
-
-
-var useFullscreen_noop = function () { };
-var useFullscreen = function (ref, on, options) {
-    if (options === void 0) { options = {}; }
-    var video = options.video, _a = options.onClose, onClose = _a === void 0 ? useFullscreen_noop : _a;
-    var _b = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(on), isFullscreen = _b[0], setIsFullscreen = _b[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useLayoutEffect"])(function () {
-        if (!on)
-            return;
-        if (!ref.current)
-            return;
-        var onWebkitEndFullscreen = function () {
-            video.current.removeEventListener('webkitendfullscreen', onWebkitEndFullscreen);
-            onClose();
-        };
-        var onChange = function () {
-            if (screenfull_default.a) {
-                var isFullscreen_1 = screenfull_default.a.isFullscreen;
-                setIsFullscreen(isFullscreen_1);
-                if (!isFullscreen_1) {
-                    onClose();
-                }
-            }
-        };
-        if (screenfull_default.a && screenfull_default.a.enabled) {
-            try {
-                screenfull_default.a.request(ref.current);
-                setIsFullscreen(true);
-            }
-            catch (error) {
-                onClose(error);
-                setIsFullscreen(false);
-            }
-            screenfull_default.a.on('change', onChange);
-        }
-        else if (video && video.current && video.current.webkitEnterFullscreen) {
-            video.current.webkitEnterFullscreen();
-            video.current.addEventListener('webkitendfullscreen', onWebkitEndFullscreen);
-            setIsFullscreen(true);
-        }
-        else {
-            onClose();
-            setIsFullscreen(false);
-        }
-        return function () {
-            setIsFullscreen(false);
-            if (screenfull_default.a && screenfull_default.a.enabled) {
-                try {
-                    screenfull_default.a.off('change', onChange);
-                    screenfull_default.a.exit();
-                }
-                catch (_a) { }
-            }
-            else if (video && video.current && video.current.webkitExitFullscreen) {
-                video.current.removeEventListener('webkitendfullscreen', onWebkitEndFullscreen);
-                video.current.webkitExitFullscreen();
-            }
-        };
-    }, [ref.current, video, on]);
-    return isFullscreen;
-};
-/* harmony default export */ var esm_useFullscreen = (useFullscreen);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useGeolocation.js
-var useGeolocation_assign = (undefined && undefined.__assign) || function () {
-    useGeolocation_assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return useGeolocation_assign.apply(this, arguments);
-};
-
-var useGeolocation = function () {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
-        loading: true,
-        accuracy: null,
-        altitude: null,
-        altitudeAccuracy: null,
-        heading: null,
-        latitude: null,
-        longitude: null,
-        speed: null,
-        timestamp: Date.now(),
-    }), state = _a[0], setState = _a[1];
-    var mounted = true;
-    var watchId;
-    var onEvent = function (event) {
-        if (mounted) {
-            setState({
-                loading: false,
-                accuracy: event.coords.accuracy,
-                altitude: event.coords.altitude,
-                altitudeAccuracy: event.coords.altitudeAccuracy,
-                heading: event.coords.heading,
-                latitude: event.coords.latitude,
-                longitude: event.coords.longitude,
-                speed: event.coords.speed,
-                timestamp: event.timestamp,
-            });
-        }
-    };
-    var onEventError = function (error) {
-        return mounted && setState(function (oldState) { return (useGeolocation_assign({}, oldState, { loading: false, error: error })); });
-    };
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        navigator.geolocation.getCurrentPosition(onEvent, onEventError);
-        watchId = navigator.geolocation.watchPosition(onEvent, onEventError);
-        return function () {
-            mounted = false;
-            navigator.geolocation.clearWatch(watchId);
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useGeolocation = (useGeolocation);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useGetSetState.js
-var useGetSetState_assign = (undefined && undefined.__assign) || function () {
-    useGetSetState_assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return useGetSetState_assign.apply(this, arguments);
-};
-
-
-var useGetSetState = function (initialState) {
-    if (initialState === void 0) { initialState = {}; }
-    if (false) {}
-    var update = esm_useUpdate();
-    var state = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(useGetSetState_assign({}, initialState));
-    var get = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () { return state.current; }, []);
-    var set = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (patch) {
-        if (!patch)
-            return;
-        if (false) {}
-        Object.assign(state.current, patch);
-        update();
-    }, []);
-    return [get, set];
-};
-/* harmony default export */ var esm_useGetSetState = (useGetSetState);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useHover.js
-
-var useHover_useState = external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"];
-var useHover_noop = function () { };
-var useHover = function (element) {
-    var _a = useHover_useState(false), state = _a[0], setState = _a[1];
-    var onMouseEnter = function (originalOnMouseEnter) { return function (event) {
-        (originalOnMouseEnter || useHover_noop)(event);
-        setState(true);
-    }; };
-    var onMouseLeave = function (originalOnMouseLeave) { return function (event) {
-        (originalOnMouseLeave || useHover_noop)(event);
-        setState(false);
-    }; };
-    if (typeof element === 'function') {
-        element = element(state);
-    }
-    var el = external_root_React_commonjs2_react_commonjs_react_amd_react_["cloneElement"](element, {
-        onMouseEnter: onMouseEnter(element.props.onMouseEnter),
-        onMouseLeave: onMouseLeave(element.props.onMouseLeave)
-    });
-    return [el, state];
-};
-/* harmony default export */ var esm_useHover = (useHover);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useHoverDirty.js
-
-// kudos: https://usehooks.com/
-var useHoverDirty = function (ref, enabled) {
-    if (enabled === void 0) { enabled = true; }
-    if (false) {}
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false), value = _a[0], setValue = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var onMouseOver = function () { return setValue(true); };
-        var onMouseOut = function () { return setValue(false); };
-        if (enabled && ref && ref.current) {
-            ref.current.addEventListener('mouseover', onMouseOver);
-            ref.current.addEventListener('mouseout', onMouseOut);
-        }
-        return function () {
-            if (enabled && ref && ref.current) {
-                ref.current.removeEventListener('mouseover', onMouseOver);
-                ref.current.removeEventListener('mouseout', onMouseOut);
-            }
-        };
-    }, [enabled, ref]);
-    return value;
-};
-/* harmony default export */ var esm_useHoverDirty = (useHoverDirty);
-
-// EXTERNAL MODULE: ./node_modules/throttle-debounce/index.umd.js
-var index_umd = __webpack_require__(71);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useIdle.js
-
-
-
-var defaultEvents = ['mousemove', 'mousedown', 'resize', 'keydown', 'touchstart', 'wheel'];
-var oneMinute = 60e3;
-var useIdle = function (ms, initialState, events) {
-    if (ms === void 0) { ms = oneMinute; }
-    if (initialState === void 0) { initialState = false; }
-    if (events === void 0) { events = defaultEvents; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var mounted = true;
-        var timeout;
-        var localState = state;
-        var set = function (newState) {
-            if (mounted) {
-                localState = newState;
-                setState(newState);
-            }
-        };
-        var onEvent = Object(index_umd["throttle"])(50, function () {
-            if (localState) {
-                set(false);
-            }
-            clearTimeout(timeout);
-            timeout = setTimeout(function () { return set(true); }, ms);
-        });
-        var onVisibility = function () {
-            if (!document.hidden)
-                onEvent();
-        };
-        for (var i = 0; i < events.length; i++) {
-            util_on(window, events[i], onEvent);
-        }
-        util_on(document, 'visibilitychange', onVisibility);
-        timeout = setTimeout(function () { return set(true); }, ms);
-        return function () {
-            mounted = false;
-            for (var i = 0; i < events.length; i++) {
-                off(window, events[i], onEvent);
-            }
-            off(document, 'visibilitychange', onVisibility);
-        };
-    }, events);
-    return state;
-};
-/* harmony default export */ var esm_useIdle = (useIdle);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useKey.js
-
-
-var useKey_noop = function () { };
-var createKeyPredicate = function (keyFilter) {
-    return typeof keyFilter === 'function'
-        ? keyFilter
-        : typeof keyFilter === 'string'
-            ? function (event) { return event.key === keyFilter; }
-            : keyFilter
-                ? function () { return true; }
-                : function () { return false; };
-};
-var useKey = function (key, fn, opts, deps) {
-    if (fn === void 0) { fn = useKey_noop; }
-    if (opts === void 0) { opts = {}; }
-    if (deps === void 0) { deps = [key]; }
-    var _a = opts.event, event = _a === void 0 ? 'keydown' : _a, target = opts.target, options = opts.options;
-    var handler = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () {
-        var predicate = createKeyPredicate(key);
-        var handler = function (event) {
-            if (predicate(event))
-                return fn(event);
-        };
-        return handler;
-    }, deps);
-    esm_useEvent(event, handler, target, options);
-};
-/* harmony default export */ var esm_useKey = (useKey);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useKeyPress.js
-
-
-var useKeyPress_useKeyPress = function (keyFilter) {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([false, null]), state = _a[0], set = _a[1];
-    esm_useKey(keyFilter, function (event) { return set([true, event]); }, { event: 'keydown' }, [state]);
-    esm_useKey(keyFilter, function (event) { return set([false, event]); }, { event: 'keyup' }, [state]);
-    return state;
-};
-/* harmony default export */ var esm_useKeyPress = (useKeyPress_useKeyPress);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useKeyPressEvent.js
-
-
-var useKeyPressEvent = function (key, keydown, keyup, useKeyPress) {
-    if (useKeyPress === void 0) { useKeyPress = esm_useKeyPress; }
-    var _a = useKeyPress(key), pressed = _a[0], event = _a[1];
-    esm_useUpdateEffect(function () {
-        if (!pressed && keyup)
-            keyup(event);
-        else if (pressed && keydown)
-            keydown(event);
-    }, [pressed]);
-};
-/* harmony default export */ var esm_useKeyPressEvent = (useKeyPressEvent);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useMount.js
-
-var useMount = function (fn) {
-    esm_useEffectOnce(function () {
-        fn();
-    });
-};
-/* harmony default export */ var esm_useMount = (useMount);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useKeyboardJs.js
-
-
-var useKeyboardJs = function (combination) {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([false, null]), state = _a[0], set = _a[1];
-    var _b = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null), keyboardJs = _b[0], setKeyboardJs = _b[1];
-    esm_useMount(function () {
-        __webpack_require__.e(/* import() */ 1).then(__webpack_require__.t.bind(null, 154, 7)).then(setKeyboardJs);
-    });
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (!keyboardJs)
-            return;
-        var down = function (event) { return set([true, event]); };
-        var up = function (event) { return set([false, event]); };
-        keyboardJs.bind(combination, down, up);
-        return function () {
-            keyboardJs.unbind(combination, down, up);
-        };
-    }, [combination, keyboardJs]);
-    return state;
-};
-/* harmony default export */ var esm_useKeyboardJs = (useKeyboardJs);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useLifecycles.js
-
-var useLifecycles = function (mount, unmount) {
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (mount)
-            mount();
-        return function () {
-            if (unmount)
-                unmount();
-        };
-    }, []);
-};
-/* harmony default export */ var esm_useLifecycles = (useLifecycles);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useList.js
-
-var useList = function (initialList) {
-    if (initialList === void 0) { initialList = []; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialList), list = _a[0], set = _a[1];
-    return [list, {
-            set: set,
-            clear: function () { return set([]); },
-            updateAt: function (index, entry) { return set(function (list) { return list.slice(0, index).concat([
-                entry
-            ], list.slice(index + 1)); }); },
-            remove: function (index) { return set(function (list) { return list.slice(0, index).concat(list.slice(index + 1)); }); },
-            push: function (entry) { return set(function (list) { return list.concat([entry]); }); },
-            filter: function (fn) { return set(function (list) { return list.filter(fn); }); },
-            sort: function (fn) { return set(function (list) { return list.slice().sort(fn); }); },
-        }];
-};
-/* harmony default export */ var esm_useList = (useList);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useLocalStorage.js
-
-
-var useLocalStorage = function (key, initialValue, raw) {
-    if (!isClient) {
-        return [initialValue, function () { }];
-    }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(function () {
-        try {
-            var localStorageValue = localStorage.getItem(key);
-            if (typeof localStorageValue !== 'string') {
-                localStorage.setItem(key, raw ? String(initialValue) : JSON.stringify(initialValue));
-                return initialValue;
-            }
-            else {
-                return raw ? localStorageValue : JSON.parse(localStorageValue || 'null');
-            }
-        }
-        catch (_a) {
-            // If user is in private mode or has storage restriction
-            // localStorage can throw. JSON.parse and JSON.stringify
-            // can throw, too.
-            return initialValue;
-        }
-    }), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        try {
-            var serializedState = raw ? String(state) : JSON.stringify(state);
-            localStorage.setItem(key, serializedState);
-        }
-        catch (_a) {
-            // If user is in private mode or has storage restriction
-            // localStorage can throw. Also JSON.stringify can throw.
-        }
-    });
-    return [state, setState];
-};
-/* harmony default export */ var esm_useLocalStorage = (useLocalStorage);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useLocation.js
-
-
-var patchHistoryMethod = function (method) {
-    var original = history[method];
-    history[method] = function (state) {
-        var result = original.apply(this, arguments);
-        var event = new Event(method.toLowerCase());
-        event.state = state;
-        window.dispatchEvent(event);
-        return result;
-    };
-};
-if (isClient) {
-    patchHistoryMethod('pushState');
-    patchHistoryMethod('replaceState');
-}
-var useLocation = function () {
-    var buildState = function (trigger) {
-        var state = history.state, length = history.length;
-        var hash = location.hash, host = location.host, hostname = location.hostname, href = location.href, origin = location.origin, pathname = location.pathname, port = location.port, protocol = location.protocol, search = location.search;
-        return {
-            trigger: trigger,
-            state: state,
-            length: length,
-            hash: hash,
-            host: host,
-            hostname: hostname,
-            href: href,
-            origin: origin,
-            pathname: pathname,
-            port: port,
-            protocol: protocol,
-            search: search
-        };
-    };
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(isClient
-        ? buildState('load')
-        : {
-            trigger: 'load',
-            length: 1
-        }), state = _a[0], setState = _a[1];
-    var onChange = function (trigger) {
-        return setState(buildState(trigger));
-    };
-    var onPopstate = function () { return onChange('popstate'); };
-    var onPushstate = function () { return onChange('pushstate'); };
-    var onReplacestate = function () { return onChange('replacestate'); };
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        util_on(window, 'popstate', onPopstate);
-        util_on(window, 'pushstate', onPushstate);
-        util_on(window, 'replacestate', onReplacestate);
-        return function () {
-            off(window, 'popstate', onPopstate);
-            off(window, 'pushstate', onPushstate);
-            off(window, 'replacestate', onReplacestate);
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useLocation = (useLocation);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useLockBodyScroll.js
-
-var useLockBodyScroll_counter = 0;
-var originalOverflow = null;
-var lock = function () {
-    originalOverflow = window.getComputedStyle(document.body).overflow;
-    document.body.style.overflow = 'hidden';
-};
-var unlock = function () {
-    document.body.style.overflow = originalOverflow;
-    originalOverflow = null;
-};
-var increment = function () {
-    useLockBodyScroll_counter++;
-    if (useLockBodyScroll_counter === 1)
-        lock();
-};
-var decrement = function () {
-    useLockBodyScroll_counter--;
-    if (useLockBodyScroll_counter === 0)
-        unlock();
-};
-var useLockBodyScroll = function (enabled) {
-    if (enabled === void 0) { enabled = true; }
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () { return enabled ? (increment(), decrement) : undefined; }, [enabled]);
-};
-/* harmony default export */ var esm_useLockBodyScroll = (useLockBodyScroll);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useLogger.js
-
-
-var useLogger = function (componentName) {
-    var rest = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        rest[_i - 1] = arguments[_i];
-    }
-    esm_useEffectOnce(function () {
-        console.log.apply(console, [componentName + " mounted"].concat(rest));
-        return function () { return console.log(componentName + " unmounted"); };
-    });
-    esm_useUpdateEffect(function () {
-        console.log.apply(console, [componentName + " updated"].concat(rest));
-    });
-};
-/* harmony default export */ var esm_useLogger = (useLogger);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useMap.js
-var useMap_assign = (undefined && undefined.__assign) || function () {
-    useMap_assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return useMap_assign.apply(this, arguments);
-};
-var __rest = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
-            t[p[i]] = s[p[i]];
-    return t;
-};
-
-var useMap = function (initialMap) {
-    if (initialMap === void 0) { initialMap = {}; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialMap), map = _a[0], set = _a[1];
-    return [map, {
-            get: function (key) { return map[key]; },
-            set: function (key, entry) {
-                var _a;
-                return set(useMap_assign({}, map, (_a = {}, _a[key] = entry, _a)));
-            },
-            remove: function (key) {
-                var _a = map, _b = key, omit = _a[_b], rest = __rest(_a, [typeof _b === "symbol" ? _b : _b + ""]);
-                set(rest);
-            },
-            reset: function () { return set(initialMap); },
-        }];
-};
-/* harmony default export */ var esm_useMap = (useMap);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useMedia.js
-
-var useMedia = function (query, defaultState) {
-    if (defaultState === void 0) { defaultState = false; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(defaultState), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var mounted = true;
-        var mql = window.matchMedia(query);
-        var onChange = function () {
-            if (!mounted)
-                return;
-            setState(!!mql.matches);
-        };
-        mql.addListener(onChange);
-        setState(mql.matches);
-        return function () {
-            mounted = false;
-            mql.removeListener(onChange);
-        };
-    }, [query]);
-    return state;
-};
-/* harmony default export */ var esm_useMedia = (useMedia);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useMediaDevices.js
-
-
-var useMediaDevices_noop = function () { };
-var useMediaDevices = function () {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var mounted = true;
-        var onChange = function () {
-            navigator.mediaDevices.enumerateDevices()
-                .then(function (devices) {
-                if (mounted) {
-                    setState({
-                        devices: devices.map(function (_a) {
-                            var deviceId = _a.deviceId, groupId = _a.groupId, kind = _a.kind, label = _a.label;
-                            return ({ deviceId: deviceId, groupId: groupId, kind: kind, label: label });
-                        })
-                    });
-                }
-            })
-                .catch(useMediaDevices_noop);
-        };
-        util_on(navigator.mediaDevices, 'devicechange', onChange);
-        onChange();
-        return function () {
-            mounted = false;
-            off(navigator.mediaDevices, 'devicechange', onChange);
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useMediaDevices = (useMediaDevices);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useMotion.js
-
-
-var useMotion_defaultState = {
-    acceleration: {
-        x: null,
-        y: null,
-        z: null,
-    },
-    accelerationIncludingGravity: {
-        x: null,
-        y: null,
-        z: null,
-    },
-    rotationRate: {
-        alpha: null,
-        beta: null,
-        gamma: null,
-    },
-    interval: 16,
-};
-var useMotion = function (initialState) {
-    if (initialState === void 0) { initialState = useMotion_defaultState; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var handler = function (event) {
-            var acceleration = event.acceleration, accelerationIncludingGravity = event.accelerationIncludingGravity, rotationRate = event.rotationRate, interval = event.interval;
-            setState({
-                acceleration: {
-                    x: acceleration.x,
-                    y: acceleration.y,
-                    z: acceleration.z
-                },
-                accelerationIncludingGravity: {
-                    x: accelerationIncludingGravity.x,
-                    y: accelerationIncludingGravity.y,
-                    z: accelerationIncludingGravity.z
-                },
-                rotationRate: {
-                    alpha: rotationRate.alpha,
-                    beta: rotationRate.beta,
-                    gamma: rotationRate.gamma,
-                },
-                interval: interval
-            });
-        };
-        util_on(window, 'devicemotion', handler);
-        return function () {
-            off(window, 'devicemotion', handler);
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useMotion = (useMotion);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useMouse.js
-
-var useMouse = function (ref) {
-    if (false) {}
-    var frame = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(0);
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
-        docX: 0,
-        docY: 0,
-        posX: 0,
-        posY: 0,
-        elX: 0,
-        elY: 0,
-        elH: 0,
-        elW: 0,
-    }), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var moveHandler = function (event) {
-            cancelAnimationFrame(frame.current);
-            frame.current = requestAnimationFrame(function () {
-                if (ref && ref.current) {
-                    var _a = ref.current.getBoundingClientRect(), left = _a.left, top_1 = _a.top, elW = _a.width, elH = _a.height;
-                    var posX = left + window.scrollX;
-                    var posY = top_1 + window.scrollY;
-                    var elX = event.pageX - posX;
-                    var elY = event.pageY - posY;
-                    setState({
-                        docX: event.pageX,
-                        docY: event.pageY,
-                        posX: posX,
-                        posY: posY,
-                        elX: elX,
-                        elY: elY,
-                        elH: elH,
-                        elW: elW,
-                    });
-                }
-            });
-        };
-        document.addEventListener('mousemove', moveHandler);
-        return function () {
-            cancelAnimationFrame(frame.current);
-            document.removeEventListener('mousemove', moveHandler);
-        };
-    }, [ref.current]);
-    return state;
-};
-/* harmony default export */ var esm_useMouse = (useMouse);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useMouseHovered.js
-
-
-var nullRef = { current: null };
-var useMouseHovered = function (ref, options) {
-    if (options === void 0) { options = {}; }
-    var whenHovered = !!options.whenHovered;
-    var bound = !!options.bound;
-    var isHovered = esm_useHoverDirty(ref, whenHovered);
-    var state = esm_useMouse(whenHovered && !isHovered ? nullRef : ref);
-    if (bound) {
-        state.elX = Math.max(0, Math.min(state.elX, state.elW));
-        state.elY = Math.max(0, Math.min(state.elY, state.elH));
-    }
-    return state;
-};
-/* harmony default export */ var esm_useMouseHovered = (useMouseHovered);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useNetwork.js
-var useNetwork_assign = (undefined && undefined.__assign) || function () {
-    useNetwork_assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return useNetwork_assign.apply(this, arguments);
-};
-
-
-var getConnection = function () {
-    if (typeof navigator !== 'object') {
-        return null;
-    }
-    var nav = navigator;
-    return nav.connection || nav.mozConnection || nav.webkitConnection;
-};
-var getConnectionState = function () {
-    var connection = getConnection();
-    if (!connection) {
-        return {};
-    }
-    var downlink = connection.downlink, downlinkMax = connection.downlinkMax, effectiveType = connection.effectiveType, type = connection.type, rtt = connection.rtt;
-    return {
-        downlink: downlink,
-        downlinkMax: downlinkMax,
-        effectiveType: effectiveType,
-        type: type,
-        rtt: rtt
-    };
-};
-var useNetwork = function (initialState) {
-    if (initialState === void 0) { initialState = {}; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var localState = state;
-        var localSetState = function (patch) {
-            localState = useNetwork_assign({}, localState, patch);
-            setState(localState);
-        };
-        var connection = getConnection();
-        var onOnline = function () {
-            localSetState({
-                online: true,
-                since: new Date()
-            });
-        };
-        var onOffline = function () {
-            localSetState({
-                online: false,
-                since: new Date()
-            });
-        };
-        var onConnectionChange = function () {
-            localSetState(getConnectionState());
-        };
-        util_on(window, 'online', onOnline);
-        util_on(window, 'offline', onOffline);
-        if (connection) {
-            util_on(connection, 'change', onConnectionChange);
-            localSetState(useNetwork_assign({}, state, { online: navigator.onLine, since: undefined }, getConnectionState()));
-        }
-        return function () {
-            off(window, 'online', onOnline);
-            off(window, 'offline', onOffline);
-            if (connection) {
-                off(connection, 'change', onConnectionChange);
-            }
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useNetwork = (useNetwork);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useNumber.js
-
-/* harmony default export */ var useNumber = (esm_useCounter);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useObservable.js
-
-var useObservable = function (observable$, initialValue) {
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialValue), value = _a[0], update = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var s = observable$.subscribe(update);
-        return function () { return s.unsubscribe(); };
-    }, [observable$]);
-    return value;
-};
-/* harmony default export */ var esm_useObservable = (useObservable);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useOrientation.js
-
-
-var useOrientation_defaultState = {
-    angle: 0,
-    type: 'landscape-primary'
-};
-var useOrientation = function (initialState) {
-    if (initialState === void 0) { initialState = useOrientation_defaultState; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(initialState), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var mounted = true;
-        var onChange = function () {
-            if (mounted) {
-                var orientation_1 = screen.orientation;
-                if (orientation_1) {
-                    var angle = orientation_1.angle, type = orientation_1.type;
-                    setState({ angle: angle, type: type });
-                }
-                else if (window.orientation) {
-                    setState({
-                        angle: typeof window.orientation === 'number' ? window.orientation : 0,
-                        type: ''
-                    });
-                }
-                else {
-                    setState(initialState);
-                }
-            }
-        };
-        util_on(window, 'orientationchange', onChange);
-        onChange();
-        return function () {
-            mounted = false;
-            off(window, 'orientationchange', onChange);
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useOrientation = (useOrientation);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useClickAway.js
-
-
-var useClickAway = function (ref, onClickAway) {
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var handler = function (event) {
-            var el = ref.current;
-            el && !el.contains(event.target) && onClickAway(event);
-        };
-        util_on(document, 'click', handler);
-        return function () {
-            off(document, 'click', handler);
-        };
-    });
-};
-/* harmony default export */ var esm_useClickAway = (useClickAway);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/usePageLeave.js
-
-var usePageLeave = function (onPageLeave, args) {
-    if (args === void 0) { args = []; }
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (!onPageLeave)
-            return;
-        var handler = function (event) {
-            event = event ? event : window.event;
-            var from = event.relatedTarget || event.toElement;
-            if (!from || from.nodeName === 'HTML')
-                onPageLeave();
-        };
-        document.addEventListener('mouseout', handler);
-        return function () {
-            document.removeEventListener('mouseout', handler);
-        };
-    }, args);
-};
-/* harmony default export */ var esm_usePageLeave = (usePageLeave);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/usePromise.js
-
-
-var usePromise = function () {
-    var refMounted = esm_useRefMounted();
-    return Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (promise) {
-        return new Promise(function (resolve, reject) {
-            var onValue = function (value) {
-                if (refMounted.current) {
-                    resolve(value);
-                }
-            };
-            var onError = function (error) {
-                if (refMounted.current) {
-                    reject(error);
-                }
-            };
-            promise.then(onValue, onError);
-        });
-    }, []);
-};
-/* harmony default export */ var esm_usePromise = (usePromise);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useRaf.js
-
-var useRaf = function (ms, delay) {
-    if (ms === void 0) { ms = 1e12; }
-    if (delay === void 0) { delay = 0; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(0), elapsed = _a[0], set = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useLayoutEffect"])(function () {
-        var raf, timerStop, start;
-        var onFrame = function () {
-            var time = Math.min(1, (Date.now() - start) / ms);
-            set(time);
-            loop();
-        };
-        var loop = function () {
-            raf = requestAnimationFrame(onFrame);
-        };
-        var onStart = function () {
-            timerStop = setTimeout(function () {
-                cancelAnimationFrame(raf);
-                set(1);
-            }, ms);
-            start = Date.now();
-            loop();
-        };
-        var timerDelay = setTimeout(onStart, delay);
-        return function () {
-            clearTimeout(timerStop);
-            clearTimeout(timerDelay);
-            cancelAnimationFrame(raf);
-        };
-    }, [ms, delay]);
-    return elapsed;
-};
-/* harmony default export */ var esm_useRaf = (useRaf);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useScroll.js
-
-var useScroll = function (ref) {
-    if (false) {}
-    var frame = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(0);
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
-        x: 0,
-        y: 0
-    }), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var handler = function () {
-            cancelAnimationFrame(frame.current);
-            frame.current = requestAnimationFrame(function () {
-                if (ref.current) {
-                    setState({
-                        x: ref.current.scrollLeft,
-                        y: ref.current.scrollTop
-                    });
-                }
-            });
-        };
-        if (ref.current) {
-            ref.current.addEventListener('scroll', handler, {
-                capture: false,
-                passive: true
-            });
-        }
-        return function () {
-            if (frame.current) {
-                cancelAnimationFrame(frame.current);
-            }
-            if (ref.current) {
-                ref.current.removeEventListener('scroll', handler);
-            }
-        };
-    }, [ref.current]);
-    return state;
-};
-/* harmony default export */ var esm_useScroll = (useScroll);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useSessionStorage.js
-
-
-var useSessionStorage = function (key, initialValue, raw) {
-    if (!isClient) {
-        return [initialValue, function () { }];
-    }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(function () {
-        try {
-            var sessionStorageValue = sessionStorage.getItem(key);
-            if (typeof sessionStorageValue !== 'string') {
-                sessionStorage.setItem(key, raw ? String(initialValue) : JSON.stringify(initialValue));
-                return initialValue;
-            }
-            else {
-                return raw ? sessionStorageValue : JSON.parse(sessionStorageValue || 'null');
-            }
-        }
-        catch (_a) {
-            // If user is in private mode or has storage restriction
-            // sessionStorage can throw. JSON.parse and JSON.stringify
-            // cat throw, too.
-            return initialValue;
-        }
-    }), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        try {
-            var serializedState = raw ? String(state) : JSON.stringify(state);
-            sessionStorage.setItem(key, serializedState);
-        }
-        catch (_a) {
-            // If user is in private mode or has storage restriction
-            // sessionStorage can throw. Also JSON.stringify can throw.
-        }
-    });
-    return [state, setState];
-};
-/* harmony default export */ var esm_useSessionStorage = (useSessionStorage);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useSize.js
-
-
-var useSize_useState = external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"], useSize_useEffect = external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"], useRef = external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"];
-var DRAF = function (callback) { return setTimeout(callback, 35); };
-var useSize = function (element, _a) {
-    var _b = _a === void 0 ? {} : _a, _c = _b.width, width = _c === void 0 ? Infinity : _c, _d = _b.height, height = _d === void 0 ? Infinity : _d;
-    if (!isClient) {
-        return [
-            typeof element === 'function'
-                ? element({ width: width, height: height })
-                : element,
-            { width: width, height: height }
-        ];
-    }
-    var _e = useSize_useState({ width: width, height: height }), state = _e[0], setState = _e[1];
-    if (typeof element === 'function') {
-        element = element(state);
-    }
-    var style = element.props.style || {};
-    var ref = useRef(null);
-    var window = null;
-    var setSize = function () {
-        var iframe = ref.current;
-        var size = iframe
-            ? {
-                width: iframe.offsetWidth,
-                height: iframe.offsetHeight,
-            }
-            : { width: width, height: height, };
-        setState(size);
-    };
-    var onWindow = function (window) {
-        window.addEventListener('resize', setSize);
-        DRAF(setSize);
-    };
-    useSize_useEffect(function () {
-        var iframe = ref.current;
-        if (iframe.contentWindow) {
-            window = iframe.contentWindow;
-            onWindow(window);
-        }
-        else {
-            var onLoad_1 = function () {
-                iframe.removeEventListener('load', onLoad_1);
-                window = iframe.contentWindow;
-                onWindow(window);
-            };
-            iframe.addEventListener('load', onLoad_1);
-        }
-        return function () {
-            if (window) {
-                window.removeEventListener('resize', setSize);
-            }
-        };
-    }, []);
-    style.position = 'relative';
-    var sized = external_root_React_commonjs2_react_commonjs_react_amd_react_["cloneElement"].apply(external_root_React_commonjs2_react_commonjs_react_amd_react_, [element, { style: style }].concat([
-        external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"]('iframe', {
-            ref: ref,
-            style: {
-                background: 'transparent',
-                border: 'none',
-                height: '100%',
-                left: 0,
-                position: 'absolute',
-                top: 0,
-                width: '100%',
-                zIndex: -1
-            }
-        })
-    ].concat(external_root_React_commonjs2_react_commonjs_react_amd_react_["Children"].toArray(element.props.children))));
-    return [sized, state];
-};
-/* harmony default export */ var esm_useSize = (useSize);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useSpeech.js
-
-
-
-var useSpeech = function (text, opts) {
-    if (opts === void 0) { opts = {}; }
-    var _a = esm_useSetState({
-        isPlaying: false,
-        volume: opts.volume || 1,
-    }), state = _a[0], setState = _a[1];
-    var uterranceRef = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
-    esm_useMount(function () {
-        var utterance = new SpeechSynthesisUtterance(text);
-        utterance.volume = opts.volume || 1;
-        utterance.onstart = function () { return setState({ isPlaying: true }); };
-        utterance.onresume = function () { return setState({ isPlaying: true }); };
-        utterance.onend = function () { return setState({ isPlaying: false }); };
-        utterance.onpause = function () { return setState({ isPlaying: false }); };
-        uterranceRef.current = utterance;
-        window.speechSynthesis.speak(uterranceRef.current);
-    });
-    return state;
-};
-/* harmony default export */ var esm_useSpeech = (useSpeech);
-
-// EXTERNAL MODULE: ./node_modules/rebound/dist/rebound.js
-var rebound = __webpack_require__(72);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useSpring.js
-
-
-var useSpring = function (targetValue, tension, friction) {
-    if (targetValue === void 0) { targetValue = 0; }
-    if (tension === void 0) { tension = 50; }
-    if (friction === void 0) { friction = 3; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null), spring = _a[0], setSpring = _a[1];
-    var _b = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(targetValue), value = _b[0], setValue = _b[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var listener = {
-            onSpringUpdate: function (spring) {
-                var value = spring.getCurrentValue();
-                setValue(value);
-            }
-        };
-        if (!spring) {
-            var newSpring = (new rebound["SpringSystem"]()).createSpring(tension, friction);
-            newSpring.setCurrentValue(targetValue);
-            setSpring(newSpring);
-            newSpring.addListener(listener);
-            return;
-        }
-        return function () {
-            spring.removeListener(listener);
-            setSpring(null);
-        };
-    }, [tension, friction]);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (spring) {
-            spring.setEndValue(targetValue);
-        }
-    }, [targetValue]);
-    return value;
-};
-/* harmony default export */ var esm_useSpring = (useSpring);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useStartTyping.js
-
-var isFocusedElementEditable = function () {
-    var activeElement = document.activeElement, body = document.body;
-    if (!activeElement)
-        return false;
-    // If not element has focus, we assume it is not editable, too.
-    if (activeElement === body)
-        return false;
-    // Assume <input> and <textarea> elements are editable.
-    switch (activeElement.tagName) {
-        case 'INPUT':
-        case 'TEXTAREA':
-            return true;
-    }
-    // Check if any other focused element id editable.
-    return activeElement.hasAttribute('contenteditable');
-};
-var isTypedCharGood = function (_a) {
-    var keyCode = _a.keyCode;
-    // 0...9
-    if ((keyCode >= 48) && (keyCode <= 57))
-        return true;
-    // a...z
-    if ((keyCode >= 65) && (keyCode <= 90))
-        return true;
-    // All other keys.
-    return false;
-};
-var useStartTyping = function (onStartTyping) {
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useLayoutEffect"])(function () {
-        var keydown = function (event) {
-            !isFocusedElementEditable() && isTypedCharGood(event) && onStartTyping(event);
-        };
-        document.addEventListener('keydown', keydown);
-        return function () {
-            document.removeEventListener('keydown', keydown);
-        };
-    }, []);
-};
-/* harmony default export */ var esm_useStartTyping = (useStartTyping);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useUnmount.js
-
-var useUnmount = function (fn) {
-    esm_useEffectOnce(function () { return fn; });
-};
-/* harmony default export */ var esm_useUnmount = (useUnmount);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useThrottle.js
-
-
-var useThrottle = function (value, ms) {
-    if (ms === void 0) { ms = 200; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(value), state = _a[0], setState = _a[1];
-    var timeout = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
-    var nextValue = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
-    var hasNextValue = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(0);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (!timeout.current) {
-            setState(value);
-            var timeoutCallback_1 = function () {
-                if (hasNextValue.current) {
-                    hasNextValue.current = false;
-                    setState(nextValue.current);
-                    timeout.current = setTimeout(timeoutCallback_1, ms);
-                }
-                else {
-                    timeout.current = null;
-                }
-            };
-            timeout.current = setTimeout(timeoutCallback_1, ms);
-        }
-        else {
-            nextValue.current = value;
-            hasNextValue.current = true;
-        }
-    }, [value]);
-    esm_useUnmount(function () {
-        clearTimeout(timeout.current);
-    });
-    return state;
-};
-/* harmony default export */ var esm_useThrottle = (useThrottle);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useThrottleFn.js
-
-
-var useThrottleFn = function (fn, ms, args) {
-    if (ms === void 0) { ms = 200; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null), state = _a[0], setState = _a[1];
-    var timeout = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
-    var nextArgs = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
-    var hasNextArgs = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(false);
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (!timeout.current) {
-            setState(fn.apply(void 0, args));
-            var timeoutCallback_1 = function () {
-                if (hasNextArgs.current) {
-                    hasNextArgs.current = false;
-                    setState(fn.apply(void 0, nextArgs.current));
-                    timeout.current = setTimeout(timeoutCallback_1, ms);
-                }
-                else {
-                    timeout.current = null;
-                }
-            };
-            timeout.current = setTimeout(timeoutCallback_1, ms);
-        }
-        else {
-            nextArgs.current = args;
-            hasNextArgs.current = true;
-        }
-    }, args);
-    esm_useUnmount(function () {
-        clearTimeout(timeout.current);
-    });
-    return state;
-};
-/* harmony default export */ var esm_useThrottleFn = (useThrottleFn);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useTimeout.js
-
-var useTimeout = function (ms) {
-    if (ms === void 0) { ms = 0; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false), ready = _a[0], setReady = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var timer = setTimeout(function () {
-            setReady(true);
-        }, ms);
-        return function () {
-            clearTimeout(timer);
-        };
-    }, [ms]);
-    return ready;
-};
-/* harmony default export */ var esm_useTimeout = (useTimeout);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useTitle.js
-
-var useTitle = function (title) {
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        document.title = title;
-    }, [title]);
-};
-/* harmony default export */ var esm_useTitle = (useTitle);
-
-// EXTERNAL MODULE: ./node_modules/ts-easing/lib/index.js
-var lib = __webpack_require__(73);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useTween.js
-
-
-var useTween = function (easingName, ms, delay) {
-    if (easingName === void 0) { easingName = 'inCirc'; }
-    if (ms === void 0) { ms = 200; }
-    if (delay === void 0) { delay = 0; }
-    var fn = lib["easing"][easingName];
-    var t = esm_useRaf(ms, delay);
-    if (false) {}
-    return fn(t);
-};
-/* harmony default export */ var esm_useTween = (useTween);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useVideo.js
-
-var useVideo = util_createHTMLMediaHook('video');
-/* harmony default export */ var esm_useVideo = (useVideo);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useWindowScroll.js
-
-
-var useWindowScroll = function () {
-    var frame = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(0);
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
-        x: isClient ? window.scrollX : 0,
-        y: isClient ? window.scrollY : 0
-    }), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        var handler = function () {
-            cancelAnimationFrame(frame.current);
-            frame.current = requestAnimationFrame(function () {
-                setState({
-                    x: window.scrollX,
-                    y: window.scrollY
-                });
-            });
-        };
-        window.addEventListener('scroll', handler, {
-            capture: false,
-            passive: true
-        });
-        return function () {
-            cancelAnimationFrame(frame.current);
-            window.removeEventListener('scroll', handler);
-        };
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useWindowScroll = (useWindowScroll);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useWindowSize.js
-
-
-var useWindowSize = function (initialWidth, initialHeight) {
-    if (initialWidth === void 0) { initialWidth = Infinity; }
-    if (initialHeight === void 0) { initialHeight = Infinity; }
-    var _a = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
-        width: isClient ? window.innerWidth : initialWidth,
-        height: isClient ? window.innerHeight : initialHeight,
-    }), state = _a[0], setState = _a[1];
-    Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-        if (isClient) {
-            var handler_1 = function () {
-                setState({
-                    width: window.innerWidth,
-                    height: window.innerHeight
-                });
-            };
-            window.addEventListener('resize', handler_1);
-            return function () { return window.removeEventListener('resize', handler_1); };
-        }
-        else {
-            return undefined;
-        }
-    }, []);
-    return state;
-};
-/* harmony default export */ var esm_useWindowSize = (useWindowSize);
-
-// CONCATENATED MODULE: ./node_modules/react-wait/dist/react-wait.esm.js
-
-var react_wait_esm_i = function(n) {
-    return n.length > 0;
-  },
-  react_wait_esm_e = function(n, t) {
-    return n.includes(t);
-  },
-  u = function(n, t) {
-    return react_wait_esm_e(n, t) ? n : n.concat([t]);
-  },
-  react_wait_esm_c = function(n, t) {
-    return n.filter(function(n) {
-      return n !== t;
-    });
-  },
-  react_wait_esm_a = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext();
-function o(n) {
-  return Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(react_wait_esm_a).waiters.includes(n.on) ? n.fallback : n.children;
-}
-function react_wait_esm_f(r) {
-  var f = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([]),
-    s = f[0],
-    g = f[1];
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-    react_wait_esm_a.Provider,
-    {
-      value: {
-        waiters: s,
-        createWaitingContext: function(t) {
-          return {
-            isWaiting: function() {
-              return react_wait_esm_e(s, t);
-            },
-            startWaiting: function() {
-              return g(u(s, t));
-            },
-            endWaiting: function() {
-              return g(react_wait_esm_c(s, t));
-            },
-            Wait: function(r) {
-              return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(o, Object.assign({}, { on: t }, r));
-            }
-          };
-        },
-        anyWaiting: function() {
-          return react_wait_esm_i(s);
-        },
-        isWaiting: function(n) {
-          return react_wait_esm_e(s, n);
-        },
-        startWaiting: function(n) {
-          g(u(s, n));
-        },
-        endWaiting: function(n) {
-          g(react_wait_esm_c(s, n));
-        }
-      }
-    },
-    r.children
-  );
-}
-function react_wait_esm_s() {
-  var n = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(react_wait_esm_a);
-  return Object.assign({}, n, { Wait: o });
-}
-
-//# sourceMappingURL=react-wait.esm.js.map
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/useWait.js
-
-react_wait_esm_s.Waiter = react_wait_esm_f;
-/* harmony default export */ var useWait = (react_wait_esm_s);
-
-// CONCATENATED MODULE: ./node_modules/react-use/esm/index.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // EXTERNAL MODULE: ./node_modules/query-string/index.js
-var query_string = __webpack_require__(74);
+var query_string = __webpack_require__(64);
 
 // CONCATENATED MODULE: ./src/DataTable/DataTableContainer.js
 
@@ -14099,7 +9445,6 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 
 
 
-
 var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   var endpointURL = _ref.endpointURL,
       imagePath = _ref.imagePath,
@@ -14108,53 +9453,67 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       total = _ref.total,
       page = _ref.page,
       max_per_page = _ref.max_per_page,
-      search = _ref.search,
-      tags = _ref.tags,
       elements = _ref.elements,
-      modalities = _ref.modalities,
-      formats = _ref.formats,
-      dataTableProps = _objectWithoutPropertiesLoose(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "search", "tags", "elements", "modalities", "formats"]);
+      filters = _ref.filters,
+      dataTableProps = _objectWithoutPropertiesLoose(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "elements", "filters"]);
 
-  var _React$useState = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(elements),
-      fetchedElements = _React$useState[0],
-      setFetchedElements = _React$useState[1];
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(elements),
+      fetchedElements = _useState[0],
+      setFetchedElements = _useState[1];
 
-  var _React$useState2 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState({
-    search: search,
-    tags: tags,
-    modalities: modalities !== null ? modalities.split(",") : [],
-    formats: formats !== null ? formats.split(",") : [],
-    sortKey: "conpStatus",
-    sortComparitor: "asc",
-    page: page,
-    max_per_page: max_per_page,
-    cursor: 0,
-    limit: limit
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
+    search: filters.search ? filters.search : "",
+    tags: filters.tags ? filters.tags.split(",") : [],
+    modalities: filters.modalities ? filters.modalities.split(",") : [],
+    formats: filters.formats ? filters.formats.split(",") : [],
+    sortKey: filters.sortKey ? filters.sortKey : "conpStatus",
+    sortComparitor: filters.sortComparitor ? filters.sortComparitor : "asc",
+    page: filters.page ? filters.page : 1,
+    max_per_page: filters.max_per_page ? filters.max_per_page : 10,
+    cursor: filters.cursor ? filters.cursor : 0,
+    limit: filters.limit ? filters.limit : 10
   }),
-      query = _React$useState2[0],
-      setQuery = _React$useState2[1];
+      query = _useState2[0],
+      setQuery = _useState2[1];
 
-  var _React$useState3 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(total),
-      totalState = _React$useState3[0],
-      setTotalState = _React$useState3[1];
+  var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(total),
+      totalState = _useState3[0],
+      setTotalState = _useState3[1];
 
-  var _React$useState4 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(),
-      sortKeysState = _React$useState4[0],
-      setSortKeysState = _React$useState4[1];
+  var _useState4 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(),
+      sortKeysState = _useState4[0],
+      setSortKeysState = _useState4[1];
 
-  var _React$useState5 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(),
-      filterKeysState = _React$useState5[0],
-      setFilterKeysState = _React$useState5[1];
+  var _useState5 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(),
+      filterKeysState = _useState5[0],
+      setFilterKeysState = _useState5[1];
 
-  var _React$useState6 = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useState(authorized),
-      authorizedState = _React$useState6[0],
-      setAuthorizedState = _React$useState6[1];
+  var _useState6 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(authorized),
+      authorizedState = _useState6[0],
+      setAuthorizedState = _useState6[1];
 
-  external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.useEffect(function () {
+  var _useState7 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(true),
+      isLoading = _useState7[0],
+      setIsLoading = _useState7[1];
+
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
     setQuery(DataTableContainer_extends({}, query, {
       limit: limit
     }));
   }, [limit]);
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    // Remove empty keys from query and set query object as query parameters
+    // Repeat this every time the query changes to ensure query state survives refresh / back navigation
+    var q = query;
+    Object.keys(q).forEach(function (k) {
+      if (q[k] === '' || Array.isArray(q[k]) && q[k].length === 0) {
+        delete q[k];
+      }
+    });
+    var queryString = new URLSearchParams(q).toString();
+    var pathname = window.location.pathname;
+    window.history.replaceState(null, null, pathname + "?" + queryString);
+  }, [query]);
 
   var fetchElements = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
@@ -14201,11 +9560,19 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
               console.error(_context.t0);
 
             case 21:
+              _context.prev = 21;
+              isLoading && setIsLoading(false);
+              setTimeout(function () {
+                window.scrollTo(0, 0);
+              }, 100);
+              return _context.finish(21);
+
+            case 25:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 17]]);
+      }, _callee, null, [[1, 17, 21, 25]]);
     }));
 
     return function fetchElements() {
@@ -14213,9 +9580,9 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
     };
   }();
 
-  esm_useDebounce(function () {
-    return void fetchElements();
-  }, 300, [endpointURL, query]);
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    fetchElements();
+  }, [query]);
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_DataTable_DataTable, DataTableContainer_extends({
     authorized: authorizedState,
     elements: fetchedElements,
@@ -14224,7 +9591,8 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
     sortKeys: sortKeysState,
     filterKeys: filterKeysState,
     query: query,
-    setQuery: setQuery
+    setQuery: setQuery,
+    isLoading: isLoading
   }, dataTableProps));
 };
 
@@ -14235,7 +9603,7 @@ DataTableContainer_DataTableContainer.propTypes = {
   limit: prop_types_default.a.number,
   total: prop_types_default.a.number,
   page: prop_types_default.a.number,
-  max_per_page: prop_types_default.a.number,
+  max_per_page: prop_types_default.a.oneOfType([prop_types_default.a.string, prop_types_default.a.number]),
   elements: prop_types_default.a.arrayOf(prop_types_default.a.object)
 };
 DataTableContainer_DataTableContainer.defaultProps = {
@@ -14247,15 +9615,15 @@ DataTableContainer_DataTableContainer.defaultProps = {
   page: 1,
   max_per_page: 10,
   elements: [],
-  modalities: "",
-  formats: ""
+  modalities: [],
+  formats: []
 };
 /* harmony default export */ var DataTable_DataTableContainer = (DataTableContainer_DataTableContainer);
 // CONCATENATED MODULE: ./src/DataTable/index.js
 
 
 // EXTERNAL MODULE: ./node_modules/@fortawesome/fontawesome-svg-core/index.es.js
-var index_es = __webpack_require__(60);
+var index_es = __webpack_require__(59);
 
 // CONCATENATED MODULE: ./node_modules/@fortawesome/react-fontawesome/index.es.js
 
@@ -21908,11 +17276,11 @@ PipelineElement_PipelineElement.propTypes = {
 
 /* harmony default export */ var src_PipelineElement = (PipelineElement_PipelineElement);
 // EXTERNAL MODULE: ./node_modules/highcharts/highcharts.js
-var highcharts = __webpack_require__(21);
+var highcharts = __webpack_require__(19);
 var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
 
 // EXTERNAL MODULE: ./node_modules/highcharts-react-official/dist/highcharts-react.min.js
-var highcharts_react_min = __webpack_require__(37);
+var highcharts_react_min = __webpack_require__(36);
 var highcharts_react_min_default = /*#__PURE__*/__webpack_require__.n(highcharts_react_min);
 
 // CONCATENATED MODULE: ./src/charts/TotalDatasetsPipelines/index.js
@@ -22119,7 +17487,7 @@ function DatasetModalities_objectWithoutPropertiesLoose(source, excluded) { if (
 
 
 
-__webpack_require__(64)(highcharts_default.a);
+__webpack_require__(61)(highcharts_default.a);
 
 var DatasetModalities_defaultOptions = {
   chart: {
@@ -22148,8 +17516,7 @@ var DatasetModalities_defaultOptions = {
       point: {
         events: {
           select: function select(e) {
-            console.log(e); // eslint-disable-next-line no-restricted-globals
-
+            // eslint-disable-next-line no-restricted-globals
             location.assign("/search?modalities=" + e.target.name.toLowerCase());
           }
         }
@@ -22261,7 +17628,7 @@ function PipelineTags_objectWithoutPropertiesLoose(source, excluded) { if (sourc
 
 
 
-__webpack_require__(64)(highcharts_default.a);
+__webpack_require__(61)(highcharts_default.a);
 
 var PipelineTags_defaultOptions = {
   chart: {
@@ -22290,8 +17657,7 @@ var PipelineTags_defaultOptions = {
       point: {
         events: {
           select: function select(e) {
-            console.log(e); // eslint-disable-next-line no-restricted-globals
-
+            // eslint-disable-next-line no-restricted-globals
             location.assign("/pipelines?tags=" + e.target.name.toLowerCase());
           }
         }
@@ -22598,6 +17964,10 @@ ChartContainer_ChartContainer.defaultProps = {
   toggleState: 1
 };
 /* harmony default export */ var src_ChartContainer = (ChartContainer_ChartContainer);
+// EXTERNAL MODULE: ./node_modules/react-fast-compare/index.js
+var react_fast_compare = __webpack_require__(21);
+var react_fast_compare_default = /*#__PURE__*/__webpack_require__.n(react_fast_compare);
+
 // CONCATENATED MODULE: ./node_modules/deepmerge/dist/es.js
 var isMergeableObject = function isMergeableObject(value) {
 	return isNonNullObject(value)
@@ -24072,7 +19442,7 @@ var isArray = Array.isArray;
 /* harmony default export */ var lodash_es_isArray = (isArray);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/isBuffer.js
-var isBuffer = __webpack_require__(31);
+var isBuffer = __webpack_require__(30);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/_isIndex.js
 /** Used as references for various `Number` constants. */
@@ -24217,7 +19587,7 @@ function baseUnary(func) {
 /* harmony default export */ var _baseUnary = (baseUnary);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/_nodeUtil.js
-var _nodeUtil = __webpack_require__(24);
+var _nodeUtil = __webpack_require__(23);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/isTypedArray.js
 
@@ -24563,7 +19933,7 @@ function baseAssignIn(object, source) {
 /* harmony default export */ var _baseAssignIn = (baseAssignIn);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/_cloneBuffer.js
-var _cloneBuffer = __webpack_require__(76);
+var _cloneBuffer = __webpack_require__(66);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/_copyArray.js
 /**
@@ -25791,7 +21161,7 @@ function toPath(value) {
 var tiny_warning_esm = __webpack_require__(15);
 
 // EXTERNAL MODULE: ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
-var hoist_non_react_statics_cjs = __webpack_require__(30);
+var hoist_non_react_statics_cjs = __webpack_require__(29);
 var hoist_non_react_statics_cjs_default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics_cjs);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/cloneDeep.js
@@ -27782,13 +23152,13 @@ var FastField = /*#__PURE__*/connect(formik_esm_FastFieldInner);
 //# sourceMappingURL=formik.esm.js.map
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 2 modules
-var toConsumableArray = __webpack_require__(22);
+var toConsumableArray = __webpack_require__(20);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
 var esm_extends = __webpack_require__(1);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/merge.js
-var esm_merge = __webpack_require__(27);
+var esm_merge = __webpack_require__(26);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/css.js
 
@@ -27806,7 +23176,7 @@ function omit(input, fields) {
   return output;
 }
 
-function css_css(styleFunction) {
+function css(styleFunction) {
   var newStyleFunction = function newStyleFunction(props) {
     var output = styleFunction(props);
 
@@ -27824,7 +23194,7 @@ function css_css(styleFunction) {
   return newStyleFunction;
 }
 
-/* harmony default export */ var esm_css = (css_css);
+/* harmony default export */ var esm_css = (css);
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/compose.js
 
 
@@ -27873,7 +23243,7 @@ function compose() {
 var esm_defineProperty = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/breakpoints.js
-var breakpoints = __webpack_require__(49);
+var breakpoints = __webpack_require__(48);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/style.js
 
@@ -28151,7 +23521,7 @@ function sizing_transform(value) {
   return value <= 1 ? "".concat(value * 100, "%") : value;
 }
 
-var sizing_width = esm_style({
+var width = esm_style({
   prop: 'width',
   transform: sizing_transform
 });
@@ -28163,7 +23533,7 @@ var minWidth = esm_style({
   prop: 'minWidth',
   transform: sizing_transform
 });
-var sizing_height = esm_style({
+var height = esm_style({
   prop: 'height',
   transform: sizing_transform
 });
@@ -28188,10 +23558,10 @@ var sizeHeight = esm_style({
 var boxSizing = esm_style({
   prop: 'boxSizing'
 });
-var sizing = esm_compose(sizing_width, sizing_maxWidth, minWidth, sizing_height, maxHeight, minHeight, boxSizing);
+var sizing = esm_compose(width, sizing_maxWidth, minWidth, height, maxHeight, minHeight, boxSizing);
 /* harmony default export */ var esm_sizing = (sizing);
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/spacing.js + 1 modules
-var esm_spacing = __webpack_require__(153);
+var esm_spacing = __webpack_require__(142);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/typography.js
 
@@ -28230,7 +23600,7 @@ var objectWithoutProperties = __webpack_require__(3);
 var clsx_m = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/makeStyles/makeStyles.js + 19 modules
-var makeStyles = __webpack_require__(151);
+var makeStyles = __webpack_require__(140);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/styles/esm/styled/styled.js
 
@@ -28344,7 +23714,7 @@ function styled_styled(Component) {
   return componentCreator;
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/defaultTheme.js + 16 modules
-var defaultTheme = __webpack_require__(28);
+var defaultTheme = __webpack_require__(27);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/styled.js
 
@@ -28775,10 +24145,10 @@ function useIsFocusVisible() {
 var objectWithoutPropertiesLoose = __webpack_require__(14);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(32);
+var assertThisInitialized = __webpack_require__(31);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js
-var inheritsLoose = __webpack_require__(19);
+var inheritsLoose = __webpack_require__(18);
 
 // CONCATENATED MODULE: ./node_modules/react-transition-group/esm/TransitionGroupContext.js
 
@@ -30741,7 +26111,7 @@ var SwitchBase_SwitchBase = /*#__PURE__*/external_root_React_commonjs2_react_com
   name: 'PrivateSwitchBase'
 })(SwitchBase_SwitchBase));
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/SvgIcon/SvgIcon.js
-var SvgIcon = __webpack_require__(65);
+var SvgIcon = __webpack_require__(62);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/createSvgIcon.js
 
@@ -32201,7 +27571,7 @@ var Stepper_Stepper = /*#__PURE__*/external_root_React_commonjs2_react_commonjs_
   name: 'MuiStepper'
 })(Stepper_Stepper));
 // EXTERNAL MODULE: ./node_modules/react-is/index.js
-var react_is = __webpack_require__(36);
+var react_is = __webpack_require__(35);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Step/Step.js
 
@@ -33479,7 +28849,7 @@ var Condition_Condition = /*#__PURE__*/function () {
 
 /* harmony default export */ var es_Condition = (Condition_Condition);
 // EXTERNAL MODULE: ./node_modules/synchronous-promise/index.js
-var synchronous_promise = __webpack_require__(38);
+var synchronous_promise = __webpack_require__(37);
 
 // CONCATENATED MODULE: ./node_modules/yup/es/ValidationError.js
 
@@ -34432,12 +29802,12 @@ function baseGet(object, path) {
  * _.get(object, 'a.b.c', 'default');
  * // => 'default'
  */
-function get_get(object, path, defaultValue) {
+function get(object, path, defaultValue) {
   var result = object == null ? undefined : _baseGet(object, path);
   return result === undefined ? defaultValue : result;
 }
 
-/* harmony default export */ var lodash_es_get = (get_get);
+/* harmony default export */ var lodash_es_get = (get);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/_baseHasIn.js
 /**
@@ -34695,7 +30065,7 @@ function mapValues(object, iteratee) {
 /* harmony default export */ var lodash_es_mapValues = (mapValues);
 
 // EXTERNAL MODULE: ./node_modules/property-expr/index.js
-var property_expr = __webpack_require__(26);
+var property_expr = __webpack_require__(25);
 
 // CONCATENATED MODULE: ./node_modules/yup/es/Reference.js
 
@@ -36678,7 +32048,7 @@ function mapKeys(object, iteratee) {
 /* harmony default export */ var lodash_es_mapKeys = (mapKeys);
 
 // EXTERNAL MODULE: ./node_modules/toposort/index.js
-var toposort = __webpack_require__(77);
+var toposort = __webpack_require__(67);
 var toposort_default = /*#__PURE__*/__webpack_require__.n(toposort);
 
 // CONCATENATED MODULE: ./node_modules/yup/es/util/sortFields.js
@@ -37401,18 +32771,18 @@ function __extends(d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
 
-var tslib_es6_assign = function() {
-    tslib_es6_assign = Object.assign || function __assign(t) {
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
             s = arguments[i];
             for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
         }
         return t;
     }
-    return tslib_es6_assign.apply(this, arguments);
+    return __assign.apply(this, arguments);
 }
 
-function tslib_es6_rest(s, e) {
+function __rest(s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
         t[p] = s[p];
@@ -37439,7 +32809,7 @@ function __metadata(metadataKey, metadataValue) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
 }
 
-function tslib_es6_awaiter(thisArg, _arguments, P, generator) {
+function __awaiter(thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -37449,7 +32819,7 @@ function tslib_es6_awaiter(thisArg, _arguments, P, generator) {
     });
 }
 
-function tslib_es6_generator(thisArg, body) {
+function __generator(thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
@@ -37670,8 +33040,8 @@ var FILES_TO_IGNORE = [
  * @param evt
  */
 function fromEvent(evt) {
-    return tslib_es6_awaiter(this, void 0, void 0, function () {
-        return tslib_es6_generator(this, function (_a) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
             return [2 /*return*/, isDragEvt(evt) && evt.dataTransfer
                     ? getDataTransferFiles(evt.dataTransfer, evt.type)
                     : getInputFiles(evt)];
@@ -37693,9 +33063,9 @@ function isInput(value) {
     return value !== null;
 }
 function getDataTransferFiles(dt, type) {
-    return tslib_es6_awaiter(this, void 0, void 0, function () {
+    return __awaiter(this, void 0, void 0, function () {
         var items, files;
-        return tslib_es6_generator(this, function (_a) {
+        return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!dt.items) return [3 /*break*/, 2];
@@ -37759,8 +33129,8 @@ function fromDataTransferItem(item) {
 }
 // https://developer.mozilla.org/en-US/docs/Web/API/FileSystemEntry
 function fromEntry(entry) {
-    return tslib_es6_awaiter(this, void 0, void 0, function () {
-        return tslib_es6_generator(this, function (_a) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
             return [2 /*return*/, entry.isDirectory ? fromDirEntry(entry) : fromFileEntry(entry)];
         });
     });
@@ -37774,9 +33144,9 @@ function fromDirEntry(entry) {
             var _this = this;
             // https://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryEntry/createReader
             // https://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryReader/readEntries
-            reader.readEntries(function (batch) { return tslib_es6_awaiter(_this, void 0, void 0, function () {
+            reader.readEntries(function (batch) { return __awaiter(_this, void 0, void 0, function () {
                 var files, err_1, items;
-                return tslib_es6_generator(this, function (_a) {
+                return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             if (!!batch.length) return [3 /*break*/, 5];
@@ -37811,8 +33181,8 @@ function fromDirEntry(entry) {
 }
 // https://developer.mozilla.org/en-US/docs/Web/API/FileSystemFileEntry
 function fromFileEntry(entry) {
-    return tslib_es6_awaiter(this, void 0, void 0, function () {
-        return tslib_es6_generator(this, function (_a) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, reject) {
                     entry.file(function (file) {
                         var fwp = toFileWithPath(file, entry.fullPath);
@@ -37829,7 +33199,7 @@ function fromFileEntry(entry) {
 
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ./node_modules/attr-accept/dist/es/index.js
-var dist_es = __webpack_require__(78);
+var dist_es = __webpack_require__(68);
 var es_default = /*#__PURE__*/__webpack_require__.n(dist_es);
 
 // CONCATENATED MODULE: ./node_modules/react-dropzone/dist/es/utils/index.js
@@ -38310,7 +33680,7 @@ Dropzone.propTypes = {
  * @property {FileRejection[]} fileRejections Rejected files and why they were rejected
  */
 
-var es_initialState = {
+var initialState = {
   isFocused: false,
   isFileDialogActive: false,
   isDragActive: false,
@@ -38420,7 +33790,7 @@ function useDropzone() {
   var rootRef = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
   var inputRef = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
 
-  var _useReducer = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useReducer"])(reducer, es_initialState),
+  var _useReducer = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useReducer"])(reducer, initialState),
       _useReducer2 = es_slicedToArray(_useReducer, 2),
       state = _useReducer2[0],
       dispatch = _useReducer2[1];
@@ -38829,11 +34199,11 @@ function reducer(state, action) {
   }
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/icons/Cancel.js
-var Cancel = __webpack_require__(82);
+var Cancel = __webpack_require__(72);
 var Cancel_default = /*#__PURE__*/__webpack_require__.n(Cancel);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/utils/esm/formatMuiErrorMessage.js
-var formatMuiErrorMessage = __webpack_require__(83);
+var formatMuiErrorMessage = __webpack_require__(73);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/debounce.js
 // Corresponds to 10 frames at 60 Hz.
@@ -39821,7 +35191,7 @@ FilledInput_FilledInput.muiName = 'Input';
   name: 'MuiFilledInput'
 })(FilledInput_FilledInput));
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/useTheme/useTheme.js + 1 modules
-var useTheme = __webpack_require__(152);
+var useTheme = __webpack_require__(141);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/useTheme.js
 
@@ -40209,10 +35579,10 @@ var FormHelperText_FormHelperText = /*#__PURE__*/external_root_React_commonjs2_r
   name: 'MuiFormHelperText'
 })(FormHelperText_FormHelperText));
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/mergeClasses/mergeClasses.js
-var mergeClasses = __webpack_require__(149);
+var mergeClasses = __webpack_require__(138);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
-var esm_typeof = __webpack_require__(23);
+var esm_typeof = __webpack_require__(22);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/ownerDocument.js
 function ownerDocument(node) {
@@ -40225,7 +35595,7 @@ function ownerWindow(node) {
   return doc.defaultView || window;
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/getThemeProps/getThemeProps.js
-var getThemeProps = __webpack_require__(150);
+var getThemeProps = __webpack_require__(139);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Portal/Portal.js
 
@@ -40298,7 +35668,7 @@ if (false) {}
 
 /* harmony default export */ var esm_Portal_Portal = (Portal_Portal);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/zIndex.js
-var styles_zIndex = __webpack_require__(50);
+var styles_zIndex = __webpack_require__(49);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js
 function _classCallCheck(instance, Constructor) {
@@ -41451,7 +36821,7 @@ var Transition_Transition = /*#__PURE__*/function (_React$Component) {
 Transition_Transition.contextType = TransitionGroupContext;
 Transition_Transition.propTypes =  false ? undefined : {}; // Name the function so it is clearer in the documentation
 
-function Transition_noop() {}
+function noop() {}
 
 Transition_Transition.defaultProps = {
   in: false,
@@ -41460,12 +36830,12 @@ Transition_Transition.defaultProps = {
   appear: false,
   enter: true,
   exit: true,
-  onEnter: Transition_noop,
-  onEntering: Transition_noop,
-  onEntered: Transition_noop,
-  onExit: Transition_noop,
-  onExiting: Transition_noop,
-  onExited: Transition_noop
+  onEnter: noop,
+  onEntering: noop,
+  onEntered: noop,
+  onExit: noop,
+  onExiting: noop,
+  onExited: noop
 };
 Transition_Transition.UNMOUNTED = UNMOUNTED;
 Transition_Transition.EXITED = EXITED;
@@ -44216,7 +39586,7 @@ var DialogContent_DialogContent = /*#__PURE__*/external_root_React_commonjs2_rea
   name: 'MuiDialogContent'
 })(DialogContent_DialogContent));
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/transitions.js
-var transitions = __webpack_require__(29);
+var transitions = __webpack_require__(28);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Fade/Fade.js
 
@@ -57571,14 +52941,14 @@ var index_modern_DatsEditorForm = function DatsEditorForm(props) {
 });
 
 /***/ }),
-/* 116 */
+/* 105 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export isPlainObject */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return deepmerge; });
 /* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
+/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22);
 
 
 function isPlainObject(item) {
@@ -57609,6 +52979,17 @@ function deepmerge(target, source) {
 }
 
 /***/ }),
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
 /* 117 */,
 /* 118 */,
 /* 119 */,
@@ -57630,18 +53011,7 @@ function deepmerge(target, source) {
 /* 135 */,
 /* 136 */,
 /* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */,
-/* 143 */,
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */
+/* 138 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57674,7 +53044,7 @@ function mergeClasses() {
 }
 
 /***/ }),
-/* 150 */
+/* 139 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57704,7 +53074,7 @@ function getThemeProps(params) {
 }
 
 /***/ }),
-/* 151 */
+/* 140 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57736,10 +53106,10 @@ var tiny_warning_esm = __webpack_require__(15);
 var createClass = __webpack_require__(13);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js
-var inheritsLoose = __webpack_require__(19);
+var inheritsLoose = __webpack_require__(18);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(32);
+var assertThisInitialized = __webpack_require__(31);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
 var objectWithoutPropertiesLoose = __webpack_require__(14);
@@ -59990,7 +55360,7 @@ var jss_esm_jss = jss_esm_create();
 
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/mergeClasses/mergeClasses.js
-var mergeClasses = __webpack_require__(149);
+var mergeClasses = __webpack_require__(138);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/styles/esm/makeStyles/multiKeyStore.js
 // Used https://github.com/thinkloop/multi-key-cache as inspiration
@@ -60016,7 +55386,7 @@ var multiKeyStore = {
 };
 /* harmony default export */ var makeStyles_multiKeyStore = (multiKeyStore);
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/useTheme/useTheme.js + 1 modules
-var useTheme = __webpack_require__(152);
+var useTheme = __webpack_require__(141);
 
 // EXTERNAL MODULE: ./node_modules/prop-types/index.js
 var prop_types = __webpack_require__(2);
@@ -60797,7 +56167,7 @@ function defaultUnit(options) {
 /* harmony default export */ var jss_plugin_default_unit_esm = (defaultUnit);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 2 modules
-var toConsumableArray = __webpack_require__(22);
+var toConsumableArray = __webpack_require__(20);
 
 // CONCATENATED MODULE: ./node_modules/css-vendor/dist/css-vendor.esm.js
 
@@ -61572,10 +56942,10 @@ function increment() {
   return indexCounter;
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
-var esm_typeof = __webpack_require__(23);
+var esm_typeof = __webpack_require__(22);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/utils/esm/deepmerge.js
-var deepmerge = __webpack_require__(116);
+var deepmerge = __webpack_require__(105);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/styles/esm/getStylesCreator/getStylesCreator.js
 
@@ -61882,7 +57252,7 @@ function makeStyles(stylesOrCreator) {
 }
 
 /***/ }),
-/* 152 */
+/* 141 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61913,7 +57283,7 @@ function useTheme() {
 }
 
 /***/ }),
-/* 153 */
+/* 142 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61925,10 +57295,10 @@ __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding *
 var slicedToArray = __webpack_require__(11);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/breakpoints.js
-var breakpoints = __webpack_require__(49);
+var breakpoints = __webpack_require__(48);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/merge.js
-var merge = __webpack_require__(27);
+var merge = __webpack_require__(26);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/memoize.js
 function memoize(fn) {

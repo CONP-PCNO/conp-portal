@@ -25,16 +25,11 @@
     "@fortawesome/react-fontawesome": "^0.1.9",
     "bootstrap": "^4.3.1",
     "conp-dats-editor": "git://github.com/CONP-PCNO/conp-dats-editor.git",
-    "fuse.js": "3.4.4",
     "highcharts": "^8.2.0",
     "highcharts-react-official": "^3.0.0",
-    "keyboardjs": "^2.5.1",
     "prop-types": "15.7.2",
     "query-string": "^6.4.2",
-    "ramda": "^0.26.1",
-    "react-use": "^7.3.1",
-    "reactstrap": "^8.1.1",
-    "rebound": "^0.1.0"
+    "ramda": "^0.26.1"
   },
   "peerDependencies": {
     "react": "16.x"

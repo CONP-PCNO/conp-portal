@@ -2,34 +2,38 @@
 
 <!-- Head Block -->
 
-{% block scripts %}
-{{ super() }}
-  <script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
-  <script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
-  <script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+{% block scripts %} {{ super() }}
+<script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
+<script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
+<script
+  type="text/javascript"
+  src="static/lib/conp-react/umd/conp-react.js"
+></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"
+/>
 {% endblock %}
 
 <!-- Title Block -->
 
 {% block contenttitle %}
-  <h2><span style="color:red;">CONP Portal</span> | Tools & Pipelines Search</h2>
+<h2><span style="color: red">CONP Portal</span> | Tools & Pipelines Search</h2>
 {% endblock %}
 
 <!-- Content Block -->
 
 {% block appcontent %}
-  <div>
-    <div id="pipelines-datatable-mount"></div>
-    <script type="text/javascript">
-      const reactElement = React.createElement(CONPReact.DataTableContainer, {
-        endpointURL: "{{ url_for('pipelines.pipeline_search') }}",
-        imagePath: "/static/img",
-        search: "{{ search }}",
-        tags: "{{ tags }}",
-        renderElement: CONPReact.PipelineElement
-      });
-      ReactDOM.render(reactElement, document.querySelector("#pipelines-datatable-mount"));
-    </script>
-  </div>
+<div>
+  <div id="pipelines-datatable-mount"></div>
+  <script type="text/javascript">
+    const reactElement = React.createElement(CONPReact.DataTableContainer, {
+      endpointURL: "{{ url_for('pipelines.pipeline_search') }}",
+      imagePath: "/static/img",
+      renderElement: CONPReact.PipelineElement,
+      filters: {{ filters|tojson }}
+    });
+    ReactDOM.render(reactElement, document.querySelector("#pipelines-datatable-mount"));
+  </script>
+</div>
 {% endblock %}

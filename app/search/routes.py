@@ -32,8 +32,26 @@ def search():
     """
 
     modalities = request.args.get('modalities')
+    formats = request.args.get('formats')
+    search = request.args.get('search')
+    tags = request.args.get('tags')
+    sortComparitor = request.args.get('sortComparitor')
+    sortKey = request.args.get('sortKey')
+    max_per_page = request.args.get('max_per_page')
+    page = request.args.get('page')
 
-    return render_template('search.html', title='CONP | Search', user=current_user, modalities=modalities)
+    filters = {
+        "modalities": modalities,
+        "formats": formats,
+        "search": search,
+        "tags": tags,
+        "sortComparitor": sortComparitor,
+        "sortKey": sortKey,
+        "max_per_page": max_per_page,
+        "page": page
+    }
+
+    return render_template('search.html', title='CONP | Search', user=current_user, filters=filters)
 
 
 @search_bp.route('/dataset_logo')
@@ -178,10 +196,15 @@ def dataset_search():
             elements = list(filter(lambda e: all(item in (
                 f.lower() for f in e['format'].split(", ")) for item in filterFormats), elements))
 
-        delta = int(request.args.get('max_per_page', 10)) * \
-            (int(request.args.get('page', 1)) - 1)
-        cursor = max(min(int(request.args.get('cursor') or 0), 0), 0) + delta
-        limit = int(request.args.get('limit') or 10)
+        cursor = None
+        limit = None
+        if(request.args.get('max_per_page') != 'All'):
+            delta = int(request.args.get('max_per_page', 10)) * \
+                (int(request.args.get('page', 1)) - 1)
+            cursor = max(
+                min(int(request.args.get('cursor') or 0), 0), 0) + delta
+            limit = int(request.args.get('limit') or 10)
+
         sort_key = request.args.get('sortKey') or "conpStatus"
         paginated = elements
 
@@ -248,7 +271,8 @@ def dataset_search():
         else:
             paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
 
-        paginated = paginated[(cursor):(cursor + limit)]
+        if(cursor is not None and limit is not None):
+            paginated = paginated[(cursor):(cursor + limit)]
     else:
         paginated = elements
 
