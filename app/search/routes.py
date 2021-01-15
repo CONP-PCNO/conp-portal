@@ -5,6 +5,7 @@
 """
 import json
 import os
+import re
 from datetime import datetime, timedelta
 
 import requests
@@ -173,12 +174,22 @@ def dataset_search():
     modalities = list(set(modalities))
 
     formats = []
+    # by default, formats should be represented in upper case
+    # except for NIfTI, BigWig and RNA-Seq
     for e in elements:
         if e['format'] is None:
             continue
         for m in e['format'].split(", "):
-            formats.append(m.lower())
-    formats = list(set(formats))
+            formatted_string = re.sub(r'\.', '', m)
+            if formatted_string.lower() in ['nifti', 'nii', 'niigz']:
+                formats.append('NIfTI')
+            elif formatted_string.lower() == 'bigwig':
+                formats.append('BigWig')
+            elif formatted_string.lower() == 'rna-seq':
+                formats.append('RNA-Seq')
+            else:
+                formats.append(formatted_string.upper())
+    formats = sorted(list(set(formats)))
 
     queryAll = bool(request.args.get('elements') == 'all')
     if(not queryAll):
