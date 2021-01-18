@@ -244,13 +244,13 @@ var hoist_non_react_statics_cjs = __webpack_require__(29);
 var hoist_non_react_statics_cjs_default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics_cjs);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/makeStyles/makeStyles.js + 19 modules
-var makeStyles = __webpack_require__(140);
+var makeStyles = __webpack_require__(141);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/getThemeProps/getThemeProps.js
-var getThemeProps = __webpack_require__(139);
+var getThemeProps = __webpack_require__(140);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/useTheme/useTheme.js + 1 modules
-var useTheme = __webpack_require__(141);
+var useTheme = __webpack_require__(142);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/styles/esm/withStyles/withStyles.js
 
@@ -718,7 +718,7 @@ if (true) {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(98);
+  module.exports = __webpack_require__(99);
 } else {}
 
 
@@ -864,21 +864,7 @@ function warning(condition, message) {
 
 
 /***/ }),
-/* 16 */,
-/* 17 */,
-/* 18 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _inheritsLoose; });
-function _inheritsLoose(subClass, superClass) {
-  subClass.prototype = Object.create(superClass.prototype);
-  subClass.prototype.constructor = subClass;
-  subClass.__proto__ = superClass;
-}
-
-/***/ }),
-/* 19 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1429,6 +1415,20 @@ K(e,function(d,e){if(!v&&-1<h.collectionsWithUpdate.indexOf(e))for(d=y(d),m[e]=[
 //# sourceMappingURL=highcharts.js.map
 
 /***/ }),
+/* 17 */,
+/* 18 */,
+/* 19 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _inheritsLoose; });
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+/***/ }),
 /* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1807,7 +1807,7 @@ function shouldBeQuoted(part) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(105);
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(106);
 
 
 function merge(acc, item) {
@@ -1836,7 +1836,7 @@ var defineProperty = __webpack_require__(7);
 var objectWithoutProperties = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/utils/esm/deepmerge.js
-var deepmerge = __webpack_require__(105);
+var deepmerge = __webpack_require__(106);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
 var esm_extends = __webpack_require__(1);
@@ -2417,7 +2417,7 @@ var shape = {
 };
 /* harmony default export */ var styles_shape = (shape);
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/spacing.js + 1 modules
-var esm_spacing = __webpack_require__(142);
+var esm_spacing = __webpack_require__(143);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/createSpacing.js
 
@@ -2812,7 +2812,7 @@ function _assertThisInitialized(self) {
 
 
 if (true) {
-  module.exports = __webpack_require__(97);
+  module.exports = __webpack_require__(98);
 } else {}
 
 
@@ -2820,7 +2820,7 @@ if (true) {
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-!function(e,t){ true?module.exports=t(__webpack_require__(0),__webpack_require__(19)):undefined}("undefined"!=typeof self?self:this,function(e,t){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,r){"use strict";function n(){return n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},n.apply(this,arguments)}function o(e){return i(e)||u(e)||c()}function c(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function u(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function i(e){if(Array.isArray(e)){for(var t=0,r=new Array(e.length);t<e.length;t++)r[t]=e[t];return r}}Object.defineProperty(t,"__esModule",{value:!0});var a=r(1),s=r.n(a),f=r(2),p=r.n(f),l="undefined"!=typeof window?a.useLayoutEffect:a.useEffect,d=Object(a.forwardRef)(function(e,t){var r=Object(a.useRef)(),c=Object(a.useRef)();return l(function(){function t(){var t=e.highcharts||p.a,n=e.constructorType||"chart";t?t[n]?e.options?c.current=t[n](r.current,e.options,e.callback?e.callback:void 0):console.warn('The "options" property was not passed.'):console.warn('The "constructorType" property is incorrect or some required module is not imported.'):console.warn('The "highcharts" property was not passed.')}if(c.current){if(!1!==e.allowChartUpdate)if(!e.immutable&&c.current){var n;(n=c.current).update.apply(n,[e.options].concat(o(e.updateArgs||[!0,!0])))}else t()}else t()}),l(function(){return function(){c.current&&(c.current.destroy(),c.current=null)}},[]),Object(a.useImperativeHandle)(t,function(){return{get chart(){return c.current},container:r}},[]),s.a.createElement("div",n({},e.containerProps,{ref:r}))});t.default=Object(a.memo)(d)},function(t,r){t.exports=e},function(e,r){e.exports=t}])});
+!function(e,t){ true?module.exports=t(__webpack_require__(0),__webpack_require__(16)):undefined}("undefined"!=typeof self?self:this,function(e,t){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,r){"use strict";function n(){return n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},n.apply(this,arguments)}function o(e){return i(e)||u(e)||c()}function c(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function u(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function i(e){if(Array.isArray(e)){for(var t=0,r=new Array(e.length);t<e.length;t++)r[t]=e[t];return r}}Object.defineProperty(t,"__esModule",{value:!0});var a=r(1),s=r.n(a),f=r(2),p=r.n(f),l="undefined"!=typeof window?a.useLayoutEffect:a.useEffect,d=Object(a.forwardRef)(function(e,t){var r=Object(a.useRef)(),c=Object(a.useRef)();return l(function(){function t(){var t=e.highcharts||p.a,n=e.constructorType||"chart";t?t[n]?e.options?c.current=t[n](r.current,e.options,e.callback?e.callback:void 0):console.warn('The "options" property was not passed.'):console.warn('The "constructorType" property is incorrect or some required module is not imported.'):console.warn('The "highcharts" property was not passed.')}if(c.current){if(!1!==e.allowChartUpdate)if(!e.immutable&&c.current){var n;(n=c.current).update.apply(n,[e.options].concat(o(e.updateArgs||[!0,!0])))}else t()}else t()}),l(function(){return function(){c.current&&(c.current.destroy(),c.current=null)}},[]),Object(a.useImperativeHandle)(t,function(){return{get chart(){return c.current},container:r}},[]),s.a.createElement("div",n({},e.containerProps,{ref:r}))});t.default=Object(a.memo)(d)},function(t,r){t.exports=e},function(e,r){e.exports=t}])});
 //# sourceMappingURL=highcharts-react.min.js.map
 
 /***/ }),
@@ -6046,7 +6046,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
  License: www.highcharts.com/license
 */
-(function(c){ true&&module.exports?(c["default"]=c,module.exports=c): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(19)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(A){c(A);c.Highcharts=A;return c}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+(function(c){ true&&module.exports?(c["default"]=c,module.exports=c): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(16)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(A){c(A);c.Highcharts=A;return c}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):undefined})(function(c){function A(c,b,h,a){c.hasOwnProperty(b)||(c[b]=a.apply(null,h))}c=c?c._modules:{};A(c,"Extensions/Pane.js",[c["Core/Chart/Chart.js"],c["Core/Globals.js"],c["Core/Pointer.js"],c["Core/Utilities.js"],c["Mixins/CenteredSeries.js"]],
 function(c,b,h,a,f){function q(e,f,m){return Math.sqrt(Math.pow(e-m[0],2)+Math.pow(f-m[1],2))<=m[2]/2}var u=a.addEvent,z=a.extend,E=a.merge,B=a.pick,e=a.splat;c.prototype.collectionsWithUpdate.push("pane");a=function(){function b(e,m){this.options=this.chart=this.center=this.background=void 0;this.coll="pane";this.defaultOptions={center:["50%","50%"],size:"85%",innerSize:"0%",startAngle:0};this.defaultBackgroundOptions={shape:"circle",borderWidth:1,borderColor:"#cccccc",backgroundColor:{linearGradient:{x1:0,
 y1:0,x2:0,y2:1},stops:[[0,"#ffffff"],[1,"#e6e6e6"]]},from:-Number.MAX_VALUE,innerRadius:0,to:Number.MAX_VALUE,outerRadius:"105%"};this.init(e,m)}b.prototype.init=function(e,m){this.chart=m;this.background=[];m.pane.push(this);this.setOptions(e)};b.prototype.setOptions=function(e){this.options=E(this.defaultOptions,this.chart.angular?{background:{}}:void 0,e)};b.prototype.render=function(){var b=this.options,m=this.options.background,f=this.chart.renderer;this.group||(this.group=f.g("pane-group").attr({zIndex:b.zIndex||
@@ -6973,7 +6973,7 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _createSvgIcon = _interopRequireDefault(__webpack_require__(102));
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(103));
 
 var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
   d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
@@ -7027,7 +7027,7 @@ function formatMuiErrorMessage(code) {
 /* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(104);
+module.exports = __webpack_require__(105);
 
 
 /***/ }),
@@ -8470,6 +8470,629 @@ process.umask = function() { return 0; };
 /* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
+* Custom events v3.0.10 (2020-12-21)
+*
+* (c) 2012-2020 Black Label
+*
+* License: Creative Commons Attribution (CC)
+*/
+
+/* global Highcharts setTimeout clearTimeout module:true */
+/* eslint no-loop-func: 0 */
+
+/**
+ * @namespace customEvents
+ **/
+
+(function (factory) {
+    if ( true && module.exports) {
+        factory['default'] = factory;
+        module.exports = factory;
+    } else if (true) {
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(16)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (Highcharts) {
+            factory(Highcharts);
+            factory.Highcharts = Highcharts;
+            return factory;
+        }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else {}
+}(function (HC) {
+
+	/* global Highcharts :true, window */
+
+	'use strict';
+
+	var UNDEFINED,
+		DBLCLICK = 'dblclick',
+		TOUCHSTART = 'touchstart',
+		CLICK = 'click',
+		pick = HC.pick,
+		wrap = HC.wrap,
+		merge = HC.merge,
+		addEvent = HC.addEvent,
+		isTouchDevice = HC.isTouchDevice,
+		defaultOptions = HC.getOptions().plotOptions,
+		axisProto = HC.Axis && HC.Axis.prototype,
+		plotLineOrBandProto = HC.PlotLineOrBand && HC.PlotLineOrBand.prototype,
+		seriesTypes = HC.seriesTypes,
+		seriesProto = HC.Series && HC.Series.prototype,
+		isObject,
+		isNumber,
+		isArray,
+		objectEach,
+		customEvents,
+		proto,
+		methods;
+
+	/*
+	 * Back compatibility
+	 */
+
+	isArray = HC.isArray || function (obj) {
+		var str = Object.prototype.toString.call(obj);
+		return str === '[object Array]' || str === '[object Array Iterator]';
+	};
+	
+	objectEach = HC.objectEach || function (obj, fn, ctx) {
+		for (var key in obj) {
+	    	if (obj.hasOwnProperty(key)) {
+	    		fn.call(ctx, obj[key], key, obj);
+	    	}
+		}
+	};
+
+	isNumber = HC.isNumber || function (n) {
+		return typeof n === 'number' && !isNaN(n);
+	};
+
+	isObject = HC.isObject || function (obj) {
+		return obj && typeof obj === 'object';
+	}
+
+	/**
+	 * WRAPPED FUNCTIONS
+	 */
+
+	// reset exis events
+	if (plotLineOrBandProto) { // # condition for highmaps and custom builds
+		wrap(plotLineOrBandProto, 'render', function (proceed) {
+			var defaultEvents = this.options && this.options.events;
+		
+			// reset default events on plot lines or bands
+			if (defaultEvents) {
+				defaultEvents = false;
+			}
+
+			return proceed.apply(this, Array.prototype.slice.call(arguments, 1));
+		});
+	}
+	if (seriesProto) { // # condition for highmaps and custom builds
+		wrap(seriesProto, 'init', function (proceed, chart, options) {
+			var chartOptions = chart.options,
+				plotOptions = chartOptions.plotOptions,
+				seriesOptions = chartOptions.plotOptions.series,
+				userOptions = merge(seriesOptions, plotOptions[this.type], options),
+				userOptionsEvents = userOptions && userOptions.events,
+				userOptionsPointEvents = userOptions && userOptions.point && userOptions.point.events; // Fixed #70
+
+			// reset default events on series and series point
+			options.events = {};
+			options.point = {
+				events: {}
+			};
+
+			// Add support for legendItemClick
+			if (userOptionsEvents) {
+				options.events = {
+					legendItemClick: userOptionsEvents && userOptionsEvents.legendItemClick
+				};
+			}
+
+			// Add support for legendItemClick in pie chart
+			if (userOptionsPointEvents) {
+				options.point.events = {
+					legendItemClick: userOptionsPointEvents && userOptionsPointEvents.legendItemClick,
+					select: userOptionsPointEvents && userOptionsPointEvents.select,
+					unselect: userOptionsPointEvents && userOptionsPointEvents.unselect,
+					click: userOptionsPointEvents && userOptionsPointEvents.click,
+					mouseOut: userOptionsPointEvents && userOptionsPointEvents.mouseOut,
+					mouseOver: userOptionsPointEvents && userOptionsPointEvents.mouseOver
+				};
+			}
+
+			// attach events to custom object, which is used in attach event
+			options.customEvents = {
+				series: userOptionsEvents,
+				point: userOptionsPointEvents
+			};
+
+			// call default action
+			proceed.apply(this, Array.prototype.slice.call(arguments, 1));
+
+		});
+	}
+
+	HC.Chart.prototype.customEvent = {
+		/**
+		 * @description Example: [HC.Series, ['drawPoints', 'drawDataLabels']]
+		 * @memberof customEvents
+		 * @returns {Array} array of pairs: prototype, array of methods to wrap
+		 **/
+		getEventsProtoMethods: function () {
+			var protoMethods = [
+				[HC.Tick, ['addLabel']],
+				[HC.Axis, ['render']],
+				[HC.Axis, ['drawCrosshair']],
+				[HC.Chart, ['setTitle']],
+				[HC.Legend, ['renderItem']],
+				[HC.PlotLineOrBand, ['render']],
+				[HC.Series, ['drawPoints', 'drawDataLabels']]
+			];
+
+			// support for extra series
+			objectEach(seriesTypes, function (fn, seriesType) {
+				protoMethods.push([
+					seriesTypes[seriesType], ['drawPoints', 'drawDataLabels']
+				]);
+			});
+	
+			return protoMethods;
+		},
+		/**
+		 * @description Init method, based on getEventsProtoMethods() array. Iterates on array of prototypes and methods to wrap
+		 * @memberof customEvents
+		 **/
+		init: function () {
+			var eventsProtoMethods = this.getEventsProtoMethods(); // array of pairs [object, [methods]]
+			
+			eventsProtoMethods.forEach(function (protoMethod) {
+				if (isArray(protoMethod)) {
+					proto = protoMethod[0] && protoMethod[0].prototype;
+					methods = protoMethod[1];
+
+					if (proto) {
+						methods.forEach(function (method) {
+							customEvents.attach(proto, method);
+						});
+					}
+				}
+			});
+		},
+		/**
+		 * @description Wraps methods i.e drawPoints to extract SVG element and set an event by calling customEvents.add()
+		 * @param {Object} proto Highcharts prototype i.e Highcharts.Series.prototype
+		 * @param {Object} hcMethod name of wrapped method i.e drawPoints
+		 * @memberof customEvents
+		 **/
+		attach: function (proto, hcMethod) {
+			
+			wrap(proto, hcMethod, function (proceed, param) {
+				var eventElement = {
+						events: UNDEFINED,
+						element: UNDEFINED
+					},
+					proceedObject,
+					len,
+					j;
+
+				//  call default actions
+				proceedObject = proceed.apply(this, Array.prototype.slice.call(arguments, 1));
+
+				//	call
+				eventElement = customEvents.eventElement[hcMethod].call(this, param);
+
+				//  stop, when events and SVG element do not exist
+				if (!eventElement.events && !eventElement.eventsSubtitle && !eventElement.eventsPoint) {
+					return proceedObject;
+				}
+				
+				if (eventElement.eventsPoint) {
+
+					len = eventElement.elementPoint.length;
+
+					// attach events per each point
+					for (j = 0; j < len; j++) {
+						if (eventElement.elementPoint[j]) {
+							var elemPoint = pick(eventElement.elementPoint[j].graphic, eventElement.elementPoint[j]);
+
+							if (elemPoint && elemPoint !== UNDEFINED) {
+								customEvents.add(elemPoint, eventElement.eventsPoint, eventElement.elementPoint[j], eventElement, true);
+							}
+						}
+					}
+				}
+
+				// attach event to subtitle
+				if (eventElement.eventsSubtitle) {
+					customEvents.add(eventElement.elementSubtitle, eventElement.eventsSubtitle, eventElement, this);
+				}
+
+				// attach event to each datalabal and add reference to each point
+				if (eventElement.dataLabelsPoints) {
+					var dataLabelsPoints = eventElement.dataLabelsPoints;
+					
+					len = dataLabelsPoints.length;
+
+					for (j = 0; j < len; j++) {
+						customEvents.add(
+							dataLabelsPoints[j].dataLabel,
+							eventElement.events,
+							{
+								dataLabel: dataLabelsPoints[j].dataLabel,
+								point: dataLabelsPoints[j]
+							},
+							this
+						);
+					}
+				}
+
+				// attach event to stackLabels
+				if (eventElement.eventsStackLabel) {
+					customEvents.add(eventElement.elementStackLabel, eventElement.eventsStackLabel, eventElement, this);
+				}
+
+				customEvents.add(eventElement.element, eventElement.events, eventElement, this);
+
+				return proceedObject;
+
+			});
+		},
+		/**
+		 * @description adds event on a SVG element
+		 * @param {Object} SVGelem graphic element
+		 * @param {Object} events object with all events
+		 * @param {Object} elemObj "this" object, which is available in the event
+		 * @param {Object} series chart series
+		 * @memberof customEvents
+		 **/
+		add: function (SVGelem, events, elemObj, eventElement, isPoint) {
+
+			var eventObject = eventElement.eventObject || elemObj.eventObject, //	Fix series reference #89
+				isSeries = elemObj.isSeries || eventElement.isSeries;
+
+
+			// stop when SVG element does not exist
+			if (!SVGelem || !SVGelem.element) {
+				return false;
+			}
+
+			for (var action in events) {
+
+				(function (event) {
+					if (events.hasOwnProperty(event) && !SVGelem[event]) {
+						if (isTouchDevice && event === DBLCLICK) { //  #30 - fallback for iPad
+							
+							var tapped = false;
+
+							addEvent(SVGelem.element, TOUCHSTART, function (e) {
+
+								e.preventDefault();
+
+								if (isSeries) { // #93
+									var chart = eventObject.chart,
+										normalizedEvent = chart.pointer.normalize(e);
+
+									if (!eventObject.directTouch) {
+										elemObj = eventObject.searchPoint(normalizedEvent, eventObject.kdDimensions === 1);
+									}
+
+									e.point = elemObj;	//	#89 point reference in mouse event
+								}
+
+								if ((eventObject && !isPoint) || (eventObject && isNumber(eventObject.value))) { // #95 
+									eventObject.value = elemObj.textStr;
+									elemObj = eventObject;
+								}
+
+								if (elemObj && elemObj.textStr) { // labels
+									elemObj.value = elemObj.textStr;
+								}
+
+								if (elemObj && elemObj.drilldown) { // #114 - drillUp - undefined ddDupes []
+									elemObj.doDrilldown(undefined, undefined, e);
+								}
+
+								if (!tapped) {
+
+									tapped = setTimeout(function () {
+										tapped = null;
+										if (events[CLICK] && elemObj && elemObj.drilldown === undefined) {
+											events[CLICK].call(elemObj, e); //	call single click action
+										}
+									}, 300);
+
+								} else {
+									clearTimeout(tapped);
+
+									tapped = null;
+									
+									if (elemObj && elemObj.drilldown === undefined) {
+										events[event].call(elemObj, e);
+									}
+								}
+
+								return false;
+
+							});
+
+						} else {
+
+							addEvent(SVGelem.element, event, function (e) {
+								
+								e.stopPropagation();
+
+								if (isSeries) { // #108, #93 - references in e.point and this after chart.update()
+									var chart = eventObject.chart,
+										normalizedEvent = chart.pointer.normalize(e);
+
+									if (!eventObject.directTouch) {
+										elemObj = eventObject.searchPoint(normalizedEvent, eventObject.kdDimensions === 1);
+									}
+
+									e.point = elemObj;	//	#89 point reference in mouse event
+								}
+
+								if ((eventObject && !isPoint) || (eventObject && isNumber(eventObject.value))) { // #95 wrong reference for axis labels
+									eventObject.value = elemObj.textStr || eventObject.value; // #95, #98 wrong reference for axis labels
+									elemObj = eventObject;
+								}
+
+								if (elemObj && elemObj.textStr) { // labels
+									elemObj.value = elemObj.textStr;
+								}
+
+								if (
+									isPoint &&
+									event === 'click' &&
+									elemObj.series &&
+									elemObj.series.options &&
+									elemObj.series.options.allowPointSelect
+								) {
+									var defaultFunction = function (event) {
+										// Control key is for Windows, meta (= Cmd key) for Mac, Shift
+										// for Opera.
+										if (elemObj.select) { // #2911
+												elemObj.select(null, e.ctrlKey || e.metaKey || e.shiftKey);
+										}
+									};
+
+								  	HC.fireEvent(elemObj, event, e, defaultFunction);
+								}
+
+								if (elemObj && elemObj.drilldown) { // #114 - drillUp - undefined ddDupes []
+									elemObj.doDrilldown(undefined, undefined, e);
+								} else if (events && events[event]) {
+									events[event].call(elemObj, e);
+								}
+
+								return false;
+							});
+						}
+
+						SVGelem[event] = function () {
+							return true;
+						};
+					}
+				})(action);
+			}
+		},
+		eventElement: {
+			/**
+			* @typedef {Object} eventElement
+			**/
+			/**
+			 * @description Extracts SVG elements from points
+			 * @property {Object} eventsPoint events for point
+			 * @property {Array} elementPoint array of SVG point elements
+			 * @property {Object} eventObject object kept in this on i.e click
+			 * @return {Object} { events: object, element: object }
+			 * @memberof customEvents
+			 **/
+			addLabel: function () {
+				var parent = this.parent,
+					axis = this.axis,
+					axisOptions = axis.options,
+					eventsPoint = axisOptions.labels && axisOptions.labels.events,
+					elementPoint = [this.label],
+					len, i;
+
+				if (parent) {
+					var step = this; // current label
+
+					while (step) {
+						if (isArray(step)) {
+							len = step.length;
+
+							for (i = 0; i < len; i++) {
+								elementPoint.push(step[i].label);
+							}
+						} else {
+							elementPoint.push(step.label);
+						}
+
+						step = step.parent;
+					}
+				}
+
+				return {
+					eventsPoint: eventsPoint,
+					elementPoint: elementPoint,
+					eventObject: {
+						axis: axis,
+						isFirst: this.isFirst,
+						isLast: this.isLast,
+						chart: axis.chart,
+						dateTimeLabelFormat: axisOptions.dateTimeLabelFormats,
+						value: this.pos,
+						pos: this.pos
+					}
+				};
+			},
+			/**
+			 * @description Extracts SVG elements from title and subtitle
+			 * @property {Object} events events for title
+			 * @property {Array} elementPoint title SVG element
+			 * @property {Object} eventsSubtitle events for subtitle
+			 * @property {Array} elementSubtitle subtitle SVG element
+			 * @return {Object} {event: object, element: object, eventsSubtitle: object, elementSubtitle: object }
+			 * @memberof customEvents
+			 **/
+			setTitle: function () {
+				var events = this.options.title && this.options.title.events,
+					element = this.title,
+					eventsSubtitle = this.options.subtitle && this.options.subtitle.events,
+					elementSubtitle = this.subtitle;
+
+				return {
+					events: events,
+					element: element,
+					eventsSubtitle: eventsSubtitle,
+					elementSubtitle: elementSubtitle
+				};
+			},
+			/**
+			 * @description Extracts SVG elements from dataLabels
+			 * @property {Object} events events for dataLabels
+			 * @property {Array} element dataLabels SVG element
+			 * @return {Object} { events: object, element: object }
+			 * @memberof customEvents
+			 **/
+			drawDataLabels: function () {
+				var dataLabelsGroup = this.dataLabelsGroup,
+					dataLabelEvents = dataLabelsGroup && this.options.dataLabels.events;
+
+				return {
+					events: dataLabelEvents,
+					element: dataLabelsGroup,
+					dataLabelsPoints: this.points
+				};
+			},
+			/**
+			 * @description Extracts SVG elements from axis title and stackLabels
+			 * @property {Object} events events for axis title
+			 * @property {Array} element axis title SVG element
+			 * @property {Object} eventsPoint events for stacklabels
+			 * @property {Array} elementPoint stacklabels SVG element
+			 * @property {Object} eventsStackLabel events for stacklabels
+			 * @property {Array} elementStackLabel stacklabels group SVG element
+			 * @return {Object} { events: object, element: object, eventsPoint: object, elementPoint: object, eventsStackLabel: object, elementStackLabel: object }
+			 * @memberof customEvents
+			 **/
+			render: function () {
+				var stackLabels = this.options.stackLabels,
+					events,
+					element,
+					eventsPoint,
+					elementPoint,
+					eventsStackLabel,
+					elementStackLabel;
+
+				if (this.axisTitle) {
+					events = this.options.title.events;
+					element = this.axisTitle;
+				}
+
+				if (stackLabels && stackLabels.enabled) {
+					eventsPoint = stackLabels.events;
+					elementPoint = this.stacks || this.stacking.stacks;
+					eventsStackLabel = stackLabels.events;
+					elementStackLabel = this.stackTotalGroup || this.stacking.stackTotalGroup;
+				}
+
+				return {
+					events: events,
+					element: element,
+					eventsPoint: eventsPoint,
+					elementPoint: elementPoint,
+					eventsStackLabel: eventsStackLabel,
+					elementStackLabel: elementStackLabel
+				};
+			},
+			/**
+			 * @description Extracts SVG elements from series and series points
+			 * @property {Object} events events for series
+			 * @property {Array} element series SVG element
+			 * @property {Object} events events for series points
+			 * @property {Array} element series points SVG element
+			 * @return {Object} { events: object, element: object, eventsPoint: object, elementPoint: object }
+			 * @memberof customEvents
+			 **/
+			drawPoints: function () {
+				var op = this.options,
+					type = this.type,
+					events = op.customEvents ? op.customEvents.series : op.events,
+					element = this.group,
+					eventsPoint = op.customEvents ? op.customEvents.point : op.point.events,
+					elementPoint;
+
+				if (defaultOptions[type] && defaultOptions[type].marker && !this.bubblePadding) {
+					elementPoint = [this.markerGroup]; //	get markers when enabled
+				} else {
+					elementPoint = this.points; //	extract points
+				}
+
+				if (!this.kdTree && !this.buildingKdTree) {
+					this.buildKDTree(); //	#86, missing reference to point on first mouseover
+				}
+
+				return {
+					events: events,
+					element: element,
+					eventsPoint: eventsPoint,
+					elementPoint: elementPoint,
+					eventObject: this,
+					isSeries: true
+				};
+			},
+			/**
+			 * @description Extracts SVG elements from legend item
+			 * @property {Object} events events for legend item
+			 * @property {Array} element legend item SVG element
+			 * @return {Object} { events: object, element: object }
+			 * @memberof customEvents
+			 **/
+			renderItem: function (item) {
+				return {
+					events: this.options.itemEvents,
+					element: item.legendGroup,
+					eventObject: item
+				};
+			},
+			/**
+			 * @description Extracts SVG elements from crosshair
+			 * @property {Object} events events for crosshair
+			 * @property {Array} element crosshair SVG element
+			 * @return {Object} { events: object, element: object }
+			 * @memberof customEvents
+			 **/
+			drawCrosshair: function () {
+				var cross = this.cross,
+					crosshairOptions = this.options.crosshair;
+
+				if (cross) {
+					cross.css({
+						'pointer-events': 'auto'
+					});
+				}
+
+				return {
+					events: crosshairOptions && crosshairOptions.events,
+					element: cross
+				};
+			}
+		}
+	};
+
+	customEvents = HC.Chart.prototype.customEvent;
+	customEvents.init();
+
+}));
+
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /** @license React v16.13.1
  * react-is.production.min.js
@@ -8489,7 +9112,7 @@ exports.isValidElementType=function(a){return"string"===typeof a||"function"===t
 
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8505,7 +9128,7 @@ exports.isValidElementType=function(a){return"string"===typeof a||"function"===t
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),n=__webpack_require__(99),r=__webpack_require__(100);function ba(a,b,c,d,e,f,g,h){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var l=[c,d,e,f,g,h],k=0;a=Error(b.replace(/%s/g,function(){return l[k++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
+var aa=__webpack_require__(0),n=__webpack_require__(100),r=__webpack_require__(101);function ba(a,b,c,d,e,f,g,h){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var l=[c,d,e,f,g,h],k=0;a=Error(b.replace(/%s/g,function(){return l[k++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
 function x(a){for(var b=arguments.length-1,c="https://reactjs.org/docs/error-decoder.html?invariant="+a,d=0;d<b;d++)c+="&args[]="+encodeURIComponent(arguments[d+1]);ba(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",c)}aa?void 0:x("227");function ca(a,b,c,d,e,f,g,h,l){var k=Array.prototype.slice.call(arguments,3);try{b.apply(c,k)}catch(m){this.onError(m)}}
 var da=!1,ea=null,fa=!1,ha=null,ia={onError:function(a){da=!0;ea=a}};function ja(a,b,c,d,e,f,g,h,l){da=!1;ea=null;ca.apply(ia,arguments)}function ka(a,b,c,d,e,f,g,h,l){ja.apply(this,arguments);if(da){if(da){var k=ea;da=!1;ea=null}else x("198"),k=void 0;fa||(fa=!0,ha=k)}}var la=null,ma={};
 function na(){if(la)for(var a in ma){var b=ma[a],c=la.indexOf(a);-1<c?void 0:x("96",a);if(!oa[c]){b.extractEvents?void 0:x("97",a);oa[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],g=b,h=d;pa.hasOwnProperty(h)?x("99",h):void 0;pa[h]=f;var l=f.phasedRegistrationNames;if(l){for(e in l)l.hasOwnProperty(e)&&qa(l[e],g,h);e=!0}else f.registrationName?(qa(f.registrationName,g,h),e=!0):e=!1;e?void 0:x("98",d,a)}}}}
@@ -8765,7 +9388,7 @@ X;X=!0;try{ki(a)}finally{(X=b)||W||Yh(1073741823,!1)}},__SECRET_INTERNALS_DO_NOT
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8862,19 +9485,19 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(101);
+  module.exports = __webpack_require__(102);
 } else {}
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8903,7 +9526,7 @@ exports.unstable_shouldYield=function(){return!e&&(null!==d&&d.expirationTime<l|
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(39)))
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8916,7 +9539,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = createSvgIcon;
 
-var _extends2 = _interopRequireDefault(__webpack_require__(103));
+var _extends2 = _interopRequireDefault(__webpack_require__(104));
 
 var _react = _interopRequireDefault(__webpack_require__(0));
 
@@ -8936,7 +9559,7 @@ function createSvgIcon(path, displayName) {
 }
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports) {
 
 function _extends() {
@@ -8960,7 +9583,7 @@ function _extends() {
 module.exports = _extends;
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17276,7 +17899,7 @@ PipelineElement_PipelineElement.propTypes = {
 
 /* harmony default export */ var src_PipelineElement = (PipelineElement_PipelineElement);
 // EXTERNAL MODULE: ./node_modules/highcharts/highcharts.js
-var highcharts = __webpack_require__(19);
+var highcharts = __webpack_require__(16);
 var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
 
 // EXTERNAL MODULE: ./node_modules/highcharts-react-official/dist/highcharts-react.min.js
@@ -17478,6 +18101,32 @@ var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipeli
 TotalDatasetsPipelines_TotalDatasetsPipelines.propTypes = {};
 TotalDatasetsPipelines_TotalDatasetsPipelines.defaultProps = {};
 /* harmony default export */ var charts_TotalDatasetsPipelines = (TotalDatasetsPipelines_TotalDatasetsPipelines);
+// CONCATENATED MODULE: ./src/charts/ContextMenu/index.js
+var ContextMenu = function ContextMenu(props) {
+  var _props$options = props.options,
+      url = _props$options.url,
+      style = _props$options.style,
+      show = _props$options.show;
+  console.log(style);
+  console.log(url);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "dropdown",
+    style: style
+  }, /*#__PURE__*/React.createElement("ul", {
+    className: "dropdown-menu" + (show ? " show" : ""),
+    role: "menu",
+    "aria-labelledby": "dropdownMenu"
+  }, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    className: "dropdown-item",
+    href: url
+  }, "View Datasets")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    className: "dropdown-item",
+    href: url,
+    target: "_blank"
+  }, "View Datasets in New Tab"))));
+};
+
+/* harmony default export */ var charts_ContextMenu = (ContextMenu);
 // CONCATENATED MODULE: ./src/charts/DatasetModalities/index.js
 function DatasetModalities_extends() { DatasetModalities_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return DatasetModalities_extends.apply(this, arguments); }
 
@@ -17487,7 +18136,10 @@ function DatasetModalities_objectWithoutPropertiesLoose(source, excluded) { if (
 
 
 
+
 __webpack_require__(61)(highcharts_default.a);
+
+__webpack_require__(97)(highcharts_default.a);
 
 var DatasetModalities_defaultOptions = {
   chart: {
@@ -17514,24 +18166,19 @@ var DatasetModalities_defaultOptions = {
     series: {
       allowPointSelect: true,
       point: {
-        events: {
-          select: function select(e) {
-            // eslint-disable-next-line no-restricted-globals
-            location.assign("/search?modalities=" + e.target.name.toLowerCase());
-          }
-        }
+        events: {}
       }
     },
     packedbubble: {
       color: "#EA2627",
-      minSize: '10%',
+      minSize: '20%',
       maxSize: '100%',
       zMin: 0,
       zMax: 20,
       layoutAlgorithm: {
         initialPositions: 'random',
         bubblePadding: 8,
-        gravitationalConstant: 0.01,
+        gravitationalConstant: 0.006,
         splitSeries: false
       },
       dataLabels: {
@@ -17566,6 +18213,10 @@ var DatasetModalities_DatasetModalities = function DatasetModalities(_ref) {
   var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
       isDrawn = _useState2[0],
       setIsDrawn = _useState2[1];
+
+  var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}),
+      contextMenuOptions = _useState3[0],
+      setContextMenuOptions = _useState3[1];
 
   var updateChart = function updateChart(data) {
     var datasetData = Object.keys(data.datasets).map(function (d) {
@@ -17612,14 +18263,40 @@ var DatasetModalities_DatasetModalities = function DatasetModalities(_ref) {
     setIsDrawn(true);
   }
 
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(highcharts_react_min_default.a, {
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    setOptions(function (prevOptions) {
+      var options = prevOptions;
+      options.plotOptions.series.point.events = {
+        contextmenu: function contextmenu(e) {
+          e.preventDefault();
+          console.log(e.target);
+          var xPos = e.pageX;
+          var yPos = e.pageY;
+          var style = {
+            "position": "absolute",
+            "left": xPos,
+            "top": yPos,
+            "zIndex": 1000
+          };
+          var url = "/search?modalities=" + e.target.point.name.toLowerCase();
+          setContextMenuOptions({
+            style: style,
+            url: url,
+            show: true
+          });
+        }
+      };
+      return options;
+    });
+  }, []);
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_ContextMenu, {
+    options: contextMenuOptions
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(highcharts_react_min_default.a, {
     highcharts: highcharts_default.a,
     options: options
-  });
+  }));
 };
 
-DatasetModalities_DatasetModalities.propTypes = {};
-DatasetModalities_DatasetModalities.defaultProps = {};
 /* harmony default export */ var charts_DatasetModalities = (DatasetModalities_DatasetModalities);
 // CONCATENATED MODULE: ./src/charts/PipelineTags/index.js
 function PipelineTags_extends() { PipelineTags_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return PipelineTags_extends.apply(this, arguments); }
@@ -23563,7 +24240,7 @@ var boxSizing = esm_style({
 var sizing = esm_compose(width, sizing_maxWidth, minWidth, height, maxHeight, minHeight, boxSizing);
 /* harmony default export */ var esm_sizing = (sizing);
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/spacing.js + 1 modules
-var esm_spacing = __webpack_require__(142);
+var esm_spacing = __webpack_require__(143);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/typography.js
 
@@ -23602,7 +24279,7 @@ var objectWithoutProperties = __webpack_require__(3);
 var clsx_m = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/makeStyles/makeStyles.js + 19 modules
-var makeStyles = __webpack_require__(140);
+var makeStyles = __webpack_require__(141);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/styles/esm/styled/styled.js
 
@@ -24150,7 +24827,7 @@ var objectWithoutPropertiesLoose = __webpack_require__(14);
 var assertThisInitialized = __webpack_require__(31);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js
-var inheritsLoose = __webpack_require__(18);
+var inheritsLoose = __webpack_require__(19);
 
 // CONCATENATED MODULE: ./node_modules/react-transition-group/esm/TransitionGroupContext.js
 
@@ -35193,7 +35870,7 @@ FilledInput_FilledInput.muiName = 'Input';
   name: 'MuiFilledInput'
 })(FilledInput_FilledInput));
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/useTheme/useTheme.js + 1 modules
-var useTheme = __webpack_require__(141);
+var useTheme = __webpack_require__(142);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/useTheme.js
 
@@ -35581,7 +36258,7 @@ var FormHelperText_FormHelperText = /*#__PURE__*/external_root_React_commonjs2_r
   name: 'MuiFormHelperText'
 })(FormHelperText_FormHelperText));
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/mergeClasses/mergeClasses.js
-var mergeClasses = __webpack_require__(138);
+var mergeClasses = __webpack_require__(139);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
 var esm_typeof = __webpack_require__(22);
@@ -35597,7 +36274,7 @@ function ownerWindow(node) {
   return doc.defaultView || window;
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/getThemeProps/getThemeProps.js
-var getThemeProps = __webpack_require__(139);
+var getThemeProps = __webpack_require__(140);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Portal/Portal.js
 
@@ -52943,7 +53620,7 @@ var index_modern_DatsEditorForm = function DatsEditorForm(props) {
 });
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52981,7 +53658,6 @@ function deepmerge(target, source) {
 }
 
 /***/ }),
-/* 106 */,
 /* 107 */,
 /* 108 */,
 /* 109 */,
@@ -53013,7 +53689,8 @@ function deepmerge(target, source) {
 /* 135 */,
 /* 136 */,
 /* 137 */,
-/* 138 */
+/* 138 */,
+/* 139 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53046,7 +53723,7 @@ function mergeClasses() {
 }
 
 /***/ }),
-/* 139 */
+/* 140 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53076,7 +53753,7 @@ function getThemeProps(params) {
 }
 
 /***/ }),
-/* 140 */
+/* 141 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53108,7 +53785,7 @@ var tiny_warning_esm = __webpack_require__(15);
 var createClass = __webpack_require__(13);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js
-var inheritsLoose = __webpack_require__(18);
+var inheritsLoose = __webpack_require__(19);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
 var assertThisInitialized = __webpack_require__(31);
@@ -55362,7 +56039,7 @@ var jss_esm_jss = jss_esm_create();
 
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/mergeClasses/mergeClasses.js
-var mergeClasses = __webpack_require__(138);
+var mergeClasses = __webpack_require__(139);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/styles/esm/makeStyles/multiKeyStore.js
 // Used https://github.com/thinkloop/multi-key-cache as inspiration
@@ -55388,7 +56065,7 @@ var multiKeyStore = {
 };
 /* harmony default export */ var makeStyles_multiKeyStore = (multiKeyStore);
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/useTheme/useTheme.js + 1 modules
-var useTheme = __webpack_require__(141);
+var useTheme = __webpack_require__(142);
 
 // EXTERNAL MODULE: ./node_modules/prop-types/index.js
 var prop_types = __webpack_require__(2);
@@ -56947,7 +57624,7 @@ function increment() {
 var esm_typeof = __webpack_require__(22);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/utils/esm/deepmerge.js
-var deepmerge = __webpack_require__(105);
+var deepmerge = __webpack_require__(106);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/styles/esm/getStylesCreator/getStylesCreator.js
 
@@ -57254,7 +57931,7 @@ function makeStyles(stylesOrCreator) {
 }
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57285,7 +57962,7 @@ function useTheme() {
 }
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

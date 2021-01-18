@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import ContextMenu from '../ContextMenu'
 
 import Highcharts from "highcharts";
-import HighchartsReact from 'highcharts-react-official'
+import HighchartsReact from 'highcharts-react-official';
 require('highcharts/highcharts-more.js')(Highcharts);
+require('highcharts-custom-events')(Highcharts);
 
-const defaultOptions = {
+let defaultOptions = {
 
     chart: {
         type: 'packedbubble',
@@ -32,25 +34,20 @@ const defaultOptions = {
         series: {
             allowPointSelect: true,
             point: {
-                events: {
-                    select: function (e) {
-                        // eslint-disable-next-line no-restricted-globals
-                        location.assign(`/search?modalities=${e.target.name.toLowerCase()}`)
-                    }
-                }
+                events: {}
             }
         },
 
         packedbubble: {
             color: "#EA2627",
-            minSize: '10%',
+            minSize: '20%',
             maxSize: '100%',
             zMin: 0,
             zMax: 20,
             layoutAlgorithm: {
                 initialPositions: 'random',
                 bubblePadding: 8,
-                gravitationalConstant: 0.008,
+                gravitationalConstant: 0.006,
                 splitSeries: false,
             },
             dataLabels: {
@@ -79,6 +76,8 @@ const DatasetModalities = ({ datasets, pipelines, ...props }) => {
 
     const [options, setOptions] = useState(defaultOptions);
     const [isDrawn, setIsDrawn] = useState(false);
+
+    const [contextMenuOptions, setContextMenuOptions] = useState({});
 
     const updateChart = (data) => {
 
@@ -136,20 +135,42 @@ const DatasetModalities = ({ datasets, pipelines, ...props }) => {
         setIsDrawn(true);
     }
 
+    useEffect(() => {
+        setOptions(prevOptions => {
+            const options = prevOptions
+            options.plotOptions.series.point.events = {
+                contextmenu: function (e) {
+                    e.preventDefault()
+                    console.log(e.target)
+                    const xPos = e.pageX;
+                    const yPos = e.pageY;
+                    const style = {
+                        "position": "absolute",
+                        "left": xPos,
+                        "top": yPos,
+                        "zIndex": 1000
+                    };
+                    const url = `/search?modalities=${e.target.point.name.toLowerCase()}`;
+                    setContextMenuOptions({
+                        style: style,
+                        url: url,
+                        show: true
+                    })
+                }
+            }
+            return options
+        })
+    }, []);
+
     return (
-        <HighchartsReact
-            highcharts={Highcharts}
-            options={options}
-        />
+        <div>
+            <ContextMenu options={contextMenuOptions} />
+            <HighchartsReact
+                highcharts={Highcharts}
+                options={options}
+            />
+        </div>
     );
-};
-
-DatasetModalities.propTypes = {
-
-};
-
-DatasetModalities.defaultProps = {
-
 };
 
 export default DatasetModalities;
