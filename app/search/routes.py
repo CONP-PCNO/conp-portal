@@ -203,9 +203,11 @@ def dataset_search():
         if request.args.get('formats'):
             filterFormats = request.args.get('formats').split(",")
             elements = list(
-                filter(lambda e: e['format'] is not None, elements))
-            elements = list(filter(lambda e: all(item in (
-                f.lower() for f in e['format'].split(", ")) for item in filterFormats), elements))
+                filter(lambda e: e['format'] is not None, elements)
+            )
+            elements = list(filter(lambda e: all(item.lower() in (
+                f.lower() for f in e['format'].split(", ")) for item in filterFormats), elements)
+            )
 
         cursor = None
         limit = None
