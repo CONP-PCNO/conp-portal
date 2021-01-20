@@ -175,7 +175,7 @@ def dataset_search():
 
     formats = []
     # by default, formats should be represented in upper case
-    # except for NIfTI, BigWig and RNA-Seq
+    # except for NIfTI, bigWig and RNA-Seq
     for e in elements:
         if e['format'] is None:
             continue
@@ -184,7 +184,7 @@ def dataset_search():
             if formatted_string.lower() in ['nifti', 'nii', 'niigz']:
                 formats.append('NIfTI')
             elif formatted_string.lower() == 'bigwig':
-                formats.append('BigWig')
+                formats.append('bigWig')
             elif formatted_string.lower() == 'rna-seq':
                 formats.append('RNA-Seq')
             else:
