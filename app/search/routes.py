@@ -5,6 +5,7 @@
 """
 import json
 import os
+import re
 from datetime import datetime, timedelta
 
 import requests
@@ -173,12 +174,22 @@ def dataset_search():
     modalities = list(set(modalities))
 
     formats = []
+    # by default, formats should be represented in upper case
+    # except for NIfTI, BigWig and RNA-Seq
     for e in elements:
         if e['format'] is None:
             continue
         for m in e['format'].split(", "):
-            formats.append(m.lower())
-    formats = list(set(formats))
+            formatted_string = re.sub(r'\.', '', m)
+            if formatted_string.lower() in ['nifti', 'nii', 'niigz']:
+                formats.append('NIfTI')
+            elif formatted_string.lower() == 'bigwig':
+                formats.append('BigWig')
+            elif formatted_string.lower() == 'rna-seq':
+                formats.append('RNA-Seq')
+            else:
+                formats.append(formatted_string.upper())
+    formats = sorted(list(set(formats)))
 
     queryAll = bool(request.args.get('elements') == 'all')
     if(not queryAll):
@@ -192,9 +203,11 @@ def dataset_search():
         if request.args.get('formats'):
             filterFormats = request.args.get('formats').split(",")
             elements = list(
-                filter(lambda e: e['format'] is not None, elements))
-            elements = list(filter(lambda e: all(item in (
-                f.lower() for f in e['format'].split(", ")) for item in filterFormats), elements))
+                filter(lambda e: e['format'] is not None, elements)
+            )
+            elements = list(filter(lambda e: all(item.lower() in (
+                f.lower() for f in e['format'].split(", ")) for item in filterFormats), elements)
+            )
 
         cursor = None
         limit = None
