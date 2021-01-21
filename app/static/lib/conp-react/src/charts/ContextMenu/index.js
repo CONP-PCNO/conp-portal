@@ -12,10 +12,6 @@ const ContextMenu = (props) => {
         }
     }, []);
 
-    console.log("1", props.options.style);
-    //console.log(props.options.url);
-    console.log("2", dimensions);
-
     useEffect(() => {
         props.options.style && dimensions && setStyle(
             {
@@ -26,11 +22,13 @@ const ContextMenu = (props) => {
         )
     }, [props.options.style])
 
-    console.log("3", style)
+    useEffect(() => {
+        $(".dropdown-menu").toggle()
+    }, [props.options.style])
 
     return (
         <div ref={callBackRef} className="dropdown" style={style}>
-            <div className={"dropdown-menu" + (props.options.show ? " show" : "")} role="menu" aria-labelledby="dropdownMenu">
+            <div className="dropdown-menu">
                 <span className="dropdown-item-text"><b>{props.options.title}</b></span>
                 <div className="dropdown-divider"></div>
                 <a className="dropdown-item" href={props.options.url}>{props.options.actionText}</a>

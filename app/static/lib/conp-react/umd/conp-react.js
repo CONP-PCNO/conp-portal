@@ -18120,24 +18120,21 @@ var ContextMenu_ContextMenu = function ContextMenu(props) {
       setDimensions(domNode.getBoundingClientRect());
     }
   }, []);
-  console.log("1", props.options.style); //console.log(props.options.url);
-
-  console.log("2", dimensions);
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
     props.options.style && dimensions && setStyle(ContextMenu_extends({}, props.options.style, {
       top: props.options.style.top - dimensions.top - 80,
       left: props.options.style.left - dimensions.left
     }));
   }, [props.options.style]);
-  console.log("3", style);
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    $(".dropdown-menu").toggle();
+  }, [props.options.style]);
   return /*#__PURE__*/React.createElement("div", {
     ref: callBackRef,
     className: "dropdown",
     style: style
   }, /*#__PURE__*/React.createElement("div", {
-    className: "dropdown-menu" + (props.options.show ? " show" : ""),
-    role: "menu",
-    "aria-labelledby": "dropdownMenu"
+    className: "dropdown-menu"
   }, /*#__PURE__*/React.createElement("span", {
     className: "dropdown-item-text"
   }, /*#__PURE__*/React.createElement("b", null, props.options.title)), /*#__PURE__*/React.createElement("div", {
@@ -18308,8 +18305,7 @@ var DatasetModalities_DatasetModalities = function DatasetModalities(_ref) {
             title: e.target.point.name,
             actionText: "View Datasets",
             style: style,
-            url: url,
-            show: true
+            url: url
           });
         }
       };

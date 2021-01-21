@@ -154,8 +154,7 @@ const DatasetModalities = ({ datasets, pipelines, ...props }) => {
                         title: e.target.point.name,
                         actionText: "View Datasets",
                         style: style,
-                        url: url,
-                        show: true
+                        url: url
                     })
                 }
             }
