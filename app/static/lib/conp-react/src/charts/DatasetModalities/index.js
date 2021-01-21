@@ -11,7 +11,6 @@ let defaultOptions = {
     chart: {
         type: 'packedbubble',
         backgroundColor: '#FFF',
-        //height: (9 / 16 * 100) + '%',
         margin: [-30, -30, -30, -30],
         colors: ["#EA2627", "#A5A5A5", "#FFC000", "#207EA0", "#898989", "#5E5E5E"]
     },
@@ -40,13 +39,13 @@ let defaultOptions = {
 
         packedbubble: {
             color: "#EA2627",
-            minSize: '20%',
+            minSize: '30%',
             maxSize: '100%',
             zMin: 0,
             zMax: 20,
             layoutAlgorithm: {
                 initialPositions: 'random',
-                bubblePadding: 8,
+                bubblePadding: 12,
                 gravitationalConstant: 0.006,
                 splitSeries: false,
             },
@@ -152,6 +151,8 @@ const DatasetModalities = ({ datasets, pipelines, ...props }) => {
                     };
                     const url = `/search?modalities=${e.target.point.name.toLowerCase()}`;
                     setContextMenuOptions({
+                        title: e.target.point.name,
+                        actionText: "View Datasets",
                         style: style,
                         url: url,
                         show: true

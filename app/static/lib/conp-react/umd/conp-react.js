@@ -95,7 +95,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 87);
+/******/ 	return __webpack_require__(__webpack_require__.s = 88);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -142,7 +142,7 @@ function _extends() {
 if (false) { var throwOnDirectAccess, ReactIs; } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(88)();
+  module.exports = __webpack_require__(89)();
 }
 
 
@@ -358,7 +358,7 @@ function styles_withStyles_withStyles(stylesOrCreator, options) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return capitalize; });
-/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(73);
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(74);
 
 // It should to be noted that this function isn't equivalent to `text-transform: capitalize`.
 //
@@ -410,7 +410,7 @@ function _defineProperty(obj, key, value) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return fade; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return darken; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return lighten; });
-/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(73);
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(74);
 
 
 /* eslint-disable no-use-before-define */
@@ -732,7 +732,7 @@ if (true) {
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ _slicedToArray; });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
-var arrayWithHoles = __webpack_require__(70);
+var arrayWithHoles = __webpack_require__(71);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
 function _iterableToArrayLimit(arr, i) {
@@ -765,7 +765,7 @@ function _iterableToArrayLimit(arr, i) {
 var unsupportedIterableToArray = __webpack_require__(47);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
-var nonIterableRest = __webpack_require__(71);
+var nonIterableRest = __webpack_require__(72);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js
 
@@ -1446,7 +1446,7 @@ function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return Object(arrayLikeToArray["a" /* default */])(arr);
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
-var iterableToArray = __webpack_require__(69);
+var iterableToArray = __webpack_require__(70);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
 var unsupportedIterableToArray = __webpack_require__(47);
@@ -1632,7 +1632,7 @@ var nodeUtil = (function() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(62);
+/* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(63);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _SvgIcon__WEBPACK_IMPORTED_MODULE_0__["a"]; });
 
 
@@ -1952,7 +1952,7 @@ function createMixins(breakpoints, spacing, mixins) {
   }, mixins);
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/utils/esm/formatMuiErrorMessage.js
-var formatMuiErrorMessage = __webpack_require__(73);
+var formatMuiErrorMessage = __webpack_require__(74);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/colors/common.js
 var common = {
@@ -2745,7 +2745,7 @@ module.exports = hoistNonReactStatics;
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _root_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
-/* harmony import */ var _stubFalse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(65);
+/* harmony import */ var _stubFalse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(66);
 
 
 
@@ -3307,7 +3307,7 @@ module.exports = {
 /* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(90);
+module.exports = __webpack_require__(91);
 
 
 /***/ }),
@@ -6032,7 +6032,7 @@ var autoReplace = function autoReplace() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(39), __webpack_require__(94).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(39), __webpack_require__(95).setImmediate))
 
 /***/ }),
 /* 60 */,
@@ -6214,6 +6214,629 @@ a.isXAxis,f=a.center;if("colorAxis"!==a.coll){var g=b.chartX-f[0]-c.plotLeft;f=b
 
 /***/ }),
 /* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
+* Custom events v3.0.10 (2020-12-21)
+*
+* (c) 2012-2020 Black Label
+*
+* License: Creative Commons Attribution (CC)
+*/
+
+/* global Highcharts setTimeout clearTimeout module:true */
+/* eslint no-loop-func: 0 */
+
+/**
+ * @namespace customEvents
+ **/
+
+(function (factory) {
+    if ( true && module.exports) {
+        factory['default'] = factory;
+        module.exports = factory;
+    } else if (true) {
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(16)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (Highcharts) {
+            factory(Highcharts);
+            factory.Highcharts = Highcharts;
+            return factory;
+        }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else {}
+}(function (HC) {
+
+	/* global Highcharts :true, window */
+
+	'use strict';
+
+	var UNDEFINED,
+		DBLCLICK = 'dblclick',
+		TOUCHSTART = 'touchstart',
+		CLICK = 'click',
+		pick = HC.pick,
+		wrap = HC.wrap,
+		merge = HC.merge,
+		addEvent = HC.addEvent,
+		isTouchDevice = HC.isTouchDevice,
+		defaultOptions = HC.getOptions().plotOptions,
+		axisProto = HC.Axis && HC.Axis.prototype,
+		plotLineOrBandProto = HC.PlotLineOrBand && HC.PlotLineOrBand.prototype,
+		seriesTypes = HC.seriesTypes,
+		seriesProto = HC.Series && HC.Series.prototype,
+		isObject,
+		isNumber,
+		isArray,
+		objectEach,
+		customEvents,
+		proto,
+		methods;
+
+	/*
+	 * Back compatibility
+	 */
+
+	isArray = HC.isArray || function (obj) {
+		var str = Object.prototype.toString.call(obj);
+		return str === '[object Array]' || str === '[object Array Iterator]';
+	};
+	
+	objectEach = HC.objectEach || function (obj, fn, ctx) {
+		for (var key in obj) {
+	    	if (obj.hasOwnProperty(key)) {
+	    		fn.call(ctx, obj[key], key, obj);
+	    	}
+		}
+	};
+
+	isNumber = HC.isNumber || function (n) {
+		return typeof n === 'number' && !isNaN(n);
+	};
+
+	isObject = HC.isObject || function (obj) {
+		return obj && typeof obj === 'object';
+	}
+
+	/**
+	 * WRAPPED FUNCTIONS
+	 */
+
+	// reset exis events
+	if (plotLineOrBandProto) { // # condition for highmaps and custom builds
+		wrap(plotLineOrBandProto, 'render', function (proceed) {
+			var defaultEvents = this.options && this.options.events;
+		
+			// reset default events on plot lines or bands
+			if (defaultEvents) {
+				defaultEvents = false;
+			}
+
+			return proceed.apply(this, Array.prototype.slice.call(arguments, 1));
+		});
+	}
+	if (seriesProto) { // # condition for highmaps and custom builds
+		wrap(seriesProto, 'init', function (proceed, chart, options) {
+			var chartOptions = chart.options,
+				plotOptions = chartOptions.plotOptions,
+				seriesOptions = chartOptions.plotOptions.series,
+				userOptions = merge(seriesOptions, plotOptions[this.type], options),
+				userOptionsEvents = userOptions && userOptions.events,
+				userOptionsPointEvents = userOptions && userOptions.point && userOptions.point.events; // Fixed #70
+
+			// reset default events on series and series point
+			options.events = {};
+			options.point = {
+				events: {}
+			};
+
+			// Add support for legendItemClick
+			if (userOptionsEvents) {
+				options.events = {
+					legendItemClick: userOptionsEvents && userOptionsEvents.legendItemClick
+				};
+			}
+
+			// Add support for legendItemClick in pie chart
+			if (userOptionsPointEvents) {
+				options.point.events = {
+					legendItemClick: userOptionsPointEvents && userOptionsPointEvents.legendItemClick,
+					select: userOptionsPointEvents && userOptionsPointEvents.select,
+					unselect: userOptionsPointEvents && userOptionsPointEvents.unselect,
+					click: userOptionsPointEvents && userOptionsPointEvents.click,
+					mouseOut: userOptionsPointEvents && userOptionsPointEvents.mouseOut,
+					mouseOver: userOptionsPointEvents && userOptionsPointEvents.mouseOver
+				};
+			}
+
+			// attach events to custom object, which is used in attach event
+			options.customEvents = {
+				series: userOptionsEvents,
+				point: userOptionsPointEvents
+			};
+
+			// call default action
+			proceed.apply(this, Array.prototype.slice.call(arguments, 1));
+
+		});
+	}
+
+	HC.Chart.prototype.customEvent = {
+		/**
+		 * @description Example: [HC.Series, ['drawPoints', 'drawDataLabels']]
+		 * @memberof customEvents
+		 * @returns {Array} array of pairs: prototype, array of methods to wrap
+		 **/
+		getEventsProtoMethods: function () {
+			var protoMethods = [
+				[HC.Tick, ['addLabel']],
+				[HC.Axis, ['render']],
+				[HC.Axis, ['drawCrosshair']],
+				[HC.Chart, ['setTitle']],
+				[HC.Legend, ['renderItem']],
+				[HC.PlotLineOrBand, ['render']],
+				[HC.Series, ['drawPoints', 'drawDataLabels']]
+			];
+
+			// support for extra series
+			objectEach(seriesTypes, function (fn, seriesType) {
+				protoMethods.push([
+					seriesTypes[seriesType], ['drawPoints', 'drawDataLabels']
+				]);
+			});
+	
+			return protoMethods;
+		},
+		/**
+		 * @description Init method, based on getEventsProtoMethods() array. Iterates on array of prototypes and methods to wrap
+		 * @memberof customEvents
+		 **/
+		init: function () {
+			var eventsProtoMethods = this.getEventsProtoMethods(); // array of pairs [object, [methods]]
+			
+			eventsProtoMethods.forEach(function (protoMethod) {
+				if (isArray(protoMethod)) {
+					proto = protoMethod[0] && protoMethod[0].prototype;
+					methods = protoMethod[1];
+
+					if (proto) {
+						methods.forEach(function (method) {
+							customEvents.attach(proto, method);
+						});
+					}
+				}
+			});
+		},
+		/**
+		 * @description Wraps methods i.e drawPoints to extract SVG element and set an event by calling customEvents.add()
+		 * @param {Object} proto Highcharts prototype i.e Highcharts.Series.prototype
+		 * @param {Object} hcMethod name of wrapped method i.e drawPoints
+		 * @memberof customEvents
+		 **/
+		attach: function (proto, hcMethod) {
+			
+			wrap(proto, hcMethod, function (proceed, param) {
+				var eventElement = {
+						events: UNDEFINED,
+						element: UNDEFINED
+					},
+					proceedObject,
+					len,
+					j;
+
+				//  call default actions
+				proceedObject = proceed.apply(this, Array.prototype.slice.call(arguments, 1));
+
+				//	call
+				eventElement = customEvents.eventElement[hcMethod].call(this, param);
+
+				//  stop, when events and SVG element do not exist
+				if (!eventElement.events && !eventElement.eventsSubtitle && !eventElement.eventsPoint) {
+					return proceedObject;
+				}
+				
+				if (eventElement.eventsPoint) {
+
+					len = eventElement.elementPoint.length;
+
+					// attach events per each point
+					for (j = 0; j < len; j++) {
+						if (eventElement.elementPoint[j]) {
+							var elemPoint = pick(eventElement.elementPoint[j].graphic, eventElement.elementPoint[j]);
+
+							if (elemPoint && elemPoint !== UNDEFINED) {
+								customEvents.add(elemPoint, eventElement.eventsPoint, eventElement.elementPoint[j], eventElement, true);
+							}
+						}
+					}
+				}
+
+				// attach event to subtitle
+				if (eventElement.eventsSubtitle) {
+					customEvents.add(eventElement.elementSubtitle, eventElement.eventsSubtitle, eventElement, this);
+				}
+
+				// attach event to each datalabal and add reference to each point
+				if (eventElement.dataLabelsPoints) {
+					var dataLabelsPoints = eventElement.dataLabelsPoints;
+					
+					len = dataLabelsPoints.length;
+
+					for (j = 0; j < len; j++) {
+						customEvents.add(
+							dataLabelsPoints[j].dataLabel,
+							eventElement.events,
+							{
+								dataLabel: dataLabelsPoints[j].dataLabel,
+								point: dataLabelsPoints[j]
+							},
+							this
+						);
+					}
+				}
+
+				// attach event to stackLabels
+				if (eventElement.eventsStackLabel) {
+					customEvents.add(eventElement.elementStackLabel, eventElement.eventsStackLabel, eventElement, this);
+				}
+
+				customEvents.add(eventElement.element, eventElement.events, eventElement, this);
+
+				return proceedObject;
+
+			});
+		},
+		/**
+		 * @description adds event on a SVG element
+		 * @param {Object} SVGelem graphic element
+		 * @param {Object} events object with all events
+		 * @param {Object} elemObj "this" object, which is available in the event
+		 * @param {Object} series chart series
+		 * @memberof customEvents
+		 **/
+		add: function (SVGelem, events, elemObj, eventElement, isPoint) {
+
+			var eventObject = eventElement.eventObject || elemObj.eventObject, //	Fix series reference #89
+				isSeries = elemObj.isSeries || eventElement.isSeries;
+
+
+			// stop when SVG element does not exist
+			if (!SVGelem || !SVGelem.element) {
+				return false;
+			}
+
+			for (var action in events) {
+
+				(function (event) {
+					if (events.hasOwnProperty(event) && !SVGelem[event]) {
+						if (isTouchDevice && event === DBLCLICK) { //  #30 - fallback for iPad
+							
+							var tapped = false;
+
+							addEvent(SVGelem.element, TOUCHSTART, function (e) {
+
+								e.preventDefault();
+
+								if (isSeries) { // #93
+									var chart = eventObject.chart,
+										normalizedEvent = chart.pointer.normalize(e);
+
+									if (!eventObject.directTouch) {
+										elemObj = eventObject.searchPoint(normalizedEvent, eventObject.kdDimensions === 1);
+									}
+
+									e.point = elemObj;	//	#89 point reference in mouse event
+								}
+
+								if ((eventObject && !isPoint) || (eventObject && isNumber(eventObject.value))) { // #95 
+									eventObject.value = elemObj.textStr;
+									elemObj = eventObject;
+								}
+
+								if (elemObj && elemObj.textStr) { // labels
+									elemObj.value = elemObj.textStr;
+								}
+
+								if (elemObj && elemObj.drilldown) { // #114 - drillUp - undefined ddDupes []
+									elemObj.doDrilldown(undefined, undefined, e);
+								}
+
+								if (!tapped) {
+
+									tapped = setTimeout(function () {
+										tapped = null;
+										if (events[CLICK] && elemObj && elemObj.drilldown === undefined) {
+											events[CLICK].call(elemObj, e); //	call single click action
+										}
+									}, 300);
+
+								} else {
+									clearTimeout(tapped);
+
+									tapped = null;
+									
+									if (elemObj && elemObj.drilldown === undefined) {
+										events[event].call(elemObj, e);
+									}
+								}
+
+								return false;
+
+							});
+
+						} else {
+
+							addEvent(SVGelem.element, event, function (e) {
+								
+								e.stopPropagation();
+
+								if (isSeries) { // #108, #93 - references in e.point and this after chart.update()
+									var chart = eventObject.chart,
+										normalizedEvent = chart.pointer.normalize(e);
+
+									if (!eventObject.directTouch) {
+										elemObj = eventObject.searchPoint(normalizedEvent, eventObject.kdDimensions === 1);
+									}
+
+									e.point = elemObj;	//	#89 point reference in mouse event
+								}
+
+								if ((eventObject && !isPoint) || (eventObject && isNumber(eventObject.value))) { // #95 wrong reference for axis labels
+									eventObject.value = elemObj.textStr || eventObject.value; // #95, #98 wrong reference for axis labels
+									elemObj = eventObject;
+								}
+
+								if (elemObj && elemObj.textStr) { // labels
+									elemObj.value = elemObj.textStr;
+								}
+
+								if (
+									isPoint &&
+									event === 'click' &&
+									elemObj.series &&
+									elemObj.series.options &&
+									elemObj.series.options.allowPointSelect
+								) {
+									var defaultFunction = function (event) {
+										// Control key is for Windows, meta (= Cmd key) for Mac, Shift
+										// for Opera.
+										if (elemObj.select) { // #2911
+												elemObj.select(null, e.ctrlKey || e.metaKey || e.shiftKey);
+										}
+									};
+
+								  	HC.fireEvent(elemObj, event, e, defaultFunction);
+								}
+
+								if (elemObj && elemObj.drilldown) { // #114 - drillUp - undefined ddDupes []
+									elemObj.doDrilldown(undefined, undefined, e);
+								} else if (events && events[event]) {
+									events[event].call(elemObj, e);
+								}
+
+								return false;
+							});
+						}
+
+						SVGelem[event] = function () {
+							return true;
+						};
+					}
+				})(action);
+			}
+		},
+		eventElement: {
+			/**
+			* @typedef {Object} eventElement
+			**/
+			/**
+			 * @description Extracts SVG elements from points
+			 * @property {Object} eventsPoint events for point
+			 * @property {Array} elementPoint array of SVG point elements
+			 * @property {Object} eventObject object kept in this on i.e click
+			 * @return {Object} { events: object, element: object }
+			 * @memberof customEvents
+			 **/
+			addLabel: function () {
+				var parent = this.parent,
+					axis = this.axis,
+					axisOptions = axis.options,
+					eventsPoint = axisOptions.labels && axisOptions.labels.events,
+					elementPoint = [this.label],
+					len, i;
+
+				if (parent) {
+					var step = this; // current label
+
+					while (step) {
+						if (isArray(step)) {
+							len = step.length;
+
+							for (i = 0; i < len; i++) {
+								elementPoint.push(step[i].label);
+							}
+						} else {
+							elementPoint.push(step.label);
+						}
+
+						step = step.parent;
+					}
+				}
+
+				return {
+					eventsPoint: eventsPoint,
+					elementPoint: elementPoint,
+					eventObject: {
+						axis: axis,
+						isFirst: this.isFirst,
+						isLast: this.isLast,
+						chart: axis.chart,
+						dateTimeLabelFormat: axisOptions.dateTimeLabelFormats,
+						value: this.pos,
+						pos: this.pos
+					}
+				};
+			},
+			/**
+			 * @description Extracts SVG elements from title and subtitle
+			 * @property {Object} events events for title
+			 * @property {Array} elementPoint title SVG element
+			 * @property {Object} eventsSubtitle events for subtitle
+			 * @property {Array} elementSubtitle subtitle SVG element
+			 * @return {Object} {event: object, element: object, eventsSubtitle: object, elementSubtitle: object }
+			 * @memberof customEvents
+			 **/
+			setTitle: function () {
+				var events = this.options.title && this.options.title.events,
+					element = this.title,
+					eventsSubtitle = this.options.subtitle && this.options.subtitle.events,
+					elementSubtitle = this.subtitle;
+
+				return {
+					events: events,
+					element: element,
+					eventsSubtitle: eventsSubtitle,
+					elementSubtitle: elementSubtitle
+				};
+			},
+			/**
+			 * @description Extracts SVG elements from dataLabels
+			 * @property {Object} events events for dataLabels
+			 * @property {Array} element dataLabels SVG element
+			 * @return {Object} { events: object, element: object }
+			 * @memberof customEvents
+			 **/
+			drawDataLabels: function () {
+				var dataLabelsGroup = this.dataLabelsGroup,
+					dataLabelEvents = dataLabelsGroup && this.options.dataLabels.events;
+
+				return {
+					events: dataLabelEvents,
+					element: dataLabelsGroup,
+					dataLabelsPoints: this.points
+				};
+			},
+			/**
+			 * @description Extracts SVG elements from axis title and stackLabels
+			 * @property {Object} events events for axis title
+			 * @property {Array} element axis title SVG element
+			 * @property {Object} eventsPoint events for stacklabels
+			 * @property {Array} elementPoint stacklabels SVG element
+			 * @property {Object} eventsStackLabel events for stacklabels
+			 * @property {Array} elementStackLabel stacklabels group SVG element
+			 * @return {Object} { events: object, element: object, eventsPoint: object, elementPoint: object, eventsStackLabel: object, elementStackLabel: object }
+			 * @memberof customEvents
+			 **/
+			render: function () {
+				var stackLabels = this.options.stackLabels,
+					events,
+					element,
+					eventsPoint,
+					elementPoint,
+					eventsStackLabel,
+					elementStackLabel;
+
+				if (this.axisTitle) {
+					events = this.options.title.events;
+					element = this.axisTitle;
+				}
+
+				if (stackLabels && stackLabels.enabled) {
+					eventsPoint = stackLabels.events;
+					elementPoint = this.stacks || this.stacking.stacks;
+					eventsStackLabel = stackLabels.events;
+					elementStackLabel = this.stackTotalGroup || this.stacking.stackTotalGroup;
+				}
+
+				return {
+					events: events,
+					element: element,
+					eventsPoint: eventsPoint,
+					elementPoint: elementPoint,
+					eventsStackLabel: eventsStackLabel,
+					elementStackLabel: elementStackLabel
+				};
+			},
+			/**
+			 * @description Extracts SVG elements from series and series points
+			 * @property {Object} events events for series
+			 * @property {Array} element series SVG element
+			 * @property {Object} events events for series points
+			 * @property {Array} element series points SVG element
+			 * @return {Object} { events: object, element: object, eventsPoint: object, elementPoint: object }
+			 * @memberof customEvents
+			 **/
+			drawPoints: function () {
+				var op = this.options,
+					type = this.type,
+					events = op.customEvents ? op.customEvents.series : op.events,
+					element = this.group,
+					eventsPoint = op.customEvents ? op.customEvents.point : op.point.events,
+					elementPoint;
+
+				if (defaultOptions[type] && defaultOptions[type].marker && !this.bubblePadding) {
+					elementPoint = [this.markerGroup]; //	get markers when enabled
+				} else {
+					elementPoint = this.points; //	extract points
+				}
+
+				if (!this.kdTree && !this.buildingKdTree) {
+					this.buildKDTree(); //	#86, missing reference to point on first mouseover
+				}
+
+				return {
+					events: events,
+					element: element,
+					eventsPoint: eventsPoint,
+					elementPoint: elementPoint,
+					eventObject: this,
+					isSeries: true
+				};
+			},
+			/**
+			 * @description Extracts SVG elements from legend item
+			 * @property {Object} events events for legend item
+			 * @property {Array} element legend item SVG element
+			 * @return {Object} { events: object, element: object }
+			 * @memberof customEvents
+			 **/
+			renderItem: function (item) {
+				return {
+					events: this.options.itemEvents,
+					element: item.legendGroup,
+					eventObject: item
+				};
+			},
+			/**
+			 * @description Extracts SVG elements from crosshair
+			 * @property {Object} events events for crosshair
+			 * @property {Array} element crosshair SVG element
+			 * @return {Object} { events: object, element: object }
+			 * @memberof customEvents
+			 **/
+			drawCrosshair: function () {
+				var cross = this.cross,
+					crosshairOptions = this.options.crosshair;
+
+				if (cross) {
+					cross.css({
+						'pointer-events': 'auto'
+					});
+				}
+
+				return {
+					events: crosshairOptions && crosshairOptions.events,
+					element: cross
+				};
+			}
+		}
+	};
+
+	customEvents = HC.Chart.prototype.customEvent;
+	customEvents.init();
+
+}));
+
+/***/ }),
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6324,7 +6947,7 @@ SvgIcon.muiName = 'SvgIcon';
 })(SvgIcon));
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports) {
 
 function _interopRequireDefault(obj) {
@@ -6336,14 +6959,14 @@ function _interopRequireDefault(obj) {
 module.exports = _interopRequireDefault;
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-const strictUriEncode = __webpack_require__(91);
-const decodeComponent = __webpack_require__(92);
-const splitOnFirst = __webpack_require__(93);
+const strictUriEncode = __webpack_require__(92);
+const decodeComponent = __webpack_require__(93);
+const splitOnFirst = __webpack_require__(94);
 
 const isNullOrUndefined = value => value === null || value === undefined;
 
@@ -6723,7 +7346,7 @@ exports.stringifyUrl = (object, options) => {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6748,7 +7371,7 @@ function stubFalse() {
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6792,7 +7415,7 @@ function cloneBuffer(buffer, isDeep) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(58)(module)))
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports) {
 
 
@@ -6896,7 +7519,7 @@ function makeNodesHash(arr){
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6928,7 +7551,7 @@ exports.default = function (file, acceptedFiles) {
 };
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6938,7 +7561,7 @@ function _iterableToArray(iter) {
 }
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6948,7 +7571,7 @@ function _arrayWithHoles(arr) {
 }
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6958,13 +7581,13 @@ function _nonIterableRest() {
 }
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(63);
+var _interopRequireDefault = __webpack_require__(64);
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6982,7 +7605,7 @@ var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", 
 exports.default = _default;
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7011,7 +7634,6 @@ function formatMuiErrorMessage(code) {
 }
 
 /***/ }),
-/* 74 */,
 /* 75 */,
 /* 76 */,
 /* 77 */,
@@ -7024,14 +7646,15 @@ function formatMuiErrorMessage(code) {
 /* 84 */,
 /* 85 */,
 /* 86 */,
-/* 87 */
+/* 87 */,
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(105);
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7044,7 +7667,7 @@ module.exports = __webpack_require__(105);
 
 
 
-var ReactPropTypesSecret = __webpack_require__(89);
+var ReactPropTypesSecret = __webpack_require__(90);
 
 function emptyFunction() {}
 function emptyFunctionWithReset() {}
@@ -7102,7 +7725,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7121,7 +7744,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -7875,7 +8498,7 @@ try {
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7884,7 +8507,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7985,7 +8608,7 @@ module.exports = function (encodedURI) {
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8014,7 +8637,7 @@ module.exports = (string, separator) => {
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -8070,7 +8693,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(95);
+__webpack_require__(96);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -8084,7 +8707,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(39)))
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -8274,10 +8897,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(39), __webpack_require__(96)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(39), __webpack_require__(97)))
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -8465,629 +9088,6 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-
-/***/ }),
-/* 97 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
-* Custom events v3.0.10 (2020-12-21)
-*
-* (c) 2012-2020 Black Label
-*
-* License: Creative Commons Attribution (CC)
-*/
-
-/* global Highcharts setTimeout clearTimeout module:true */
-/* eslint no-loop-func: 0 */
-
-/**
- * @namespace customEvents
- **/
-
-(function (factory) {
-    if ( true && module.exports) {
-        factory['default'] = factory;
-        module.exports = factory;
-    } else if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(16)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (Highcharts) {
-            factory(Highcharts);
-            factory.Highcharts = Highcharts;
-            return factory;
-        }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-    } else {}
-}(function (HC) {
-
-	/* global Highcharts :true, window */
-
-	'use strict';
-
-	var UNDEFINED,
-		DBLCLICK = 'dblclick',
-		TOUCHSTART = 'touchstart',
-		CLICK = 'click',
-		pick = HC.pick,
-		wrap = HC.wrap,
-		merge = HC.merge,
-		addEvent = HC.addEvent,
-		isTouchDevice = HC.isTouchDevice,
-		defaultOptions = HC.getOptions().plotOptions,
-		axisProto = HC.Axis && HC.Axis.prototype,
-		plotLineOrBandProto = HC.PlotLineOrBand && HC.PlotLineOrBand.prototype,
-		seriesTypes = HC.seriesTypes,
-		seriesProto = HC.Series && HC.Series.prototype,
-		isObject,
-		isNumber,
-		isArray,
-		objectEach,
-		customEvents,
-		proto,
-		methods;
-
-	/*
-	 * Back compatibility
-	 */
-
-	isArray = HC.isArray || function (obj) {
-		var str = Object.prototype.toString.call(obj);
-		return str === '[object Array]' || str === '[object Array Iterator]';
-	};
-	
-	objectEach = HC.objectEach || function (obj, fn, ctx) {
-		for (var key in obj) {
-	    	if (obj.hasOwnProperty(key)) {
-	    		fn.call(ctx, obj[key], key, obj);
-	    	}
-		}
-	};
-
-	isNumber = HC.isNumber || function (n) {
-		return typeof n === 'number' && !isNaN(n);
-	};
-
-	isObject = HC.isObject || function (obj) {
-		return obj && typeof obj === 'object';
-	}
-
-	/**
-	 * WRAPPED FUNCTIONS
-	 */
-
-	// reset exis events
-	if (plotLineOrBandProto) { // # condition for highmaps and custom builds
-		wrap(plotLineOrBandProto, 'render', function (proceed) {
-			var defaultEvents = this.options && this.options.events;
-		
-			// reset default events on plot lines or bands
-			if (defaultEvents) {
-				defaultEvents = false;
-			}
-
-			return proceed.apply(this, Array.prototype.slice.call(arguments, 1));
-		});
-	}
-	if (seriesProto) { // # condition for highmaps and custom builds
-		wrap(seriesProto, 'init', function (proceed, chart, options) {
-			var chartOptions = chart.options,
-				plotOptions = chartOptions.plotOptions,
-				seriesOptions = chartOptions.plotOptions.series,
-				userOptions = merge(seriesOptions, plotOptions[this.type], options),
-				userOptionsEvents = userOptions && userOptions.events,
-				userOptionsPointEvents = userOptions && userOptions.point && userOptions.point.events; // Fixed #70
-
-			// reset default events on series and series point
-			options.events = {};
-			options.point = {
-				events: {}
-			};
-
-			// Add support for legendItemClick
-			if (userOptionsEvents) {
-				options.events = {
-					legendItemClick: userOptionsEvents && userOptionsEvents.legendItemClick
-				};
-			}
-
-			// Add support for legendItemClick in pie chart
-			if (userOptionsPointEvents) {
-				options.point.events = {
-					legendItemClick: userOptionsPointEvents && userOptionsPointEvents.legendItemClick,
-					select: userOptionsPointEvents && userOptionsPointEvents.select,
-					unselect: userOptionsPointEvents && userOptionsPointEvents.unselect,
-					click: userOptionsPointEvents && userOptionsPointEvents.click,
-					mouseOut: userOptionsPointEvents && userOptionsPointEvents.mouseOut,
-					mouseOver: userOptionsPointEvents && userOptionsPointEvents.mouseOver
-				};
-			}
-
-			// attach events to custom object, which is used in attach event
-			options.customEvents = {
-				series: userOptionsEvents,
-				point: userOptionsPointEvents
-			};
-
-			// call default action
-			proceed.apply(this, Array.prototype.slice.call(arguments, 1));
-
-		});
-	}
-
-	HC.Chart.prototype.customEvent = {
-		/**
-		 * @description Example: [HC.Series, ['drawPoints', 'drawDataLabels']]
-		 * @memberof customEvents
-		 * @returns {Array} array of pairs: prototype, array of methods to wrap
-		 **/
-		getEventsProtoMethods: function () {
-			var protoMethods = [
-				[HC.Tick, ['addLabel']],
-				[HC.Axis, ['render']],
-				[HC.Axis, ['drawCrosshair']],
-				[HC.Chart, ['setTitle']],
-				[HC.Legend, ['renderItem']],
-				[HC.PlotLineOrBand, ['render']],
-				[HC.Series, ['drawPoints', 'drawDataLabels']]
-			];
-
-			// support for extra series
-			objectEach(seriesTypes, function (fn, seriesType) {
-				protoMethods.push([
-					seriesTypes[seriesType], ['drawPoints', 'drawDataLabels']
-				]);
-			});
-	
-			return protoMethods;
-		},
-		/**
-		 * @description Init method, based on getEventsProtoMethods() array. Iterates on array of prototypes and methods to wrap
-		 * @memberof customEvents
-		 **/
-		init: function () {
-			var eventsProtoMethods = this.getEventsProtoMethods(); // array of pairs [object, [methods]]
-			
-			eventsProtoMethods.forEach(function (protoMethod) {
-				if (isArray(protoMethod)) {
-					proto = protoMethod[0] && protoMethod[0].prototype;
-					methods = protoMethod[1];
-
-					if (proto) {
-						methods.forEach(function (method) {
-							customEvents.attach(proto, method);
-						});
-					}
-				}
-			});
-		},
-		/**
-		 * @description Wraps methods i.e drawPoints to extract SVG element and set an event by calling customEvents.add()
-		 * @param {Object} proto Highcharts prototype i.e Highcharts.Series.prototype
-		 * @param {Object} hcMethod name of wrapped method i.e drawPoints
-		 * @memberof customEvents
-		 **/
-		attach: function (proto, hcMethod) {
-			
-			wrap(proto, hcMethod, function (proceed, param) {
-				var eventElement = {
-						events: UNDEFINED,
-						element: UNDEFINED
-					},
-					proceedObject,
-					len,
-					j;
-
-				//  call default actions
-				proceedObject = proceed.apply(this, Array.prototype.slice.call(arguments, 1));
-
-				//	call
-				eventElement = customEvents.eventElement[hcMethod].call(this, param);
-
-				//  stop, when events and SVG element do not exist
-				if (!eventElement.events && !eventElement.eventsSubtitle && !eventElement.eventsPoint) {
-					return proceedObject;
-				}
-				
-				if (eventElement.eventsPoint) {
-
-					len = eventElement.elementPoint.length;
-
-					// attach events per each point
-					for (j = 0; j < len; j++) {
-						if (eventElement.elementPoint[j]) {
-							var elemPoint = pick(eventElement.elementPoint[j].graphic, eventElement.elementPoint[j]);
-
-							if (elemPoint && elemPoint !== UNDEFINED) {
-								customEvents.add(elemPoint, eventElement.eventsPoint, eventElement.elementPoint[j], eventElement, true);
-							}
-						}
-					}
-				}
-
-				// attach event to subtitle
-				if (eventElement.eventsSubtitle) {
-					customEvents.add(eventElement.elementSubtitle, eventElement.eventsSubtitle, eventElement, this);
-				}
-
-				// attach event to each datalabal and add reference to each point
-				if (eventElement.dataLabelsPoints) {
-					var dataLabelsPoints = eventElement.dataLabelsPoints;
-					
-					len = dataLabelsPoints.length;
-
-					for (j = 0; j < len; j++) {
-						customEvents.add(
-							dataLabelsPoints[j].dataLabel,
-							eventElement.events,
-							{
-								dataLabel: dataLabelsPoints[j].dataLabel,
-								point: dataLabelsPoints[j]
-							},
-							this
-						);
-					}
-				}
-
-				// attach event to stackLabels
-				if (eventElement.eventsStackLabel) {
-					customEvents.add(eventElement.elementStackLabel, eventElement.eventsStackLabel, eventElement, this);
-				}
-
-				customEvents.add(eventElement.element, eventElement.events, eventElement, this);
-
-				return proceedObject;
-
-			});
-		},
-		/**
-		 * @description adds event on a SVG element
-		 * @param {Object} SVGelem graphic element
-		 * @param {Object} events object with all events
-		 * @param {Object} elemObj "this" object, which is available in the event
-		 * @param {Object} series chart series
-		 * @memberof customEvents
-		 **/
-		add: function (SVGelem, events, elemObj, eventElement, isPoint) {
-
-			var eventObject = eventElement.eventObject || elemObj.eventObject, //	Fix series reference #89
-				isSeries = elemObj.isSeries || eventElement.isSeries;
-
-
-			// stop when SVG element does not exist
-			if (!SVGelem || !SVGelem.element) {
-				return false;
-			}
-
-			for (var action in events) {
-
-				(function (event) {
-					if (events.hasOwnProperty(event) && !SVGelem[event]) {
-						if (isTouchDevice && event === DBLCLICK) { //  #30 - fallback for iPad
-							
-							var tapped = false;
-
-							addEvent(SVGelem.element, TOUCHSTART, function (e) {
-
-								e.preventDefault();
-
-								if (isSeries) { // #93
-									var chart = eventObject.chart,
-										normalizedEvent = chart.pointer.normalize(e);
-
-									if (!eventObject.directTouch) {
-										elemObj = eventObject.searchPoint(normalizedEvent, eventObject.kdDimensions === 1);
-									}
-
-									e.point = elemObj;	//	#89 point reference in mouse event
-								}
-
-								if ((eventObject && !isPoint) || (eventObject && isNumber(eventObject.value))) { // #95 
-									eventObject.value = elemObj.textStr;
-									elemObj = eventObject;
-								}
-
-								if (elemObj && elemObj.textStr) { // labels
-									elemObj.value = elemObj.textStr;
-								}
-
-								if (elemObj && elemObj.drilldown) { // #114 - drillUp - undefined ddDupes []
-									elemObj.doDrilldown(undefined, undefined, e);
-								}
-
-								if (!tapped) {
-
-									tapped = setTimeout(function () {
-										tapped = null;
-										if (events[CLICK] && elemObj && elemObj.drilldown === undefined) {
-											events[CLICK].call(elemObj, e); //	call single click action
-										}
-									}, 300);
-
-								} else {
-									clearTimeout(tapped);
-
-									tapped = null;
-									
-									if (elemObj && elemObj.drilldown === undefined) {
-										events[event].call(elemObj, e);
-									}
-								}
-
-								return false;
-
-							});
-
-						} else {
-
-							addEvent(SVGelem.element, event, function (e) {
-								
-								e.stopPropagation();
-
-								if (isSeries) { // #108, #93 - references in e.point and this after chart.update()
-									var chart = eventObject.chart,
-										normalizedEvent = chart.pointer.normalize(e);
-
-									if (!eventObject.directTouch) {
-										elemObj = eventObject.searchPoint(normalizedEvent, eventObject.kdDimensions === 1);
-									}
-
-									e.point = elemObj;	//	#89 point reference in mouse event
-								}
-
-								if ((eventObject && !isPoint) || (eventObject && isNumber(eventObject.value))) { // #95 wrong reference for axis labels
-									eventObject.value = elemObj.textStr || eventObject.value; // #95, #98 wrong reference for axis labels
-									elemObj = eventObject;
-								}
-
-								if (elemObj && elemObj.textStr) { // labels
-									elemObj.value = elemObj.textStr;
-								}
-
-								if (
-									isPoint &&
-									event === 'click' &&
-									elemObj.series &&
-									elemObj.series.options &&
-									elemObj.series.options.allowPointSelect
-								) {
-									var defaultFunction = function (event) {
-										// Control key is for Windows, meta (= Cmd key) for Mac, Shift
-										// for Opera.
-										if (elemObj.select) { // #2911
-												elemObj.select(null, e.ctrlKey || e.metaKey || e.shiftKey);
-										}
-									};
-
-								  	HC.fireEvent(elemObj, event, e, defaultFunction);
-								}
-
-								if (elemObj && elemObj.drilldown) { // #114 - drillUp - undefined ddDupes []
-									elemObj.doDrilldown(undefined, undefined, e);
-								} else if (events && events[event]) {
-									events[event].call(elemObj, e);
-								}
-
-								return false;
-							});
-						}
-
-						SVGelem[event] = function () {
-							return true;
-						};
-					}
-				})(action);
-			}
-		},
-		eventElement: {
-			/**
-			* @typedef {Object} eventElement
-			**/
-			/**
-			 * @description Extracts SVG elements from points
-			 * @property {Object} eventsPoint events for point
-			 * @property {Array} elementPoint array of SVG point elements
-			 * @property {Object} eventObject object kept in this on i.e click
-			 * @return {Object} { events: object, element: object }
-			 * @memberof customEvents
-			 **/
-			addLabel: function () {
-				var parent = this.parent,
-					axis = this.axis,
-					axisOptions = axis.options,
-					eventsPoint = axisOptions.labels && axisOptions.labels.events,
-					elementPoint = [this.label],
-					len, i;
-
-				if (parent) {
-					var step = this; // current label
-
-					while (step) {
-						if (isArray(step)) {
-							len = step.length;
-
-							for (i = 0; i < len; i++) {
-								elementPoint.push(step[i].label);
-							}
-						} else {
-							elementPoint.push(step.label);
-						}
-
-						step = step.parent;
-					}
-				}
-
-				return {
-					eventsPoint: eventsPoint,
-					elementPoint: elementPoint,
-					eventObject: {
-						axis: axis,
-						isFirst: this.isFirst,
-						isLast: this.isLast,
-						chart: axis.chart,
-						dateTimeLabelFormat: axisOptions.dateTimeLabelFormats,
-						value: this.pos,
-						pos: this.pos
-					}
-				};
-			},
-			/**
-			 * @description Extracts SVG elements from title and subtitle
-			 * @property {Object} events events for title
-			 * @property {Array} elementPoint title SVG element
-			 * @property {Object} eventsSubtitle events for subtitle
-			 * @property {Array} elementSubtitle subtitle SVG element
-			 * @return {Object} {event: object, element: object, eventsSubtitle: object, elementSubtitle: object }
-			 * @memberof customEvents
-			 **/
-			setTitle: function () {
-				var events = this.options.title && this.options.title.events,
-					element = this.title,
-					eventsSubtitle = this.options.subtitle && this.options.subtitle.events,
-					elementSubtitle = this.subtitle;
-
-				return {
-					events: events,
-					element: element,
-					eventsSubtitle: eventsSubtitle,
-					elementSubtitle: elementSubtitle
-				};
-			},
-			/**
-			 * @description Extracts SVG elements from dataLabels
-			 * @property {Object} events events for dataLabels
-			 * @property {Array} element dataLabels SVG element
-			 * @return {Object} { events: object, element: object }
-			 * @memberof customEvents
-			 **/
-			drawDataLabels: function () {
-				var dataLabelsGroup = this.dataLabelsGroup,
-					dataLabelEvents = dataLabelsGroup && this.options.dataLabels.events;
-
-				return {
-					events: dataLabelEvents,
-					element: dataLabelsGroup,
-					dataLabelsPoints: this.points
-				};
-			},
-			/**
-			 * @description Extracts SVG elements from axis title and stackLabels
-			 * @property {Object} events events for axis title
-			 * @property {Array} element axis title SVG element
-			 * @property {Object} eventsPoint events for stacklabels
-			 * @property {Array} elementPoint stacklabels SVG element
-			 * @property {Object} eventsStackLabel events for stacklabels
-			 * @property {Array} elementStackLabel stacklabels group SVG element
-			 * @return {Object} { events: object, element: object, eventsPoint: object, elementPoint: object, eventsStackLabel: object, elementStackLabel: object }
-			 * @memberof customEvents
-			 **/
-			render: function () {
-				var stackLabels = this.options.stackLabels,
-					events,
-					element,
-					eventsPoint,
-					elementPoint,
-					eventsStackLabel,
-					elementStackLabel;
-
-				if (this.axisTitle) {
-					events = this.options.title.events;
-					element = this.axisTitle;
-				}
-
-				if (stackLabels && stackLabels.enabled) {
-					eventsPoint = stackLabels.events;
-					elementPoint = this.stacks || this.stacking.stacks;
-					eventsStackLabel = stackLabels.events;
-					elementStackLabel = this.stackTotalGroup || this.stacking.stackTotalGroup;
-				}
-
-				return {
-					events: events,
-					element: element,
-					eventsPoint: eventsPoint,
-					elementPoint: elementPoint,
-					eventsStackLabel: eventsStackLabel,
-					elementStackLabel: elementStackLabel
-				};
-			},
-			/**
-			 * @description Extracts SVG elements from series and series points
-			 * @property {Object} events events for series
-			 * @property {Array} element series SVG element
-			 * @property {Object} events events for series points
-			 * @property {Array} element series points SVG element
-			 * @return {Object} { events: object, element: object, eventsPoint: object, elementPoint: object }
-			 * @memberof customEvents
-			 **/
-			drawPoints: function () {
-				var op = this.options,
-					type = this.type,
-					events = op.customEvents ? op.customEvents.series : op.events,
-					element = this.group,
-					eventsPoint = op.customEvents ? op.customEvents.point : op.point.events,
-					elementPoint;
-
-				if (defaultOptions[type] && defaultOptions[type].marker && !this.bubblePadding) {
-					elementPoint = [this.markerGroup]; //	get markers when enabled
-				} else {
-					elementPoint = this.points; //	extract points
-				}
-
-				if (!this.kdTree && !this.buildingKdTree) {
-					this.buildKDTree(); //	#86, missing reference to point on first mouseover
-				}
-
-				return {
-					events: events,
-					element: element,
-					eventsPoint: eventsPoint,
-					elementPoint: elementPoint,
-					eventObject: this,
-					isSeries: true
-				};
-			},
-			/**
-			 * @description Extracts SVG elements from legend item
-			 * @property {Object} events events for legend item
-			 * @property {Array} element legend item SVG element
-			 * @return {Object} { events: object, element: object }
-			 * @memberof customEvents
-			 **/
-			renderItem: function (item) {
-				return {
-					events: this.options.itemEvents,
-					element: item.legendGroup,
-					eventObject: item
-				};
-			},
-			/**
-			 * @description Extracts SVG elements from crosshair
-			 * @property {Object} events events for crosshair
-			 * @property {Array} element crosshair SVG element
-			 * @return {Object} { events: object, element: object }
-			 * @memberof customEvents
-			 **/
-			drawCrosshair: function () {
-				var cross = this.cross,
-					crosshairOptions = this.options.crosshair;
-
-				if (cross) {
-					cross.css({
-						'pointer-events': 'auto'
-					});
-				}
-
-				return {
-					events: crosshairOptions && crosshairOptions.events,
-					element: cross
-				};
-			}
-		}
-	};
-
-	customEvents = HC.Chart.prototype.customEvent;
-	customEvents.init();
-
-}));
 
 /***/ }),
 /* 98 */
@@ -9532,7 +9532,7 @@ exports.unstable_shouldYield=function(){return!e&&(null!==d&&d.expirationTime<l|
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(63);
+var _interopRequireDefault = __webpack_require__(64);
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -10050,7 +10050,7 @@ var regenerator = __webpack_require__(38);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/query-string/index.js
-var query_string = __webpack_require__(64);
+var query_string = __webpack_require__(65);
 
 // CONCATENATED MODULE: ./src/DataTable/DataTableContainer.js
 
@@ -18102,31 +18102,57 @@ TotalDatasetsPipelines_TotalDatasetsPipelines.propTypes = {};
 TotalDatasetsPipelines_TotalDatasetsPipelines.defaultProps = {};
 /* harmony default export */ var charts_TotalDatasetsPipelines = (TotalDatasetsPipelines_TotalDatasetsPipelines);
 // CONCATENATED MODULE: ./src/charts/ContextMenu/index.js
-var ContextMenu = function ContextMenu(props) {
-  var _props$options = props.options,
-      url = _props$options.url,
-      style = _props$options.style,
-      show = _props$options.show;
-  console.log(style);
-  console.log(url);
+function ContextMenu_extends() { ContextMenu_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return ContextMenu_extends.apply(this, arguments); }
+
+
+
+var ContextMenu_ContextMenu = function ContextMenu(props) {
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null),
+      dimensions = _useState[0],
+      setDimensions = _useState[1];
+
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null),
+      style = _useState2[0],
+      setStyle = _useState2[1];
+
+  var callBackRef = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (domNode) {
+    if (domNode) {
+      setDimensions(domNode.getBoundingClientRect());
+    }
+  }, []);
+  console.log("1", props.options.style); //console.log(props.options.url);
+
+  console.log("2", dimensions);
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    props.options.style && dimensions && setStyle(ContextMenu_extends({}, props.options.style, {
+      top: props.options.style.top - dimensions.top - 80,
+      left: props.options.style.left - dimensions.left
+    }));
+  }, [props.options.style]);
+  console.log("3", style);
   return /*#__PURE__*/React.createElement("div", {
+    ref: callBackRef,
     className: "dropdown",
     style: style
-  }, /*#__PURE__*/React.createElement("ul", {
-    className: "dropdown-menu" + (show ? " show" : ""),
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "dropdown-menu" + (props.options.show ? " show" : ""),
     role: "menu",
     "aria-labelledby": "dropdownMenu"
-  }, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "dropdown-item-text"
+  }, /*#__PURE__*/React.createElement("b", null, props.options.title)), /*#__PURE__*/React.createElement("div", {
+    className: "dropdown-divider"
+  }), /*#__PURE__*/React.createElement("a", {
     className: "dropdown-item",
-    href: url
-  }, "View Datasets")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: props.options.url
+  }, props.options.actionText), /*#__PURE__*/React.createElement("a", {
     className: "dropdown-item",
-    href: url,
+    href: props.options.url,
     target: "_blank"
-  }, "View Datasets in New Tab"))));
+  }, props.options.actionText, " in New Tab")));
 };
 
-/* harmony default export */ var charts_ContextMenu = (ContextMenu);
+/* harmony default export */ var charts_ContextMenu = (ContextMenu_ContextMenu);
 // CONCATENATED MODULE: ./src/charts/DatasetModalities/index.js
 function DatasetModalities_extends() { DatasetModalities_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return DatasetModalities_extends.apply(this, arguments); }
 
@@ -18139,13 +18165,12 @@ function DatasetModalities_objectWithoutPropertiesLoose(source, excluded) { if (
 
 __webpack_require__(61)(highcharts_default.a);
 
-__webpack_require__(97)(highcharts_default.a);
+__webpack_require__(62)(highcharts_default.a);
 
 var DatasetModalities_defaultOptions = {
   chart: {
     type: 'packedbubble',
     backgroundColor: '#FFF',
-    //height: (9 / 16 * 100) + '%',
     margin: [-30, -30, -30, -30],
     colors: ["#EA2627", "#A5A5A5", "#FFC000", "#207EA0", "#898989", "#5E5E5E"]
   },
@@ -18171,13 +18196,13 @@ var DatasetModalities_defaultOptions = {
     },
     packedbubble: {
       color: "#EA2627",
-      minSize: '20%',
+      minSize: '30%',
       maxSize: '100%',
       zMin: 0,
       zMax: 20,
       layoutAlgorithm: {
         initialPositions: 'random',
-        bubblePadding: 8,
+        bubblePadding: 12,
         gravitationalConstant: 0.006,
         splitSeries: false
       },
@@ -18280,6 +18305,8 @@ var DatasetModalities_DatasetModalities = function DatasetModalities(_ref) {
           };
           var url = "/search?modalities=" + e.target.point.name.toLowerCase();
           setContextMenuOptions({
+            title: e.target.point.name,
+            actionText: "View Datasets",
             style: style,
             url: url,
             show: true
@@ -18307,7 +18334,10 @@ function PipelineTags_objectWithoutPropertiesLoose(source, excluded) { if (sourc
 
 
 
+
 __webpack_require__(61)(highcharts_default.a);
+
+__webpack_require__(62)(highcharts_default.a);
 
 var PipelineTags_defaultOptions = {
   chart: {
@@ -18334,22 +18364,19 @@ var PipelineTags_defaultOptions = {
     series: {
       allowPointSelect: true,
       point: {
-        events: {
-          select: function select(e) {
-            // eslint-disable-next-line no-restricted-globals
-            location.assign("/pipelines?tags=" + e.target.name.toLowerCase());
-          }
-        }
+        events: {}
       }
     },
     packedbubble: {
       color: "#207EA0",
-      minSize: '10%',
+      minSize: '30%',
       maxSize: '100%',
       zMin: 0,
       zMax: 20,
       layoutAlgorithm: {
-        gravitationalConstant: 0.02,
+        initialPositions: 'random',
+        bubblePadding: 12,
+        gravitationalConstant: 0.006,
         splitSeries: false
       },
       dataLabels: {
@@ -18382,6 +18409,10 @@ var PipelineTags_PipelineTags = function PipelineTags(_ref) {
   var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
       isDrawn = _useState2[0],
       setIsDrawn = _useState2[1];
+
+  var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}),
+      contextMenuOptions = _useState3[0],
+      setContextMenuOptions = _useState3[1];
 
   var updateChart = function updateChart(data) {
     var pipelineData = Object.keys(data.pipelines).map(function (p) {
@@ -18434,10 +18465,40 @@ var PipelineTags_PipelineTags = function PipelineTags(_ref) {
     setIsDrawn(true);
   }
 
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(highcharts_react_min_default.a, {
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    setOptions(function (prevOptions) {
+      var options = prevOptions;
+      options.plotOptions.series.point.events = {
+        contextmenu: function contextmenu(e) {
+          e.preventDefault();
+          console.log(e.target);
+          var xPos = e.pageX;
+          var yPos = e.pageY;
+          var style = {
+            "position": "absolute",
+            "left": xPos,
+            "top": yPos,
+            "zIndex": 1000
+          };
+          var url = "/pipelines?tags=" + e.target.point.name.toLowerCase();
+          setContextMenuOptions({
+            title: e.target.point.name,
+            actionText: "View Pipelines",
+            style: style,
+            url: url,
+            show: true
+          });
+        }
+      };
+      return options;
+    });
+  }, []);
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_ContextMenu, {
+    options: contextMenuOptions
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(highcharts_react_min_default.a, {
     highcharts: highcharts_default.a,
     options: options
-  });
+  }));
 };
 
 PipelineTags_PipelineTags.propTypes = {};
@@ -20612,7 +20673,7 @@ function baseAssignIn(object, source) {
 /* harmony default export */ var _baseAssignIn = (baseAssignIn);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/_cloneBuffer.js
-var _cloneBuffer = __webpack_require__(66);
+var _cloneBuffer = __webpack_require__(67);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/_copyArray.js
 /**
@@ -26790,7 +26851,7 @@ var SwitchBase_SwitchBase = /*#__PURE__*/external_root_React_commonjs2_react_com
   name: 'PrivateSwitchBase'
 })(SwitchBase_SwitchBase));
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/SvgIcon/SvgIcon.js
-var SvgIcon = __webpack_require__(62);
+var SvgIcon = __webpack_require__(63);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/createSvgIcon.js
 
@@ -32727,7 +32788,7 @@ function mapKeys(object, iteratee) {
 /* harmony default export */ var lodash_es_mapKeys = (mapKeys);
 
 // EXTERNAL MODULE: ./node_modules/toposort/index.js
-var toposort = __webpack_require__(67);
+var toposort = __webpack_require__(68);
 var toposort_default = /*#__PURE__*/__webpack_require__.n(toposort);
 
 // CONCATENATED MODULE: ./node_modules/yup/es/util/sortFields.js
@@ -33878,7 +33939,7 @@ function fromFileEntry(entry) {
 
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ./node_modules/attr-accept/dist/es/index.js
-var dist_es = __webpack_require__(68);
+var dist_es = __webpack_require__(69);
 var es_default = /*#__PURE__*/__webpack_require__.n(dist_es);
 
 // CONCATENATED MODULE: ./node_modules/react-dropzone/dist/es/utils/index.js
@@ -34878,11 +34939,11 @@ function reducer(state, action) {
   }
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/icons/Cancel.js
-var Cancel = __webpack_require__(72);
+var Cancel = __webpack_require__(73);
 var Cancel_default = /*#__PURE__*/__webpack_require__.n(Cancel);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/utils/esm/formatMuiErrorMessage.js
-var formatMuiErrorMessage = __webpack_require__(73);
+var formatMuiErrorMessage = __webpack_require__(74);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/debounce.js
 // Corresponds to 10 frames at 60 Hz.
