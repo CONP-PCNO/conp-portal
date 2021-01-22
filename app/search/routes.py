@@ -183,6 +183,8 @@ def dataset_search():
             formatted_string = re.sub(r'\.', '', m)
             if formatted_string.lower() in ['nifti', 'nii', 'niigz']:
                 formats.append('NIfTI')
+            elif formatted_string.lower() in ['gifti', 'gii']:
+                formats.append('GIfTI')
             elif formatted_string.lower() == 'bigwig':
                 formats.append('bigWig')
             elif formatted_string.lower() == 'rna-seq':
