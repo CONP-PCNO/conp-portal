@@ -5,6 +5,7 @@
 """
 import json
 import os
+import re
 from datetime import datetime, timedelta
 
 import requests
@@ -33,8 +34,26 @@ def search():
     """
 
     modalities = request.args.get('modalities')
+    formats = request.args.get('formats')
+    search = request.args.get('search')
+    tags = request.args.get('tags')
+    sortComparitor = request.args.get('sortComparitor')
+    sortKey = request.args.get('sortKey')
+    max_per_page = request.args.get('max_per_page')
+    page = request.args.get('page')
 
-    return render_template('search.html', title='CONP | Search', user=current_user, modalities=modalities)
+    filters = {
+        "modalities": modalities,
+        "formats": formats,
+        "search": search,
+        "tags": tags,
+        "sortComparitor": sortComparitor,
+        "sortKey": sortKey,
+        "max_per_page": max_per_page,
+        "page": page
+    }
+
+    return render_template('search.html', title='CONP | Search', user=current_user, filters=filters)
 
 
 @search_bp.route('/dataset_logo')
@@ -156,12 +175,24 @@ def dataset_search():
     modalities = list(set(modalities))
 
     formats = []
+    # by default, formats should be represented in upper case
+    # except for NIfTI, bigWig and RNA-Seq
     for e in elements:
         if e['format'] is None:
             continue
         for m in e['format'].split(", "):
-            formats.append(m.lower())
-    formats = list(set(formats))
+            formatted_string = re.sub(r'\.', '', m)
+            if formatted_string.lower() in ['nifti', 'nii', 'niigz']:
+                formats.append('NIfTI')
+            elif formatted_string.lower() in ['gifti', 'gii']:
+                formats.append('GIfTI')
+            elif formatted_string.lower() == 'bigwig':
+                formats.append('bigWig')
+            elif formatted_string.lower() == 'rna-seq':
+                formats.append('RNA-Seq')
+            else:
+                formats.append(formatted_string.upper())
+    formats = sorted(list(set(formats)))
 
     queryAll = bool(request.args.get('elements') == 'all')
     if(not queryAll):
@@ -175,14 +206,21 @@ def dataset_search():
         if request.args.get('formats'):
             filterFormats = request.args.get('formats').split(",")
             elements = list(
-                filter(lambda e: e['format'] is not None, elements))
-            elements = list(filter(lambda e: all(item in (
-                f.lower() for f in e['format'].split(", ")) for item in filterFormats), elements))
+                filter(lambda e: e['format'] is not None, elements)
+            )
+            elements = list(filter(lambda e: all(item.lower() in (
+                f.lower() for f in e['format'].split(", ")) for item in filterFormats), elements)
+            )
 
-        delta = int(request.args.get('max_per_page', 10)) * \
-            (int(request.args.get('page', 1)) - 1)
-        cursor = max(min(int(request.args.get('cursor') or 0), 0), 0) + delta
-        limit = int(request.args.get('limit') or 10)
+        cursor = None
+        limit = None
+        if(request.args.get('max_per_page') != 'All'):
+            delta = int(request.args.get('max_per_page', 10)) * \
+                (int(request.args.get('page', 1)) - 1)
+            cursor = max(
+                min(int(request.args.get('cursor') or 0), 0), 0) + delta
+            limit = int(request.args.get('limit') or 10)
+
         sort_key = request.args.get('sortKey') or "conpStatus"
         paginated = elements
 
@@ -249,7 +287,8 @@ def dataset_search():
         else:
             paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
 
-        paginated = paginated[(cursor):(cursor + limit)]
+        if(cursor is not None and limit is not None):
+            paginated = paginated[(cursor):(cursor + limit)]
     else:
         paginated = elements
 
