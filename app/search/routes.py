@@ -17,6 +17,7 @@ from app.models import Dataset, DatasetAncestry, User
 from app.search import search_bp
 from app.search.models import DATSDataset
 from app.services import github
+from config import Config
 
 
 @search_bp.route('/search')
@@ -476,6 +477,17 @@ def download_metadata():
             dataset.name.replace(' ', '_'), '.dats.json'),
         mimetype='application/json'
     )
+
+
+@search_bp.route('/sparql')
+def sparql():
+    """
+        Route for the SPARQL interface provided by YASGUI
+    """
+
+    sparql_endpoint = Config.NEXUS_SPARQL_ENDPOINT
+
+    return render_template('sparql.html', title='CONP | SPARQL', user=current_user, sparql_endpoint=sparql_endpoint)
 
 
 def get_dataset_metadata_information(dataset):
