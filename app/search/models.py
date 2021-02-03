@@ -109,21 +109,21 @@ class DATSDataset(object):
         return readme
 
     @property
-    def authors(self):
-        authors = []
-        creators = self.descriptor.get('creators', '')
-        if type(creators) == list:
-            for x in creators:
+    def creators(self):
+        creators = []
+        c = self.descriptor.get('creators', '')
+        if type(c) == list:
+            for x in c:
                 if 'name' in x:
-                    authors.append(x['name'])
+                    creators.append(x['name'])
                 if 'fullname' in x:
-                    authors.append(x['fullname'])
-        elif 'name' in creators:
-            authors.append(creators['name'])
+                    creators.append(x['fullname'])
+        elif 'name' in c:
+            creators.append(c['name'])
         else:
-            authors.append(creators)
+            creators.append(c)
 
-        return ", ".join(authors) if len(authors) > 0 else None
+        return ", ".join(creators) if len(creators) > 0 else None
 
     @property
     def principalInvestigators(self):

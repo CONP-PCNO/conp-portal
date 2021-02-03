@@ -149,6 +149,7 @@ def dataset_search():
             "URL": '?',
             "dateAdded": str(d.date_created.date()),
             "dateUpdated": str(d.date_updated.date()),
+            "creators": datsdataset.creators,
             "size": datsdataset.size,
             "files": datsdataset.fileCount,
             "subjects": datsdataset.subjectCount,
@@ -401,6 +402,7 @@ def dataset_info():
         "likes": "0",
         "dateAdded": str(d.date_created.date()),
         "dateUpdated": str(d.date_updated.date()),
+        "creators": datsdataset.creators,
         "size": datsdataset.size,
         "files": datsdataset.fileCount,
         "subjects": datsdataset.subjectCount,
@@ -506,7 +508,7 @@ def get_dataset_metadata_information(dataset):
 
     return {
         "schema_org_metadata": datsdataset.schema_org_metadata,
-        "authors": datsdataset.authors,
+        "creators": datsdataset.creators,
         "description": datsdataset.description,
         "contact": datsdataset.contacts,
         "version": datsdataset.version,
