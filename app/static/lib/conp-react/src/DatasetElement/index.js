@@ -54,7 +54,20 @@ const DatasetElement = props => {
               <div className="card-list-item">
                 <p className="card-text pr-1">
                   <strong>Creators: </strong>{element.creators}
-                  <strong>|</strong>
+                </p>
+              </div> : null}
+            {element.origin?.institution ?
+              <div className="card-list-item">
+                <p className="card-text pr-1">
+                  <strong> | </strong>
+                  <strong>Institution: </strong>{element.origin.institution}
+                </p>
+              </div> : null}
+            {element.origin?.consortium ?
+              <div className="card-list-item">
+                <p className="card-text pr-1">
+                  <strong> | </strong>
+                  <strong>Consortium: </strong>{element.origin.consortium}
                 </p>
               </div> : null}
           </div>
@@ -63,14 +76,13 @@ const DatasetElement = props => {
               <div className="card-list-item">
                 <p className="card-text text-capitalize pr-1">
                   <strong>Date Added: </strong>{element.dateAdded}
-                  <strong>|</strong>
                 </p>
               </div> : null}
             {element.dateUpdated ?
               <div className="card-list-item">
                 <p className="card-text text-capitalize pr-1">
-                  <strong>Date Updated: </strong>{element.dateUpdated}
                   <strong> | </strong>
+                  <strong>Date Updated: </strong>{element.dateUpdated}
                 </p>
               </div> : null}
           </div>
@@ -79,7 +91,6 @@ const DatasetElement = props => {
               <div className="card-list-item">
                 <p className="card-text text-capitalize pr-1">
                   <strong>Modalities: </strong>{element.modalities}
-                  <strong>|</strong>
                 </p>
               </div> : null}
           </div>
@@ -87,33 +98,31 @@ const DatasetElement = props => {
             {element.files ?
               <div className="card-list-item">
                 <p className="card-text text-capitalize pr-1">
+                  <strong> | </strong>
                   <strong>Files: </strong>{element.files}
-                  <strong>|</strong>
                 </p>
               </div> : null}
             {element.size ?
               <div className="card-list-item">
                 <p className="card-text text-capitalize pr-1">
+                  <strong> | </strong>
                   <strong>Size: </strong>{element.size}
-                  <strong>|</strong>
                 </p>
               </div> : null}
             {element.subjects ?
               <div className="card-list-item">
                 <p className="card-text text-capitalize pr-1">
+                  <strong> | </strong>
                   <strong>Subjects: </strong>{element.subjects}
-                  <strong>|</strong>
                 </p>
               </div> : null}
             {element.format ?
               <div className="card-list-item">
                 <p className="card-text text-capitalize pr-1">
+                  <strong> | </strong>
                   <strong>Format: </strong>{element.format.toString()}
-                  <strong>|</strong>
                 </p>
               </div> : null}
-
-
           </div>
           {element.sources ?
             <div className="card-list-item">
@@ -131,8 +140,9 @@ const DatasetElement = props => {
             </div> : null}
         </div>
       </div>
-      <div className="d-flex flex-column justify-content-center align-items-center w-50">
-        {element.showDownload ? <a
+      <div className="d-flex flex-column justify-content-center align-items-center">
+        <h5>DOWNLOAD</h5>
+        <a
           className="card-button"
           style={{
             pointerEvents: element.isPrivate && !authorized ? "none" : "all",
@@ -141,16 +151,8 @@ const DatasetElement = props => {
           href={`download_metadata?dataset=${element.id}`}
           download
         >
-          {element.isPrivate && !authorized && (
-            <div className="card-button-tooltip">
-              Please register for access.
-            </div>
-          )}
-          <div className="d-flex flex-column align-items-center">
-            <FontAwesomeIcon icon={faFileCode} color="black" size="5x" />
-            <button className="btn btn-link">Download Metadata</button>
-          </div>
-        </a> : null}
+          <button className="btn btn-outline-primary">Metadata</button>
+        </a>
         <div className="d-flex">
           {authIcons.map((icon, index) => <div key={"authIcon_" + index} className="p-1">{icon}</div>)}
         </div>

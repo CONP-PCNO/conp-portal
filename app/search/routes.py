@@ -150,6 +150,7 @@ def dataset_search():
             "dateAdded": str(d.date_created.date()),
             "dateUpdated": str(d.date_updated.date()),
             "creators": datsdataset.creators,
+            "origin": datsdataset.origin,
             "size": datsdataset.size,
             "files": datsdataset.fileCount,
             "subjects": datsdataset.subjectCount,

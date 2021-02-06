@@ -116,14 +116,20 @@ class DATSDataset(object):
             for x in c:
                 if 'name' in x:
                     creators.append(x['name'])
-                if 'fullname' in x:
-                    creators.append(x['fullname'])
+                if 'fullName' in x:
+                    creators.append(x['fullName'])
         elif 'name' in c:
             creators.append(c['name'])
         else:
             creators.append(c)
 
-        return ", ".join(creators) if len(creators) > 0 else None
+        # If creators contains > 3 names, use 'et al.' abbreviation
+        if len(creators) > 3:
+            return creators[0] + ' et al.'
+        elif len(creators) > 0:
+            return ", ".join(creators)
+
+        return None
 
     @property
     def principalInvestigators(self):
@@ -136,15 +142,15 @@ class DATSDataset(object):
                         if role['value'] == 'Principal Investigator':
                             if 'name' in x:
                                 principalInvestigators.append(x['name'])
-                            elif 'fullname' in x:
-                                principalInvestigators.append(x['fullname'])
+                            elif 'fullName' in x:
+                                principalInvestigators.append(x['fullName'])
         elif 'roles' in creators:
             for role in creators['roles']:
                 if role['value'] == 'Principal Investigator':
                     if 'name' in x:
                         principalInvestigators.append(x['name'])
-                    elif 'fullname' in x:
-                        principalInvestigators.append(x['fullname'])
+                    elif 'fullName' in x:
+                        principalInvestigators.append(x['fullName'])
 
         return ", ".join(principalInvestigators) if len(principalInvestigators) > 0 else None
 
@@ -214,6 +220,17 @@ class DATSDataset(object):
             auth = None
 
         return "{}".format(auth)
+
+    @property
+    def origin(self):
+        origin = None
+        extraprops = self.descriptor.get('extraProperties', {})
+        for prop in extraprops:
+            if prop.get('category') == 'origin':
+                origin = ", ".join([x['value']
+                                    for x in prop.get('values')])
+
+        return origin
 
     @property
     def contacts(self):
