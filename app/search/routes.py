@@ -154,8 +154,10 @@ def dataset_search():
             "size": datsdataset.size,
             "files": datsdataset.fileCount,
             "subjects": datsdataset.subjectCount,
-            "format": datsdataset.formats,
+            "formats": datsdataset.formats,
             "modalities": datsdataset.modalities,
+            "licenses": datsdataset.licenses,
+            "version": datsdataset.version,
             "sources": datsdataset.sources,
             "conpStatus": datsdataset.conpStatus,
             "authorizations": datsdataset.authorizations,
@@ -179,9 +181,9 @@ def dataset_search():
     # by default, formats should be represented in upper case
     # except for NIfTI, bigWig and RNA-Seq
     for e in elements:
-        if e['format'] is None:
+        if e['formats'] is None:
             continue
-        for m in e['format'].split(", "):
+        for m in e['formats'].split(", "):
             formatted_string = re.sub(r'\.', '', m)
             if formatted_string.lower() in ['nifti', 'nii', 'niigz']:
                 formats.append('NIfTI')
@@ -207,10 +209,10 @@ def dataset_search():
         if request.args.get('formats'):
             filterFormats = request.args.get('formats').split(",")
             elements = list(
-                filter(lambda e: e['format'] is not None, elements)
+                filter(lambda e: e['formats'] is not None, elements)
             )
             elements = list(filter(lambda e: all(item.lower() in (
-                f.lower() for f in e['format'].split(", ")) for item in filterFormats), elements)
+                f.lower() for f in e['formats'].split(", ")) for item in filterFormats), elements)
             )
 
         cursor = None
@@ -404,11 +406,14 @@ def dataset_info():
         "dateAdded": str(d.date_created.date()),
         "dateUpdated": str(d.date_updated.date()),
         "creators": datsdataset.creators,
+        "origin": datsdataset.origin,
         "size": datsdataset.size,
         "files": datsdataset.fileCount,
         "subjects": datsdataset.subjectCount,
-        "format": datsdataset.formats,
+        "formats": datsdataset.formats,
         "modalities": datsdataset.modalities,
+        "licenses": datsdataset.licenses,
+        "version": datsdataset.version,
         "sources": datsdataset.sources,
         "conpStatus": datsdataset.conpStatus,
         "authorizations": datsdataset.authorizations,

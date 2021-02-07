@@ -42,87 +42,109 @@ const DatasetElement = props => {
           {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP} alt="CONP status" />) : <div style={{ width: 32 }} />}
         </div>
       </div>
-      <div className="card-body d-flex flex-wrap">
-        <div className="d-flex flex-column">
+      <div className="card-body d-flex">
+        <div className="d-flex flex-column w-100">
           <h5 className="card-title text-card-title">
             <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>
               {element.title}
             </a>
           </h5>
-          <div className="d-flex flex-wrap align-items-start">
-            {element.creators ?
-              <div className="card-list-item">
-                <p className="card-text pr-1">
-                  <strong>Creators: </strong>{element.creators}
-                </p>
-              </div> : null}
-            {element.origin?.institution ?
-              <div className="card-list-item">
-                <p className="card-text pr-1">
-                  <strong> | </strong>
-                  <strong>Institution: </strong>{element.origin.institution}
-                </p>
-              </div> : null}
-            {element.origin?.consortium ?
-              <div className="card-list-item">
-                <p className="card-text pr-1">
-                  <strong> | </strong>
-                  <strong>Consortium: </strong>{element.origin.consortium}
-                </p>
-              </div> : null}
-          </div>
-          <div className="d-flex flex-wrap align-items-start">
-            {element.dateAdded ?
-              <div className="card-list-item">
-                <p className="card-text text-capitalize pr-1">
-                  <strong>Date Added: </strong>{element.dateAdded}
-                </p>
-              </div> : null}
-            {element.dateUpdated ?
-              <div className="card-list-item">
-                <p className="card-text text-capitalize pr-1">
-                  <strong> | </strong>
-                  <strong>Date Updated: </strong>{element.dateUpdated}
-                </p>
-              </div> : null}
-          </div>
-          <div className="d-flex flex-wrap align-items-start">
-            {element.modalities ?
-              <div className="card-list-item">
-                <p className="card-text text-capitalize pr-1">
-                  <strong>Modalities: </strong>{element.modalities}
-                </p>
-              </div> : null}
-          </div>
-          <div className="d-flex flex-wrap align-items-start">
-            {element.files ?
-              <div className="card-list-item">
-                <p className="card-text text-capitalize pr-1">
-                  <strong> | </strong>
-                  <strong>Files: </strong>{element.files}
-                </p>
-              </div> : null}
-            {element.size ?
-              <div className="card-list-item">
-                <p className="card-text text-capitalize pr-1">
-                  <strong> | </strong>
-                  <strong>Size: </strong>{element.size}
-                </p>
-              </div> : null}
-            {element.subjects ?
-              <div className="card-list-item">
-                <p className="card-text text-capitalize pr-1">
-                  <strong> | </strong>
-                  <strong>Subjects: </strong>{element.subjects}
-                </p>
-              </div> : null}
-            {element.format ?
-              <div className="card-list-item">
-                <p className="card-text text-capitalize pr-1">
-                  <strong> | </strong>
-                  <strong>Format: </strong>{element.format.toString()}
-                </p>
-              </div> : null}
+          <div className="py-2">
+            <div className="d-flex align-items-start">
+              {element.creators ?
+                <div className="card-list-item">
+                  <p className="card-text pr-1">
+                    <strong>Creators: </strong>{element.creators}
+                  </p>
+                </div> : null}
+              {element.origin?.institution ?
+                <div className="card-list-item">
+                  <p className="card-text pr-1">
+                    <strong> | </strong>
+                    <strong>Institution: </strong>{element.origin.institution}
+                  </p>
+                </div> : null}
+              {element.origin?.consortium ?
+                <div className="card-list-item">
+                  <p className="card-text pr-1">
+                    <strong> | </strong>
+                    <strong>Consortium: </strong>{element.origin.consortium}
+                  </p>
+                </div> : null}
+            </div>
+            <div className="d-flex align-items-start">
+              {element.dateAdded ?
+                <div className="card-list-item">
+                  <p className="card-text pr-1">
+                    <strong>Date Added: </strong>{element.dateAdded}
+                  </p>
+                </div> : null}
+              {element.dateUpdated ?
+                <div className="card-list-item">
+                  <p className="card-text pr-1">
+                    <strong> | </strong>
+                    <strong>Date Updated: </strong>{element.dateUpdated}
+                  </p>
+                </div> : null}
+            </div>
+            <div className="d-flex align-items-start">
+              {element.version ?
+                <div className="card-list-item">
+                  <p className="card-text pr-1">
+                    <strong>Version: </strong>{element.version}
+                  </p>
+                </div> : null}
+              {element.types ?
+                <div className="card-list-item">
+                  <p className="card-text pr-1">
+                    <strong> | </strong>
+                    <strong>Data Types: </strong>{element.types}
+                  </p>
+                </div> : null}
+              {element.modalities ?
+                <div className="card-list-item">
+                  <p className="card-text pr-1">
+                    <strong> | </strong>
+                    <strong>Modalities: </strong>{element.modalities}
+                  </p>
+                </div> : null}
+              {element.licenses ?
+                <div className="card-list-item">
+                  <p className="card-text text-capitalize pr-1">
+                    <strong> | </strong>
+                    <strong>License: </strong>{element.licenses}
+                  </p>
+                </div> : null}
+            </div>
+            <div className="d-flex align-items-start">
+              {element.files ?
+                <div className="card-list-item">
+                  <p className="card-text text-capitalize pr-1">
+                    <strong>Files: </strong>{element.files}
+                  </p>
+                </div> : null}
+              {element.size ?
+                <div className="card-list-item">
+                  <p className="card-text text-capitalize pr-1">
+                    <strong> | </strong>
+                    <strong>Size: </strong>{element.size}
+                  </p>
+                </div> : null}
+              {element.subjects ?
+                <div className="card-list-item">
+                  <p className="card-text text-capitalize pr-1">
+                    <strong> | </strong>
+                    <strong>Subjects: </strong>{element.subjects}
+                  </p>
+                </div> : null}
+              {element.formats ?
+                <div className="card-list-item">
+                  <p className="card-text text-capitalize pr-1">
+                    <strong> | </strong>
+                    <strong>Formats: </strong>{element.formats.toString()}
+                  </p>
+                </div> : null}
+            </div>
           </div>
           {element.sources ?
             <div className="card-list-item">
@@ -140,8 +162,8 @@ const DatasetElement = props => {
             </div> : null}
         </div>
       </div>
-      <div className="d-flex flex-column justify-content-center align-items-center">
-        <h5>DOWNLOAD</h5>
+      <div className="d-flex flex-column justify-content-center align-items-center p-4">
+        <h6>DOWNLOAD</h6>
         <a
           className="card-button"
           style={{
@@ -179,7 +201,7 @@ DatasetElement.propTypes = {
   size: PropTypes.string,
   files: PropTypes.number,
   subjects: PropTypes.number,
-  format: PropTypes.string,
+  formats: PropTypes.string,
   modalities: PropTypes.string,
   sources: PropTypes.number
 };

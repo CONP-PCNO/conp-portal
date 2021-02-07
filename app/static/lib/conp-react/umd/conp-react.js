@@ -16639,9 +16639,9 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       width: 32
     }
   }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "card-body d-flex flex-wrap"
+    className: "card-body d-flex"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-column"
+    className: "d-flex flex-column w-100"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
     className: "card-title text-card-title"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
@@ -16650,7 +16650,9 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     },
     href: "dataset?id=" + element.id
   }, element.title)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-wrap align-items-start"
+    className: "py-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex align-items-start"
   }, element.creators ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
@@ -16664,28 +16666,40 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
     className: "card-text pr-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, " | "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Consortium: "), element.origin.consortium)) : null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-wrap align-items-start"
+    className: "d-flex align-items-start"
   }, element.dateAdded ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
-    className: "card-text text-capitalize pr-1"
+    className: "card-text pr-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Date Added: "), element.dateAdded)) : null, element.dateUpdated ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
-    className: "card-text text-capitalize pr-1"
+    className: "card-text pr-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, " | "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Date Updated: "), element.dateUpdated)) : null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-wrap align-items-start"
-  }, element.modalities ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex align-items-start"
+  }, element.version ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Version: "), element.version)) : null, element.types ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, " | "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Data Types: "), element.types)) : null, element.modalities ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text pr-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, " | "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Modalities: "), element.modalities)) : null, element.licenses ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
     className: "card-text text-capitalize pr-1"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Modalities: "), element.modalities)) : null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-wrap align-items-start"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, " | "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "License: "), element.licenses)) : null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex align-items-start"
   }, element.files ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
     className: "card-text text-capitalize pr-1"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, " | "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Files: "), element.files)) : null, element.size ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Files: "), element.files)) : null, element.size ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
     className: "card-text text-capitalize pr-1"
@@ -16693,11 +16707,11 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
     className: "card-text text-capitalize pr-1"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, " | "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Subjects: "), element.subjects)) : null, element.format ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, " | "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Subjects: "), element.subjects)) : null, element.formats ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
     className: "card-text text-capitalize pr-1"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, " | "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Format: "), element.format.toString())) : null), element.sources ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, " | "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Formats: "), element.formats.toString())) : null)), element.sources ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
     className: "card-text pr-1"
@@ -16714,8 +16728,8 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     rel: "noopener noreferrer",
     href: element.sources
   }, element.sources))) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-column justify-content-center align-items-center"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", null, "DOWNLOAD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    className: "d-flex flex-column justify-content-center align-items-center p-4"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h6", null, "DOWNLOAD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     className: "card-button",
     style: {
       pointerEvents: element.isPrivate && !authorized ? "none" : "all",
@@ -16753,7 +16767,7 @@ DatasetElement_DatasetElement.propTypes = {
   size: prop_types_default.a.string,
   files: prop_types_default.a.number,
   subjects: prop_types_default.a.number,
-  format: prop_types_default.a.string,
+  formats: prop_types_default.a.string,
   modalities: prop_types_default.a.string,
   sources: prop_types_default.a.number
 };
