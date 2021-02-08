@@ -16570,6 +16570,30 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       imagePath = props.imagePath,
       element = DatasetElement_objectWithoutPropertiesLoose(props, ["authorized", "imagePath"]);
 
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
+      metadataSpinnerState = _useState[0],
+      setMetadataSpinnerState = _useState[1];
+
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
+      datasetSpinnerState = _useState2[0],
+      setDatasetSpinnerState = _useState2[1];
+
+  var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
+      metadataErrorState = _useState3[0],
+      setMetadataErrorState = _useState3[1];
+
+  var _useState4 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
+      datasetErrorState = _useState4[0],
+      setDatasetErrorState = _useState4[1];
+
+  var _useState5 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(""),
+      metadataErrorText = _useState5[0],
+      setMetadataErrorText = _useState5[1];
+
+  var _useState6 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(""),
+      datasetErrorText = _useState6[0],
+      setDatasetErrorText = _useState6[1];
+
   var statusCONP = imagePath + "/canada.svg";
   var authIcons = [];
 
@@ -16594,7 +16618,58 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       break;
   }
 
-  console.log(element);
+  var downloadMetadata = function downloadMetadata(event) {
+    setMetadataSpinnerState(true);
+    setMetadataErrorState(false);
+    fetch(window.origin + "/download_metadata?dataset=" + element.id).then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      var file = window.URL.createObjectURL(new Blob([json], {
+        type: 'application/json'
+      }));
+      var link = document.createElement('a');
+      link.href = file;
+      link.download = element.title.toLowerCase().replace(" ", ",") + ".dats.json";
+      link.click(); // For Firefox it is necessary to delay revoking the ObjectURL.
+
+      setTimeout(function () {
+        window.URL.revokeObjectURL(file);
+      }, 250);
+    })["catch"](function (error) {
+      setMetadataErrorState(true);
+      setMetadataErrorText("Something went wrong when trying to download the metadata: " + error);
+    })["finally"](function () {
+      setMetadataSpinnerState(false);
+    });
+  };
+
+  var downloadDataset = function downloadDataset(event) {
+    setDatasetSpinnerState(true);
+    setDatasetErrorState(false);
+    fetch(window.origin + "/download_content?id=" + element.id + "&version=" + element.version).then(function (response) {
+      if (response.ok) {
+        return response.blob();
+      } else {
+        return response.text().then(function (text) {
+          throw new Error(text);
+        });
+      }
+    }).then(function (blob) {
+      var file = window.URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = file;
+      a.download = "{{ data.title }}.{{ metadata.version }}.tar.gz";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })["catch"](function (error) {
+      setDatasetErrorState(true);
+      setDatasetErrorText("Something went wrong when trying to download this dataset: " + error);
+    })["finally"](function () {
+      setDatasetSpinnerState(false);
+    });
+  };
+
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card d-flex flex-row",
     "data-type": "dataset"
@@ -16729,17 +16804,39 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     href: element.sources
   }, element.sources))) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-column justify-content-center align-items-center p-4"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h6", null, "DOWNLOAD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
-    className: "card-button",
-    style: {
-      pointerEvents: element.isPrivate && !authorized ? "none" : "all",
-      maxWidth: "120px"
-    },
-    href: "download_metadata?dataset=" + element.id,
-    download: true
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-    className: "btn btn-outline-primary"
-  }, "Metadata")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h6", null, "DOWNLOAD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-outline-primary m-1",
+    onClick: function onClick() {
+      return downloadMetadata();
+    }
+  }, "Metadata", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "spinner-border text-primary",
+    role: "status",
+    hidden: !metadataSpinnerState
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    className: "sr-only"
+  }, "Loading..."))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "alert alert-danger",
+    role: "alert",
+    hidden: !metadataErrorState
+  }, metadataErrorText), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-outline-primary m-1",
+    onClick: function onClick() {
+      return downloadDataset();
+    }
+  }, "Dataset", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "spinner-border text-primary",
+    role: "status",
+    hidden: !datasetSpinnerState
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    className: "sr-only"
+  }, "Loading..."))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "alert alert-danger",
+    role: "alert",
+    hidden: !datasetErrorState
+  }, datasetErrorText), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex"
   }, authIcons.map(function (icon, index) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {

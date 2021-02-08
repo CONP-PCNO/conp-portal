@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,6 +8,15 @@ import { faFileCode } from '@fortawesome/free-regular-svg-icons'
 
 const DatasetElement = props => {
   const { authorized, imagePath, ...element } = props;
+
+  const [metadataSpinnerState, setMetadataSpinnerState] = useState(false)
+  const [datasetSpinnerState, setDatasetSpinnerState] = useState(false)
+
+  const [metadataErrorState, setMetadataErrorState] = useState(false)
+  const [datasetErrorState, setDatasetErrorState] = useState(false)
+
+  const [metadataErrorText, setMetadataErrorText] = useState("")
+  const [datasetErrorText, setDatasetErrorText] = useState("")
 
   const statusCONP = `${imagePath}/canada.svg`;
 
@@ -23,7 +32,67 @@ const DatasetElement = props => {
       break;
   }
 
-  console.log(element)
+  const downloadMetadata = (event) => {
+
+    setMetadataSpinnerState(true)
+    setMetadataErrorState(false)
+
+    fetch(`${window.origin}/download_metadata?dataset=${element.id}`)
+      .then(response => response.json())
+      .then(json => {
+        var file = window.URL.createObjectURL(new Blob([json], { type: 'application/json' }),);
+        let link = document.createElement('a');
+        link.href = file;
+        link.download = `${element.title.toLowerCase().replace(" ", ",")}.dats.json`;
+        link.click();
+
+        // For Firefox it is necessary to delay revoking the ObjectURL.
+        setTimeout(() => { window.URL.revokeObjectURL(file); }, 250);
+      })
+      .catch(function (error) {
+        setMetadataErrorState(true)
+        setMetadataErrorText(`Something went wrong when trying to download the metadata: ${error}`)
+      })
+      .finally(function () {
+        setMetadataSpinnerState(false)
+      }
+      );
+  }
+
+  const downloadDataset = (event) => {
+
+    setDatasetSpinnerState(true)
+    setDatasetErrorState(false)
+
+    fetch(`${window.origin}/download_content?id=${element.id}&version=${element.version}`)
+      .then((response) => {
+        if (response.ok) {
+          return response.blob();
+        }
+        else {
+          return response.text().then(text => {
+            throw new Error(text)
+          })
+        }
+      })
+      .then(function (blob) {
+        var file = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = file;
+        a.download = "{{ data.title }}.{{ metadata.version }}.tar.gz";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      })
+      .catch(function (error) {
+        setDatasetErrorState(true)
+        setDatasetErrorText(`Something went wrong when trying to download this dataset: ${error}`)
+      })
+      .finally(function () {
+        setDatasetSpinnerState(false)
+      }
+      );
+  }
 
   return (
     <div className="card d-flex flex-row" data-type="dataset">
@@ -164,17 +233,24 @@ const DatasetElement = props => {
       </div>
       <div className="d-flex flex-column justify-content-center align-items-center p-4">
         <h6>DOWNLOAD</h6>
-        <a
-          className="card-button"
-          style={{
-            pointerEvents: element.isPrivate && !authorized ? "none" : "all",
-            maxWidth: "120px"
-          }}
-          href={`download_metadata?dataset=${element.id}`}
-          download
-        >
-          <button className="btn btn-outline-primary">Metadata</button>
-        </a>
+        <button type="button" className="btn btn-outline-primary m-1" onClick={() => downloadMetadata()}>
+          Metadata
+        <div className="spinner-border text-primary" role="status" hidden={!metadataSpinnerState}>
+            <span className="sr-only">Loading...</span>
+          </div>
+        </button>
+        <div className="alert alert-danger" role="alert" hidden={!metadataErrorState}>
+          {metadataErrorText}
+        </div>
+        <button type="button" className="btn btn-outline-primary m-1" onClick={() => downloadDataset()}>
+          Dataset
+        <div className="spinner-border text-primary" role="status" hidden={!datasetSpinnerState}>
+            <span className="sr-only">Loading...</span>
+          </div>
+        </button>
+        <div className="alert alert-danger" role="alert" hidden={!datasetErrorState}>
+          {datasetErrorText}
+        </div>
         <div className="d-flex">
           {authIcons.map((icon, index) => <div key={"authIcon_" + index} className="p-1">{icon}</div>)}
         </div>
