@@ -9698,29 +9698,80 @@ var DataTable_DataTable = function DataTable(_ref) {
     className: "search-dataset-table",
     cellSpacing: 0
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "searchbar col-12 d-flex p-2"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex dropdown"
+    className: "searchbar d-flex align-items-center p-2"
+  }, renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex align-items-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
-    className: "dropdown-label m-2"
-  }, "Sort By: "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("select", {
-    className: "btn btn-outline-secondary dropdown-toggle dropdown-select",
-    value: query.sortKey,
-    onChange: function onChange(e) {
-      return setQuery(_extends({}, query, {
-        sortKey: e.currentTarget.value,
-        page: 1
-      }));
-    }
-  }, sortKeys.map(function (_ref2, i) {
-    var sortKey = _ref2.key,
-        label = _ref2.label;
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
-      className: "dropdown-item",
-      key: i,
-      value: sortKey
-    }, label);
-  }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown-label text-nowrap m-2"
+  }, "Filter By: "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-outline-secondary dropdown-toggle p-2",
+    type: "button",
+    id: "dropdownMenuButton",
+    "data-toggle": "dropdown",
+    "aria-haspopup": "true",
+    "aria-expanded": "false",
+    "data-display": "static"
+  }, "Modality:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown-menu",
+    "aria-labelledby": "dropdownMenuButton"
+  }, filterKeys.filter(function (f) {
+    return f["key"] === "modalities";
+  }).length > 0 ? filterKeys.filter(function (f) {
+    return f["key"] === "modalities";
+  })[0]["values"].map(function (modality) {
+    return modality !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      key: modality.id,
+      className: "dropdown-item ml-2"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+      className: "form-check-input",
+      type: "checkbox",
+      checked: filters.filter(function (f) {
+        return f["key"] === "modalities";
+      })[0]["values"].includes(modality),
+      value: "modalities." + modality,
+      id: "filter" + modality,
+      onChange: handleFiltersChange
+    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+      className: "form-check-label",
+      htmlFor: "filter" + modality
+    }, modality)) : null;
+  }) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-outline-secondary dropdown-toggle p-2",
+    type: "button",
+    id: "dropdownMenuButton",
+    "data-toggle": "dropdown",
+    "aria-haspopup": "true",
+    "aria-expanded": "false",
+    "data-display": "static"
+  }, "File Format:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown-menu",
+    "aria-labelledby": "dropdownMenuButton"
+  }, filterKeys.filter(function (f) {
+    return f["key"] === "formats";
+  }).length > 0 ? filterKeys.filter(function (f) {
+    return f["key"] === "formats";
+  })[0]["values"].map(function (format) {
+    return format !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      key: format.id,
+      className: "dropdown-item ml-2"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+      className: "form-check-input",
+      type: "checkbox",
+      checked: filters.filter(function (f) {
+        return f["key"] === "formats";
+      })[0]["values"].includes(format),
+      value: "formats." + format,
+      id: "filter" + format,
+      onChange: handleFiltersChange
+    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+      className: "form-check-label",
+      htmlFor: "filter" + format
+    }, format)) : null;
+  }) : null))) : null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "input-group m-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
     className: "form-control p-2",
@@ -9804,77 +9855,28 @@ var DataTable_DataTable = function DataTable(_ref) {
     value: "All",
     id: "max_per_page.all",
     onClick: handleMaxPerPageChange
-  }, "All")))), ")"), renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex p-2 justify-content-end"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "dropdown p-2"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-    className: "btn btn-secondary dropdown-toggle p-2",
-    type: "button",
-    id: "dropdownMenuButton",
-    "data-toggle": "dropdown",
-    "aria-haspopup": "true",
-    "aria-expanded": "false",
-    "data-display": "static"
-  }, "Modality:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "dropdown-menu dropdown-menu-right",
-    "aria-labelledby": "dropdownMenuButton"
-  }, filterKeys.filter(function (f) {
-    return f["key"] === "modalities";
-  }).length > 0 ? filterKeys.filter(function (f) {
-    return f["key"] === "modalities";
-  })[0]["values"].map(function (modality) {
-    return modality !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      key: modality.id,
-      className: "dropdown-item ml-2"
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
-      className: "form-check-input",
-      type: "checkbox",
-      checked: filters.filter(function (f) {
-        return f["key"] === "modalities";
-      })[0]["values"].includes(modality),
-      value: "modalities." + modality,
-      id: "filter" + modality,
-      onChange: handleFiltersChange
-    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
-      className: "form-check-label",
-      htmlFor: "filter" + modality
-    }, modality)) : null;
-  }) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "dropdown p-2"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-    className: "btn btn-secondary dropdown-toggle p-2",
-    type: "button",
-    id: "dropdownMenuButton",
-    "data-toggle": "dropdown",
-    "aria-haspopup": "true",
-    "aria-expanded": "false",
-    "data-display": "static"
-  }, "File Format:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "dropdown-menu dropdown-menu-right",
-    "aria-labelledby": "dropdownMenuButton"
-  }, filterKeys.filter(function (f) {
-    return f["key"] === "formats";
-  }).length > 0 ? filterKeys.filter(function (f) {
-    return f["key"] === "formats";
-  })[0]["values"].map(function (format) {
-    return format !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      key: format.id,
-      className: "dropdown-item ml-2"
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
-      className: "form-check-input",
-      type: "checkbox",
-      checked: filters.filter(function (f) {
-        return f["key"] === "formats";
-      })[0]["values"].includes(format),
-      value: "formats." + format,
-      id: "filter" + format,
-      onChange: handleFiltersChange
-    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
-      className: "form-check-label",
-      htmlFor: "filter" + format
-    }, format)) : null;
-  }) : null))) : null), elements.map(function (element, i) {
+  }, "All")))), ")"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex align-items-center dropdown p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+    className: "dropdown-label text-nowrap m-2"
+  }, "Sort By: "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("select", {
+    className: "btn btn-outline-secondary dropdown-toggle dropdown-select p-2",
+    value: query.sortKey,
+    onChange: function onChange(e) {
+      return setQuery(_extends({}, query, {
+        sortKey: e.currentTarget.value,
+        page: 1
+      }));
+    }
+  }, sortKeys.map(function (_ref2, i) {
+    var sortKey = _ref2.key,
+        label = _ref2.label;
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
+      className: "dropdown-item",
+      key: i,
+      value: sortKey
+    }, label);
+  })))), elements.map(function (element, i) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       key: "" + element.id
     }, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, {

@@ -87,23 +87,50 @@ const DataTable = ({
     isLoading ? <div />
       :
       < div className="search-dataset-table" cellSpacing={0} >
-        <div className="searchbar col-12 d-flex p-2">
-          <div className="d-flex dropdown">
-            <label className="dropdown-label m-2">Sort By: </label>
-            <select
-              className="btn btn-outline-secondary dropdown-toggle dropdown-select"
-              value={query.sortKey}
-              onChange={e =>
-                setQuery({ ...query, sortKey: e.currentTarget.value, page: 1 })
-              }
-            >
-              {sortKeys.map(({ key: sortKey, label }, i) => (
-                <option className="dropdown-item" key={i} value={sortKey}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </div>
+        <div className="searchbar d-flex align-items-center p-2">
+          {renderElement.name === "DatasetElement" ?
+            <div className="d-flex align-items-center p-2">
+              <label className="dropdown-label text-nowrap m-2">Filter By: </label>
+              <div className="dropdown">
+                <button className="btn btn-outline-secondary dropdown-toggle p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                  Modality:
+              </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  {filterKeys.filter(f => f["key"] === "modalities").length > 0 ?
+                    filterKeys.filter(f => f["key"] === "modalities")[0]["values"].map(modality => (
+                      modality !== '' ?
+                        <div key={modality.id} className="dropdown-item ml-2">
+                          <input className="form-check-input" type="checkbox" checked={filters.filter(f => f["key"] === "modalities")[0]["values"].includes(modality)} value={"modalities." + modality} id={"filter" + modality} onChange={handleFiltersChange} />
+                          <label className="form-check-label" htmlFor={"filter" + modality}>
+                            {modality}
+                          </label>
+                        </div>
+                        : null
+                    ))
+                    : null}
+                </div>
+              </div>
+              <div className="dropdown">
+                <button className="btn btn-outline-secondary dropdown-toggle p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                  File Format:
+              </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  {filterKeys.filter(f => f["key"] === "formats").length > 0 ?
+                    filterKeys.filter(f => f["key"] === "formats")[0]["values"].map(format => (
+                      format !== '' ?
+                        <div key={format.id} className="dropdown-item ml-2">
+                          <input className="form-check-input" type="checkbox" checked={filters.filter(f => f["key"] === "formats")[0]["values"].includes(format)} value={"formats." + format} id={"filter" + format} onChange={handleFiltersChange} />
+                          <label className="form-check-label" htmlFor={"filter" + format}>
+                            {format}
+                          </label>
+                        </div>
+                        : null
+                    ))
+                    : null}
+                </div>
+              </div>
+            </div>
+            : null}
           <div className="input-group m-2">
             <input
               className="form-control p-2"
@@ -160,48 +187,22 @@ const DataTable = ({
               </div>
             </span>)
           </div>
-          {renderElement.name === "DatasetElement" ?
-            <div className="d-flex p-2 justify-content-end">
-              <div className="dropdown p-2">
-                <button className="btn btn-secondary dropdown-toggle p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                  Modality:
-              </button>
-                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                  {filterKeys.filter(f => f["key"] === "modalities").length > 0 ?
-                    filterKeys.filter(f => f["key"] === "modalities")[0]["values"].map(modality => (
-                      modality !== '' ?
-                        <div key={modality.id} className="dropdown-item ml-2">
-                          <input className="form-check-input" type="checkbox" checked={filters.filter(f => f["key"] === "modalities")[0]["values"].includes(modality)} value={"modalities." + modality} id={"filter" + modality} onChange={handleFiltersChange} />
-                          <label className="form-check-label" htmlFor={"filter" + modality}>
-                            {modality}
-                          </label>
-                        </div>
-                        : null
-                    ))
-                    : null}
-                </div>
-              </div>
-              <div className="dropdown p-2">
-                <button className="btn btn-secondary dropdown-toggle p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                  File Format:
-              </button>
-                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                  {filterKeys.filter(f => f["key"] === "formats").length > 0 ?
-                    filterKeys.filter(f => f["key"] === "formats")[0]["values"].map(format => (
-                      format !== '' ?
-                        <div key={format.id} className="dropdown-item ml-2">
-                          <input className="form-check-input" type="checkbox" checked={filters.filter(f => f["key"] === "formats")[0]["values"].includes(format)} value={"formats." + format} id={"filter" + format} onChange={handleFiltersChange} />
-                          <label className="form-check-label" htmlFor={"filter" + format}>
-                            {format}
-                          </label>
-                        </div>
-                        : null
-                    ))
-                    : null}
-                </div>
-              </div>
-            </div>
-            : null}
+          <div className="d-flex align-items-center dropdown p-2">
+            <label className="dropdown-label text-nowrap m-2">Sort By: </label>
+            <select
+              className="btn btn-outline-secondary dropdown-toggle dropdown-select p-2"
+              value={query.sortKey}
+              onChange={e =>
+                setQuery({ ...query, sortKey: e.currentTarget.value, page: 1 })
+              }
+            >
+              {sortKeys.map(({ key: sortKey, label }, i) => (
+                <option className="dropdown-item" key={i} value={sortKey}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         {
           elements.map((element, i) => (
