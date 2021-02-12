@@ -96,8 +96,8 @@ const DatasetElement = props => {
 
   return (
     <div className="card d-flex flex-row" data-type="dataset">
-      <div className="d-flex flex-column justify-content-between">
-        <div className="flex-grow-2">
+      <div className="d-flex flex-column p-2">
+        <div className="flex-grow-2 d-flex flex-column h-100 justify-content-center">
           <img
             alt="dataset format"
             className="img-fluid"
@@ -105,9 +105,7 @@ const DatasetElement = props => {
             src={element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL}
           />
         </div>
-        <div className="d-flex flex-row justify-content-center">
-          {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP} alt="CONP status" />) : <div style={{ width: 32 }} />}
-          {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP} alt="CONP status" />) : <div style={{ width: 32 }} />}
+        <div className="flex-grow-1 d-flex flex-row align-items-end">
           {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP} alt="CONP status" />) : <div style={{ width: 32 }} />}
         </div>
       </div>

@@ -16676,9 +16676,9 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "card d-flex flex-row",
     "data-type": "dataset"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-column justify-content-between"
+    className: "d-flex flex-column p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "flex-grow-2"
+    className: "flex-grow-2 d-flex flex-column h-100 justify-content-center"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     alt: "dataset format",
     className: "img-fluid",
@@ -16687,26 +16687,8 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     },
     src: element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-row justify-content-center"
+    className: "flex-grow-1 d-flex flex-row align-items-end"
   }, element.conpStatus !== 'external' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-    height: "32",
-    width: "32",
-    src: statusCONP,
-    alt: "CONP status"
-  }) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    style: {
-      width: 32
-    }
-  }), element.conpStatus !== 'external' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-    height: "32",
-    width: "32",
-    src: statusCONP,
-    alt: "CONP status"
-  }) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    style: {
-      width: 32
-    }
-  }), element.conpStatus !== 'external' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     height: "32",
     width: "32",
     src: statusCONP,
