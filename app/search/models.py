@@ -123,11 +123,8 @@ class DATSDataset(object):
         else:
             creators.append(c)
 
-        # If creators contains > 3 names, use 'et al.' abbreviation
-        if len(creators) > 3:
-            return creators[0] + ' et al.'
-        elif len(creators) > 0:
-            return ", ".join(creators)
+        if len(creators) > 0:
+            return creators
 
         return None
 
@@ -315,6 +312,16 @@ class DATSDataset(object):
                 modalities.append(modality)
 
         return ", ".join(modalities) if len(modalities) > 0 else None
+
+    @property
+    def keywords(self):
+        keywords = []
+        for t in self.descriptor.get('keywords', []):
+            keyword = t.get('value', None)
+            if keyword is not None:
+                keywords.append(keyword)
+
+        return keywords if len(keywords) > 0 else None
 
     @property
     def size(self):

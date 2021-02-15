@@ -520,6 +520,7 @@ def get_dataset_metadata_information(dataset):
         "version": datsdataset.version,
         "licenses": datsdataset.licenses,
         "sources": datsdataset.sources,
+        "keywords": datsdataset.keywords,
         "parentDatasets": datsdataset.parentDatasetId,
         "primaryPublications": datsdataset.primaryPublications,
         "childDatasets": childDatasets

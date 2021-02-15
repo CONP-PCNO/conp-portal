@@ -16718,7 +16718,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
     className: "card-text pr-1"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Creators: "), element.creators)) : null, ((_element$origin = element.origin) === null || _element$origin === void 0 ? void 0 : _element$origin.institution) ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Creators: "), element.creators.length > 3 ? element.creators.slice(0, 3).join(', ') + ' et al.' : element.creators.join(', '))) : null, ((_element$origin = element.origin) === null || _element$origin === void 0 ? void 0 : _element$origin.institution) ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
     className: "card-text pr-1"

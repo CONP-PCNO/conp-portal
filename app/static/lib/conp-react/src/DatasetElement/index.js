@@ -122,7 +122,7 @@ const DatasetElement = props => {
                 {element.creators ?
                   <div className="card-list-item">
                     <p className="card-text pr-1">
-                      <strong>Creators: </strong>{element.creators}
+                      <strong>Creators: </strong>{element.creators.length > 3 ? element.creators.slice(0, 3).join(', ') + ' et al.' : element.creators.join(', ')}
                     </p>
                   </div> : null}
                 {element.origin?.institution ?
