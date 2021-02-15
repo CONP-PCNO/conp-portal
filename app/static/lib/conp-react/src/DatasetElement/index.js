@@ -95,165 +95,171 @@ const DatasetElement = props => {
   }
 
   return (
-    <div className="card d-flex flex-row" data-type="dataset">
-      <div className="d-flex flex-column p-2">
-        <div className="flex-grow-2 d-flex flex-column h-100 justify-content-center">
-          <img
-            alt="dataset format"
-            className="img-fluid"
-            style={{ maxWidth: '160px' }}
-            src={element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL}
-          />
-        </div>
-        <div className="flex-grow-1 d-flex flex-row align-items-end">
-          {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP} alt="CONP status" />) : <div style={{ width: 32 }} />}
-        </div>
-      </div>
-      <div className="card-body d-flex">
-        <div className="d-flex flex-column w-100">
-          <h5 className="card-title text-card-title">
-            <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>
-              {element.title}
-            </a>
-          </h5>
-          <div className="py-2">
-            <div className="d-flex align-items-start">
-              {element.creators ?
-                <div className="card-list-item">
-                  <p className="card-text pr-1">
-                    <strong>Creators: </strong>{element.creators}
-                  </p>
-                </div> : null}
-              {element.origin?.institution ?
-                <div className="card-list-item">
-                  <p className="card-text pr-1">
-                    <strong> | </strong>
-                    <strong>Institution: </strong>{element.origin.institution}
-                  </p>
-                </div> : null}
-              {element.origin?.consortium ?
-                <div className="card-list-item">
-                  <p className="card-text pr-1">
-                    <strong> | </strong>
-                    <strong>Consortium: </strong>{element.origin.consortium}
-                  </p>
-                </div> : null}
-            </div>
-            <div className="d-flex align-items-start">
-              {element.dateAdded ?
-                <div className="card-list-item">
-                  <p className="card-text pr-1">
-                    <strong>Date Added: </strong>{element.dateAdded}
-                  </p>
-                </div> : null}
-              {element.dateUpdated ?
-                <div className="card-list-item">
-                  <p className="card-text pr-1">
-                    <strong> | </strong>
-                    <strong>Date Updated: </strong>{element.dateUpdated}
-                  </p>
-                </div> : null}
-            </div>
-            <div className="d-flex align-items-start">
-              {element.version ?
-                <div className="card-list-item">
-                  <p className="card-text pr-1">
-                    <strong>Version: </strong>{element.version}
-                  </p>
-                </div> : null}
-              {element.types ?
-                <div className="card-list-item">
-                  <p className="card-text pr-1">
-                    <strong> | </strong>
-                    <strong>Data Types: </strong>{element.types}
-                  </p>
-                </div> : null}
-              {element.modalities ?
-                <div className="card-list-item">
-                  <p className="card-text pr-1">
-                    <strong> | </strong>
-                    <strong>Modalities: </strong>{element.modalities}
-                  </p>
-                </div> : null}
-              {element.licenses ?
-                <div className="card-list-item">
-                  <p className="card-text text-capitalize pr-1">
-                    <strong> | </strong>
-                    <strong>License: </strong>{element.licenses}
-                  </p>
-                </div> : null}
-            </div>
-            <div className="d-flex align-items-start">
-              {element.files ?
-                <div className="card-list-item">
-                  <p className="card-text text-capitalize pr-1">
-                    <strong>Files: </strong>{element.files}
-                  </p>
-                </div> : null}
-              {element.size ?
-                <div className="card-list-item">
-                  <p className="card-text text-capitalize pr-1">
-                    <strong> | </strong>
-                    <strong>Size: </strong>{element.size}
-                  </p>
-                </div> : null}
-              {element.subjects ?
-                <div className="card-list-item">
-                  <p className="card-text text-capitalize pr-1">
-                    <strong> | </strong>
-                    <strong>Subjects: </strong>{element.subjects}
-                  </p>
-                </div> : null}
-              {element.formats ?
-                <div className="card-list-item">
-                  <p className="card-text text-capitalize pr-1">
-                    <strong> | </strong>
-                    <strong>Formats: </strong>{element.formats.toString()}
-                  </p>
-                </div> : null}
-            </div>
+    <div className="card container-fluid" data-type="dataset">
+      <div className="row">
+        <div className="col col-md-2 d-flex flex-column p-2">
+          <div className="flex-grow-2 d-flex flex-column h-100 justify-content-center align-items-center">
+            <img
+              alt="dataset format"
+              className="img-fluid"
+              style={{ maxWidth: '180px' }}
+              src={element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL}
+            />
           </div>
-          {element.sources ?
-            <div className="card-list-item">
-              <p className="card-text pr-1">
-                <strong>Browse on Github: </strong>
-                <a target="_blank" rel="noopener noreferrer" href={element.sources}>{element.sources}</a>
-              </p>
-            </div> : null}
-          {element.sources ?
-            <div className="card-list-item">
-              <p className="card-text pr-1">
-                <strong>Sources: </strong>
-                <a target="_blank" rel="noopener noreferrer" href={element.sources}>{element.sources}</a>
-              </p>
-            </div> : null}
+          <div className="flex-grow-1 d-flex flex-row align-items-end">
+            {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP} alt="CONP status" />) : <div style={{ width: 32 }} />}
+          </div>
         </div>
-      </div>
-      <div className="d-flex flex-column justify-content-center align-items-center p-4">
-        <h6>DOWNLOAD</h6>
-        <button type="button" className="btn btn-outline-primary m-1" onClick={() => downloadMetadata()}>
-          Metadata
+        <div className="col col-md-8 card-body d-flex">
+          <div className="d-flex flex-column">
+            <h5 className="card-title text-card-title">
+              <a style={{ color: "inherit" }} href={`dataset?id=${element.id}`}>
+                {element.title}
+              </a>
+            </h5>
+            <div className="py-2">
+              <div className="d-flex align-items-start">
+                {element.creators ?
+                  <div className="card-list-item">
+                    <p className="card-text pr-1">
+                      <strong>Creators: </strong>{element.creators}
+                    </p>
+                  </div> : null}
+                {element.origin?.institution ?
+                  <div className="card-list-item">
+                    <p className="card-text pr-1">
+                      <strong> | </strong>
+                      <strong>Institution: </strong>{element.origin.institution}
+                    </p>
+                  </div> : null}
+                {element.origin?.consortium ?
+                  <div className="card-list-item">
+                    <p className="card-text pr-1">
+                      <strong> | </strong>
+                      <strong>Consortium: </strong>{element.origin.consortium}
+                    </p>
+                  </div> : null}
+              </div>
+              <div className="d-flex align-items-start">
+                {element.dateAdded ?
+                  <div className="card-list-item">
+                    <p className="card-text pr-1">
+                      <strong>Date Added: </strong>{element.dateAdded}
+                    </p>
+                  </div> : null}
+                {element.dateUpdated ?
+                  <div className="card-list-item">
+                    <p className="card-text pr-1">
+                      <strong> | </strong>
+                      <strong>Date Updated: </strong>{element.dateUpdated}
+                    </p>
+                  </div> : null}
+              </div>
+              <div className="d-flex align-items-start">
+                {element.version ?
+                  <div className="card-list-item">
+                    <p className="card-text pr-1">
+                      <strong>Version: </strong>{element.version}
+                    </p>
+                  </div> : null}
+                {element.types ?
+                  <div className="card-list-item">
+                    <p className="card-text pr-1">
+                      <strong> | </strong>
+                      <strong>Data Types: </strong>{element.types}
+                    </p>
+                  </div> : null}
+                {element.modalities ?
+                  <div className="card-list-item">
+                    <p className="card-text pr-1">
+                      <strong> | </strong>
+                      <strong>Modalities: </strong>{element.modalities}
+                    </p>
+                  </div> : null}
+                {element.licenses ?
+                  <div className="card-list-item">
+                    <p className="card-text text-capitalize pr-1">
+                      <strong> | </strong>
+                      <strong>License: </strong>{element.licenses}
+                    </p>
+                  </div> : null}
+              </div>
+              <div className="d-flex align-items-start">
+                {element.files ?
+                  <div className="card-list-item">
+                    <p className="card-text text-capitalize pr-1">
+                      <strong>Files: </strong>{element.files}
+                    </p>
+                  </div> : null}
+                {element.size ?
+                  <div className="card-list-item">
+                    <p className="card-text text-capitalize pr-1">
+                      <strong> | </strong>
+                      <strong>Size: </strong>{element.size}
+                    </p>
+                  </div> : null}
+                {element.subjects ?
+                  <div className="card-list-item">
+                    <p className="card-text text-capitalize pr-1">
+                      <strong> | </strong>
+                      <strong>Subjects: </strong>{element.subjects}
+                    </p>
+                  </div> : null}
+                {element.formats ?
+                  <div className="card-list-item">
+                    <p className="card-text text-capitalize pr-1">
+                      <strong> | </strong>
+                      <strong>Formats: </strong>{element.formats.toString()}
+                    </p>
+                  </div> : null}
+              </div>
+            </div>
+            {element.sources ?
+              <div className="card-list-item">
+                <p className="card-text pr-1">
+                  <strong>Browse on Github: </strong>
+                  <a target="_blank" rel="noopener noreferrer" href={'https://github.com/conpdatasets/' + element.id.replace('projects/', '')}>
+                    {'https://github.com/conpdatasets/' + element.id.replace('projects/', '')}
+                  </a>
+                </p>
+              </div> : null}
+            {element.sources ?
+              <div className="card-list-item">
+                <p className="card-text pr-1">
+                  <strong>Origin: </strong>
+                  <a target="_blank" rel="noopener noreferrer" href={element.sources}>{element.sources}</a>
+                </p>
+              </div> : null}
+          </div>
+        </div>
+        <div className="col col-md-2 d-flex flex-column justify-content-between align-items-center p-2">
+          <h6>DOWNLOAD</h6>
+          <div className="d-flex flex-column">
+            <button type="button" className="btn btn-outline-secondary m-1" onClick={() => downloadMetadata()}>
+              Metadata
         <div className="spinner-border text-primary" role="status" hidden={!metadataSpinnerState}>
-            <span className="sr-only">Loading...</span>
-          </div>
-        </button>
-        <div className="alert alert-danger" role="alert" hidden={!metadataErrorState}>
-          {metadataErrorText}
-        </div>
-        <button type="button" className="btn btn-outline-primary m-1" onClick={() => downloadDataset()}>
-          Dataset
+                <span className="sr-only">Loading...</span>
+              </div>
+            </button>
+            <div className="alert alert-danger" role="alert" hidden={!metadataErrorState}>
+              {metadataErrorText}
+            </div>
+            <button type="button" className="btn btn-outline-secondary m-1" disabled={true} onClick={() => downloadDataset()}>
+              Dataset
         <div className="spinner-border text-primary" role="status" hidden={!datasetSpinnerState}>
-            <span className="sr-only">Loading...</span>
+                <span className="sr-only">Loading...</span>
+              </div>
+            </button>
+            <div className="alert alert-danger" role="alert" hidden={!datasetErrorState}>
+              {datasetErrorText}
+            </div>
           </div>
-        </button>
-        <div className="alert alert-danger" role="alert" hidden={!datasetErrorState}>
-          {datasetErrorText}
-        </div>
-        <div className="d-flex">
-          {authIcons.map((icon, index) => <div key={"authIcon_" + index} className="p-1">{icon}</div>)}
+          <div className="d-flex">
+            {authIcons.map((icon, index) => <div key={"authIcon_" + index} className="text-center p-1">{icon}</div>)}
+          </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

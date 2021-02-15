@@ -16673,17 +16673,19 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   };
 
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "card d-flex flex-row",
+    className: "card container-fluid",
     "data-type": "dataset"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-column p-2"
+    className: "row"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "flex-grow-2 d-flex flex-column h-100 justify-content-center"
+    className: "col col-md-2 d-flex flex-column p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "flex-grow-2 d-flex flex-column h-100 justify-content-center align-items-center"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     alt: "dataset format",
     className: "img-fluid",
     style: {
-      maxWidth: '160px'
+      maxWidth: '180px'
     },
     src: element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -16698,9 +16700,9 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       width: 32
     }
   }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "card-body d-flex"
+    className: "col col-md-8 card-body d-flex"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-column w-100"
+    className: "d-flex flex-column"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
     className: "card-title text-card-title"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
@@ -16777,20 +16779,22 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Browse on Github: "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     target: "_blank",
     rel: "noopener noreferrer",
-    href: element.sources
-  }, element.sources))) : null, element.sources ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    href: 'https://github.com/conpdatasets/' + element.id.replace('projects/', '')
+  }, 'https://github.com/conpdatasets/' + element.id.replace('projects/', '')))) : null, element.sources ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
     className: "card-text pr-1"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Sources: "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Origin: "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     target: "_blank",
     rel: "noopener noreferrer",
     href: element.sources
   }, element.sources))) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-column justify-content-center align-items-center p-4"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h6", null, "DOWNLOAD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "col col-md-2 d-flex flex-column justify-content-between align-items-center p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h6", null, "DOWNLOAD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex flex-column"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     type: "button",
-    className: "btn btn-outline-primary m-1",
+    className: "btn btn-outline-secondary m-1",
     onClick: function onClick() {
       return downloadMetadata();
     }
@@ -16806,7 +16810,8 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     hidden: !metadataErrorState
   }, metadataErrorText), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     type: "button",
-    className: "btn btn-outline-primary m-1",
+    className: "btn btn-outline-secondary m-1",
+    disabled: true,
     onClick: function onClick() {
       return downloadDataset();
     }
@@ -16820,14 +16825,14 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "alert alert-danger",
     role: "alert",
     hidden: !datasetErrorState
-  }, datasetErrorText), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, datasetErrorText)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex"
   }, authIcons.map(function (icon, index) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       key: "authIcon_" + index,
-      className: "p-1"
+      className: "text-center p-1"
     }, icon);
-  }))));
+  })))));
 };
 
 DatasetElement_DatasetElement.propTypes = {
