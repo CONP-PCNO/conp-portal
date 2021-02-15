@@ -67,7 +67,7 @@ class Config(object):
 
     # Matomo
     MATOMO_SERVER_URL = os.environ.get("MATOMO_SERVER_URL")
-    MATOMO_SITE_ID = os.environ.get("MATOMO_SITE_ID", "2")
+    MATOMO_SITE_ID    = os.environ.get("MATOMO_SITE_ID", "2")
     MATOMO_TOKEN_AUTH = os.environ.get("MATOMO_TOKEN_AUTH")
 
     # Nexus SPARQL endpoint

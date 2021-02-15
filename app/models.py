@@ -251,3 +251,26 @@ class Pipeline(db.Model):
 
     def __repr__(self):
         return '<Pipeline {}>'.format(self.name)
+
+
+class MatomoDailyVisitsSummary(db.Model):
+    """
+    Provides Matomo Daily VisitsSummary Model to store Daily VisitsSummary
+    """
+    __tablename__ = 'matomo_daily_visits_summary'
+
+    id                   = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date                 = db.Column(db.DateTime, unique=True)
+    avg_time_on_site     = db.Column(db.Integer)
+    bounce_cound         = db.Column(db.Integer)
+    max_actions          = db.Column(db.Integer)
+    nb_action            = db.Column(db.Integer)
+    nb_actions_per_visit = db.Column(db.Integer)
+    nb_uniq_visitors     = db.Column(db.Integer)
+    nb_users             = db.Column(db.Integer)
+    nb_visits            = db.Column(db.Integer)
+    nb_visits_converted  = db.Column(db.Integer)
+    sum_visit_length     = db.Column(db.Integer)
+
+    def __repr__(self):
+        return '<MatomoDailyVisitsSummary {}>'.format(self.name)
