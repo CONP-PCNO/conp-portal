@@ -61,6 +61,13 @@ def register(app):
         """
         _update_datasets(app)
 
+    @app.cli.command('update_analytics')
+    def update_analytics():
+        """
+        Wrapper to call the update of the analytics tables
+        """
+        _update_analytics(app)
+
 
 def _seed_aff_types_db(app):
     """
@@ -291,3 +298,81 @@ def _update_datasets(app):
         db.session.merge(dataset)
         db.session.commit()
         print('[INFO   ] ' + ds['gitmodule_name'] + ' updated.')
+
+
+def _update_analytics(app):
+    """
+    Updates analytics table using Matomo API endpoints
+
+    :param app:
+    :return:
+    """
+
+    _update_analytics_matomo_visits_summary(app)
+
+
+def _update_analytics_matomo_visits_summary(app):
+    """
+    Function to update specifically the Matomo visits summary
+    queried from the Matomo API endpoing VisitsSummary.
+
+    Note: gather stats only until the day before the current
+    day since stats are still being gathered by Matomo for the
+    current day.
+    """
+
+    from app        import db, config
+    from app.models import MatomoDailyVisitsSummary
+    from datetime   import datetime, timedelta
+    import json
+    import requests
+
+    import pprint # TO REMOVE
+
+    matomo_server_url  = app.config['MATOMO_SERVER_URL']
+    matomo_site_id     = app.config['MATOMO_SITE_ID']
+    matomo_token_auth  = app.config['MATOMO_TOKEN_AUTH']
+
+    matomo_api_baseurl = f"{matomo_server_url}/?module=API" \
+                         f"&idSite={matomo_site_id}" \
+                         f"&token_auth={matomo_token_auth}" \
+                         f"&format=json" \
+
+    # grep the dates already inserted into the database
+    dates_in_database = [row[0] for row in db.session.query(MatomoDailyVisitsSummary.date).all() ]
+
+    # determines which dates are missing from the database and could be queried on Matomo
+    # NOTE: start date was set to 2020-05-01 as May is when the portal started to be live
+    start_date = datetime.strptime('2020-05-01', '%Y-%m-%d').date()
+    end_date   = (datetime.today() - timedelta(1)).date()
+    delta      = timedelta(days=1)
+    dates_to_process  = []
+    while start_date <= end_date:
+        if str(start_date) not in dates_in_database:
+            dates_to_process.append(str(start_date))
+        start_date += delta
+
+    # for each date to process, query Matomo and insert response into the database
+    for date in dates_to_process:
+        matomo_query = f"{matomo_api_baseurl}" \
+                       f"&method=VisitsSummary.get" \
+                       f"&period=day" \
+                       f"&date={date}"
+        response = requests.get(matomo_query).json()
+
+        visits_summary = MatomoDailyVisitsSummary()
+        visits_summary.date                 = date
+        visits_summary.avg_time_on_site     = response['avg_time_on_site']
+        visits_summary.bounce_count         = response['bounce_count']
+        visits_summary.max_actions          = response['max_actions']
+        visits_summary.nb_actions           = response['nb_actions']
+        visits_summary.nb_actions_per_visit = response['nb_actions_per_visit']
+        visits_summary.nb_uniq_visitors     = response['nb_uniq_visitors']
+        visits_summary.nb_users             = response['nb_users']
+        visits_summary.nb_visits            = response['nb_visits']
+        visits_summary.nb_visits_converted  = response['nb_visits_converted']
+        visits_summary.sum_visit_length     = response['sum_visit_length']
+
+        db.session.merge(visits_summary)
+        db.session.commit()
+        print(f'[INFO   ] {date} inserted in matomo_daily_visits_summary')

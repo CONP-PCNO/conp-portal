@@ -260,12 +260,12 @@ class MatomoDailyVisitsSummary(db.Model):
     __tablename__ = 'matomo_daily_visits_summary'
 
     id                   = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    date                 = db.Column(db.DateTime, unique=True)
+    date                 = db.Column(db.String, unique=True)
     avg_time_on_site     = db.Column(db.Integer)
-    bounce_cound         = db.Column(db.Integer)
+    bounce_count         = db.Column(db.Integer)
     max_actions          = db.Column(db.Integer)
-    nb_action            = db.Column(db.Integer)
-    nb_actions_per_visit = db.Column(db.Integer)
+    nb_actions           = db.Column(db.Integer)
+    nb_actions_per_visit = db.Column(db.Float)
     nb_uniq_visitors     = db.Column(db.Integer)
     nb_users             = db.Column(db.Integer)
     nb_visits            = db.Column(db.Integer)
