@@ -87,66 +87,71 @@ const DataTable = ({
     isLoading ? <div />
       :
       < div className="search-dataset-table" cellSpacing={0} >
-        <div className="searchbar d-flex align-items-center p-2">
-          {renderElement.name === "DatasetElement" ?
-            <div className="d-flex align-items-center p-2">
-              <label className="dropdown-label text-nowrap m-2">Filter By: </label>
-              <div className="dropdown">
-                <button className="btn btn-outline-secondary dropdown-toggle p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                  Modality:
+        <div className="searchbar d-flex flex-column">
+          <div className="d-flex align-items-center">
+            {renderElement.name === "DatasetElement" ?
+              <div className="d-flex align-items-center p-2">
+                <label className="dropdown-label text-nowrap m-2">Filter By: </label>
+                <div className="dropdown">
+                  <button className="btn btn-outline-secondary dropdown-toggle p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                    Modality:
               </button>
-                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  {filterKeys.filter(f => f["key"] === "modalities").length > 0 ?
-                    filterKeys.filter(f => f["key"] === "modalities")[0]["values"].map(modality => (
-                      modality !== '' ?
-                        <div key={modality.id} className="dropdown-item ml-2">
-                          <input className="form-check-input" type="checkbox" checked={filters.filter(f => f["key"] === "modalities")[0]["values"].includes(modality)} value={"modalities." + modality} id={"filter" + modality} onChange={handleFiltersChange} />
-                          <label className="form-check-label" htmlFor={"filter" + modality}>
-                            {modality}
-                          </label>
-                        </div>
-                        : null
-                    ))
-                    : null}
+                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {filterKeys.filter(f => f["key"] === "modalities").length > 0 ?
+                      filterKeys.filter(f => f["key"] === "modalities")[0]["values"].map(modality => (
+                        modality !== '' ?
+                          <div key={modality.id} className="dropdown-item ml-2">
+                            <input className="form-check-input" type="checkbox" checked={filters.filter(f => f["key"] === "modalities")[0]["values"].includes(modality)} value={"modalities." + modality} id={"filter" + modality} onChange={handleFiltersChange} />
+                            <label className="form-check-label" htmlFor={"filter" + modality}>
+                              {modality}
+                            </label>
+                          </div>
+                          : null
+                      ))
+                      : null}
+                  </div>
+                </div>
+                <div className="dropdown">
+                  <button className="btn btn-outline-secondary dropdown-toggle p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                    File Format:
+              </button>
+                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {filterKeys.filter(f => f["key"] === "formats").length > 0 ?
+                      filterKeys.filter(f => f["key"] === "formats")[0]["values"].map(format => (
+                        format !== '' ?
+                          <div key={format.id} className="dropdown-item ml-2">
+                            <input className="form-check-input" type="checkbox" checked={filters.filter(f => f["key"] === "formats")[0]["values"].includes(format)} value={"formats." + format} id={"filter" + format} onChange={handleFiltersChange} />
+                            <label className="form-check-label" htmlFor={"filter" + format}>
+                              {format}
+                            </label>
+                          </div>
+                          : null
+                      ))
+                      : null}
+                  </div>
                 </div>
               </div>
-              <div className="dropdown">
-                <button className="btn btn-outline-secondary dropdown-toggle p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                  File Format:
-              </button>
-                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  {filterKeys.filter(f => f["key"] === "formats").length > 0 ?
-                    filterKeys.filter(f => f["key"] === "formats")[0]["values"].map(format => (
-                      format !== '' ?
-                        <div key={format.id} className="dropdown-item ml-2">
-                          <input className="form-check-input" type="checkbox" checked={filters.filter(f => f["key"] === "formats")[0]["values"].includes(format)} value={"formats." + format} id={"filter" + format} onChange={handleFiltersChange} />
-                          <label className="form-check-label" htmlFor={"filter" + format}>
-                            {format}
-                          </label>
-                        </div>
-                        : null
-                    ))
-                    : null}
-                </div>
-              </div>
-            </div>
-            : null}
-          <div className="input-group m-2">
-            <input
-              className="form-control p-2"
-              type="text"
-              placeholder="Search"
-              aria-label="Search"
-              value={query.search}
-              onChange={e =>
-                setQuery({ ...query, search: e.currentTarget.value, page: 1 })
-              }
-            />
-            <span className="input-group-append">
-              <span className="input-group-text" id="basic-addon2">
-                <i className="fa fa-search" />
+              : null}
+            <div className="input-group m-2">
+              <input
+                className="form-control p-2"
+                type="text"
+                placeholder="Search"
+                aria-label="Search"
+                value={query.search}
+                onChange={e =>
+                  setQuery({ ...query, search: e.currentTarget.value, page: 1 })
+                }
+              />
+              <span className="input-group-append">
+                <span className="input-group-text" id="basic-addon2">
+                  <i className="fa fa-search" />
+                </span>
               </span>
-            </span>
+            </div>
+          </div>
+          <div className="d-flex justify-content-end pb-1">
+            <a className="text-reset px-1" href="/sparql">Advanced Search Page (NEXUS)</a>
           </div>
         </div>
         <div className="d-flex justify-content-between">
