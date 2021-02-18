@@ -3,7 +3,16 @@
 Main module that will call and create the flask app
 """
 from app import create_app, db, cli
-from app.models import User, Dataset, Pipeline, OAuth, AffiliationType, MatomoDailyVisitsSummary
+from app.models import (
+    User,
+    Dataset,
+    Pipeline,
+    OAuth,
+    AffiliationType,
+    MatomoDailyVisitsSummary,
+    MatomoDailyGetPageUrlsSummary,
+    MatomoDailyGetDatasetPageViewsSummary,
+)
 
 app = create_app()
 cli.register(app)
@@ -21,5 +30,7 @@ def make_shell_context():
         'OAuth': OAuth,
         'AffiliationType': AffiliationType,
         'Pipeline': Pipeline,
-        'MatomoDailyVisitsSummary': MatomoDailyVisitsSummary
+        'MatomoDailyVisitsSummary': MatomoDailyVisitsSummary,
+        'MatomoDailyGetPageUrlsSummary': MatomoDailyGetPageUrlsSummary,
+        'MatomoDailyGetDatasetPageViewsSummary': MatomoDailyGetDatasetPageViewsSummary
     }
