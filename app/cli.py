@@ -510,6 +510,7 @@ def _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_bas
             db.session.merge(views_summary)
             db.session.commit()
 
+
 def determine_dates_to_query_on_matomo(dates_in_database):
     """
     Determines which dates need to be queried on Matomo to update the dataset
