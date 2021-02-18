@@ -244,13 +244,31 @@ def _update_datasets(app):
         dataset = DBDataset.query.filter_by(
             dataset_id=ds['gitmodule_name']).first()
 
-        # pull the timestamp of the first commit in the git log for the dataset
-        createTimeStamp = os.popen(
-            "git -C {} log --pretty=format:%ct --reverse | head -1".format(ds['path'])).read()
+        # pull the timestamp of the first commit in the git log for the dataset create date
+        createDate = datetime.utcnow()
         try:
+            createTimeStamp = os.popen(
+                "git -C {} log --pretty=format:%ct --reverse | head -1".format(ds['path'])).read()
             createDate = datetime.fromtimestamp(int(createTimeStamp))
-        except ValueError:
-            createDate = datetime.utcnow()
+        except:
+            print("[ERROR  ] Create Date couldnt be read.")
+
+        # last commit in the git log for the dataset update date
+        updateDate = datetime.utcnow()
+        try:
+            createTimeStamp = os.popen(
+                "git -C {} log --pretty=format:%ct | head -1".format(ds['path'])).read()
+            updateDate = datetime.fromtimestamp(int(createTimeStamp))
+        except:
+            print("[ERROR  ] Update Date couldnt be read.")
+
+        # get the remote URL
+        remoteUrl = None
+        try:
+            remoteUrl = os.popen(
+                "git -C {} config --get remote.origin.url".format(ds['path'])).read()
+        except:
+            print("[ERROR  ] Remote URL couldnt be read.")
 
         if dataset is None:
             dataset = DBDataset()
@@ -279,8 +297,9 @@ def _update_datasets(app):
                         # we already have a record of this ancestry
                         db.session.rollback()
 
-        dataset.date_updated = datetime.utcnow()
+        dataset.date_updated = updateDate
         dataset.fspath = ds['path']
+        dataset.remoteUrl = remoteUrl
         dataset.description = dats.get(
             'description', 'No description in DATS.json')
         dataset.name = dats.get(

@@ -16784,8 +16784,8 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "text-reset",
     target: "_blank",
     rel: "noopener noreferrer",
-    href: 'https://github.com/conpdatasets/' + element.id.replace('projects/', '')
-  }, 'https://github.com/conpdatasets/' + element.id.replace('projects/', '')))) : null, element.sources ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    href: element.remoteUrl
+  }, element.remoteUrl))) : null, element.sources ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
     className: "card-text pr-1"

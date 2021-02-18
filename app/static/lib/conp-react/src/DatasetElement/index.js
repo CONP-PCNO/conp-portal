@@ -218,8 +218,8 @@ const DatasetElement = props => {
               <div className="card-list-item">
                 <p className="card-text pr-1">
                   <strong>Browse on Github: </strong>
-                  <a className="text-reset" target="_blank" rel="noopener noreferrer" href={'https://github.com/conpdatasets/' + element.id.replace('projects/', '')}>
-                    {'https://github.com/conpdatasets/' + element.id.replace('projects/', '')}
+                  <a className="text-reset" target="_blank" rel="noopener noreferrer" href={element.remoteUrl}>
+                    {element.remoteUrl}
                   </a>
                 </p>
               </div> : null}
