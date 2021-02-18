@@ -415,6 +415,13 @@ def _update_analytics_matomo_get_page_urls_summary(app, matomo_api_baseurl):
         response = requests.get(matomo_query).json()
 
         if not response:
+            # if no response, then there are no stats for that date.
+            # enter the date in the table so that this date is not
+            # reprocessed at the next run of analytics updates
+            page_summary = MatomoDailyGetPageUrlsSummary()
+            page_summary.date = date
+            db.session.merge(page_summary)
+            db.session.commit()
             continue
 
         for page in response:
@@ -434,6 +441,14 @@ def _update_analytics_matomo_get_page_urls_summary(app, matomo_api_baseurl):
             db.session.commit()
 
         print(f'[INFO   ] Inserted Matomo visits per page URL for {date}')
+
+        # if no stats existed for that date, then add a row to the table
+        # with empty values so that the script does not reprocess those dates
+        if not date_inserted:
+            views_summary = MatomoDailyGetDatasetPageViewsSummary()
+            views_summary.date = date
+            db.session.merge(views_summary)
+            db.session.commit()
 
 
 def _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_baseurl):
@@ -457,6 +472,7 @@ def _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_bas
 
     # for each date and each dataset, query Matomo for the view stats
     for date in dates_to_process:
+        date_inserted = False
         for dataset_id in dataset_id_list:
             page_url = f"https://portal.conp.ca/dataset?id={dataset_id}"
             matomo_query = f"{matomo_api_baseurl}" \
@@ -483,8 +499,16 @@ def _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_bas
             db.session.merge(views_summary)
             db.session.commit()
 
+            date_inserted = True
             print(f'[INFO   ] Inserted Matomo number of views for {dataset_id} on {date}')
 
+        # if no stats existed for that date, then add a row to the table
+        # with empty values so that the script does not reprocess that date
+        if not date_inserted:
+            views_summary = MatomoDailyGetDatasetPageViewsSummary()
+            views_summary.date = date
+            db.session.merge(views_summary)
+            db.session.commit()
 
 def determine_dates_to_query_on_matomo(dates_in_database):
     """
