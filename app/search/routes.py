@@ -36,7 +36,6 @@ def search():
     modalities = request.args.get('modalities')
     formats = request.args.get('formats')
     search = request.args.get('search')
-    tags = request.args.get('tags')
     sortComparitor = request.args.get('sortComparitor')
     sortKey = request.args.get('sortKey')
     max_per_page = request.args.get('max_per_page')
@@ -46,7 +45,6 @@ def search():
         "modalities": modalities,
         "formats": formats,
         "search": search,
-        "tags": tags,
         "sortComparitor": sortComparitor,
         "sortKey": sortKey,
         "max_per_page": max_per_page,
@@ -174,7 +172,7 @@ def dataset_search():
     for e in elements:
         if e['modalities'] is None:
             continue
-        for m in e['modalities'].split(", "):
+        for m in e['modalities']:
             modalities.append(m.lower())
     modalities = list(set(modalities))
 
@@ -184,7 +182,7 @@ def dataset_search():
     for e in elements:
         if e['formats'] is None:
             continue
-        for m in e['formats'].split(", "):
+        for m in e['formats']:
             formatted_string = re.sub(r'\.', '', m)
             if formatted_string.lower() in ['nifti', 'nii', 'niigz']:
                 formats.append('NIfTI')
@@ -206,14 +204,14 @@ def dataset_search():
             elements = list(
                 filter(lambda e: e['modalities'] is not None, elements))
             elements = list(filter(lambda e: all(item in (m.lower(
-            ) for m in e['modalities'].split(", ")) for item in filterModalities), elements))
+            ) for m in e['modalities']) for item in filterModalities), elements))
         if request.args.get('formats'):
             filterFormats = request.args.get('formats').split(",")
             elements = list(
                 filter(lambda e: e['formats'] is not None, elements)
             )
             elements = list(filter(lambda e: all(item.lower() in (
-                f.lower() for f in e['formats'].split(", ")) for item in filterFormats), elements)
+                f.lower() for f in e['formats']) for item in filterFormats), elements)
             )
 
         cursor = None

@@ -9996,9 +9996,8 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
 
   var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
     search: filters.search ? filters.search : "",
-    tags: filters.tags ? filters.tags.split(",") : [],
-    modalities: filters.modalities ? filters.modalities.split(",") : [],
-    formats: filters.formats ? filters.formats.split(",") : [],
+    modalities: filters.modalities ? filters.modalities : [],
+    formats: filters.formats ? filters.formats : [],
     sortKey: filters.sortKey ? filters.sortKey : "conpStatus",
     sortComparitor: filters.sortComparitor ? filters.sortComparitor : "asc",
     page: filters.page ? filters.page : 1,

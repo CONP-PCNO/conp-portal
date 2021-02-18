@@ -30,69 +30,93 @@
 <div class="d-flex flex-column p-4">
   {% if metadata.keywords is defined and metadata.keywords is not none %}
   <p>
-    <strong>Tags: </strong>
+    <strong>Keywords: </strong>
     {% for d in metadata.keywords %} {% if d is defined %} {% set href =
-    "search?keywords=" ~ d %}
+    "search?search=" ~ d %}
     <span class="mr-1"
-      ><a class="badge badge-primary" href="{{ href }}">{{ d }}</a></span
+      ><a class="badge badge-info" href="{{ href }}">{{ d }}</a></span
     >
     {% endif %} {% endfor %}
   </p>
   {% endif %} {% if data.title is defined and data.title is not none %}
   <h5><strong> {{ data.title }} </strong></h5>
   {% endif %} {% if data.creators is defined and data.creators is not none %}
-  <p><strong>Creators: </strong> {{ data.creators }}</p>
+  <p><strong>Creators: </strong> {{ data.creators|join(',') }}</p>
+  {% endif %} {% if data.principalInvestigators is defined and
+  data.principalInvestigators is not none %}
+  <div class="p-1">
+    <strong>Principal Investigator: </strong>{{ data.principalInvestigators }}
+  </div>
+  {% endif %} {% if metadata.contact is defined and metadata.contact is not none
+  %}
+  <div class="p-1"><strong>Contact: </strong> {{ metadata.contact }}</div>
   {% endif %} {% if metadata.licenses is defined and metadata.licenses is not
   none %}
-  <div><strong>Licenses: </strong> {{ metadata.licenses }}</div>
+  <div class="p-1">
+    <strong>Licenses: </strong> {{ metadata.licenses|join(',') }}
+  </div>
   {% endif %} {% if metadata.version is defined and metadata.version is not none
   %}
-  <div><strong>Version: </strong> {{ metadata.version }}</div>
+  <div class="p-1"><strong>Version: </strong> {{ metadata.version }}</div>
   {% endif %} {% if metadata.sources is defined and metadata.sources is not none
   %}
-  <div>
+  <div class="p-1">
     <strong>Source: </strong
     ><a target="_blank" rel="noopener noreferrer" href="{{ metadata.sources }}"
       >{{ metadata.sources }}</a
     >
   </div>
-  {% endif %} {% if metadata.authors is defined and metadata.authors is not none
+  {% endif %} {% if data.modalities is defined and data.modalities is not none
   %}
-  <div><strong>Authors: </strong>{{ metadata.authors }}</div>
-  {% endif %} {% if data.principalInvestigators is defined and
-  data.principalInvestigators is not none %}
-  <div>
-    <strong>Principal Investigator: </strong>{{ data.principalInvestigators }}
+  <div class="p-1">
+    <strong>Modalities: </strong>
+    {% for d in data.modalities %} {% if d is defined %} {% set href =
+    "search?modalities=" ~ d %}
+    <span class="mr-1"
+      ><a class="badge badge-info" href="{{ href }}">{{ d }}</a></span
+    >
+    {% endif %} {% endfor %}
   </div>
-  {% endif %} {% if metadata.contact is defined and metadata.contact is not none
-  %}
-  <div><strong>Contact: </strong> {{ metadata.contact }}</div>
+  {% endif %}{% if data.formats is defined and data.formats is not none %}
+  <div class="p-1">
+    <strong>Formats: </strong>
+    {% for d in data.formats %} {% if d is defined %} {% set href =
+    "search?formats=" ~ d %}
+    <span class="mr-1"
+      ><a class="badge badge-info" href="{{ href }}">{{ d }}</a></span
+    >
+    {% endif %} {% endfor %}
+  </div>
+  {% endif %} {% if data.size is defined and data.size is not none %}
+  <div class="p-1"><strong>Size: </strong> {{ data.size }}</div>
+  {% endif %} {% if data.files is defined and data.files is not none %}
+  <div class="p-1"><strong>No of Files: </strong> {{ data.files }}</div>
   {% endif %} {% if metadata.parentDatasets is defined and
   metadata.parentDatasets is not none %}
-  <div>
+  <div class="p-1">
     <strong>Input Datasets: </strong>
     {% for d in metadata.parentDatasets %} {% if d is defined %} {% set href =
     "/dataset?id=projects/" ~ d %}
     <span class="mr-1"
-      ><a class="badge badge-primary" href="{{ href }}">{{ d }}</a></span
+      ><a class="badge badge-info" href="{{ href }}">{{ d }}</a></span
     >
     {% endif %} {% endfor %}
   </div>
   {% endif %} {% if metadata.childDatasets is defined and
   metadata.childDatasets|length > 0 %}
-  <div>
+  <div class="p-1">
     <strong>Derived Datasets: </strong>
     {% for d in metadata.childDatasets %} {% set href = "/dataset?id=" ~
     d.child_dataset_id %}
     <span class="mr-1"
-      ><a class="badge badge-primary" href="{{ href }}">{{ d.name }}</a></span
+      ><a class="badge badge-info" href="{{ href }}">{{ d.name }}</a></span
     >
     {% endfor %}
   </div>
   {% endif %} {% if metadata.primaryPublications is defined and
   metadata.primaryPublications is not none %} {% if
   metadata.primaryPublications|length > 1 %}
-  <div>
+  <div class="p-1">
     <strong>Primary Publications: </strong>
     {% for p in metadata.primaryPublications %}
     <ul>
@@ -108,7 +132,7 @@
     {% endfor %}
   </div>
   {% elif metadata.primaryPublications|length == 1 %}
-  <div>
+  <div class="p-1">
     <strong>Primary Publication: </strong>
     {{metadata.primaryPublications[0].title}}
     {{metadata.primaryPublications[0].author}}
@@ -129,7 +153,7 @@
 <div class="d-flex flex-column p-4">
   {% if metadata.description is defined and metadata.description is not none %}
   <div class="text-center"><strong>Description: </strong></div>
-  <div>{{ metadata.description|safe }}</div>
+  <div class="p-1">{{ metadata.description|safe }}</div>
   {% endif %}
 </div>
 

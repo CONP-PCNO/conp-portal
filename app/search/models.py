@@ -149,7 +149,7 @@ class DATSDataset(object):
                     elif 'fullName' in x:
                         principalInvestigators.append(x['fullName'])
 
-        return ", ".join(principalInvestigators) if len(principalInvestigators) > 0 else None
+        return principalInvestigators if len(principalInvestigators) > 0 else None
 
     @property
     def primaryPublications(self):
@@ -282,7 +282,7 @@ class DATSDataset(object):
             formats = ", ".join([", ".join(x.get('formats', []))
                                  for x in dists])
 
-        return formats
+        return formats.split(",")
 
     @property
     def licenses(self):
@@ -300,7 +300,7 @@ class DATSDataset(object):
             else:
                 licenses = licenseString
 
-        return licenses
+        return licenses.split(",")
 
     @property
     def modalities(self):
@@ -311,7 +311,7 @@ class DATSDataset(object):
             if modality is not None:
                 modalities.append(modality)
 
-        return ", ".join(modalities) if len(modalities) > 0 else None
+        return modalities if len(modalities) > 0 else None
 
     @property
     def keywords(self):
