@@ -269,40 +269,36 @@ class DATSDataset(object):
 
     @property
     def formats(self):
-        formats = None
+        formats = []
         dists = self.descriptor.get('distributions', None)
         if dists is None:
             return None
 
-        if not type(dists) == list:
-            if dists.get('@type', '') == 'DatasetDistribution':
-                formats = ", ".join([x['description']
-                                     for x in dists.get('formats', [])])
-        else:
-            formats = ", ".join([", ".join(x.get('formats', []))
-                                 for x in dists])
+        for x in dists:
+            formats += x.get('formats', [])
 
-        return formats.split(",")
+        return formats
 
-    @property
+    @ property
     def licenses(self):
-        licenseString = self.descriptor.get('licenses', 'None')
-        licenses = licenseString
-        if type(licenseString) == list:
-            licenses = ", ".join([x['name'] for x in licenseString])
+        licenses = []
+        lics = self.descriptor.get('licenses', None)
+        if type(lics) == list:
+            for x in lics:
+                licenses.append(x.get('name'))
         else:
-            if 'name' in licenseString:
-                licenses = licenseString['name']
-            elif '$schema' in licenseString:
-                licenses = licenseString['$schema']
-            elif 'dataUsesConditions' in licenseString:
-                licenses = licenseString['dataUsesConditions']
+            if 'name' in lics:
+                licenses = lics['name']
+            elif '$schema' in lics:
+                licenses = lics['$schema']
+            elif 'dataUsesConditions' in lics:
+                licenses = lics['dataUsesConditions']
             else:
-                licenses = licenseString
+                licenses = lics
 
-        return licenses.split(",")
+        return licenses
 
-    @property
+    @ property
     def modalities(self):
         modalities = []
         for t in self.descriptor.get('types', []):
@@ -313,7 +309,7 @@ class DATSDataset(object):
 
         return modalities if len(modalities) > 0 else None
 
-    @property
+    @ property
     def keywords(self):
         keywords = []
         for t in self.descriptor.get('keywords', []):
@@ -323,7 +319,7 @@ class DATSDataset(object):
 
         return keywords if len(keywords) > 0 else None
 
-    @property
+    @ property
     def size(self):
         dists = self.descriptor.get('distributions', None)
         if dists is None:
@@ -355,7 +351,7 @@ class DATSDataset(object):
 
         return "{} {}".format(size, unit)
 
-    @property
+    @ property
     def sources(self):
         dists = self.descriptor.get('distributions', None)
         if dists is None:
@@ -373,7 +369,7 @@ class DATSDataset(object):
 
         return "{}".format(sources)
 
-    @property
+    @ property
     def subjectCount(self):
         count = 0
         extraprops = self.descriptor.get('extraProperties', {})
@@ -387,7 +383,7 @@ class DATSDataset(object):
 
         return count if count > 0 else None
 
-    @property
+    @ property
     def derivedFrom(self):
         derivedFrom = []
         extraprops = self.descriptor.get('extraProperties', {})
@@ -398,7 +394,7 @@ class DATSDataset(object):
 
         return derivedFrom if len(derivedFrom) > 0 else None
 
-    @property
+    @ property
     def parentDatasetId(self):
         parentDatasetId = []
         extraprops = self.descriptor.get('extraProperties', {})
@@ -410,11 +406,11 @@ class DATSDataset(object):
 
         return parentDatasetId if len(parentDatasetId) > 0 else None
 
-    @property
+    @ property
     def version(self):
         return self.descriptor.get('version', None)
 
-    @property
+    @ property
     def schema_org_metadata(self):
         """ Returns json-ld metadata snippet for Google dataset search. """
         try:
@@ -482,7 +478,7 @@ class DATSDataset(object):
         except Exception:
             return None
 
-    @property
+    @ property
     def status(self):
 
         test_results = get_latest_test_results()

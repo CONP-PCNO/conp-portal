@@ -171,30 +171,30 @@ def dataset_search():
 
     modalities = []
     for e in elements:
-        if e['modalities'] is None:
+        if e['modalities'] is None or e['modalities'] == '':
             continue
         for m in e['modalities']:
             modalities.append(m.lower())
-    modalities = list(set(modalities))
+    modalities = sorted(list(set(modalities)))
 
     formats = []
     # by default, formats should be represented in upper case
     # except for NIfTI, bigWig and RNA-Seq
     for e in elements:
-        if e['formats'] is None:
+        if e['formats'] is None or e['formats'] == []:
             continue
         for m in e['formats']:
-            formatted_string = re.sub(r'\.', '', m)
-            if formatted_string.lower() in ['nifti', 'nii', 'niigz']:
+            if m.lower() in ['nifti', 'nii', 'niigz']:
                 formats.append('NIfTI')
-            elif formatted_string.lower() in ['gifti', 'gii']:
+            elif m.lower() in ['gifti', 'gii']:
                 formats.append('GIfTI')
-            elif formatted_string.lower() == 'bigwig':
+            elif m.lower() == 'bigwig':
                 formats.append('bigWig')
-            elif formatted_string.lower() == 'rna-seq':
+            elif m.lower() == 'rna-seq':
                 formats.append('RNA-Seq')
             else:
-                formats.append(formatted_string.upper())
+                formats.append(m.upper())
+
     formats = sorted(list(set(formats)))
 
     queryAll = bool(request.args.get('elements') == 'all')

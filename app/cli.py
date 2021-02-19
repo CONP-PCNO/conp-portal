@@ -250,7 +250,7 @@ def _update_datasets(app):
             createTimeStamp = os.popen(
                 "git -C {} log --pretty=format:%ct --reverse | head -1".format(ds['path'])).read()
             createDate = datetime.fromtimestamp(int(createTimeStamp))
-        except:
+        except Exception:
             print("[ERROR  ] Create Date couldnt be read.")
 
         # last commit in the git log for the dataset update date
@@ -259,7 +259,7 @@ def _update_datasets(app):
             createTimeStamp = os.popen(
                 "git -C {} log --pretty=format:%ct | head -1".format(ds['path'])).read()
             updateDate = datetime.fromtimestamp(int(createTimeStamp))
-        except:
+        except Exception:
             print("[ERROR  ] Update Date couldnt be read.")
 
         # get the remote URL
@@ -267,7 +267,7 @@ def _update_datasets(app):
         try:
             remoteUrl = os.popen(
                 "git -C {} config --get remote.origin.url".format(ds['path'])).read()
-        except:
+        except Exception:
             print("[ERROR  ] Remote URL couldnt be read.")
 
         if dataset is None:
