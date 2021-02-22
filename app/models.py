@@ -323,7 +323,7 @@ class MatomoDailyGetDatasetPageViewsSummary(db.Model):
     on the different dataset pages that could not be stored in
     matomo_daily_get_page_urls_summary.
 
-     Chosen variables from the endpoint are:
+    Chosen variables from the endpoint are:
     - url              = page URL
     - label            = page label
     - nb_hits          = number of views on this page
@@ -344,3 +344,36 @@ class MatomoDailyGetDatasetPageViewsSummary(db.Model):
     nb_uniq_visitors = db.Column(db.Integer)
     sum_time_spent = db.Column(db.Integer)
     avg_time_on_page = db.Column(db.Float)
+
+
+class MatomoDailyGetSiteSearchKeywords(db.Model):
+    """
+    Provides Matomo daily site search keywords statistics to store
+    the search keyword statistics in matomo_daily_site_keyword_searches_summary
+
+    avg_time_on_page    = average time spent, in seconds, on this page
+    bounce_rate         = ratio of visits leaving the website after landing on this page
+    exit_nb_visits      = number of visits that finished on this page
+    exit_rate           = ratio of visits that do not view any other page after this page
+    label               = keyword searched
+    nb_hits             = number of views on this page
+    nb_pages_per_search = number of pages displayed for the searched keyword
+    nb_visits           = number of visits (30 min of inactivity considered a new visit)
+    segment             = segment with keyword search
+    sum_time_spent      = total time spent on this page, in seconds
+    """
+
+    __tablename__ = 'matomo_daily_site_keyword_searches_summary'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column(db.String)
+    avg_time_on_page = db.Column(db.Integer)
+    bounce_rate = db.Column(db.String)
+    exit_nb_visits = db.Column(db.Integer)
+    exit_rate = db.Column(db.String)
+    label = db.Column(db.String)
+    nb_hits = db.Column(db.Integer)
+    nb_pages_per_search = db.Column(db.Integer)
+    nb_visits = db.Column(db.Integer)
+    segment = db.Column(db.String)
+    sum_time_spent = db.Column(db.Integer)

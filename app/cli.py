@@ -326,6 +326,8 @@ def _update_analytics(app):
 
     _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_baseurl)
 
+    _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_baseurl)
+
 
 def _update_analytics_matomo_visits_summary(app, matomo_api_baseurl):
     """
@@ -442,14 +444,6 @@ def _update_analytics_matomo_get_page_urls_summary(app, matomo_api_baseurl):
 
         print(f'[INFO   ] Inserted Matomo visits per page URL for {date}')
 
-        # if no stats existed for that date, then add a row to the table
-        # with empty values so that the script does not reprocess those dates
-        if not date_inserted:
-            views_summary = MatomoDailyGetDatasetPageViewsSummary()
-            views_summary.date = date
-            db.session.merge(views_summary)
-            db.session.commit()
-
 
 def _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_baseurl):
     from app import db
@@ -510,6 +504,59 @@ def _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_bas
             db.session.merge(views_summary)
             db.session.commit()
 
+
+def _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_baseurl):
+    from app import db
+    from app.models import MatomoDailyGetSiteSearchKeywords
+    from datetime import datetime, timedelta
+    import json
+    import requests
+
+    # grep the dates already inserted into the database
+    date_field = MatomoDailyGetSiteSearchKeywords.date
+    db_results = db.session.query(date_field).distinct(date_field).all()
+    dates_in_database = [row[0] for row in db_results]
+
+    # determines which dates are missing from the database and could be queried on Matomo
+    dates_to_process = determine_dates_to_query_on_matomo(dates_in_database)
+
+    # for each date to process, query Matomo API and insert response into the database
+    for date in dates_to_process:
+        matomo_query = f"{matomo_api_baseurl}" \
+                       f"&method=Actions.getSiteSearchKeywords" \
+                       f"&period=day" \
+                       f"&date={date}"
+        response = requests.get(matomo_query).json()
+
+        if not response:
+            # if no response, then there are no stats for that date.
+            # enter the date in the table so that this date is not
+            # reprocessed at the next run of analytics updates
+            keyword_summary = MatomoDailyGetSiteSearchKeywords()
+            keyword_summary.date = date
+            db.session.merge(keyword_summary)
+            db.session.commit()
+
+        for keyword in response:
+            exit_nb_visits = keyword['exit_nb_visits'] \
+                if 'exit_nb_visits' in keyword.keys() else None
+            keyword_summary = MatomoDailyGetSiteSearchKeywords()
+            keyword_summary.date = date
+            keyword_summary.avg_time_on_page = keyword['avg_time_on_page']
+            keyword_summary.bounce_rate = keyword['bounce_rate']
+            keyword_summary.exit_nb_visits = exit_nb_visits
+            keyword_summary.exit_rate = keyword['exit_rate']
+            keyword_summary.label = keyword['label']
+            keyword_summary.nb_hits = keyword['nb_hits']
+            keyword_summary.nb_pages_per_search = keyword['nb_pages_per_search']
+            keyword_summary.nb_visits = keyword['nb_visits']
+            keyword_summary.segment = keyword['segment']
+            keyword_summary.sum_time_spent = keyword['sum_time_spent']
+
+            db.session.merge(keyword_summary)
+            db.session.commit()
+
+    print(f'[INFO   ] Inserted Matomo search keywords summary for {date}')
 
 def determine_dates_to_query_on_matomo(dates_in_database):
     """
