@@ -217,7 +217,7 @@ const DataTable = ({
           ))
         }
         {
-          query.max_per_page !== 'all' ?
+          query.max_per_page !== 'All' ?
             <div className="search-dataset-footer d-flex align-items-center p-2">
               <div className="btn-group">
                 <button className="btn btn-outline-dark" value="first"

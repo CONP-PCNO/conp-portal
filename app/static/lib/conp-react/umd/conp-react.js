@@ -9890,7 +9890,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       authorized: authorized,
       imagePath: imagePath
     })));
-  }), query.max_per_page !== 'all' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }), query.max_per_page !== 'All' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "search-dataset-footer d-flex align-items-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn-group"
