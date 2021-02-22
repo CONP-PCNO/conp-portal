@@ -150,9 +150,11 @@ const DataTable = ({
               </span>
             </div>
           </div>
-          <div className="d-flex justify-content-end pb-1">
-            <a className="text-reset px-1" href="/sparql">Advanced Search Page (NEXUS)</a>
-          </div>
+          {renderElement.name === "DatasetElement" ?
+            <div className="d-flex justify-content-end pb-1">
+              <a className="text-reset px-1" href="/sparql">Advanced Search Page (NEXUS)</a>
+            </div>
+            : null}
         </div>
         <div className="d-flex justify-content-between">
           <div className="d-flex p-2 justify-content-start align-items-center">
