@@ -173,7 +173,7 @@ const DatasetElement = props => {
                   <div className="card-list-item">
                     <p className="card-text pr-1">
                       <strong> | </strong>
-                      <strong>Modalities: </strong>{element.modalities}
+                      <strong>Modalities: </strong>{element.modalities.join(', ')}
                     </p>
                   </div> : null}
                 {element.licenses ?
@@ -209,7 +209,7 @@ const DatasetElement = props => {
                   <div className="card-list-item">
                     <p className="card-text text-capitalize pr-1">
                       <strong> | </strong>
-                      <strong>Formats: </strong>{element.formats.toString()}
+                      <strong>Formats: </strong>{element.formats.join(', ')}
                     </p>
                   </div> : null}
               </div>
