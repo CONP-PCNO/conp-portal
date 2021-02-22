@@ -118,101 +118,66 @@ const DatasetElement = props => {
               </a>
             </h5>
             <div className="py-2">
-              <div className="d-flex align-items-start">
+              <ul className="d-flex align-items-start">
                 {element.creators ?
-                  <div className="card-list-item">
-                    <p className="card-text pr-1">
-                      <strong>Creators: </strong>{element.creators.length > 3 ? element.creators.slice(0, 3).join(', ') + ' et al.' : element.creators.join(', ')}
-                    </p>
-                  </div> : null}
+                  <li className="card-list-item">
+                    <strong>Creators: </strong>{element.creators.length > 3 ? element.creators.slice(0, 3).join(', ') + ' et al.' : element.creators.join(', ')}
+                  </li> : null}
                 {element.origin?.institution ?
-                  <div className="card-list-item">
-                    <p className="card-text pr-1">
-                      <strong> | </strong>
-                      <strong>Institution: </strong>{element.origin.institution}
-                    </p>
-                  </div> : null}
+                  <li className="card-list-item">
+                    <strong>Institution: </strong>{element.origin.institution}
+                  </li> : null}
                 {element.origin?.consortium ?
-                  <div className="card-list-item">
-                    <p className="card-text pr-1">
-                      <strong> | </strong>
-                      <strong>Consortium: </strong>{element.origin.consortium}
-                    </p>
-                  </div> : null}
-              </div>
-              <div className="d-flex align-items-start">
+                  <li className="card-list-item">
+                    <strong>Consortium: </strong>{element.origin.consortium}
+                  </li> : null}
+              </ul>
+              <ul className="d-flex align-items-start">
                 {element.dateAdded ?
-                  <div className="card-list-item">
-                    <p className="card-text pr-1">
-                      <strong>Date Added: </strong>{element.dateAdded}
-                    </p>
-                  </div> : null}
+                  <li className="card-list-item">
+                    <strong>Date Added: </strong>{element.dateAdded}
+                  </li> : null}
                 {element.dateUpdated ?
-                  <div className="card-list-item">
-                    <p className="card-text pr-1">
-                      <strong> | </strong>
-                      <strong>Date Updated: </strong>{element.dateUpdated}
-                    </p>
-                  </div> : null}
-              </div>
-              <div className="d-flex align-items-start">
+                  <li className="card-list-item">
+                    <strong>Date Updated: </strong>{element.dateUpdated}
+                  </li> : null}
+              </ul>
+              <ul className="d-flex align-items-start">
                 {element.version ?
-                  <div className="card-list-item">
-                    <p className="card-text pr-1">
-                      <strong>Version: </strong>{element.version}
-                    </p>
-                  </div> : null}
+                  <li className="card-list-item">
+                    <strong>Version: </strong>{element.version}
+                  </li> : null}
                 {element.types ?
-                  <div className="card-list-item">
-                    <p className="card-text pr-1">
-                      <strong> | </strong>
-                      <strong>Data Types: </strong>{element.types}
-                    </p>
-                  </div> : null}
+                  <li className="card-list-item">
+                    <strong>Data Types: </strong>{element.types}
+                  </li> : null}
                 {element.modalities ?
-                  <div className="card-list-item">
-                    <p className="card-text pr-1">
-                      <strong> | </strong>
-                      <strong>Modalities: </strong>{element.modalities.join(', ')}
-                    </p>
-                  </div> : null}
+                  <li className="card-list-item">
+                    <strong>Modalities: </strong>{element.modalities.join(', ')}
+                  </li> : null}
                 {element.licenses ?
-                  <div className="card-list-item">
-                    <p className="card-text text-capitalize pr-1">
-                      <strong> | </strong>
-                      <strong>License: </strong>{element.licenses}
-                    </p>
-                  </div> : null}
-              </div>
-              <div className="d-flex align-items-start">
+                  <li className="card-list-item">
+                    <strong>License: </strong>{element.licenses}
+                  </li> : null}
+              </ul>
+              <ul className="d-flex align-items-start">
                 {element.files ?
-                  <div className="card-list-item">
-                    <p className="card-text text-capitalize pr-1">
-                      <strong>Files: </strong>{element.files}
-                    </p>
-                  </div> : null}
+                  <li className="card-list-item">
+                    <strong>Files: </strong>{element.files}
+                  </li> : null}
                 {element.size ?
-                  <div className="card-list-item">
-                    <p className="card-text text-capitalize pr-1">
-                      <strong> | </strong>
-                      <strong>Size: </strong>{element.size}
-                    </p>
-                  </div> : null}
+                  <li className="card-list-item">
+                    <strong>Size: </strong>{element.size}
+                  </li> : null}
                 {element.subjects ?
-                  <div className="card-list-item">
-                    <p className="card-text text-capitalize pr-1">
-                      <strong> | </strong>
-                      <strong>Subjects: </strong>{element.subjects}
-                    </p>
-                  </div> : null}
+                  <li className="card-list-item">
+                    <strong>Subjects: </strong>{element.subjects}
+                  </li> : null}
                 {element.formats ?
-                  <div className="card-list-item">
-                    <p className="card-text text-capitalize pr-1">
-                      <strong> | </strong>
-                      <strong>Formats: </strong>{element.formats.join(', ')}
-                    </p>
-                  </div> : null}
-              </div>
+                  <li className="card-list-item">
+                    <strong>Formats: </strong>{element.formats.join(', ')}
+                  </li> : null}
+              </ul>
             </div>
             {element.sources ?
               <div className="card-list-item">

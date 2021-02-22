@@ -334,8 +334,20 @@ Colour names courtesy of chir.ag/projects/name-that-color
 }
 
 .card .card-body ul {
-  justify-content: space-between;
-  flex-direction: column;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.card .card-body li:first-child {
+  list-style: none;
+}
+
+.card .card-body li {
+  padding-right: 1rem;
 }
 
 .card .card-buttons {
@@ -372,7 +384,7 @@ Colour names courtesy of chir.ag/projects/name-that-color
   display: flex;
 }
 
-@media (min-width: 576px) {
+/* @media (min-width: 576px) {
   .card .card-buttons {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -411,7 +423,7 @@ Colour names courtesy of chir.ag/projects/name-that-color
     flex-direction: column;
     justify-content: center;
   }
-}
+} */
 
 /* Dataset Cards */
 
