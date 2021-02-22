@@ -339,15 +339,15 @@ def _update_analytics_matomo_visits_summary(app, matomo_api_baseurl):
     current day.
     """
 
-    from app        import db
+    from app import db
     from app.models import MatomoDailyVisitsSummary
-    from datetime   import datetime, timedelta
+    from datetime import datetime, timedelta
     import json
     import requests
 
     # grep the dates already inserted into the database
     db_results = db.session.query(MatomoDailyVisitsSummary.date).all()
-    dates_in_database = [row[0] for row in db_results ]
+    dates_in_database = [row[0] for row in db_results]
 
     # determines which dates are missing from the database and could be queried on Matomo
     dates_to_process = determine_dates_to_query_on_matomo(dates_in_database)
@@ -394,16 +394,16 @@ def _update_analytics_matomo_get_page_urls_summary(app, matomo_api_baseurl):
     current day.
     """
 
-    from app        import db
+    from app import db
     from app.models import MatomoDailyGetPageUrlsSummary
-    from datetime   import datetime, timedelta
+    from datetime import datetime, timedelta
     import json
     import requests
 
     # grep the dates already inserted into the database
     date_field = MatomoDailyGetPageUrlsSummary.date
     db_results = db.session.query(date_field).distinct(date_field).all()
-    dates_in_database = [row[0] for row in db_results ]
+    dates_in_database = [row[0] for row in db_results]
 
     # determines which dates are missing from the database and could be queried on Matomo
     dates_to_process = determine_dates_to_query_on_matomo(dates_in_database)
@@ -462,7 +462,7 @@ def _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_bas
     dates_to_process = determine_dates_to_query_on_matomo(dates_in_database)
 
     # get the list of dataset_id_list to process
-    dataset_id_list = [ row[0] for row in db.session.query(DBDataset.dataset_id).all() ]
+    dataset_id_list = [row[0] for row in db.session.query(DBDataset.dataset_id).all()]
 
     # for each date and each dataset, query Matomo for the view stats
     for date in dates_to_process:
@@ -557,6 +557,7 @@ def _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_
             db.session.commit()
 
     print(f'[INFO   ] Inserted Matomo search keywords summary for {date}')
+
 
 def determine_dates_to_query_on_matomo(dates_in_database):
     """
