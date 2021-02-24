@@ -154,6 +154,32 @@
     {% endif %}
   </div>
   {% endif %} {% endif %}
+  <div class="py-1">
+    <div class="d-inline-flex">
+      <button
+        class="btn btn-link text-reset p-0"
+        type="button"
+        data-toggle="collapse"
+        data-target="#collapseExample"
+        aria-expanded="false"
+        aria-controls="collapseExample"
+      >
+        more...
+      </button>
+    </div>
+    <div class="collapse py-1" id="collapseExample">
+      <table class="table">
+        <tbody>
+          {% for key, value in metadata.items() %}
+          <tr>
+            <th scope="row">{{key}}</th>
+            <td>{{value}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 <div class="d-flex flex-column p-4">
