@@ -133,6 +133,10 @@ const DatasetElement = props => {
                   </li> : null}
               </ul>
               <ul className="d-flex align-items-start">
+                {element.version ?
+                  <li className="card-list-item">
+                    <strong>Version: </strong>{element.version}
+                  </li> : null}
                 {element.dateAdded ?
                   <li className="card-list-item">
                     <strong>Date Added: </strong>{element.dateAdded}
@@ -143,10 +147,6 @@ const DatasetElement = props => {
                   </li> : null}
               </ul>
               <ul className="d-flex align-items-start">
-                {element.version ?
-                  <li className="card-list-item">
-                    <strong>Version: </strong>{element.version}
-                  </li> : null}
                 {element.types ?
                   <li className="card-list-item">
                     <strong>Data Types: </strong>{element.types}

@@ -16726,15 +16726,15 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Consortium: "), element.origin.consortium) : null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
     className: "d-flex align-items-start"
-  }, element.dateAdded ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+  }, element.version ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    className: "card-list-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Version: "), element.version) : null, element.dateAdded ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Date Added: "), element.dateAdded) : null, element.dateUpdated ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Date Updated: "), element.dateUpdated) : null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
     className: "d-flex align-items-start"
-  }, element.version ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
-    className: "card-list-item"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Version: "), element.version) : null, element.types ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+  }, element.types ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Data Types: "), element.types) : null, element.modalities ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
     className: "card-list-item"
@@ -16792,7 +16792,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "d-inline-block",
     tabIndex: "0",
     "data-toggle": "tooltip",
-    title: "Disabled tooltip"
+    title: "This dataset is not currently available for instant download. See the dataset page for detailed download instructions"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     type: "button",
     className: "btn btn-outline-secondary m-1",
