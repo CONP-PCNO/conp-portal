@@ -404,10 +404,11 @@ class DATSDataset(object):
     def acknowledges(self):
         acknowledges = []
         for t in self.descriptor.get('acknowledges', []):
-            ack = t.get('funders', None)
-            if ack is not None:
-                if ack.get('name', None) is not None:
-                    acknowledges.append(ack.get('name', None))
+            funders = t.get('funders', None)
+            if funders is not None and type(funders) == list:
+                for f in funders:
+                    if f.get('name', None) is not None:
+                        acknowledges.append(f.get('name', None))
 
         return acknowledges if len(acknowledges) > 0 else None
 
