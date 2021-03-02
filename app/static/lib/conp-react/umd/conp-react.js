@@ -16788,28 +16788,17 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "alert alert-danger",
     role: "alert",
     hidden: !metadataErrorState
-  }, metadataErrorText), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
-    className: "d-inline-block",
-    tabIndex: "0",
-    "data-toggle": "tooltip",
-    title: "This dataset is not currently available for instant download. See the dataset page for detailed download instructions"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-    type: "button",
-    className: "btn btn-outline-secondary m-1",
-    disabled: true,
-    style: {
-      pointerEvents: 'none'
-    },
-    onClick: function onClick() {
-      return downloadDataset();
-    }
+  }, metadataErrorText), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    href: "dataset?id=" + element.id + "#downloadInstructions",
+    role: "button",
+    className: "btn btn-outline-secondary m-1"
   }, "Dataset", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "spinner-border text-primary",
     role: "status",
     hidden: !datasetSpinnerState
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
     className: "sr-only"
-  }, "Loading...")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "Loading..."))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "alert alert-danger",
     role: "alert",
     hidden: !datasetErrorState

@@ -209,14 +209,12 @@ const DatasetElement = props => {
             <div className="alert alert-danger" role="alert" hidden={!metadataErrorState}>
               {metadataErrorText}
             </div>
-            <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="This dataset is not currently available for instant download. See the dataset page for detailed download instructions">
-              <button type="button" className="btn btn-outline-secondary m-1" disabled={true} style={{ pointerEvents: 'none' }} onClick={() => downloadDataset()}>
-                Dataset
+            <a href={`dataset?id=${element.id}#downloadInstructions`} role="button" className="btn btn-outline-secondary m-1" >
+              Dataset
               <div className="spinner-border text-primary" role="status" hidden={!datasetSpinnerState}>
-                  <span className="sr-only">Loading...</span>
-                </div>
-              </button>
-            </span>
+                <span className="sr-only">Loading...</span>
+              </div>
+            </a>
             <div className="alert alert-danger" role="alert" hidden={!datasetErrorState}>
               {datasetErrorText}
             </div>
