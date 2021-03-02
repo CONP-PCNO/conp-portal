@@ -97,6 +97,8 @@
   <div class="py-1"><strong>Size: </strong> {{ data.size }}</div>
   {% endif %} {% if data.files is defined and data.files is not none %}
   <div class="py-1"><strong>No of Files: </strong> {{ data.files }}</div>
+  {% endif %} {% if data.subjects is defined and data.subjects is not none %}
+  <div class="py-1"><strong>No of Subjects: </strong> {{ data.subjects }}</div>
   {% endif %} {% if metadata.parentDatasets is defined and
   metadata.parentDatasets is not none %}
   <div class="py-1">
