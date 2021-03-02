@@ -155,7 +155,10 @@
     </a>
     {% endif %}
   </div>
-  {% endif %} {% endif %}
+  {% endif %} {% endif %} {% if (metadata.dimensions is not none) or
+  (metadata.producedBy is not none) or (metadata.isAbout is not none) or
+  (metadata.acknowledges is not none) or (metadata.spatialCoverage is not none)
+  %}
   <div class="py-1">
     <div class="d-inline-flex">
       <button
@@ -172,16 +175,37 @@
     <div class="collapse py-1" id="collapseExample">
       <table class="table">
         <tbody>
-          {% for key, value in metadata.items() %}
+          {% if metadata.dimensions is not none %}
           <tr>
-            <th scope="row">{{key}}</th>
-            <td>{{value}}</td>
+            <th scope="row">Dimensions:</th>
+            <td>{{metadata.dimensions|join(", ")}}</td>
           </tr>
-          {% endfor %}
+          {% endif %} {% if metadata.producedBy is not none %}
+          <tr>
+            <th scope="row">Produced By:</th>
+            <td>{{metadata.producedBy|join(", ")}}</td>
+          </tr>
+          {% endif %} {% if metadata.isAbout is not none %}
+          <tr>
+            <th scope="row">Is About:</th>
+            <td>{{metadata.isAbout|join(", ")}}</td>
+          </tr>
+          {% endif %} {% if metadata.acknowledges is not none %}
+          <tr>
+            <th scope="row">Acknowledges:</th>
+            <td>{{metadata.acknowledges|join(", ")}}</td>
+          </tr>
+          {% endif %} {% if metadata.spatialCoverage is not none %}
+          <tr>
+            <th scope="row">Spatial Coverage:</th>
+            <td>{{metadata.spatialCoverage|join(", ")}}</td>
+          </tr>
+          {% endif %}
         </tbody>
       </table>
     </div>
   </div>
+  {% endif %}
 </div>
 
 <div class="d-flex flex-column p-4">

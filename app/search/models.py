@@ -370,6 +370,58 @@ class DATSDataset(object):
         return "{}".format(sources)
 
     @ property
+    def dimensions(self):
+        dimensions = []
+        for t in self.descriptor.get('dimensions', []):
+            dim = t.get('name', None)
+            if dim is not None:
+                if dim.get('value', None) is not None:
+                    dimensions.append(dim.get('value'))
+
+        return dimensions if len(dimensions) > 0 else None
+
+    @ property
+    def isAbout(self):
+        isAbout = []
+        for t in self.descriptor.get('isAbout', []):
+            isAb = t.get('name', None)
+            if isAb is not None:
+                isAbout.append(isAb)
+
+        return isAbout if len(isAbout) > 0 else None
+
+    @ property
+    def spatialCoverage(self):
+        spatialCoverage = []
+        for t in self.descriptor.get('spatialCoverage', []):
+            spatC = t.get('name', None)
+            if spatC is not None:
+                spatialCoverage.append(spatC)
+
+        return spatialCoverage if len(spatialCoverage) > 0 else None
+
+    @ property
+    def acknowledges(self):
+        acknowledges = []
+        for t in self.descriptor.get('acknowledges', []):
+            ack = t.get('funders', None)
+            if ack is not None:
+                if ack.get('name', None) is not None:
+                    acknowledges.append(ack.get('name', None))
+
+        return acknowledges if len(acknowledges) > 0 else None
+
+    @ property
+    def producedBy(self):
+        producedBy = []
+        for t in self.descriptor.get('producedBy', []):
+            prod = t.get('name', None)
+            if prod is not None:
+                producedBy.append(prod)
+
+        return producedBy if len(producedBy) > 0 else None
+
+    @ property
     def subjectCount(self):
         count = 0
         extraprops = self.descriptor.get('extraProperties', {})

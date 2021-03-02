@@ -535,7 +535,12 @@ def get_dataset_metadata_information(dataset):
         "keywords": datsdataset.keywords,
         "parentDatasets": datsdataset.parentDatasetId,
         "primaryPublications": datsdataset.primaryPublications,
-        "childDatasets": childDatasets
+        "childDatasets": childDatasets,
+        "dimensions": datsdataset.dimensions,
+        "producedBy": datsdataset.producedBy,
+        "isAbout": datsdataset.isAbout,
+        "acknowledges": datsdataset.acknowledges,
+        "spatialCoverage": datsdataset.spatialCoverage,
     }
 
 
