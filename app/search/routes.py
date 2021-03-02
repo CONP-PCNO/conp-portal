@@ -195,7 +195,7 @@ def dataset_search():
             else:
                 formats.append(m.upper())
 
-    formats = sorted(list(set(formats)))
+    formats = sorted(list(set(formats)), key=str.casefold)
 
     queryAll = bool(request.args.get('elements') == 'all')
     if(not queryAll):
