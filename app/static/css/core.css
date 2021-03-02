@@ -304,7 +304,6 @@ Colour names courtesy of chir.ag/projects/name-that-color
 
 .card {
   box-shadow: 0px 2px 4px #979797;
-  flex-wrap: wrap;
 }
 
 .card .card-social {
