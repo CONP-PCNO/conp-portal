@@ -191,7 +191,7 @@ const DatasetElement = props => {
             {element.sources ?
               <div className="card-list-item">
                 <p className="card-text pr-1">
-                  <strong>Origin: </strong>
+                  <strong>Source: </strong>
                   <a className="text-reset" target="_blank" rel="noopener noreferrer" href={element.sources}>{element.sources}</a>
                 </p>
               </div> : null}
