@@ -20,12 +20,12 @@ const PipelineElement = props => {
   return (
     <div className="card container-fluid" data-type="pipeline">
       <div className="row">
-        <div className="col col-md-2 d-flex flex-column p-2">
+        <div className="col col-lg-2 d-flex flex-column p-2">
           <div className="flex-grow-2 d-flex flex-column h-100 justify-content-center align-items-center">
             <a href={element.url}>
               <img
                 alt="dataset format"
-                className="img-fluid"
+                className="img-fluid w-100"
                 style={{ maxWidth: '180px' }}
                 src={
                   element.url === undefined
@@ -43,7 +43,7 @@ const PipelineElement = props => {
               </div> : null}
           </div>
         </div>
-        <div className="col col-md-8 card-body d-flex">
+        <div className="col col-lg-8 card-body d-flex">
           <div className="d-flex flex-column">
             <h5 className="card-title text-card-title">
               <a className="text-reset" href={`pipeline?id=${element.id}`}>
@@ -72,7 +72,7 @@ const PipelineElement = props => {
             </div>
           </div>
         </div>
-        <div className="col col-md-2 d-flex flex-column justify-content-center align-items-center p-2">
+        <div className="col col-lg-2 d-flex flex-column justify-content-center align-items-center p-2">
           {platforms}
         </div>
       </div >

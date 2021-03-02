@@ -16684,12 +16684,12 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "row"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-md-2 d-flex flex-column p-2"
+    className: "col col-lg-2 d-flex flex-column p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "flex-grow-2 d-flex flex-column h-100 justify-content-center align-items-center"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     alt: "dataset format",
-    className: "img-fluid",
+    className: "img-fluid w-100",
     style: {
       maxWidth: '180px'
     },
@@ -16706,7 +16706,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       width: 32
     }
   }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-md-8 card-body d-flex"
+    className: "col col-lg-8 card-body d-flex"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-column"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
@@ -16769,7 +16769,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     rel: "noopener noreferrer",
     href: element.sources
   }, element.sources))) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-md-2 d-flex flex-column justify-content-center align-items-center p-2"
+    className: "col col-lg-2 d-flex flex-column justify-content-center align-items-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h6", null, "DOWNLOAD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-column"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
@@ -16887,14 +16887,14 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "row"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-md-2 d-flex flex-column p-2"
+    className: "col col-lg-2 d-flex flex-column p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "flex-grow-2 d-flex flex-column h-100 justify-content-center align-items-center"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     href: element.url
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     alt: "dataset format",
-    className: "img-fluid",
+    className: "img-fluid w-100",
     style: {
       maxWidth: '180px'
     },
@@ -16906,7 +16906,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", {
     className: "fa fa-download my-2"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, element.downloads)) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-md-8 card-body d-flex"
+    className: "col col-lg-8 card-body d-flex"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-column"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
@@ -16940,7 +16940,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     rel: "noopener noreferrer",
     href: "https://www.zenodo.org/record/" + element.id.split(".")[1]
   }, element.id)) : null)))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-md-2 d-flex flex-column justify-content-center align-items-center p-2"
+    className: "col col-lg-2 d-flex flex-column justify-content-center align-items-center p-2"
   }, platforms)));
 };
 
