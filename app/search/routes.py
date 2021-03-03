@@ -5,7 +5,6 @@
 """
 import json
 import os
-import re
 
 from flask import render_template, request, current_app, send_from_directory
 from flask_login import current_user
