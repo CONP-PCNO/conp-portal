@@ -19,16 +19,16 @@
 <div class="d-flex p-4">
   <div class="col-4">
     <div class="card h-100">
-      <div class="card-body d-flex flex-column align-items-center">
+      <div
+        class="card-body d-flex flex-column justify-content-between align-items-center"
+      >
         <h6 class="card-title text-center">Run Locally Using Boutiques</h6>
-        <div class="row py-4 flex-grow-1 w-100 justify-content-center">
-          <div class="col-6">
-            <img
-              class="img-fluid"
-              alt="Boutiques"
-              src="/static/img/boutiques.png"
-            />
-          </div>
+        <div class="row py-4 w-100 justify-content-center">
+          <img
+            class="img-fluid"
+            alt="Boutiques"
+            src="/static/img/boutiques.png"
+          />
         </div>
         <a href="#boutiques" class="btn-link">Click here for instructions</a>
       </div>
@@ -36,24 +36,24 @@
   </div>
   <div class="col-4">
     <div class="card h-100">
-      <div class="card-body d-flex flex-column align-items-center">
+      <div
+        class="card-body d-flex flex-column justify-content-between align-items-center"
+      >
         <h6 class="card-title text-center">Run on the CBRAIN Platform</h6>
-        <div class="row py-4 flex-grow-1 w-100 justify-content-center">
-          <div class="col-6">
-            {% if pipeline.platforms[0].uri == "" %}
-            <img
-              class="img-fluid"
-              alt="Online platform"
-              src="/static/img/cbrain-icon-grey.png"
-            />
-            {% else %}
-            <img
-              class="img-fluid"
-              alt="CBRAIN"
-              src="/static/img/cbrain-icon-blue.png"
-            />
-            {% endif %}
-          </div>
+        <div class="row py-4 w-100 justify-content-center">
+          {% if pipeline.platforms[0].uri == "" %}
+          <img
+            class="img-fluid"
+            alt="Online platform"
+            src="/static/img/cbrain-icon-grey.png"
+          />
+          {% else %}
+          <img
+            class="img-fluid"
+            alt="CBRAIN"
+            src="/static/img/cbrain-icon-blue.png"
+          />
+          {% endif %}
         </div>
         {% if pipeline.platforms[0].uri == "" %}
         <a href="{{ pipeline.platforms[0].uri }}" class="btn-link disabled"
@@ -73,16 +73,16 @@
   </div>
   <div class="col-4">
     <div class="card h-100">
-      <div class="card-body d-flex flex-column align-items-center">
+      <div
+        class="card-body d-flex flex-column justify-content-between align-items-center"
+      >
         <h6 class="card-title text-center">Run on HPCs with Clowdr</h6>
-        <div class="row py-4 flex-grow-1 w-100 justify-content-center">
-          <div class="col-12">
-            <img
-              class="img-fluid"
-              alt="Compute Canada"
-              src="/static/img/compute_canada_logo.png"
-            />
-          </div>
+        <div class="row py-4 w-100 justify-content-center">
+          <img
+            class="img-fluid"
+            alt="Compute Canada"
+            src="/static/img/compute_canada_logo.png"
+          />
         </div>
         <a
           target="_blank"

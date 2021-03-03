@@ -12,6 +12,7 @@ body {
   font-size: 14px;
   color: #343434;
   scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* height of sticky header */
 }
 
 h1,
@@ -48,13 +49,6 @@ h6 {
 
 p {
   font-size: 1rem;
-}
-
-:target::before {
-  content: "";
-  display: block;
-  height: 4.5rem;
-  margin: -4.5rem 0 0;
 }
 
 button:focus {
@@ -184,74 +178,6 @@ Colour names courtesy of chir.ag/projects/name-that-color
   width: 100%;
 }
 
-.btn-green {
-  background-color: #88d368;
-  color: white;
-}
-
-.btn-green:hover {
-  background-color: #70ad56;
-  color: white;
-}
-
-.btn-orange {
-  background-color: #f6a032;
-  color: white;
-}
-
-.btn-orange:hover {
-  background-color: #c5822b;
-}
-
-.btn-cbrain,
-.btn-cbrain.disabled,
-.btn-download-metadata,
-.btn-download-metadata.disabled {
-  min-width: 5rem;
-  min-height: 5rem;
-  transition: transform 0.2s linear;
-}
-
-.btn-cbrain:not(.disabled):hover,
-.btn-download-metadata:not(.disabled):hover {
-  transform: translate(0px, -1px);
-  transition: transform 0.2s linear;
-}
-
-.btn-cbrain {
-  background: url(../img/run_on_cbrain_green.png);
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.btn-cbrain.disabled {
-  background: url(../img/run_on_cbrain_gray.png);
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.btn-download-metadata {
-  background: url(../img/download_green.png);
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.btn-download-metadata.disabled {
-  background: url(../img/download_gray.png);
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-@media (min-width: 786px) {
-  .btn-cbrain,
-  .btn-cbrain.disabled,
-  .btn-download-metadata,
-  .btn-download-metadata.disabled {
-    min-width: 6rem;
-    min-height: 6rem;
-  }
-}
-
 /*
 =============================================================
 | Navigation Bar
@@ -378,7 +304,6 @@ Colour names courtesy of chir.ag/projects/name-that-color
 
 .card {
   box-shadow: 0px 2px 4px #979797;
-  flex-wrap: wrap;
 }
 
 .card .card-social {
@@ -402,8 +327,20 @@ Colour names courtesy of chir.ag/projects/name-that-color
 }
 
 .card .card-body ul {
-  justify-content: space-between;
-  flex-direction: column;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.card .card-body li:first-child {
+  list-style: none;
+}
+
+.card .card-body li {
+  padding-right: 1rem;
 }
 
 .card .card-buttons {
@@ -438,47 +375,6 @@ Colour names courtesy of chir.ag/projects/name-that-color
 
 .card .card-body .card-list .card-list-item {
   display: flex;
-}
-
-@media (min-width: 576px) {
-  .card .card-buttons {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-  }
-
-  .card .card-buttons .card-button img {
-    width: 6rem;
-    height: 6rem;
-  }
-
-  .card .card-body {
-    padding: 1rem;
-  }
-}
-
-@media (min-width: 786px) {
-  .card {
-    flex-wrap: nowrap;
-  }
-
-  .card .card-buttons {
-    margin: 0.5rem;
-    min-width: 10rem;
-  }
-
-  .card .card-body ul {
-    justify-content: start;
-    flex-wrap: wrap;
-  }
-
-  .card .card-body ul li {
-    padding: 0.5rem;
-    padding-right: 2rem;
-    flex-direction: column;
-    justify-content: center;
-  }
 }
 
 /* Dataset Cards */

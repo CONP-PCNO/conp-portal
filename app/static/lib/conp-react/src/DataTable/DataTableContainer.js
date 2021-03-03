@@ -20,9 +20,8 @@ const DataTableContainer = ({
 
   const [query, setQuery] = useState({
     search: filters.search ? filters.search : "",
-    tags: filters.tags ? filters.tags.split(",") : [],
-    modalities: filters.modalities ? filters.modalities.split(",") : [],
-    formats: filters.formats ? filters.formats.split(",") : [],
+    modalities: filters.modalities ? filters.modalities : [],
+    formats: filters.formats ? filters.formats : [],
     sortKey: filters.sortKey ? filters.sortKey : "conpStatus",
     sortComparitor: filters.sortComparitor ? filters.sortComparitor : "asc",
     page: filters.page ? filters.page : 1,

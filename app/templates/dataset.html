@@ -1,203 +1,360 @@
-{% extends 'common/base_main.html' %}
-
-{% block scripts %}
-{{ super() }}
+{% extends 'common/base_main.html' %} {% block scripts %} {{ super() }}
 <script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
 <script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
-<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<script
+  type="text/javascript"
+  src="static/lib/conp-react/umd/conp-react.js"
+></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"
+/>
 
 <!-- ADD JSON-LD DESCRIPTOR -->
-<script type="application/ld+json">{{ metadata.schema_org_metadata | tojson }}</script>
+<script type="application/ld+json">
+  {{ metadata.schema_org_metadata | tojson }}
+</script>
 
 <script type="text/javascript">
   $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })
+    $('[data-toggle="tooltip"]').tooltip();
+  });
 </script>
-{% endblock %}
-
-{% block contenttitle %}
+{% endblock %} {% block contenttitle %}
 <div class="search-header page-title">
-  <h2><span style="color:red;">CONP Portal</span> | {{ data.title }} </h2>
+  <h2><span style="color: red">CONP Portal</span> | Dataset</h2>
 </div>
-{% endblock %}
-
-{% block appcontent %}
+{% endblock %} {% block appcontent %}
 <div id="mount-display" class="dataset"></div>
 
 <div class="d-flex flex-column p-4">
-  {% if metadata.version is defined and metadata.version is not none %}
-  <p><strong>Version: </strong> {{ metadata.version }} </p>
-  {% endif %}
-  {% if metadata.sources is defined and metadata.sources is not none %}
-  <p><strong>Source: </strong><a target="_blank" rel="noopener noreferrer"
-      href="{{ metadata.sources }}">{{ metadata.sources }}</a></p>
-  {% endif %}
-  {% if metadata.authors is defined and metadata.authors is not none %}
-  <p><strong>Authors: </strong>{{ metadata.authors }}</p>
-  {% endif %}
-  {% if data.principalInvestigators is defined and data.principalInvestigators is not none %}
-  <p><strong>Principal Investigator: </strong>{{ data.principalInvestigators }}</p>
-  {% endif %}
-  {% if metadata.contact is defined and metadata.contact is not none %}
-  <p><strong>Contact: </strong> {{ metadata.contact }}</p>
-  {% endif %}
-  {% if metadata.description is defined and metadata.description is not none %}
-  <p><strong>Description: </strong> {{ metadata.description|safe }}</p>
-  {% endif %}
-  {% if metadata.licenses is defined and metadata.licenses is not none %}
-  <p><strong>Licenses: </strong> {{ metadata.licenses }}</p>
-  {% endif %}
-  {% if metadata.parentDatasets is defined and metadata.parentDatasets is not none %}
-  <p><strong>Input Datasets: </strong>
-    {% for d in metadata.parentDatasets %}
-    {% if d is defined %}
-    {% set href = "/dataset?id=projects/" ~ d %}
-    <span class="mr-1"><a class="badge badge-primary" href="{{ href }}">{{ d }}</a></span>
-    {% endif %}
-    {% endfor %}</p>
-  {% endif %}
-  {% if metadata.childDatasets is defined and metadata.childDatasets|length > 0 %}
-  <p><strong>Derived Datasets: </strong>
-    {% for d in metadata.childDatasets %}
-    {% set href = "/dataset?id=" ~ d.child_dataset_id %}
-    <span class="mr-1"><a class="badge badge-primary" href="{{ href }}">{{ d.name }}</a></span>
-    {% endfor %}</p>
-  {% endif %}
-
-  {% if metadata.primaryPublications is defined and metadata.primaryPublications is not none %}
-  {% if metadata.primaryPublications|length > 1 %}
-  <p>
+  {% if metadata.keywords is defined and metadata.keywords is not none %}
+  <div class="py-2">
+    <strong>Keywords: </strong>
+    {% for d in metadata.keywords %} {% if d is defined %} {% set href =
+    "search?search=" ~ d %}
+    <span class="mr-1"
+      ><a class="badge badge-info" href="{{ href }}">{{ d }}</a></span
+    >
+    {% endif %} {% endfor %}
+  </div>
+  {% endif %} {% if data.title is defined and data.title is not none %}
+  <h5><strong> {{ data.title }} </strong></h5>
+  {% endif %} {% if data.creators is defined and data.creators is not none %}
+  <div class="py-2">
+    <strong>Creators: </strong> {{ data.creators|join(',') }}
+  </div>
+  {% endif %} {% if data.principalInvestigators is defined and
+  data.principalInvestigators is not none %}
+  <div class="py-1">
+    <strong>Principal Investigator: </strong>{{ data.principalInvestigators }}
+  </div>
+  {% endif %} {% if metadata.contact is defined and metadata.contact is not none
+  %}
+  <div class="py-1"><strong>Contact: </strong> {{ metadata.contact }}</div>
+  {% endif %} {% if metadata.licenses is defined and metadata.licenses is not
+  none %}
+  <div class="py-1">
+    <strong>Licenses: </strong> {{ metadata.licenses|join(',') }}
+  </div>
+  {% endif %} {% if metadata.version is defined and metadata.version is not none
+  %}
+  <div class="py-1"><strong>Version: </strong> {{ metadata.version }}</div>
+  {% endif %} {% if metadata.sources is defined and metadata.sources is not none
+  %}
+  <div class="py-1">
+    <strong>Source: </strong
+    ><a
+      class="text-reset"
+      target="_blank"
+      rel="noopener noreferrer"
+      href="{{ metadata.sources }}"
+      >{{ metadata.sources }}</a
+    >
+  </div>
+  {% endif %} {% if data.modalities is defined and data.modalities is not none
+  %}
+  <div class="py-1">
+    <strong>Modalities: </strong>
+    {% for d in data.modalities %} {% if d is defined %} {% set href =
+    "search?modalities=" ~ d %}
+    <span class="mr-1"
+      ><a class="badge badge-info" href="{{ href }}">{{ d }}</a></span
+    >
+    {% endif %} {% endfor %}
+  </div>
+  {% endif %}{% if data.formats is defined and data.formats is not none %}
+  <div class="py-1">
+    <strong>Formats: </strong>
+    {% for d in data.formats %} {% if d is defined %} {% set href =
+    "search?formats=" ~ d %}
+    <span class="mr-1"
+      ><a class="badge badge-info" href="{{ href }}">{{ d }}</a></span
+    >
+    {% endif %} {% endfor %}
+  </div>
+  {% endif %} {% if data.size is defined and data.size is not none %}
+  <div class="py-1"><strong>Size: </strong> {{ data.size }}</div>
+  {% endif %} {% if data.files is defined and data.files is not none %}
+  <div class="py-1"><strong>No of Files: </strong> {{ data.files }}</div>
+  {% endif %} {% if data.subjects is defined and data.subjects is not none %}
+  <div class="py-1"><strong>No of Subjects: </strong> {{ data.subjects }}</div>
+  {% endif %} {% if metadata.parentDatasets is defined and
+  metadata.parentDatasets is not none %}
+  <div class="py-1">
+    <strong>Input Datasets: </strong>
+    {% for d in metadata.parentDatasets %} {% if d is defined %} {% set href =
+    "/dataset?id=projects/" ~ d %}
+    <span class="mr-1"
+      ><a class="badge badge-info" href="{{ href }}">{{ d }}</a></span
+    >
+    {% endif %} {% endfor %}
+  </div>
+  {% endif %} {% if metadata.childDatasets is defined and
+  metadata.childDatasets|length > 0 %}
+  <div class="py-1">
+    <strong>Derived Datasets: </strong>
+    {% for d in metadata.childDatasets %} {% set href = "/dataset?id=" ~
+    d.child_dataset_id %}
+    <span class="mr-1"
+      ><a class="badge badge-info" href="{{ href }}">{{ d.name }}</a></span
+    >
+    {% endfor %}
+  </div>
+  {% endif %} {% if metadata.primaryPublications is defined and
+  metadata.primaryPublications is not none %} {% if
+  metadata.primaryPublications|length > 1 %}
+  <div class="py-1">
     <strong>Primary Publications: </strong>
     {% for p in metadata.primaryPublications %}
-  <ul>
-    <li>
-      {{p.title}} {{p.author}} <em>{{p.journal}}</em>
-      {% if p.doi is defined %}
-      <a target="_blank" rel="noopener noreferrer" href="{{ p.doi }}">{{ p.doi }}</a>
-      {% endif %}
-    </li>
-  </ul>
-  {% endfor %}
-  </p>
+    <ul>
+      <li>
+        {{p.title}} {{p.author}} <em>{{p.journal}}</em>
+        {% if p.doi is defined %}
+        <a target="_blank" rel="noopener noreferrer" href="{{ p.doi }}"
+          >{{ p.doi }}</a
+        >
+        {% endif %}
+      </li>
+    </ul>
+    {% endfor %}
+  </div>
   {% elif metadata.primaryPublications|length == 1 %}
-  <p>
+  <div class="py-1">
     <strong>Primary Publication: </strong>
     {{metadata.primaryPublications[0].title}}
     {{metadata.primaryPublications[0].author}}
     <em>{{metadata.primaryPublications[0].journal}}</em>
     {% if metadata.primaryPublications[0].doi is defined %}
-    <a target="_blank" rel="noopener noreferrer" href="{{ metadata.primaryPublications[0].doi }}">
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href="{{ metadata.primaryPublications[0].doi }}"
+    >
       {{ metadata.primaryPublications[0].doi }}
     </a>
     {% endif %}
-  </p>
+  </div>
+  {% endif %} {% endif %} {% if (metadata.dimensions is not none) or
+  (metadata.producedBy is not none) or (metadata.isAbout is not none) or
+  (metadata.acknowledges is not none) or (metadata.spatialCoverage is not none)
+  %}
+  <div class="py-1">
+    <div class="d-inline-flex">
+      <button
+        class="btn btn-link text-reset p-0"
+        type="button"
+        data-toggle="collapse"
+        data-target="#collapseExample"
+        aria-expanded="false"
+        aria-controls="collapseExample"
+      >
+        more...
+      </button>
+    </div>
+    <div class="collapse py-1" id="collapseExample">
+      <table class="table">
+        <tbody>
+          {% if metadata.dimensions is not none %}
+          <tr>
+            <th scope="row">Dimensions:</th>
+            <td>{{metadata.dimensions|join(", ")}}</td>
+          </tr>
+          {% endif %} {% if metadata.producedBy is not none %}
+          <tr>
+            <th scope="row">Produced By:</th>
+            <td>{{metadata.producedBy|join(", ")}}</td>
+          </tr>
+          {% endif %} {% if metadata.isAbout is not none %}
+          <tr>
+            <th scope="row">Is About:</th>
+            <td>{{metadata.isAbout|join(", ")}}</td>
+          </tr>
+          {% endif %} {% if metadata.acknowledges is not none %}
+          <tr>
+            <th scope="row">Acknowledges:</th>
+            <td>{{metadata.acknowledges|join(", ")}}</td>
+          </tr>
+          {% endif %} {% if metadata.spatialCoverage is not none %}
+          <tr>
+            <th scope="row">Spatial Coverage:</th>
+            <td>{{metadata.spatialCoverage|join(", ")}}</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
   {% endif %}
+</div>
+
+<div class="d-flex flex-column p-4">
+  {% if metadata.description is defined and metadata.description is not none %}
+  <h5><strong>Description: </strong></h5>
+  <div class="py-1">{{ metadata.description|safe }}</div>
   {% endif %}
 </div>
 
 <div class="d-flex flex-column p-2">
   <div class="d-flex flex-row align-items-center">
-    <h2 class="px-2">Dataset Download Instructions</h2>
-    <a class="px-2" target="_blank" rel="noopener noreferrer" href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master">
+    <a name="downloadInstructions">
+      <h2 class="px-2">Dataset Download Instructions</h2>
+    </a>
+    <a
+      class="px-2"
+      target="_blank"
+      rel="noopener noreferrer"
+      href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master"
+    >
       <img src="{{ ciBadgeUrl }}" alt="CircleCI status" />
     </a>
     <div>
-      <button type="button" class="btn btn-default p-0" data-toggle="tooltip" data-placement="right" title="The CONP integrates datasets stored in multiple platforms, to accommodate the various governance models adopted by
+      <button
+        type="button"
+        class="btn btn-default p-0"
+        data-toggle="tooltip"
+        data-placement="right"
+        title="The CONP integrates datasets stored in multiple platforms, to accommodate the various governance models adopted by
           diverse research groups. While this decentralized architecture nicely fits with open-science goals, it also has
           challenges, as the availability of dataset storage locations may fluctuate. For this reason, CONP datasets are
           periodically tested (every few hours), to ensure a satisfying user experience. This status badge shows the status of
           the dataset as returned by the latest iteration of the tests. In general, it gives a good indication whether data
           download can expected to succeed. In some cases, however, status may flicker due to temporary network glitches,
           transient misconfiguration or other issues. In any case, the CONP team is working hard to ensure the
-          high-availability of the datasets present in the platform!">
-        <span style="font-size: 1em; color: Gray;"><i class="fa fa-question"></i></span>
+          high-availability of the datasets present in the platform!"
+      >
+        <span style="font-size: 1em; color: Gray"
+          ><i class="fa fa-question"></i
+        ></span>
       </button>
     </div>
   </div>
   {% if data.authorizations == "private" %}
   <div class="alert alert-info" role="alert">
-    <strong>Note: </strong>an account is required to access this dataset. Please follow the Source URL and request an
-    account on the source page.</div>
+    <strong>Note: </strong>an account is required to access this dataset. Please
+    follow the Source URL and request an account on the source page.
+  </div>
   {% endif %}
   <p>
-    The following instructions require a basic understanding of UNIX/LINUX command lines. Future portal functionality
-    may
-    include downloads directly from the web browser. Dataset download is currently enabled through
-    <a target="_blank" rel="noopener noreferrer" href="https://www.datalad.org/">DataLad</a>.
+    The following instructions require a basic understanding of UNIX/LINUX
+    command lines. Future portal functionality may include downloads directly
+    from the web browser. Dataset download is currently enabled through
+    <a target="_blank" rel="noopener noreferrer" href="https://www.datalad.org/"
+      >DataLad</a
+    >.
   </p>
   <p>
     <strong>
-      Note: The <code>conp-dataset</code> requires version >=0.12.5 of DataLad and
-      version >=8.20200309 of git-annex.
+      Note: The <code>conp-dataset</code> requires version >=0.12.5 of DataLad
+      and version >=8.20200309 of git-annex.
     </strong>
   </p>
   <p>
     To install DataLad on your system, please refer to the
-    <a target="_blank" rel="noopener noreferrer"
-      href="http://handbook.datalad.org/en/latest/intro/installation.html#install">
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href="http://handbook.datalad.org/en/latest/intro/installation.html#install"
+    >
       install section of the DataLad Handbook
     </a>
-    (installation via miniconda is recommended in order to obtain the latest version of DataLad).
+    (installation via miniconda is recommended in order to obtain the latest
+    version of DataLad).
   </p>
   <h6>1) Initiate the CONP dataset</h6>
-  <p>To initiate the CONP dataset (<code>conp-dataset</code>), run the following command in the directory where you want
-    CONP datasets to be installed:</p>
+  <p>
+    To initiate the CONP dataset (<code>conp-dataset</code>), run the following
+    command in the directory where you want CONP datasets to be installed:
+  </p>
   <div class="card">
     <div class="card-body">
-      <pre class="card-text"
-        style="white-space: pre-wrap;">datalad install https://github.com/CONP-PCNO/conp-dataset.git</pre>
+      <pre class="card-text" style="white-space: pre-wrap">
+datalad install https://github.com/CONP-PCNO/conp-dataset.git</pre
+      >
     </div>
   </div>
   <p></p>
   <h6>2) Install the {{data.name}} dataset</h6>
-  <p>To install the dataset, go into the created conp-dataset directory and run <code>datalad install</code> on the
-    dataset <code>{{data.name}}</code>:</p>
+  <p>
+    To install the dataset, go into the created conp-dataset directory and run
+    <code>datalad install</code> on the dataset <code>{{data.name}}</code>:
+  </p>
   <div class="card">
     <div class="card-body">
-      <pre class="card-text"
-        style="white-space: pre-wrap;">cd conp-dataset<br>datalad install projects/{{data.name}}</pre>
+      <pre
+        class="card-text"
+        style="white-space: pre-wrap"
+      >cd conp-dataset<br>datalad install projects/{{data.name}}</pre>
     </div>
   </div>
   <p></p>
   <h6>3) Download the {{data.name}} dataset</h6>
-  <p>Now that the DataLad dataset has been installed, go into the dataset directory under
-    <code>projects/{{data.name}}</code>.</p>
+  <p>
+    Now that the DataLad dataset has been installed, go into the dataset
+    directory under <code>projects/{{data.name}}</code>.
+  </p>
   <div class="card">
     <div class="card-body">
-      <pre class="card-text" style="white-space: pre-wrap;">cd projects/{{data.name}}</pre>
+      <pre class="card-text" style="white-space: pre-wrap">
+cd projects/{{data.name}}</pre
+      >
     </div>
   </div>
   <p></p>
   <p>
-    Note that files visible in the dataset are symlinks and will need to be downloaded manually using the
+    Note that files visible in the dataset are symlinks and will need to be
+    downloaded manually using the
     <code>datalad get</code>
     command in the dataset directory:
   </p>
   <div class="card">
     <div class="card-body">
-      <pre class="card-text" style="white-space: pre-wrap;">datalad get &ltfilepath&gt</pre>
+      <pre class="card-text" style="white-space: pre-wrap">
+datalad get &ltfilepath&gt</pre
+      >
     </div>
   </div>
   <p></p>
-  <p>Note, if you run <code>datalad get *</code> command, all the files present in the dataset directory will be
-    downloaded.</p>
-  <h6>For more information on how DataLad works, please visit the
-    <a target="_blank" rel="noopener noreferrer" href="http://handbook.datalad.org/en/latest/">
-      DataLad Handbook documentation
-    </a>.
+  <p>
+    Note, if you run <code>datalad get *</code> command, all the files present
+    in the dataset directory will be downloaded.
+  </p>
+  <h6>
+    For more information on how DataLad works, please visit the
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href="http://handbook.datalad.org/en/latest/"
+    >
+      DataLad Handbook documentation </a
+    >.
   </h6>
 </div>
 <div class="d-flex flex-column p-2">
   <h2>Dataset README information</h2>
   <div class="card">
-    <div class="card-header">
-      README.md
-    </div>
-    <div class="card-body">
-      {{readme|safe}}
-    </div>
+    <div class="card-header">README.md</div>
+    <div class="card-body">{{readme|safe}}</div>
   </div>
 </div>
 
@@ -207,7 +364,6 @@
   element.showDownload = true;
   const reactElement = React.createElement(CONPReact.DatasetElement, element);
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));
-
 </script>
 <!--/span-->
 {% endblock %}

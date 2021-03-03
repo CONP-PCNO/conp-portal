@@ -5,7 +5,6 @@
 """
 import json
 import os
-import re
 
 from flask import render_template, request, current_app, send_from_directory
 from flask_login import current_user
@@ -33,7 +32,6 @@ def search():
     modalities = request.args.get('modalities')
     formats = request.args.get('formats')
     search = request.args.get('search')
-    tags = request.args.get('tags')
     sortComparitor = request.args.get('sortComparitor')
     sortKey = request.args.get('sortKey')
     max_per_page = request.args.get('max_per_page')
@@ -43,7 +41,6 @@ def search():
         "modalities": modalities,
         "formats": formats,
         "search": search,
-        "tags": tags,
         "sortComparitor": sortComparitor,
         "sortKey": sortKey,
         "max_per_page": max_per_page,
@@ -141,17 +138,22 @@ def dataset_search():
             "authorized": authorized,
             "id": d.dataset_id,
             "title": d.name.replace("'", ""),
+            "remoteUrl": d.remoteUrl,
             "isPrivate": d.is_private,
             "thumbnailURL": "/dataset_logo?id={}".format(d.dataset_id),
             "downloadPath": d.dataset_id,
             "URL": '?',
             "dateAdded": str(d.date_created.date()),
             "dateUpdated": str(d.date_updated.date()),
+            "creators": datsdataset.creators,
+            "origin": datsdataset.origin,
             "size": datsdataset.size,
             "files": datsdataset.fileCount,
             "subjects": datsdataset.subjectCount,
-            "format": datsdataset.formats,
+            "formats": datsdataset.formats,
             "modalities": datsdataset.modalities,
+            "licenses": datsdataset.licenses,
+            "version": datsdataset.version,
             "sources": datsdataset.sources,
             "conpStatus": datsdataset.conpStatus,
             "authorizations": datsdataset.authorizations,
@@ -165,31 +167,31 @@ def dataset_search():
 
     modalities = []
     for e in elements:
-        if e['modalities'] is None:
+        if e['modalities'] is None or e['modalities'] == '':
             continue
-        for m in e['modalities'].split(", "):
+        for m in e['modalities']:
             modalities.append(m.lower())
-    modalities = list(set(modalities))
+    modalities = sorted(list(set(modalities)))
 
     formats = []
     # by default, formats should be represented in upper case
     # except for NIfTI, bigWig and RNA-Seq
     for e in elements:
-        if e['format'] is None:
+        if e['formats'] is None or e['formats'] == []:
             continue
-        for m in e['format'].split(", "):
-            formatted_string = re.sub(r'\.', '', m)
-            if formatted_string.lower() in ['nifti', 'nii', 'niigz']:
+        for m in e['formats']:
+            if m.lower() in ['nifti', 'nii', 'niigz']:
                 formats.append('NIfTI')
-            elif formatted_string.lower() in ['gifti', 'gii']:
+            elif m.lower() in ['gifti', 'gii']:
                 formats.append('GIfTI')
-            elif formatted_string.lower() == 'bigwig':
+            elif m.lower() == 'bigwig':
                 formats.append('bigWig')
-            elif formatted_string.lower() == 'rna-seq':
+            elif m.lower() == 'rna-seq':
                 formats.append('RNA-Seq')
             else:
-                formats.append(formatted_string.upper())
-    formats = sorted(list(set(formats)))
+                formats.append(m.upper())
+
+    formats = sorted(list(set(formats)), key=str.casefold)
 
     query_all = bool(request.args.get('elements') == 'all')
     if not query_all:
@@ -199,14 +201,14 @@ def dataset_search():
             elements = list(
                 filter(lambda e: e['modalities'] is not None, elements))
             elements = list(filter(lambda e: all(item in (m.lower(
-            ) for m in e['modalities'].split(", ")) for item in filter_modalities), elements))
+            ) for m in e['modalities']) for item in filter_modalities), elements))
         if request.args.get('formats'):
             filter_formats = request.args.get('formats').split(",")
             elements = list(
-                filter(lambda e: e['format'] is not None, elements)
+                filter(lambda e: e['formats'] is not None, elements)
             )
             elements = list(filter(lambda e: all(item.lower() in (
-                f.lower() for f in e['format'].split(", ")) for item in filter_formats), elements)
+                f.lower() for f in e['formats']) for item in filter_formats), elements)
             )
 
         cursor = None
@@ -256,7 +258,8 @@ def dataset_search():
                 return int(o["files"])
 
             reverse = (sort_key == 'filesDes')
-            paginated.sort(key=lambda o: get_number_of_files(o), reverse=reverse)
+            paginated.sort(key=lambda o: get_number_of_files(o),
+                           reverse=reverse)
 
         elif sort_key == "subjectsDes" or sort_key == "subjectsAsc":
 
@@ -390,6 +393,7 @@ def dataset_info():
         "name": datsdataset.name,
         "id": d.dataset_id,
         "title": d.name.replace("'", ""),
+        "remoteUrl": d.remoteUrl,
         "isPrivate": d.is_private,
         "thumbnailURL": "/dataset_logo?id={}".format(d.dataset_id),
         "imagePath": "static/img/",
@@ -400,11 +404,15 @@ def dataset_info():
         "likes": "0",
         "dateAdded": str(d.date_created.date()),
         "dateUpdated": str(d.date_updated.date()),
+        "creators": datsdataset.creators,
+        "origin": datsdataset.origin,
         "size": datsdataset.size,
         "files": datsdataset.fileCount,
         "subjects": datsdataset.subjectCount,
-        "format": datsdataset.formats,
+        "formats": datsdataset.formats,
         "modalities": datsdataset.modalities,
+        "licenses": datsdataset.licenses,
+        "version": datsdataset.version,
         "sources": datsdataset.sources,
         "conpStatus": datsdataset.conpStatus,
         "authorizations": datsdataset.authorizations,
@@ -516,15 +524,21 @@ def get_dataset_metadata_information(dataset):
 
     return {
         "schema_org_metadata": datsdataset.schema_org_metadata,
-        "authors": datsdataset.authors,
+        "creators": datsdataset.creators,
         "description": datsdataset.description,
         "contact": datsdataset.contacts,
         "version": datsdataset.version,
         "licenses": datsdataset.licenses,
         "sources": datsdataset.sources,
+        "keywords": datsdataset.keywords,
         "parentDatasets": datsdataset.parentDatasetId,
         "primaryPublications": datsdataset.primaryPublications,
-        "childDatasets": child_datasets
+        "childDatasets": child_datasets,
+        "dimensions": datsdataset.dimensions,
+        "producedBy": datsdataset.producedBy,
+        "isAbout": datsdataset.isAbout,
+        "acknowledges": datsdataset.acknowledges,
+        "spatialCoverage": datsdataset.spatialCoverage,
     }
 
 
