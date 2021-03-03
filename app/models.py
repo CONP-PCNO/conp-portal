@@ -5,12 +5,11 @@ Module that contains the Data Models
 
 """
 from app import db
-from flask_user import UserMixin, user_registered
+from flask_user import UserMixin
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 from sqlalchemy.orm.collections import attribute_mapped_collection
 from datetime import datetime, timedelta
 from pytz import timezone
-import enum
 from app.oauth import OAuth_pretty
 
 eastern = timezone('US/Eastern')

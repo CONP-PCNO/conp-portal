@@ -47,6 +47,7 @@ In the top level directory:
 ```shell
 flask db upgrade
 flask seed_test_db
+flask update_pipeline_data
 ```
 
 ### Run Application
@@ -69,6 +70,9 @@ For unit tests of classes and utilities, use the folder `tests/unit_tests`
 For database specific testing, please use the folder `tests/database_tests`
 for blueprint and route testing, please use the `tests/blueprint_specific_tests` folder and place it in the appropriate blueprint specific directory.
 
+### Coding standards
+
+In order to keep the Python code maintainable and readable, please run `./lint.sh` to make sure the coding is up to standards. TravisCI will be checking this.
 
 ### AWS Cloud9 (Experimental)
 
