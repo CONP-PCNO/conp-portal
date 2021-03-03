@@ -1,4 +1,4 @@
-"""empty message
+"""add matomo_daily_site_keyword_searches_summary table
 
 Revision ID: eab8cbe3da7a
 Revises: 3c0e54159f59
