@@ -1,10 +1,9 @@
-<nav class="navbar sticky-top navbar-expand navbar-light bg-white navigation-bar">
-  <a class="navbar-brand" href="https://conp.ca/"><img src="/static/img/conp.png" alt="conp logo" /></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white navigation-bar">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+  <a class="navbar-brand" href="https://conp.ca/"><img style="max-width:100px;" src="/static/img/conp.png" alt="conp logo" /></a>
     <ul class="navbar-nav">
       {% if not current_user.is_anonymous %}
       <li class="nav-item px-3">
@@ -23,6 +22,9 @@
       <li class="nav-item px-3">
         <a class="nav-link" href="{{ url_for('main.contact_us') }}">Contact Us</a>
       </li>
+      <li class="nav-item px-3">
+        <a class="nav-link" href="#" id="btnShowTut">?</a>
+      </li>
     </ul>
   </div>
 </nav>
@@ -33,4 +35,50 @@
       $('#termsModal').modal('show')
     });
   });
+</script>
+<script>
+  var pathName = window.location.pathname
+  var href = window.location.href
+  if (pathName=="/index" || pathName=="/index#" || pathName=="/" || pathName=="/#"){
+     $(function () {
+    $('#btnShowTut').on('click', function (event) {
+      $('#tutModal1').modal('show')
+    });
+  });
+  }
+  else if (href.includes("dataset?id=projects") == true){
+     $(function () {
+    $('#btnShowTut').on('click', function (event) {
+      $('#tutModal2-1').modal('show')
+    });
+  });
+  }
+  else if (pathName=="/search" || pathName=="/search#"){
+     $(function () {
+    $('#btnShowTut').on('click', function (event) {
+      $('#tutModal2').modal('show')
+    });
+  });
+  }
+  else if (href.includes("pipeline?id") == true){
+     $(function () {
+    $('#btnShowTut').on('click', function (event) {
+      $('#tutModal3-1').modal('show')
+    });
+  });
+  }
+  else if (pathName=="/pipelines" || pathName=="/pipelines#"){
+     $(function () {
+    $('#btnShowTut').on('click', function (event) {
+      $('#tutModal3').modal('show')
+    });
+  });
+  }
+  else if (pathName=="/share" || pathName=="/share#"){
+     $(function () {
+    $('#btnShowTut').on('click', function (event) {
+      $('#tutModal4').modal('show')
+    });
+  });
+  }
 </script>

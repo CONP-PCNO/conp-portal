@@ -24,9 +24,9 @@ const PipelineElement = props => {
           <img
             alt="dataset format"
             className="img-fluid"
-            style={{maxWidth: '160px'}}
+            style={{maxWidth: '140px'}}
             src={
-              element.url == undefined
+              element.url === undefined
                 ? "static/img/cogs-solid-grey.png"
                 : "static/img/cogs-solid-green.png"
             }
