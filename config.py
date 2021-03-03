@@ -81,8 +81,8 @@ class Config(object):
 class DevelopmentConfig(Config):
     """This is the config for Development"""
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = (os.environ.get('DATABASE_URL') or
-                               "sqlite:///{}".format(os.path.join(basedir, "app.db")))
+    SQLALCHEMY_DATABASE_URI = (os.environ.get('DATABASE_URL')
+                               or "sqlite:///{}".format(os.path.join(basedir, "app.db")))
 
 
 class TestingConfig(Config):
@@ -97,5 +97,5 @@ class ProductionConfig(Config):
     """This is for when we are full on production, needs to be elaborated"""
     DEBUG = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = (os.environ.get('DATABASE_URL') or
-                               "sqlite:///{}".format(os.path.join(basedir, "app.db")))
+    SQLALCHEMY_DATABASE_URI = (os.environ.get('DATABASE_URL')
+                               or "sqlite:///{}".format(os.path.join(basedir, "app.db")))

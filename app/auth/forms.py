@@ -2,16 +2,11 @@
 """
 Defines forms needed for Flask-User login
 """
-from flask_wtf import FlaskForm
 from flask_user.forms import RegisterForm
 from flask_user import UserManager
-from wtforms import StringField, SelectField, BooleanField
-from wtforms.widgets import ListWidget
+from wtforms import StringField, BooleanField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from wtforms.validators import DataRequired, Required
-from flask_user.forms import password_validator
-from app import db
-from app.models import Role, User, AffiliationType
+from wtforms.validators import DataRequired
 from app.utils.form_utils import possible_affiliation_types
 
 
@@ -30,7 +25,7 @@ class CustomRegisterForm(RegisterForm):
                                         get_label='label', allow_blank=False)
 
     agreeToTerms = BooleanField('I Agree to the CONP Terms and Conditions',
-                                 validators=[DataRequired('Need to agree to the terms to register account')])
+                                validators=[DataRequired('Need to agree to the terms to register account')])
 
     def validate_affiliation_type(form, field):
         """

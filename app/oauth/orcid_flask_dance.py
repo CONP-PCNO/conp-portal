@@ -7,13 +7,14 @@ to create a orchid blueprint for Flask-Dance
 """
 from __future__ import unicode_literals
 
-import os.path,os
-from urlobject import URLObject
-from oauthlib.oauth1 import SIGNATURE_RSA
+import os
+import os.path
+from functools import partial
+
+from flask.globals import LocalProxy, _lookup_app_object
 from flask_dance.consumer import OAuth2ConsumerBlueprint
 from flask_dance.consumer.requests import OAuth2Session
-from functools import partial
-from flask.globals import LocalProxy, _lookup_app_object
+
 try:
     from flask import _app_ctx_stack as stack
 except ImportError:
@@ -40,7 +41,7 @@ def make_orcid_blueprint(
     authorized_url=None,
     session_class=None,
     storage=None
-  ):
+):
     """
     This function actually creates a specific orchid blueprint for use with Flask Dance
     Args:
@@ -61,13 +62,13 @@ def make_orcid_blueprint(
     session_class = session_class or JsonOath2Session
 
     _base_url = "https://orcid.org/oauth"
-    _token_url="https://orcid.org/oauth/token"
-    _authorization_url="https://orcid.org/oauth/authorize"
+    _token_url = "https://orcid.org/oauth/token"
+    _authorization_url = "https://orcid.org/oauth/authorize"
 
     if os.environ.get("USE_ORCID_OAUTH_SANDBOX"):
-        _base_url="https://api.sandbox.orcid.org/v2.0"
-        _token_url="https://api.sandbox.orcid.org/oauth/token"
-        _authorization_url="https://sandbox.orcid.org/oauth/authorize"
+        _base_url = "https://api.sandbox.orcid.org/v2.0"
+        _token_url = "https://api.sandbox.orcid.org/oauth/token"
+        _authorization_url = "https://sandbox.orcid.org/oauth/authorize"
 
     orcid_bp = OAuth2ConsumerBlueprint(
         "orcid",
@@ -88,7 +89,6 @@ def make_orcid_blueprint(
 
     orcid_bp.from_config["client_id"] = "ORCID_OAUTH_CLIENT_ID"
     orcid_bp.from_config["client_secret"] = "ORCID_OAUTH_CLIENT_SECRET"
-
 
     @orcid_bp.before_app_request
     def set_applocal_session():

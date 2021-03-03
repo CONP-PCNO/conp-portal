@@ -5,12 +5,11 @@ Module that contains the Data Models
 
 """
 from app import db
-from flask_user import UserMixin, user_registered
+from flask_user import UserMixin
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 from sqlalchemy.orm.collections import attribute_mapped_collection
 from datetime import datetime, timedelta
 from pytz import timezone
-import enum
 from app.oauth import OAuth_pretty
 
 eastern = timezone('US/Eastern')
@@ -205,6 +204,7 @@ class Dataset(db.Model):
     description = db.Column(db.Text)
     name = db.Column(db.String(256), index=True)
     fspath = db.Column(db.Text)
+    remoteUrl = db.Column(db.Text)
     version = db.Column(db.String(6), index=True)
     date_created = db.Column(db.DateTime, default=datetime.now())
     date_updated = db.Column(db.DateTime, default=datetime.now())
@@ -226,7 +226,8 @@ class DatasetAncestry(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.now())
     date_updated = db.Column(db.DateTime, default=datetime.now())
 
-    __table_args__ = (db.UniqueConstraint('parent_dataset_id', 'child_dataset_id', name='uix_1'),)
+    __table_args__ = (db.UniqueConstraint(
+        'parent_dataset_id', 'child_dataset_id', name='uix_1'),)
 
     def __repr__(self):
         return '<DatasetAncestry {}>'.format(self.id)
