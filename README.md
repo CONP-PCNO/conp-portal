@@ -72,7 +72,7 @@ for blueprint and route testing, please use the `tests/blueprint_specific_tests`
 
 ### Coding standards
 
-In order to keep the Python code maintainable and readable, please run `./lint.sh` to make sure the coding is up to standards. Travis.CI will be checking this.
+In order to keep the Python code maintainable and readable, please run `./lint.sh` to make sure the coding is up to standards. TravisCI will be checking this.
 
 ### AWS Cloud9 (Experimental)
 
