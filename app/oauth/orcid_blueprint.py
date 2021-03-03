@@ -11,9 +11,8 @@ from app.oauth.orcid_flask_dance import make_orcid_blueprint
 from flask_dance.consumer import oauth_authorized, oauth_error
 from flask_dance.consumer.storage.sqla import SQLAlchemyStorage
 from sqlalchemy.orm.exc import NoResultFound
-from app.models import db, User, OAuth, Role, UsersRoles
+from app.models import db, User, OAuth
 from datetime import datetime
-from config import Config
 from pprint import pprint
 
 
@@ -75,10 +74,10 @@ def orcid_logged_in(orcid_blueprint, token):
         print("Current user is anonymous")
         if oauth.user:
             # Case 1 (above)
-            return current_app.user_manager._do_login_user(oauth.user,url_for("main.public"))
+            return current_app.user_manager._do_login_user(oauth.user, url_for("main.public"))
         else:
             # Case 2 (above)
-            print ("!!! No Oauth")
+            print("!!! No Oauth")
             orcid_person = orcid_record['person']
 
             # check if there is a user with this email address
@@ -118,15 +117,15 @@ def orcid_logged_in(orcid_blueprint, token):
                                 )
 
                     user.add_role("member")
-                    user.add_role("registered-orcid",add_to_roles=True)
+                    user.add_role("registered-orcid", add_to_roles=True)
 
                     oauth.user = user
 
                     db.session.add_all([user, oauth])
                     db.session.commit()
-                    ## Need to use private method to bypass in this case
+                    # Need to use private method to bypass in this case
                     flash("Please update your Profile affiliation and affiliation type")
-                    return current_app.user_manager._do_login_user(user,url_for('profile.current_user_profile_page'))
+                    return current_app.user_manager._do_login_user(user, url_for('profile.current_user_profile_page'))
                 except Exception as e:
                     flash("There was an error creating a user from the ORCID credentials: {}".format(e))
                     return redirect(url_for("user.login"))

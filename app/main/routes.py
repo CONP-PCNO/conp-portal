@@ -5,12 +5,11 @@
 """
 import os
 import json
-from flask import render_template, request
-from flask_login import current_user, login_required
+from flask import render_template
+from flask_login import current_user
 from app.main import main_bp
 from app.models import Dataset
 from app.services import github
-import requests
 
 
 @main_bp.route('/')
@@ -44,7 +43,7 @@ def share():
     """
 
     content = github.get_share_content()
-    
+
     return render_template('share.html', title='CONP | Share a Dataset', user=current_user, content=content)
 
 
@@ -124,6 +123,7 @@ def about():
 
     return render_template('about.html', title='CONP | About', user=current_user,
                            countDatasets=countDatasets, countPipelines=countPipelines)
+
 
 @main_bp.route('/tutorial')
 def tutorial():

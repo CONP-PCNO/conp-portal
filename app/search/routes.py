@@ -6,14 +6,11 @@
 import json
 import os
 import re
-from datetime import datetime, timedelta
 
-import requests
-from flask import Response, abort, render_template, request, url_for, current_app, send_from_directory
+from flask import render_template, request, current_app, send_from_directory
 from flask_login import current_user
-from sqlalchemy import func, or_
 
-from app.models import Dataset, DatasetAncestry, User
+from app.models import Dataset, DatasetAncestry
 from app.search import search_bp
 from app.search.models import DATSDataset
 from app.services import github
@@ -123,21 +120,21 @@ def dataset_search():
     for d in datasets:
         try:
             datsdataset = DATSDataset(d.fspath)
-        except Exception as e:
+        except Exception:
             # If the DATS file can't be laoded, skip this dataset.
             # There should be an error message in the logs/update_datsets.log
             continue
 
         # If search term exists filter results here
         if request.args.get('search'):
-            searchTerm = request.args.get('search')
+            search_term = request.args.get('search')
             with open(datsdataset.DatsFilepath, 'r') as dats:
                 match = False
                 for line in dats.readlines():
-                    if searchTerm.lower() in line.lower():
+                    if search_term.lower() in line.lower():
                         match = True
                         break
-                if(not match):
+                if not match:
                     continue
 
         dataset = {
@@ -194,27 +191,27 @@ def dataset_search():
                 formats.append(formatted_string.upper())
     formats = sorted(list(set(formats)))
 
-    queryAll = bool(request.args.get('elements') == 'all')
-    if(not queryAll):
+    query_all = bool(request.args.get('elements') == 'all')
+    if not query_all:
 
         if request.args.get('modalities'):
-            filterModalities = request.args.get('modalities').split(",")
+            filter_modalities = request.args.get('modalities').split(",")
             elements = list(
                 filter(lambda e: e['modalities'] is not None, elements))
             elements = list(filter(lambda e: all(item in (m.lower(
-            ) for m in e['modalities'].split(", ")) for item in filterModalities), elements))
+            ) for m in e['modalities'].split(", ")) for item in filter_modalities), elements))
         if request.args.get('formats'):
-            filterFormats = request.args.get('formats').split(",")
+            filter_formats = request.args.get('formats').split(",")
             elements = list(
                 filter(lambda e: e['format'] is not None, elements)
             )
             elements = list(filter(lambda e: all(item.lower() in (
-                f.lower() for f in e['format'].split(", ")) for item in filterFormats), elements)
+                f.lower() for f in e['format'].split(", ")) for item in filter_formats), elements)
             )
 
         cursor = None
         limit = None
-        if(request.args.get('max_per_page') != 'All'):
+        if request.args.get('max_per_page') != 'All':
             delta = int(request.args.get('max_per_page', 10)) * \
                 (int(request.args.get('page', 1)) - 1)
             cursor = max(
@@ -224,61 +221,62 @@ def dataset_search():
         sort_key = request.args.get('sortKey') or "conpStatus"
         paginated = elements
 
-        if(sort_key == "conpStatus"):
+        if sort_key == "conpStatus":
             order = {'conp': 0, 'canadian': 1, 'external': 2}
             paginated.sort(key=lambda o: (
                 o[sort_key].lower() not in order, order.get(o[sort_key].lower(), None)))
 
-        elif(sort_key == "title"):
+        elif sort_key == "title":
             paginated.sort(key=lambda o: o[sort_key].lower())
 
-        elif(sort_key == "sizeDes" or sort_key == "sizeAsc"):
+        elif sort_key == "sizeDes" or sort_key == "sizeAsc":
 
-            def getAbsoluteSize(e):
-                if not e["size"]:
+            def get_absolute_size(o):
+                if not o["size"]:
                     return 0.0
 
                 units = ["KB", "MB", "GB", "TB"]
-                unitScales = [1000, 1000**2, 1000**3, 1000**4]
-                size = e["size"].split(" ")
-                absoluteSize = size[0]
-                if(size[1] in units):
-                    absoluteSize = float(size[0]) * \
-                        unitScales[units.index(size[1])]
-                return absoluteSize
+                unit_scales = [1000, 1000**2, 1000**3, 1000**4]
+                size = o["size"].split(" ")
+                absolute_size = size[0]
+                if size[1] in units:
+                    absolute_size = float(size[0]) * \
+                        unit_scales[units.index(size[1])]
+                return absolute_size
 
             reverse = (sort_key == 'sizeDes')
-            paginated.sort(key=lambda o: getAbsoluteSize(o), reverse=reverse)
+            paginated.sort(key=lambda o: get_absolute_size(o), reverse=reverse)
 
-        elif(sort_key == "filesDes" or sort_key == "filesAsc"):
+        elif sort_key == "filesDes" or sort_key == "filesAsc":
 
-            def getNumberOfFiles(e):
-                if not e["files"]:
+            def get_number_of_files(o):
+                if not o["files"]:
                     return 0
 
-                return int(e["files"])
+                return int(o["files"])
 
             reverse = (sort_key == 'filesDes')
-            paginated.sort(key=lambda o: getNumberOfFiles(o), reverse=reverse)
+            paginated.sort(key=lambda o: get_number_of_files(o), reverse=reverse)
 
-        elif(sort_key == "subjectsDes" or sort_key == "subjectsAsc"):
+        elif sort_key == "subjectsDes" or sort_key == "subjectsAsc":
 
-            def getNumberOfSubjects(e):
-                if not e["subjects"]:
+            def get_number_of_subjects(o):
+                if not o["subjects"]:
                     return 0
 
-                return int(e["subjects"])
+                return int(o["subjects"])
+
             reverse = (sort_key == 'subjectsDes')
-            paginated.sort(key=lambda o: getNumberOfSubjects(o),
+            paginated.sort(key=lambda o: get_number_of_subjects(o),
                            reverse=reverse)
 
-        elif(sort_key == "dateAddedDesc" or sort_key == "dateAddedAsc"):
+        elif sort_key == "dateAddedDesc" or sort_key == "dateAddedAsc":
 
             reverse = (sort_key == 'dateAddedAsc')
             paginated.sort(key=lambda o: (
                 o["dateAdded"] is None, o["dateAdded"]), reverse=reverse)
 
-        elif(sort_key == "dateUpdatedDesc" or sort_key == "dateUpdatedAsc"):
+        elif sort_key == "dateUpdatedDesc" or sort_key == "dateUpdatedAsc":
 
             reverse = (sort_key == 'dateUpdatedAsc')
             paginated.sort(key=lambda o: (
@@ -287,8 +285,8 @@ def dataset_search():
         else:
             paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
 
-        if(cursor is not None and limit is not None):
-            paginated = paginated[(cursor):(cursor + limit)]
+        if cursor is not None and limit is not None:
+            paginated = paginated[cursor:(cursor + limit)]
     else:
         paginated = elements
 
@@ -427,7 +425,7 @@ def dataset_info():
     else:
         color = "critical"
 
-    ciBadgeUrl = "https://img.shields.io/badge/circleci-" + \
+    ci_badge_url = "https://img.shields.io/badge/circleci-" + \
         dataset["status"] + "-" + color + "?style=flat-square&logo=circleci"
 
     return render_template(
@@ -436,7 +434,7 @@ def dataset_info():
         data=dataset,
         metadata=metadata,
         readme=readme,
-        ciBadgeUrl=ciBadgeUrl,
+        ciBadgeUrl=ci_badge_url,
         user=current_user
     )
 
@@ -505,16 +503,16 @@ def get_dataset_metadata_information(dataset):
     datsdataset = DATSDataset(dataset.fspath)
 
     # check for child datasets
-    childDatasets = []
-    datasetAncestries = DatasetAncestry.query.all()
-    for da in datasetAncestries:
+    child_datasets = []
+    dataset_ancestries = DatasetAncestry.query.all()
+    for da in dataset_ancestries:
         if da.parent_dataset_id == dataset.dataset_id:
             name = da.child_dataset_id[9:]
-            childDataset = {
+            child_dataset = {
                 "child_dataset_id": da.child_dataset_id,
                 "name": name
             }
-            childDatasets.append(childDataset)
+            child_datasets.append(child_dataset)
 
     return {
         "schema_org_metadata": datsdataset.schema_org_metadata,
@@ -526,7 +524,7 @@ def get_dataset_metadata_information(dataset):
         "sources": datsdataset.sources,
         "parentDatasets": datsdataset.parentDatasetId,
         "primaryPublications": datsdataset.primaryPublications,
-        "childDatasets": childDatasets
+        "childDatasets": child_datasets
     }
 
 
@@ -538,9 +536,9 @@ def get_dataset_readme(dataset_id):
 
     datsdataset = DATSDataset(dataset.fspath)
 
-    readmeFilepath = datsdataset.ReadmeFilepath
+    readme_filepath = datsdataset.ReadmeFilepath
 
-    f = open(readmeFilepath, 'r')
+    f = open(readme_filepath, 'r')
     if f.mode != 'r':
         return 'Readme Not Found', 404
 

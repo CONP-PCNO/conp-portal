@@ -13,7 +13,7 @@ def analytics():
     """ Analytics Route
 
         Route to lead to the analytics page
-    
+
         Args:
             None
 

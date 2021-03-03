@@ -3,12 +3,7 @@
 
     Currently this module contains all of the routes for the auth blueprint
 """
-from app import db
-from app.models import User
-from sqlalchemy import func, or_
-from flask import render_template, request, flash, session, redirect,\
-    url_for, send_file, Response, abort
-from flask_user import current_user, login_required, roles_accepted
+from flask import render_template
 from app.auth import auth_bp
 
 

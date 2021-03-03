@@ -5,9 +5,6 @@
 """
 import json
 import os
-import time
-import math
-from app.threads import UpdatePipelineData
 from flask import render_template, request, url_for
 from flask_login import current_user
 from app.pipelines import pipelines_bp
@@ -72,7 +69,7 @@ def pipeline_search():
     sort_key = request.args.get("sortKey") or "downloads-desc"
 
     max_per_page = None
-    if(request.args.get('max_per_page') != 'All'):
+    if request.args.get('max_per_page') != 'All':
         max_per_page = int(request.args.get("max_per_page") or 999999)
 
     page = int(request.args.get("page") or 1)
@@ -133,7 +130,7 @@ def pipeline_search():
         real_key = sort_key[:-4]
     reverse = sort_key.endswith("-desc")
 
-    if (real_key == 'title'):
+    if real_key == 'title':
         elements.sort(
             key=lambda x: (x[real_key] is None, x[real_key].lower()),
             reverse=reverse
@@ -148,7 +145,7 @@ def pipeline_search():
     elements_on_page = elements
     if max_per_page is not None:
         if len(elements) > max_per_page:
-            start_index = (page-1)*max_per_page
+            start_index = (page - 1) * max_per_page
             end_index = start_index + max_per_page
             if end_index > len(elements):
                 end_index = len(elements)
@@ -159,7 +156,7 @@ def pipeline_search():
     # TODO right now, this handles CBRAIN and one other platform
 
     with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json"), "r") as f:
-        zenodoUrls = json.load(f)
+        zenodo_urls = json.load(f)
 
     for element in elements_on_page:
         element["platforms"] = [{} for x in range(0, 1)]
@@ -167,10 +164,10 @@ def pipeline_search():
             'static', filename="img/run_on_cbrain_gray.png")
         element["platforms"][0]["uri"] = ""
 
-        if element["id"] in zenodoUrls.keys():
+        if element["id"] in zenodo_urls.keys():
             element["platforms"][0]["img"] = url_for(
                 'static', filename="img/run_on_cbrain_green.png")
-            element["platforms"][0]["uri"] = zenodoUrls[element["id"]]
+            element["platforms"][0]["uri"] = zenodo_urls[element["id"]]
         else:
             element["platforms"][0]["img"] = url_for(
                 'static', filename="img/run_on_cbrain_gray.png")
