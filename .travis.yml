@@ -17,8 +17,8 @@ install:
 - git config --global pull.rebase false
 
 script:
-- pycodestyle --max-line-length=99 -r *.py app/*.py
-- pytest --cov ../conp-portal 
+- ./lint.sh
+- pytest --cov ../conp-portal
 
 after_success:
 - coveralls

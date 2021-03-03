@@ -3,7 +3,7 @@
 
     Currently this module contains all of the routes for profile blueprint
 """
-from flask import render_template, redirect, url_for, flash, request, current_app, session
+from flask import render_template, redirect, url_for, flash, request, session
 from flask_user import current_user, login_required, roles_accepted
 from app import db
 from app.profile import profile_bp
@@ -18,7 +18,7 @@ def current_user_profile_page():
     Route that provides a path to the current users profile page for editting
     """
     form = UserProfileForm(request.form, obj=current_user)
-    session.pop('_flashes',None)
+    session.pop('_flashes', None)
 
     if request.method == 'POST':
         current_user.full_name = request.form.get('full_name')

@@ -5,14 +5,9 @@ Module that contains the special command line tools
 
 """
 import os
-import click
-import csv
 import uuid
-import fnmatch
 from datetime import datetime, timedelta
-from pytz import timezone
 from app.threads import UpdatePipelineData
-from app.search.models import DATSDataset
 
 
 def register(app):
@@ -142,7 +137,7 @@ def _update_datasets(app):
     """
     Updates from conp-datasets
     """
-    from app import db, config
+    from app import db
     from app.models import Dataset as DBDataset
     from app.models import DatasetAncestry as DBDatasetAncestry
     from sqlalchemy import exc
@@ -159,7 +154,7 @@ def _update_datasets(app):
     # Initialize the git repository object
     try:
         repo = git.Repo(datasetsdir)
-    except git.exc.InvalidGitRepositoryError as e:
+    except git.exc.InvalidGitRepositoryError:
         repo = git.Repo.clone_from(
             'https://github.com/CONP-PCNO/conp-dataset',
             datasetsdir,

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from app.utils import utils_bp
-from app.models import Role, AffiliationType
+from app.models import AffiliationType
 from wtforms import SelectMultipleField
 
 

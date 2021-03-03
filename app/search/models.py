@@ -5,10 +5,10 @@ import json
 import re
 
 import fnmatch
+from typing import Optional
+
 import dateutil
 import requests
-
-from app.models import Dataset
 
 
 @lru_cache(maxsize=1)
@@ -50,15 +50,15 @@ class DATSDataset(object):
           store the datsetopath and tries to find a DATS.json file
         """
         if not os.path.isdir(datasetpath):
-            raise 'No dataset found at {}'.format(datasetpath)
+            raise RuntimeError('No dataset found at {}'.format(datasetpath))
 
         self.datasetpath = datasetpath
 
         with open(self.DatsFilepath, 'r') as f:
             try:
                 self.descriptor = json.load(f)
-            except Exception as e:
-                raise 'Can`t parse {}'.format(self.DatsFilepath)
+            except Exception:
+                raise RuntimeError('Can`t parse {}'.format(self.DatsFilepath))
 
     @property
     def name(self):
@@ -67,13 +67,14 @@ class DATSDataset(object):
     @property
     def DatsFilepath(self):
         dirs = os.listdir(self.datasetpath)
+        descriptor: Optional[str] = None
         for file in dirs:
             if fnmatch.fnmatch(file.lower(), 'dats.json'):
                 descriptor = os.path.join(self.datasetpath, file)
                 break
 
-        if descriptor == None:
-            raise 'No DATS descriptor found'
+        if not descriptor:
+            raise RuntimeError('No DATS descriptor found')
 
         return descriptor
 
@@ -98,13 +99,14 @@ class DATSDataset(object):
     @property
     def ReadmeFilepath(self):
         dirs = os.listdir(self.datasetpath)
+        readme: Optional[str] = None
         for file in dirs:
             if fnmatch.fnmatch(file.lower(), 'readme.md'):
                 readme = os.path.join(self.datasetpath, file)
                 break
 
-        if readme == None:
-            raise 'No Readme found'
+        if not readme:
+            raise RuntimeError('No Readme found')
 
         return readme
 
@@ -465,7 +467,7 @@ class DATSDataset(object):
         tests_status = [
             results["status"]
             for test, results in test_results.items()
-            if test.startswith(re.sub("/", "_", self.name)+":")
+            if test.startswith(re.sub("/", "_", self.name) + ":")
         ]
 
         if tests_status == []:
