@@ -13,7 +13,7 @@ def forums():
     """ Forums Route
 
         Route to lead to the forums page
-    
+
         Args:
             None
 
