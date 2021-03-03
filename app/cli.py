@@ -317,12 +317,7 @@ def _update_datasets(app):
 def _update_analytics(app):
     """
     Updates analytics table using Matomo API endpoints
-
-    :param app:
-    :return:
     """
-
-    from app import config
 
     matomo_server_url = app.config['MATOMO_SERVER_URL']
     matomo_site_id = app.config['MATOMO_SITE_ID']
@@ -355,8 +350,6 @@ def _update_analytics_matomo_visits_summary(app, matomo_api_baseurl):
 
     from app import db
     from app.models import MatomoDailyVisitsSummary
-    from datetime import datetime, timedelta
-    import json
     import requests
 
     # grep the dates already inserted into the database
@@ -410,8 +403,6 @@ def _update_analytics_matomo_get_page_urls_summary(app, matomo_api_baseurl):
 
     from app import db
     from app.models import MatomoDailyGetPageUrlsSummary
-    from datetime import datetime, timedelta
-    import json
     import requests
 
     # grep the dates already inserted into the database
@@ -460,11 +451,17 @@ def _update_analytics_matomo_get_page_urls_summary(app, matomo_api_baseurl):
 
 
 def _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_baseurl):
+    """
+    Function to update specifically the Matomo daily dataset views summary
+    queried from the Matomo API endpoint Actions.getPageUrl for each dataset_id.
+
+    Note: gather stats only until the day before the current
+    day since stats are still being gathered by Matomo for the
+    current day.
+    """
     from app import db
     from app.models import MatomoDailyGetDatasetPageViewsSummary
     from app.models import Dataset as DBDataset
-    from datetime import datetime, timedelta
-    import json
     import requests
 
     # grep the dates already inserted into the database
@@ -520,10 +517,16 @@ def _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_bas
 
 
 def _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_baseurl):
+    """
+    Function to update specifically the Matomo daily keyword search summary
+    queried from the Matomo API endpoint Actions.getSiteSearchKeywords.
+
+    Note: gather stats only until the day before the current
+    day since stats are still being gathered by Matomo for the
+    current day.
+    """
     from app import db
     from app.models import MatomoDailyGetSiteSearchKeywords
-    from datetime import datetime, timedelta
-    import json
     import requests
 
     # grep the dates already inserted into the database
@@ -575,9 +578,7 @@ def _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_
 
 def determine_dates_to_query_on_matomo(dates_in_database):
     """
-    Determines which dates need to be queried on Matomo to update the dataset
-    :param dates_in_database:
-    :return:
+    Determines which dates need to be queried on Matomo to update the dataset.
     """
 
     from datetime import datetime, timedelta
