@@ -16,6 +16,8 @@ class Config(object):
     the CONP Portal. Ideally, variables such as secret keys and such should
     be set by environment variable rather than explicitely here.
     """
+
+    FLASK_ENV = os.environ.get('FLASK_ENV')
     SECRET_KEY = os.environ.get('SECRET_KEY') or "conp-secret-key-for-here"
     DATA_PATH = os.environ.get('DATA_PATH') or os.path.join(
         basedir, "app/static/data")
@@ -30,8 +32,8 @@ class Config(object):
     MAIL_DEFAULT_SENDER = '"CONP-PCNO Portal" <shawntbrown@gmail.com>'
     ADMINS = [os.environ.get('ADMIN_EMAIL')] or ['conp-test@mailinator.com']
     LOG_TO_STDOUT = True
-    # Flask-User Settings
 
+    # Flask-User Settings
     USER_APP_NAME = "CONP-PCNO Data Portal"
     USER_ENABLE_CHANGE_PASSWORD = True
     USER_ENABLE_CHANGE_USERNAME = False

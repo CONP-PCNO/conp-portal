@@ -19,10 +19,14 @@ mail = Mail()
 bootstrap = Bootstrap()
 
 
-def create_app(config_settings=DevelopmentConfig):
+def create_app():
 
     app = Flask(__name__, static_url_path='/static')
-    app.config.from_object(config_settings)
+    if os.environ.get('FLASK_ENV') == 'production':
+        from config import ProductionConfig
+        app.config.from_object(ProductionConfig)
+    else:
+        app.config.from_object(DevelopmentConfig)
 
     db.init_app(app)
     migrate.init_app(app, db)
