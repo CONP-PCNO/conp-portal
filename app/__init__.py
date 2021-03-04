@@ -26,7 +26,7 @@ def create_app(config_settings=None):
         from config import ProductionConfig
         config_settings = ProductionConfig
     elif not config_settings:
-        app.config.from_object(DevelopmentConfig)
+        config_settings = DevelopmentConfig
     app.config.from_object(config_settings)
 
     db.init_app(app)
