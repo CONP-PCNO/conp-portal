@@ -47,7 +47,7 @@ gunicorn==19.9.0
 humanize==0.5.1
 idna==2.8
 imagesize==1.1.0
-importlib-metadata==0.20
+importlib-metadata==3.7.0
 iso8601==0.1.12
 itsdangerous==1.1.0
 jeepney==0.4.1

@@ -30,7 +30,12 @@ def search():
     """
 
     modalities = request.args.get('modalities')
+    if modalities is not None:
+        modalities = modalities.split(",")
+
     formats = request.args.get('formats')
+    if formats is not None:
+        formats = formats.split(",")
     search = request.args.get('search')
     sortComparitor = request.args.get('sortComparitor')
     sortKey = request.args.get('sortKey')
