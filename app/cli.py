@@ -573,7 +573,7 @@ def _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_
             db.session.merge(keyword_summary)
             db.session.commit()
 
-    print(f'[INFO   ] Inserted Matomo search keywords summary for {date}')
+        print(f'[INFO   ] Inserted Matomo search keywords summary for {date}')
 
 
 def determine_dates_to_query_on_matomo(dates_in_database):
