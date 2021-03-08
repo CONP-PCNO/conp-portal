@@ -285,7 +285,7 @@ class MatomoDailyVisitsSummary(db.Model):
     sum_visit_length = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<MatomoDailyVisitsSummary {}>'.format(self.name)
+        return '<MatomoDailyVisitsSummary {}>'.format(self.id)
 
 
 class MatomoDailyGetPageUrlsSummary(db.Model):
