@@ -252,3 +252,129 @@ class Pipeline(db.Model):
 
     def __repr__(self):
         return '<Pipeline {}>'.format(self.name)
+
+
+class MatomoDailyVisitsSummary(db.Model):
+    """
+    Provides Matomo Daily VisitsSummary Model to store Daily VisitsSummary
+
+    avg_time_on_site     = average time spent, in seconds, on this page
+    bounce_count         = number of visits that bounced (viewed only one page)
+    max_actions          = maximum number of actions in a visit
+    nb_actions           = number of actions (page views, outlinks and downloads)
+    nb_uniq_visitors     = number of unique visitors
+    nb_users             = number of unique active users (visitors with a known User ID).
+                           If you are not using User ID then this metric will be set to zero.
+    nb_visits            = number of visits (30 min of inactivity considered a new visit)
+    nb_visits_converted  = number of visits that converted a goal
+    sum_visit_length     = total time spent, in seconds
+    """
+    __tablename__ = 'matomo_daily_visits_summary'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column(db.String, unique=True)
+    avg_time_on_site = db.Column(db.Integer)
+    bounce_count = db.Column(db.Integer)
+    max_actions = db.Column(db.Integer)
+    nb_actions = db.Column(db.Integer)
+    nb_actions_per_visit = db.Column(db.Float)
+    nb_uniq_visitors = db.Column(db.Integer)
+    nb_users = db.Column(db.Integer)
+    nb_visits = db.Column(db.Integer)
+    nb_visits_converted = db.Column(db.Integer)
+    sum_visit_length = db.Column(db.Integer)
+
+    def __repr__(self):
+        return '<MatomoDailyVisitsSummary {}>'.format(self.name)
+
+
+class MatomoDailyGetPageUrlsSummary(db.Model):
+    """
+    Provides Matomo Daily getPageUrls Model to store daily Visited Page Urls
+    from the Matomo Actions.getPageUrls API endpoint.
+
+    This will get the URLs for all pages except for the dataset specific
+    pages. This will be stored in matomo_daily_dataset_views_summary.
+
+    Chosen variables from the endpoint are:
+    - url              = page URL
+    - label            = page label
+    - nb_hits          = number of views on this page
+    - nb_visits        = number of visits (30 min of inactivity considered a new visit)
+    - nb_uniq_visitors = number of unique visitors
+    - sum_time_spent   = total time spent on this page, in seconds
+    - avg_time_on_page = average time spent, in seconds, on this page
+    """
+    __tablename__ = 'matomo_daily_get_page_urls_summary'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column(db.String)
+    url = db.Column(db.String)
+    label = db.Column(db.String)
+    nb_hits = db.Column(db.Integer)
+    nb_visits = db.Column(db.Integer)
+    nb_uniq_visitors = db.Column(db.Integer)
+    sum_time_spent = db.Column(db.Integer)
+    avg_time_on_page = db.Column(db.Float)
+
+
+class MatomoDailyGetDatasetPageViewsSummary(db.Model):
+    """
+    Provides Matomo daily dataset views summary to store the statistics
+    on the different dataset pages that could not be stored in
+    matomo_daily_get_page_urls_summary.
+
+    Chosen variables from the endpoint are:
+    - url              = page URL
+    - label            = page label
+    - nb_hits          = number of views on this page
+    - nb_visits        = number of visits (30 min of inactivity considered a new visit)
+    - nb_uniq_visitors = number of unique visitors
+    - sum_time_spent   = total time spent on this page, in seconds
+    - avg_time_on_page = average time spent, in seconds, on this page
+    """
+    __tablename__ = 'matomo_daily_dataset_page_views_summary'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    dataset_id = db.Column(db.String)
+    date = db.Column(db.String)
+    url = db.Column(db.String)
+    label = db.Column(db.String)
+    nb_hits = db.Column(db.Integer)
+    nb_visits = db.Column(db.Integer)
+    nb_uniq_visitors = db.Column(db.Integer)
+    sum_time_spent = db.Column(db.Integer)
+    avg_time_on_page = db.Column(db.Float)
+
+
+class MatomoDailyGetSiteSearchKeywords(db.Model):
+    """
+    Provides Matomo daily site search keywords statistics to store
+    the search keyword statistics in matomo_daily_site_keyword_searches_summary
+
+    avg_time_on_page    = average time spent, in seconds, on this page
+    bounce_rate         = ratio of visits leaving the website after landing on this page
+    exit_nb_visits      = number of visits that finished on this page
+    exit_rate           = ratio of visits that do not view any other page after this page
+    label               = keyword searched
+    nb_hits             = number of views on this page
+    nb_pages_per_search = number of pages displayed for the searched keyword
+    nb_visits           = number of visits (30 min of inactivity considered a new visit)
+    segment             = segment with keyword search
+    sum_time_spent      = total time spent on this page, in seconds
+    """
+
+    __tablename__ = 'matomo_daily_site_keyword_searches_summary'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column(db.String)
+    avg_time_on_page = db.Column(db.Integer)
+    bounce_rate = db.Column(db.String)
+    exit_nb_visits = db.Column(db.Integer)
+    exit_rate = db.Column(db.String)
+    label = db.Column(db.String)
+    nb_hits = db.Column(db.Integer)
+    nb_pages_per_search = db.Column(db.Integer)
+    nb_visits = db.Column(db.Integer)
+    segment = db.Column(db.String)
+    sum_time_spent = db.Column(db.Integer)
