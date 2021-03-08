@@ -21782,7 +21782,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
         maxWidth: "140px"
       }
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
-      className: "btn",
+      className: "btn", target: "_blank",
       href: item.uri
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
       className: "img-fluid",
