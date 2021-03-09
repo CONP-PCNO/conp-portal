@@ -6,7 +6,7 @@ import HighchartsReact from 'highcharts-react-official';
 require('highcharts/highcharts-more.js')(Highcharts);
 require('highcharts-custom-events')(Highcharts);
 
-let defaultOptions = {
+const defaultOptions = {
 
     chart: {
         type: 'packedbubble',
@@ -71,12 +71,32 @@ let defaultOptions = {
 
 };
 
-const DatasetModalities = ({ datasets, pipelines, ...props }) => {
+const DatasetModalities = (props) => {
 
+    const [chartData, setChartData] = useState()
     const [options, setOptions] = useState(defaultOptions);
-    const [isDrawn, setIsDrawn] = useState(false);
 
     const [contextMenuOptions, setContextMenuOptions] = useState({});
+
+    useEffect(() => {
+        fetchChartData();
+    }, [])
+
+    const fetchChartData = async () => {
+
+        try {
+            fetch('/dataset-search?elements=all')
+                .then(res => res.json())
+                .then(json => setChartData(prevState => ({
+                    ...prevState,
+                    datasets: json
+                })));
+
+        } catch (err) {
+            alert("There was an error retrieving the search results.");
+            console.error(err);
+        }
+    };
 
     const updateChart = (data) => {
 
@@ -98,27 +118,29 @@ const DatasetModalities = ({ datasets, pipelines, ...props }) => {
         }));
     };
 
-    const constructData = () => {
+    useEffect(() => {
 
-        const chartData = {
+        if (!chartData) {
+            return
+        }
+
+        const axes = {
             datasets: {}
         };
 
-        datasets.elements.forEach(dataset => {
+        chartData.datasets.elements.forEach(dataset => {
 
             if (!dataset.modalities)
                 return;
 
-            const modalitiesArr = dataset.modalities.split(", ");
-
-            modalitiesArr.forEach(modality => {
-                addOrIncreaseDatapoint(chartData.datasets, modality.toLowerCase());
+            dataset.modalities.forEach(modality => {
+                addOrIncreaseDatapoint(axes.datasets, modality.toLowerCase());
             })
         })
 
-        updateChart(chartData);
+        updateChart(axes);
 
-    };
+    }, [chartData]);
 
     const addOrIncreaseDatapoint = (data, point) => {
         if (!Object.keys(data).includes(point)) {
@@ -127,11 +149,6 @@ const DatasetModalities = ({ datasets, pipelines, ...props }) => {
         else {
             data[point] += 1;
         }
-    }
-
-    if (datasets && pipelines && !isDrawn) {
-        constructData();
-        setIsDrawn(true);
     }
 
     useEffect(() => {

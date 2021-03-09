@@ -1,119 +1,46 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
 import TotalDatasetsPipelines from '../charts/TotalDatasetsPipelines';
 import DatasetModalities from '../charts/DatasetModalities';
 import PipelineTags from '../charts/PipelineTags'
 
-class ChartContainer extends React.Component {
+const ChartContainer = (props) => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            datasets: null,
-            pipelines: null,
-            toggle: props.toggleState
-        };
+    const [showToggle, setShowToggle] = useState(props.showToggle || false)
+    const [toggleState, setToggleState] = useState(props.toggleState || 1)
 
-        this.toggleChart = this.toggleChart.bind(this);
-    }
-
-    componentDidMount() {
-        this.fetchElements();
-    }
-
-    async fetchElements() {
-
-        try {
-            const datasetsFetch = await fetch(this.props.datasetsURL + '?elements=all');
-
-            if (!datasetsFetch.ok) {
-                throw new Error(
-                    `Request failed with status: ${datasetsFetch.status} (${datasetsFetch.statusText})`
-                );
-            }
-
-            const datasetsRes = await datasetsFetch.json();
-
-            const pipelinesFetch = await fetch(this.props.pipelinesURL);
-
-            if (!pipelinesFetch.ok) {
-                throw new Error(
-                    `Request failed with status: ${pipelinesFetch.status} (${pipelinesFetch.statusText})`
-                );
-            }
-
-            const pipelinesRes = await pipelinesFetch.json();
-
-            this.setState({
-                datasets: datasetsRes,
-                pipelines: pipelinesRes
-            })
-
-        } catch (err) {
-            alert("There was an error retrieving the search results.");
-            console.error(err);
-        }
-    };
-
-    renderChart(toggle) {
-        switch (toggle) {
+    const renderChart = () => {
+        switch (toggleState) {
             case 1:
-                return <TotalDatasetsPipelines
-                    datasets={this.state.datasets}
-                    pipelines={this.state.pipelines} />;
+                return <TotalDatasetsPipelines />;
             case 2:
-                return <DatasetModalities
-                    datasets={this.state.datasets}
-                    pipelines={this.state.pipelines} />;
+                return <DatasetModalities />;
             case 3:
-                return <PipelineTags
-                    pipelines={this.state.pipelines} />;
+                return <PipelineTags />;
             default:
-                return <TotalDatasetsPipelines
-                    datasets={this.state.datasets}
-                    pipelines={this.state.pipelines} />;
+                return <TotalDatasetsPipelines />;
         }
     }
 
-    toggleChart(event, number) {
-        event.preventDefault();
-        this.setState({
-            toggle: number
-        });
-    }
-
-    render() {
-        return (
-            <div>
-                {this.props.showToggle ? <div className="d-flex flex-row-reverse">
-                    <div className="dropdown show mt-2 mr-2" style={{ zIndex: 1 }}>
-                        <button className="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Select Chart
+    return (
+        <div>
+            {showToggle ? <div className="d-flex flex-row-reverse">
+                <div className="dropdown show mt-2 mr-2" style={{ zIndex: 1 }}>
+                    <button className="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Chart
                         </button>
 
-                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                            <button className="dropdown-item" type="button" onClick={(e) => {this.toggleChart(e, 1)}}>Total Datasets and Pipelines</button>
-                            <button className="dropdown-item" type="button" onClick={(e) => {this.toggleChart(e, 2)}}>Dataset Modalities</button>
-                            <button className="dropdown-item" type="button" onClick={(e) => {this.toggleChart(e, 3)}}>Pipeline Tags</button>
-                        </div>
+                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                        <button className="dropdown-item" type="button" onClick={setToggleState(1)}>Total Datasets and Pipelines</button>
+                        <button className="dropdown-item" type="button" onClick={setToggleState(2)}>Dataset Modalities</button>
+                        <button className="dropdown-item" type="button" onClick={setToggleState(3)}>Pipeline Tags</button>
                     </div>
-                </div> : null}
-                
-                {this.renderChart(this.state.toggle)}
-            </div>
-        );
-    }
+                </div>
+            </div> : null}
 
-};
+            {renderChart()}
+        </div>
+    );
 
-ChartContainer.propTypes = {
-    showToggle: PropTypes.bool,
-    toggleState: PropTypes.number
-};
-
-ChartContainer.defaultProps = {
-    showToggle: false,
-    toggleState: 1
 };
 
 export default ChartContainer;

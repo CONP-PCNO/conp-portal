@@ -240,7 +240,7 @@ var external_root_React_commonjs2_react_commonjs_react_amd_react_default = /*#__
 var prop_types = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
-var hoist_non_react_statics_cjs = __webpack_require__(41);
+var hoist_non_react_statics_cjs = __webpack_require__(42);
 var hoist_non_react_statics_cjs_default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics_cjs);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/makeStyles/makeStyles.js + 19 modules
@@ -337,7 +337,7 @@ var withStyles_withStyles = function withStyles(stylesOrCreator) {
 
 /* harmony default export */ var esm_withStyles_withStyles = (withStyles_withStyles);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/defaultTheme.js + 16 modules
-var styles_defaultTheme = __webpack_require__(38);
+var styles_defaultTheme = __webpack_require__(39);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/withStyles.js
 
@@ -491,7 +491,7 @@ module.exports = exports.default;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return useForkRef; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _setRef__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28);
+/* harmony import */ var _setRef__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(29);
 
 
 function useForkRef(refA, refB) {
@@ -1627,9 +1627,16 @@ K(e,function(d,e){if(!v&&-1<h.collectionsWithUpdate.indexOf(e))for(d=y(d),m[e]=[
 //# sourceMappingURL=highcharts.js.map
 
 /***/ }),
-/* 24 */,
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(152);
+
+
+/***/ }),
 /* 25 */,
-/* 26 */
+/* 26 */,
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1664,7 +1671,7 @@ function debounce(func) {
 }
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1678,7 +1685,7 @@ function _inheritsLoose(subClass, superClass) {
 }
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1693,7 +1700,7 @@ function setRef(ref, value) {
 }
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1729,7 +1736,7 @@ function _toConsumableArray(arr) {
 }
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1830,7 +1837,7 @@ module.exports = function exportedEqual(a, b) {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1868,7 +1875,7 @@ function createChainedFunction() {
 }
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1907,7 +1914,7 @@ var nodeUtil = (function() {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(82)(module)))
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1943,7 +1950,7 @@ function useControlled(_ref) {
 }
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1956,7 +1963,7 @@ function ownerWindow(node) {
 }
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2121,7 +2128,7 @@ function shouldBeQuoted(part) {
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2142,7 +2149,7 @@ function merge(acc, item) {
 /* harmony default export */ __webpack_exports__["a"] = (merge);
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2155,7 +2162,7 @@ function isMuiElement(element, muiNames) {
 }
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2805,7 +2812,7 @@ function createSpacing() {
   return spacing;
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/transitions.js
-var transitions = __webpack_require__(39);
+var transitions = __webpack_require__(40);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/zIndex.js
 var zIndex = __webpack_require__(69);
@@ -2878,7 +2885,7 @@ var defaultTheme = styles_createMuiTheme();
 /* harmony default export */ var styles_defaultTheme = __webpack_exports__["a"] = (defaultTheme);
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2961,7 +2968,7 @@ function formatMs(milliseconds) {
 });
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2983,7 +2990,7 @@ function _typeof(obj) {
 }
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3093,7 +3100,7 @@ module.exports = hoistNonReactStatics;
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3141,7 +3148,7 @@ var isBuffer = nativeIsBuffer || _stubFalse_js__WEBPACK_IMPORTED_MODULE_1__[/* d
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(82)(module)))
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3155,18 +3162,18 @@ function _assertThisInitialized(self) {
 }
 
 /***/ }),
-/* 44 */,
 /* 45 */,
 /* 46 */,
 /* 47 */,
-/* 48 */
+/* 48 */,
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(e,t){ true?module.exports=t(__webpack_require__(0),__webpack_require__(23)):undefined}("undefined"!=typeof self?self:this,function(e,t){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,r){"use strict";function n(){return n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},n.apply(this,arguments)}function o(e){return i(e)||u(e)||c()}function c(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function u(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function i(e){if(Array.isArray(e)){for(var t=0,r=new Array(e.length);t<e.length;t++)r[t]=e[t];return r}}Object.defineProperty(t,"__esModule",{value:!0});var a=r(1),s=r.n(a),f=r(2),p=r.n(f),l="undefined"!=typeof window?a.useLayoutEffect:a.useEffect,d=Object(a.forwardRef)(function(e,t){var r=Object(a.useRef)(),c=Object(a.useRef)();return l(function(){function t(){var t=e.highcharts||p.a,n=e.constructorType||"chart";t?t[n]?e.options?c.current=t[n](r.current,e.options,e.callback?e.callback:void 0):console.warn('The "options" property was not passed.'):console.warn('The "constructorType" property is incorrect or some required module is not imported.'):console.warn('The "highcharts" property was not passed.')}if(c.current){if(!1!==e.allowChartUpdate)if(!e.immutable&&c.current){var n;(n=c.current).update.apply(n,[e.options].concat(o(e.updateArgs||[!0,!0])))}else t()}else t()}),l(function(){return function(){c.current&&(c.current.destroy(),c.current=null)}},[]),Object(a.useImperativeHandle)(t,function(){return{get chart(){return c.current},container:r}},[]),s.a.createElement("div",n({},e.containerProps,{ref:r}))});t.default=Object(a.memo)(d)},function(t,r){t.exports=e},function(e,r){e.exports=t}])});
 //# sourceMappingURL=highcharts-react.min.js.map
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3643,13 +3650,6 @@ function patchAwaiterIfRequired(__awaiter) {
 module.exports = {
   SynchronousPromise: SynchronousPromise
 };
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(152);
 
 
 /***/ }),
@@ -6536,12 +6536,12 @@ function _unsupportedIterableToArray(o, minLen) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return handleBreakpoints; });
-/* harmony import */ var _babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(29);
+/* harmony import */ var _babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(30);
 /* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
-/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40);
+/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(41);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _merge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(36);
+/* harmony import */ var _merge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(37);
 
 
 
@@ -17591,7 +17591,7 @@ DataTable_DataTable.defaultProps = {
 };
 /* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
 // EXTERNAL MODULE: ./node_modules/nwb/node_modules/@babel/runtime/regenerator/index.js
-var regenerator = __webpack_require__(50);
+var regenerator = __webpack_require__(24);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/query-string/index.js
@@ -24613,13 +24613,17 @@ var highcharts = __webpack_require__(23);
 var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
 
 // EXTERNAL MODULE: ./node_modules/highcharts-react-official/dist/highcharts-react.min.js
-var highcharts_react_min = __webpack_require__(48);
+var highcharts_react_min = __webpack_require__(49);
 var highcharts_react_min_default = /*#__PURE__*/__webpack_require__.n(highcharts_react_min);
 
 // CONCATENATED MODULE: ./src/charts/TotalDatasetsPipelines/index.js
+
+
 function TotalDatasetsPipelines_extends() { TotalDatasetsPipelines_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return TotalDatasetsPipelines_extends.apply(this, arguments); }
 
-function TotalDatasetsPipelines_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+function TotalDatasetsPipelines_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function TotalDatasetsPipelines_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { TotalDatasetsPipelines_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { TotalDatasetsPipelines_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
 
@@ -24661,35 +24665,78 @@ var defaultOptions = {
   }]
 };
 
-var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipelines(_ref) {
-  var datasets = _ref.datasets,
-      pipelines = _ref.pipelines,
-      props = TotalDatasetsPipelines_objectWithoutPropertiesLoose(_ref, ["datasets", "pipelines"]);
+var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipelines(props) {
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(),
+      chartData = _useState[0],
+      setChartData = _useState[1];
 
-  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(defaultOptions),
-      options = _useState[0],
-      setOptions = _useState[1];
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(defaultOptions),
+      options = _useState2[0],
+      setOptions = _useState2[1];
 
-  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
-      isDrawn = _useState2[0],
-      setIsDrawn = _useState2[1];
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    fetchChartData();
+  }, []);
 
-  var updateChart = function updateChart(data) {
+  var fetchChartData = /*#__PURE__*/function () {
+    var _ref = TotalDatasetsPipelines_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              try {
+                fetch('/dataset-search?elements=all').then(function (res) {
+                  return res.json();
+                }).then(function (json) {
+                  return setChartData(function (prevState) {
+                    return TotalDatasetsPipelines_extends({}, prevState, {
+                      datasets: json
+                    });
+                  });
+                });
+                fetch('/pipeline-search').then(function (res) {
+                  return res.json();
+                }).then(function (json) {
+                  return setChartData(function (prevState) {
+                    return TotalDatasetsPipelines_extends({}, prevState, {
+                      pipelines: json
+                    });
+                  });
+                });
+              } catch (err) {
+                alert("There was an error retrieving the search results.");
+                console.error(err);
+              }
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function fetchChartData() {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  var updateChart = function updateChart(axes) {
     var xAxis = [];
     var yAxisDatasets = [];
     var yAxisPipelines = [];
     var countDatasets = 0;
     var countPipelines = 0;
-    Object.keys(data.datasets).forEach(function (year) {
-      Object.keys(data.datasets[year]).forEach(function (month) {
+    Object.keys(axes.datasets).forEach(function (year) {
+      Object.keys(axes.datasets[year]).forEach(function (month) {
         xAxis.push(month + "/" + year);
-        countDatasets += data.datasets[year][month];
+        countDatasets += axes.datasets[year][month];
         yAxisDatasets.push(countDatasets);
       });
     });
-    Object.keys(data.pipelines).forEach(function (year) {
-      Object.keys(data.pipelines[year]).forEach(function (month) {
-        countPipelines += data.pipelines[year][month];
+    Object.keys(axes.pipelines).forEach(function (year) {
+      Object.keys(axes.pipelines[year]).forEach(function (month) {
+        countPipelines += axes.pipelines[year][month];
         yAxisPipelines.push(countPipelines);
       });
     });
@@ -24724,22 +24771,26 @@ var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipeli
     });
   };
 
-  var constructData = function constructData() {
-    var chartData = {
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    if (!chartData || !chartData.datasets || !chartData.pipelines) {
+      return;
+    }
+
+    var axes = {
       datasets: {},
       pipelines: {}
     };
-    datasets.elements.forEach(function (element) {
+    chartData.datasets.elements.forEach(function (element) {
       var dateAdded = new Date(element.dateAdded);
 
-      if (!chartData.datasets[dateAdded.getFullYear()]) {
-        chartData.datasets[dateAdded.getFullYear()] = {};
+      if (!axes.datasets[dateAdded.getFullYear()]) {
+        axes.datasets[dateAdded.getFullYear()] = {};
       }
 
-      if (!chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
-        chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+      if (!axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
+        axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
       } else {
-        chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
+        axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
       }
     });
     /* check if we've skipped months */
@@ -24751,65 +24802,57 @@ var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipeli
     }
 
     var today = new Date();
-    Object.keys(chartData.datasets).forEach(function (year) {
+    Object.keys(axes.datasets).forEach(function (year) {
       for (var i = 1; i <= 12; i++) {
         if (year === today.getFullYear() && i === today.getMonth() + 2) {
           break;
         }
 
-        if (Object.keys(chartData.datasets).includes((year - 1).toString()) && !Object.keys(chartData.datasets[year]).includes("" + i) && i === 1) {
-          chartData.datasets[year][i] = 0;
+        if (Object.keys(axes.datasets).includes((year - 1).toString()) && !Object.keys(axes.datasets[year]).includes("" + i) && i === 1) {
+          axes.datasets[year][i] = 0;
         }
 
-        if (Object.keys(chartData.datasets[year]).includes("" + (i - 1)) && !Object.keys(chartData.datasets[year]).includes("" + i)) {
-          chartData.datasets[year][i] = 0;
+        if (Object.keys(axes.datasets[year]).includes("" + (i - 1)) && !Object.keys(axes.datasets[year]).includes("" + i)) {
+          axes.datasets[year][i] = 0;
         }
       }
     });
-    pipelines.elements.forEach(function (element) {
+    chartData.pipelines.elements.forEach(function (element) {
       var dateAdded = new Date(element.publicationdate);
 
-      if (!chartData.pipelines[dateAdded.getFullYear()]) {
-        chartData.pipelines[dateAdded.getFullYear()] = {};
+      if (!axes.pipelines[dateAdded.getFullYear()]) {
+        axes.pipelines[dateAdded.getFullYear()] = {};
       }
 
-      if (!chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
-        chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+      if (!axes.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
+        axes.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
       } else {
-        chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
+        axes.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
       }
     });
-    Object.keys(chartData.pipelines).forEach(function (year) {
+    Object.keys(axes.pipelines).forEach(function (year) {
       for (var i = 1; i <= 12; i++) {
         if (year === today.getFullYear() && i === today.getMonth() + 2) {
           break;
         }
 
-        if (Object.keys(chartData.pipelines).includes((year - 1).toString()) && !Object.keys(chartData.pipelines[year]).includes("" + i) && i === 1) {
-          chartData.pipelines[year][i] = 0;
+        if (Object.keys(axes.pipelines).includes((year - 1).toString()) && !Object.keys(axes.pipelines[year]).includes("" + i) && i === 1) {
+          axes.pipelines[year][i] = 0;
         }
 
-        if (Object.keys(chartData.pipelines[year]).includes("" + (i - 1)) && !Object.keys(chartData.pipelines[year]).includes("" + i)) {
-          chartData.pipelines[year][i] = 0;
+        if (Object.keys(axes.pipelines[year]).includes("" + (i - 1)) && !Object.keys(axes.pipelines[year]).includes("" + i)) {
+          axes.pipelines[year][i] = 0;
         }
       }
     });
-    updateChart(chartData);
-  };
-
-  if (datasets && pipelines && !isDrawn) {
-    constructData();
-    setIsDrawn(true);
-  }
-
+    updateChart(axes);
+  }, [chartData]);
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(highcharts_react_min_default.a, {
     highcharts: highcharts_default.a,
     options: options
   });
 };
 
-TotalDatasetsPipelines_TotalDatasetsPipelines.propTypes = {};
-TotalDatasetsPipelines_TotalDatasetsPipelines.defaultProps = {};
 /* harmony default export */ var charts_TotalDatasetsPipelines = (TotalDatasetsPipelines_TotalDatasetsPipelines);
 // CONCATENATED MODULE: ./src/charts/ContextMenu/index.js
 function ContextMenu_extends() { ContextMenu_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return ContextMenu_extends.apply(this, arguments); }
@@ -24861,9 +24904,13 @@ var ContextMenu_ContextMenu = function ContextMenu(props) {
 
 /* harmony default export */ var charts_ContextMenu = (ContextMenu_ContextMenu);
 // CONCATENATED MODULE: ./src/charts/DatasetModalities/index.js
+
+
 function DatasetModalities_extends() { DatasetModalities_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return DatasetModalities_extends.apply(this, arguments); }
 
-function DatasetModalities_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+function DatasetModalities_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function DatasetModalities_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { DatasetModalities_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { DatasetModalities_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
 
@@ -24933,22 +24980,56 @@ var DatasetModalities_defaultOptions = {
   series: []
 };
 
-var DatasetModalities_DatasetModalities = function DatasetModalities(_ref) {
-  var datasets = _ref.datasets,
-      pipelines = _ref.pipelines,
-      props = DatasetModalities_objectWithoutPropertiesLoose(_ref, ["datasets", "pipelines"]);
+var DatasetModalities_DatasetModalities = function DatasetModalities(props) {
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(),
+      chartData = _useState[0],
+      setChartData = _useState[1];
 
-  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(DatasetModalities_defaultOptions),
-      options = _useState[0],
-      setOptions = _useState[1];
-
-  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
-      isDrawn = _useState2[0],
-      setIsDrawn = _useState2[1];
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(DatasetModalities_defaultOptions),
+      options = _useState2[0],
+      setOptions = _useState2[1];
 
   var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}),
       contextMenuOptions = _useState3[0],
       setContextMenuOptions = _useState3[1];
+
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    fetchChartData();
+  }, []);
+
+  var fetchChartData = /*#__PURE__*/function () {
+    var _ref = DatasetModalities_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              try {
+                fetch('/dataset-search?elements=all').then(function (res) {
+                  return res.json();
+                }).then(function (json) {
+                  return setChartData(function (prevState) {
+                    return DatasetModalities_extends({}, prevState, {
+                      datasets: json
+                    });
+                  });
+                });
+              } catch (err) {
+                alert("There was an error retrieving the search results.");
+                console.error(err);
+              }
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function fetchChartData() {
+      return _ref.apply(this, arguments);
+    };
+  }();
 
   var updateChart = function updateChart(data) {
     var datasetData = Object.keys(data.datasets).map(function (d) {
@@ -24968,19 +25049,22 @@ var DatasetModalities_DatasetModalities = function DatasetModalities(_ref) {
     });
   };
 
-  var constructData = function constructData() {
-    var chartData = {
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    if (!chartData) {
+      return;
+    }
+
+    var axes = {
       datasets: {}
     };
-    datasets.elements.forEach(function (dataset) {
+    chartData.datasets.elements.forEach(function (dataset) {
       if (!dataset.modalities) return;
-      var modalitiesArr = dataset.modalities.split(", ");
-      modalitiesArr.forEach(function (modality) {
-        addOrIncreaseDatapoint(chartData.datasets, modality.toLowerCase());
+      dataset.modalities.forEach(function (modality) {
+        addOrIncreaseDatapoint(axes.datasets, modality.toLowerCase());
       });
     });
-    updateChart(chartData);
-  };
+    updateChart(axes);
+  }, [chartData]);
 
   var addOrIncreaseDatapoint = function addOrIncreaseDatapoint(data, point) {
     if (!Object.keys(data).includes(point)) {
@@ -24989,11 +25073,6 @@ var DatasetModalities_DatasetModalities = function DatasetModalities(_ref) {
       data[point] += 1;
     }
   };
-
-  if (datasets && pipelines && !isDrawn) {
-    constructData();
-    setIsDrawn(true);
-  }
 
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
     setOptions(function (prevOptions) {
@@ -25032,9 +25111,13 @@ var DatasetModalities_DatasetModalities = function DatasetModalities(_ref) {
 
 /* harmony default export */ var charts_DatasetModalities = (DatasetModalities_DatasetModalities);
 // CONCATENATED MODULE: ./src/charts/PipelineTags/index.js
+
+
 function PipelineTags_extends() { PipelineTags_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return PipelineTags_extends.apply(this, arguments); }
 
-function PipelineTags_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+function PipelineTags_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function PipelineTags_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { PipelineTags_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { PipelineTags_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
 
@@ -25104,21 +25187,56 @@ var PipelineTags_defaultOptions = {
   series: []
 };
 
-var PipelineTags_PipelineTags = function PipelineTags(_ref) {
-  var pipelines = _ref.pipelines,
-      props = PipelineTags_objectWithoutPropertiesLoose(_ref, ["pipelines"]);
+var PipelineTags_PipelineTags = function PipelineTags(props) {
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(),
+      chartData = _useState[0],
+      setChartData = _useState[1];
 
-  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(PipelineTags_defaultOptions),
-      options = _useState[0],
-      setOptions = _useState[1];
-
-  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
-      isDrawn = _useState2[0],
-      setIsDrawn = _useState2[1];
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(PipelineTags_defaultOptions),
+      options = _useState2[0],
+      setOptions = _useState2[1];
 
   var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}),
       contextMenuOptions = _useState3[0],
       setContextMenuOptions = _useState3[1];
+
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    fetchChartData();
+  }, []);
+
+  var fetchChartData = /*#__PURE__*/function () {
+    var _ref = PipelineTags_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              try {
+                fetch('/pipeline-search').then(function (res) {
+                  return res.json();
+                }).then(function (json) {
+                  return setChartData(function (prevState) {
+                    return PipelineTags_extends({}, prevState, {
+                      pipelines: json
+                    });
+                  });
+                });
+              } catch (err) {
+                alert("There was an error retrieving the search results.");
+                console.error(err);
+              }
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function fetchChartData() {
+      return _ref.apply(this, arguments);
+    };
+  }();
 
   var updateChart = function updateChart(data) {
     var pipelineData = Object.keys(data.pipelines).map(function (p) {
@@ -25138,25 +25256,29 @@ var PipelineTags_PipelineTags = function PipelineTags(_ref) {
     });
   };
 
-  var constructData = function constructData() {
-    var chartData = {
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    if (!chartData) {
+      return;
+    }
+
+    var axes = {
       pipelines: {}
     };
-    pipelines.elements.forEach(function (pipeline) {
+    chartData.pipelines.elements.forEach(function (pipeline) {
       if (!pipeline.tags.domain) return;
 
       if (!Array.isArray(pipeline.tags.domain)) {
-        addOrIncreaseDatapoint(chartData.pipelines, pipeline.tags.domain);
+        addOrIncreaseDatapoint(axes.pipelines, pipeline.tags.domain);
         return;
       }
 
       var tagsArr = pipeline.tags.domain;
       tagsArr.forEach(function (tag) {
-        addOrIncreaseDatapoint(chartData.pipelines, tag.toLowerCase());
+        addOrIncreaseDatapoint(axes.pipelines, tag.toLowerCase());
       });
     });
-    updateChart(chartData);
-  };
+    updateChart(axes);
+  }, [chartData]);
 
   var addOrIncreaseDatapoint = function addOrIncreaseDatapoint(data, point) {
     if (!Object.keys(data).includes(point)) {
@@ -25165,11 +25287,6 @@ var PipelineTags_PipelineTags = function PipelineTags(_ref) {
       data[point] += 1;
     }
   };
-
-  if (pipelines && !isDrawn) {
-    constructData();
-    setIsDrawn(true);
-  }
 
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
     setOptions(function (prevOptions) {
@@ -25207,213 +25324,72 @@ var PipelineTags_PipelineTags = function PipelineTags(_ref) {
   }));
 };
 
-PipelineTags_PipelineTags.propTypes = {};
-PipelineTags_PipelineTags.defaultProps = {};
 /* harmony default export */ var charts_PipelineTags = (PipelineTags_PipelineTags);
 // CONCATENATED MODULE: ./src/ChartContainer/index.js
 
 
-function ChartContainer_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function ChartContainer_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { ChartContainer_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { ChartContainer_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
 
+var ChartContainer_ChartContainer = function ChartContainer(props) {
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(props.showToggle || false),
+      showToggle = _useState[0],
+      setShowToggle = _useState[1];
 
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(props.toggleState || 1),
+      toggleState = _useState2[0],
+      setToggleState = _useState2[1];
 
-
-
-var ChartContainer_ChartContainer = /*#__PURE__*/function (_React$Component) {
-  _inheritsLoose(ChartContainer, _React$Component);
-
-  function ChartContainer(props) {
-    var _this;
-
-    _this = _React$Component.call(this, props) || this;
-    _this.state = {
-      datasets: null,
-      pipelines: null,
-      toggle: props.toggleState
-    };
-    _this.toggleChart = _this.toggleChart.bind(_assertThisInitialized(_this));
-    return _this;
-  }
-
-  var _proto = ChartContainer.prototype;
-
-  _proto.componentDidMount = function componentDidMount() {
-    this.fetchElements();
-  };
-
-  _proto.fetchElements = /*#__PURE__*/function () {
-    var _fetchElements = ChartContainer_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-      var datasetsFetch, datasetsRes, pipelinesFetch, pipelinesRes;
-      return regenerator_default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              _context.next = 3;
-              return fetch(this.props.datasetsURL + '?elements=all');
-
-            case 3:
-              datasetsFetch = _context.sent;
-
-              if (datasetsFetch.ok) {
-                _context.next = 6;
-                break;
-              }
-
-              throw new Error("Request failed with status: " + datasetsFetch.status + " (" + datasetsFetch.statusText + ")");
-
-            case 6:
-              _context.next = 8;
-              return datasetsFetch.json();
-
-            case 8:
-              datasetsRes = _context.sent;
-              _context.next = 11;
-              return fetch(this.props.pipelinesURL);
-
-            case 11:
-              pipelinesFetch = _context.sent;
-
-              if (pipelinesFetch.ok) {
-                _context.next = 14;
-                break;
-              }
-
-              throw new Error("Request failed with status: " + pipelinesFetch.status + " (" + pipelinesFetch.statusText + ")");
-
-            case 14:
-              _context.next = 16;
-              return pipelinesFetch.json();
-
-            case 16:
-              pipelinesRes = _context.sent;
-              this.setState({
-                datasets: datasetsRes,
-                pipelines: pipelinesRes
-              });
-              _context.next = 24;
-              break;
-
-            case 20:
-              _context.prev = 20;
-              _context.t0 = _context["catch"](0);
-              alert("There was an error retrieving the search results.");
-              console.error(_context.t0);
-
-            case 24:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, this, [[0, 20]]);
-    }));
-
-    function fetchElements() {
-      return _fetchElements.apply(this, arguments);
-    }
-
-    return fetchElements;
-  }();
-
-  _proto.renderChart = function renderChart(toggle) {
-    switch (toggle) {
+  var renderChart = function renderChart() {
+    switch (toggleState) {
       case 1:
-        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_TotalDatasetsPipelines, {
-          datasets: this.state.datasets,
-          pipelines: this.state.pipelines
-        });
+        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_TotalDatasetsPipelines, null);
 
       case 2:
-        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_DatasetModalities, {
-          datasets: this.state.datasets,
-          pipelines: this.state.pipelines
-        });
+        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_DatasetModalities, null);
 
       case 3:
-        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_PipelineTags, {
-          pipelines: this.state.pipelines
-        });
+        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_PipelineTags, null);
 
       default:
-        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_TotalDatasetsPipelines, {
-          datasets: this.state.datasets,
-          pipelines: this.state.pipelines
-        });
+        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_TotalDatasetsPipelines, null);
     }
   };
 
-  _proto.toggleChart = function toggleChart(event, number) {
-    event.preventDefault();
-    this.setState({
-      toggle: number
-    });
-  };
-
-  _proto.render = function render() {
-    var _this2 = this;
-
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, this.props.showToggle ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      className: "d-flex flex-row-reverse"
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      className: "dropdown show mt-2 mr-2",
-      style: {
-        zIndex: 1
-      }
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-      className: "btn btn-secondary btn-sm dropdown-toggle",
-      id: "dropdownMenuLink",
-      "data-toggle": "dropdown",
-      "aria-haspopup": "true",
-      "aria-expanded": "false"
-    }, "Select Chart"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      className: "dropdown-menu dropdown-menu-right",
-      "aria-labelledby": "dropdownMenuLink"
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-      className: "dropdown-item",
-      type: "button",
-      onClick: function onClick(e) {
-        _this2.toggleChart(e, 1);
-      }
-    }, "Total Datasets and Pipelines"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-      className: "dropdown-item",
-      type: "button",
-      onClick: function onClick(e) {
-        _this2.toggleChart(e, 2);
-      }
-    }, "Dataset Modalities"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-      className: "dropdown-item",
-      type: "button",
-      onClick: function onClick(e) {
-        _this2.toggleChart(e, 3);
-      }
-    }, "Pipeline Tags")))) : null, this.renderChart(this.state.toggle));
-  };
-
-  return ChartContainer;
-}(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Component);
-
-;
-ChartContainer_ChartContainer.propTypes = {
-  showToggle: prop_types_default.a.bool,
-  toggleState: prop_types_default.a.number
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, showToggle ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex flex-row-reverse"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown show mt-2 mr-2",
+    style: {
+      zIndex: 1
+    }
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-secondary btn-sm dropdown-toggle",
+    id: "dropdownMenuLink",
+    "data-toggle": "dropdown",
+    "aria-haspopup": "true",
+    "aria-expanded": "false"
+  }, "Select Chart"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown-menu dropdown-menu-right",
+    "aria-labelledby": "dropdownMenuLink"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "dropdown-item",
+    type: "button",
+    onClick: setToggleState(1)
+  }, "Total Datasets and Pipelines"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "dropdown-item",
+    type: "button",
+    onClick: setToggleState(2)
+  }, "Dataset Modalities"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "dropdown-item",
+    type: "button",
+    onClick: setToggleState(3)
+  }, "Pipeline Tags")))) : null, renderChart());
 };
-ChartContainer_ChartContainer.defaultProps = {
-  showToggle: false,
-  toggleState: 1
-};
+
 /* harmony default export */ var src_ChartContainer = (ChartContainer_ChartContainer);
 // EXTERNAL MODULE: ./node_modules/react-fast-compare/index.js
-var react_fast_compare = __webpack_require__(30);
+var react_fast_compare = __webpack_require__(31);
 var react_fast_compare_default = /*#__PURE__*/__webpack_require__.n(react_fast_compare);
 
 // CONCATENATED MODULE: ./node_modules/deepmerge/dist/es.js
@@ -26890,7 +26866,7 @@ var isArray = Array.isArray;
 /* harmony default export */ var lodash_es_isArray = (isArray);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/isBuffer.js
-var isBuffer = __webpack_require__(42);
+var isBuffer = __webpack_require__(43);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/_isIndex.js
 /** Used as references for various `Number` constants. */
@@ -27035,7 +27011,7 @@ function baseUnary(func) {
 /* harmony default export */ var _baseUnary = (baseUnary);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/_nodeUtil.js
-var _nodeUtil = __webpack_require__(32);
+var _nodeUtil = __webpack_require__(33);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/isTypedArray.js
 
@@ -28610,7 +28586,7 @@ function toPath(value) {
 var tiny_warning_esm = __webpack_require__(22);
 
 // EXTERNAL MODULE: ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
-var hoist_non_react_statics_cjs = __webpack_require__(41);
+var hoist_non_react_statics_cjs = __webpack_require__(42);
 var hoist_non_react_statics_cjs_default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics_cjs);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/cloneDeep.js
@@ -28673,7 +28649,7 @@ function formik_esm_extends() {
   return formik_esm_extends.apply(this, arguments);
 }
 
-function formik_esm_inheritsLoose(subClass, superClass) {
+function _inheritsLoose(subClass, superClass) {
   subClass.prototype = Object.create(superClass.prototype);
   subClass.prototype.constructor = subClass;
   subClass.__proto__ = superClass;
@@ -28694,7 +28670,7 @@ function formik_esm_objectWithoutPropertiesLoose(source, excluded) {
   return target;
 }
 
-function formik_esm_assertThisInitialized(self) {
+function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
   }
@@ -30046,7 +30022,7 @@ function withFormik(_ref) {
      */
 
     var C = /*#__PURE__*/function (_React$Component) {
-      formik_esm_inheritsLoose(C, _React$Component);
+      _inheritsLoose(C, _React$Component);
 
       function C() {
         var _this;
@@ -30176,7 +30152,7 @@ var copyArrayLike = function copyArrayLike(arrayLike) {
 };
 
 var formik_esm_FieldArrayInner = /*#__PURE__*/function (_React$Component) {
-  formik_esm_inheritsLoose(FieldArrayInner, _React$Component);
+  _inheritsLoose(FieldArrayInner, _React$Component);
 
   function FieldArrayInner(props) {
     var _this;
@@ -30328,8 +30304,8 @@ var formik_esm_FieldArrayInner = /*#__PURE__*/function (_React$Component) {
     // @todo Fix TS 3.2.1
 
 
-    _this.remove = _this.remove.bind(formik_esm_assertThisInitialized(_this));
-    _this.pop = _this.pop.bind(formik_esm_assertThisInitialized(_this));
+    _this.remove = _this.remove.bind(_assertThisInitialized(_this));
+    _this.pop = _this.pop.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -30423,7 +30399,7 @@ formik_esm_FieldArrayInner.defaultProps = {
 var FieldArray = /*#__PURE__*/connect(formik_esm_FieldArrayInner);
 
 var formik_esm_ErrorMessageImpl = /*#__PURE__*/function (_React$Component) {
-  formik_esm_inheritsLoose(ErrorMessageImpl, _React$Component);
+  _inheritsLoose(ErrorMessageImpl, _React$Component);
 
   function ErrorMessageImpl() {
     return _React$Component.apply(this, arguments) || this;
@@ -30464,7 +30440,7 @@ var ErrorMessage = /*#__PURE__*/connect(formik_esm_ErrorMessageImpl);
  */
 
 var formik_esm_FastFieldInner = /*#__PURE__*/function (_React$Component) {
-  formik_esm_inheritsLoose(FastFieldInner, _React$Component);
+  _inheritsLoose(FastFieldInner, _React$Component);
 
   function FastFieldInner(props) {
     var _this;
@@ -30601,13 +30577,13 @@ var FastField = /*#__PURE__*/connect(formik_esm_FastFieldInner);
 //# sourceMappingURL=formik.esm.js.map
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 2 modules
-var toConsumableArray = __webpack_require__(29);
+var toConsumableArray = __webpack_require__(30);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
 var esm_extends = __webpack_require__(1);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/merge.js
-var esm_merge = __webpack_require__(36);
+var esm_merge = __webpack_require__(37);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/css.js
 
@@ -31163,7 +31139,7 @@ function styled_styled(Component) {
   return componentCreator;
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/defaultTheme.js + 16 modules
-var defaultTheme = __webpack_require__(38);
+var defaultTheme = __webpack_require__(39);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/styled.js
 
@@ -31402,10 +31378,10 @@ var useIsFocusVisible = __webpack_require__(63);
 var objectWithoutPropertiesLoose = __webpack_require__(21);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(43);
+var assertThisInitialized = __webpack_require__(44);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js
-var inheritsLoose = __webpack_require__(27);
+var inheritsLoose = __webpack_require__(28);
 
 // CONCATENATED MODULE: ./node_modules/react-transition-group/esm/TransitionGroupContext.js
 
@@ -32534,7 +32510,7 @@ function isAdornedStart(obj) {
   return obj.startAdornment;
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/isMuiElement.js
-var isMuiElement = __webpack_require__(37);
+var isMuiElement = __webpack_require__(38);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/FormControl/FormControlContext.js
 
@@ -33197,7 +33173,7 @@ var FormControlLabel_FormControlLabel = /*#__PURE__*/external_root_React_commonj
 var slicedToArray = __webpack_require__(15);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useControlled.js
-var useControlled = __webpack_require__(33);
+var useControlled = __webpack_require__(34);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/internal/SwitchBase.js
 
@@ -33418,7 +33394,7 @@ function RadioButtonIcon(props) {
   name: 'PrivateRadioButtonIcon'
 })(RadioButtonIcon));
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createChainedFunction.js
-var createChainedFunction = __webpack_require__(31);
+var createChainedFunction = __webpack_require__(32);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/RadioGroup/RadioGroupContext.js
 
@@ -36033,7 +36009,7 @@ var Condition_Condition = /*#__PURE__*/function () {
 
 /* harmony default export */ var es_Condition = (Condition_Condition);
 // EXTERNAL MODULE: ./node_modules/synchronous-promise/index.js
-var synchronous_promise = __webpack_require__(49);
+var synchronous_promise = __webpack_require__(50);
 
 // CONCATENATED MODULE: ./node_modules/yup/es/ValidationError.js
 
@@ -37251,7 +37227,7 @@ function mapValues(object, iteratee) {
 /* harmony default export */ var lodash_es_mapValues = (mapValues);
 
 // EXTERNAL MODULE: ./node_modules/property-expr/index.js
-var property_expr = __webpack_require__(35);
+var property_expr = __webpack_require__(36);
 
 // CONCATENATED MODULE: ./node_modules/yup/es/Reference.js
 
@@ -41418,7 +41394,7 @@ var Cancel_default = /*#__PURE__*/__webpack_require__.n(Cancel);
 var formatMuiErrorMessage = __webpack_require__(134);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/debounce.js
-var debounce = __webpack_require__(26);
+var debounce = __webpack_require__(27);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/TextareaAutosize/TextareaAutosize.js
 
@@ -42768,19 +42744,19 @@ var FormHelperText_FormHelperText = /*#__PURE__*/external_root_React_commonjs2_r
 var mergeClasses = __webpack_require__(227);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
-var esm_typeof = __webpack_require__(40);
+var esm_typeof = __webpack_require__(41);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerDocument.js
 var ownerDocument = __webpack_require__(18);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerWindow.js
-var ownerWindow = __webpack_require__(34);
+var ownerWindow = __webpack_require__(35);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/getThemeProps/getThemeProps.js
 var getThemeProps = __webpack_require__(228);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/setRef.js
-var setRef = __webpack_require__(28);
+var setRef = __webpack_require__(29);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Portal/Portal.js
 
@@ -46752,7 +46728,7 @@ var DialogContent_DialogContent = /*#__PURE__*/external_root_React_commonjs2_rea
   name: 'MuiDialogContent'
 })(DialogContent_DialogContent));
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/transitions.js
-var transitions = __webpack_require__(39);
+var transitions = __webpack_require__(40);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Fade/Fade.js
 
@@ -56959,13 +56935,13 @@ __webpack_require__.d(__webpack_exports__, "useIsFocusVisible", function() { ret
 var capitalize = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createChainedFunction.js
-var createChainedFunction = __webpack_require__(31);
+var createChainedFunction = __webpack_require__(32);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createSvgIcon.js
 var createSvgIcon = __webpack_require__(14);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/debounce.js
-var debounce = __webpack_require__(26);
+var debounce = __webpack_require__(27);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/deprecatedPropType.js
 function deprecatedPropType(validator, reason) {
@@ -56987,25 +56963,25 @@ function deprecatedPropType(validator, reason) {
   };
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/isMuiElement.js
-var isMuiElement = __webpack_require__(37);
+var isMuiElement = __webpack_require__(38);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerDocument.js
 var ownerDocument = __webpack_require__(18);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerWindow.js
-var ownerWindow = __webpack_require__(34);
+var ownerWindow = __webpack_require__(35);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/requirePropFactory.js
 var requirePropFactory = __webpack_require__(84);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/setRef.js
-var setRef = __webpack_require__(28);
+var setRef = __webpack_require__(29);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/unsupportedProp.js
 var unsupportedProp = __webpack_require__(85);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useControlled.js
-var useControlled = __webpack_require__(33);
+var useControlled = __webpack_require__(34);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useEventCallback.js
 var useEventCallback = __webpack_require__(20);
@@ -57046,7 +57022,7 @@ var useIsFocusVisible = __webpack_require__(63);
 /* unused harmony export isPlainObject */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return deepmerge; });
 /* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
+/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41);
 
 
 function isPlainObject(item) {
@@ -57203,10 +57179,10 @@ var tiny_warning_esm = __webpack_require__(22);
 var createClass = __webpack_require__(19);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js
-var inheritsLoose = __webpack_require__(27);
+var inheritsLoose = __webpack_require__(28);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(43);
+var assertThisInitialized = __webpack_require__(44);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
 var objectWithoutPropertiesLoose = __webpack_require__(21);
@@ -60266,7 +60242,7 @@ function defaultUnit(options) {
 /* harmony default export */ var jss_plugin_default_unit_esm = (defaultUnit);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 2 modules
-var toConsumableArray = __webpack_require__(29);
+var toConsumableArray = __webpack_require__(30);
 
 // CONCATENATED MODULE: ./node_modules/css-vendor/dist/css-vendor.esm.js
 
@@ -61041,7 +61017,7 @@ function increment() {
   return indexCounter;
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
-var esm_typeof = __webpack_require__(40);
+var esm_typeof = __webpack_require__(41);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/utils/esm/deepmerge.js
 var deepmerge = __webpack_require__(195);
@@ -61397,7 +61373,7 @@ var slicedToArray = __webpack_require__(15);
 var breakpoints = __webpack_require__(68);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/merge.js
-var merge = __webpack_require__(36);
+var merge = __webpack_require__(37);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/memoize.js
 function memoize(fn) {

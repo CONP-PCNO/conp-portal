@@ -70,12 +70,32 @@ const defaultOptions = {
 
 };
 
-const PipelineTags = ({ pipelines, ...props }) => {
+const PipelineTags = (props) => {
 
+    const [chartData, setChartData] = useState()
     const [options, setOptions] = useState(defaultOptions);
-    const [isDrawn, setIsDrawn] = useState(false);
 
     const [contextMenuOptions, setContextMenuOptions] = useState({});
+
+    useEffect(() => {
+        fetchChartData();
+    }, [])
+
+    const fetchChartData = async () => {
+
+        try {
+            fetch('/pipeline-search')
+                .then(res => res.json())
+                .then(json => setChartData(prevState => ({
+                    ...prevState,
+                    pipelines: json
+                })));
+
+        } catch (err) {
+            alert("There was an error retrieving the search results.");
+            console.error(err);
+        }
+    };
 
     const updateChart = (data) => {
 
@@ -97,32 +117,36 @@ const PipelineTags = ({ pipelines, ...props }) => {
         }));
     };
 
-    const constructData = () => {
+    useEffect(() => {
 
-        const chartData = {
+        if (!chartData) {
+            return
+        }
+
+        const axes = {
             pipelines: {}
         };
 
-        pipelines.elements.forEach(pipeline => {
+        chartData.pipelines.elements.forEach(pipeline => {
 
             if (!pipeline.tags.domain)
                 return;
 
             if (!Array.isArray(pipeline.tags.domain)) {
-                addOrIncreaseDatapoint(chartData.pipelines, pipeline.tags.domain);
+                addOrIncreaseDatapoint(axes.pipelines, pipeline.tags.domain);
                 return;
             }
             const tagsArr = pipeline.tags.domain;
 
             tagsArr.forEach(tag => {
-                addOrIncreaseDatapoint(chartData.pipelines, tag.toLowerCase());
+                addOrIncreaseDatapoint(axes.pipelines, tag.toLowerCase());
             })
 
         })
 
-        updateChart(chartData);
+        updateChart(axes);
 
-    };
+    }, [chartData]);
 
     const addOrIncreaseDatapoint = (data, point) => {
         if (!Object.keys(data).includes(point)) {
@@ -131,11 +155,6 @@ const PipelineTags = ({ pipelines, ...props }) => {
         else {
             data[point] += 1;
         }
-    }
-
-    if (pipelines && !isDrawn) {
-        constructData();
-        setIsDrawn(true);
     }
 
     useEffect(() => {
@@ -176,14 +195,6 @@ const PipelineTags = ({ pipelines, ...props }) => {
             />
         </div>
     );
-};
-
-PipelineTags.propTypes = {
-
-};
-
-PipelineTags.defaultProps = {
-
 };
 
 export default PipelineTags;
