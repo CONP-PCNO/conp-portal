@@ -21,7 +21,7 @@ def upgrade():
     op.create_table('matomo_daily_get_page_urls_summary',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('date', sa.String(length=12), nullable=True),
-    sa.Column('url', sa.String(length=256), nullable=True),
+    sa.Column('url', sa.Text(), nullable=True),
     sa.Column('label', sa.String(length=256), nullable=True),
     sa.Column('nb_hits', sa.Integer(), nullable=True),
     sa.Column('nb_visits', sa.Integer(), nullable=True),

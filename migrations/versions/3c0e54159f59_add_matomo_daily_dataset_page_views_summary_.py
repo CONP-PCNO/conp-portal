@@ -22,7 +22,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('dataset_id', sa.String(length=256), nullable=True),
     sa.Column('date', sa.String(length=12), nullable=True),
-    sa.Column('url', sa.String(length=256), nullable=True),
+    sa.Column('url', sa.Text(), nullable=True),
     sa.Column('label', sa.String(length=256), nullable=True),
     sa.Column('nb_hits', sa.Integer(), nullable=True),
     sa.Column('nb_visits', sa.Integer(), nullable=True),

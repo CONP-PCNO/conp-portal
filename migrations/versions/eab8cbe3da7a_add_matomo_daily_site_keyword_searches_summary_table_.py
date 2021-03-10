@@ -29,7 +29,7 @@ def upgrade():
     sa.Column('nb_hits', sa.Integer(), nullable=True),
     sa.Column('nb_pages_per_search', sa.Integer(), nullable=True),
     sa.Column('nb_visits', sa.Integer(), nullable=True),
-    sa.Column('segment', sa.String(length=256), nullable=True),
+    sa.Column('segment', sa.Text(), nullable=True),
     sa.Column('sum_time_spent', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
