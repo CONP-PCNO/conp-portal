@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ContextMenu from '../ContextMenu'
+import LoadingSpinner from "../LoadingSpinner"
 
 import Highcharts from "highcharts";
 import HighchartsReact from 'highcharts-react-official';
@@ -75,6 +76,7 @@ const DatasetModalities = (props) => {
 
     const [chartData, setChartData] = useState()
     const [options, setOptions] = useState(defaultOptions);
+    const [isLoading, setIsLoading] = useState(true);
 
     const [contextMenuOptions, setContextMenuOptions] = useState({});
 
@@ -93,7 +95,6 @@ const DatasetModalities = (props) => {
                 })));
 
         } catch (err) {
-            alert("There was an error retrieving the search results.");
             console.error(err);
         }
     };
@@ -116,6 +117,8 @@ const DatasetModalities = (props) => {
             ...prevOptions,
             series: series,
         }));
+
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -180,13 +183,16 @@ const DatasetModalities = (props) => {
     }, []);
 
     return (
-        <div>
-            <ContextMenu options={contextMenuOptions} />
-            <HighchartsReact
-                highcharts={Highcharts}
-                options={options}
-            />
-        </div>
+        isLoading ?
+            <LoadingSpinner />
+            :
+            <div>
+                <ContextMenu options={contextMenuOptions} />
+                <HighchartsReact
+                    highcharts={Highcharts}
+                    options={options}
+                />
+            </div>
     );
 };
 

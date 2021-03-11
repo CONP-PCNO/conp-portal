@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from 'highcharts-react-official'
 
+import LoadingSpinner from "../LoadingSpinner"
+
 const defaultOptions = {
 
     chart: {
@@ -52,6 +54,7 @@ const TotalDatasetsPipelines = (props) => {
 
     const [chartData, setChartData] = useState()
     const [options, setOptions] = useState(defaultOptions);
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         fetchChartData();
@@ -75,7 +78,6 @@ const TotalDatasetsPipelines = (props) => {
                 })));
 
         } catch (err) {
-            alert("There was an error retrieving the search results.");
             console.error(err);
         }
     };
@@ -133,6 +135,8 @@ const TotalDatasetsPipelines = (props) => {
                 categories: xAxis
             }
         }));
+
+        setIsLoading(false);
 
     };
 
@@ -224,10 +228,13 @@ const TotalDatasetsPipelines = (props) => {
     }, [chartData])
 
     return (
-        <HighchartsReact
-            highcharts={Highcharts}
-            options={options}
-        />
+        isLoading ?
+            <LoadingSpinner />
+            :
+            <HighchartsReact
+                highcharts={Highcharts}
+                options={options}
+            />
     );
 };
 

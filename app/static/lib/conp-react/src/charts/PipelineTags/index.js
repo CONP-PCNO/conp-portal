@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ContextMenu from '../ContextMenu'
+import LoadingSpinner from "../LoadingSpinner"
 
 import Highcharts from "highcharts";
 import HighchartsReact from 'highcharts-react-official';
@@ -74,6 +75,7 @@ const PipelineTags = (props) => {
 
     const [chartData, setChartData] = useState()
     const [options, setOptions] = useState(defaultOptions);
+    const [isLoading, setIsLoading] = useState(true)
 
     const [contextMenuOptions, setContextMenuOptions] = useState({});
 
@@ -92,7 +94,6 @@ const PipelineTags = (props) => {
                 })));
 
         } catch (err) {
-            alert("There was an error retrieving the search results.");
             console.error(err);
         }
     };
@@ -115,6 +116,8 @@ const PipelineTags = (props) => {
             ...prevOptions,
             series: series,
         }));
+
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -187,13 +190,16 @@ const PipelineTags = (props) => {
     }, []);
 
     return (
-        <div>
-            <ContextMenu options={contextMenuOptions} />
-            <HighchartsReact
-                highcharts={Highcharts}
-                options={options}
-            />
-        </div>
+        isLoading ?
+            <LoadingSpinner />
+            :
+            <div>
+                <ContextMenu options={contextMenuOptions} />
+                <HighchartsReact
+                    highcharts={Highcharts}
+                    options={options}
+                />
+            </div>
     );
 };
 

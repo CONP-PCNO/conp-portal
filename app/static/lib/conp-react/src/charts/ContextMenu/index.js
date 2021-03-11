@@ -20,10 +20,10 @@ const ContextMenu = (props) => {
                 left: props.options.style.left - dimensions.left
             }
         )
-    }, [props.options.style])
+    }, [dimensions, props.options.style])
 
     useEffect(() => {
-        $(".dropdown-menu").toggle()
+        // $(".dropdown-menu").toggle()
     }, [props.options.style])
 
     return (
@@ -32,7 +32,7 @@ const ContextMenu = (props) => {
                 <span className="dropdown-item-text"><b>{props.options.title}</b></span>
                 <div className="dropdown-divider"></div>
                 <a className="dropdown-item" href={props.options.url}>{props.options.actionText}</a>
-                <a className="dropdown-item" href={props.options.url} target='_blank'>{props.options.actionText} in New Tab</a>
+                <a className="dropdown-item" href={props.options.url} target='_blank' rel="noreferrer">{props.options.actionText} in New Tab</a>
             </div>
         </div>
     )

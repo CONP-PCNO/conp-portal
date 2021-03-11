@@ -24616,6 +24616,19 @@ var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
 var highcharts_react_min = __webpack_require__(49);
 var highcharts_react_min_default = /*#__PURE__*/__webpack_require__.n(highcharts_react_min);
 
+// CONCATENATED MODULE: ./src/charts/LoadingSpinner/index.js
+var LoadingSpinner = function LoadingSpinner(props) {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "d-flex justify-content-center align-items-center w-100 h-100"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "spinner-grow text-info",
+    role: "status"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "sr-only"
+  }, "Loading...")));
+};
+
+/* harmony default export */ var charts_LoadingSpinner = (LoadingSpinner);
 // CONCATENATED MODULE: ./src/charts/TotalDatasetsPipelines/index.js
 
 
@@ -24624,6 +24637,7 @@ function TotalDatasetsPipelines_extends() { TotalDatasetsPipelines_extends = Obj
 function TotalDatasetsPipelines_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function TotalDatasetsPipelines_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { TotalDatasetsPipelines_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { TotalDatasetsPipelines_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -24674,6 +24688,10 @@ var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipeli
       options = _useState2[0],
       setOptions = _useState2[1];
 
+  var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(true),
+      isLoading = _useState3[0],
+      setIsLoading = _useState3[1];
+
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
     fetchChartData();
   }, []);
@@ -24704,7 +24722,6 @@ var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipeli
                   });
                 });
               } catch (err) {
-                alert("There was an error retrieving the search results.");
                 console.error(err);
               }
 
@@ -24769,6 +24786,7 @@ var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipeli
         }
       });
     });
+    setIsLoading(false);
   };
 
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
@@ -24847,7 +24865,7 @@ var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipeli
     });
     updateChart(axes);
   }, [chartData]);
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(highcharts_react_min_default.a, {
+  return isLoading ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_LoadingSpinner, null) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(highcharts_react_min_default.a, {
     highcharts: highcharts_default.a,
     options: options
   });
@@ -24878,9 +24896,8 @@ var ContextMenu_ContextMenu = function ContextMenu(props) {
       top: props.options.style.top - dimensions.top - 80,
       left: props.options.style.left - dimensions.left
     }));
-  }, [props.options.style]);
-  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-    $(".dropdown-menu").toggle();
+  }, [dimensions, props.options.style]);
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {// $(".dropdown-menu").toggle()
   }, [props.options.style]);
   return /*#__PURE__*/React.createElement("div", {
     ref: callBackRef,
@@ -24898,7 +24915,8 @@ var ContextMenu_ContextMenu = function ContextMenu(props) {
   }, props.options.actionText), /*#__PURE__*/React.createElement("a", {
     className: "dropdown-item",
     href: props.options.url,
-    target: "_blank"
+    target: "_blank",
+    rel: "noreferrer"
   }, props.options.actionText, " in New Tab")));
 };
 
@@ -24911,6 +24929,7 @@ function DatasetModalities_extends() { DatasetModalities_extends = Object.assign
 function DatasetModalities_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function DatasetModalities_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { DatasetModalities_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { DatasetModalities_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -24989,9 +25008,13 @@ var DatasetModalities_DatasetModalities = function DatasetModalities(props) {
       options = _useState2[0],
       setOptions = _useState2[1];
 
-  var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}),
-      contextMenuOptions = _useState3[0],
-      setContextMenuOptions = _useState3[1];
+  var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(true),
+      isLoading = _useState3[0],
+      setIsLoading = _useState3[1];
+
+  var _useState4 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}),
+      contextMenuOptions = _useState4[0],
+      setContextMenuOptions = _useState4[1];
 
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
     fetchChartData();
@@ -25014,7 +25037,6 @@ var DatasetModalities_DatasetModalities = function DatasetModalities(props) {
                   });
                 });
               } catch (err) {
-                alert("There was an error retrieving the search results.");
                 console.error(err);
               }
 
@@ -25047,6 +25069,7 @@ var DatasetModalities_DatasetModalities = function DatasetModalities(props) {
         series: series
       });
     });
+    setIsLoading(false);
   };
 
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
@@ -25101,7 +25124,7 @@ var DatasetModalities_DatasetModalities = function DatasetModalities(props) {
       return options;
     });
   }, []);
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_ContextMenu, {
+  return isLoading ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_LoadingSpinner, null) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_ContextMenu, {
     options: contextMenuOptions
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(highcharts_react_min_default.a, {
     highcharts: highcharts_default.a,
@@ -25118,6 +25141,7 @@ function PipelineTags_extends() { PipelineTags_extends = Object.assign || functi
 function PipelineTags_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function PipelineTags_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { PipelineTags_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { PipelineTags_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -25196,9 +25220,13 @@ var PipelineTags_PipelineTags = function PipelineTags(props) {
       options = _useState2[0],
       setOptions = _useState2[1];
 
-  var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}),
-      contextMenuOptions = _useState3[0],
-      setContextMenuOptions = _useState3[1];
+  var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(true),
+      isLoading = _useState3[0],
+      setIsLoading = _useState3[1];
+
+  var _useState4 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}),
+      contextMenuOptions = _useState4[0],
+      setContextMenuOptions = _useState4[1];
 
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
     fetchChartData();
@@ -25221,7 +25249,6 @@ var PipelineTags_PipelineTags = function PipelineTags(props) {
                   });
                 });
               } catch (err) {
-                alert("There was an error retrieving the search results.");
                 console.error(err);
               }
 
@@ -25254,6 +25281,7 @@ var PipelineTags_PipelineTags = function PipelineTags(props) {
         series: series
       });
     });
+    setIsLoading(false);
   };
 
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
@@ -25316,7 +25344,7 @@ var PipelineTags_PipelineTags = function PipelineTags(props) {
       return options;
     });
   }, []);
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_ContextMenu, {
+  return isLoading ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_LoadingSpinner, null) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_ContextMenu, {
     options: contextMenuOptions
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(highcharts_react_min_default.a, {
     highcharts: highcharts_default.a,
@@ -25356,7 +25384,11 @@ var ChartContainer_ChartContainer = function ChartContainer(props) {
     }
   };
 
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, showToggle ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    style: {
+      minHeight: "300px"
+    }
+  }, showToggle ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-row-reverse"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "dropdown show mt-2 mr-2",

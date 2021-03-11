@@ -72,11 +72,7 @@
       <div id="dashboard-chart-container">
         <script type="text/javascript">
           const dashboardChartElement = React.createElement(
-            CONPReact.ChartContainer,
-            {
-              datasetsURL: "{{ url_for('search.dataset_search') }}",
-              pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
-            }
+            CONPReact.ChartContainer
           );
           ReactDOM.render(
             dashboardChartElement,
