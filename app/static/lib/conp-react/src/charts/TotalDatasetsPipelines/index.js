@@ -176,9 +176,17 @@ const TotalDatasetsPipelines = (props) => {
 
         const today = new Date();
 
+        if (!Object.keys(axes.datasets).includes(today.getFullYear())) {
+            axes.datasets[today.getFullYear()] = {}
+        }
+
+        if (!Object.keys(axes.pipelines).includes(today.getFullYear())) {
+            axes.pipelines[today.getFullYear()] = {}
+        }
+
         Object.keys(axes.datasets).forEach(year => {
             for (var i = 1; i <= 12; i++) {
-                if (year === today.getFullYear() && i === today.getMonth() + 2) {
+                if (parseInt(year) === today.getFullYear() && i === (today.getMonth() + 2)) {
                     break;
                 }
                 if (Object.keys(axes.datasets).includes((year - 1).toString()) &&
