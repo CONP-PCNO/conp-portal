@@ -22,7 +22,7 @@
     <div id="analytics-chart-1">
       <script type="text/javascript">
         const analyticsChart1 = React.createElement(CONPReact.ChartContainer, {
-          toggleState: 1,
+          toggleState: "TotalDatasetsPipelines",
         });
         ReactDOM.render(
           analyticsChart1,
@@ -39,7 +39,7 @@
           const analyticsChart2 = React.createElement(
             CONPReact.ChartContainer,
             {
-              toggleState: 2,
+              toggleState: "DatasetModalities",
             }
           );
           ReactDOM.render(
@@ -55,12 +55,47 @@
           const analyticsChart3 = React.createElement(
             CONPReact.ChartContainer,
             {
-              toggleState: 3,
+              toggleState: "PipelineTags",
             }
           );
           ReactDOM.render(
             analyticsChart3,
             document.querySelector("#analytics-chart-3")
+          );
+        </script>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row">
+    <div class="card m-2 w-100">
+      <div id="analytics-chart-4">
+        <script type="text/javascript">
+          const analyticsChart4 = React.createElement(
+            CONPReact.ChartContainer,
+            {
+              toggleState: "DailyVisitors",
+            }
+          );
+          ReactDOM.render(
+            analyticsChart4,
+            document.querySelector("#analytics-chart-4")
+          );
+        </script>
+      </div>
+    </div>
+    <div class="card m-2 w-100">
+      <div id="analytics-chart-5">
+        <script type="text/javascript">
+          const analyticsChart5 = React.createElement(
+            CONPReact.ChartContainer,
+            {
+              toggleState: "DailyVisitors",
+            }
+          );
+          ReactDOM.render(
+            analyticsChart5,
+            document.querySelector("#analytics-chart-5")
           );
         </script>
       </div>

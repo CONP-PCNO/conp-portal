@@ -152,7 +152,7 @@ if (false) { var throwOnDirectAccess, ReactIs; } else {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _objectWithoutProperties; });
-/* harmony import */ var _objectWithoutPropertiesLoose_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(21);
+/* harmony import */ var _objectWithoutPropertiesLoose_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(22);
 
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
@@ -240,7 +240,7 @@ var external_root_React_commonjs2_react_commonjs_react_amd_react_default = /*#__
 var prop_types = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
-var hoist_non_react_statics_cjs = __webpack_require__(42);
+var hoist_non_react_statics_cjs = __webpack_require__(43);
 var hoist_non_react_statics_cjs_default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics_cjs);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/makeStyles/makeStyles.js + 19 modules
@@ -337,7 +337,7 @@ var withStyles_withStyles = function withStyles(stylesOrCreator) {
 
 /* harmony default export */ var esm_withStyles_withStyles = (withStyles_withStyles);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/defaultTheme.js + 16 modules
-var styles_defaultTheme = __webpack_require__(39);
+var styles_defaultTheme = __webpack_require__(40);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/withStyles.js
 
@@ -1029,54 +1029,6 @@ function useEventCallback(fn) {
 
 /***/ }),
 /* 21 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _objectWithoutPropertiesLoose; });
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-
-  return target;
-}
-
-/***/ }),
-/* 22 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var isProduction = "production" === 'production';
-function warning(condition, message) {
-  if (!isProduction) {
-    if (condition) {
-      return;
-    }
-
-    var text = "Warning: " + message;
-
-    if (typeof console !== 'undefined') {
-      console.warn(text);
-    }
-
-    try {
-      throw Error(text);
-    } catch (x) {}
-  }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (warning);
-
-
-/***/ }),
-/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1627,10 +1579,58 @@ K(e,function(d,e){if(!v&&-1<h.collectionsWithUpdate.indexOf(e))for(d=y(d),m[e]=[
 //# sourceMappingURL=highcharts.js.map
 
 /***/ }),
-/* 24 */
+/* 22 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _objectWithoutPropertiesLoose; });
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(152);
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var isProduction = "production" === 'production';
+function warning(condition, message) {
+  if (!isProduction) {
+    if (condition) {
+      return;
+    }
+
+    var text = "Warning: " + message;
+
+    if (typeof console !== 'undefined') {
+      console.warn(text);
+    }
+
+    try {
+      throw Error(text);
+    } catch (x) {}
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (warning);
 
 
 /***/ }),
@@ -1966,6 +1966,13 @@ function ownerWindow(node) {
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
+!function(e,t){ true?module.exports=t(__webpack_require__(0),__webpack_require__(21)):undefined}("undefined"!=typeof self?self:this,function(e,t){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,r){"use strict";function n(){return n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},n.apply(this,arguments)}function o(e){return i(e)||u(e)||c()}function c(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function u(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function i(e){if(Array.isArray(e)){for(var t=0,r=new Array(e.length);t<e.length;t++)r[t]=e[t];return r}}Object.defineProperty(t,"__esModule",{value:!0});var a=r(1),s=r.n(a),f=r(2),p=r.n(f),l="undefined"!=typeof window?a.useLayoutEffect:a.useEffect,d=Object(a.forwardRef)(function(e,t){var r=Object(a.useRef)(),c=Object(a.useRef)();return l(function(){function t(){var t=e.highcharts||p.a,n=e.constructorType||"chart";t?t[n]?e.options?c.current=t[n](r.current,e.options,e.callback?e.callback:void 0):console.warn('The "options" property was not passed.'):console.warn('The "constructorType" property is incorrect or some required module is not imported.'):console.warn('The "highcharts" property was not passed.')}if(c.current){if(!1!==e.allowChartUpdate)if(!e.immutable&&c.current){var n;(n=c.current).update.apply(n,[e.options].concat(o(e.updateArgs||[!0,!0])))}else t()}else t()}),l(function(){return function(){c.current&&(c.current.destroy(),c.current=null)}},[]),Object(a.useImperativeHandle)(t,function(){return{get chart(){return c.current},container:r}},[]),s.a.createElement("div",n({},e.containerProps,{ref:r}))});t.default=Object(a.memo)(d)},function(t,r){t.exports=e},function(e,r){e.exports=t}])});
+//# sourceMappingURL=highcharts-react.min.js.map
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /**
  * Based on Kendo UI Core expression code <https://github.com/telerik/kendo-ui-core#license-information>
@@ -2128,7 +2135,7 @@ function shouldBeQuoted(part) {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2149,7 +2156,7 @@ function merge(acc, item) {
 /* harmony default export */ __webpack_exports__["a"] = (merge);
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2162,7 +2169,7 @@ function isMuiElement(element, muiNames) {
 }
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2812,7 +2819,7 @@ function createSpacing() {
   return spacing;
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/transitions.js
-var transitions = __webpack_require__(40);
+var transitions = __webpack_require__(41);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/zIndex.js
 var zIndex = __webpack_require__(69);
@@ -2885,7 +2892,7 @@ var defaultTheme = styles_createMuiTheme();
 /* harmony default export */ var styles_defaultTheme = __webpack_exports__["a"] = (defaultTheme);
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2968,7 +2975,7 @@ function formatMs(milliseconds) {
 });
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2990,7 +2997,7 @@ function _typeof(obj) {
 }
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3100,7 +3107,7 @@ module.exports = hoistNonReactStatics;
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3148,7 +3155,7 @@ var isBuffer = nativeIsBuffer || _stubFalse_js__WEBPACK_IMPORTED_MODULE_1__[/* d
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(82)(module)))
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3162,17 +3169,10 @@ function _assertThisInitialized(self) {
 }
 
 /***/ }),
-/* 45 */,
 /* 46 */,
 /* 47 */,
 /* 48 */,
-/* 49 */
-/***/ (function(module, exports, __webpack_require__) {
-
-!function(e,t){ true?module.exports=t(__webpack_require__(0),__webpack_require__(23)):undefined}("undefined"!=typeof self?self:this,function(e,t){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,r){"use strict";function n(){return n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},n.apply(this,arguments)}function o(e){return i(e)||u(e)||c()}function c(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function u(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function i(e){if(Array.isArray(e)){for(var t=0,r=new Array(e.length);t<e.length;t++)r[t]=e[t];return r}}Object.defineProperty(t,"__esModule",{value:!0});var a=r(1),s=r.n(a),f=r(2),p=r.n(f),l="undefined"!=typeof window?a.useLayoutEffect:a.useEffect,d=Object(a.forwardRef)(function(e,t){var r=Object(a.useRef)(),c=Object(a.useRef)();return l(function(){function t(){var t=e.highcharts||p.a,n=e.constructorType||"chart";t?t[n]?e.options?c.current=t[n](r.current,e.options,e.callback?e.callback:void 0):console.warn('The "options" property was not passed.'):console.warn('The "constructorType" property is incorrect or some required module is not imported.'):console.warn('The "highcharts" property was not passed.')}if(c.current){if(!1!==e.allowChartUpdate)if(!e.immutable&&c.current){var n;(n=c.current).update.apply(n,[e.options].concat(o(e.updateArgs||[!0,!0])))}else t()}else t()}),l(function(){return function(){c.current&&(c.current.destroy(),c.current=null)}},[]),Object(a.useImperativeHandle)(t,function(){return{get chart(){return c.current},container:r}},[]),s.a.createElement("div",n({},e.containerProps,{ref:r}))});t.default=Object(a.memo)(d)},function(t,r){t.exports=e},function(e,r){e.exports=t}])});
-//# sourceMappingURL=highcharts-react.min.js.map
-
-/***/ }),
+/* 49 */,
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6538,10 +6538,10 @@ function _unsupportedIterableToArray(o, minLen) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return handleBreakpoints; });
 /* harmony import */ var _babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(30);
 /* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
-/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(41);
+/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(42);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _merge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(37);
+/* harmony import */ var _merge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(38);
 
 
 
@@ -7542,7 +7542,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
  License: www.highcharts.com/license
 */
-(function(c){ true&&module.exports?(c["default"]=c,module.exports=c): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(23)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(A){c(A);c.Highcharts=A;return c}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+(function(c){ true&&module.exports?(c["default"]=c,module.exports=c): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(21)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(A){c(A);c.Highcharts=A;return c}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):undefined})(function(c){function A(c,b,h,a){c.hasOwnProperty(b)||(c[b]=a.apply(null,h))}c=c?c._modules:{};A(c,"Extensions/Pane.js",[c["Core/Chart/Chart.js"],c["Core/Globals.js"],c["Core/Pointer.js"],c["Core/Utilities.js"],c["Mixins/CenteredSeries.js"]],
 function(c,b,h,a,f){function q(e,f,m){return Math.sqrt(Math.pow(e-m[0],2)+Math.pow(f-m[1],2))<=m[2]/2}var u=a.addEvent,z=a.extend,E=a.merge,B=a.pick,e=a.splat;c.prototype.collectionsWithUpdate.push("pane");a=function(){function b(e,m){this.options=this.chart=this.center=this.background=void 0;this.coll="pane";this.defaultOptions={center:["50%","50%"],size:"85%",innerSize:"0%",startAngle:0};this.defaultBackgroundOptions={shape:"circle",borderWidth:1,borderColor:"#cccccc",backgroundColor:{linearGradient:{x1:0,
 y1:0,x2:0,y2:1},stops:[[0,"#ffffff"],[1,"#e6e6e6"]]},from:-Number.MAX_VALUE,innerRadius:0,to:Number.MAX_VALUE,outerRadius:"105%"};this.init(e,m)}b.prototype.init=function(e,m){this.chart=m;this.background=[];m.pane.push(this);this.setOptions(e)};b.prototype.setOptions=function(e){this.options=E(this.defaultOptions,this.chart.angular?{background:{}}:void 0,e)};b.prototype.render=function(){var b=this.options,m=this.options.background,f=this.chart.renderer;this.group||(this.group=f.g("pane-group").attr({zIndex:b.zIndex||
@@ -7732,7 +7732,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
         factory['default'] = factory;
         module.exports = factory;
     } else if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(23)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (Highcharts) {
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(21)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (Highcharts) {
             factory(Highcharts);
             factory.Highcharts = Highcharts;
             return factory;
@@ -17591,7 +17591,7 @@ DataTable_DataTable.defaultProps = {
 };
 /* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
 // EXTERNAL MODULE: ./node_modules/nwb/node_modules/@babel/runtime/regenerator/index.js
-var regenerator = __webpack_require__(24);
+var regenerator = __webpack_require__(23);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/query-string/index.js
@@ -24609,11 +24609,11 @@ PipelineElement_PipelineElement.propTypes = {
 
 /* harmony default export */ var src_PipelineElement = (PipelineElement_PipelineElement);
 // EXTERNAL MODULE: ./node_modules/highcharts/highcharts.js
-var highcharts = __webpack_require__(23);
+var highcharts = __webpack_require__(21);
 var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
 
 // EXTERNAL MODULE: ./node_modules/highcharts-react-official/dist/highcharts-react.min.js
-var highcharts_react_min = __webpack_require__(49);
+var highcharts_react_min = __webpack_require__(36);
 var highcharts_react_min_default = /*#__PURE__*/__webpack_require__.n(highcharts_react_min);
 
 // CONCATENATED MODULE: ./src/charts/LoadingSpinner/index.js
@@ -25362,7 +25362,157 @@ var PipelineTags_PipelineTags = function PipelineTags(props) {
 };
 
 /* harmony default export */ var charts_PipelineTags = (PipelineTags_PipelineTags);
+// CONCATENATED MODULE: ./src/charts/DailyVisitors/index.js
+
+
+function DailyVisitors_extends() { DailyVisitors_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return DailyVisitors_extends.apply(this, arguments); }
+
+function DailyVisitors_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function DailyVisitors_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { DailyVisitors_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { DailyVisitors_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+var DailyVisitors_defaultOptions = {
+  chart: {
+    type: 'column'
+  },
+  credits: {
+    enabled: false
+  },
+  title: {
+    text: 'Number of Unique Visitors'
+  },
+  yAxis: [{
+    title: {
+      text: ''
+    },
+    allowDecimals: false
+  }],
+  xAxis: {
+    categories: []
+  },
+  plotOptions: {
+    column: {
+      borderRadius: 5
+    }
+  },
+  series: [{
+    name: 'Visitors',
+    color: '#EA2627B3',
+    data: [],
+    yAxis: 0
+  }]
+};
+
+var DailyVisitors_DailyVisitors = function DailyVisitors(props) {
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(),
+      chartData = _useState[0],
+      setChartData = _useState[1];
+
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(DailyVisitors_defaultOptions),
+      options = _useState2[0],
+      setOptions = _useState2[1];
+
+  var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(true),
+      isLoading = _useState3[0],
+      setIsLoading = _useState3[1];
+
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    fetchChartData();
+  }, []);
+
+  var fetchChartData = /*#__PURE__*/function () {
+    var _ref = DailyVisitors_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              try {
+                fetch('/analytics/visitors').then(function (res) {
+                  return res.json();
+                }).then(function (json) {
+                  return setChartData({
+                    visitors: json
+                  });
+                });
+              } catch (err) {
+                console.error(err);
+              }
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function fetchChartData() {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  var updateChart = function updateChart(axes) {
+    var xAxis = [];
+    var yAxisVisitors = [];
+    Object.keys(axes.visitors).forEach(function (year) {
+      Object.keys(axes.visitors[year]).forEach(function (month) {
+        xAxis.push(month + "/" + year);
+        yAxisVisitors.push(axes.visitors[year][month]);
+      });
+    });
+    var series = [{
+      name: 'Visitors',
+      color: '#EA2627B3',
+      data: yAxisVisitors,
+      yAxis: 0
+    }];
+    setOptions(function (prevOptions) {
+      return DailyVisitors_extends({}, prevOptions, {
+        series: series,
+        xAxis: {
+          categories: xAxis
+        }
+      });
+    });
+    setIsLoading(false);
+  };
+
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    if (!chartData) {
+      return;
+    }
+
+    var axes = {
+      visitors: {}
+    };
+    chartData.visitors.forEach(function (element) {
+      var dateOfVisit = new Date(element.date);
+
+      if (!axes.visitors[dateOfVisit.getFullYear()]) {
+        axes.visitors[dateOfVisit.getFullYear()] = {};
+      }
+
+      if (!axes.visitors[dateOfVisit.getFullYear()][dateOfVisit.getMonth() + 1]) {
+        axes.visitors[dateOfVisit.getFullYear()][dateOfVisit.getMonth() + 1] = element.nb_uniq_visitors;
+      } else {
+        axes.visitors[dateOfVisit.getFullYear()][dateOfVisit.getMonth() + 1] += element.nb_uniq_visitors;
+      }
+    });
+    updateChart(axes);
+  }, [chartData]);
+  return isLoading ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_LoadingSpinner, null) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(highcharts_react_min_default.a, {
+    highcharts: highcharts_default.a,
+    options: options
+  });
+};
+
+/* harmony default export */ var charts_DailyVisitors = (DailyVisitors_DailyVisitors);
 // CONCATENATED MODULE: ./src/ChartContainer/index.js
+
 
 
 
@@ -25373,20 +25523,23 @@ var ChartContainer_ChartContainer = function ChartContainer(props) {
       showToggle = _useState[0],
       setShowToggle = _useState[1];
 
-  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(props.toggleState || 1),
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(props.toggleState),
       toggleState = _useState2[0],
       setToggleState = _useState2[1];
 
   var renderChart = function renderChart() {
     switch (toggleState) {
-      case 1:
+      case "TotalDatasetsPipelines":
         return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_TotalDatasetsPipelines, null);
 
-      case 2:
+      case "DatasetModalities":
         return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_DatasetModalities, null);
 
-      case 3:
+      case "PipelineTags":
         return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_PipelineTags, null);
+
+      case "DailyVisitors":
+        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_DailyVisitors, null);
 
       default:
         return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_TotalDatasetsPipelines, null);
@@ -25395,7 +25548,7 @@ var ChartContainer_ChartContainer = function ChartContainer(props) {
 
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     style: {
-      minHeight: "300px"
+      minHeight: "360px"
     }
   }, showToggle ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-row-reverse"
@@ -25416,15 +25569,15 @@ var ChartContainer_ChartContainer = function ChartContainer(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "dropdown-item",
     type: "button",
-    onClick: setToggleState(1)
+    onClick: setToggleState("TotalDatasetsPipelines")
   }, "Total Datasets and Pipelines"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "dropdown-item",
     type: "button",
-    onClick: setToggleState(2)
+    onClick: setToggleState("DatasetModalities")
   }, "Dataset Modalities"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "dropdown-item",
     type: "button",
-    onClick: setToggleState(3)
+    onClick: setToggleState("PipelineTags")
   }, "Pipeline Tags")))) : null, renderChart());
 };
 
@@ -26907,7 +27060,7 @@ var isArray = Array.isArray;
 /* harmony default export */ var lodash_es_isArray = (isArray);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/isBuffer.js
-var isBuffer = __webpack_require__(43);
+var isBuffer = __webpack_require__(44);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/_isIndex.js
 /** Used as references for various `Number` constants. */
@@ -28624,10 +28777,10 @@ function toPath(value) {
 /* harmony default export */ var lodash_es_toPath = (toPath);
 
 // EXTERNAL MODULE: ./node_modules/tiny-warning/dist/tiny-warning.esm.js
-var tiny_warning_esm = __webpack_require__(22);
+var tiny_warning_esm = __webpack_require__(24);
 
 // EXTERNAL MODULE: ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
-var hoist_non_react_statics_cjs = __webpack_require__(42);
+var hoist_non_react_statics_cjs = __webpack_require__(43);
 var hoist_non_react_statics_cjs_default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics_cjs);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/cloneDeep.js
@@ -30624,7 +30777,7 @@ var toConsumableArray = __webpack_require__(30);
 var esm_extends = __webpack_require__(1);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/merge.js
-var esm_merge = __webpack_require__(37);
+var esm_merge = __webpack_require__(38);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/css.js
 
@@ -31180,7 +31333,7 @@ function styled_styled(Component) {
   return componentCreator;
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/defaultTheme.js + 16 modules
-var defaultTheme = __webpack_require__(39);
+var defaultTheme = __webpack_require__(40);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/styled.js
 
@@ -31416,10 +31569,10 @@ var utils_useEventCallback = __webpack_require__(20);
 var useIsFocusVisible = __webpack_require__(63);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
-var objectWithoutPropertiesLoose = __webpack_require__(21);
+var objectWithoutPropertiesLoose = __webpack_require__(22);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(44);
+var assertThisInitialized = __webpack_require__(45);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js
 var inheritsLoose = __webpack_require__(28);
@@ -32551,7 +32704,7 @@ function isAdornedStart(obj) {
   return obj.startAdornment;
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/isMuiElement.js
-var isMuiElement = __webpack_require__(38);
+var isMuiElement = __webpack_require__(39);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/FormControl/FormControlContext.js
 
@@ -37268,7 +37421,7 @@ function mapValues(object, iteratee) {
 /* harmony default export */ var lodash_es_mapValues = (mapValues);
 
 // EXTERNAL MODULE: ./node_modules/property-expr/index.js
-var property_expr = __webpack_require__(36);
+var property_expr = __webpack_require__(37);
 
 // CONCATENATED MODULE: ./node_modules/yup/es/Reference.js
 
@@ -42785,7 +42938,7 @@ var FormHelperText_FormHelperText = /*#__PURE__*/external_root_React_commonjs2_r
 var mergeClasses = __webpack_require__(227);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
-var esm_typeof = __webpack_require__(41);
+var esm_typeof = __webpack_require__(42);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerDocument.js
 var ownerDocument = __webpack_require__(18);
@@ -46769,7 +46922,7 @@ var DialogContent_DialogContent = /*#__PURE__*/external_root_React_commonjs2_rea
   name: 'MuiDialogContent'
 })(DialogContent_DialogContent));
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/transitions.js
-var transitions = __webpack_require__(40);
+var transitions = __webpack_require__(41);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Fade/Fade.js
 
@@ -57004,7 +57157,7 @@ function deprecatedPropType(validator, reason) {
   };
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/isMuiElement.js
-var isMuiElement = __webpack_require__(38);
+var isMuiElement = __webpack_require__(39);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerDocument.js
 var ownerDocument = __webpack_require__(18);
@@ -57063,7 +57216,7 @@ var useIsFocusVisible = __webpack_require__(63);
 /* unused harmony export isPlainObject */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return deepmerge; });
 /* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41);
+/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(42);
 
 
 function isPlainObject(item) {
@@ -57214,7 +57367,7 @@ var isBrowser = (typeof window === "undefined" ? "undefined" : _typeof(window)) 
 /* harmony default export */ var dist_module = (isBrowser);
 
 // EXTERNAL MODULE: ./node_modules/tiny-warning/dist/tiny-warning.esm.js
-var tiny_warning_esm = __webpack_require__(22);
+var tiny_warning_esm = __webpack_require__(24);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/createClass.js
 var createClass = __webpack_require__(19);
@@ -57223,10 +57376,10 @@ var createClass = __webpack_require__(19);
 var inheritsLoose = __webpack_require__(28);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(44);
+var assertThisInitialized = __webpack_require__(45);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
-var objectWithoutPropertiesLoose = __webpack_require__(21);
+var objectWithoutPropertiesLoose = __webpack_require__(22);
 
 // CONCATENATED MODULE: ./node_modules/jss/dist/jss.esm.js
 
@@ -61058,7 +61211,7 @@ function increment() {
   return indexCounter;
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
-var esm_typeof = __webpack_require__(41);
+var esm_typeof = __webpack_require__(42);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/utils/esm/deepmerge.js
 var deepmerge = __webpack_require__(195);
@@ -61414,7 +61567,7 @@ var slicedToArray = __webpack_require__(15);
 var breakpoints = __webpack_require__(68);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/merge.js
-var merge = __webpack_require__(37);
+var merge = __webpack_require__(38);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/memoize.js
 function memoize(fn) {
