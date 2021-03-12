@@ -10,7 +10,7 @@ from flask import render_template
 from flask_login import current_user
 from app.analytics import analytics_bp
 
-from app.models import MatomoDailyVisitsSummary
+from app.models import MatomoDailyVisitsSummary, MatomoDailyGetPageUrlsSummary
 
 
 @analytics_bp.route('/analytics')
@@ -62,5 +62,48 @@ def visitors():
             "sum_visit_length": v.sum_visit_length
         }
         elements.append(element)
+
+    return json.dumps(elements)
+
+
+@analytics_bp.route('/analytics/views')
+def views():
+    """ Analytics/Views Route
+
+        Endpoint for returning analytics related to page views on the portal
+
+        Args:
+            None
+
+        Returns:
+            Object
+    """
+
+    elements = []
+
+    page_views = MatomoDailyGetPageUrlsSummary.query.order_by(
+        MatomoDailyGetPageUrlsSummary.id).all()
+
+    for v in page_views:
+        exists = False
+        for e in elements:
+            label = e.get("label", None)
+            if label is not None and label == v.label:
+                exists = True
+                e["nb_hits"] += v.nb_hits
+                e["nb_visits"] += v.nb_visits
+                e["nb_uniq_visitors"] += (
+                    v.nb_uniq_visitors if v.nb_uniq_visitors is not None else 0)
+
+        if not exists and v.label is not None:
+            element = {
+                "id": v.id,
+                "url": v.url,
+                "label": v.label,
+                "nb_hits": v.nb_hits,
+                "nb_visits": v.nb_visits,
+                "nb_uniq_visitors": v.nb_uniq_visitors if v.nb_uniq_visitors is not None else 0,
+            }
+            elements.append(element)
 
     return json.dumps(elements)

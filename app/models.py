@@ -317,6 +317,9 @@ class MatomoDailyGetPageUrlsSummary(db.Model):
     sum_time_spent = db.Column(db.Integer)
     avg_time_on_page = db.Column(db.Float)
 
+    def __repr__(self):
+        return '<MatomoDailyGetPageUrlsSummary {}>'.format(self.id)
+
 
 class MatomoDailyGetDatasetPageViewsSummary(db.Model):
     """
