@@ -272,7 +272,7 @@ class MatomoDailyVisitsSummary(db.Model):
     __tablename__ = 'matomo_daily_visits_summary'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    date = db.Column(db.String, unique=True)
+    date = db.Column(db.String(12), unique=True)
     avg_time_on_site = db.Column(db.Integer)
     bounce_count = db.Column(db.Integer)
     max_actions = db.Column(db.Integer)
@@ -308,9 +308,9 @@ class MatomoDailyGetPageUrlsSummary(db.Model):
     __tablename__ = 'matomo_daily_get_page_urls_summary'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    date = db.Column(db.String)
-    url = db.Column(db.String)
-    label = db.Column(db.String)
+    date = db.Column(db.String(12))
+    url = db.Column(db.Text)
+    label = db.Column(db.String(256))
     nb_hits = db.Column(db.Integer)
     nb_visits = db.Column(db.Integer)
     nb_uniq_visitors = db.Column(db.Integer)
@@ -336,10 +336,10 @@ class MatomoDailyGetDatasetPageViewsSummary(db.Model):
     __tablename__ = 'matomo_daily_dataset_page_views_summary'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    dataset_id = db.Column(db.String)
-    date = db.Column(db.String)
-    url = db.Column(db.String)
-    label = db.Column(db.String)
+    dataset_id = db.Column(db.String(256))
+    date = db.Column(db.String(12))
+    url = db.Column(db.Text)
+    label = db.Column(db.String(256))
     nb_hits = db.Column(db.Integer)
     nb_visits = db.Column(db.Integer)
     nb_uniq_visitors = db.Column(db.Integer)
@@ -367,14 +367,14 @@ class MatomoDailyGetSiteSearchKeywords(db.Model):
     __tablename__ = 'matomo_daily_site_keyword_searches_summary'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    date = db.Column(db.String)
+    date = db.Column(db.String(12))
     avg_time_on_page = db.Column(db.Integer)
-    bounce_rate = db.Column(db.String)
+    bounce_rate = db.Column(db.String(64))
     exit_nb_visits = db.Column(db.Integer)
-    exit_rate = db.Column(db.String)
-    label = db.Column(db.String)
+    exit_rate = db.Column(db.String(64))
+    label = db.Column(db.String(256))
     nb_hits = db.Column(db.Integer)
     nb_pages_per_search = db.Column(db.Integer)
     nb_visits = db.Column(db.Integer)
-    segment = db.Column(db.String)
+    segment = db.Column(db.Text)
     sum_time_spent = db.Column(db.Integer)
