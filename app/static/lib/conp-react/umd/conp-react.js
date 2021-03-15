@@ -810,6 +810,13 @@ function lighten(color, coefficient) {
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(152);
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -841,7 +848,7 @@ if (true) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -871,7 +878,7 @@ function createSvgIcon(path, displayName) {
 }
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -925,7 +932,7 @@ function _slicedToArray(arr, i) {
 }
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -953,31 +960,7 @@ function toInteger(dirtyNumber) {
 module.exports = exports.default;
 
 /***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(152);
-
-
-/***/ }),
 /* 18 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(65);
-
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"] || freeSelf || Function('return this')();
-
-/* harmony default export */ __webpack_exports__["a"] = (root);
-
-
-/***/ }),
-/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1528,6 +1511,23 @@ K(e,function(d,e){if(!v&&-1<h.collectionsWithUpdate.indexOf(e))for(d=y(d),m[e]=[
 //# sourceMappingURL=highcharts.js.map
 
 /***/ }),
+/* 19 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(65);
+
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"] || freeSelf || Function('return this')();
+
+/* harmony default export */ __webpack_exports__["a"] = (root);
+
+
+/***/ }),
 /* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1637,7 +1637,7 @@ function warning(condition, message) {
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-!function(e,t){ true?module.exports=t(__webpack_require__(0),__webpack_require__(19)):undefined}("undefined"!=typeof self?self:this,function(e,t){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,r){"use strict";function n(){return n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},n.apply(this,arguments)}function o(e){return i(e)||u(e)||c()}function c(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function u(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function i(e){if(Array.isArray(e)){for(var t=0,r=new Array(e.length);t<e.length;t++)r[t]=e[t];return r}}Object.defineProperty(t,"__esModule",{value:!0});var a=r(1),s=r.n(a),f=r(2),p=r.n(f),l="undefined"!=typeof window?a.useLayoutEffect:a.useEffect,d=Object(a.forwardRef)(function(e,t){var r=Object(a.useRef)(),c=Object(a.useRef)();return l(function(){function t(){var t=e.highcharts||p.a,n=e.constructorType||"chart";t?t[n]?e.options?c.current=t[n](r.current,e.options,e.callback?e.callback:void 0):console.warn('The "options" property was not passed.'):console.warn('The "constructorType" property is incorrect or some required module is not imported.'):console.warn('The "highcharts" property was not passed.')}if(c.current){if(!1!==e.allowChartUpdate)if(!e.immutable&&c.current){var n;(n=c.current).update.apply(n,[e.options].concat(o(e.updateArgs||[!0,!0])))}else t()}else t()}),l(function(){return function(){c.current&&(c.current.destroy(),c.current=null)}},[]),Object(a.useImperativeHandle)(t,function(){return{get chart(){return c.current},container:r}},[]),s.a.createElement("div",n({},e.containerProps,{ref:r}))});t.default=Object(a.memo)(d)},function(t,r){t.exports=e},function(e,r){e.exports=t}])});
+!function(e,t){ true?module.exports=t(__webpack_require__(0),__webpack_require__(18)):undefined}("undefined"!=typeof self?self:this,function(e,t){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,r){"use strict";function n(){return n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},n.apply(this,arguments)}function o(e){return i(e)||u(e)||c()}function c(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function u(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function i(e){if(Array.isArray(e)){for(var t=0,r=new Array(e.length);t<e.length;t++)r[t]=e[t];return r}}Object.defineProperty(t,"__esModule",{value:!0});var a=r(1),s=r.n(a),f=r(2),p=r.n(f),l="undefined"!=typeof window?a.useLayoutEffect:a.useEffect,d=Object(a.forwardRef)(function(e,t){var r=Object(a.useRef)(),c=Object(a.useRef)();return l(function(){function t(){var t=e.highcharts||p.a,n=e.constructorType||"chart";t?t[n]?e.options?c.current=t[n](r.current,e.options,e.callback?e.callback:void 0):console.warn('The "options" property was not passed.'):console.warn('The "constructorType" property is incorrect or some required module is not imported.'):console.warn('The "highcharts" property was not passed.')}if(c.current){if(!1!==e.allowChartUpdate)if(!e.immutable&&c.current){var n;(n=c.current).update.apply(n,[e.options].concat(o(e.updateArgs||[!0,!0])))}else t()}else t()}),l(function(){return function(){c.current&&(c.current.destroy(),c.current=null)}},[]),Object(a.useImperativeHandle)(t,function(){return{get chart(){return c.current},container:r}},[]),s.a.createElement("div",n({},e.containerProps,{ref:r}))});t.default=Object(a.memo)(d)},function(t,r){t.exports=e},function(e,r){e.exports=t}])});
 //# sourceMappingURL=highcharts-react.min.js.map
 
 /***/ }),
@@ -3111,7 +3111,7 @@ module.exports = hoistNonReactStatics;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _root_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _root_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
 /* harmony import */ var _stubFalse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(108);
 
 
@@ -6226,7 +6226,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = startOfUTCWeek;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -6300,7 +6300,7 @@ module.exports = exports.default;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return useIsFocusVisible; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 // based on https://github.com/WICG/focus-visible/blob/v4.1.5/src/focus-visible.js
 
@@ -6691,7 +6691,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = addMonths;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -6917,7 +6917,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = getUTCWeekYear;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -7133,7 +7133,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = addDays;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -7398,7 +7398,7 @@ exports.default = startOfWeek;
 
 var _index = _interopRequireDefault(__webpack_require__(9));
 
-var _index2 = _interopRequireDefault(__webpack_require__(16));
+var _index2 = _interopRequireDefault(__webpack_require__(17));
 
 var _index3 = _interopRequireDefault(__webpack_require__(7));
 
@@ -7471,7 +7471,7 @@ exports.default = endOfWeek;
 
 var _index = _interopRequireDefault(__webpack_require__(9));
 
-var _index2 = _interopRequireDefault(__webpack_require__(16));
+var _index2 = _interopRequireDefault(__webpack_require__(17));
 
 var _index3 = _interopRequireDefault(__webpack_require__(7));
 
@@ -7542,7 +7542,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
  License: www.highcharts.com/license
 */
-(function(c){ true&&module.exports?(c["default"]=c,module.exports=c): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(19)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(A){c(A);c.Highcharts=A;return c}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+(function(c){ true&&module.exports?(c["default"]=c,module.exports=c): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(A){c(A);c.Highcharts=A;return c}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):undefined})(function(c){function A(c,b,h,a){c.hasOwnProperty(b)||(c[b]=a.apply(null,h))}c=c?c._modules:{};A(c,"Extensions/Pane.js",[c["Core/Chart/Chart.js"],c["Core/Globals.js"],c["Core/Pointer.js"],c["Core/Utilities.js"],c["Mixins/CenteredSeries.js"]],
 function(c,b,h,a,f){function q(e,f,m){return Math.sqrt(Math.pow(e-m[0],2)+Math.pow(f-m[1],2))<=m[2]/2}var u=a.addEvent,z=a.extend,E=a.merge,B=a.pick,e=a.splat;c.prototype.collectionsWithUpdate.push("pane");a=function(){function b(e,m){this.options=this.chart=this.center=this.background=void 0;this.coll="pane";this.defaultOptions={center:["50%","50%"],size:"85%",innerSize:"0%",startAngle:0};this.defaultBackgroundOptions={shape:"circle",borderWidth:1,borderColor:"#cccccc",backgroundColor:{linearGradient:{x1:0,
 y1:0,x2:0,y2:1},stops:[[0,"#ffffff"],[1,"#e6e6e6"]]},from:-Number.MAX_VALUE,innerRadius:0,to:Number.MAX_VALUE,outerRadius:"105%"};this.init(e,m)}b.prototype.init=function(e,m){this.chart=m;this.background=[];m.pane.push(this);this.setOptions(e)};b.prototype.setOptions=function(e){this.options=E(this.defaultOptions,this.chart.angular?{background:{}}:void 0,e)};b.prototype.render=function(){var b=this.options,m=this.options.background,f=this.chart.renderer;this.group||(this.group=f.g("pane-group").attr({zIndex:b.zIndex||
@@ -7732,7 +7732,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
         factory['default'] = factory;
         module.exports = factory;
     } else if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(19)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (Highcharts) {
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (Highcharts) {
             factory(Highcharts);
             factory.Highcharts = Highcharts;
             return factory;
@@ -8394,7 +8394,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = subMilliseconds;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(177));
 
@@ -9196,7 +9196,7 @@ function stubFalse() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _root_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _root_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
 
 
 /** Detect free variable `exports`. */
@@ -9514,7 +9514,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setHours;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -9566,7 +9566,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setMinutes;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -9666,7 +9666,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setSeconds;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -9962,7 +9962,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setYear;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -10033,7 +10033,7 @@ var _index6 = _interopRequireDefault(__webpack_require__(101));
 
 var _index7 = __webpack_require__(102);
 
-var _index8 = _interopRequireDefault(__webpack_require__(16));
+var _index8 = _interopRequireDefault(__webpack_require__(17));
 
 var _index9 = _interopRequireDefault(__webpack_require__(179));
 
@@ -10613,7 +10613,7 @@ var _index7 = _interopRequireDefault(__webpack_require__(101));
 
 var _index8 = __webpack_require__(102);
 
-var _index9 = _interopRequireDefault(__webpack_require__(16));
+var _index9 = _interopRequireDefault(__webpack_require__(17));
 
 var _index10 = _interopRequireDefault(__webpack_require__(7));
 
@@ -11109,7 +11109,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setMonth;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -11278,7 +11278,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = addYears;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(71));
 
@@ -14119,7 +14119,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = addMilliseconds;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -15727,7 +15727,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setUTCDay;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -15773,7 +15773,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setUTCISODay;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -15815,7 +15815,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setUTCISOWeek;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -15884,7 +15884,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setUTCWeek;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -15919,7 +15919,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = startOfUTCWeekYear;
 
-var _index = _interopRequireDefault(__webpack_require__(16));
+var _index = _interopRequireDefault(__webpack_require__(17));
 
 var _index2 = _interopRequireDefault(__webpack_require__(83));
 
@@ -17591,7 +17591,7 @@ DataTable_DataTable.defaultProps = {
 };
 /* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
 // EXTERNAL MODULE: ./node_modules/nwb/node_modules/@babel/runtime/regenerator/index.js
-var regenerator = __webpack_require__(17);
+var regenerator = __webpack_require__(13);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/query-string/index.js
@@ -24609,7 +24609,7 @@ PipelineElement_PipelineElement.propTypes = {
 
 /* harmony default export */ var src_PipelineElement = (PipelineElement_PipelineElement);
 // EXTERNAL MODULE: ./node_modules/highcharts/highcharts.js
-var highcharts = __webpack_require__(19);
+var highcharts = __webpack_require__(18);
 var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
 
 // EXTERNAL MODULE: ./node_modules/highcharts-react-official/dist/highcharts-react.min.js
@@ -25645,6 +25645,140 @@ var DatasetPageViews_DatasetPageViews = function DatasetPageViews(props) {
 };
 
 /* harmony default export */ var charts_DatasetPageViews = (DatasetPageViews_DatasetPageViews);
+// CONCATENATED MODULE: ./src/charts/PipelinePageViews/index.js
+
+
+function PipelinePageViews_extends() { PipelinePageViews_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return PipelinePageViews_extends.apply(this, arguments); }
+
+function PipelinePageViews_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function PipelinePageViews_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { PipelinePageViews_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { PipelinePageViews_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+var PipelinePageViews_defaultOptions = {
+  chart: {
+    type: 'bar'
+  },
+  credits: {
+    enabled: false
+  },
+  title: {
+    text: 'Most Viewed Pipelines'
+  },
+  yAxis: [{
+    title: {
+      text: ''
+    },
+    allowDecimals: false
+  }],
+  xAxis: {
+    categories: []
+  },
+  plotOptions: {
+    column: {
+      borderRadius: 5
+    }
+  },
+  series: []
+};
+
+var PipelinePageViews_PipelinePageViews = function PipelinePageViews(props) {
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(),
+      chartData = _useState[0],
+      setChartData = _useState[1];
+
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(PipelinePageViews_defaultOptions),
+      options = _useState2[0],
+      setOptions = _useState2[1];
+
+  var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(true),
+      isLoading = _useState3[0],
+      setIsLoading = _useState3[1];
+
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    fetchChartData();
+  }, []);
+
+  var fetchChartData = /*#__PURE__*/function () {
+    var _ref = PipelinePageViews_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              try {
+                fetch('/analytics/pipelines/views').then(function (res) {
+                  return res.json();
+                }).then(function (json) {
+                  return setChartData({
+                    views: json
+                  });
+                });
+              } catch (err) {
+                console.error(err);
+              }
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function fetchChartData() {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  var updateChart = function updateChart(axes) {
+    var xAxis = [];
+    var yAxis = [];
+    Object.keys(axes.views).some(function (page) {
+      xAxis.push(page);
+      yAxis.push(axes.views[page]);
+      return xAxis.length >= 15;
+    });
+    var series = [{
+      name: 'Pipeline Views',
+      color: '#207EA0B3',
+      data: yAxis,
+      yAxis: 0
+    }];
+    setOptions(function (prevOptions) {
+      return PipelinePageViews_extends({}, prevOptions, {
+        series: series,
+        xAxis: {
+          categories: xAxis
+        }
+      });
+    });
+    setIsLoading(false);
+  };
+
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    if (!chartData) {
+      return;
+    }
+
+    var axes = {
+      views: {}
+    };
+    chartData.views.forEach(function (element) {
+      var label = element.label.includes('/pipeline?id=') ? element.label.split('/pipeline?id=')[1] : element.label;
+      axes.views[label] = element.nb_hits;
+    });
+    updateChart(axes);
+  }, [chartData]);
+  return isLoading ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_LoadingSpinner, null) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(highcharts_react_min_default.a, {
+    highcharts: highcharts_default.a,
+    options: options
+  });
+};
+
+/* harmony default export */ var charts_PipelinePageViews = (PipelinePageViews_PipelinePageViews);
 // CONCATENATED MODULE: ./src/charts/Keywords/index.js
 
 
@@ -25787,6 +25921,7 @@ var Keywords_Keywords = function Keywords(props) {
 
 
 
+
 var ChartContainer_ChartContainer = function ChartContainer(props) {
   var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(props.showToggle || false),
       showToggle = _useState[0],
@@ -25812,6 +25947,9 @@ var ChartContainer_ChartContainer = function ChartContainer(props) {
 
       case "DatasetPageViews":
         return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_DatasetPageViews, null);
+
+      case "PipelinePageViews":
+        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_PipelinePageViews, null);
 
       case "Keywords":
         return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_Keywords, null);
@@ -25953,7 +26091,7 @@ var deepmerge_1 = deepmerge;
 /* harmony default export */ var es = (deepmerge_1);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/_root.js
-var _root = __webpack_require__(18);
+var _root = __webpack_require__(19);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/_Symbol.js
 
@@ -31831,7 +31969,7 @@ var Typography_Typography = /*#__PURE__*/external_root_React_commonjs2_react_com
 var colorManipulator = __webpack_require__(12);
 
 // EXTERNAL MODULE: ./node_modules/react-dom/index.js
-var react_dom = __webpack_require__(13);
+var react_dom = __webpack_require__(14);
 var react_dom_default = /*#__PURE__*/__webpack_require__.n(react_dom);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useForkRef.js
@@ -33639,7 +33777,7 @@ var FormControlLabel_FormControlLabel = /*#__PURE__*/external_root_React_commonj
   name: 'MuiFormControlLabel'
 })(FormControlLabel_FormControlLabel));
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 1 modules
-var slicedToArray = __webpack_require__(15);
+var slicedToArray = __webpack_require__(16);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useControlled.js
 var useControlled = __webpack_require__(35);
@@ -33786,7 +33924,7 @@ var SwitchBase_SwitchBase = /*#__PURE__*/external_root_React_commonjs2_react_com
   name: 'PrivateSwitchBase'
 })(SwitchBase_SwitchBase));
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createSvgIcon.js
-var createSvgIcon = __webpack_require__(14);
+var createSvgIcon = __webpack_require__(15);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/internal/svg-icons/RadioButtonUnchecked.js
 
@@ -57407,7 +57545,7 @@ var capitalize = __webpack_require__(6);
 var createChainedFunction = __webpack_require__(33);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createSvgIcon.js
-var createSvgIcon = __webpack_require__(14);
+var createSvgIcon = __webpack_require__(15);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/debounce.js
 var debounce = __webpack_require__(28);
@@ -61836,7 +61974,7 @@ function useTheme() {
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ createUnarySpacing; });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 1 modules
-var slicedToArray = __webpack_require__(15);
+var slicedToArray = __webpack_require__(16);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/breakpoints.js
 var breakpoints = __webpack_require__(68);

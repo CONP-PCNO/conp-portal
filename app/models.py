@@ -384,3 +384,6 @@ class MatomoDailyGetSiteSearchKeywords(db.Model):
     nb_visits = db.Column(db.Integer)
     segment = db.Column(db.String)
     sum_time_spent = db.Column(db.Integer)
+
+    def __repr__(self):
+        return '<MatomoDailyGetSiteSearchKeywords {}>'.format(self.id)

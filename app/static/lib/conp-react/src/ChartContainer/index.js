@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import TotalDatasetsPipelines from '../charts/TotalDatasetsPipelines';
 import DatasetModalities from '../charts/DatasetModalities';
-import PipelineTags from '../charts/PipelineTags'
+import PipelineTags from '../charts/PipelineTags';
 import DailyVisitors from "../charts/DailyVisitors";
 import DatasetPageViews from "../charts/DatasetPageViews";
-import Keywords from "../charts/Keywords"
+import PipelinePageViews from "../charts/PipelinePageViews";
+import Keywords from "../charts/Keywords";
 
 const ChartContainer = (props) => {
 
@@ -23,6 +24,8 @@ const ChartContainer = (props) => {
                 return <DailyVisitors />;
             case "DatasetPageViews":
                 return <DatasetPageViews />;
+            case "PipelinePageViews":
+                return <PipelinePageViews />;
             case "Keywords":
                 return <Keywords />;
             default:

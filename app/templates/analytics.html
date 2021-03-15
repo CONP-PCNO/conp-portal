@@ -101,7 +101,6 @@
       </div>
     </div>
   </div>
-
   <div class="card m-2">
     <div id="analytics-chart-6">
       <script type="text/javascript">
@@ -111,6 +110,19 @@
         ReactDOM.render(
           analyticsChart6,
           document.querySelector("#analytics-chart-6")
+        );
+      </script>
+    </div>
+  </div>
+  <div class="card m-2">
+    <div id="analytics-chart-7">
+      <script type="text/javascript">
+        const analyticsChart7 = React.createElement(CONPReact.ChartContainer, {
+          toggleState: "PipelinePageViews",
+        });
+        ReactDOM.render(
+          analyticsChart7,
+          document.querySelector("#analytics-chart-7")
         );
       </script>
     </div>
