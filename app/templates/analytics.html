@@ -90,7 +90,7 @@
           const analyticsChart5 = React.createElement(
             CONPReact.ChartContainer,
             {
-              toggleState: "PageViews",
+              toggleState: "DatasetPageViews",
             }
           );
           ReactDOM.render(
@@ -99,6 +99,20 @@
           );
         </script>
       </div>
+    </div>
+  </div>
+
+  <div class="card m-2">
+    <div id="analytics-chart-6">
+      <script type="text/javascript">
+        const analyticsChart6 = React.createElement(CONPReact.ChartContainer, {
+          toggleState: "DatasetPageViews",
+        });
+        ReactDOM.render(
+          analyticsChart6,
+          document.querySelector("#analytics-chart-6")
+        );
+      </script>
     </div>
   </div>
 </div>

@@ -25511,20 +25511,20 @@ var DailyVisitors_DailyVisitors = function DailyVisitors(props) {
 };
 
 /* harmony default export */ var charts_DailyVisitors = (DailyVisitors_DailyVisitors);
-// CONCATENATED MODULE: ./src/charts/PageViews/index.js
+// CONCATENATED MODULE: ./src/charts/DatasetPageViews/index.js
 
 
-function PageViews_extends() { PageViews_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return PageViews_extends.apply(this, arguments); }
+function DatasetPageViews_extends() { DatasetPageViews_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return DatasetPageViews_extends.apply(this, arguments); }
 
-function PageViews_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function DatasetPageViews_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-function PageViews_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { PageViews_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { PageViews_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-
+function DatasetPageViews_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { DatasetPageViews_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { DatasetPageViews_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
 
-var PageViews_defaultOptions = {
+
+
+var DatasetPageViews_defaultOptions = {
   chart: {
     type: 'column'
   },
@@ -25532,7 +25532,7 @@ var PageViews_defaultOptions = {
     enabled: false
   },
   title: {
-    text: 'Most Viewed Pages'
+    text: 'Most Viewed Datasets'
   },
   yAxis: [{
     title: {
@@ -25548,20 +25548,15 @@ var PageViews_defaultOptions = {
       borderRadius: 5
     }
   },
-  series: [{
-    name: 'Views',
-    color: '#EA2627B3',
-    data: [],
-    yAxis: 0
-  }]
+  series: []
 };
 
-var PageViews_PageViews = function PageViews(props) {
+var DatasetPageViews_DatasetPageViews = function DatasetPageViews(props) {
   var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(),
       chartData = _useState[0],
       setChartData = _useState[1];
 
-  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(PageViews_defaultOptions),
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(DatasetPageViews_defaultOptions),
       options = _useState2[0],
       setOptions = _useState2[1];
 
@@ -25574,13 +25569,13 @@ var PageViews_PageViews = function PageViews(props) {
   }, []);
 
   var fetchChartData = /*#__PURE__*/function () {
-    var _ref = PageViews_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+    var _ref = DatasetPageViews_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
       return regenerator_default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               try {
-                fetch('/analytics/views').then(function (res) {
+                fetch('/analytics/datasets/views').then(function (res) {
                   return res.json();
                 }).then(function (json) {
                   return setChartData({
@@ -25612,13 +25607,13 @@ var PageViews_PageViews = function PageViews(props) {
       yAxis.push(axes.views[page]);
     });
     var series = [{
-      name: 'Views',
-      color: '#EA2627B3',
+      name: 'Dataset Views',
+      color: '#f6a032',
       data: yAxis,
       yAxis: 0
     }];
     setOptions(function (prevOptions) {
-      return PageViews_extends({}, prevOptions, {
+      return DatasetPageViews_extends({}, prevOptions, {
         series: series,
         xAxis: {
           categories: xAxis
@@ -25637,9 +25632,8 @@ var PageViews_PageViews = function PageViews(props) {
       views: {}
     };
     chartData.views.forEach(function (element) {
-      if (element.label.includes('dataset?id=') && element.label !== 'dataset?id=projects') {
-        axes.views[element.label] = element.nb_hits;
-      }
+      var label = element.dataset_id.includes('projects/') ? element.dataset_id.split('projects/')[1] : element.dataset_id;
+      axes.views[label] = element.nb_hits;
     });
     updateChart(axes);
   }, [chartData]);
@@ -25649,7 +25643,7 @@ var PageViews_PageViews = function PageViews(props) {
   });
 };
 
-/* harmony default export */ var charts_PageViews = (PageViews_PageViews);
+/* harmony default export */ var charts_DatasetPageViews = (DatasetPageViews_DatasetPageViews);
 // CONCATENATED MODULE: ./src/ChartContainer/index.js
 
 
@@ -25681,8 +25675,8 @@ var ChartContainer_ChartContainer = function ChartContainer(props) {
       case "DailyVisitors":
         return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_DailyVisitors, null);
 
-      case "PageViews":
-        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_PageViews, null);
+      case "DatasetPageViews":
+        return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_DatasetPageViews, null);
 
       default:
         return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_TotalDatasetsPipelines, null);

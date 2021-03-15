@@ -3,7 +3,7 @@ import TotalDatasetsPipelines from '../charts/TotalDatasetsPipelines';
 import DatasetModalities from '../charts/DatasetModalities';
 import PipelineTags from '../charts/PipelineTags'
 import DailyVisitors from "../charts/DailyVisitors";
-import PageViews from "../charts/PageViews";
+import DatasetPageViews from "../charts/DatasetPageViews";
 
 const ChartContainer = (props) => {
 
@@ -20,8 +20,8 @@ const ChartContainer = (props) => {
                 return <PipelineTags />;
             case "DailyVisitors":
                 return <DailyVisitors />;
-            case "PageViews":
-                return <PageViews />;
+            case "DatasetPageViews":
+                return <DatasetPageViews />;
             default:
                 return <TotalDatasetsPipelines />;
         }

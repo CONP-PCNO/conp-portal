@@ -349,6 +349,9 @@ class MatomoDailyGetDatasetPageViewsSummary(db.Model):
     sum_time_spent = db.Column(db.Integer)
     avg_time_on_page = db.Column(db.Float)
 
+    def __repr__(self):
+        return '<MatomoDailyGetDatasetPageViewsSummary {}>'.format(self.id)
+
 
 class MatomoDailyGetSiteSearchKeywords(db.Model):
     """

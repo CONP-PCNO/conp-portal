@@ -15,7 +15,7 @@ const defaultOptions = {
     },
 
     title: {
-        text: 'Most Viewed Pages'
+        text: 'Most Viewed Datasets'
     },
 
     yAxis: [{
@@ -35,16 +35,11 @@ const defaultOptions = {
         }
     },
 
-    series: [{
-        name: 'Views',
-        color: '#EA2627B3',
-        data: [],
-        yAxis: 0
-    }]
+    series: []
 
 };
 
-const PageViews = (props) => {
+const DatasetPageViews = (props) => {
 
     const [chartData, setChartData] = useState()
     const [options, setOptions] = useState(defaultOptions);
@@ -57,7 +52,7 @@ const PageViews = (props) => {
     const fetchChartData = async () => {
 
         try {
-            fetch('/analytics/views')
+            fetch('/analytics/datasets/views')
                 .then(res => res.json())
                 .then(json => setChartData({
                     views: json
@@ -79,8 +74,8 @@ const PageViews = (props) => {
         });
 
         const series = [{
-            name: 'Views',
-            color: '#EA2627B3',
+            name: 'Dataset Views',
+            color: '#f6a032',
             data: yAxis,
             yAxis: 0
         }];
@@ -108,9 +103,8 @@ const PageViews = (props) => {
         };
 
         chartData.views.forEach(element => {
-            if (element.label.includes('dataset?id=') && element.label !== 'dataset?id=projects') {
-                axes.views[element.label] = element.nb_hits
-            }
+            const label = element.dataset_id.includes('projects/') ? element.dataset_id.split('projects/')[1] : element.dataset_id
+            axes.views[label] = element.nb_hits
         });
 
         updateChart(axes);
@@ -128,4 +122,4 @@ const PageViews = (props) => {
     );
 };
 
-export default PageViews;
+export default DatasetPageViews;

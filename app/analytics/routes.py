@@ -10,7 +10,7 @@ from flask import render_template
 from flask_login import current_user
 from app.analytics import analytics_bp
 
-from app.models import MatomoDailyVisitsSummary, MatomoDailyGetPageUrlsSummary
+from app.models import MatomoDailyVisitsSummary, MatomoDailyGetDatasetPageViewsSummary
 
 
 @analytics_bp.route('/analytics')
@@ -66,11 +66,11 @@ def visitors():
     return json.dumps(elements)
 
 
-@analytics_bp.route('/analytics/views')
+@analytics_bp.route('/analytics/datasets/views')
 def views():
-    """ Analytics/Views Route
+    """ Analytics/Datasets/Views Route
 
-        Endpoint for returning analytics related to page views on the portal
+        Endpoint for returning analytics related to datset page views on the portal
 
         Args:
             None
@@ -81,23 +81,23 @@ def views():
 
     elements = []
 
-    page_views = MatomoDailyGetPageUrlsSummary.query.order_by(
-        MatomoDailyGetPageUrlsSummary.id).all()
+    page_views = MatomoDailyGetDatasetPageViewsSummary.query.order_by(
+        MatomoDailyGetDatasetPageViewsSummary.id).all()
 
     for v in page_views:
         exists = False
         for e in elements:
-            label = e.get("label", None)
-            if label is not None and label == v.label:
+            dataset_id = e.get("dataset_id", None)
+            if dataset_id is not None and dataset_id == v.dataset_id:
                 exists = True
                 e["nb_hits"] += v.nb_hits
                 e["nb_visits"] += v.nb_visits
                 e["nb_uniq_visitors"] += (
                     v.nb_uniq_visitors if v.nb_uniq_visitors is not None else 0)
 
-        if not exists and v.label is not None:
+        if not exists and v.dataset_id is not None:
             element = {
-                "id": v.id,
+                "dataset_id": v.dataset_id,
                 "url": v.url,
                 "label": v.label,
                 "nb_hits": v.nb_hits,
@@ -105,5 +105,7 @@ def views():
                 "nb_uniq_visitors": v.nb_uniq_visitors if v.nb_uniq_visitors is not None else 0,
             }
             elements.append(element)
+
+    elements.sort(key=lambda e: e["nb_hits"], reverse=True)
 
     return json.dumps(elements)
