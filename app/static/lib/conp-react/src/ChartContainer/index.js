@@ -4,6 +4,7 @@ import DatasetModalities from '../charts/DatasetModalities';
 import PipelineTags from '../charts/PipelineTags'
 import DailyVisitors from "../charts/DailyVisitors";
 import DatasetPageViews from "../charts/DatasetPageViews";
+import Keywords from "../charts/Keywords"
 
 const ChartContainer = (props) => {
 
@@ -22,6 +23,8 @@ const ChartContainer = (props) => {
                 return <DailyVisitors />;
             case "DatasetPageViews":
                 return <DatasetPageViews />;
+            case "Keywords":
+                return <Keywords />;
             default:
                 return <TotalDatasetsPipelines />;
         }

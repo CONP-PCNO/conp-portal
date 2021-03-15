@@ -8,7 +8,7 @@ import LoadingSpinner from "../LoadingSpinner"
 const defaultOptions = {
 
     chart: {
-        type: 'column',
+        type: 'bar',
     },
     credits: {
         enabled: false
@@ -68,9 +68,11 @@ const DatasetPageViews = (props) => {
         const xAxis = [];
         const yAxis = [];
 
-        Object.keys(axes.views).forEach(page => {
+        Object.keys(axes.views).some(page => {
             xAxis.push(page);
             yAxis.push(axes.views[page]);
+
+            return xAxis.length >= 15
         });
 
         const series = [{

@@ -10,7 +10,7 @@ from flask import render_template
 from flask_login import current_user
 from app.analytics import analytics_bp
 
-from app.models import MatomoDailyVisitsSummary, MatomoDailyGetDatasetPageViewsSummary
+from app.models import MatomoDailyVisitsSummary, MatomoDailyGetDatasetPageViewsSummary, MatomoDailyGetSiteSearchKeywords
 
 
 @analytics_bp.route('/analytics')
@@ -67,7 +67,7 @@ def visitors():
 
 
 @analytics_bp.route('/analytics/datasets/views')
-def views():
+def datasets_views():
     """ Analytics/Datasets/Views Route
 
         Endpoint for returning analytics related to datset page views on the portal
@@ -103,6 +103,44 @@ def views():
                 "nb_hits": v.nb_hits,
                 "nb_visits": v.nb_visits,
                 "nb_uniq_visitors": v.nb_uniq_visitors if v.nb_uniq_visitors is not None else 0,
+            }
+            elements.append(element)
+
+    elements.sort(key=lambda e: e["nb_hits"], reverse=True)
+
+    return json.dumps(elements)
+
+
+@analytics_bp.route('/analytics/keywords')
+def keywords():
+    """ Analytics/Keywords Route
+
+        Endpoint for returning analytics related to datset page views on the portal
+
+        Args:
+            None
+
+        Returns:
+            Object
+    """
+
+    elements = []
+
+    keywords = MatomoDailyGetSiteSearchKeywords.query.order_by(
+        MatomoDailyGetSiteSearchKeywords.id).all()
+
+    for v in keywords:
+        exists = False
+        for e in elements:
+            label = e.get("label", None)
+            if label is not None and label == v.label:
+                exists = True
+                e["nb_hits"] += v.nb_hits
+
+        if not exists and v.label is not None:
+            element = {
+                "label": v.label,
+                "nb_hits": v.nb_hits,
             }
             elements.append(element)
 
