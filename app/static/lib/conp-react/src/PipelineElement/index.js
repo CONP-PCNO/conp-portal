@@ -6,7 +6,7 @@ const PipelineElement = props => {
   const platforms = element.platforms.map((item, key) =>
     item.uri ?
       <span key={key} data-toggle="tooltip" title="Run Pipeline" style={{ maxWidth: "140px" }}>
-        <a className="btn" href={item.uri}>
+        <a target="_blank" className="btn" href={item.uri}>
           <img className="img-fluid" alt="Online platform" src={item.img} />
         </a>
       </span> :
