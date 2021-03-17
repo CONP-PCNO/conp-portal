@@ -98,7 +98,7 @@ const DatasetElement = props => {
     <div className="card container-fluid" data-type="dataset">
       <div className="row">
         <div className="col col-lg-2 d-flex flex-column p-2">
-          <div className="flex-grow-2 d-flex flex-column h-100 justify-content-center align-items-center">
+          <div className="flex-grow-2 d-flex flex-column justify-content-center align-items-center">
             <img
               alt="dataset format"
               className="img-fluid w-100"
@@ -111,7 +111,7 @@ const DatasetElement = props => {
           </div>
         </div>
         <div className="col col-lg-8 card-body d-flex">
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column justify-content-center">
             <h5 className="card-title text-card-title">
               <a className="text-reset" href={`dataset?id=${element.id}`}>
                 {element.title}
