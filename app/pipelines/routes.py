@@ -109,6 +109,16 @@ def pipeline_search():
     elements = list(
         filter(lambda e: (not e.get("DEPRECATED", None)), elements))
 
+    blocked_pipelines_ids = list()
+    with open(os.path.join(os.getcwd(), "app/static/pipelines/block-list-pipeline.json"), "r") as f:
+        blocked_pipelines_ids = json.load(f)
+    blocked_pipelines_indexes = list()
+    for index, element in enumerate(elements):
+        if element['ID'] in blocked_pipelines_ids:
+            blocked_pipelines_indexes += [index]
+    for index in reversed(blocked_pipelines_indexes):
+        elements.pop(index)
+
     # filter by tags
     if len(tags) > 0:
         elements = list(
