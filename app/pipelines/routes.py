@@ -279,14 +279,12 @@ def pipeline_info():
 
     with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json"), "r") as f:
         zenodo_urls = json.load(f)
-        
+
     if element["id"] in zenodo_urls.keys():
-        element["platforms"][0]["img"] = url_for(
-            'static', filename="img/run_on_cbrain_green.png")
+        element["platforms"][0]["img"] = url_for('static', filename="img/run_on_cbrain_green.png")
         element["platforms"][0]["uri"] = zenodo_urls[element["id"]]
     else:
-        element["platforms"][0]["img"] = url_for(
-            'static', filename="img/run_on_cbrain_gray.png")
+        element["platforms"][0]["img"] = url_for('static', filename="img/run_on_cbrain_gray.png")
         element["platforms"][0]["uri"] = ""
 
     # make all keys lowercase and without spaces
