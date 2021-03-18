@@ -417,8 +417,13 @@ class DATSDataset(object):
     @ property
     def producedBy(self):
         producedBy = []
-        for t in self.descriptor.get('producedBy', []):
-            prod = t.get('name', None)
+        field_data = self.descriptor.get('producedBy', None)
+        if not field_data:
+            return None
+        elif isinstance(field_data, str):
+            producedBy.append(field_data)
+        elif isinstance(field_data, dict):
+            prod = field_data.get('name', None)
             if prod is not None:
                 producedBy.append(prod)
 

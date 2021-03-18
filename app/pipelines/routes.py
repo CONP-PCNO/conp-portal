@@ -109,6 +109,16 @@ def pipeline_search():
     elements = list(
         filter(lambda e: (not e.get("DEPRECATED", None)), elements))
 
+    blocked_pipelines_ids = list()
+    with open(os.path.join(os.getcwd(), "app/static/pipelines/block-list-pipeline.json"), "r") as f:
+        blocked_pipelines_ids = json.load(f)
+    blocked_pipelines_indexes = list()
+    for index, element in enumerate(elements):
+        if element['ID'] in blocked_pipelines_ids:
+            blocked_pipelines_indexes += [index]
+    for index in reversed(blocked_pipelines_indexes):
+        elements.pop(index)
+
     # filter by tags
     if len(tags) > 0:
         elements = list(
@@ -267,17 +277,15 @@ def pipeline_info():
         'static', filename="img/run_on_cbrain_gray.png")
     element["platforms"][0]["uri"] = ""
 
-    if "online-platform-urls" in element:
-        # Check CBRAIN
-        for url in element["online-platform-urls"]:
-            if url.startswith('https://portal.cbrain.mcgill.ca'):
-                element["platforms"][0]["img"] = url_for(
-                    'static', filename="img/run_on_cbrain_green.png")
-                element["platforms"][0]["uri"] = url
-            else:
-                platform_dict = {"img": url_for('static', filename="img/globe-solid-green.png"),
-                                 "uri": url}
-                element["platforms"].append(platform_dict)
+    with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json"), "r") as f:
+        zenodo_urls = json.load(f)
+
+    if element["id"] in zenodo_urls.keys():
+        element["platforms"][0]["img"] = url_for('static', filename="img/run_on_cbrain_green.png")
+        element["platforms"][0]["uri"] = zenodo_urls[element["id"]]
+    else:
+        element["platforms"][0]["img"] = url_for('static', filename="img/run_on_cbrain_gray.png")
+        element["platforms"][0]["uri"] = ""
 
     # make all keys lowercase and without spaces
     element = {k.lower().replace(" ", ""): v for k, v in element.items()}
