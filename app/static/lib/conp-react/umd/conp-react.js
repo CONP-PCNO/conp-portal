@@ -14048,6 +14048,7 @@ var parsers = {
       var valueCallback = function (value) {
         return value - 1;
       };
+<<<<<<< HEAD
 
       switch (token) {
         // 1, 2, ..., 12
@@ -14237,6 +14238,197 @@ var parsers = {
             unit: 'date'
           });
 
+=======
+
+      switch (token) {
+        // 1, 2, ..., 12
+        case 'M':
+          return parseNumericPattern(numericPatterns.month, string, valueCallback);
+        // 01, 02, ..., 12
+
+        case 'MM':
+          return parseNDigits(2, string, valueCallback);
+        // 1st, 2nd, ..., 12th
+
+        case 'Mo':
+          return match.ordinalNumber(string, {
+            unit: 'month',
+            valueCallback: valueCallback
+          });
+        // Jan, Feb, ..., Dec
+
+        case 'MMM':
+          return match.month(string, {
+            width: 'abbreviated',
+            context: 'formatting'
+          }) || match.month(string, {
+            width: 'narrow',
+            context: 'formatting'
+          });
+        // J, F, ..., D
+
+        case 'MMMMM':
+          return match.month(string, {
+            width: 'narrow',
+            context: 'formatting'
+          });
+        // January, February, ..., December
+
+        case 'MMMM':
+        default:
+          return match.month(string, {
+            width: 'wide',
+            context: 'formatting'
+          }) || match.month(string, {
+            width: 'abbreviated',
+            context: 'formatting'
+          }) || match.month(string, {
+            width: 'narrow',
+            context: 'formatting'
+          });
+      }
+    },
+    validate: function (_date, value, _options) {
+      return value >= 0 && value <= 11;
+    },
+    set: function (date, _flags, value, _options) {
+      date.setUTCMonth(value, 1);
+      date.setUTCHours(0, 0, 0, 0);
+      return date;
+    },
+    incompatibleTokens: ['Y', 'R', 'q', 'Q', 'L', 'w', 'I', 'D', 'i', 'e', 'c', 't', 'T']
+  },
+  // Stand-alone month
+  L: {
+    priority: 110,
+    parse: function (string, token, match, _options) {
+      var valueCallback = function (value) {
+        return value - 1;
+      };
+
+      switch (token) {
+        // 1, 2, ..., 12
+        case 'L':
+          return parseNumericPattern(numericPatterns.month, string, valueCallback);
+        // 01, 02, ..., 12
+
+        case 'LL':
+          return parseNDigits(2, string, valueCallback);
+        // 1st, 2nd, ..., 12th
+
+        case 'Lo':
+          return match.ordinalNumber(string, {
+            unit: 'month',
+            valueCallback: valueCallback
+          });
+        // Jan, Feb, ..., Dec
+
+        case 'LLL':
+          return match.month(string, {
+            width: 'abbreviated',
+            context: 'standalone'
+          }) || match.month(string, {
+            width: 'narrow',
+            context: 'standalone'
+          });
+        // J, F, ..., D
+
+        case 'LLLLL':
+          return match.month(string, {
+            width: 'narrow',
+            context: 'standalone'
+          });
+        // January, February, ..., December
+
+        case 'LLLL':
+        default:
+          return match.month(string, {
+            width: 'wide',
+            context: 'standalone'
+          }) || match.month(string, {
+            width: 'abbreviated',
+            context: 'standalone'
+          }) || match.month(string, {
+            width: 'narrow',
+            context: 'standalone'
+          });
+      }
+    },
+    validate: function (_date, value, _options) {
+      return value >= 0 && value <= 11;
+    },
+    set: function (date, _flags, value, _options) {
+      date.setUTCMonth(value, 1);
+      date.setUTCHours(0, 0, 0, 0);
+      return date;
+    },
+    incompatibleTokens: ['Y', 'R', 'q', 'Q', 'M', 'w', 'I', 'D', 'i', 'e', 'c', 't', 'T']
+  },
+  // Local week of year
+  w: {
+    priority: 100,
+    parse: function (string, token, match, _options) {
+      switch (token) {
+        case 'w':
+          return parseNumericPattern(numericPatterns.week, string);
+
+        case 'wo':
+          return match.ordinalNumber(string, {
+            unit: 'week'
+          });
+
+        default:
+          return parseNDigits(token.length, string);
+      }
+    },
+    validate: function (_date, value, _options) {
+      return value >= 1 && value <= 53;
+    },
+    set: function (date, _flags, value, options) {
+      return (0, _index7.default)((0, _index5.default)(date, value, options), options);
+    },
+    incompatibleTokens: ['y', 'R', 'u', 'q', 'Q', 'M', 'L', 'I', 'd', 'D', 'i', 't', 'T']
+  },
+  // ISO week of year
+  I: {
+    priority: 100,
+    parse: function (string, token, match, _options) {
+      switch (token) {
+        case 'I':
+          return parseNumericPattern(numericPatterns.week, string);
+
+        case 'Io':
+          return match.ordinalNumber(string, {
+            unit: 'week'
+          });
+
+        default:
+          return parseNDigits(token.length, string);
+      }
+    },
+    validate: function (_date, value, _options) {
+      return value >= 1 && value <= 53;
+    },
+    set: function (date, _flags, value, options) {
+      return (0, _index6.default)((0, _index4.default)(date, value, options), options);
+    },
+    incompatibleTokens: ['y', 'Y', 'u', 'q', 'Q', 'M', 'L', 'w', 'd', 'D', 'e', 'c', 't', 'T']
+  },
+  // Day of the month
+  d: {
+    priority: 90,
+    subPriority: 1,
+    parse: function (string, token, match, _options) {
+      switch (token) {
+        case 'd':
+          return parseNumericPattern(numericPatterns.date, string);
+
+        case 'do':
+          return match.ordinalNumber(string, {
+            unit: 'date'
+          });
+
+>>>>>>> conp/master
         default:
           return parseNDigits(token.length, string);
       }
@@ -16556,6 +16748,12 @@ var range_range = /*#__PURE__*/_curry2(function range(from, to) {
 // EXTERNAL MODULE: external {"root":"React","commonjs2":"react","commonjs":"react","amd":"react"}
 var external_root_React_commonjs2_react_commonjs_react_amd_react_ = __webpack_require__(0);
 var external_root_React_commonjs2_react_commonjs_react_amd_react_default = /*#__PURE__*/__webpack_require__.n(external_root_React_commonjs2_react_commonjs_react_amd_react_);
+<<<<<<< HEAD
+
+// EXTERNAL MODULE: ./node_modules/prop-types/index.js
+var prop_types = __webpack_require__(2);
+var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
+=======
 
 // EXTERNAL MODULE: ./node_modules/prop-types/index.js
 var prop_types = __webpack_require__(2);
@@ -16563,11 +16761,61 @@ var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
 
 // CONCATENATED MODULE: ./src/DataTable/DataTable.js
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+>>>>>>> conp/master
+
+// CONCATENATED MODULE: ./src/DataTable/DataTable.js
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 
 
 
+<<<<<<< HEAD
 
+var DataTable_DataTable = function DataTable(_ref) {
+  var authorized = _ref.authorized,
+      sortKeys = _ref.sortKeys,
+      filterKeys = _ref.filterKeys,
+      elements = _ref.elements,
+      imagePath = _ref.imagePath,
+      total = _ref.total,
+      renderElement = _ref.renderElement,
+      query = _ref.query,
+      setQuery = _ref.setQuery,
+      isLoading = _ref.isLoading;
+
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([{
+    key: "modalities",
+    values: query.modalities || []
+  }, {
+    key: "formats",
+    values: query.formats || []
+  }]),
+      filters = _useState[0],
+      setFilters = _useState[1];
+
+  var handleFiltersChange = function handleFiltersChange(event) {
+    event.preventDefault();
+    var e = event.target.value;
+    var filter = e.split(".");
+    var newFilters = filters;
+    newFilters.forEach(function (f) {
+      if (f.key === filter[0]) {
+        if (f.values.includes(filter[1])) {
+          f.values.splice(f.values.indexOf(filter[1]), 1);
+        } else {
+          f.values.push(filter[1]);
+        }
+      }
+    });
+    setFilters(newFilters);
+    setQuery(_extends({}, query, {
+      modalities: filters.filter(function (f) {
+        return f["key"] === "modalities";
+      })[0].values,
+      formats: filters.filter(function (f) {
+        return f["key"] === "formats";
+      })[0].values,
+=======
 var DataTable_DataTable = function DataTable(_ref) {
   var authorized = _ref.authorized,
       sortKeys = _ref.sortKeys,
@@ -16616,6 +16864,18 @@ var DataTable_DataTable = function DataTable(_ref) {
     }));
   };
 
+  var handleMaxPerPageChange = function handleMaxPerPageChange(event) {
+    event.preventDefault();
+    var value = event.target.value;
+    setQuery(_extends({}, query, {
+      max_per_page: value,
+      limit: value,
+>>>>>>> conp/master
+      page: 1
+    }));
+  };
+
+<<<<<<< HEAD
   var handleMaxPerPageChange = function handleMaxPerPageChange(event) {
     event.preventDefault();
     var value = event.target.value;
@@ -16935,12 +17195,336 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 function DataTableContainer_extends() { DataTableContainer_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return DataTableContainer_extends.apply(this, arguments); }
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+=======
+  var handlePageChange = function handlePageChange(event) {
+    event.preventDefault();
+    var page;
+    var value = event.target.value;
+
+    switch (value) {
+      case 'first':
+        page = 1;
+        break;
+
+      case 'back':
+        page = Math.max(1, query.page - 1);
+        break;
+
+      case 'forward':
+        page = Math.min(query.page + 1, Math.ceil(total / query.max_per_page));
+        break;
+
+      case 'last':
+        page = Math.ceil(total / query.max_per_page);
+        break;
+
+      default:
+        page = parseInt(value);
+    }
+
+    setQuery(_extends({}, query, {
+      page: page
+    }));
+  };
+
+  return isLoading ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "search-dataset-table",
+    cellSpacing: 0
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "searchbar d-flex flex-column"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex align-items-center"
+  }, renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex align-items-center p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+    className: "dropdown-label text-nowrap m-2"
+  }, "Filter By: "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-outline-secondary dropdown-toggle p-2",
+    type: "button",
+    id: "dropdownMenuButton",
+    "data-toggle": "dropdown",
+    "aria-haspopup": "true",
+    "aria-expanded": "false",
+    "data-display": "static"
+  }, "Modality:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown-menu",
+    "aria-labelledby": "dropdownMenuButton"
+  }, filterKeys.filter(function (f) {
+    return f["key"] === "modalities";
+  }).length > 0 ? filterKeys.filter(function (f) {
+    return f["key"] === "modalities";
+  })[0]["values"].map(function (modality) {
+    return modality !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      key: modality.id,
+      className: "dropdown-item ml-2"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+      className: "form-check-input",
+      type: "checkbox",
+      checked: filters.filter(function (f) {
+        return f["key"] === "modalities";
+      })[0]["values"].includes(modality),
+      value: "modalities." + modality,
+      id: "filter" + modality,
+      onChange: handleFiltersChange
+    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+      className: "form-check-label",
+      htmlFor: "filter" + modality
+    }, modality)) : null;
+  }) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-outline-secondary dropdown-toggle p-2",
+    type: "button",
+    id: "dropdownMenuButton",
+    "data-toggle": "dropdown",
+    "aria-haspopup": "true",
+    "aria-expanded": "false",
+    "data-display": "static"
+  }, "File Format:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown-menu",
+    "aria-labelledby": "dropdownMenuButton"
+  }, filterKeys.filter(function (f) {
+    return f["key"] === "formats";
+  }).length > 0 ? filterKeys.filter(function (f) {
+    return f["key"] === "formats";
+  })[0]["values"].map(function (format) {
+    return format !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      key: format.id,
+      className: "dropdown-item ml-2"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+      className: "form-check-input",
+      type: "checkbox",
+      checked: filters.filter(function (f) {
+        return f["key"] === "formats";
+      })[0]["values"].includes(format),
+      value: "formats." + format,
+      id: "filter" + format,
+      onChange: handleFiltersChange
+    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+      className: "form-check-label",
+      htmlFor: "filter" + format
+    }, format)) : null;
+  }) : null))) : null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "input-group m-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+    className: "form-control p-2",
+    type: "text",
+    placeholder: "Search",
+    "aria-label": "Search",
+    value: query.search,
+    onChange: function onChange(e) {
+      return setQuery(_extends({}, query, {
+        search: e.currentTarget.value,
+        page: 1
+      }));
+    }
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    className: "input-group-append"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    className: "input-group-text",
+    id: "basic-addon2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", {
+    className: "fa fa-search"
+  }))))), renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex justify-content-end pb-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    className: "text-reset px-1",
+    href: "/sparql"
+  }, "Advanced Search Page (NEXUS)")) : null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex justify-content-between"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex p-2 justify-content-start align-items-center"
+  }, query.max_per_page === 'All' ? "Displaying " + total + " results." : "Results " + (query.max_per_page * (query.page - 1) + 1) + " - " + Math.min(query.max_per_page * query.page, total) + " displayed of " + total + ".", " (Maximum results per page", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    className: "dropdown p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-secondary dropdown-toggle p-2",
+    type: "button",
+    id: "dropdownMenuButton",
+    "data-toggle": "dropdown",
+    "aria-haspopup": "true",
+    "aria-expanded": "false"
+  }, query.max_per_page), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown-menu",
+    style: {
+      minWidth: '5rem'
+    }
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    key: "max_per_page_5",
+    className: "dropdown-item p-0"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-light p-1",
+    value: 5,
+    id: "max_per_page." + 5,
+    onClick: handleMaxPerPageChange
+  }, "5")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    key: "max_per_page_10",
+    className: "dropdown-item p-0"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-light p-1",
+    value: 10,
+    id: "max_per_page." + 10,
+    onClick: handleMaxPerPageChange
+  }, "10")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    key: "max_per_page_15",
+    className: "dropdown-item p-0"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-light p-1",
+    value: 15,
+    id: "max_per_page." + 15,
+    onClick: handleMaxPerPageChange
+  }, "15")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    key: "max_per_page_20",
+    className: "dropdown-item p-0"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-light p-1",
+    value: 20,
+    id: "max_per_page." + 20,
+    onClick: handleMaxPerPageChange
+  }, "20")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    key: "max_per_page_all",
+    className: "dropdown-item p-0"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-light p-1",
+    value: "All",
+    id: "max_per_page.all",
+    onClick: handleMaxPerPageChange
+  }, "All")))), ")"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex align-items-center dropdown p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+    className: "dropdown-label text-nowrap m-2"
+  }, "Sort By: "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("select", {
+    className: "btn btn-outline-secondary dropdown-toggle dropdown-select p-2",
+    value: query.sortKey,
+    onChange: function onChange(e) {
+      return setQuery(_extends({}, query, {
+        sortKey: e.currentTarget.value,
+        page: 1
+      }));
+    }
+  }, sortKeys.map(function (_ref2, i) {
+    var sortKey = _ref2.key,
+        label = _ref2.label;
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
+      className: "dropdown-item",
+      key: i,
+      value: sortKey
+    }, label);
+  })))), elements.map(function (element, i) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      key: "" + element.id
+    }, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, {
+      authorized: authorized,
+      imagePath: imagePath
+    })));
+  }), query.max_per_page !== 'All' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "search-dataset-footer d-flex align-items-center p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "btn-group"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-outline-dark",
+    value: "first",
+    onClick: handlePageChange
+  }, "<<"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-outline-dark",
+    value: "back",
+    onClick: handlePageChange
+  }, " < "), es_range(1, Math.ceil(total / query.max_per_page) + 1).map(function (page, i) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+      className: page === query.page ? "btn btn-dark" : "btn btn-outline-dark",
+      value: page,
+      onClick: handlePageChange,
+      key: i
+    }, page);
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-outline-dark",
+    value: "forward",
+    onClick: handlePageChange
+  }, ">"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-outline-dark",
+    value: "last",
+    onClick: handlePageChange
+  }, ">>"))) : null);
+};
+
+DataTable_DataTable.propTypes = {
+  authorized: prop_types_default.a.bool,
+  sortKeys: prop_types_default.a.arrayOf(prop_types_default.a.shape({
+    key: prop_types_default.a.string,
+    label: prop_types_default.a.string
+  })),
+  elements: prop_types_default.a.arrayOf(prop_types_default.a.object),
+  imagePath: prop_types_default.a.string,
+  total: prop_types_default.a.number,
+  renderElement: prop_types_default.a.func,
+  query: prop_types_default.a.shape({
+    search: prop_types_default.a.string,
+    sortKey: prop_types_default.a.string,
+    page: prop_types_default.a.number,
+    max_per_page: prop_types_default.a.number,
+    sortComparitor: prop_types_default.a.string,
+    cursor: prop_types_default.a.number,
+    limit: prop_types_default.a.number
+  }),
+  setQuery: prop_types_default.a.func
+};
+DataTable_DataTable.defaultProps = {
+  sortKeys: [],
+  filterKeys: [{
+    key: "modalities",
+    values: []
+  }, {
+    key: "formats",
+    values: []
+  }],
+  elements: [],
+  total: 0,
+  imagePath: 'static/img/'
+};
+/* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
+// EXTERNAL MODULE: ./node_modules/nwb/node_modules/@babel/runtime/regenerator/index.js
+var regenerator = __webpack_require__(51);
+var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
+
+// EXTERNAL MODULE: ./node_modules/query-string/index.js
+var query_string = __webpack_require__(104);
+
+// CONCATENATED MODULE: ./src/DataTable/DataTableContainer.js
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function DataTableContainer_extends() { DataTableContainer_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return DataTableContainer_extends.apply(this, arguments); }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+>>>>>>> conp/master
 
 
 
 
 
+var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
+  var endpointURL = _ref.endpointURL,
+      imagePath = _ref.imagePath,
+      limit = _ref.limit,
+      authorized = _ref.authorized,
+      total = _ref.total,
+      page = _ref.page,
+      max_per_page = _ref.max_per_page,
+      elements = _ref.elements,
+      filters = _ref.filters,
+      dataTableProps = _objectWithoutPropertiesLoose(_ref, ["endpointURL", "imagePath", "limit", "authorized", "total", "page", "max_per_page", "elements", "filters"]);
 
+<<<<<<< HEAD
 var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   var endpointURL = _ref.endpointURL,
       imagePath = _ref.imagePath,
@@ -17091,6 +17675,146 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   }, dataTableProps));
 };
 
+=======
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(elements),
+      fetchedElements = _useState[0],
+      setFetchedElements = _useState[1];
+
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
+    search: filters.search ? filters.search : "",
+    modalities: filters.modalities ? filters.modalities : [],
+    formats: filters.formats ? filters.formats : [],
+    sortKey: filters.sortKey ? filters.sortKey : "conpStatus",
+    sortComparitor: filters.sortComparitor ? filters.sortComparitor : "asc",
+    page: filters.page ? filters.page : 1,
+    max_per_page: filters.max_per_page ? filters.max_per_page : 10,
+    cursor: filters.cursor ? filters.cursor : 0,
+    limit: filters.limit ? filters.limit : 10
+  }),
+      query = _useState2[0],
+      setQuery = _useState2[1];
+
+  var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(total),
+      totalState = _useState3[0],
+      setTotalState = _useState3[1];
+
+  var _useState4 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(),
+      sortKeysState = _useState4[0],
+      setSortKeysState = _useState4[1];
+
+  var _useState5 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(),
+      filterKeysState = _useState5[0],
+      setFilterKeysState = _useState5[1];
+
+  var _useState6 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(authorized),
+      authorizedState = _useState6[0],
+      setAuthorizedState = _useState6[1];
+
+  var _useState7 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(true),
+      isLoading = _useState7[0],
+      setIsLoading = _useState7[1];
+
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    setQuery(DataTableContainer_extends({}, query, {
+      limit: limit
+    }));
+  }, [limit]);
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    // Remove empty keys from query and set query object as query parameters
+    // Repeat this every time the query changes to ensure query state survives refresh / back navigation
+    var q = query;
+    Object.keys(q).forEach(function (k) {
+      if (q[k] === '' || Array.isArray(q[k]) && q[k].length === 0) {
+        delete q[k];
+      }
+    });
+    var queryString = new URLSearchParams(q).toString();
+    var pathname = window.location.pathname;
+    window.history.replaceState(null, null, pathname + "?" + queryString);
+  }, [query]);
+
+  var fetchElements = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      var url, res, parsed;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              url = endpointURL + "?" + query_string["stringify"](query, {
+                arrayFormat: 'comma'
+              });
+              _context.prev = 1;
+              _context.next = 4;
+              return fetch(url);
+
+            case 4:
+              res = _context.sent;
+
+              if (res.ok) {
+                _context.next = 7;
+                break;
+              }
+
+              throw new Error("Request failed with status: " + res.status + " (" + res.statusText + ")");
+
+            case 7:
+              _context.next = 9;
+              return res.json();
+
+            case 9:
+              parsed = _context.sent;
+              setFetchedElements(parsed.elements);
+              setTotalState(parsed.total);
+              setSortKeysState(parsed.sortKeys);
+              setFilterKeysState(parsed.filterKeys);
+              setAuthorizedState(parsed.authorized);
+              _context.next = 21;
+              break;
+
+            case 17:
+              _context.prev = 17;
+              _context.t0 = _context["catch"](1);
+              alert("There was an error retrieving the search results.");
+              console.error(_context.t0);
+
+            case 21:
+              _context.prev = 21;
+              isLoading && setIsLoading(false);
+              setTimeout(function () {
+                window.scrollTo(0, 0);
+              }, 100);
+              return _context.finish(21);
+
+            case 25:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[1, 17, 21, 25]]);
+    }));
+
+    return function fetchElements() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    fetchElements();
+  }, [query]);
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_DataTable_DataTable, DataTableContainer_extends({
+    authorized: authorizedState,
+    elements: fetchedElements,
+    imagePath: imagePath,
+    total: totalState,
+    sortKeys: sortKeysState,
+    filterKeys: filterKeysState,
+    query: query,
+    setQuery: setQuery,
+    isLoading: isLoading
+  }, dataTableProps));
+};
+
+>>>>>>> conp/master
 DataTableContainer_DataTableContainer.propTypes = {
   authorized: prop_types_default.a.bool,
   endpointURL: prop_types_default.a.string.isRequired,
@@ -23649,7 +24373,11 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col col-lg-2 d-flex flex-column p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+<<<<<<< HEAD
     className: "flex-grow-2 d-flex flex-column justify-content-center align-items-center"
+=======
+    className: "flex-grow-2 d-flex flex-column h-100 justify-content-center align-items-center"
+>>>>>>> conp/master
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     alt: "dataset format",
     className: "img-fluid w-100",
@@ -23671,7 +24399,11 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col col-lg-8 card-body d-flex"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+<<<<<<< HEAD
     className: "d-flex flex-column justify-content-center"
+=======
+    className: "d-flex flex-column"
+>>>>>>> conp/master
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
     className: "card-title text-card-title"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
