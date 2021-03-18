@@ -18,23 +18,49 @@
 {% block appcontent %}
 
 <div class="d-flex flex-column">
+  <!-- Visitor Map -->
   <div id="widgetIframe">
     <iframe
       width="100%"
       height="350"
-      src="https://matomo-dev.acelab.ca/index.php?module=Widgetize&action=iframe&disableLink=0&widget=1&moduleToWidgetize=UserCountryMap&actionToWidgetize=visitorMap&idSite=2&period=month&date=yesterday&disableLink=1&widget=1"
+      src="https://matomo-dev.acelab.ca/index.php?module=Widgetize&action=iframe&disableLink=0&widget=1&moduleToWidgetize=UserCountryMap&actionToWidgetize=visitorMap&idSite=2&period=day&date=yesterday&disableLink=1&widget=1"
       scrolling="yes"
       frameborder="0"
       marginheight="0"
       marginwidth="0"
     ></iframe>
   </div>
-
+  <!-- Real-time Visitor Map -->
+  <div id="widgetIframe">
+    <iframe
+      width="100%"
+      height="350"
+      src="https://matomo-dev.acelab.ca/index.php?module=Widgetize&action=iframe&disableLink=0&widget=1&moduleToWidgetize=UserCountryMap&actionToWidgetize=realtimeMap&idSite=2&period=day&date=yesterday&disableLink=1&widget=1"
+      scrolling="yes"
+      frameborder="0"
+      marginheight="0"
+      marginwidth="0"
+    ></iframe>
+  </div>
+  <!-- Behaviour Transition Graph -->
+  <div id="widgetIframe">
+    <iframe
+      width="100%"
+      height="350"
+      src="https://matomo-dev.acelab.ca/index.php?module=Widgetize&action=iframe&disableLink=0&widget=1&moduleToWidgetize=Transitions&actionToWidgetize=getTransitions&idSite=2&period=day&date=yesterday&disableLink=1&widget=1"
+      scrolling="yes"
+      frameborder="0"
+      marginheight="0"
+      marginwidth="0"
+    ></iframe>
+  </div>
   <div class="card m-2">
     <div id="analytics-chart-1">
       <script type="text/javascript">
         const analyticsChart1 = React.createElement(CONPReact.ChartContainer, {
-          toggleState: "TotalDatasetsPipelines",
+          datasetsURL: "{{ url_for('search.dataset_search') }}",
+          pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
+          toggleState: 1,
         });
         ReactDOM.render(
           analyticsChart1,
@@ -51,7 +77,9 @@
           const analyticsChart2 = React.createElement(
             CONPReact.ChartContainer,
             {
-              toggleState: "DatasetModalities",
+              datasetsURL: "{{ url_for('search.dataset_search') }}",
+              pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
+              toggleState: 2,
             }
           );
           ReactDOM.render(
@@ -67,7 +95,9 @@
           const analyticsChart3 = React.createElement(
             CONPReact.ChartContainer,
             {
-              toggleState: "PipelineTags",
+              datasetsURL: "{{ url_for('search.dataset_search') }}",
+              pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
+              toggleState: 3,
             }
           );
           ReactDOM.render(
@@ -76,67 +106,6 @@
           );
         </script>
       </div>
-    </div>
-  </div>
-
-  <div class="d-flex flex-row">
-    <div class="card m-2 w-100">
-      <div id="analytics-chart-4">
-        <script type="text/javascript">
-          const analyticsChart4 = React.createElement(
-            CONPReact.ChartContainer,
-            {
-              toggleState: "DailyVisitors",
-            }
-          );
-          ReactDOM.render(
-            analyticsChart4,
-            document.querySelector("#analytics-chart-4")
-          );
-        </script>
-      </div>
-    </div>
-    <div class="card m-2 w-100">
-      <div id="analytics-chart-5">
-        <script type="text/javascript">
-          const analyticsChart5 = React.createElement(
-            CONPReact.ChartContainer,
-            {
-              toggleState: "Keywords",
-            }
-          );
-          ReactDOM.render(
-            analyticsChart5,
-            document.querySelector("#analytics-chart-5")
-          );
-        </script>
-      </div>
-    </div>
-  </div>
-  <div class="card m-2">
-    <div id="analytics-chart-6">
-      <script type="text/javascript">
-        const analyticsChart6 = React.createElement(CONPReact.ChartContainer, {
-          toggleState: "DatasetPageViews",
-        });
-        ReactDOM.render(
-          analyticsChart6,
-          document.querySelector("#analytics-chart-6")
-        );
-      </script>
-    </div>
-  </div>
-  <div class="card m-2">
-    <div id="analytics-chart-7">
-      <script type="text/javascript">
-        const analyticsChart7 = React.createElement(CONPReact.ChartContainer, {
-          toggleState: "PipelinePageViews",
-        });
-        ReactDOM.render(
-          analyticsChart7,
-          document.querySelector("#analytics-chart-7")
-        );
-      </script>
     </div>
   </div>
 </div>
