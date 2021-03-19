@@ -52,6 +52,9 @@ class DatasetCache(object):
 
     @property
     def cachedDatasets(self):
+        """
+          Return a dict of available cached datasets
+        """
         return dict(
             (f.name, f)
             for f in os.scandir(self.current_app.config['DATASET_CACHE_PATH'])
@@ -60,21 +63,16 @@ class DatasetCache(object):
     def getZipLocation(self, dataset):
         """
           1. Server checks if a zip file already exists for this version.
-          2. Return zip file
+          2. Return zip filepath or None
         """
 
         datasetmeta = DATSDataset(dataset.fspath)
         zipFilename = datasetmeta.name.replace('/','__') + '_version-' + \
                         datasetmeta.version + '.tar.gz'
 
+        # Look for the filename in the cached datasets
         cached = self.cachedDatasets.get(zipFilename)
-        zipped = cached.path if cached is not None else None
-
-        if zipped is None:
-            raise RuntimeError('Not found')
-
-        os.system('touch -a ' + zipped)
-        return zipped
+        return cached.path if cached is not None else None
 
 
 class DATSDataset(object):

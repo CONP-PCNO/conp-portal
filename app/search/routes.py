@@ -394,8 +394,6 @@ def dataset_info():
         zipped = DatasetCache(current_app).getZipLocation(d)
     except IOError as err:
         zipped = None
-    except RuntimeError as err:
-        zipped = None
 
     showDownloadButton = zipped is not None
     zipLocation = '/data/{0}'.format(os.path.basename(zipped or ''))
