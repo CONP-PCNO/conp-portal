@@ -37,6 +37,19 @@
         try_files $uri =404;
     }
 
+    #########################################################
+    # Large files are stored on /data
+    # - use autoindex for the browser to list the available files
+    # - increase send_timeout for download not to stop after 1Gb
+    # - use directio to skip caching on disk
+    #########################################################
+    location /data/ {
+        alias              /data/not_backed_up/conp-portal/data/.cache/;
+        autoindex          on;
+        send_timeout       25m;  # That's the one !
+        directio           128m; # Files bigger than 128mb will not use sendfile but directio instead.
+    }
+
     location / {
       # checks for static file, if not found proxy to app
       try_files $uri @proxy_to_app;

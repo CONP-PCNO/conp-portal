@@ -32,9 +32,9 @@
   {% endif %}
   {% if showDownloadButton %}
   <div class="d-flex flex-row align-items-center mb-2">
-    <button type="button" class="btn btn-outline-primary" id="downloadButton" onClick="downloadVersion(event)">
+    <a href="{{ zipLocation }}" class="btn btn-outline-primary" id="downloadButton">
       Download this version
-    </button>
+    </a>
     <div class="spinner-border text-primary m-2" role="status" id="downloadButtonSpinner" hidden>
       <span class="sr-only">Loading...</span>
     </div>

@@ -391,13 +391,14 @@ def dataset_info():
         dataset["status"] + "-" + color + "?style=flat-square&logo=circleci"
 
     try:
-        zipped = DatasetCache(current_app).getZippedContent(d)
+        zipped = DatasetCache(current_app).getZipLocation(d)
     except IOError as err:
         zipped = None
     except RuntimeError as err:
         zipped = None
 
     showDownloadButton = zipped is not None
+    zipLocation = '/data/{0}'.format(os.path.basename(zipped or ''))
 
     return render_template(
         'dataset.html',
@@ -407,6 +408,7 @@ def dataset_info():
         readme=readme,
         ciBadgeUrl=ciBadgeUrl,
         showDownloadButton=showDownloadButton,
+        zipLocation=zipLocation,
         user=current_user
     )
 
@@ -448,39 +450,6 @@ def download_metadata():
         mimetype='application/json'
     )
 
-@search_bp.route('/download_content', methods=['GET'])
-def download_content():
-    """ Download dataset content
-
-        route to allow downloading of files from a dataset
-
-        Args:
-            dataset (REQ ARG): the dataset
-
-        Returns:
-            Response to the zipped data for the browser to download
-
-        Raises:
-            HTML error if this fails
-    """
-    dataset_id = request.args.get('id', '')
-    dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
-    if dataset is None:
-        # This shoud return a 404 not found
-        return 'Not Found', 400
-    
-    try:
-        zipped = DatasetCache(current_app).getZippedContent(dataset)
-    except IOError as err:
-        return "IO error: {0}".format(err), 500
-    except RuntimeError as err:
-        return "Runtime error: {0}".format(err), 500
-    
-    return send_from_directory(
-        os.path.dirname(zipped),
-        os.path.basename(zipped),
-        as_attachment=True
-    )
 
 def get_dataset_metadata_information(dataset):
     """

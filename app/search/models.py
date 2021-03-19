@@ -57,7 +57,7 @@ class DatasetCache(object):
             for f in os.scandir(self.current_app.config['DATASET_CACHE_PATH'])
         )
 
-    def getZippedContent(self, dataset):
+    def getZipLocation(self, dataset):
         """
           1. Server checks if a zip file already exists for this version.
           2. Return zip file
