@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
-import sys
-import inspect
+from logging.handlers import RotatingFileHandler
+
 from flask import Flask
-from flask_user import UserManager, UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
-from config import DevelopmentConfig, ProductionConfig
+from config import DevelopmentConfig
 
 
 db = SQLAlchemy()
@@ -20,9 +19,14 @@ mail = Mail()
 bootstrap = Bootstrap()
 
 
-def create_app(config_settings=DevelopmentConfig):
+def create_app(config_settings=None):
 
     app = Flask(__name__, static_url_path='/static')
+    if os.environ.get('FLASK_ENV') == 'production':
+        from config import ProductionConfig
+        config_settings = ProductionConfig
+    elif not config_settings:
+        config_settings = DevelopmentConfig
     app.config.from_object(config_settings)
 
     db.init_app(app)
@@ -102,8 +106,7 @@ def init_email_and_logs_error_handler(app):
             secure = 90
 
         mail_handler = SMTPHandler(mailhost=(app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
-                                   fromaddr='no-reply@' +
-                                   app.config['MAIL_SERVER'],
+                                   fromaddr='no-reply@' + app.config['MAIL_SERVER'],
                                    toaddrs=app.config['ADMINS'], subject='Microblog Failure',
                                    credentials=auth, secure=secure)
         mail_handler.setLevel(logging.ERROR)

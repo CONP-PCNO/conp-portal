@@ -5,10 +5,10 @@ import json
 import re
 
 import fnmatch
+from typing import Optional
+
 import dateutil
 import requests
-
-from app.models import Dataset
 
 
 @lru_cache(maxsize=1)
@@ -81,15 +81,15 @@ class DATSDataset(object):
           store the datsetopath and tries to find a DATS.json file
         """
         if not os.path.isdir(datasetpath):
-            raise 'No dataset found at {}'.format(datasetpath)
+            raise RuntimeError('No dataset found at {}'.format(datasetpath))
 
         self.datasetpath = datasetpath
 
         with open(self.DatsFilepath, 'r') as f:
             try:
                 self.descriptor = json.load(f)
-            except Exception as e:
-                raise 'Can`t parse {}'.format(self.DatsFilepath)
+            except Exception:
+                raise RuntimeError('Can`t parse {}'.format(self.DatsFilepath))
 
     @property
     def name(self):
@@ -98,13 +98,14 @@ class DATSDataset(object):
     @property
     def DatsFilepath(self):
         dirs = os.listdir(self.datasetpath)
+        descriptor: Optional[str] = None
         for file in dirs:
             if fnmatch.fnmatch(file.lower(), 'dats.json'):
                 descriptor = os.path.join(self.datasetpath, file)
                 break
 
-        if descriptor == None:
-            raise 'No DATS descriptor found'
+        if not descriptor:
+            raise RuntimeError('No DATS descriptor found')
 
         return descriptor
 
@@ -129,32 +130,36 @@ class DATSDataset(object):
     @property
     def ReadmeFilepath(self):
         dirs = os.listdir(self.datasetpath)
+        readme: Optional[str] = None
         for file in dirs:
             if fnmatch.fnmatch(file.lower(), 'readme.md'):
                 readme = os.path.join(self.datasetpath, file)
                 break
 
-        if readme == None:
-            raise 'No Readme found'
+        if not readme:
+            raise RuntimeError('No Readme found')
 
         return readme
 
     @property
-    def authors(self):
-        authors = []
-        creators = self.descriptor.get('creators', '')
-        if type(creators) == list:
-            for x in creators:
+    def creators(self):
+        creators = []
+        c = self.descriptor.get('creators', '')
+        if type(c) == list:
+            for x in c:
                 if 'name' in x:
-                    authors.append(x['name'])
-                if 'fullname' in x:
-                    authors.append(x['fullname'])
-        elif 'name' in creators:
-            authors.append(creators['name'])
+                    creators.append(x['name'])
+                if 'fullName' in x:
+                    creators.append(x['fullName'])
+        elif 'name' in c:
+            creators.append(c['name'])
         else:
-            authors.append(creators)
+            creators.append(c)
 
-        return ", ".join(authors) if len(authors) > 0 else None
+        if len(creators) > 0:
+            return creators
+
+        return None
 
     @property
     def principalInvestigators(self):
@@ -167,17 +172,17 @@ class DATSDataset(object):
                         if role['value'] == 'Principal Investigator':
                             if 'name' in x:
                                 principalInvestigators.append(x['name'])
-                            elif 'fullname' in x:
-                                principalInvestigators.append(x['fullname'])
+                            elif 'fullName' in x:
+                                principalInvestigators.append(x['fullName'])
         elif 'roles' in creators:
             for role in creators['roles']:
                 if role['value'] == 'Principal Investigator':
                     if 'name' in x:
                         principalInvestigators.append(x['name'])
-                    elif 'fullname' in x:
-                        principalInvestigators.append(x['fullname'])
+                    elif 'fullName' in x:
+                        principalInvestigators.append(x['fullName'])
 
-        return ", ".join(principalInvestigators) if len(principalInvestigators) > 0 else None
+        return principalInvestigators if len(principalInvestigators) > 0 else None
 
     @property
     def primaryPublications(self):
@@ -247,6 +252,17 @@ class DATSDataset(object):
         return "{}".format(auth)
 
     @property
+    def origin(self):
+        origin = None
+        extraprops = self.descriptor.get('extraProperties', {})
+        for prop in extraprops:
+            if prop.get('category') == 'origin':
+                origin = ", ".join([x['value']
+                                    for x in prop.get('values')])
+
+        return origin
+
+    @property
     def contacts(self):
         contacts = None
         extraprops = self.descriptor.get('extraProperties', {})
@@ -286,40 +302,36 @@ class DATSDataset(object):
 
     @property
     def formats(self):
-        formats = None
+        formats = []
         dists = self.descriptor.get('distributions', None)
         if dists is None:
             return None
 
-        if not type(dists) == list:
-            if dists.get('@type', '') == 'DatasetDistribution':
-                formats = ", ".join([x['description']
-                                     for x in dists.get('formats', [])])
-        else:
-            formats = ", ".join([", ".join(x.get('formats', []))
-                                 for x in dists])
+        for x in dists:
+            formats += x.get('formats', [])
 
         return formats
 
-    @property
+    @ property
     def licenses(self):
-        licenseString = self.descriptor.get('licenses', 'None')
-        licenses = licenseString
-        if type(licenseString) == list:
-            licenses = ", ".join([x['name'] for x in licenseString])
+        licenses = []
+        lics = self.descriptor.get('licenses', None)
+        if type(lics) == list:
+            for x in lics:
+                licenses.append(x.get('name'))
         else:
-            if 'name' in licenseString:
-                licenses = licenseString['name']
-            elif '$schema' in licenseString:
-                licenses = licenseString['$schema']
-            elif 'dataUsesConditions' in licenseString:
-                licenses = licenseString['dataUsesConditions']
+            if 'name' in lics:
+                licenses = lics['name']
+            elif '$schema' in lics:
+                licenses = lics['$schema']
+            elif 'dataUsesConditions' in lics:
+                licenses = lics['dataUsesConditions']
             else:
-                licenses = licenseString
+                licenses = lics
 
         return licenses
 
-    @property
+    @ property
     def modalities(self):
         modalities = []
         for t in self.descriptor.get('types', []):
@@ -328,9 +340,19 @@ class DATSDataset(object):
             if modality is not None:
                 modalities.append(modality)
 
-        return ", ".join(modalities) if len(modalities) > 0 else None
+        return modalities if len(modalities) > 0 else None
 
-    @property
+    @ property
+    def keywords(self):
+        keywords = []
+        for t in self.descriptor.get('keywords', []):
+            keyword = t.get('value', None)
+            if keyword is not None:
+                keywords.append(keyword)
+
+        return keywords if len(keywords) > 0 else None
+
+    @ property
     def size(self):
         dists = self.descriptor.get('distributions', None)
         if dists is None:
@@ -362,7 +384,7 @@ class DATSDataset(object):
 
         return "{} {}".format(size, unit)
 
-    @property
+    @ property
     def sources(self):
         dists = self.descriptor.get('distributions', None)
         if dists is None:
@@ -380,7 +402,65 @@ class DATSDataset(object):
 
         return "{}".format(sources)
 
-    @property
+    @ property
+    def dimensions(self):
+        dimensions = []
+        for t in self.descriptor.get('dimensions', []):
+            dim = t.get('name', None)
+            if dim is not None:
+                if dim.get('value', None) is not None:
+                    dimensions.append(dim.get('value'))
+
+        return dimensions if len(dimensions) > 0 else None
+
+    @ property
+    def isAbout(self):
+        isAbout = []
+        for t in self.descriptor.get('isAbout', []):
+            isAb = t.get('name', None)
+            if isAb is not None:
+                isAbout.append(isAb)
+
+        return isAbout if len(isAbout) > 0 else None
+
+    @ property
+    def spatialCoverage(self):
+        spatialCoverage = []
+        for t in self.descriptor.get('spatialCoverage', []):
+            spatC = t.get('name', None)
+            if spatC is not None:
+                spatialCoverage.append(spatC)
+
+        return spatialCoverage if len(spatialCoverage) > 0 else None
+
+    @ property
+    def acknowledges(self):
+        acknowledges = []
+        for t in self.descriptor.get('acknowledges', []):
+            funders = t.get('funders', None)
+            if funders is not None and type(funders) == list:
+                for f in funders:
+                    if f.get('name', None) is not None:
+                        acknowledges.append(f.get('name', None))
+
+        return acknowledges if len(acknowledges) > 0 else None
+
+    @ property
+    def producedBy(self):
+        producedBy = []
+        field_data = self.descriptor.get('producedBy', None)
+        if not field_data:
+            return None
+        elif isinstance(field_data, str):
+            producedBy.append(field_data)
+        elif isinstance(field_data, dict):
+            prod = field_data.get('name', None)
+            if prod is not None:
+                producedBy.append(prod)
+
+        return producedBy if len(producedBy) > 0 else None
+
+    @ property
     def subjectCount(self):
         count = 0
         extraprops = self.descriptor.get('extraProperties', {})
@@ -394,7 +474,7 @@ class DATSDataset(object):
 
         return count if count > 0 else None
 
-    @property
+    @ property
     def derivedFrom(self):
         derivedFrom = []
         extraprops = self.descriptor.get('extraProperties', {})
@@ -405,7 +485,7 @@ class DATSDataset(object):
 
         return derivedFrom if len(derivedFrom) > 0 else None
 
-    @property
+    @ property
     def parentDatasetId(self):
         parentDatasetId = []
         extraprops = self.descriptor.get('extraProperties', {})
@@ -417,11 +497,11 @@ class DATSDataset(object):
 
         return parentDatasetId if len(parentDatasetId) > 0 else None
 
-    @property
+    @ property
     def version(self):
         return self.descriptor.get('version', None)
 
-    @property
+    @ property
     def schema_org_metadata(self):
         """ Returns json-ld metadata snippet for Google dataset search. """
         try:
@@ -489,14 +569,14 @@ class DATSDataset(object):
         except Exception:
             return None
 
-    @property
+    @ property
     def status(self):
 
         test_results = get_latest_test_results()
         tests_status = [
             results["status"]
             for test, results in test_results.items()
-            if test.startswith(re.sub("/", "_", self.name)+":")
+            if test.startswith(re.sub("/", "_", self.name) + ":")
         ]
 
         if tests_status == []:

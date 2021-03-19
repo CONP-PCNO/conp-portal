@@ -1,6 +1,7 @@
 import os
 import requests
 
+
 def render_content(raw):
     url = 'https://api.github.com/markdown'
     body = {
@@ -23,6 +24,7 @@ def render_content(raw):
     content = response.text.replace('user-content-', '')
     return content
 
+
 def get_share_content():
     content = None
     try:
@@ -33,10 +35,11 @@ def get_share_content():
         raw = response.text
 
         content = render_content(raw)
-    except requests.exceptions.HTTPError as err: 
+    except requests.exceptions.HTTPError as err:
         print("ERROR: Something went wrong retrieving the Github markdown", err)
 
     return content
+
 
 def get_faq_content():
     content = None
@@ -48,10 +51,11 @@ def get_faq_content():
         raw = response.text
 
         content = render_content(raw)
-    except requests.exceptions.HTTPError as err: 
+    except requests.exceptions.HTTPError as err:
         print("ERROR: Something went wrong retrieving the Github markdown", err)
 
     return content
+
 
 def get_tutorial_content():
     content = None
@@ -63,7 +67,7 @@ def get_tutorial_content():
         raw = response.text
 
         content = render_content(raw)
-    except requests.exceptions.HTTPError as err: 
+    except requests.exceptions.HTTPError as err:
         print("ERROR: Something went wrong retrieving the Github markdown", err)
 
     return content

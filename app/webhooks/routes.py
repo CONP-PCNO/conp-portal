@@ -3,11 +3,8 @@
 
     Currently this module contains all of the routes in webhooks blueprint
 """
-from app import config
 from app.webhooks import webhooks_bp
 from flask import request, abort, current_app
-from flask import Flask
-from flask_wtf.csrf import CSRFProtect
 import git
 import hmac
 import os
@@ -27,7 +24,7 @@ def webhooks():
     if not request.is_json:
         abort(400)
 
-    """ Security check. GitHub will send a header containing an HMAC of the 
+    """ Security check. GitHub will send a header containing an HMAC of the
         contents of the POST body. We calculate this server side and update the
         code only if the hashes match.
 
@@ -43,7 +40,7 @@ def webhooks():
 
     if not hmac.compare_digest(server_signature, client_signature):
         abort(400)
-            
+
     # Initialize the git repository object
     repo = git.Repo(os.getcwd())
 

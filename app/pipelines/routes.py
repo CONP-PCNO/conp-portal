@@ -5,9 +5,6 @@
 """
 import json
 import os
-import time
-import math
-from app.threads import UpdatePipelineData
 from flask import render_template, request, url_for
 from flask_login import current_user
 from app.pipelines import pipelines_bp
@@ -27,16 +24,26 @@ def pipelines():
             Rendered template for pipelines.html
     """
     page = int(request.args.get('page') or 1)
-    max_per_page = int(request.args.get('max_per_page') or 10)
+    max_per_page = request.args.get('max_per_page') or 10
+    if max_per_page != 'All':
+        max_per_page = int(max_per_page)
     search = request.args.get('search') or ""
     tags = request.args.get('tags') or ""
+    sortComparitor = request.args.get('sortComparitor')
+    sortKey = request.args.get('sortKey')
+
+    filters = {
+        "page": page,
+        "max_per_page": max_per_page,
+        "search": search,
+        "tags": tags,
+        "sortComparitor": sortComparitor,
+        "sortKey": sortKey,
+    }
 
     return render_template('pipelines.html',
                            title='CONP | Tools & Pipelines',
-                           page=page,
-                           max_per_page=max_per_page,
-                           search=search,
-                           tags=tags)
+                           filters=filters)
 
 
 @pipelines_bp.route('/pipeline-search', methods=['GET'])
@@ -60,8 +67,13 @@ def pipeline_search():
     tags = request.args.get(
         "tags").lower().split(',') if request.args.get("tags") else []
     sort_key = request.args.get("sortKey") or "downloads-desc"
-    max_per_page = int(request.args.get("max_per_page") or 999999)
+
+    max_per_page = None
+    if request.args.get('max_per_page') != 'All':
+        max_per_page = int(request.args.get("max_per_page") or 999999)
+
     page = int(request.args.get("page") or 1)
+
     cache_dir = os.path.join(os.path.expanduser(
         '~'), ".cache", "boutiques", "production")
     all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
@@ -94,11 +106,23 @@ def pipeline_search():
         ]
 
     # filter out the deprecated pipelines
-    elements = list(filter(lambda e: (not e.get("DEPRECATED", None)), elements))
+    elements = list(
+        filter(lambda e: (not e.get("DEPRECATED", None)), elements))
+
+    blocked_pipelines_ids = list()
+    with open(os.path.join(os.getcwd(), "app/static/pipelines/block-list-pipeline.json"), "r") as f:
+        blocked_pipelines_ids = json.load(f)
+    blocked_pipelines_indexes = list()
+    for index, element in enumerate(elements):
+        if element['ID'] in blocked_pipelines_ids:
+            blocked_pipelines_indexes += [index]
+    for index in reversed(blocked_pipelines_indexes):
+        elements.pop(index)
 
     # filter by tags
     if len(tags) > 0:
-        elements = list(filter(lambda e: ("tags" in e and "domain" in e["tags"]), elements))
+        elements = list(
+            filter(lambda e: ("tags" in e and "domain" in e["tags"]), elements))
         elements = list(filter(lambda e: all(
             t in e["tags"]["domain"] for t in tags), elements))
 
@@ -116,7 +140,7 @@ def pipeline_search():
         real_key = sort_key[:-4]
     reverse = sort_key.endswith("-desc")
 
-    if (real_key == 'title'):
+    if real_key == 'title':
         elements.sort(
             key=lambda x: (x[real_key] is None, x[real_key].lower()),
             reverse=reverse
@@ -129,16 +153,20 @@ def pipeline_search():
 
     # extract the appropriate page
     elements_on_page = elements
-    if len(elements) > max_per_page:
-        start_index = (page-1)*max_per_page
-        end_index = start_index + max_per_page
-        if end_index > len(elements):
-            end_index = len(elements)
-        elements_on_page = elements[start_index:end_index]
+    if max_per_page is not None:
+        if len(elements) > max_per_page:
+            start_index = (page - 1) * max_per_page
+            end_index = start_index + max_per_page
+            if end_index > len(elements):
+                end_index = len(elements)
+            elements_on_page = elements[start_index:end_index]
 
     # if element has online platform url, retrieve the cbrain one,
     # else take the first one and set logo
     # TODO right now, this handles CBRAIN and one other platform
+
+    with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json"), "r") as f:
+        zenodo_urls = json.load(f)
 
     for element in elements_on_page:
         element["platforms"] = [{} for x in range(0, 1)]
@@ -146,24 +174,19 @@ def pipeline_search():
             'static', filename="img/run_on_cbrain_gray.png")
         element["platforms"][0]["uri"] = ""
 
-        if "onlineplatformurls" in element:
-            # Check CBRAIN
-            for url in element["onlineplatformurls"]:
-                if url.startswith('https://portal.cbrain.mcgill.ca'):
-                    element["platforms"][0]["img"] = url_for(
-                        'static', filename="img/run_on_cbrain_green.png")
-                    element["platforms"][0]["uri"] = url
-                else:
-                    platform_dict = {"img": url_for('static', filename="img/globe-solid-green.png"),
-                                     "uri": url}
-                    element["platforms"].append(platform_dict)
+        if element["id"] in zenodo_urls.keys():
+            element["platforms"][0]["img"] = url_for(
+                'static', filename="img/run_on_cbrain_green.png")
+            element["platforms"][0]["uri"] = zenodo_urls[element["id"]]
+        else:
+            element["platforms"][0]["img"] = url_for(
+                'static', filename="img/run_on_cbrain_gray.png")
+            element["platforms"][0]["uri"] = ""
 
     # construct payload
     payload = {
         "authorized": authorized,
         "total": len(elements),
-        "page": page,
-        'num_pages': math.ceil(len(elements)/max_per_page),
         "sortKeys": [
             {
                 "key": "downloads-desc",
@@ -254,20 +277,18 @@ def pipeline_info():
         'static', filename="img/run_on_cbrain_gray.png")
     element["platforms"][0]["uri"] = ""
 
-    if "online-platform-urls" in element:
-        # Check CBRAIN
-        for url in element["online-platform-urls"]:
-            if url.startswith('https://portal.cbrain.mcgill.ca'):
-                element["platforms"][0]["img"] = url_for(
-                    'static', filename="img/run_on_cbrain_green.png")
-                element["platforms"][0]["uri"] = url
-            else:
-                platform_dict = {"img": url_for('static', filename="img/globe-solid-green.png"),
-                                 "uri": url}
-                element["platforms"].append(platform_dict)
+    with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json"), "r") as f:
+        zenodo_urls = json.load(f)
+
+    if element["id"] in zenodo_urls.keys():
+        element["platforms"][0]["img"] = url_for('static', filename="img/run_on_cbrain_green.png")
+        element["platforms"][0]["uri"] = zenodo_urls[element["id"]]
+    else:
+        element["platforms"][0]["img"] = url_for('static', filename="img/run_on_cbrain_gray.png")
+        element["platforms"][0]["uri"] = ""
 
     # make all keys lowercase and without spaces
-    element =  {k.lower().replace(" ", ""): v for k, v in element.items()}
+    element = {k.lower().replace(" ", ""): v for k, v in element.items()}
 
     return render_template(
         'pipeline.html',

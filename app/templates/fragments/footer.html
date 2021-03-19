@@ -6,14 +6,25 @@
     <div
       class="col-sm-6 d-flex flex-column justify-content-center align-items-center text-center p-4"
     >
-      <h5 class="py-4">
-        Canadian Open Neuroscience Platform 
-      </h5>
+      <h5 class="py-4">Canadian Open Neuroscience Platform</h5>
 
-      <a class="footer-link pb-4" href="https://github.com/CONP-PCNO/conp-portal"
+      <a
+        class="footer-link pb-4"
+        href="https://github.com/CONP-PCNO/conp-portal"
         >Code is available on
         <span>Github <i class="fa fa-github"></i></span>
+      </a>
+      <a class="footer-link pb-4" href="#" id="btnShowPrivacyPolicy"
+        >Privacy Policy
       </a>
     </div>
   </div>
 </footer>
+
+<script>
+  $(function () {
+    $("#btnShowPrivacyPolicy").on("click", function (event) {
+      $("#privacyPolicyModal").modal("show");
+    });
+  });
+</script>
