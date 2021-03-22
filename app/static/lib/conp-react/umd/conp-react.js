@@ -810,159 +810,6 @@ function lighten(color, coefficient) {
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(152);
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function checkDCE() {
-  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
-  if (
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
-  ) {
-    return;
-  }
-  if (false) {}
-  try {
-    // Verify that the code above has been dead code eliminated (DCE'd).
-    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
-  } catch (err) {
-    // DevTools shouldn't crash React, no matter what.
-    // We should still report in case we break this code.
-    console.error(err);
-  }
-}
-
-if (true) {
-  // DCE check should happen before ReactDOM bundle executes so that
-  // DevTools can report bad minification during injection.
-  checkDCE();
-  module.exports = __webpack_require__(163);
-} else {}
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createSvgIcon; });
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(135);
-
-
-
-/**
- * Private module reserved for @material-ui/x packages.
- */
-
-function createSvgIcon(path, displayName) {
-  var Component = function Component(props, ref) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_SvgIcon__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"], Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])({
-      ref: ref
-    }, props), path);
-  };
-
-  if (false) {}
-
-  Component.muiName = _SvgIcon__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"].muiName;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.memo( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.forwardRef(Component));
-}
-
-/***/ }),
-/* 16 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ _slicedToArray; });
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
-var arrayWithHoles = __webpack_require__(113);
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
-function _iterableToArrayLimit(arr, i) {
-  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _e = undefined;
-
-  try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-var unsupportedIterableToArray = __webpack_require__(67);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
-var nonIterableRest = __webpack_require__(114);
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js
-
-
-
-
-function _slicedToArray(arr, i) {
-  return Object(arrayWithHoles["a" /* default */])(arr) || _iterableToArrayLimit(arr, i) || Object(unsupportedIterableToArray["a" /* default */])(arr, i) || Object(nonIterableRest["a" /* default */])();
-}
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = toInteger;
-
-function toInteger(dirtyNumber) {
-  if (dirtyNumber === null || dirtyNumber === true || dirtyNumber === false) {
-    return NaN;
-  }
-
-  var number = Number(dirtyNumber);
-
-  if (isNaN(number)) {
-    return number;
-  }
-
-  return number < 0 ? Math.ceil(number) : Math.floor(number);
-}
-
-module.exports = exports.default;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
  Highcharts JS v8.2.2 (2020-10-22)
 
@@ -1511,6 +1358,159 @@ K(e,function(d,e){if(!v&&-1<h.collectionsWithUpdate.indexOf(e))for(d=y(d),m[e]=[
 //# sourceMappingURL=highcharts.js.map
 
 /***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(152);
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function checkDCE() {
+  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+  if (
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
+  ) {
+    return;
+  }
+  if (false) {}
+  try {
+    // Verify that the code above has been dead code eliminated (DCE'd).
+    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+  } catch (err) {
+    // DevTools shouldn't crash React, no matter what.
+    // We should still report in case we break this code.
+    console.error(err);
+  }
+}
+
+if (true) {
+  // DCE check should happen before ReactDOM bundle executes so that
+  // DevTools can report bad minification during injection.
+  checkDCE();
+  module.exports = __webpack_require__(163);
+} else {}
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createSvgIcon; });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(135);
+
+
+
+/**
+ * Private module reserved for @material-ui/x packages.
+ */
+
+function createSvgIcon(path, displayName) {
+  var Component = function Component(props, ref) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_SvgIcon__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"], Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])({
+      ref: ref
+    }, props), path);
+  };
+
+  if (false) {}
+
+  Component.muiName = _SvgIcon__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"].muiName;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.memo( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.forwardRef(Component));
+}
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ _slicedToArray; });
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
+var arrayWithHoles = __webpack_require__(113);
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+var unsupportedIterableToArray = __webpack_require__(67);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
+var nonIterableRest = __webpack_require__(114);
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js
+
+
+
+
+function _slicedToArray(arr, i) {
+  return Object(arrayWithHoles["a" /* default */])(arr) || _iterableToArrayLimit(arr, i) || Object(unsupportedIterableToArray["a" /* default */])(arr, i) || Object(nonIterableRest["a" /* default */])();
+}
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = toInteger;
+
+function toInteger(dirtyNumber) {
+  if (dirtyNumber === null || dirtyNumber === true || dirtyNumber === false) {
+    return NaN;
+  }
+
+  var number = Number(dirtyNumber);
+
+  if (isNaN(number)) {
+    return number;
+  }
+
+  return number < 0 ? Math.ceil(number) : Math.floor(number);
+}
+
+module.exports = exports.default;
+
+/***/ }),
 /* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1637,7 +1637,7 @@ function warning(condition, message) {
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-!function(e,t){ true?module.exports=t(__webpack_require__(0),__webpack_require__(18)):undefined}("undefined"!=typeof self?self:this,function(e,t){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,r){"use strict";function n(){return n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},n.apply(this,arguments)}function o(e){return i(e)||u(e)||c()}function c(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function u(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function i(e){if(Array.isArray(e)){for(var t=0,r=new Array(e.length);t<e.length;t++)r[t]=e[t];return r}}Object.defineProperty(t,"__esModule",{value:!0});var a=r(1),s=r.n(a),f=r(2),p=r.n(f),l="undefined"!=typeof window?a.useLayoutEffect:a.useEffect,d=Object(a.forwardRef)(function(e,t){var r=Object(a.useRef)(),c=Object(a.useRef)();return l(function(){function t(){var t=e.highcharts||p.a,n=e.constructorType||"chart";t?t[n]?e.options?c.current=t[n](r.current,e.options,e.callback?e.callback:void 0):console.warn('The "options" property was not passed.'):console.warn('The "constructorType" property is incorrect or some required module is not imported.'):console.warn('The "highcharts" property was not passed.')}if(c.current){if(!1!==e.allowChartUpdate)if(!e.immutable&&c.current){var n;(n=c.current).update.apply(n,[e.options].concat(o(e.updateArgs||[!0,!0])))}else t()}else t()}),l(function(){return function(){c.current&&(c.current.destroy(),c.current=null)}},[]),Object(a.useImperativeHandle)(t,function(){return{get chart(){return c.current},container:r}},[]),s.a.createElement("div",n({},e.containerProps,{ref:r}))});t.default=Object(a.memo)(d)},function(t,r){t.exports=e},function(e,r){e.exports=t}])});
+!function(e,t){ true?module.exports=t(__webpack_require__(0),__webpack_require__(13)):undefined}("undefined"!=typeof self?self:this,function(e,t){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,r){"use strict";function n(){return n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},n.apply(this,arguments)}function o(e){return i(e)||u(e)||c()}function c(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function u(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function i(e){if(Array.isArray(e)){for(var t=0,r=new Array(e.length);t<e.length;t++)r[t]=e[t];return r}}Object.defineProperty(t,"__esModule",{value:!0});var a=r(1),s=r.n(a),f=r(2),p=r.n(f),l="undefined"!=typeof window?a.useLayoutEffect:a.useEffect,d=Object(a.forwardRef)(function(e,t){var r=Object(a.useRef)(),c=Object(a.useRef)();return l(function(){function t(){var t=e.highcharts||p.a,n=e.constructorType||"chart";t?t[n]?e.options?c.current=t[n](r.current,e.options,e.callback?e.callback:void 0):console.warn('The "options" property was not passed.'):console.warn('The "constructorType" property is incorrect or some required module is not imported.'):console.warn('The "highcharts" property was not passed.')}if(c.current){if(!1!==e.allowChartUpdate)if(!e.immutable&&c.current){var n;(n=c.current).update.apply(n,[e.options].concat(o(e.updateArgs||[!0,!0])))}else t()}else t()}),l(function(){return function(){c.current&&(c.current.destroy(),c.current=null)}},[]),Object(a.useImperativeHandle)(t,function(){return{get chart(){return c.current},container:r}},[]),s.a.createElement("div",n({},e.containerProps,{ref:r}))});t.default=Object(a.memo)(d)},function(t,r){t.exports=e},function(e,r){e.exports=t}])});
 //# sourceMappingURL=highcharts-react.min.js.map
 
 /***/ }),
@@ -6226,7 +6226,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = startOfUTCWeek;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -6300,7 +6300,7 @@ module.exports = exports.default;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return useIsFocusVisible; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 // based on https://github.com/WICG/focus-visible/blob/v4.1.5/src/focus-visible.js
 
@@ -6691,7 +6691,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = addMonths;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -6917,7 +6917,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = getUTCWeekYear;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -7133,7 +7133,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = addDays;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -7398,7 +7398,7 @@ exports.default = startOfWeek;
 
 var _index = _interopRequireDefault(__webpack_require__(9));
 
-var _index2 = _interopRequireDefault(__webpack_require__(17));
+var _index2 = _interopRequireDefault(__webpack_require__(18));
 
 var _index3 = _interopRequireDefault(__webpack_require__(7));
 
@@ -7471,7 +7471,7 @@ exports.default = endOfWeek;
 
 var _index = _interopRequireDefault(__webpack_require__(9));
 
-var _index2 = _interopRequireDefault(__webpack_require__(17));
+var _index2 = _interopRequireDefault(__webpack_require__(18));
 
 var _index3 = _interopRequireDefault(__webpack_require__(7));
 
@@ -7542,7 +7542,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
  License: www.highcharts.com/license
 */
-(function(c){ true&&module.exports?(c["default"]=c,module.exports=c): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(A){c(A);c.Highcharts=A;return c}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+(function(c){ true&&module.exports?(c["default"]=c,module.exports=c): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(13)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(A){c(A);c.Highcharts=A;return c}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):undefined})(function(c){function A(c,b,h,a){c.hasOwnProperty(b)||(c[b]=a.apply(null,h))}c=c?c._modules:{};A(c,"Extensions/Pane.js",[c["Core/Chart/Chart.js"],c["Core/Globals.js"],c["Core/Pointer.js"],c["Core/Utilities.js"],c["Mixins/CenteredSeries.js"]],
 function(c,b,h,a,f){function q(e,f,m){return Math.sqrt(Math.pow(e-m[0],2)+Math.pow(f-m[1],2))<=m[2]/2}var u=a.addEvent,z=a.extend,E=a.merge,B=a.pick,e=a.splat;c.prototype.collectionsWithUpdate.push("pane");a=function(){function b(e,m){this.options=this.chart=this.center=this.background=void 0;this.coll="pane";this.defaultOptions={center:["50%","50%"],size:"85%",innerSize:"0%",startAngle:0};this.defaultBackgroundOptions={shape:"circle",borderWidth:1,borderColor:"#cccccc",backgroundColor:{linearGradient:{x1:0,
 y1:0,x2:0,y2:1},stops:[[0,"#ffffff"],[1,"#e6e6e6"]]},from:-Number.MAX_VALUE,innerRadius:0,to:Number.MAX_VALUE,outerRadius:"105%"};this.init(e,m)}b.prototype.init=function(e,m){this.chart=m;this.background=[];m.pane.push(this);this.setOptions(e)};b.prototype.setOptions=function(e){this.options=E(this.defaultOptions,this.chart.angular?{background:{}}:void 0,e)};b.prototype.render=function(){var b=this.options,m=this.options.background,f=this.chart.renderer;this.group||(this.group=f.g("pane-group").attr({zIndex:b.zIndex||
@@ -7732,7 +7732,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
         factory['default'] = factory;
         module.exports = factory;
     } else if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (Highcharts) {
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(13)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (Highcharts) {
             factory(Highcharts);
             factory.Highcharts = Highcharts;
             return factory;
@@ -8394,7 +8394,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = subMilliseconds;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(177));
 
@@ -9514,7 +9514,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setHours;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -9566,7 +9566,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setMinutes;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -9666,7 +9666,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setSeconds;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -9962,7 +9962,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setYear;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -10033,7 +10033,7 @@ var _index6 = _interopRequireDefault(__webpack_require__(101));
 
 var _index7 = __webpack_require__(102);
 
-var _index8 = _interopRequireDefault(__webpack_require__(17));
+var _index8 = _interopRequireDefault(__webpack_require__(18));
 
 var _index9 = _interopRequireDefault(__webpack_require__(179));
 
@@ -10613,7 +10613,7 @@ var _index7 = _interopRequireDefault(__webpack_require__(101));
 
 var _index8 = __webpack_require__(102);
 
-var _index9 = _interopRequireDefault(__webpack_require__(17));
+var _index9 = _interopRequireDefault(__webpack_require__(18));
 
 var _index10 = _interopRequireDefault(__webpack_require__(7));
 
@@ -11109,7 +11109,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setMonth;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -11278,7 +11278,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = addYears;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(71));
 
@@ -14119,7 +14119,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = addMilliseconds;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -15727,7 +15727,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setUTCDay;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -15773,7 +15773,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setUTCISODay;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -15815,7 +15815,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setUTCISOWeek;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -15884,7 +15884,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setUTCWeek;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(9));
 
@@ -15919,7 +15919,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = startOfUTCWeekYear;
 
-var _index = _interopRequireDefault(__webpack_require__(17));
+var _index = _interopRequireDefault(__webpack_require__(18));
 
 var _index2 = _interopRequireDefault(__webpack_require__(83));
 
@@ -17591,7 +17591,7 @@ DataTable_DataTable.defaultProps = {
 };
 /* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
 // EXTERNAL MODULE: ./node_modules/nwb/node_modules/@babel/runtime/regenerator/index.js
-var regenerator = __webpack_require__(13);
+var regenerator = __webpack_require__(14);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/query-string/index.js
@@ -24625,7 +24625,7 @@ PipelineElement_PipelineElement.propTypes = {
 
 /* harmony default export */ var src_PipelineElement = (PipelineElement_PipelineElement);
 // EXTERNAL MODULE: ./node_modules/highcharts/highcharts.js
-var highcharts = __webpack_require__(18);
+var highcharts = __webpack_require__(13);
 var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
 
 // EXTERNAL MODULE: ./node_modules/highcharts-react-official/dist/highcharts-react.min.js
@@ -25402,8 +25402,34 @@ var DailyVisitors_defaultOptions = {
     text: 'Number of Unique Visitors'
   },
   yAxis: [{
+    // Primary yAxis
     title: {
-      text: ''
+      text: 'Cumulative Visitors',
+      style: {
+        color: highcharts_default.a.getOptions().colors[0]
+      }
+    },
+    labels: {
+      format: '{value}',
+      style: {
+        color: highcharts_default.a.getOptions().colors[0]
+      }
+    },
+    allowDecimals: false,
+    opposite: true
+  }, {
+    // Secondary yAxis
+    labels: {
+      format: '{value}',
+      style: {
+        color: highcharts_default.a.getOptions().colors[1]
+      }
+    },
+    title: {
+      text: 'Visitors',
+      style: {
+        color: highcharts_default.a.getOptions().colors[1]
+      }
     },
     allowDecimals: false
   }],
@@ -25474,17 +25500,28 @@ var DailyVisitors_DailyVisitors = function DailyVisitors(props) {
   var updateChart = function updateChart(axes) {
     var xAxis = [];
     var yAxisVisitors = [];
+    var yAxisCumulativeVisitors = [];
+    var cumulativeVisitors = 0;
     Object.keys(axes.visitors).forEach(function (year) {
       Object.keys(axes.visitors[year]).forEach(function (month) {
         xAxis.push(month + "/" + year);
         yAxisVisitors.push(axes.visitors[year][month]);
+        cumulativeVisitors += axes.visitors[year][month];
+        yAxisCumulativeVisitors.push(cumulativeVisitors);
       });
     });
     var series = [{
-      name: 'Visitors',
-      color: '#EA2627B3',
-      data: yAxisVisitors,
+      name: 'Cumulative Visitors',
+      color: '#88d368',
+      type: 'column',
+      data: yAxisCumulativeVisitors,
       yAxis: 0
+    }, {
+      name: 'Visitors',
+      color: '#207EA0B3',
+      type: 'spline',
+      data: yAxisVisitors,
+      yAxis: 1
     }];
     setOptions(function (prevOptions) {
       return DailyVisitors_extends({}, prevOptions, {
@@ -31985,7 +32022,7 @@ var Typography_Typography = /*#__PURE__*/external_root_React_commonjs2_react_com
 var colorManipulator = __webpack_require__(12);
 
 // EXTERNAL MODULE: ./node_modules/react-dom/index.js
-var react_dom = __webpack_require__(14);
+var react_dom = __webpack_require__(15);
 var react_dom_default = /*#__PURE__*/__webpack_require__.n(react_dom);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useForkRef.js
@@ -33793,7 +33830,7 @@ var FormControlLabel_FormControlLabel = /*#__PURE__*/external_root_React_commonj
   name: 'MuiFormControlLabel'
 })(FormControlLabel_FormControlLabel));
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 1 modules
-var slicedToArray = __webpack_require__(16);
+var slicedToArray = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useControlled.js
 var useControlled = __webpack_require__(35);
@@ -33940,7 +33977,7 @@ var SwitchBase_SwitchBase = /*#__PURE__*/external_root_React_commonjs2_react_com
   name: 'PrivateSwitchBase'
 })(SwitchBase_SwitchBase));
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createSvgIcon.js
-var createSvgIcon = __webpack_require__(15);
+var createSvgIcon = __webpack_require__(16);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/internal/svg-icons/RadioButtonUnchecked.js
 
@@ -57561,7 +57598,7 @@ var capitalize = __webpack_require__(6);
 var createChainedFunction = __webpack_require__(33);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createSvgIcon.js
-var createSvgIcon = __webpack_require__(15);
+var createSvgIcon = __webpack_require__(16);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/debounce.js
 var debounce = __webpack_require__(28);
@@ -62001,7 +62038,7 @@ function useTheme() {
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ createUnarySpacing; });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 1 modules
-var slicedToArray = __webpack_require__(16);
+var slicedToArray = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/breakpoints.js
 var breakpoints = __webpack_require__(68);

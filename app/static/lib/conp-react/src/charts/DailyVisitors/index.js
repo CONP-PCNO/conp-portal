@@ -18,11 +18,35 @@ const defaultOptions = {
         text: 'Number of Unique Visitors'
     },
 
-    yAxis: [{
+    yAxis: [{ // Primary yAxis
         title: {
-            text: '',
+            text: 'Cumulative Visitors',
+            style: {
+                color: Highcharts.getOptions().colors[0]
+            }
+        },
+        labels: {
+            format: '{value}',
+            style: {
+                color: Highcharts.getOptions().colors[0]
+            }
         },
         allowDecimals: false,
+        opposite: true
+    }, { // Secondary yAxis
+        labels: {
+            format: '{value}',
+            style: {
+                color: Highcharts.getOptions().colors[1]
+            }
+        },
+        title: {
+            text: 'Visitors',
+            style: {
+                color: Highcharts.getOptions().colors[1]
+            }
+        },
+        allowDecimals: false
     }],
 
     xAxis: {
@@ -72,20 +96,35 @@ const DailyVisitors = (props) => {
 
         const xAxis = [];
         const yAxisVisitors = [];
+        const yAxisCumulativeVisitors = [];
+
+        let cumulativeVisitors = 0;
 
         Object.keys(axes.visitors).forEach(year => {
             Object.keys(axes.visitors[year]).forEach(month => {
                 xAxis.push(`${month}/${year}`);
                 yAxisVisitors.push(axes.visitors[year][month]);
+
+                cumulativeVisitors += axes.visitors[year][month]
+                yAxisCumulativeVisitors.push(cumulativeVisitors);
             });
         });
 
         const series = [{
-            name: 'Visitors',
-            color: '#EA2627B3',
-            data: yAxisVisitors,
+            name: 'Cumulative Visitors',
+            color: '#88d368',
+            type: 'column',
+            data: yAxisCumulativeVisitors,
             yAxis: 0
-        }];
+        },
+        {
+            name: 'Visitors',
+            color: '#207EA0B3',
+            type: 'spline',
+            data: yAxisVisitors,
+            yAxis: 1
+        }
+        ];
 
         setOptions(prevOptions => ({
             ...prevOptions,
