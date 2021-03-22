@@ -443,7 +443,7 @@ def dataset_info():
 
     try:
         zipped = DatasetCache(current_app).getZipLocation(d)
-    except IOError as err:
+    except IOError:
         zipped = None
 
     showDownloadButton = zipped is not None

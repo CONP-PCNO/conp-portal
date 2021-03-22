@@ -43,6 +43,7 @@ def get_latest_test_results():
 
     return _get_latest_test_results(normalized_date)
 
+
 class DatasetCache(object):
     def __init__(self, current_app):
         self.current_app = current_app
@@ -67,8 +68,8 @@ class DatasetCache(object):
         """
 
         datasetmeta = DATSDataset(dataset.fspath)
-        zipFilename = datasetmeta.name.replace('/','__') + '_version-' + \
-                        datasetmeta.version + '.tar.gz'
+        zipFilename = datasetmeta.name.replace('/', '__') + '_version-' + \
+            datasetmeta.version + '.tar.gz'
 
         # Look for the filename in the cached datasets
         cached = self.cachedDatasets.get(zipFilename)
