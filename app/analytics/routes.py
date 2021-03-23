@@ -6,7 +6,7 @@
 
 import json
 
-from flask import render_template
+from flask import render_template, request
 from flask_login import current_user
 from app.analytics import analytics_bp
 
@@ -81,8 +81,17 @@ def datasets_views():
 
     elements = []
 
-    page_views = MatomoDailyGetDatasetPageViewsSummary.query.order_by(
-        MatomoDailyGetDatasetPageViewsSummary.id).all()
+    page_views = []
+
+    id = request.args.get('id', None)
+
+    if id is not None:
+        page_views = MatomoDailyGetDatasetPageViewsSummary.query.filter_by(
+            dataset_id=id).all()
+
+    else:
+        page_views = MatomoDailyGetDatasetPageViewsSummary.query.order_by(
+            MatomoDailyGetDatasetPageViewsSummary.id).all()
 
     for v in page_views:
         exists = False
