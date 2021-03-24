@@ -68,15 +68,11 @@
   </div>
 
   <div class="p-2 flex-fill">
-    <div class="card w-100 mx-1" data-type="dashboard">
+    <div class="card w-100 p-1 mx-1" data-type="dashboard">
       <div id="dashboard-chart-container">
         <script type="text/javascript">
           const dashboardChartElement = React.createElement(
-            CONPReact.ChartContainer,
-            {
-              datasetsURL: "{{ url_for('search.dataset_search') }}",
-              pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
-            }
+            CONPReact.ChartContainer
           );
           ReactDOM.render(
             dashboardChartElement,

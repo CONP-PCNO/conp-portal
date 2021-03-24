@@ -285,7 +285,7 @@ class MatomoDailyVisitsSummary(db.Model):
     sum_visit_length = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<MatomoDailyVisitsSummary {}>'.format(self.name)
+        return '<MatomoDailyVisitsSummary {}>'.format(self.id)
 
 
 class MatomoDailyGetPageUrlsSummary(db.Model):
@@ -317,6 +317,9 @@ class MatomoDailyGetPageUrlsSummary(db.Model):
     sum_time_spent = db.Column(db.Integer)
     avg_time_on_page = db.Column(db.Float)
 
+    def __repr__(self):
+        return '<MatomoDailyGetPageUrlsSummary {}>'.format(self.id)
+
 
 class MatomoDailyGetDatasetPageViewsSummary(db.Model):
     """
@@ -345,6 +348,9 @@ class MatomoDailyGetDatasetPageViewsSummary(db.Model):
     nb_uniq_visitors = db.Column(db.Integer)
     sum_time_spent = db.Column(db.Integer)
     avg_time_on_page = db.Column(db.Float)
+
+    def __repr__(self):
+        return '<MatomoDailyGetDatasetPageViewsSummary {}>'.format(self.id)
 
 
 class MatomoDailyGetSiteSearchKeywords(db.Model):
@@ -378,3 +384,6 @@ class MatomoDailyGetSiteSearchKeywords(db.Model):
     nb_visits = db.Column(db.Integer)
     segment = db.Column(db.Text)
     sum_time_spent = db.Column(db.Integer)
+
+    def __repr__(self):
+        return '<MatomoDailyGetSiteSearchKeywords {}>'.format(self.id)

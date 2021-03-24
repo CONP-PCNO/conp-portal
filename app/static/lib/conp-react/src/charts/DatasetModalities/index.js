@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import ContextMenu from '../ContextMenu'
+import LoadingSpinner from "../LoadingSpinner"
 
 import Highcharts from "highcharts";
-import HighchartsReact from 'highcharts-react-official'
+import HighchartsReact from 'highcharts-react-official';
 require('highcharts/highcharts-more.js')(Highcharts);
+require('highcharts-custom-events')(Highcharts);
 
 const defaultOptions = {
 
     chart: {
         type: 'packedbubble',
         backgroundColor: '#FFF',
-        height: (9 / 16 * 100) + '%',
         margin: [-30, -30, -30, -30],
         colors: ["#EA2627", "#A5A5A5", "#FFC000", "#207EA0", "#898989", "#5E5E5E"]
     },
@@ -32,23 +34,20 @@ const defaultOptions = {
         series: {
             allowPointSelect: true,
             point: {
-                events: {
-                    select: function (e) {
-                        // eslint-disable-next-line no-restricted-globals
-                        location.assign(`/search?modalities=${e.target.name.toLowerCase()}`)
-                    }
-                }
+                events: {}
             }
         },
 
         packedbubble: {
             color: "#EA2627",
-            minSize: '10%',
+            minSize: '30%',
             maxSize: '100%',
             zMin: 0,
             zMax: 20,
             layoutAlgorithm: {
-                gravitationalConstant: 0.02,
+                initialPositions: 'random',
+                bubblePadding: 12,
+                gravitationalConstant: 0.006,
                 splitSeries: false,
             },
             dataLabels: {
@@ -73,10 +72,32 @@ const defaultOptions = {
 
 };
 
-const DatasetModalities = ({ datasets, pipelines, ...props }) => {
+const DatasetModalities = (props) => {
 
+    const [chartData, setChartData] = useState()
     const [options, setOptions] = useState(defaultOptions);
-    const [isDrawn, setIsDrawn] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const [contextMenuOptions, setContextMenuOptions] = useState({});
+
+    useEffect(() => {
+        fetchChartData();
+    }, [])
+
+    const fetchChartData = async () => {
+
+        try {
+            fetch('/dataset-search?elements=all')
+                .then(res => res.json())
+                .then(json => setChartData(prevState => ({
+                    ...prevState,
+                    datasets: json
+                })));
+
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     const updateChart = (data) => {
 
@@ -96,29 +117,33 @@ const DatasetModalities = ({ datasets, pipelines, ...props }) => {
             ...prevOptions,
             series: series,
         }));
+
+        setIsLoading(false);
     };
 
-    const constructData = () => {
+    useEffect(() => {
 
-        const chartData = {
+        if (!chartData) {
+            return
+        }
+
+        const axes = {
             datasets: {}
         };
 
-        datasets.elements.forEach(dataset => {
+        chartData.datasets.elements.forEach(dataset => {
 
             if (!dataset.modalities)
                 return;
 
-            const modalitiesArr = dataset.modalities.split(", ");
-
-            modalitiesArr.forEach(modality => {
-                addOrIncreaseDatapoint(chartData.datasets, modality.toLowerCase());
+            dataset.modalities.forEach(modality => {
+                addOrIncreaseDatapoint(axes.datasets, modality.toLowerCase());
             })
         })
 
-        updateChart(chartData);
+        updateChart(axes);
 
-    };
+    }, [chartData]);
 
     const addOrIncreaseDatapoint = (data, point) => {
         if (!Object.keys(data).includes(point)) {
@@ -129,25 +154,46 @@ const DatasetModalities = ({ datasets, pipelines, ...props }) => {
         }
     }
 
-    if (datasets && pipelines && !isDrawn) {
-        constructData();
-        setIsDrawn(true);
-    }
+    useEffect(() => {
+        setOptions(prevOptions => {
+            const options = prevOptions
+            options.plotOptions.series.point.events = {
+                contextmenu: function (e) {
+                    e.preventDefault()
+                    console.log(e.target)
+                    const xPos = e.pageX;
+                    const yPos = e.pageY;
+                    const style = {
+                        "position": "absolute",
+                        "left": xPos,
+                        "top": yPos,
+                        "zIndex": 1000
+                    };
+                    const url = `/search?modalities=${e.target.point.name.toLowerCase()}`;
+                    setContextMenuOptions({
+                        title: e.target.point.name,
+                        actionText: "View Datasets",
+                        style: style,
+                        url: url
+                    })
+                }
+            }
+            return options
+        })
+    }, []);
 
     return (
-        <HighchartsReact
-            highcharts={Highcharts}
-            options={options}
-        />
+        isLoading ?
+            <LoadingSpinner />
+            :
+            <div>
+                <ContextMenu options={contextMenuOptions} />
+                <HighchartsReact
+                    highcharts={Highcharts}
+                    options={options}
+                />
+            </div>
     );
-};
-
-DatasetModalities.propTypes = {
-
-};
-
-DatasetModalities.defaultProps = {
-
 };
 
 export default DatasetModalities;

@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Highcharts from "highcharts";
 import HighchartsReact from 'highcharts-react-official'
+
+import LoadingSpinner from "../LoadingSpinner"
 
 const defaultOptions = {
 
@@ -48,12 +50,39 @@ const defaultOptions = {
 
 };
 
-const TotalDatasetsPipelines = ({ datasets, pipelines, ...props }) => {
+const TotalDatasetsPipelines = (props) => {
 
+    const [chartData, setChartData] = useState()
     const [options, setOptions] = useState(defaultOptions);
-    const [isDrawn, setIsDrawn] = useState(false);
+    const [isLoading, setIsLoading] = useState(true)
 
-    const updateChart = (data) => {
+    useEffect(() => {
+        fetchChartData();
+    }, [])
+
+    const fetchChartData = async () => {
+
+        try {
+            fetch('/dataset-search?elements=all')
+                .then(res => res.json())
+                .then(json => setChartData(prevState => ({
+                    ...prevState,
+                    datasets: json
+                })));
+
+            fetch('/pipeline-search')
+                .then(res => res.json())
+                .then(json => setChartData(prevState => ({
+                    ...prevState,
+                    pipelines: json
+                })));
+
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const updateChart = (axes) => {
 
         const xAxis = [];
         const yAxisDatasets = [];
@@ -62,17 +91,17 @@ const TotalDatasetsPipelines = ({ datasets, pipelines, ...props }) => {
         var countDatasets = 0;
         var countPipelines = 0;
 
-        Object.keys(data.datasets).forEach(year => {
-            Object.keys(data.datasets[year]).forEach(month => {
+        Object.keys(axes.datasets).forEach(year => {
+            Object.keys(axes.datasets[year]).forEach(month => {
                 xAxis.push(`${month}/${year}`);
-                countDatasets += data.datasets[year][month];
+                countDatasets += axes.datasets[year][month];
                 yAxisDatasets.push(countDatasets);
             });
         });
 
-        Object.keys(data.pipelines).forEach(year => {
-            Object.keys(data.pipelines[year]).forEach(month => {
-                countPipelines += data.pipelines[year][month];
+        Object.keys(axes.pipelines).forEach(year => {
+            Object.keys(axes.pipelines[year]).forEach(month => {
+                countPipelines += axes.pipelines[year][month];
                 yAxisPipelines.push(countPipelines);
             });
         });
@@ -107,27 +136,33 @@ const TotalDatasetsPipelines = ({ datasets, pipelines, ...props }) => {
             }
         }));
 
+        setIsLoading(false);
+
     };
 
-    const constructData = () => {
+    useEffect(() => {
 
-        const chartData = {
+        if (!chartData || !chartData.datasets || !chartData.pipelines) {
+            return
+        }
+
+        const axes = {
             datasets: {},
             pipelines: {}
         };
 
-        datasets.elements.forEach(element => {
+        chartData.datasets.elements.forEach(element => {
             const dateAdded = new Date(element.dateAdded);
 
-            if (!chartData.datasets[dateAdded.getFullYear()]) {
-                chartData.datasets[dateAdded.getFullYear()] = {}
+            if (!axes.datasets[dateAdded.getFullYear()]) {
+                axes.datasets[dateAdded.getFullYear()] = {}
             }
 
-            if (!chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
-                chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+            if (!axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
+                axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
             }
             else {
-                chartData.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1
+                axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1
             }
         });
 
@@ -141,76 +176,74 @@ const TotalDatasetsPipelines = ({ datasets, pipelines, ...props }) => {
 
         const today = new Date();
 
-        Object.keys(chartData.datasets).forEach(year => {
+        if (!Object.keys(axes.datasets).includes(today.getFullYear())) {
+            axes.datasets[today.getFullYear()] = {}
+        }
+
+        if (!Object.keys(axes.pipelines).includes(today.getFullYear())) {
+            axes.pipelines[today.getFullYear()] = {}
+        }
+
+        Object.keys(axes.datasets).forEach(year => {
             for (var i = 1; i <= 12; i++) {
-                if (year === today.getFullYear() && i === today.getMonth() + 2) {
+                if (parseInt(year) === today.getFullYear() && i === (today.getMonth() + 2)) {
                     break;
                 }
-                if (Object.keys(chartData.datasets).includes((year - 1).toString()) &&
-                    !Object.keys(chartData.datasets[year]).includes(`${i}`) && i === 1) {
-                    chartData.datasets[year][i] = 0;
+                if (Object.keys(axes.datasets).includes((year - 1).toString()) &&
+                    !Object.keys(axes.datasets[year]).includes(`${i}`) && i === 1) {
+                    axes.datasets[year][i] = 0;
                 }
-                if (Object.keys(chartData.datasets[year]).includes(`${i - 1}`) &&
-                    !Object.keys(chartData.datasets[year]).includes(`${i}`)) {
-                    chartData.datasets[year][i] = 0;
+                if (Object.keys(axes.datasets[year]).includes(`${i - 1}`) &&
+                    !Object.keys(axes.datasets[year]).includes(`${i}`)) {
+                    axes.datasets[year][i] = 0;
                 }
             }
         });
 
-        pipelines.elements.forEach(element => {
+        chartData.pipelines.elements.forEach(element => {
             const dateAdded = new Date(element.publicationdate);
 
-            if (!chartData.pipelines[dateAdded.getFullYear()]) {
-                chartData.pipelines[dateAdded.getFullYear()] = {}
+            if (!axes.pipelines[dateAdded.getFullYear()]) {
+                axes.pipelines[dateAdded.getFullYear()] = {}
             }
 
-            if (!chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
-                chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+            if (!axes.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
+                axes.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
             }
             else {
-                chartData.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1
+                axes.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1
             }
         });
 
-        Object.keys(chartData.pipelines).forEach(year => {
+        Object.keys(axes.pipelines).forEach(year => {
             for (var i = 1; i <= 12; i++) {
                 if (year === today.getFullYear() && i === today.getMonth() + 2) {
                     break;
                 }
-                if (Object.keys(chartData.pipelines).includes((year - 1).toString()) &&
-                    !Object.keys(chartData.pipelines[year]).includes(`${i}`) && i === 1) {
-                    chartData.pipelines[year][i] = 0;
+                if (Object.keys(axes.pipelines).includes((year - 1).toString()) &&
+                    !Object.keys(axes.pipelines[year]).includes(`${i}`) && i === 1) {
+                    axes.pipelines[year][i] = 0;
                 }
-                if (Object.keys(chartData.pipelines[year]).includes(`${i - 1}`) &&
-                    !Object.keys(chartData.pipelines[year]).includes(`${i}`)) {
-                    chartData.pipelines[year][i] = 0;
+                if (Object.keys(axes.pipelines[year]).includes(`${i - 1}`) &&
+                    !Object.keys(axes.pipelines[year]).includes(`${i}`)) {
+                    axes.pipelines[year][i] = 0;
                 }
             }
         });
 
-        updateChart(chartData);
+        updateChart(axes);
 
-    };
-
-    if (datasets && pipelines && !isDrawn) {
-        constructData();
-        setIsDrawn(true);
-    }
+    }, [chartData])
 
     return (
-        <HighchartsReact
-            highcharts={Highcharts}
-            options={options}
-        />
+        isLoading ?
+            <LoadingSpinner />
+            :
+            <HighchartsReact
+                highcharts={Highcharts}
+                options={options}
+            />
     );
-};
-
-TotalDatasetsPipelines.propTypes = {
-
-};
-
-TotalDatasetsPipelines.defaultProps = {
-
 };
 
 export default TotalDatasetsPipelines;

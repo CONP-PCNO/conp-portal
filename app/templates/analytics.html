@@ -1,72 +1,170 @@
 {% extends 'common/base_main.html' %}
 
 <!-- Head Block -->
-{% block scripts %}
-{{ super() }}
+{% block scripts %} {{ super() }}
 <script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
 <script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
-<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
-{% endblock %}
-
-{% block styles %}
-{{ super() }}
+<script
+  type="text/javascript"
+  src="static/lib/conp-react/umd/conp-react.js"
+></script>
+{% endblock %} {% block styles %} {{ super() }}
 <link rel="stylesheet" href="https://code.highcharts.com/css/highcharts.css" />
+{% endblock %} {% block contenttitle %}
+<h2><span style="color: red">CONP</span> Portal | Analytics</h2>
 {% endblock %}
-
-{% block contenttitle %}
-<h2><span style="color:red;">CONP</span> Portal | Analytics</h2>
-{% endblock %}
-
 
 <!-- Content Block -->
 {% block appcontent %}
 
 <div class="d-flex flex-column">
-  <div class="card m-2">
+  <div class="d-flex flex-row">
+    <!-- Visitor Map -->
+    <div id="widgetIframe" class="w-100">
+      <iframe
+        width="100%"
+        height="400"
+        src="https://matomo-dev.acelab.ca/index.php?module=Widgetize&action=iframe&disableLink=0&widget=1&moduleToWidgetize=UserCountryMap&actionToWidgetize=visitorMap&idSite=2&period=range&date=2021-01-22,today&disableLink=1&widget=1"
+        scrolling="no"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+      ></iframe>
+    </div>
+    <!-- Real-time Visitor Map -->
+    <div id="widgetIframe" class="w-100">
+      <iframe
+        width="100%"
+        height="400"
+        src="https://matomo-dev.acelab.ca/index.php?module=Widgetize&action=iframe&disableLink=0&widget=1&moduleToWidgetize=UserCountryMap&actionToWidgetize=realtimeMap&idSite=2&period=range&date=last30&disableLink=1&widget=1"
+        scrolling="no"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+      ></iframe>
+    </div>
+  </div>
+  <div class="card p-1 m-1">
     <div id="analytics-chart-1">
-
       <script type="text/javascript">
         const analyticsChart1 = React.createElement(CONPReact.ChartContainer, {
-          datasetsURL: "{{ url_for('search.dataset_search') }}",
-          pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
-          toggleState: 1
+          toggleState: "TotalDatasetsPipelines",
         });
-        ReactDOM.render(analyticsChart1, document.querySelector("#analytics-chart-1"));
+        ReactDOM.render(
+          analyticsChart1,
+          document.querySelector("#analytics-chart-1")
+        );
       </script>
-
     </div>
   </div>
 
   <div class="d-flex flex-row">
-    <div class="card m-2 w-100">
+    <div class="card p-1 m-1 w-100">
       <div id="analytics-chart-2">
-
         <script type="text/javascript">
-          const analyticsChart2 = React.createElement(CONPReact.ChartContainer, {
-            datasetsURL: "{{ url_for('search.dataset_search') }}",
-            pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
-            toggleState: 2
-          });
-          ReactDOM.render(analyticsChart2, document.querySelector("#analytics-chart-2"));
+          const analyticsChart2 = React.createElement(
+            CONPReact.ChartContainer,
+            {
+              toggleState: "DatasetModalities",
+            }
+          );
+          ReactDOM.render(
+            analyticsChart2,
+            document.querySelector("#analytics-chart-2")
+          );
         </script>
-
       </div>
     </div>
-    <div class="card m-2 w-100">
+    <div class="card p-1 m-1 w-100">
       <div id="analytics-chart-3">
-
         <script type="text/javascript">
-          const analyticsChart3 = React.createElement(CONPReact.ChartContainer, {
-            datasetsURL: "{{ url_for('search.dataset_search') }}",
-            pipelinesURL: "{{ url_for('pipelines.pipeline_search') }}",
-            toggleState: 3
-          });
-          ReactDOM.render(analyticsChart3, document.querySelector("#analytics-chart-3"));
+          const analyticsChart3 = React.createElement(
+            CONPReact.ChartContainer,
+            {
+              toggleState: "PipelineTags",
+            }
+          );
+          ReactDOM.render(
+            analyticsChart3,
+            document.querySelector("#analytics-chart-3")
+          );
         </script>
-
       </div>
     </div>
+  </div>
 
+  <div class="d-flex flex-row">
+    <div class="card p-1 m-1 w-100">
+      <div id="analytics-chart-4">
+        <script type="text/javascript">
+          const analyticsChart4 = React.createElement(
+            CONPReact.ChartContainer,
+            {
+              toggleState: "DailyVisitors",
+            }
+          );
+          ReactDOM.render(
+            analyticsChart4,
+            document.querySelector("#analytics-chart-4")
+          );
+        </script>
+      </div>
+    </div>
+    <div class="card p-1 m-1 w-100">
+      <div id="analytics-chart-5">
+        <script type="text/javascript">
+          const analyticsChart5 = React.createElement(
+            CONPReact.ChartContainer,
+            {
+              toggleState: "Keywords",
+            }
+          );
+          ReactDOM.render(
+            analyticsChart5,
+            document.querySelector("#analytics-chart-5")
+          );
+        </script>
+      </div>
+    </div>
+  </div>
+  <div class="card p-1 m-1">
+    <div id="analytics-chart-6">
+      <script type="text/javascript">
+        const analyticsChart6 = React.createElement(CONPReact.ChartContainer, {
+          toggleState: "DatasetPageViews",
+        });
+        ReactDOM.render(
+          analyticsChart6,
+          document.querySelector("#analytics-chart-6")
+        );
+      </script>
+    </div>
+  </div>
+  <div class="card p-1 m-1">
+    <div id="analytics-chart-7">
+      <script type="text/javascript">
+        const analyticsChart7 = React.createElement(CONPReact.ChartContainer, {
+          toggleState: "PipelinePageViews",
+        });
+        ReactDOM.render(
+          analyticsChart7,
+          document.querySelector("#analytics-chart-7")
+        );
+      </script>
+    </div>
+  </div>
+
+  <!-- Behaviour Transition Graph -->
+  <div id="widgetIframe">
+    <iframe
+      width="100%"
+      height="800"
+      src="https://matomo-dev.acelab.ca/index.php?module=Widgetize&action=iframe&disableLink=0&widget=1&moduleToWidgetize=Transitions&actionToWidgetize=getTransitions&idSite=2&period=range&date=last30&disableLink=1&widget=1"
+      scrolling="no"
+      frameborder="0"
+      marginheight="0"
+      marginwidth="0"
+    ></iframe>
   </div>
 </div>
 

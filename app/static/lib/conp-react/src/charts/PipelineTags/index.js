@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import ContextMenu from '../ContextMenu'
+import LoadingSpinner from "../LoadingSpinner"
 
 import Highcharts from "highcharts";
-import HighchartsReact from 'highcharts-react-official'
+import HighchartsReact from 'highcharts-react-official';
 require('highcharts/highcharts-more.js')(Highcharts);
+require('highcharts-custom-events')(Highcharts);
 
 const defaultOptions = {
 
@@ -32,22 +35,19 @@ const defaultOptions = {
         series: {
             allowPointSelect: true,
             point: {
-                events: {
-                    select: function (e) {
-                        // eslint-disable-next-line no-restricted-globals
-                        location.assign(`/pipelines?tags=${e.target.name.toLowerCase()}`)
-                    }
-                }
+                events: {}
             }
         },
         packedbubble: {
             color: "#207EA0",
-            minSize: '10%',
+            minSize: '30%',
             maxSize: '100%',
             zMin: 0,
             zMax: 20,
             layoutAlgorithm: {
-                gravitationalConstant: 0.02,
+                initialPositions: 'random',
+                bubblePadding: 12,
+                gravitationalConstant: 0.006,
                 splitSeries: false,
             },
             dataLabels: {
@@ -71,10 +71,32 @@ const defaultOptions = {
 
 };
 
-const PipelineTags = ({ pipelines, ...props }) => {
+const PipelineTags = (props) => {
 
+    const [chartData, setChartData] = useState()
     const [options, setOptions] = useState(defaultOptions);
-    const [isDrawn, setIsDrawn] = useState(false);
+    const [isLoading, setIsLoading] = useState(true)
+
+    const [contextMenuOptions, setContextMenuOptions] = useState({});
+
+    useEffect(() => {
+        fetchChartData();
+    }, [])
+
+    const fetchChartData = async () => {
+
+        try {
+            fetch('/pipeline-search')
+                .then(res => res.json())
+                .then(json => setChartData(prevState => ({
+                    ...prevState,
+                    pipelines: json
+                })));
+
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     const updateChart = (data) => {
 
@@ -94,34 +116,40 @@ const PipelineTags = ({ pipelines, ...props }) => {
             ...prevOptions,
             series: series,
         }));
+
+        setIsLoading(false);
     };
 
-    const constructData = () => {
+    useEffect(() => {
 
-        const chartData = {
+        if (!chartData) {
+            return
+        }
+
+        const axes = {
             pipelines: {}
         };
 
-        pipelines.elements.forEach(pipeline => {
+        chartData.pipelines.elements.forEach(pipeline => {
 
             if (!pipeline.tags.domain)
                 return;
 
             if (!Array.isArray(pipeline.tags.domain)) {
-                addOrIncreaseDatapoint(chartData.pipelines, pipeline.tags.domain);
+                addOrIncreaseDatapoint(axes.pipelines, pipeline.tags.domain);
                 return;
             }
             const tagsArr = pipeline.tags.domain;
 
             tagsArr.forEach(tag => {
-                addOrIncreaseDatapoint(chartData.pipelines, tag.toLowerCase());
+                addOrIncreaseDatapoint(axes.pipelines, tag.toLowerCase());
             })
 
         })
 
-        updateChart(chartData);
+        updateChart(axes);
 
-    };
+    }, [chartData]);
 
     const addOrIncreaseDatapoint = (data, point) => {
         if (!Object.keys(data).includes(point)) {
@@ -132,25 +160,47 @@ const PipelineTags = ({ pipelines, ...props }) => {
         }
     }
 
-    if (pipelines && !isDrawn) {
-        constructData();
-        setIsDrawn(true);
-    }
+    useEffect(() => {
+        setOptions(prevOptions => {
+            const options = prevOptions
+            options.plotOptions.series.point.events = {
+                contextmenu: function (e) {
+                    e.preventDefault()
+                    console.log(e.target)
+                    const xPos = e.pageX;
+                    const yPos = e.pageY;
+                    const style = {
+                        "position": "absolute",
+                        "left": xPos,
+                        "top": yPos,
+                        "zIndex": 1000
+                    };
+                    const url = `/pipelines?tags=${e.target.point.name.toLowerCase()}`;
+                    setContextMenuOptions({
+                        title: e.target.point.name,
+                        actionText: "View Pipelines",
+                        style: style,
+                        url: url,
+                        show: true
+                    })
+                }
+            }
+            return options
+        })
+    }, []);
 
     return (
-        <HighchartsReact
-            highcharts={Highcharts}
-            options={options}
-        />
+        isLoading ?
+            <LoadingSpinner />
+            :
+            <div>
+                <ContextMenu options={contextMenuOptions} />
+                <HighchartsReact
+                    highcharts={Highcharts}
+                    options={options}
+                />
+            </div>
     );
-};
-
-PipelineTags.propTypes = {
-
-};
-
-PipelineTags.defaultProps = {
-
 };
 
 export default PipelineTags;

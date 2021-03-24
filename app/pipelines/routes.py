@@ -7,7 +7,7 @@ import json
 import os
 from flask import render_template, request, url_for
 from flask_login import current_user
-from app.pipelines import pipelines_bp
+from app.pipelines import pipelines_bp, pipelines as pipelines_utils
 
 
 @pipelines_bp.route('/pipelines', methods=['GET'])
@@ -74,36 +74,7 @@ def pipeline_search():
 
     page = int(request.args.get("page") or 1)
 
-    cache_dir = os.path.join(os.path.expanduser(
-        '~'), ".cache", "boutiques", "production")
-    all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
-    all_detailed_desc_path = os.path.join(
-        cache_dir, "detailed_all_descriptors.json")
-
-    # fetch data from cache
-    with open(all_desc_path, "r") as f:
-        all_descriptors = json.load(f)
-
-    with open(all_detailed_desc_path, "r") as f:
-        detailed_all_descriptors = json.load(f)
-
-    # search cache with search query else return everything
-    if search_query not in ("", '', None):
-        elements = [
-            {**descriptor, **detailed_all_descriptors[d_index]}
-            for d_index, descriptor in enumerate(all_descriptors)
-            if search_query in (
-                (str(descriptor.values())
-                    + str(detailed_all_descriptors[d_index]["tags"].values())).lower()
-                if "tags" in detailed_all_descriptors[d_index] else
-                str(descriptor.values()).lower()
-            )
-        ]
-    else:
-        elements = [
-            {**descriptor, **detailed_all_descriptors[d_index]}
-            for d_index, descriptor in enumerate(all_descriptors)
-        ]
+    elements = pipelines_utils.get_pipelines_from_cache(search_query)
 
     # filter out the deprecated pipelines
     elements = list(
@@ -250,24 +221,9 @@ def pipeline_info():
 
     pipeline_id = request.args.get('id')
 
-    # fetch data from cache
-    cache_dir = os.path.join(os.path.expanduser(
-        '~'), ".cache", "boutiques", "production")
-    all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
-    all_detailed_desc_path = os.path.join(
-        cache_dir, "detailed_all_descriptors.json")
-    with open(all_desc_path, "r") as f:
-        all_descriptors = json.load(f)
+    pipelines = pipelines_utils.get_pipelines_from_cache()
 
-    with open(all_detailed_desc_path, "r") as f:
-        detailed_all_descriptors = json.load(f)
-
-    elements = [
-        {**descriptor, **detailed_all_descriptors[d_index]}
-        for d_index, descriptor in enumerate(all_descriptors)
-    ]
-
-    element = list(filter(lambda e: e['ID'] == pipeline_id, elements))[0]
+    element = list(filter(lambda e: e['ID'] == pipeline_id, pipelines))[0]
 
     # make all keys lowercase
     element = {k.lower(): v for k, v in element.items()}
@@ -281,10 +237,12 @@ def pipeline_info():
         zenodo_urls = json.load(f)
 
     if element["id"] in zenodo_urls.keys():
-        element["platforms"][0]["img"] = url_for('static', filename="img/run_on_cbrain_green.png")
+        element["platforms"][0]["img"] = url_for(
+            'static', filename="img/run_on_cbrain_green.png")
         element["platforms"][0]["uri"] = zenodo_urls[element["id"]]
     else:
-        element["platforms"][0]["img"] = url_for('static', filename="img/run_on_cbrain_gray.png")
+        element["platforms"][0]["img"] = url_for(
+            'static', filename="img/run_on_cbrain_gray.png")
         element["platforms"][0]["uri"] = ""
 
     # make all keys lowercase and without spaces

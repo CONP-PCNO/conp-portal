@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserLock } from '@fortawesome/free-solid-svg-icons'
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
-import { faFileCode } from '@fortawesome/free-regular-svg-icons'
+
+import ViewsIcon from '../social/ViewsIcon'
 
 const DatasetElement = props => {
   const { authorized, imagePath, ...element } = props;
@@ -107,7 +108,8 @@ const DatasetElement = props => {
             />
           </div>
           <div className="flex-grow-1 d-flex flex-row align-items-end">
-            {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP} alt="CONP status" />) : <div style={{ width: 32 }} />}
+            {element.conpStatus !== 'external' ? (<img height="36" width="36" src={statusCONP} alt="CONP status" />) : <div style={{ width: 36 }} />}
+            <ViewsIcon type="dataset" id={element.id} />
           </div>
         </div>
         <div className="col col-lg-8 card-body d-flex">
