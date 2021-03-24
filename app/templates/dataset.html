@@ -215,19 +215,28 @@
   {% endif %}
 </div>
 
-{% if showDownloadButton %}
-  <div class="d-flex flex-row align-items-center mb-2">
-    <a href="{{ zipLocation }}" class="btn btn-outline-primary" id="downloadButton">
-      Download this version
-    </a>
-  </div>
-{% endif %}
-
 <div class="d-flex flex-column p-2">
   <div class="d-flex flex-row align-items-center">
     <a name="downloadInstructions">
-      <h2 class="px-2">Dataset Download Instructions</h2>
     </a>
+      {% if showDownloadButton %}
+  </div>
+  <div class="d-flex flex-row align-items-center">
+    <h2 class="px-2">Direct Download</h2>
+  </div>
+  <div class="d-flex flex-row align-items-center">
+    <p>This dataset is available for direct download from the portal.</p>
+  </div>
+  <div class="d-flex flex-row align-items-center">
+    <div class="col-md-2">
+      <a href="{{ zipLocation }}" class="btn btn-outline-primary" id="downloadButton">
+        Download this version
+      </a> 
+    </div>
+  </div>
+  <div class="d-flex flex-row align-items-center">
+      {% endif %}
+      <h2 class="px-2">Dataset Download Instructions</h2>
     <a
       class="px-2"
       target="_blank"
