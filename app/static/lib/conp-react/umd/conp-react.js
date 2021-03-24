@@ -514,13 +514,6 @@ function useForkRef(refA, refB) {
 
 /***/ }),
 /* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(152);
-
-
-/***/ }),
-/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -814,7 +807,7 @@ function lighten(color, coefficient) {
 }
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1365,6 +1358,13 @@ K(e,function(d,e){if(!v&&-1<h.collectionsWithUpdate.indexOf(e))for(d=y(d),m[e]=[
 //# sourceMappingURL=highcharts.js.map
 
 /***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(152);
+
+
+/***/ }),
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1637,7 +1637,7 @@ function warning(condition, message) {
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-!function(e,t){ true?module.exports=t(__webpack_require__(0),__webpack_require__(14)):undefined}("undefined"!=typeof self?self:this,function(e,t){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,r){"use strict";function n(){return n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},n.apply(this,arguments)}function o(e){return i(e)||u(e)||c()}function c(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function u(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function i(e){if(Array.isArray(e)){for(var t=0,r=new Array(e.length);t<e.length;t++)r[t]=e[t];return r}}Object.defineProperty(t,"__esModule",{value:!0});var a=r(1),s=r.n(a),f=r(2),p=r.n(f),l="undefined"!=typeof window?a.useLayoutEffect:a.useEffect,d=Object(a.forwardRef)(function(e,t){var r=Object(a.useRef)(),c=Object(a.useRef)();return l(function(){function t(){var t=e.highcharts||p.a,n=e.constructorType||"chart";t?t[n]?e.options?c.current=t[n](r.current,e.options,e.callback?e.callback:void 0):console.warn('The "options" property was not passed.'):console.warn('The "constructorType" property is incorrect or some required module is not imported.'):console.warn('The "highcharts" property was not passed.')}if(c.current){if(!1!==e.allowChartUpdate)if(!e.immutable&&c.current){var n;(n=c.current).update.apply(n,[e.options].concat(o(e.updateArgs||[!0,!0])))}else t()}else t()}),l(function(){return function(){c.current&&(c.current.destroy(),c.current=null)}},[]),Object(a.useImperativeHandle)(t,function(){return{get chart(){return c.current},container:r}},[]),s.a.createElement("div",n({},e.containerProps,{ref:r}))});t.default=Object(a.memo)(d)},function(t,r){t.exports=e},function(e,r){e.exports=t}])});
+!function(e,t){ true?module.exports=t(__webpack_require__(0),__webpack_require__(13)):undefined}("undefined"!=typeof self?self:this,function(e,t){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,r){"use strict";function n(){return n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},n.apply(this,arguments)}function o(e){return i(e)||u(e)||c()}function c(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function u(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function i(e){if(Array.isArray(e)){for(var t=0,r=new Array(e.length);t<e.length;t++)r[t]=e[t];return r}}Object.defineProperty(t,"__esModule",{value:!0});var a=r(1),s=r.n(a),f=r(2),p=r.n(f),l="undefined"!=typeof window?a.useLayoutEffect:a.useEffect,d=Object(a.forwardRef)(function(e,t){var r=Object(a.useRef)(),c=Object(a.useRef)();return l(function(){function t(){var t=e.highcharts||p.a,n=e.constructorType||"chart";t?t[n]?e.options?c.current=t[n](r.current,e.options,e.callback?e.callback:void 0):console.warn('The "options" property was not passed.'):console.warn('The "constructorType" property is incorrect or some required module is not imported.'):console.warn('The "highcharts" property was not passed.')}if(c.current){if(!1!==e.allowChartUpdate)if(!e.immutable&&c.current){var n;(n=c.current).update.apply(n,[e.options].concat(o(e.updateArgs||[!0,!0])))}else t()}else t()}),l(function(){return function(){c.current&&(c.current.destroy(),c.current=null)}},[]),Object(a.useImperativeHandle)(t,function(){return{get chart(){return c.current},container:r}},[]),s.a.createElement("div",n({},e.containerProps,{ref:r}))});t.default=Object(a.memo)(d)},function(t,r){t.exports=e},function(e,r){e.exports=t}])});
 //# sourceMappingURL=highcharts-react.min.js.map
 
 /***/ }),
@@ -2432,7 +2432,7 @@ var green = {
 };
 /* harmony default export */ var colors_green = (green);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/colorManipulator.js
-var colorManipulator = __webpack_require__(13);
+var colorManipulator = __webpack_require__(12);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/createPalette.js
 
@@ -7542,7 +7542,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
  License: www.highcharts.com/license
 */
-(function(c){ true&&module.exports?(c["default"]=c,module.exports=c): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(14)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(A){c(A);c.Highcharts=A;return c}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+(function(c){ true&&module.exports?(c["default"]=c,module.exports=c): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(13)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(A){c(A);c.Highcharts=A;return c}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):undefined})(function(c){function A(c,b,h,a){c.hasOwnProperty(b)||(c[b]=a.apply(null,h))}c=c?c._modules:{};A(c,"Extensions/Pane.js",[c["Core/Chart/Chart.js"],c["Core/Globals.js"],c["Core/Pointer.js"],c["Core/Utilities.js"],c["Mixins/CenteredSeries.js"]],
 function(c,b,h,a,f){function q(e,f,m){return Math.sqrt(Math.pow(e-m[0],2)+Math.pow(f-m[1],2))<=m[2]/2}var u=a.addEvent,z=a.extend,E=a.merge,B=a.pick,e=a.splat;c.prototype.collectionsWithUpdate.push("pane");a=function(){function b(e,m){this.options=this.chart=this.center=this.background=void 0;this.coll="pane";this.defaultOptions={center:["50%","50%"],size:"85%",innerSize:"0%",startAngle:0};this.defaultBackgroundOptions={shape:"circle",borderWidth:1,borderColor:"#cccccc",backgroundColor:{linearGradient:{x1:0,
 y1:0,x2:0,y2:1},stops:[[0,"#ffffff"],[1,"#e6e6e6"]]},from:-Number.MAX_VALUE,innerRadius:0,to:Number.MAX_VALUE,outerRadius:"105%"};this.init(e,m)}b.prototype.init=function(e,m){this.chart=m;this.background=[];m.pane.push(this);this.setOptions(e)};b.prototype.setOptions=function(e){this.options=E(this.defaultOptions,this.chart.angular?{background:{}}:void 0,e)};b.prototype.render=function(){var b=this.options,m=this.options.background,f=this.chart.renderer;this.group||(this.group=f.g("pane-group").attr({zIndex:b.zIndex||
@@ -7732,7 +7732,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
         factory['default'] = factory;
         module.exports = factory;
     } else if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(14)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (Highcharts) {
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(13)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (Highcharts) {
             factory(Highcharts);
             factory.Highcharts = Highcharts;
             return factory;
@@ -17591,7 +17591,7 @@ DataTable_DataTable.defaultProps = {
 };
 /* harmony default export */ var src_DataTable_DataTable = (DataTable_DataTable);
 // EXTERNAL MODULE: ./node_modules/nwb/node_modules/@babel/runtime/regenerator/index.js
-var regenerator = __webpack_require__(12);
+var regenerator = __webpack_require__(14);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/query-string/index.js
@@ -24217,17 +24217,11 @@ var LoadingSpinner = function LoadingSpinner(props) {
 // CONCATENATED MODULE: ./src/DatasetElement/ViewsIcon/index.js
 
 
-function ViewsIcon_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function ViewsIcon_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { ViewsIcon_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { ViewsIcon_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-
-
 
 
 
 var ViewsIcon_ViewsIcon = function ViewsIcon(props) {
-  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([]),
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(),
       views = _useState[0],
       setViews = _useState[1];
 
@@ -24238,36 +24232,24 @@ var ViewsIcon_ViewsIcon = function ViewsIcon(props) {
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
     fetchViews();
   }, []);
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    if (!isLoading && views) {
+      setIsLoading(false);
+    }
+  }, [views]);
 
-  var fetchViews = /*#__PURE__*/function () {
-    var _ref = ViewsIcon_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-      return regenerator_default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              try {
-                fetch("/analytics/datasets/views?id=" + props.datasetId).then(function (res) {
-                  return res.json();
-                }).then(function (json) {
-                  console.log(json);
-                  return setViews(json);
-                }).then(setIsLoading(false));
-              } catch (err) {
-                console.error(err);
-              }
-
-            case 1:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function fetchViews() {
-      return _ref.apply(this, arguments);
-    };
-  }();
+  var fetchViews = function fetchViews() {
+    try {
+      fetch("/analytics/datasets/views?id=" + props.datasetId).then(function (res) {
+        return res.json();
+      }).then(function (json) {
+        console.log(json);
+        return setViews(json[0]);
+      }).then(setIsLoading(false));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return isLoading ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(charts_LoadingSpinner, null) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-column align-items-center mx-2"
@@ -24275,7 +24257,7 @@ var ViewsIcon_ViewsIcon = function ViewsIcon(props) {
     icon: faEye,
     color: "dimgray",
     size: "md"
-  }), "7");
+  }), !!views && views.nb_hits);
 };
 
 /* harmony default export */ var DatasetElement_ViewsIcon = (ViewsIcon_ViewsIcon);
@@ -24415,13 +24397,13 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "flex-grow-1 d-flex flex-row align-items-end"
   }, element.conpStatus !== 'external' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-    height: "32",
-    width: "32",
+    height: "36",
+    width: "36",
     src: statusCONP,
     alt: "CONP status"
   }) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     style: {
-      width: 32
+      width: 36
     }
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(DatasetElement_ViewsIcon, {
     datasetId: element.id
@@ -24705,7 +24687,7 @@ PipelineElement_PipelineElement.propTypes = {
 
 /* harmony default export */ var src_PipelineElement = (PipelineElement_PipelineElement);
 // EXTERNAL MODULE: ./node_modules/highcharts/highcharts.js
-var highcharts = __webpack_require__(14);
+var highcharts = __webpack_require__(13);
 var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
 
 // EXTERNAL MODULE: ./node_modules/highcharts-react-official/dist/highcharts-react.min.js
@@ -32086,7 +32068,7 @@ var Typography_Typography = /*#__PURE__*/external_root_React_commonjs2_react_com
   name: 'MuiTypography'
 })(Typography_Typography));
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/colorManipulator.js
-var colorManipulator = __webpack_require__(13);
+var colorManipulator = __webpack_require__(12);
 
 // EXTERNAL MODULE: ./node_modules/react-dom/index.js
 var react_dom = __webpack_require__(15);

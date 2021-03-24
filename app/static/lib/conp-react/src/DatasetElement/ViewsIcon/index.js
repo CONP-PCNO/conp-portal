@@ -6,21 +6,27 @@ import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 const ViewsIcon = (props) => {
 
-    const [views, setViews] = useState([])
+    const [views, setViews] = useState()
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         fetchViews();
     }, [])
 
-    const fetchViews = async () => {
+    useEffect(() => {
+        if (!isLoading && views) {
+            setIsLoading(false)
+        }
+    }, [views])
+
+    const fetchViews = () => {
 
         try {
             fetch(`/analytics/datasets/views?id=${props.datasetId}`)
                 .then(res => res.json())
                 .then(json => {
                     console.log(json)
-                    return setViews(json)
+                    return setViews(json[0])
                 })
                 .then(
                     setIsLoading(false)
@@ -36,7 +42,7 @@ const ViewsIcon = (props) => {
         isLoading ? <LoadingSpinner /> :
             <div className="d-flex flex-column align-items-center mx-2" >
                 <FontAwesomeIcon icon={faEye} color="dimgray" size="md" />
-                7
+                {!!views && views.nb_hits}
             </div>
 
     );

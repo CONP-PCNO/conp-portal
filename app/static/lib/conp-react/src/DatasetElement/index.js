@@ -108,7 +108,7 @@ const DatasetElement = props => {
             />
           </div>
           <div className="flex-grow-1 d-flex flex-row align-items-end">
-            {element.conpStatus !== 'external' ? (<img height="32" width="32" src={statusCONP} alt="CONP status" />) : <div style={{ width: 32 }} />}
+            {element.conpStatus !== 'external' ? (<img height="36" width="36" src={statusCONP} alt="CONP status" />) : <div style={{ width: 36 }} />}
             <ViewsIcon datasetId={element.id} />
           </div>
         </div>
