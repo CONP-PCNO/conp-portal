@@ -137,8 +137,17 @@ def pipelines_views():
 
     elements = []
 
-    page_views = MatomoDailyGetPageUrlsSummary.query.order_by(
-        MatomoDailyGetPageUrlsSummary.id).all()
+    page_views = []
+
+    id = request.args.get('id', None)
+
+    if id is not None:
+        page_views = MatomoDailyGetPageUrlsSummary.query.filter_by(
+            label="/pipeline?id="+id).all()
+
+    else:
+        page_views = MatomoDailyGetPageUrlsSummary.query.order_by(
+            MatomoDailyGetPageUrlsSummary.id).all()
 
     for v in page_views:
         exists = False

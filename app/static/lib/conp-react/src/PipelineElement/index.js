@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import ViewsIcon from "../ViewsIcon"
+
 const PipelineElement = props => {
   const { authorized, ...element } = props;
   const platforms = element.platforms.map((item, key) =>
@@ -18,13 +20,13 @@ const PipelineElement = props => {
   );
 
   return (
-    <div className="card flex-row" style={{minHeight: '220px'}} data-type="pipeline">
+    <div className="card flex-row" style={{ minHeight: '220px' }} data-type="pipeline">
       <div className="col-sm-12 col-md-2 d-flex flex-column justify-content-between align-items-center p-4">
         <a href={element.url}>
           <img
             alt="dataset format"
             className="img-fluid"
-            style={{maxWidth: '140px'}}
+            style={{ maxWidth: '140px' }}
             src={
               element.url === undefined
                 ? "static/img/cogs-solid-grey.png"
@@ -33,9 +35,10 @@ const PipelineElement = props => {
           />
         </a>
         <div className="d-flex">
+          <ViewsIcon type="pipeline" id={element.id} />
           {element.downloads ?
             <div className="d-flex flex-column align-items-center">
-              <i className="fa fa-download my-2" />
+              <i className="fa fa-download" />
               <div>{element.downloads}</div>
             </div> : null}
         </div>
@@ -53,8 +56,8 @@ const PipelineElement = props => {
             </div>
             <div className="col-9">{element.tags && element.tags.domain ?
               Array.isArray(element.tags.domain) ?
-              element.tags.domain.map(tag => <span key={"tag" + tag} className="mr-1"><a href={"/pipelines?tags=" + tag} className="badge badge-primary">{tag}</a></span>)
-              : <span><a href={"/pipelines?tags=" + element.tags.domain} className="badge badge-primary">{element.tags.domain}</a></span>
+                element.tags.domain.map(tag => <span key={"tag" + tag} className="mr-1"><a href={"/pipelines?tags=" + tag} className="badge badge-primary">{tag}</a></span>)
+                : <span><a href={"/pipelines?tags=" + element.tags.domain} className="badge badge-primary">{element.tags.domain}</a></span>
               : null}
             </div>
           </div>
