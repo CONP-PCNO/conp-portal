@@ -5,7 +5,6 @@
 """
 
 import json
-import os
 
 from flask import render_template, request
 from flask_login import current_user
@@ -143,7 +142,7 @@ def pipelines_views():
 
     if id is not None:
         page_views = MatomoDailyGetPageUrlsSummary.query.filter_by(
-            label="/pipeline?id="+id).all()
+            label="/pipeline?id=" + id).all()
 
     else:
         page_views = MatomoDailyGetPageUrlsSummary.query.order_by(
