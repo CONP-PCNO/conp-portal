@@ -208,6 +208,9 @@ def keywords():
             }
             elements.append(element)
 
+    # Filter out short keywords
+    elements = list(filter(lambda e: len(e['label']) > 2, elements))
+
     elements.sort(key=lambda e: e["nb_hits"], reverse=True)
 
     return json.dumps(elements)
