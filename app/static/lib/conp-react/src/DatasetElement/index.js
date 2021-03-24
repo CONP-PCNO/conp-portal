@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserLock } from '@fortawesome/free-solid-svg-icons'
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
 
-import ViewsIcon from '../ViewsIcon'
+import ViewsIcon from '../social/ViewsIcon'
 
 const DatasetElement = props => {
   const { authorized, imagePath, ...element } = props;

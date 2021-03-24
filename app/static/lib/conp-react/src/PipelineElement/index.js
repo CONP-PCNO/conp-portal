@@ -1,14 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import ViewsIcon from "../ViewsIcon"
+import ViewsIcon from "../social/ViewsIcon"
+import DownloadsIcon from "../social/DownloadsIcon"
 
 const PipelineElement = props => {
   const { authorized, ...element } = props;
   const platforms = element.platforms.map((item, key) =>
     item.uri ?
       <span key={key} data-toggle="tooltip" title="Run Pipeline" style={{ maxWidth: "140px" }}>
-        <a target="_blank" className="btn" href={item.uri}>
+        <a target="_blank" rel="noreferrer" className="btn" href={item.uri}>
           <img className="img-fluid" alt="Online platform" src={item.img} />
         </a>
       </span> :
@@ -37,10 +38,7 @@ const PipelineElement = props => {
         <div className="d-flex">
           <ViewsIcon type="pipeline" id={element.id} />
           {element.downloads ?
-            <div className="d-flex flex-column align-items-center">
-              <i className="fa fa-download" />
-              <div>{element.downloads}</div>
-            </div> : null}
+            <DownloadsIcon downloads={element.downloads} /> : null}
         </div>
       </div>
       <div className="card-body d-md-flex flex-wrap">

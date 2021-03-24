@@ -24214,7 +24214,7 @@ var LoadingSpinner = function LoadingSpinner(props) {
 };
 
 /* harmony default export */ var charts_LoadingSpinner = (LoadingSpinner);
-// CONCATENATED MODULE: ./src/ViewsIcon/index.js
+// CONCATENATED MODULE: ./src/social/ViewsIcon/index.js
 
 
 
@@ -24260,7 +24260,7 @@ var ViewsIcon_ViewsIcon = function ViewsIcon(props) {
   }), !!views && views.nb_hits);
 };
 
-/* harmony default export */ var src_ViewsIcon = (ViewsIcon_ViewsIcon);
+/* harmony default export */ var social_ViewsIcon = (ViewsIcon_ViewsIcon);
 // CONCATENATED MODULE: ./src/DatasetElement/index.js
 function DatasetElement_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
@@ -24405,7 +24405,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     style: {
       width: 36
     }
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_ViewsIcon, {
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(social_ViewsIcon, {
     type: "dataset",
     id: element.id
   }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -24542,8 +24542,25 @@ DatasetElement_DatasetElement.defaultProps = {
   downloadPath: ""
 };
 /* harmony default export */ var src_DatasetElement = (DatasetElement_DatasetElement);
+// CONCATENATED MODULE: ./src/social/DownloadsIcon/index.js
+
+
+
+
+var DownloadsIcon_DownloadsIcon = function DownloadsIcon(props) {
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex flex-column align-items-center mx-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
+    icon: faDownload,
+    color: "dimgray",
+    size: "md"
+  }), props.downloads);
+};
+
+/* harmony default export */ var social_DownloadsIcon = (DownloadsIcon_DownloadsIcon);
 // CONCATENATED MODULE: ./src/PipelineElement/index.js
 function PipelineElement_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
 
 
 
@@ -24563,6 +24580,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       }
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
       target: "_blank",
+      rel: "noreferrer",
       className: "btn",
       href: item.uri
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
@@ -24605,14 +24623,12 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     src: element.url === undefined ? "static/img/cogs-solid-grey.png" : "static/img/cogs-solid-green.png"
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_ViewsIcon, {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(social_ViewsIcon, {
     type: "pipeline",
     id: element.id
-  }), element.downloads ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-column align-items-center"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", {
-    className: "fa fa-download"
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, element.downloads)) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }), element.downloads ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(social_DownloadsIcon, {
+    downloads: element.downloads
+  }) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-body d-md-flex flex-wrap"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     style: {
