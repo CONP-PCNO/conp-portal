@@ -25869,8 +25869,8 @@ var PipelinePageViews_PipelinePageViews = function PipelinePageViews(props) {
       views: {}
     };
     chartData.views.forEach(function (element) {
-      var label = element.label.includes('/pipeline?id=') ? element.label.split('/pipeline?id=')[1] : element.label;
-      axes.views[label] = element.nb_hits;
+      var title = element.title;
+      axes.views[title] = element.nb_hits;
     });
     updateChart(axes);
   }, [chartData]);

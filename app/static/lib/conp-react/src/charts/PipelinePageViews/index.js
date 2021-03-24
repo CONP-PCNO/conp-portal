@@ -105,8 +105,8 @@ const PipelinePageViews = (props) => {
         };
 
         chartData.views.forEach(element => {
-            const label = element.label.includes('/pipeline?id=') ? element.label.split('/pipeline?id=')[1] : element.label
-            axes.views[label] = element.nb_hits
+            const title = element.title
+            axes.views[title] = element.nb_hits
         });
 
         updateChart(axes);

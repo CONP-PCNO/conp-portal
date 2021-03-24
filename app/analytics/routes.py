@@ -5,10 +5,12 @@
 """
 
 import json
+import os
 
 from flask import render_template, request
 from flask_login import current_user
 from app.analytics import analytics_bp
+from app.pipelines import pipelines
 
 from app.models import MatomoDailyVisitsSummary, MatomoDailyGetDatasetPageViewsSummary, MatomoDailyGetSiteSearchKeywords, MatomoDailyGetPageUrlsSummary
 
@@ -153,6 +155,7 @@ def pipelines_views():
             element = {
                 "url": v.url,
                 "label": v.label,
+                "title": pipelines.get_title_from_id(v.label.split('id=')[1]),
                 "nb_hits": v.nb_hits,
                 "nb_visits": v.nb_visits,
                 "nb_uniq_visitors": v.nb_uniq_visitors if v.nb_uniq_visitors is not None else 0,
