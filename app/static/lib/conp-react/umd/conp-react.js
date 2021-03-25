@@ -23761,7 +23761,19 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     hidden: !datasetSpinnerState
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
     className: "sr-only"
-  }, "Loading..."))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "Loading..."))), element.cbrain_id ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    target: "_blank",
+    href: "" + element.cbrain_id
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    alt: "dataset format",
+    className: "img-fluid",
+    style: {
+      alignSelf: 'center'
+    },
+    src: "static/img/cbrain-icon-blue.png"
+  })) : null, element.cbrain_id ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "text-center p-1"
+  }, "Browse on CBrain") : null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "alert alert-danger",
     role: "alert",
     hidden: !datasetErrorState
@@ -23795,7 +23807,8 @@ DatasetElement_DatasetElement.propTypes = {
   subjects: prop_types_default.a.number,
   formats: prop_types_default.a.string,
   modalities: prop_types_default.a.string,
-  sources: prop_types_default.a.number
+  sources: prop_types_default.a.number,
+  cbrain_id: prop_types_default.a.string
 };
 DatasetElement_DatasetElement.defaultProps = {
   imagePath: "",
