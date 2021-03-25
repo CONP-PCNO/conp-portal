@@ -222,13 +222,13 @@ const DatasetElement = props => {
             <a target="_blank" href={`${element.cbrain_id}`}>
 			<img
 			alt="dataset format"
-			className="img-fluid"
+			className="dataset-img-fluid"
 			style={{alignSelf: 'center'}}
 			src="static/img/cbrain-icon-blue.png"/>
 		
 	    </a>:
 	    null}
-            {element.cbrain_id ? <div className="text-center p-1">Browse on CBrain</div> : null}
+            {element.cbrain_id ? <div className="dataset-text-center p-1">Browse on CBrain</div> : null}
             
             
             

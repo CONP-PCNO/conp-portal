@@ -4,7 +4,12 @@
 	"CFMM-7T: MP2RAGE T1 mapping":"https://portal.cbrain.mcgill.ca/groups/switch?id=8469",
 	"Intracellular Recordings of Murine Neocortical Neurons":"https://portal.cbrain.mcgill.ca/groups/switch?id=8475",
 	"NIH Blueprint Non-Human Primate Atlas":"https://portal.cbrain.mcgill.ca/groups/switch?id=8478",
-	"OpenPain":"https://portal.cbrain.mcgill.ca/groups/switch?id=6858",
+	"OpenPain BrainNetworkChange_Mano":"https://portal.cbrain.mcgill.ca/groups/switch?id=6858",
+	"OpenPain cbp_resting":"https://portal.cbrain.mcgill.ca/groups/switch?id=6858",
+	"OpenPain placebo_1":"https://portal.cbrain.mcgill.ca/groups/switch?id=6858",
+	"OpenPain placebo_predict_tetreault":"https://portal.cbrain.mcgill.ca/groups/switch?id=6858",
+	"OpenPain subacute_longitudinal_study":"https://portal.cbrain.mcgill.ca/groups/switch?id=6858",
+	"OpenPain thermal":"https://portal.cbrain.mcgill.ca/groups/switch?id=6858",
 	"SIMON":"https://portal.cbrain.mcgill.ca/groups/switch?id=7332",
 	"Visual working memory: Study of Task fMRI and Behavioural response":"https://portal.cbrain.mcgill.ca/groups/switch?id=6537"
 }

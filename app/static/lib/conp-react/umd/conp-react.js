@@ -23766,13 +23766,13 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     href: "" + element.cbrain_id
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     alt: "dataset format",
-    className: "img-fluid",
+    className: "dataset-img-fluid",
     style: {
       alignSelf: 'center'
     },
     src: "static/img/cbrain-icon-blue.png"
   })) : null, element.cbrain_id ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "text-center p-1"
+    className: "dataset-text-center p-1"
   }, "Browse on CBrain") : null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "alert alert-danger",
     role: "alert",
