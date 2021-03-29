@@ -64,6 +64,19 @@ def faq():
 
     return render_template('faq.html', title='CONP | FAQ', user=current_user, content=content)
 
+@main_bp.route('/result')
+def result():
+    """ Result Route
+
+        Route to lead to the result page
+
+        Args:
+            None
+
+        Returns:
+            rendered template for faq.html
+    """
+    return render_template('result.html', title='CONP | Result', user=current_user)
 
 @main_bp.route('/contact_us')
 def contact_us():
