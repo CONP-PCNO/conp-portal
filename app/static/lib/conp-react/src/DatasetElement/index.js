@@ -217,6 +217,25 @@ const DatasetElement = props => {
                 <span className="sr-only">Loading...</span>
               </div>
             </a>
+            
+            
+                        
+                        
+            
+            {element.cbrain_id ?
+            <a target="_blank" href={`${element.cbrain_id}`}>
+			<img
+			alt="dataset format"
+			className="dataset-img-fluid"
+			style={{alignSelf: 'center'}}
+			src="static/img/cbrain-icon-blue.png"/>
+		
+	    </a>:
+	    null}
+            {element.cbrain_id ? <div className="dataset-text-center p-1">Browse on CBrain</div> : null}
+            
+            
+            
             <div className="alert alert-danger" role="alert" hidden={!datasetErrorState}>
               {datasetErrorText}
             </div>
@@ -250,7 +269,9 @@ DatasetElement.propTypes = {
   subjects: PropTypes.number,
   formats: PropTypes.string,
   modalities: PropTypes.string,
-  sources: PropTypes.number
+  sources: PropTypes.number,
+  
+  cbrain_id: PropTypes.string,
 };
 
 DatasetElement.defaultProps = {
