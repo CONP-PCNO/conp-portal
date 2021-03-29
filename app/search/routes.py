@@ -176,7 +176,7 @@ def dataset_search():
             "primaryPublications": datsdataset.primaryPublications,
             "logoFilepath": datsdataset.LogoFilepath,
             "status": datsdataset.status,
-            "cbrain_id":dataset_cbrain_id,
+            "cbrain_id": dataset_cbrain_id,
         }
 
         elements.append(dataset)
@@ -407,7 +407,7 @@ def dataset_info():
     with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-cbrain-ids.json"), "r") as f:
         cbrain_dataset_ids = json.load(f)
         f.close()
-    
+
     datasetTitle = d.name.replace("'", "")
     if datasetTitle in cbrain_dataset_ids.keys():
         dataset_cbrain_id = cbrain_dataset_ids[datasetTitle]
@@ -446,7 +446,7 @@ def dataset_info():
         "primaryPublications": datsdataset.primaryPublications,
         "logoFilepath": datsdataset.LogoFilepath,
         "status": datsdataset.status,
-        "cbrain_id":dataset_cbrain_id,
+        "cbrain_id": dataset_cbrain_id,
     }
 
     metadata = get_dataset_metadata_information(d)
