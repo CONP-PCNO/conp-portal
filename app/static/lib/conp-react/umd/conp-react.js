@@ -13001,7 +13001,7 @@ exports.isValidElementType=function(a){return"string"===typeof a||"function"===t
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/** @license React v17.0.1
+/** @license React v17.0.2
  * react-is.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -41839,8 +41839,9 @@ function useDropzone() {
     event.preventDefault();
     event.persist();
     stopPropagation(event);
+    var hasFiles = isEvtWithFiles(event);
 
-    if (event.dataTransfer) {
+    if (hasFiles && event.dataTransfer) {
       try {
         event.dataTransfer.dropEffect = 'copy';
       } catch (_unused) {}
@@ -41848,7 +41849,7 @@ function useDropzone() {
 
     }
 
-    if (isEvtWithFiles(event) && onDragOver) {
+    if (hasFiles && onDragOver) {
       onDragOver(event);
     }
 
@@ -56187,6 +56188,22 @@ function GeneralForm(props) {
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
+    name: "Privacy",
+    tooltip: "A qualifier to describe the data protection applied to the dataset. This is relevant for clinical data. <ul> <li><i><strong>open</strong>: freely and publicly available</i></li> <li><i><strong>registered</strong>: available to bona fide researchers/clinical care professionals only</i></li> <li><i><strong>controlled</strong>: available to qualified researchers approved by a committee after review of their research proposal; also known as managed or restricted access</i></li> <li><i><strong>private</strong>: available only to researchers of the project; also known as closed</i></li> </ul>"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomSelectField, {
+    label: "Privacy",
+    name: "privacy"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+    value: "open"
+  }, "open"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+    value: "registered"
+  }, "registered"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+    value: "controlled"
+  }, "controlled"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+    value: "private"
+  }, "private"))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
+    variant: "middle"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
     name: "Licenses",
     tooltip: "The licences under which this dataset is shared."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FieldArray, {
@@ -56906,7 +56923,9 @@ var index_modern_FormToDats = /*#__PURE__*/function () {
       dates: this.data.dates.map(function (date) {
         return {
           date: format_format(date.date, 'yyyy-MM-dd') + ' 00:00:00',
-          type: date.type
+          type: {
+            value: date.type.value.toLowerCase()
+          }
         };
       }),
       creators: this.data.creators.map(function (creator) {
@@ -56933,7 +56952,23 @@ var index_modern_FormToDats = /*#__PURE__*/function () {
         };
       }),
       distributions: [{
-        formats: this.data.formats,
+        formats: this.data.formats.map(function (format) {
+          var nifti = ['NIFTI', 'NII', 'NIIGZ'];
+          var gifti = ['GIFTI', 'GII'];
+          var f = format.toUpperCase().replace(/\./g, '');
+
+          if (nifti.includes(f)) {
+            return 'NIfTI';
+          } else if (gifti.includes(f)) {
+            return 'GIfTI';
+          } else if (f === 'BIGWIG') {
+            return 'bigWig';
+          } else if (f === 'RNA-SEQ') {
+            return 'RNA-Seq';
+          }
+
+          return f;
+        }),
         size: parseFloat(this.data.size.value),
         unit: {
           value: this.data.size.units
@@ -56949,7 +56984,10 @@ var index_modern_FormToDats = /*#__PURE__*/function () {
         return Object.assign(pp, {
           dates: pp.dates.map(function (date) {
             return Object.assign(date, {
-              date: format_format(date.date, 'yyyy-MM-dd') + ' 00:00:00'
+              date: format_format(date.date, 'yyyy-MM-dd') + ' 00:00:00',
+              type: {
+                value: date.type.value.toLowerCase()
+              }
             });
           })
         });
@@ -57295,7 +57333,7 @@ var defaultValidationSchema = ObjectSchema({
     landingPage: StringSchema().url().required(),
     authorization: StringSchema().required()
   }).required(),
-  privacy: StringSchema().required(),
+  privacy: StringSchema(),
   files: NumberSchema().integer().positive().required(),
   subjects: NumberSchema().integer().positive().required(),
   conpStatus: StringSchema().required(),
@@ -57401,7 +57439,7 @@ var defaultValues = {
     landingPage: '',
     authorization: 'public'
   },
-  privacy: 'public',
+  privacy: '',
   files: '',
   subjects: '',
   conpStatus: '',
