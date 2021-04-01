@@ -157,7 +157,8 @@
   </div>
   {% endif %} {% endif %} {% if (metadata.dimensions is not none) or
   (metadata.producedBy is not none) or (metadata.isAbout is not none) or
-  (metadata.acknowledges is not none) or (metadata.spatialCoverage is not none)
+  (metadata.acknowledges is not none) or (metadata.spatialCoverage is not none) or
+  (metadata.dates is not none)
   %}
   <div class="py-1">
     <div class="d-inline-flex">
@@ -199,6 +200,16 @@
           <tr>
             <th scope="row">Spatial Coverage:</th>
             <td>{{metadata.spatialCoverage|join(", ")}}</td>
+          </tr>
+          {% endif %} {% if metadata.dates is not none %}
+          <tr>
+            <th scope="row">Other Dates:</th>
+            <td>
+              {% for key, value in metadata.dates.items() %}
+              <i>{{ key }}:</i> {{ value }}
+              {{" -- " if not loop.last else "" }}
+              {% endfor %}
+            </td>
           </tr>
           {% endif %}
         </tbody>

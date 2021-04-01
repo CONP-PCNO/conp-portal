@@ -470,6 +470,16 @@ class DATSDataset(object):
     def version(self):
         return self.descriptor.get('version', None)
 
+    @property
+    def dates(self):
+        dates = {}
+        for prop in self.descriptor.get('dates', {}):
+            date = prop.get('date', '')
+            date_type = prop.get('type', {}).get('value', '').title()
+            dates[date_type] = date
+
+        return dates if len(dates) > 0 else None
+
     @ property
     def schema_org_metadata(self):
         """ Returns json-ld metadata snippet for Google dataset search. """
