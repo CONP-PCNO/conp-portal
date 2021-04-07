@@ -39,12 +39,21 @@ const DatasetElement = props => {
     setMetadataErrorState(false)
 
     fetch(`${window.origin}/download_metadata?dataset=${element.id}`)
-      .then(response => response.json())
-      .then(json => {
-        var file = window.URL.createObjectURL(new Blob([json], { type: 'application/json' }),);
+      .then((response) => {
+        if (response.ok) {
+          return response.blob();
+        }
+        else {
+          return response.text().then(text => {
+            throw new Error(text)
+          })
+        }
+      })
+      .then(function (blob) {
+        var file = window.URL.createObjectURL(blob, { type: 'application/json' });
         let link = document.createElement('a');
         link.href = file;
-        link.download = `${element.title.toLowerCase().replace(" ", ",")}.dats.json`;
+        link.download = `${element.title.toLowerCase().replace(" ", "_")}.dats.json`;
         link.click();
 
         // For Firefox it is necessary to delay revoking the ObjectURL.
