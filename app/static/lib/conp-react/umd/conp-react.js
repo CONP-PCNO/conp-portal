@@ -24330,14 +24330,20 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     setMetadataSpinnerState(true);
     setMetadataErrorState(false);
     fetch(window.origin + "/download_metadata?dataset=" + element.id).then(function (response) {
-      return response.json();
-    }).then(function (json) {
-      var file = window.URL.createObjectURL(new Blob([json], {
+      if (response.ok) {
+        return response.blob();
+      } else {
+        return response.text().then(function (text) {
+          throw new Error(text);
+        });
+      }
+    }).then(function (blob) {
+      var file = window.URL.createObjectURL(blob, {
         type: 'application/json'
-      }));
+      });
       var link = document.createElement('a');
       link.href = file;
-      link.download = element.title.toLowerCase().replace(" ", ",") + ".dats.json";
+      link.download = element.title.toLowerCase().replace(" ", "_") + ".dats.json";
       link.click(); // For Firefox it is necessary to delay revoking the ObjectURL.
 
       setTimeout(function () {
