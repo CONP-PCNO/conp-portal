@@ -44,6 +44,38 @@ def get_latest_test_results():
     return _get_latest_test_results(normalized_date)
 
 
+class DatasetCache(object):
+    def __init__(self, current_app):
+        self.current_app = current_app
+        dataset_cache_dir = current_app.config['DATASET_CACHE_PATH']
+        if not os.path.exists(dataset_cache_dir):
+            os.makedirs(dataset_cache_dir)
+
+    @property
+    def cachedDatasets(self):
+        """
+          Return a dict of available cached datasets
+        """
+        return dict(
+            (f.name, f)
+            for f in os.scandir(self.current_app.config['DATASET_CACHE_PATH'])
+        )
+
+    def getZipLocation(self, dataset):
+        """
+          1. Server checks if a zip file already exists for this version.
+          2. Return zip filepath or None
+        """
+
+        datasetmeta = DATSDataset(dataset.fspath)
+        zipFilename = datasetmeta.name.replace('/', '__') + '_version-' + \
+            datasetmeta.version + '.tar.gz'
+
+        # Look for the filename in the cached datasets
+        cached = self.cachedDatasets.get(zipFilename)
+        return cached.path if cached is not None else None
+
+
 class DATSDataset(object):
     def __init__(self, datasetpath):
         """
@@ -469,6 +501,16 @@ class DATSDataset(object):
     @ property
     def version(self):
         return self.descriptor.get('version', None)
+
+    @property
+    def dates(self):
+        dates = {}
+        for prop in self.descriptor.get('dates', {}):
+            date = prop.get('date', '')
+            date_type = prop.get('type', {}).get('value', '').title()
+            dates[date_type] = date
+
+        return dates if len(dates) > 0 else None
 
     @ property
     def schema_org_metadata(self):

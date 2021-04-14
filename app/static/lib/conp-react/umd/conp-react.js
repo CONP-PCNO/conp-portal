@@ -6736,7 +6736,7 @@ function addMonths(dirtyDate, dirtyAmount) {
   }
 
   var dayOfMonth = date.getDate(); // The JS Date object supports date math by accepting out-of-bounds values for
-  // month, day, etc. For example, new Date(2020, 1, 0) returns 31 Dec 2019 and
+  // month, day, etc. For example, new Date(2020, 0, 0) returns 31 Dec 2019 and
   // new Date(2020, 13, 1) returns 1 Feb 2021.  This is *almost* the behavior we
   // want except that dates will wrap around the end of a month, meaning that
   // new Date(2020, 13, 31) will return 3 Mar 2021 not 28 Feb 2021 as desired. So
@@ -7155,8 +7155,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @param {Date|Number} date - the date to be changed
  * @param {Number} amount - the amount of days to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the days added
- * @throws {TypeError} 2 arguments required
+ * @returns {Date} - the new date with the days added
+ * @throws {TypeError} - 2 arguments required
  *
  * @example
  * // Add 10 days to 1 September 2014:
@@ -7427,12 +7427,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @example
  * // The start of a week for 2 September 2014 11:55:00:
- * var result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0))
+ * const result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0))
  * //=> Sun Aug 31 2014 00:00:00
  *
  * @example
  * // If the week starts on Monday, the start of the week for 2 September 2014 11:55:00:
- * var result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
+ * const result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
  * //=> Mon Sep 01 2014 00:00:00
  */
 function startOfWeek(dirtyDate, dirtyOptions) {
@@ -9693,7 +9693,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @example
  * // Set 45 seconds to 1 September 2014 11:30:40:
- * var result = setSeconds(new Date(2014, 8, 1, 11, 30, 40), 45)
+ * const result = setSeconds(new Date(2014, 8, 1, 11, 30, 40), 45)
  * //=> Mon Sep 01 2014 11:30:45
  */
 function setSeconds(dirtyDate, dirtySeconds) {
@@ -9989,7 +9989,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @example
  * // Set year 2013 to 1 September 2014:
- * var result = setYear(new Date(2014, 8, 1), 2013)
+ * const result = setYear(new Date(2014, 8, 1), 2013)
  * //=> Sun Sep 01 2013 00:00:00
  */
 function setYear(dirtyDate, dirtyYear) {
@@ -9997,7 +9997,7 @@ function setYear(dirtyDate, dirtyYear) {
   var date = (0, _index2.default)(dirtyDate);
   var year = (0, _index.default)(dirtyYear); // Check if date is Invalid Date because Date.prototype.setFullYear ignores the value of Invalid Date
 
-  if (isNaN(date)) {
+  if (isNaN(date.getTime())) {
     return new Date(NaN);
   }
 
@@ -10418,9 +10418,9 @@ function parse(dirtyDateString, dirtyFormatString, dirtyReferenceDate, dirtyOpti
   var subFnOptions = {
     firstWeekContainsDate: firstWeekContainsDate,
     weekStartsOn: weekStartsOn,
-    locale: locale // If timezone isn't specified, it will be set to the system timezone
+    locale: locale
+  }; // If timezone isn't specified, it will be set to the system timezone
 
-  };
   var setters = [{
     priority: TIMEZONE_UNIT_PRIORITY,
     subPriority: -1,
@@ -10778,7 +10778,7 @@ var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
  * |                                 | ss      | 00, 01, ..., 59                   |       |
  * | Fraction of second              | S       | 0, 1, ..., 9                      |       |
  * |                                 | SS      | 00, 01, ..., 99                   |       |
- * |                                 | SSS     | 000, 0001, ..., 999               |       |
+ * |                                 | SSS     | 000, 001, ..., 999                |       |
  * |                                 | SSSS    | ...                               | 3     |
  * | Timezone (ISO-8601 w/ Z)        | X       | -08, +0530, Z                     |       |
  * |                                 | XX      | -0800, +0530, Z                   |       |
@@ -11138,7 +11138,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @example
  * // Set February to 1 September 2014:
- * var result = setMonth(new Date(2014, 8, 1), 1)
+ * const result = setMonth(new Date(2014, 8, 1), 1)
  * //=> Sat Feb 01 2014 00:00:00
  */
 function setMonth(dirtyDate, dirtyMonth) {
@@ -11215,7 +11215,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *   )
  *   ```
  *
- * @param {Interval} interval - the interval. See [Interval]{@link docs/types/Interval}
+ * @param {Interval} interval - the interval. See [Interval]{@link https://date-fns.org/docs/Interval}
  * @param {Object} [options] - an object with options.
  * @param {Number} [options.step=1] - the step to increment by. The value should be more than 1.
  * @returns {Date[]} the array with starts of days from the day of the interval start to the day of the interval end
@@ -13705,12 +13705,12 @@ var eraValues = {
 var quarterValues = {
   narrow: ['1', '2', '3', '4'],
   abbreviated: ['Q1', 'Q2', 'Q3', 'Q4'],
-  wide: ['1st quarter', '2nd quarter', '3rd quarter', '4th quarter'] // Note: in English, the names of days of the week and months are capitalized.
-  // If you are making a new locale based on this one, check if the same is true for the language you're working on.
-  // Generally, formatted dates should look like they are in the middle of a sentence,
-  // e.g. in Spanish language the weekdays and months should be in the lowercase.
+  wide: ['1st quarter', '2nd quarter', '3rd quarter', '4th quarter']
+}; // Note: in English, the names of days of the week and months are capitalized.
+// If you are making a new locale based on this one, check if the same is true for the language you're working on.
+// Generally, formatted dates should look like they are in the middle of a sentence,
+// e.g. in Spanish language the weekdays and months should be in the lowercase.
 
-};
 var monthValues = {
   narrow: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
   abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -15985,53 +15985,53 @@ var dayPeriodEnum = {
   afternoon: 'afternoon',
   evening: 'evening',
   night: 'night'
-  /*
-   * |     | Unit                           |     | Unit                           |
-   * |-----|--------------------------------|-----|--------------------------------|
-   * |  a  | AM, PM                         |  A* | Milliseconds in day            |
-   * |  b  | AM, PM, noon, midnight         |  B  | Flexible day period            |
-   * |  c  | Stand-alone local day of week  |  C* | Localized hour w/ day period   |
-   * |  d  | Day of month                   |  D  | Day of year                    |
-   * |  e  | Local day of week              |  E  | Day of week                    |
-   * |  f  |                                |  F* | Day of week in month           |
-   * |  g* | Modified Julian day            |  G  | Era                            |
-   * |  h  | Hour [1-12]                    |  H  | Hour [0-23]                    |
-   * |  i! | ISO day of week                |  I! | ISO week of year               |
-   * |  j* | Localized hour w/ day period   |  J* | Localized hour w/o day period  |
-   * |  k  | Hour [1-24]                    |  K  | Hour [0-11]                    |
-   * |  l* | (deprecated)                   |  L  | Stand-alone month              |
-   * |  m  | Minute                         |  M  | Month                          |
-   * |  n  |                                |  N  |                                |
-   * |  o! | Ordinal number modifier        |  O  | Timezone (GMT)                 |
-   * |  p! | Long localized time            |  P! | Long localized date            |
-   * |  q  | Stand-alone quarter            |  Q  | Quarter                        |
-   * |  r* | Related Gregorian year         |  R! | ISO week-numbering year        |
-   * |  s  | Second                         |  S  | Fraction of second             |
-   * |  t! | Seconds timestamp              |  T! | Milliseconds timestamp         |
-   * |  u  | Extended year                  |  U* | Cyclic year                    |
-   * |  v* | Timezone (generic non-locat.)  |  V* | Timezone (location)            |
-   * |  w  | Local week of year             |  W* | Week of month                  |
-   * |  x  | Timezone (ISO-8601 w/o Z)      |  X  | Timezone (ISO-8601)            |
-   * |  y  | Year (abs)                     |  Y  | Local week-numbering year      |
-   * |  z  | Timezone (specific non-locat.) |  Z* | Timezone (aliases)             |
-   *
-   * Letters marked by * are not implemented but reserved by Unicode standard.
-   *
-   * Letters marked by ! are non-standard, but implemented by date-fns:
-   * - `o` modifies the previous token to turn it into an ordinal (see `format` docs)
-   * - `i` is ISO day of week. For `i` and `ii` is returns numeric ISO week days,
-   *   i.e. 7 for Sunday, 1 for Monday, etc.
-   * - `I` is ISO week of year, as opposed to `w` which is local week of year.
-   * - `R` is ISO week-numbering year, as opposed to `Y` which is local week-numbering year.
-   *   `R` is supposed to be used in conjunction with `I` and `i`
-   *   for universal ISO week-numbering date, whereas
-   *   `Y` is supposed to be used in conjunction with `w` and `e`
-   *   for week-numbering date specific to the locale.
-   * - `P` is long localized date format
-   * - `p` is long localized time format
-   */
-
 };
+/*
+ * |     | Unit                           |     | Unit                           |
+ * |-----|--------------------------------|-----|--------------------------------|
+ * |  a  | AM, PM                         |  A* | Milliseconds in day            |
+ * |  b  | AM, PM, noon, midnight         |  B  | Flexible day period            |
+ * |  c  | Stand-alone local day of week  |  C* | Localized hour w/ day period   |
+ * |  d  | Day of month                   |  D  | Day of year                    |
+ * |  e  | Local day of week              |  E  | Day of week                    |
+ * |  f  |                                |  F* | Day of week in month           |
+ * |  g* | Modified Julian day            |  G  | Era                            |
+ * |  h  | Hour [1-12]                    |  H  | Hour [0-23]                    |
+ * |  i! | ISO day of week                |  I! | ISO week of year               |
+ * |  j* | Localized hour w/ day period   |  J* | Localized hour w/o day period  |
+ * |  k  | Hour [1-24]                    |  K  | Hour [0-11]                    |
+ * |  l* | (deprecated)                   |  L  | Stand-alone month              |
+ * |  m  | Minute                         |  M  | Month                          |
+ * |  n  |                                |  N  |                                |
+ * |  o! | Ordinal number modifier        |  O  | Timezone (GMT)                 |
+ * |  p! | Long localized time            |  P! | Long localized date            |
+ * |  q  | Stand-alone quarter            |  Q  | Quarter                        |
+ * |  r* | Related Gregorian year         |  R! | ISO week-numbering year        |
+ * |  s  | Second                         |  S  | Fraction of second             |
+ * |  t! | Seconds timestamp              |  T! | Milliseconds timestamp         |
+ * |  u  | Extended year                  |  U* | Cyclic year                    |
+ * |  v* | Timezone (generic non-locat.)  |  V* | Timezone (location)            |
+ * |  w  | Local week of year             |  W* | Week of month                  |
+ * |  x  | Timezone (ISO-8601 w/o Z)      |  X  | Timezone (ISO-8601)            |
+ * |  y  | Year (abs)                     |  Y  | Local week-numbering year      |
+ * |  z  | Timezone (specific non-locat.) |  Z* | Timezone (aliases)             |
+ *
+ * Letters marked by * are not implemented but reserved by Unicode standard.
+ *
+ * Letters marked by ! are non-standard, but implemented by date-fns:
+ * - `o` modifies the previous token to turn it into an ordinal (see `format` docs)
+ * - `i` is ISO day of week. For `i` and `ii` is returns numeric ISO week days,
+ *   i.e. 7 for Sunday, 1 for Monday, etc.
+ * - `I` is ISO week of year, as opposed to `w` which is local week of year.
+ * - `R` is ISO week-numbering year, as opposed to `Y` which is local week-numbering year.
+ *   `R` is supposed to be used in conjunction with `I` and `i`
+ *   for universal ISO week-numbering date, whereas
+ *   `Y` is supposed to be used in conjunction with `w` and `e`
+ *   for week-numbering date specific to the locale.
+ * - `P` is long localized date format
+ * - `p` is long localized time format
+ */
+
 var formatters = {
   // Era
   G: function (date, token, localize) {
@@ -24330,14 +24330,20 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     setMetadataSpinnerState(true);
     setMetadataErrorState(false);
     fetch(window.origin + "/download_metadata?dataset=" + element.id).then(function (response) {
-      return response.json();
-    }).then(function (json) {
-      var file = window.URL.createObjectURL(new Blob([json], {
+      if (response.ok) {
+        return response.blob();
+      } else {
+        return response.text().then(function (text) {
+          throw new Error(text);
+        });
+      }
+    }).then(function (blob) {
+      var file = window.URL.createObjectURL(blob, {
         type: 'application/json'
-      }));
+      });
       var link = document.createElement('a');
       link.href = file;
-      link.download = element.title.toLowerCase().replace(" ", ",") + ".dats.json";
+      link.download = element.title.toLowerCase().replace(" ", "_") + ".dats.json";
       link.click(); // For Firefox it is necessary to delay revoking the ObjectURL.
 
       setTimeout(function () {
@@ -40857,19 +40863,17 @@ function __importDefault(mod) {
     return (mod && mod.__esModule) ? mod : { default: mod };
 }
 
-function __classPrivateFieldGet(receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 }
 
-function __classPrivateFieldSet(receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
 
 // CONCATENATED MODULE: ./node_modules/file-selector/dist/es5/file.js
@@ -53626,12 +53630,12 @@ var eraValues = {
 var quarterValues = {
   narrow: ['1', '2', '3', '4'],
   abbreviated: ['Q1', 'Q2', 'Q3', 'Q4'],
-  wide: ['1st quarter', '2nd quarter', '3rd quarter', '4th quarter'] // Note: in English, the names of days of the week and months are capitalized.
-  // If you are making a new locale based on this one, check if the same is true for the language you're working on.
-  // Generally, formatted dates should look like they are in the middle of a sentence,
-  // e.g. in Spanish language the weekdays and months should be in the lowercase.
+  wide: ['1st quarter', '2nd quarter', '3rd quarter', '4th quarter']
+}; // Note: in English, the names of days of the week and months are capitalized.
+// If you are making a new locale based on this one, check if the same is true for the language you're working on.
+// Generally, formatted dates should look like they are in the middle of a sentence,
+// e.g. in Spanish language the weekdays and months should be in the lowercase.
 
-};
 var monthValues = {
   narrow: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
   abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -54356,53 +54360,53 @@ var dayPeriodEnum = {
   afternoon: 'afternoon',
   evening: 'evening',
   night: 'night'
-  /*
-   * |     | Unit                           |     | Unit                           |
-   * |-----|--------------------------------|-----|--------------------------------|
-   * |  a  | AM, PM                         |  A* | Milliseconds in day            |
-   * |  b  | AM, PM, noon, midnight         |  B  | Flexible day period            |
-   * |  c  | Stand-alone local day of week  |  C* | Localized hour w/ day period   |
-   * |  d  | Day of month                   |  D  | Day of year                    |
-   * |  e  | Local day of week              |  E  | Day of week                    |
-   * |  f  |                                |  F* | Day of week in month           |
-   * |  g* | Modified Julian day            |  G  | Era                            |
-   * |  h  | Hour [1-12]                    |  H  | Hour [0-23]                    |
-   * |  i! | ISO day of week                |  I! | ISO week of year               |
-   * |  j* | Localized hour w/ day period   |  J* | Localized hour w/o day period  |
-   * |  k  | Hour [1-24]                    |  K  | Hour [0-11]                    |
-   * |  l* | (deprecated)                   |  L  | Stand-alone month              |
-   * |  m  | Minute                         |  M  | Month                          |
-   * |  n  |                                |  N  |                                |
-   * |  o! | Ordinal number modifier        |  O  | Timezone (GMT)                 |
-   * |  p! | Long localized time            |  P! | Long localized date            |
-   * |  q  | Stand-alone quarter            |  Q  | Quarter                        |
-   * |  r* | Related Gregorian year         |  R! | ISO week-numbering year        |
-   * |  s  | Second                         |  S  | Fraction of second             |
-   * |  t! | Seconds timestamp              |  T! | Milliseconds timestamp         |
-   * |  u  | Extended year                  |  U* | Cyclic year                    |
-   * |  v* | Timezone (generic non-locat.)  |  V* | Timezone (location)            |
-   * |  w  | Local week of year             |  W* | Week of month                  |
-   * |  x  | Timezone (ISO-8601 w/o Z)      |  X  | Timezone (ISO-8601)            |
-   * |  y  | Year (abs)                     |  Y  | Local week-numbering year      |
-   * |  z  | Timezone (specific non-locat.) |  Z* | Timezone (aliases)             |
-   *
-   * Letters marked by * are not implemented but reserved by Unicode standard.
-   *
-   * Letters marked by ! are non-standard, but implemented by date-fns:
-   * - `o` modifies the previous token to turn it into an ordinal (see `format` docs)
-   * - `i` is ISO day of week. For `i` and `ii` is returns numeric ISO week days,
-   *   i.e. 7 for Sunday, 1 for Monday, etc.
-   * - `I` is ISO week of year, as opposed to `w` which is local week of year.
-   * - `R` is ISO week-numbering year, as opposed to `Y` which is local week-numbering year.
-   *   `R` is supposed to be used in conjunction with `I` and `i`
-   *   for universal ISO week-numbering date, whereas
-   *   `Y` is supposed to be used in conjunction with `w` and `e`
-   *   for week-numbering date specific to the locale.
-   * - `P` is long localized date format
-   * - `p` is long localized time format
-   */
-
 };
+/*
+ * |     | Unit                           |     | Unit                           |
+ * |-----|--------------------------------|-----|--------------------------------|
+ * |  a  | AM, PM                         |  A* | Milliseconds in day            |
+ * |  b  | AM, PM, noon, midnight         |  B  | Flexible day period            |
+ * |  c  | Stand-alone local day of week  |  C* | Localized hour w/ day period   |
+ * |  d  | Day of month                   |  D  | Day of year                    |
+ * |  e  | Local day of week              |  E  | Day of week                    |
+ * |  f  |                                |  F* | Day of week in month           |
+ * |  g* | Modified Julian day            |  G  | Era                            |
+ * |  h  | Hour [1-12]                    |  H  | Hour [0-23]                    |
+ * |  i! | ISO day of week                |  I! | ISO week of year               |
+ * |  j* | Localized hour w/ day period   |  J* | Localized hour w/o day period  |
+ * |  k  | Hour [1-24]                    |  K  | Hour [0-11]                    |
+ * |  l* | (deprecated)                   |  L  | Stand-alone month              |
+ * |  m  | Minute                         |  M  | Month                          |
+ * |  n  |                                |  N  |                                |
+ * |  o! | Ordinal number modifier        |  O  | Timezone (GMT)                 |
+ * |  p! | Long localized time            |  P! | Long localized date            |
+ * |  q  | Stand-alone quarter            |  Q  | Quarter                        |
+ * |  r* | Related Gregorian year         |  R! | ISO week-numbering year        |
+ * |  s  | Second                         |  S  | Fraction of second             |
+ * |  t! | Seconds timestamp              |  T! | Milliseconds timestamp         |
+ * |  u  | Extended year                  |  U* | Cyclic year                    |
+ * |  v* | Timezone (generic non-locat.)  |  V* | Timezone (location)            |
+ * |  w  | Local week of year             |  W* | Week of month                  |
+ * |  x  | Timezone (ISO-8601 w/o Z)      |  X  | Timezone (ISO-8601)            |
+ * |  y  | Year (abs)                     |  Y  | Local week-numbering year      |
+ * |  z  | Timezone (specific non-locat.) |  Z* | Timezone (aliases)             |
+ *
+ * Letters marked by * are not implemented but reserved by Unicode standard.
+ *
+ * Letters marked by ! are non-standard, but implemented by date-fns:
+ * - `o` modifies the previous token to turn it into an ordinal (see `format` docs)
+ * - `i` is ISO day of week. For `i` and `ii` is returns numeric ISO week days,
+ *   i.e. 7 for Sunday, 1 for Monday, etc.
+ * - `I` is ISO week of year, as opposed to `w` which is local week of year.
+ * - `R` is ISO week-numbering year, as opposed to `Y` which is local week-numbering year.
+ *   `R` is supposed to be used in conjunction with `I` and `i`
+ *   for universal ISO week-numbering date, whereas
+ *   `Y` is supposed to be used in conjunction with `w` and `e`
+ *   for week-numbering date specific to the locale.
+ * - `P` is long localized date format
+ * - `p` is long localized time format
+ */
+
 var formatters_formatters = {
   // Era
   G: function (date, token, localize) {
@@ -55510,7 +55514,7 @@ var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
  * |                                 | ss      | 00, 01, ..., 59                   |       |
  * | Fraction of second              | S       | 0, 1, ..., 9                      |       |
  * |                                 | SS      | 00, 01, ..., 99                   |       |
- * |                                 | SSS     | 000, 0001, ..., 999               |       |
+ * |                                 | SSS     | 000, 001, ..., 999                |       |
  * |                                 | SSSS    | ...                               | 3     |
  * | Timezone (ISO-8601 w/ Z)        | X       | -08, +0530, Z                     |       |
  * |                                 | XX      | -0800, +0530, Z                   |       |
@@ -56024,7 +56028,7 @@ function GeneralForm(props) {
     variant: "h5",
     gutterBottom: true
   }, "General Information"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Title",
+    name: "Title *",
     tooltip: "Name of the dataset. The title needs to be short and easily recognizable and searchable. If there is an acronym, please also provide the long name."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
     required: true,
@@ -56034,7 +56038,7 @@ function GeneralForm(props) {
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Creators",
+    name: "Creators *",
     tooltip: "The person(s) or organization(s) that contributed to the creation of the dataset. This can be the principal investigator, hospital, university, centre, clinic, etc. The first contact provided will be associated as the main contact for this dataset."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FieldArray, {
     name: "creators"
@@ -56138,7 +56142,7 @@ function GeneralForm(props) {
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Description",
+    name: "Description *",
     tooltip: "A short paragraph providing a rapid overview of the dataset and the context of data collection. Suggestion of items to include in the description (if applicable): main use of the dataset, population studied, study design, sample size, data collected, methods, techniques, apparatus used to generate the data. Ideally, the first sentence of the description should give a good overall description of the dataset."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
     required: true,
@@ -56150,7 +56154,7 @@ function GeneralForm(props) {
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Data Types",
+    name: "Data Types *",
     tooltip: "Terms to describe the nature of the data. Data type can be single or multiple. Add a term with the <a href=\"https://neuinfo.org/interlex/dashboard\" rel=\"noreferrer\" target=\"_blank\">interlex URI</a> if possible."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FieldArray, {
     name: "types"
@@ -56180,9 +56184,10 @@ function GeneralForm(props) {
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Version",
+    name: "Version *",
     tooltip: "Provide the version number, or the release point of your dataset. If you do not have an existing versioning convention, we recommend the use of the following versoning convention: 1.0=original dataset; 1.1=minor revisions made to the dataset; 1.2=further minor revisions; 2.0=major/substantive changes to the dataset. For example: minor changes could include corrupted file or link fixes, more description/documentation of the dataset and so on; Major changes would include additional data released (more subjects, more modalities and so on)"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
+    required: true,
     label: "Version",
     name: "version"
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
@@ -56204,7 +56209,7 @@ function GeneralForm(props) {
   }, "private"))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Licenses",
+    name: "Licenses *",
     tooltip: "The licences under which this dataset is shared."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FieldArray, {
     name: "licenses"
@@ -56219,7 +56224,7 @@ function GeneralForm(props) {
         arrayHelpers: arrayHelpers
       }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomSelectField, {
         required: true,
-        label: "License",
+        label: "License *",
         name: "licenses." + index + ".value"
       }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_ListSubheader_ListSubheader, null, "Creative Commons"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
         value: "CC BY"
@@ -56262,7 +56267,7 @@ function GeneralForm(props) {
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Keywords",
+    name: "Keywords *",
     tooltip: "Tags associated with the dataset, which will help in its discovery. These should be well known terms by the research community."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FieldArray, {
     name: "keywords"
@@ -56295,7 +56300,7 @@ function GeneralForm(props) {
 function DistributionForm(props) {
   var values = props.values;
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Formats",
+    name: "Formats *",
     tooltip: "The technical format of the dataset distribution. Use the file extension or MIME type when possible. (Definition adapted from DataCite)."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FieldArray, {
     name: "formats"
@@ -56327,16 +56332,18 @@ function DistributionForm(props) {
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Size",
+    name: "Size *",
     tooltip: "The quantity of space required on disk (or other medium) for this dataset."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
+    required: true,
     label: "Size",
     name: "size.value"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
     subsection: true,
-    name: "Units",
+    name: "Units *",
     tooltip: "Unit in which the size is measured.(KB -> KiloByte, MB -> MegaByte, GB -> GigaByte, TB -> TeraByte and PB -> PetaByte)."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomSelectField, {
+    required: true,
     name: "size.units",
     label: "Units"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
@@ -56350,20 +56357,22 @@ function DistributionForm(props) {
   }, "PB"))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Access",
+    name: "Access *",
     tooltip: "The information about access modality for the dataset distribution."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
     subsection: true,
-    name: "Landing Page",
-    tooltip: "A URL (Web page) that contains information about the associated dataset (with a link to the dataset) or a direct link to the dataset itself."
+    name: "Landing Page *",
+    tooltip: "A URL (Web page) that contains information about the associated dataset (with a link to the dataset) or a direct link to the dataset itself. When none exists yet, please provide the link to the README.md file of the dataset."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
+    required: true,
     label: "Landing Page",
     name: "access.landingPage"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
     subsection: true,
-    name: "Authorizations",
+    name: "Authorizations *",
     tooltip: "This must be one of \"Public\", \"Registered\" or \"Private\". When this field is absent the value will be treated as \"Public\". \"Public\" = available to anyone; \"Registered\" = available to user authorized by the creator; \"Private\" = available only to the creator."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomSelectField, {
+    required: true,
     label: "Authorization",
     name: "access.authorization"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
@@ -56375,25 +56384,28 @@ function DistributionForm(props) {
   }, "Private"))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Number of Files",
+    name: "Number of Files *",
     tooltip: "Total number of files in the dataset."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
+    required: true,
     label: "Files",
     name: "files"
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Number of Subjects",
+    name: "Number of Subjects *",
     tooltip: "Total number of subjects constituting the dataset."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
+    required: true,
     label: "Subjects",
     name: "subjects"
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "CONP Status",
+    name: "CONP Status *",
     tooltip: "The CONP status is used to add the CONP logo or Canadian flag on the left of the dataset and sorting in the data search. Valid values are \"CONP\" = created using funding from the CONP; \"Canadian\" = created in Canada without CONP funding; \"external\" = created outside of Canada."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomSelectField, {
+    required: true,
     name: "conpStatus",
     label: "CONP Status"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
@@ -56408,33 +56420,38 @@ function DistributionForm(props) {
 function ExtraPropertiesForm(props) {
   var values = props.values;
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Origin",
+    name: "Origin *",
     tooltip: "Name of the institution or consortium that generated the dataset. Both an institution and a consortium can be specified, e.g. in the case of a named collaboration between different labs at the same institution."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
+    subsection: true,
     name: "Institution",
     tooltip: "Name of the institution where this dataset was created (if applicable)."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
     label: "Institution",
     name: "origin.institution"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
+    subsection: true,
     name: "Consortium",
     tooltip: "Name of the consortium where this dataset was created (if applicable)."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
     label: "Consortium",
     name: "origin.consortium"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
+    subsection: true,
     name: "City",
     tooltip: "(Principal) city where this dataset was created."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
     label: "City",
     name: "origin.city"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
+    subsection: true,
     name: "Province",
     tooltip: "(Principal) province where this dataset was created."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
     label: "Province",
     name: "origin.province"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
+    subsection: true,
     name: "Country",
     tooltip: "(Principal) country where this dataset was created."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
@@ -56446,14 +56463,14 @@ function ExtraPropertiesForm(props) {
     name: "Derived From",
     tooltip: "The sources this dataset is derived from."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    subtitle: true,
+    subsection: true,
     name: "Derived From",
     tooltip: "Name of the source dataset used to generate this dataset."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
     label: "Derived From",
     name: "derivedFrom"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    subtitle: true,
+    subsection: true,
     name: "Parent dataset ID",
     tooltip: "Identifier (DOI) of the source dataset used to generate this dataset."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
@@ -56685,6 +56702,7 @@ function ExtraPropertiesForm(props) {
     label: "Identifier",
     name: "identifier.identifier"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
+    subsection: true,
     name: "Identifier Source",
     tooltip: "Information about the organisation/namespace responsible for minting the identifier. It must be provided if the identifier is provided."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {

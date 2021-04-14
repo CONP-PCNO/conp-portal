@@ -21,6 +21,8 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or "conp-secret-key-for-here"
     DATA_PATH = os.environ.get('DATA_PATH') or os.path.join(
         basedir, "app/static/data")
+    DATASET_CACHE_PATH = os.environ.get('DATASET_CACHE_PATH') or os.path.join(
+        basedir, "app/static/data/.cache/conp-dataset")
     SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get(
         'SQLALCHEMY_TRACK_MODIFICATIONS') or False
 
@@ -78,6 +80,9 @@ class Config(object):
         "NEXUS_SPARQL_ENDPOINT",
         "https://reservoir.global/v1/views/Public/CONP/graph/sparql"
     )
+
+    # Dataset cache
+    DATASET_CACHE_PATH = os.environ.get("DATASET_CACHE_PATH")
 
 
 class DevelopmentConfig(Config):
