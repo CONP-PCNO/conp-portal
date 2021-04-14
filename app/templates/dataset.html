@@ -228,26 +228,41 @@
 
 <div class="d-flex flex-column p-2">
   <div class="d-flex flex-row align-items-center">
-    <a name="downloadInstructions">
-    </a>
-      {% if showDownloadButton %}
+    <a name="downloadInstructions"></a>
   </div>
   <div class="d-flex flex-row align-items-center">
     <h2 class="px-2">Direct Download</h2>
   </div>
-  <div class="d-flex flex-row align-items-center">
-    <p>This dataset is available for direct download from the portal.</p>
+  {% if showDownloadButton %}
+    <div class="d-flex flex-row align-items-center">
+    <div class="col-md-2">
+      <a href="{{ zipLocation }}" class="btn btn-outline-secondary " id="downloadButton">
+        Download This Version
+      </a>
+    </div>
   </div>
+  {% else %}
   <div class="d-flex flex-row align-items-center">
     <div class="col-md-2">
-      <a href="{{ zipLocation }}" class="btn btn-outline-primary" id="downloadButton">
-        Download this version
-      </a> 
+      <a class="btn btn-outline-secondary disabled" id="UnvailableDownloadButton">
+        Not Available
+      </a>
     </div>
   </div>
   <div class="d-flex flex-row align-items-center">
-      {% endif %}
-      <h2 class="px-2">Dataset Download Instructions With DataLad</h2>
+    <p>
+      <br>This dataset is not available for direct download from the portal either because
+      of its large size or because it requires a third-party account to access the data.
+      <br>To download this dataset, please refer to the
+      <a href="#dataladInstructions">DataLad instructions in the next section</a>.
+    </p>
+  </div>
+  {% endif %}
+  <div class="d-flex flex-row align-items-center">
+    <a name="dataladInstructions"></a>
+  </div>
+  <div class="d-flex flex-row align-items-center">
+    <h2 class="px-2">DataLad Dataset Download Instructions</h2>
     <a
       class="px-2"
       target="_blank"
