@@ -2,9 +2,9 @@
   <div class="sticky-top sticky-offset">
     <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
       href="{{ url_for('main.index') }}">
-      <h1><i class="fa fa-bar-chart"></i></h1>
+      <h1><i class="fa fa-home"></i></h1>
       <p class="text-center text-capitalize p-1">
-        Dashboard
+        Home Page
       </p>
     </a>
     <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
@@ -26,6 +26,13 @@
       <h1><i class="fa fa-cloud-upload"></i></h1>
       <p class="text-center text-capitalize p-1">
         Share
+      </p>
+    </a>
+    <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
+      href="{{ url_for('analytics.analytics') }}">
+      <h1><i class="fa fa-bar-chart"></i></h1>
+      <p class="text-center text-capitalize p-1">
+        Analytics
       </p>
     </a>
     <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
