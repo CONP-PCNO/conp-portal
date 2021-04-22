@@ -553,23 +553,24 @@ def _update_analytics_matomo_get_daily_dataset_portal_download_summary(app, mato
         if not response:
             continue
 
-        for downloaded_item in response:
-            download_summary = MatomoDailyGetDatasetPortalDownloadSummary()
-            download_summary.date = date
-            download_summary.url = downloaded_item['url']
-            download_summary.label = downloaded_item['label']
-            download_summary.nb_hits = downloaded_item['nb_hits']
-            download_summary.nb_visits = downloaded_item['nb_visits']
-            download_summary.nb_uniq_visitors = downloaded_item['nb_uniq_visitors']
-            download_summary.sum_time_spent = downloaded_item['sum_time_spent']
-            download_summary.segment = downloaded_item['segment']
+        for category in response:
+            for downloaded_item in category['subtable']:
+                download_summary = MatomoDailyGetDatasetPortalDownloadSummary()
+                download_summary.date = date
+                download_summary.url = downloaded_item['url']
+                download_summary.label = downloaded_item['label']
+                download_summary.nb_hits = downloaded_item['nb_hits']
+                download_summary.nb_visits = downloaded_item['nb_visits']
+                download_summary.nb_uniq_visitors = downloaded_item['nb_uniq_visitors']
+                download_summary.sum_time_spent = downloaded_item['sum_time_spent']
+                download_summary.segment = downloaded_item['segment']
 
-            db.session.merge(download_summary)
-            db.session.commit()
+                db.session.merge(download_summary)
+                db.session.commit()
 
-            date_inserted = True
-            label = downloaded_item['label']
-            print(f'[INFO   ] Inserted Matomo number of portal downloads for {label} on {date}')
+                date_inserted = True
+                label = downloaded_item['label']
+                print(f'[INFO   ] Inserted Matomo number of portal downloads for {label} on {date}')
 
         # if no stats existed for that date, then add a row to the table
         # with empty values so that the script does not reprocess that date
