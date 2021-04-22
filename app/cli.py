@@ -337,6 +337,8 @@ def _update_analytics(app):
 
     _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_baseurl)
 
+    _update_analytics_matomo_get_daily_dataset_portal_download_summary(app, matomo_api_baseurl)
+
 
 def _update_analytics_matomo_visits_summary(app, matomo_api_baseurl):
     """
@@ -513,6 +515,69 @@ def _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_bas
             views_summary = MatomoDailyGetDatasetPageViewsSummary()
             views_summary.date = date
             db.session.merge(views_summary)
+            db.session.commit()
+
+
+def _update_analytics_matomo_get_daily_dataset_portal_download_summary(app, matomo_api_baseurl):
+    """
+    Function to update specifically the Matomo daily dataset download summary
+    queried from the Matomo API endpoint Actions.getDownload for each dataset_id.
+
+    Note: gather stats only until the day before the current
+    day since stats are still being gathered by Matomo for the
+    current day.
+    """
+    from app import db
+    from app.models import MatomoDailyGetDatasetPortalDownloadSummary
+    from app.models import Dataset as DBDataset
+    import requests
+
+    # grep the dates already inserted into the database
+    date_field = MatomoDailyGetDatasetPortalDownloadSummary.date
+    db_results = db.session.query(date_field).distinct(date_field).all()
+    dates_in_database = [row[0] for row in db_results]
+
+    # determines which dates are missing from the database and could be queried on Matomo
+    dates_to_process = determine_dates_to_query_on_matomo(dates_in_database)
+
+    # for each date and each dataset, query Matomo for the view stats
+    for date in dates_to_process:
+        date_inserted = False
+        matomo_query = f"{matomo_api_baseurl}" \
+                           f"&method=Actions.getDownloads" \
+                           f"&period=day" \
+                           f"&date={date}" \
+                           f"&expanded=1"
+        response = requests.get(matomo_query).json()
+
+        if not response:
+            continue
+
+        for downloaded_item in response:
+            download_summary = MatomoDailyGetDatasetPortalDownloadSummary()
+            download_summary.date = date
+            download_summary.dataset_id = dataset_id
+            download_summary.url = downloaded_item['url']
+            download_summary.label = downloaded_item['label']
+            download_summary.nb_hits = downloaded_item['nb_hits']
+            download_summary.nb_visits = downloaded_item['nb_visits']
+            download_summary.nb_uniq_visitors = downloaded_item['nb_uniq_visitors']
+            download_summary.sum_time_spent = downloaded_item['sum_time_spent']
+            download_summary.segment = downloaded_item['segment']
+
+            db.session.merge(download_summary)
+            db.session.commit()
+
+            date_inserted = True
+            label = downloaded_item['label']
+            print(f'[INFO   ] Inserted Matomo number of portal downloads for {label} on {date}')
+
+        # if no stats existed for that date, then add a row to the table
+        # with empty values so that the script does not reprocess that date
+        if not date_inserted:
+            download_summary = MatomoDailyGetDatasetPortalDownloadSummary()
+            download_summary.date = date
+            db.session.merge(download_summary)
             db.session.commit()
 
 
