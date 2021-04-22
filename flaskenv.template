@@ -21,7 +21,7 @@ ORCID_OAUTH_CLIENT_SECRET=<ORCID SECRET ID>
 ORCID_TOKEN_URL=https://orcid.org/oauth/token
 ADMIN_EMAIL = <Your gmail>
 WEBHOOKS_SECRET=<github webhook secret>
-MATOMO_SERVER_URL=<Your Matomo URL>
+MATOMO_SERVER_URL=<Your Matomo base URL> ## no http:// or https://
 MATOMO_SITE_ID=1
 
 # GITHUB CREDENTIALS FOR MARKDOWN RENDERER (OPTIONAL)
