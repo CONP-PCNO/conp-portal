@@ -323,7 +323,7 @@ def _update_analytics(app):
     matomo_site_id = app.config['MATOMO_SITE_ID']
     matomo_token_auth = app.config['MATOMO_TOKEN_AUTH']
 
-    matomo_api_baseurl = f"{matomo_server_url}/?module=API" \
+    matomo_api_baseurl = f"https://{matomo_server_url}/?module=API" \
                          f"&idSite={matomo_site_id}" \
                          f"&token_auth={matomo_token_auth}" \
                          f"&format=json" \
