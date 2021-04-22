@@ -556,7 +556,6 @@ def _update_analytics_matomo_get_daily_dataset_portal_download_summary(app, mato
         for downloaded_item in response:
             download_summary = MatomoDailyGetDatasetPortalDownloadSummary()
             download_summary.date = date
-            download_summary.dataset_id = dataset_id
             download_summary.url = downloaded_item['url']
             download_summary.label = downloaded_item['label']
             download_summary.nb_hits = downloaded_item['nb_hits']

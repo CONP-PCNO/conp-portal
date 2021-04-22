@@ -370,7 +370,6 @@ class MatomoDailyGetDatasetPortalDownloadSummary(db.Model):
     __tablename__ = 'matomo_daily_dataset_portal_download_summary'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    dataset_id = db.Column(db.String(256))
     date = db.Column(db.String(12))
     url = db.Column(db.Text)
     label = db.Column(db.String(256))
