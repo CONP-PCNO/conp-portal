@@ -529,7 +529,6 @@ def _update_analytics_matomo_get_daily_portal_download_summary(app, matomo_api_b
     """
     from app import db
     from app.models import MatomoDailyGetPortalDownloadSummary
-    from app.models import Dataset as DBDataset
     import requests
 
     # grep the dates already inserted into the database
@@ -542,7 +541,6 @@ def _update_analytics_matomo_get_daily_portal_download_summary(app, matomo_api_b
 
     # for each date query Matomo for the download stats
     for date in dates_to_process:
-        date_inserted = False
         matomo_query = f"{matomo_api_baseurl}" \
                            f"&method=Actions.getDownloads" \
                            f"&period=day" \
@@ -551,6 +549,10 @@ def _update_analytics_matomo_get_daily_portal_download_summary(app, matomo_api_b
         response = requests.get(matomo_query).json()
 
         if not response:
+            download_summary = MatomoDailyGetPortalDownloadSummary()
+            download_summary.date = date
+            db.session.merge(download_summary)
+            db.session.commit()
             continue
 
         for category in response:
@@ -568,17 +570,8 @@ def _update_analytics_matomo_get_daily_portal_download_summary(app, matomo_api_b
                 db.session.merge(download_summary)
                 db.session.commit()
 
-                date_inserted = True
                 label = downloaded_item['label']
                 print(f'[INFO   ] Inserted Matomo number of portal downloads for {label} on {date}')
-
-        # if no stats existed for that date, then add a row to the table
-        # with empty values so that the script does not reprocess that date
-        if not date_inserted:
-            download_summary = MatomoDailyGetDatasetPortalDownloadSummary()
-            download_summary.date = date
-            db.session.merge(download_summary)
-            db.session.commit()
 
 
 def _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_baseurl):
