@@ -337,7 +337,7 @@ def _update_analytics(app):
 
     _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_baseurl)
 
-    _update_analytics_matomo_get_daily_dataset_portal_download_summary(app, matomo_api_baseurl)
+    _update_analytics_matomo_get_daily_portal_download_summary(app, matomo_api_baseurl)
 
 
 def _update_analytics_matomo_visits_summary(app, matomo_api_baseurl):
@@ -518,29 +518,29 @@ def _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_bas
             db.session.commit()
 
 
-def _update_analytics_matomo_get_daily_dataset_portal_download_summary(app, matomo_api_baseurl):
+def _update_analytics_matomo_get_daily_portal_download_summary(app, matomo_api_baseurl):
     """
-    Function to update specifically the Matomo daily dataset download summary
-    queried from the Matomo API endpoint Actions.getDownload for each dataset_id.
+    Function to update specifically the Matomo daily download summary
+    queried from the Matomo API endpoint Actions.getDownloads.
 
     Note: gather stats only until the day before the current
     day since stats are still being gathered by Matomo for the
     current day.
     """
     from app import db
-    from app.models import MatomoDailyGetDatasetPortalDownloadSummary
+    from app.models import MatomoDailyGetPortalDownloadSummary
     from app.models import Dataset as DBDataset
     import requests
 
     # grep the dates already inserted into the database
-    date_field = MatomoDailyGetDatasetPortalDownloadSummary.date
+    date_field = MatomoDailyGetPortalDownloadSummary.date
     db_results = db.session.query(date_field).distinct(date_field).all()
     dates_in_database = [row[0] for row in db_results]
 
     # determines which dates are missing from the database and could be queried on Matomo
     dates_to_process = determine_dates_to_query_on_matomo(dates_in_database)
 
-    # for each date and each dataset, query Matomo for the view stats
+    # for each date query Matomo for the download stats
     for date in dates_to_process:
         date_inserted = False
         matomo_query = f"{matomo_api_baseurl}" \
@@ -555,7 +555,7 @@ def _update_analytics_matomo_get_daily_dataset_portal_download_summary(app, mato
 
         for category in response:
             for downloaded_item in category['subtable']:
-                download_summary = MatomoDailyGetDatasetPortalDownloadSummary()
+                download_summary = MatomoDailyGetPortalDownloadSummary()
                 download_summary.date = date
                 download_summary.url = downloaded_item['url']
                 download_summary.label = downloaded_item['label']

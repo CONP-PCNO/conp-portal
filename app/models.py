@@ -353,10 +353,10 @@ class MatomoDailyGetDatasetPageViewsSummary(db.Model):
         return '<MatomoDailyGetDatasetPageViewsSummary {}>'.format(self.id)
 
 
-class MatomoDailyGetDatasetPortalDownloadSummary(db.Model):
+class MatomoDailyGetPortalDownloadSummary(db.Model):
     """
-    Provides Matomo daily dataset download summary to store the statistics
-    on the different dataset downloads via the portal.
+    Provides Matomo daily download summary to store the statistics
+    on the different downloads via the portal.
 
     Chosen variables from the endpoint are:
     - url              = page URL
@@ -367,7 +367,7 @@ class MatomoDailyGetDatasetPortalDownloadSummary(db.Model):
     - sum_time_spent   = total time spent on this page, in seconds
     - segment          = segment with download URL
     """
-    __tablename__ = 'matomo_daily_dataset_portal_download_summary'
+    __tablename__ = 'matomo_daily_portal_download_summary'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     date = db.Column(db.String(12))
@@ -380,7 +380,7 @@ class MatomoDailyGetDatasetPortalDownloadSummary(db.Model):
     segment = db.Column(db.String(256))
 
     def __repr__(self):
-        return '<MatomoDailyGetDatasetPortalDownloadSummary {}>'.format(self.id)
+        return '<MatomoDailyGetPortalDownloadSummary {}>'.format(self.id)
 
 
 class MatomoDailyGetSiteSearchKeywords(db.Model):
