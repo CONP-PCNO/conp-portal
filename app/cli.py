@@ -542,10 +542,10 @@ def _update_analytics_matomo_get_daily_portal_download_summary(app, matomo_api_b
     # for each date query Matomo for the download stats
     for date in dates_to_process:
         matomo_query = f"{matomo_api_baseurl}" \
-                           f"&method=Actions.getDownloads" \
-                           f"&period=day" \
-                           f"&date={date}" \
-                           f"&expanded=1"
+                       f"&method=Actions.getDownloads" \
+                       f"&period=day" \
+                       f"&date={date}" \
+                       f"&expanded=1"
         response = requests.get(matomo_query).json()
 
         if not response:
