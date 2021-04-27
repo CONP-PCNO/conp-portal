@@ -199,7 +199,23 @@ const DatasetElement = props => {
               </div> : null}
           </div>
         </div>
-        <div className="col col-lg-2 d-flex flex-column justify-content-center align-items-center p-2">
+        <div className="col col-lg-1 d-flex flex-column justify-content-top align-items-center p-2">
+          {element.cbrain_id ?
+          <h6 >PROCESS</h6>:
+	    null}
+	  {element.cbrain_id ?
+            <a target="_blank" href={`${element.cbrain_id}`} >
+			<img
+			height= '90%'
+			width= '90%'
+			alt="dataset format"
+			className="dataset-img-fluid"
+			style={{alignSelf: 'center'}}
+			src="static/img/cbrain-icon-blue.png"/>
+	    </a>:
+	    null}
+        </div>
+        <div className="col col-lg-1 d-flex flex-column justify-content-top align-items-center p-2">
           <h6>DOWNLOAD</h6>
           <div className="d-flex flex-column">
             <button type="button" className="btn btn-outline-secondary m-1" onClick={() => downloadMetadata()}>
@@ -250,7 +266,8 @@ DatasetElement.propTypes = {
   subjects: PropTypes.number,
   formats: PropTypes.string,
   modalities: PropTypes.string,
-  sources: PropTypes.number
+  sources: PropTypes.number,
+  cbrain_id: PropTypes.string,
 };
 
 DatasetElement.defaultProps = {
