@@ -200,10 +200,8 @@ const DatasetElement = props => {
           </div>
         </div>
         <div className="col col-lg-1 d-flex flex-column justify-content-top align-items-center p-2">
+          <h7>PROCESS</h7>
           {element.cbrain_id ?
-          <h6 >PROCESS</h6>:
-	    null}
-	  {element.cbrain_id ?
             <a target="_blank" href={`${element.cbrain_id}`} >
 			<img
 			height= '90%'
@@ -213,10 +211,18 @@ const DatasetElement = props => {
 			style={{alignSelf: 'center'}}
 			src="static/img/cbrain-icon-blue.png"/>
 	    </a>:
-	    null}
+	    <a target="_blank"  >
+			<img
+			height= '90%'
+			width= '90%'
+			alt="dataset format"
+			className="dataset-img-fluid"
+			style={{alignSelf: 'center'}}
+			src="static/img/cbrain-icon-grey.png"/>
+	    </a>}
         </div>
         <div className="col col-lg-1 d-flex flex-column justify-content-top align-items-center p-2">
-          <h6>DOWNLOAD</h6>
+          <h7>DOWNLOAD</h7>
           <div className="d-flex flex-column">
             <button type="button" className="btn btn-outline-secondary m-1" onClick={() => downloadMetadata()}>
               Metadata
