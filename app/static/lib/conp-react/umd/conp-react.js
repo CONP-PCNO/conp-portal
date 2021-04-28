@@ -24840,12 +24840,7 @@ var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipeli
       Object.keys(axes.datasets[year]).forEach(function (month) {
         xAxis.push(month + "/" + year);
         countDatasets += axes.datasets[year][month];
-        yAxisDatasets.push(countDatasets); //                console.log ("####### NEW MONTH ############");
-        //                console.log("year" + year.toString());
-        //                console.log("month" + month.toString());
-        //                console.log("axes.datasets[year][month]" + axes.datasets[year][month].toString());
-        //                console.log("count Datasets for the month" + countDatasets.toString());
-        //                console.log ("------- END NEW MONTH ------------");
+        yAxisDatasets.push(countDatasets);
       });
     });
     Object.keys(axes.pipelines).forEach(function (year) {
@@ -24909,22 +24904,19 @@ var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipeli
       } else {
         axes.datasets[dateAddedYear][dateAddedMonth] += 1;
       }
+
+      console.log(typeof dateAddedYear);
     });
     /* check if we've skipped months */
 
-    var months = [];
-
-    for (var i = 1; i <= 12; i++) {
-      months.push(i);
-    }
-
     var today = new Date();
 
-    if (!Object.keys(axes.datasets).includes(today.getFullYear())) {
+    if (!Object.keys(axes.datasets).includes(today.getFullYear().toString())) {
+      console.log('in IF statement');
       axes.datasets[today.getFullYear()] = {};
     }
 
-    if (!Object.keys(axes.pipelines).includes(today.getFullYear())) {
+    if (!Object.keys(axes.pipelines).includes(today.getFullYear().toString())) {
       axes.pipelines[today.getFullYear()] = {};
     }
 

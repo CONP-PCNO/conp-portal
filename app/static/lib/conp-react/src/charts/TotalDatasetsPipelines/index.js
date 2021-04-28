@@ -99,6 +99,8 @@ const TotalDatasetsPipelines = (props) => {
             });
         });
 
+
+
         Object.keys(axes.pipelines).forEach(year => {
             Object.keys(axes.pipelines[year]).forEach(month => {
                 countPipelines += axes.pipelines[year][month];
@@ -171,11 +173,11 @@ const TotalDatasetsPipelines = (props) => {
         /* check if we've skipped months */
         const today = new Date();
 
-        if (!Object.keys(axes.datasets).includes(today.getFullYear())) {
+        if (!Object.keys(axes.datasets).includes(today.getFullYear().toString())) {
             axes.datasets[today.getFullYear()] = {}
         }
 
-        if (!Object.keys(axes.pipelines).includes(today.getFullYear())) {
+        if (!Object.keys(axes.pipelines).includes(today.getFullYear().toString())) {
             axes.pipelines[today.getFullYear()] = {}
         }
 
