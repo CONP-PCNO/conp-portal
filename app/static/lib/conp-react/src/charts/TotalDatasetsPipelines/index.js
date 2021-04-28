@@ -96,12 +96,6 @@ const TotalDatasetsPipelines = (props) => {
                 xAxis.push(`${month}/${year}`);
                 countDatasets += axes.datasets[year][month];
                 yAxisDatasets.push(countDatasets);
-//                console.log ("####### NEW MONTH ############");
-//                console.log("year" + year.toString());
-//                console.log("month" + month.toString());
-//                console.log("axes.datasets[year][month]" + axes.datasets[year][month].toString());
-//                console.log("count Datasets for the month" + countDatasets.toString());
-//                console.log ("------- END NEW MONTH ------------");
             });
         });
 
@@ -175,9 +169,7 @@ const TotalDatasetsPipelines = (props) => {
         });
 
         /* check if we've skipped months */
-
         var months = [];
-
         for (var i = 1; i <= 12; i++) {
             months.push(i);
         }
