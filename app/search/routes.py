@@ -143,7 +143,6 @@ def dataset_search():
                 if not match:
                     continue
 
-
         datasetTitle = d.name.replace("'", "")
         if datasetTitle in cbrain_dataset_ids.keys():
             dataset_cbrain_id = cbrain_dataset_ids[datasetTitle]
