@@ -96,6 +96,12 @@ const TotalDatasetsPipelines = (props) => {
                 xAxis.push(`${month}/${year}`);
                 countDatasets += axes.datasets[year][month];
                 yAxisDatasets.push(countDatasets);
+//                console.log ("####### NEW MONTH ############");
+//                console.log("year" + year.toString());
+//                console.log("month" + month.toString());
+//                console.log("axes.datasets[year][month]" + axes.datasets[year][month].toString());
+//                console.log("count Datasets for the month" + countDatasets.toString());
+//                console.log ("------- END NEW MONTH ------------");
             });
         });
 
@@ -152,17 +158,19 @@ const TotalDatasetsPipelines = (props) => {
         };
 
         chartData.datasets.elements.forEach(element => {
-            const dateAdded = new Date(element.dateAdded);
+            const dateAdded = new Date(element.dateAdded.concat('T00:00:00'));
+            const dateAddedYear = dateAdded.getFullYear();
+            const dateAddedMonth = dateAdded.getMonth() + 1;
 
-            if (!axes.datasets[dateAdded.getFullYear()]) {
-                axes.datasets[dateAdded.getFullYear()] = {}
+            if (!axes.datasets[dateAddedYear]) {
+                axes.datasets[dateAddedYear] = {}
             }
 
-            if (!axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
-                axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+            if (!axes.datasets[dateAddedYear][dateAddedMonth]) {
+                axes.datasets[dateAddedYear][dateAddedMonth] = 1;
             }
             else {
-                axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1
+                axes.datasets[dateAddedYear][dateAddedMonth] += 1
             }
         });
 
