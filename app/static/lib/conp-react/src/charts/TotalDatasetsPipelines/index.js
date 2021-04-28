@@ -169,11 +169,6 @@ const TotalDatasetsPipelines = (props) => {
         });
 
         /* check if we've skipped months */
-        var months = [];
-        for (var i = 1; i <= 12; i++) {
-            months.push(i);
-        }
-
         const today = new Date();
 
         if (!Object.keys(axes.datasets).includes(today.getFullYear())) {
