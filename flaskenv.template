@@ -4,6 +4,10 @@ FLASK_DEBUG=0
 DATABASE_URL=sqlite:///<ENTER FLASK TOP DIR>/app.db
 SECRET_KEY=you-will-never-guess
 DATA_PATH=${HOME}
+
+# DATASET_CACHE_PATH is the location where zipped datasets are kept.
+DATASET_CACHE_PATH=${HOME}/.cache/conp-dataset
+
 SQLALCHEMY_TRACK_MODIFICATIONS=False
 MAIL_SERVER=smtp.googlemail.com
 MAIL_PORT=587
@@ -17,8 +21,9 @@ ORCID_OAUTH_CLIENT_SECRET=<ORCID SECRET ID>
 ORCID_TOKEN_URL=https://orcid.org/oauth/token
 ADMIN_EMAIL = <Your gmail>
 WEBHOOKS_SECRET=<github webhook secret>
-MATOMO_SERVER_URL=<Your Matomo URL>
-MATOMO_SITE_ID=1
+MATOMO_SERVER_URL=<Your Matomo base URL> ## no http:// or https://
+MATOMO_SITE_ID=<Your Matomo site ID>
+MATOMO_TOKEN_AUTH=<Your Matomo token auth>
 
 # GITHUB CREDENTIALS FOR MARKDOWN RENDERER (OPTIONAL)
 GITHUB_USER=
