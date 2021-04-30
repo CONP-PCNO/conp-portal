@@ -24472,8 +24472,29 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     rel: "noopener noreferrer",
     href: element.sources
   }, element.sources))) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-lg-2 d-flex flex-column justify-content-center align-items-center p-2"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h6", null, "DOWNLOAD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col col-lg-1 d-flex flex-column justify-content-top align-items-center p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, "PROCESS"), element.cbrain_id ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    target: "_blank",
+    href: "" + element.cbrain_id
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    alt: "dataset format",
+    className: "img-fluid",
+    style: {
+      alignSelf: 'center'
+    },
+    src: "static/img/cbrain-icon-blue.png"
+  })) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    target: "_blank"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    alt: "dataset format",
+    className: "img-fluid",
+    style: {
+      alignSelf: 'center'
+    },
+    src: "static/img/cbrain-icon-grey.png"
+  }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col col-lg-1 d-flex flex-column justify-content-top align-items-center p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, "DOWNLOAD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-column"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     type: "button",
@@ -24535,7 +24556,8 @@ DatasetElement_DatasetElement.propTypes = {
   subjects: prop_types_default.a.number,
   formats: prop_types_default.a.string,
   modalities: prop_types_default.a.string,
-  sources: prop_types_default.a.number
+  sources: prop_types_default.a.number,
+  cbrain_id: prop_types_default.a.string
 };
 DatasetElement_DatasetElement.defaultProps = {
   imagePath: "",
