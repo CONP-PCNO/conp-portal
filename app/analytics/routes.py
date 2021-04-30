@@ -160,15 +160,16 @@ def pipelines_views():
                     v.nb_uniq_visitors if v.nb_uniq_visitors is not None else 0)
 
         if not exists and v.label is not None and "/pipeline?id=" in v.label:
-            element = {
-                "url": v.url,
-                "label": v.label,
-                "title": pipelines.get_title_from_id(v.label.split('id=')[1]),
-                "nb_hits": v.nb_hits,
-                "nb_visits": v.nb_visits,
-                "nb_uniq_visitors": v.nb_uniq_visitors if v.nb_uniq_visitors is not None else 0,
-            }
-            elements.append(element)
+            if pipelines.get_title_from_id(v.label.split('id=')[1]):
+                element = {
+                    "url": v.url,
+                    "label": v.label,
+                    "title": pipelines.get_title_from_id(v.label.split('id=')[1]),
+                    "nb_hits": v.nb_hits,
+                    "nb_visits": v.nb_visits,
+                    "nb_uniq_visitors": v.nb_uniq_visitors if v.nb_uniq_visitors is not None else 0,
+                }
+                elements.append(element)
 
     elements.sort(key=lambda e: e["nb_hits"], reverse=True)
 

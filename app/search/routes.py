@@ -11,7 +11,7 @@ from flask_login import current_user
 
 from app.models import Dataset, DatasetAncestry
 from app.search import search_bp
-from app.search.models import DATSDataset
+from app.search.models import DATSDataset, DatasetCache
 from app.services import github
 from config import Config
 
@@ -463,12 +463,22 @@ def dataset_info():
     ci_badge_url = "https://img.shields.io/badge/circleci-" + \
         dataset["status"] + "-" + color + "?style=flat-square&logo=circleci"
 
+    try:
+        zipped = DatasetCache(current_app).getZipLocation(d)
+    except IOError:
+        zipped = None
+
+    showDownloadButton = zipped is not None
+    zipLocation = '/data/{0}'.format(os.path.basename(zipped or ''))
+
     return render_template(
         'dataset.html',
         title='CONP | Dataset',
         data=dataset,
         metadata=metadata,
         readme=readme,
+        showDownloadButton=showDownloadButton,
+        zipLocation=zipLocation,
         ciBadgeUrl=ci_badge_url,
         user=current_user
     )
