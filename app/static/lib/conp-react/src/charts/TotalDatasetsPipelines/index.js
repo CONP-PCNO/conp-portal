@@ -99,6 +99,8 @@ const TotalDatasetsPipelines = (props) => {
             });
         });
 
+
+
         Object.keys(axes.pipelines).forEach(year => {
             Object.keys(axes.pipelines[year]).forEach(month => {
                 countPipelines += axes.pipelines[year][month];
@@ -152,35 +154,30 @@ const TotalDatasetsPipelines = (props) => {
         };
 
         chartData.datasets.elements.forEach(element => {
-            const dateAdded = new Date(element.dateAdded);
+            const dateAdded = new Date(element.dateAdded.concat('T00:00:00'));
+            const dateAddedYear = dateAdded.getFullYear();
+            const dateAddedMonth = dateAdded.getMonth() + 1;
 
-            if (!axes.datasets[dateAdded.getFullYear()]) {
-                axes.datasets[dateAdded.getFullYear()] = {}
+            if (!axes.datasets[dateAddedYear]) {
+                axes.datasets[dateAddedYear] = {}
             }
 
-            if (!axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
-                axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+            if (!axes.datasets[dateAddedYear][dateAddedMonth]) {
+                axes.datasets[dateAddedYear][dateAddedMonth] = 1;
             }
             else {
-                axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1
+                axes.datasets[dateAddedYear][dateAddedMonth] += 1
             }
         });
 
         /* check if we've skipped months */
-
-        var months = [];
-
-        for (var i = 1; i <= 12; i++) {
-            months.push(i);
-        }
-
         const today = new Date();
 
-        if (!Object.keys(axes.datasets).includes(today.getFullYear())) {
+        if (!Object.keys(axes.datasets).includes(today.getFullYear().toString())) {
             axes.datasets[today.getFullYear()] = {}
         }
 
-        if (!Object.keys(axes.pipelines).includes(today.getFullYear())) {
+        if (!Object.keys(axes.pipelines).includes(today.getFullYear().toString())) {
             axes.pipelines[today.getFullYear()] = {}
         }
 

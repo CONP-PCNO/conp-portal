@@ -24913,33 +24913,29 @@ var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipeli
       pipelines: {}
     };
     chartData.datasets.elements.forEach(function (element) {
-      var dateAdded = new Date(element.dateAdded);
+      var dateAdded = new Date(element.dateAdded.concat('T00:00:00'));
+      var dateAddedYear = dateAdded.getFullYear();
+      var dateAddedMonth = dateAdded.getMonth() + 1;
 
-      if (!axes.datasets[dateAdded.getFullYear()]) {
-        axes.datasets[dateAdded.getFullYear()] = {};
+      if (!axes.datasets[dateAddedYear]) {
+        axes.datasets[dateAddedYear] = {};
       }
 
-      if (!axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
-        axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
+      if (!axes.datasets[dateAddedYear][dateAddedMonth]) {
+        axes.datasets[dateAddedYear][dateAddedMonth] = 1;
       } else {
-        axes.datasets[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
+        axes.datasets[dateAddedYear][dateAddedMonth] += 1;
       }
     });
     /* check if we've skipped months */
 
-    var months = [];
-
-    for (var i = 1; i <= 12; i++) {
-      months.push(i);
-    }
-
     var today = new Date();
 
-    if (!Object.keys(axes.datasets).includes(today.getFullYear())) {
+    if (!Object.keys(axes.datasets).includes(today.getFullYear().toString())) {
       axes.datasets[today.getFullYear()] = {};
     }
 
-    if (!Object.keys(axes.pipelines).includes(today.getFullYear())) {
+    if (!Object.keys(axes.pipelines).includes(today.getFullYear().toString())) {
       axes.pipelines[today.getFullYear()] = {};
     }
 
