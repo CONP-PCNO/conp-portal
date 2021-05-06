@@ -25,7 +25,7 @@
     "@fortawesome/react-fontawesome": "^0.1.9",
     "bootstrap": "^4.3.1",
     "conp-dats-editor": "git://github.com/CONP-PCNO/conp-dats-editor.git#2efe3133320a2eddbdf8ceee486e00ee78ed005d",
-    "highcharts": "^8.2.0",
+    "highcharts": "^9.0.0",
     "highcharts-custom-events": "^3.0.10",
     "highcharts-react-official": "^3.0.0",
     "prop-types": "15.7.2",
