@@ -206,7 +206,7 @@ def keywords():
         # skip searches with a sum_time_spent below 5 seconds as users are probably
         # still typing the words in the searches when the time spent on the result is
         # less than 5 seconds
-        if v.sum_time_spent < 5:
+        if v.sum_time_spent < 2:
             continue
 
         # skip if the keyword is a number and is not part of a dataset name
