@@ -5,13 +5,14 @@
 """
 
 import json
+import re
 
 from flask import render_template, request
 from flask_login import current_user
 from app.analytics import analytics_bp
 from app.pipelines import pipelines
 
-from app.models import MatomoDailyVisitsSummary, MatomoDailyGetDatasetPageViewsSummary, MatomoDailyGetSiteSearchKeywords, MatomoDailyGetPageUrlsSummary
+from app.models import MatomoDailyVisitsSummary, MatomoDailyGetDatasetPageViewsSummary, MatomoDailyGetSiteSearchKeywords, MatomoDailyGetPageUrlsSummary, Dataset
 
 
 @analytics_bp.route('/analytics')
@@ -194,7 +195,17 @@ def keywords():
     keywords = MatomoDailyGetSiteSearchKeywords.query.order_by(
         MatomoDailyGetSiteSearchKeywords.id).all()
 
+    datasets = Dataset.query.order_by(Dataset.dataset_id).all()
+    dataset_ids = [e.dataset_id for e in datasets]
+
     for v in keywords:
+        # skip if the keyword is a number and is not part of a dataset name
+        if v.label is not None and re.match(r'^\d+$', v.label) is not None:
+            r = re.compile(".*" + v.label + ".*")
+            matching_dataset_ids = list(filter(r.match, dataset_ids))
+            if not matching_dataset_ids:
+                continue
+
         exists = False
         for e in elements:
             label = e.get("label", None)
