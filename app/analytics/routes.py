@@ -238,6 +238,5 @@ def keywords():
     elements = list(filter(lambda e: len(e['label']) > 2, elements))
 
     elements.sort(key=lambda e: e["nb_hits"], reverse=True)
-    print(elements)
 
     return json.dumps(elements)
