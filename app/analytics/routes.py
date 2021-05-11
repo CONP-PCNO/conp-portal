@@ -203,12 +203,6 @@ def keywords():
         if v.label is None:
             continue
 
-        # skip searches with an exit rate below 30% considered "unsuccessful" searches
-        # otherwise, get a lot of 'b' 'bi' 'big' 'bigb' and so on
-        # exit_rate = int(re.match(r'(\d*)%', v.exit_rate).group(1))
-        # if exit_rate < 30:
-        #     continue
-
         # skip searches with a sum_time_spent below 5 seconds as users are probably
         # still typing the words in the searches when the time spent on the result is
         # less than 5 seconds
