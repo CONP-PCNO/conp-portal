@@ -199,21 +199,41 @@ def keywords():
     dataset_ids = [e.dataset_id for e in datasets]
 
     for v in keywords:
+        # skip dates with no analytics data return by the DB
+        if v.label is None:
+            continue
+
+        # skip searches with an exit rate below 30% considered "unsuccessful" searches
+        # otherwise, get a lot of 'b' 'bi' 'big' 'bigb' and so on
+        # exit_rate = int(re.match(r'(\d*)%', v.exit_rate).group(1))
+        # if exit_rate < 30:
+        #     continue
+
+        # skip searches with a sum_time_spent below 5 seconds as users are probably
+        # still typing the words in the searches when the time spent on the result is
+        # less than 5 seconds
+        if v.sum_time_spent < 5:
+            continue
+
         # skip if the keyword is a number and is not part of a dataset name
-        if v.label is not None and re.match(r'^\d+$', v.label) is not None:
+        if re.match(r'^\d+$', v.label) is not None:
             r = re.compile(".*" + v.label + ".*")
             matching_dataset_ids = list(filter(r.match, dataset_ids))
             if not matching_dataset_ids:
                 continue
+            # the following statement will prevent the react Object.keys()
+            # to reorder the keys of JSON response by showing the labels with
+            # numbers first, even if they have a small number of hits
+            v.label = " " + v.label
 
         exists = False
         for e in elements:
-            label = e.get("label", None)
+            label = e.get("label")
             if label is not None and label == v.label:
                 exists = True
                 e["nb_hits"] += v.nb_hits
 
-        if not exists and v.label is not None:
+        if not exists:
             element = {
                 "label": v.label,
                 "nb_hits": v.nb_hits,
@@ -224,5 +244,6 @@ def keywords():
     elements = list(filter(lambda e: len(e['label']) > 2, elements))
 
     elements.sort(key=lambda e: e["nb_hits"], reverse=True)
+    print(elements)
 
     return json.dumps(elements)
