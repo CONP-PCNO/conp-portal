@@ -5,13 +5,14 @@
 """
 
 import json
+import re
 
 from flask import render_template, request
 from flask_login import current_user
 from app.analytics import analytics_bp
 from app.pipelines import pipelines
 
-from app.models import MatomoDailyVisitsSummary, MatomoDailyGetDatasetPageViewsSummary, MatomoDailyGetSiteSearchKeywords, MatomoDailyGetPageUrlsSummary
+from app.models import MatomoDailyVisitsSummary, MatomoDailyGetDatasetPageViewsSummary, MatomoDailyGetSiteSearchKeywords, MatomoDailyGetPageUrlsSummary, Dataset
 
 
 @analytics_bp.route('/analytics')
@@ -194,15 +195,39 @@ def keywords():
     keywords = MatomoDailyGetSiteSearchKeywords.query.order_by(
         MatomoDailyGetSiteSearchKeywords.id).all()
 
+    datasets = Dataset.query.order_by(Dataset.dataset_id).all()
+    dataset_ids = [e.dataset_id for e in datasets]
+
     for v in keywords:
+        # skip dates with no analytics data return by the DB
+        if v.label is None:
+            continue
+
+        # skip searches with a sum_time_spent below 5 seconds as users are probably
+        # still typing the words in the searches when the time spent on the result is
+        # less than 5 seconds
+        if v.sum_time_spent < 2:
+            continue
+
+        # skip if the keyword is a number and is not part of a dataset name
+        if re.match(r'^\d+$', v.label) is not None:
+            r = re.compile(".*" + v.label + ".*")
+            matching_dataset_ids = list(filter(r.match, dataset_ids))
+            if not matching_dataset_ids:
+                continue
+            # the following statement will prevent the react Object.keys()
+            # to reorder the keys of JSON response by showing the labels with
+            # numbers first, even if they have a small number of hits
+            v.label = " " + v.label
+
         exists = False
         for e in elements:
-            label = e.get("label", None)
+            label = e.get("label")
             if label is not None and label == v.label:
                 exists = True
                 e["nb_hits"] += v.nb_hits
 
-        if not exists and v.label is not None:
+        if not exists:
             element = {
                 "label": v.label,
                 "nb_hits": v.nb_hits,
