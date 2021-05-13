@@ -141,3 +141,19 @@ def tutorial():
     content = github.get_tutorial_content()
 
     return render_template('tutorial.html', title='CONP | Tutorial', user=current_user, content=content)
+
+@main_bp.route('/dats-editor')
+def dats_editor():
+    """ DATS Editor Route
+
+        Route to lead to the DATS Editor page
+
+        Args:
+            None
+        Returns:
+            rendered template for dats-editor.html
+    """
+
+    content = github.get_tutorial_content()
+
+    return render_template('dats-editor.html', title='CONP | DATS Editor', user=current_user, content=content)
