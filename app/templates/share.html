@@ -11,39 +11,11 @@
 <!-- Title Block -->
 
 {% block contenttitle %}
-<h2><span style="color:red;">CONP Portal </span> | Share</h2>
+    <h2><span style="color:red;">CONP Portal </span> | Share</h2>
 {% endblock %}
 
 <!-- Content Block -->
 
 {% block appcontent %}
-<ul class="nav nav-tabs nav-fill my-4" id="myTab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="howto-tab" data-toggle="tab" href="#howto" role="tab" aria-controls="howto"
-      aria-selected="true"><h5>How to Share Datasets and Pipelines</h5></a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="dats-editor-tab" data-toggle="tab" href="#dats-editor" role="tab"
-      aria-controls="dats-editor" aria-selected="false"><h5>Create or Edit a DATS.json file</h5></a>
-  </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="howto" role="tabpanel" aria-labelledby="howto-tab">
-    <div class="p-2 flex-fill">
-      {{ content|safe }}
-    </div>
-  </div>
-  <div class="tab-pane fade" id="dats-editor" role="tabpanel" aria-labelledby="dats-editor-tab">
-    <div class="p-2 flex-fill">
-      <div id="dats-editor-container">
-
-        <script type="text/javascript">
-          const datsEditor = React.createElement(CONPReact.DatsEditorForm);
-          ReactDOM.render(datsEditor, document.querySelector("#dats-editor-container"));
-        </script>
-
-      </div>
-    </div>
-  </div>
-</div>
+{{ content|safe }}
 {% endblock %}
