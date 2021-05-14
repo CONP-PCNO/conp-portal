@@ -142,6 +142,7 @@ def tutorial():
 
     return render_template('tutorial.html', title='CONP | Tutorial', user=current_user, content=content)
 
+
 @main_bp.route('/dats-editor')
 def dats_editor():
     """ DATS Editor Route
