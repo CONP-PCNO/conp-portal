@@ -208,28 +208,30 @@ const DatasetElement = props => {
               </div> : null}
           </div>
         </div>
-        <div className="col col-lg-1 d-flex flex-column justify-content-top align-items-center p-2">
+        
+        <div className="col col-lg-2 d-flex flex-column justify-content-top align-items-center p-2">
+        <div class="row align-items-top width-auto">
+        
+        <div className="col col-lg-4 d-flex flex-column justify-content-top align-items-center p-2"  >
           <h7>PROCESS</h7>
           {element.cbrain_id ?
             <a target="_blank" href={`${element.cbrain_id}`} >
-			<img
-			alt="dataset format"
-			className="img-fluid"
-			style={{alignSelf: 'center'}}
-			src="static/img/cbrain-icon-blue.png"/>
+			<img 
+			className="cbrain-img justify-content-center align-items-center"
+			src="static/img/cbrain-icon-blue.png" style={{width: '90%'}}/>
 	    </a>:
 	    <a target="_blank"  >
 			<img
-			alt="dataset format"
-			className="img-fluid"
-			style={{alignSelf: 'center'}}
-			src="static/img/cbrain-icon-grey.png"/>
+			className="cbrain-img justify-content-center align-items-center"
+			src="static/img/cbrain-icon-grey.png" style={{width: '90%'}}/>
 	    </a>}
         </div>
-        <div className="col col-lg-1 d-flex flex-column justify-content-top align-items-center p-2">
+        
+        
+        <div className="col col-lg-8 d-flex flex-column justify-content-top align-items-center p-2"  >
           <h7>DOWNLOAD</h7>
           <div className="d-flex flex-column">
-            <button type="button" className="btn btn-outline-secondary m-1" onClick={() => downloadMetadata()}>
+            <button type="button" className="btn btn-outline-secondary m-1"  onClick={() => downloadMetadata()}>
               Metadata
         <div className="spinner-border text-primary" role="status" hidden={!metadataSpinnerState}>
                 <span className="sr-only">Loading...</span>
@@ -251,6 +253,8 @@ const DatasetElement = props => {
           <div className="d-flex">
             {authIcons.map((icon, index) => <div key={"authIcon_" + index} className="text-center p-1">{icon}</div>)}
           </div>
+        </div>
+        </div>
         </div>
       </div>
     </div >
