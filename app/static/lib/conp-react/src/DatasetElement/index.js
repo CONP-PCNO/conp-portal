@@ -106,7 +106,7 @@ const DatasetElement = props => {
 
   return (
     <div className="card container-fluid" data-type="dataset">
-      <div className="row">
+      <div className="row pr-4">
         <div className="col col-lg-2 d-flex flex-column p-2">
           <div className="flex-grow-2 d-flex flex-column justify-content-center align-items-center">
             <img
@@ -218,12 +218,12 @@ const DatasetElement = props => {
             <a target="_blank" href={`${element.cbrain_id}`} >
 			<img 
 			className="cbrain-img justify-content-center align-items-center"
-			src="static/img/cbrain-icon-blue.png" style={{width: '90%'}}/>
+			src="static/img/cbrain-icon-blue.png" style={{maxWidth: '60px'}}/>
 	    </a>:
 	    <a target="_blank"  >
 			<img
 			className="cbrain-img justify-content-center align-items-center"
-			src="static/img/cbrain-icon-grey.png" style={{width: '90%'}}/>
+			src="static/img/cbrain-icon-grey.png" style={{maxWidth: '60px'}}/>
 	    </a>}
         </div>
         
