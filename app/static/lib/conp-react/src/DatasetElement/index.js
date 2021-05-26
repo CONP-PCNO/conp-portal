@@ -208,7 +208,6 @@ const DatasetElement = props => {
               </div> : null}
           </div>
         </div>
-        
         <div className="col col-lg-2 d-flex flex-column justify-content-top align-items-center p-2">
         <div class="row align-items-top width-auto">
         
@@ -226,8 +225,6 @@ const DatasetElement = props => {
 			src="static/img/cbrain-icon-grey.png" style={{maxWidth: '60px'}}/>
 	    </a>}
         </div>
-        
-        
         <div className="col col-lg-8 d-flex flex-column justify-content-top align-items-center p-2"  >
           <h7>DOWNLOAD</h7>
           <div className="d-flex flex-column">
