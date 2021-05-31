@@ -106,19 +106,20 @@ const DatasetElement = props => {
 
   return (
     <div className="card container-fluid" data-type="dataset">
-      <div className="row">
+      <div className="row pr-4">
         <div className="col col-lg-2 d-flex flex-column p-2">
           <div className="flex-grow-2 d-flex flex-column justify-content-center align-items-center">
             <img
-              alt="dataset format"
-              className="img-fluid w-100"
-              style={{ maxWidth: '180px' }}
-              src={element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL}
+                alt="dataset format"
+                className="img-fluid w-100"
+                style={{maxWidth: '180px'}}
+                src={element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL}
             />
           </div>
           <div className="flex-grow-1 d-flex flex-row align-items-end">
-            {element.conpStatus !== 'external' ? (<img height="36" width="36" src={statusCONP} alt="CONP status" />) : <div style={{ width: 36 }} />}
-            <ViewsIcon type="dataset" id={element.id} />
+            {element.conpStatus !== 'external' ? (<img height="36" width="36" src={statusCONP} alt="CONP status"/>) :
+                <div style={{width: 36}}/>}
+            <ViewsIcon type="dataset" id={element.id}/>
           </div>
         </div>
         <div className="col col-lg-8 card-body d-flex">
@@ -131,129 +132,133 @@ const DatasetElement = props => {
             <div className="py-2">
               <ul className="d-flex align-items-start">
                 {element.creators ?
-                  <li className="card-list-item">
-                    <strong>Creators: </strong>{element.creators.length > 3 ? element.creators.slice(0, 3).join(', ') + ' et al.' : element.creators.join(', ')}
-                  </li> : null}
+                    <li className="card-list-item">
+                      <strong>Creators: </strong>{element.creators.length > 3 ? element.creators.slice(0, 3).join(', ') + ' et al.' : element.creators.join(', ')}
+                    </li> : null}
                 {element.origin?.institution ?
-                  <li className="card-list-item">
-                    <strong>Institution: </strong>{element.origin.institution}
-                  </li> : null}
+                    <li className="card-list-item">
+                      <strong>Institution: </strong>{element.origin.institution}
+                    </li> : null}
                 {element.origin?.consortium ?
-                  <li className="card-list-item">
-                    <strong>Consortium: </strong>{element.origin.consortium}
-                  </li> : null}
+                    <li className="card-list-item">
+                      <strong>Consortium: </strong>{element.origin.consortium}
+                    </li> : null}
               </ul>
               <ul className="d-flex align-items-start">
                 {element.version ?
-                  <li className="card-list-item">
-                    <strong>Version: </strong>{element.version}
-                  </li> : null}
+                    <li className="card-list-item">
+                      <strong>Version: </strong>{element.version}
+                    </li> : null}
                 {element.dateAdded ?
-                  <li className="card-list-item">
-                    <strong>Date Added: </strong>{element.dateAdded}
-                  </li> : null}
+                    <li className="card-list-item">
+                      <strong>Date Added: </strong>{element.dateAdded}
+                    </li> : null}
                 {element.dateUpdated ?
-                  <li className="card-list-item">
-                    <strong>Date Updated: </strong>{element.dateUpdated}
-                  </li> : null}
+                    <li className="card-list-item">
+                      <strong>Date Updated: </strong>{element.dateUpdated}
+                    </li> : null}
               </ul>
               <ul className="d-flex align-items-start">
                 {element.types ?
-                  <li className="card-list-item">
-                    <strong>Data Types: </strong>{element.types}
-                  </li> : null}
+                    <li className="card-list-item">
+                      <strong>Data Types: </strong>{element.types}
+                    </li> : null}
                 {element.modalities ?
-                  <li className="card-list-item">
-                    <strong>Modalities: </strong>{element.modalities.join(', ')}
-                  </li> : null}
+                    <li className="card-list-item">
+                      <strong>Modalities: </strong>{element.modalities.join(', ')}
+                    </li> : null}
                 {element.licenses ?
-                  <li className="card-list-item">
-                    <strong>License: </strong>{element.licenses}
-                  </li> : null}
+                    <li className="card-list-item">
+                      <strong>License: </strong>{element.licenses}
+                    </li> : null}
               </ul>
               <ul className="d-flex align-items-start">
                 {element.files ?
-                  <li className="card-list-item">
-                    <strong>Files: </strong>{element.files}
-                  </li> : null}
+                    <li className="card-list-item">
+                      <strong>Files: </strong>{element.files}
+                    </li> : null}
                 {element.size ?
-                  <li className="card-list-item">
-                    <strong>Size: </strong>{element.size}
-                  </li> : null}
+                    <li className="card-list-item">
+                      <strong>Size: </strong>{element.size}
+                    </li> : null}
                 {element.subjects ?
-                  <li className="card-list-item">
-                    <strong>Subjects: </strong>{element.subjects}
-                  </li> : null}
+                    <li className="card-list-item">
+                      <strong>Subjects: </strong>{element.subjects}
+                    </li> : null}
                 {element.formats ?
-                  <li className="card-list-item">
-                    <strong>Formats: </strong>{element.formats.join(', ')}
-                  </li> : null}
+                    <li className="card-list-item">
+                      <strong>Formats: </strong>{element.formats.join(', ')}
+                    </li> : null}
               </ul>
             </div>
             {element.sources ?
-              <div className="card-list-item">
-                <p className="card-text pr-1">
-                  <strong>Browse on Github: </strong>
-                  <a className="text-reset" target="_blank" rel="noopener noreferrer" href={element.remoteUrl}>
-                    {element.remoteUrl}
-                  </a>
-                </p>
-              </div> : null}
+                <div className="card-list-item">
+                  <p className="card-text pr-1">
+                    <strong>Browse on Github: </strong>
+                    <a className="text-reset" target="_blank" rel="noopener noreferrer" href={element.remoteUrl}>
+                      {element.remoteUrl}
+                    </a>
+                  </p>
+                </div> : null}
             {element.sources ?
-              <div className="card-list-item">
-                <p className="card-text pr-1">
-                  <strong>Source: </strong>
-                  <a className="text-reset" target="_blank" rel="noopener noreferrer" href={element.sources}>{element.sources}</a>
-                </p>
-              </div> : null}
+                <div className="card-list-item">
+                  <p className="card-text pr-1">
+                    <strong>Source: </strong>
+                    <a className="text-reset" target="_blank" rel="noopener noreferrer"
+                       href={element.sources}>{element.sources}</a>
+                  </p>
+                </div> : null}
           </div>
         </div>
-        <div className="col col-lg-1 d-flex flex-column justify-content-top align-items-center p-2">
-          <h7>PROCESS</h7>
-          {element.cbrain_id ?
-            <a target="_blank" href={`${element.cbrain_id}`} >
-			<img
-			alt="dataset format"
-			className="img-fluid"
-			style={{alignSelf: 'center'}}
-			src="static/img/cbrain-icon-blue.png"/>
-	    </a>:
-	    <a target="_blank"  >
-			<img
-			alt="dataset format"
-			className="img-fluid"
-			style={{alignSelf: 'center'}}
-			src="static/img/cbrain-icon-grey.png"/>
-	    </a>}
-        </div>
-        <div className="col col-lg-1 d-flex flex-column justify-content-top align-items-center p-2">
-          <h7>DOWNLOAD</h7>
-          <div className="d-flex flex-column">
-            <button type="button" className="btn btn-outline-secondary m-1" onClick={() => downloadMetadata()}>
-              Metadata
-        <div className="spinner-border text-primary" role="status" hidden={!metadataSpinnerState}>
-                <span className="sr-only">Loading...</span>
-              </div>
-            </button>
-            <div className="alert alert-danger" role="alert" hidden={!metadataErrorState}>
-              {metadataErrorText}
+        <div className="col col-lg-2 d-flex flex-column justify-content-top align-items-center p-2">
+          <div className="row align-items-top width-auto">
+
+            <div className="col col-lg-4 d-flex flex-column justify-content-top align-items-center p-2 pr-4">
+              <h7>PROCESS</h7>
+              {element.cbrain_id ?
+                  <a target="_blank" href={`${element.cbrain_id}`}>
+                    <img
+                        className="cbrain-img justify-content-center align-items-center"
+                        src="static/img/cbrain-icon-blue.png" style={{maxWidth: '60px'}}/>
+                  </a> :
+                  <a target="_blank">
+                    <img
+                        className="cbrain-img justify-content-center align-items-center"
+                        src="static/img/cbrain-icon-grey.png" style={{maxWidth: '60px'}}/>
+                  </a>}
             </div>
-            <a href={`dataset?id=${element.id}#downloadInstructions`} role="button" className="btn btn-outline-secondary m-1" >
-              Dataset
-              <div className="spinner-border text-primary" role="status" hidden={!datasetSpinnerState}>
-                <span className="sr-only">Loading...</span>
+            <div className="col col-lg-8 d-flex flex-column justify-content-top align-items-center p-2">
+              <h7>DOWNLOAD</h7>
+              <div className="d-flex flex-column">
+                <button type="button" className="btn btn-outline-secondary m-1" onClick={() => downloadMetadata()}>
+                  Metadata
+                  <div className="spinner-border text-primary" role="status" hidden={!metadataSpinnerState}>
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </button>
+                <div className="alert alert-danger" role="alert" hidden={!metadataErrorState}>
+                  {metadataErrorText}
+                </div>
+                <a href={`dataset?id=${element.id}#downloadInstructions`} role="button"
+                   className="btn btn-outline-secondary m-1">
+                  Dataset
+                  <div className="spinner-border text-primary" role="status" hidden={!datasetSpinnerState}>
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </a>
+                <div className="alert alert-danger" role="alert" hidden={!datasetErrorState}>
+                  {datasetErrorText}
+                </div>
               </div>
-            </a>
-            <div className="alert alert-danger" role="alert" hidden={!datasetErrorState}>
-              {datasetErrorText}
+              <div className="d-flex">
+                {authIcons.map((icon, index) => <div key={"authIcon_" + index}
+                                                     className="text-center p-1">{icon}</div>)}
+              </div>
             </div>
-          </div>
-          <div className="d-flex">
-            {authIcons.map((icon, index) => <div key={"authIcon_" + index} className="text-center p-1">{icon}</div>)}
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 
