@@ -273,20 +273,20 @@ def pipelines_execution_records():
     max_per_page = request.args.get('max_per_page') or 10
     if max_per_page != 'All':
         max_per_page = int(max_per_page)
-    search = request.args.get('search') or ""
     searchPipelineName = ""
     searchDatasetName = ""
 
     filters = {
         "page": page,
         "max_per_page": max_per_page,
-        "searchPipelineName" : searchPipelineName,
-        "searchDatasetName" : searchPipelineName,
+        "searchPipelineName": searchPipelineName,
+        "searchDatasetName": searchDatasetName,
     }
 
     return render_template('pipelinesExecutionRecords.html',
-                        title='CONP | Pipelines Provenance Records',
-                        filters=filters)
+        title='CONP | Pipelines Provenance Records',
+        filters=filters)
+
 
 @pipelines_bp.route('/pipeline-execution-records-search', methods=['GET'])
 def pipelines_execution_records_search():
@@ -298,13 +298,13 @@ def pipelines_execution_records_search():
         data = json.load(f)
     for item in data:
         newElement = {
-            "pipelineName":item["pipeline"],
+            "pipelineName": item["pipeline"],
             "pipelineUrl": item["pipeline_link"],
             "datasetName": item["dataset"],
             "datasetUrl": item["dataset_link"],
             "executionRecord": item["status"],
             "executionRecordUrl": item["status_link"]
-            }
+        }
         elements += [newElement]
 
     # get request variables
@@ -324,16 +324,16 @@ def pipelines_execution_records_search():
         if pipelineSearchQuery:
             if datasetSearchQuery:
                 if (pipelineSearchQuery in item["pipelineName"].lower()) and (datasetSearchQuery in item["datasetName"].lower()):
-                    elements_on_page += [item].copy() 
+                    elements_on_page += [item].copy()
             else:
                 if (pipelineSearchQuery in item["pipelineName"].lower()):
-                    elements_on_page += [item].copy() 
+                    elements_on_page += [item].copy()
         else:
             if datasetSearchQuery:
                 if (datasetSearchQuery in item["datasetName"].lower()):
-                    elements_on_page += [item].copy() 
+                    elements_on_page += [item].copy()
             else:
-                elements_on_page = elements.copy() 
+                elements_on_page = elements.copy()
                 continue
 
     # extract the appropriate page
@@ -349,7 +349,7 @@ def pipelines_execution_records_search():
 
     # construct payload
     payload = {
-        "authorized": False,
+        "authorized": authorized,
         "total": len(elements),
         "elements": elements_on_page
     }
