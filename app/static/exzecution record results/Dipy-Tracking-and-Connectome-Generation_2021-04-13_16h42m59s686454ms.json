@@ -1,0 +1,45 @@
+{
+    "summary": {
+        "name": "Dipy Tracking and Connectome Generation",
+        "descriptor-doi": "10.5281/zenodo.3699595",
+        "date-time": "2021-04-13_16h42m59s686454ms"
+    },
+    "public-invocation": {
+        "diffusion_image": {
+            "file-name": "sub-032633_ses-005_run-1_dwi.nii.gz",
+            "md5sum": "6a2f0faf3d33cc9123ae8d2c64601ad0"
+        },
+        "bvecs": {
+            "file-name": "sub-032633_ses-005_run-1_dwi.bvec",
+            "md5sum": "18d2d400cc9f176c1ee77ef926e70fec"
+        },
+        "bvals": {
+            "file-name": "sub-032633_ses-005_run-1_dwi.bval",
+            "md5sum": "2276896ed44ac74911f55fc9071f49d1"
+        },
+        "whitematter_mask": {
+            "file-name": "output_fsl_fast_SIMON_dwi_pve_2.nii.gz",
+            "md5sum": "928572cb4d3a88ba74612bc3d670a42f"
+        },
+        "seed_mask": {
+            "file-name": "mask2boundary.nii.gz",
+            "md5sum": "63e816dc1d4e90aa9a0fc08030aecacc"
+        },
+        "output_directory": "/home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-005/dwi/"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "python3.6 /opt/dipy_tracking.py /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-005/dwi/sub-032633_ses-005_run-1_dwi.nii.gz /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-005/dwi/sub-032633_ses-005_run-1_dwi.bvec /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-005/dwi/sub-032633_ses-005_run-1_dwi.bval /home/mandana/CONP/output_fsl_fast_SIMON_dwi/output_fsl_fast_SIMON_dwi_pve_2.nii.gz /home/mandana/CONP/output_mask2boundary/mask2boundary.nii.gz /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-005/dwi/ --prune 3 --random_seed 42",
+        "missing-files": {},
+        "output-files": {
+            "fibers": {
+                "file-name": "sub-032633_ses-005_run-1_dwi_det_rs42.trk",
+                "md5sum": "751d389e6948187779faf7182ba70f76"
+            }
+        }
+    },
+    "additional-information": null
+}

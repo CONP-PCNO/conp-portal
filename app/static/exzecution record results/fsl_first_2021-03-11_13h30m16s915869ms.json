@@ -1,0 +1,319 @@
+{
+    "summary": {
+        "name": "fsl_first",
+        "descriptor-doi": "10.5281/zenodo.1494312",
+        "date-time": "2021-03-11_13h30m16s915869ms"
+    },
+    "public-invocation": {
+        "input_file": {
+            "file-name": "t1-copy.nii.gz",
+            "md5sum": "1ededd81a26cf226985475f49068953e"
+        },
+        "prefix": "output"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "mkdir -p /home/mandana/CONP/conp-dataset/projects/openpain/cbp_resting/cbp10/t1/t1-copy; run_first_all -i /home/mandana/CONP/conp-dataset/projects/openpain/cbp_resting/cbp10/t1/t1-copy.nii.gz -o /home/mandana/CONP/conp-dataset/projects/openpain/cbp_resting/cbp10/t1/t1-copy/output",
+        "missing-files": {},
+        "output-files": {
+            "outputs": {
+                "file-name": "t1-copy",
+                "files": [
+                    {
+                        "file-name": "output.logs",
+                        "files": [
+                            {
+                                "file-name": "first_flirt.o82",
+                                "md5sum": "aef96ccf7d3223365a6c6ecb9dc3c398"
+                            },
+                            {
+                                "file-name": "first_flirt.e82",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first.o218.1",
+                                "md5sum": "2e347abd6a7a7a48f08d0354d55217ec"
+                            },
+                            {
+                                "file-name": "first.e218.1",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first.o218.2",
+                                "md5sum": "c438de472f7343fabc74f7dba2ff9821"
+                            },
+                            {
+                                "file-name": "first.e218.2",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first.o218.3",
+                                "md5sum": "655a826a67a4ff4015119c0f9ad52a47"
+                            },
+                            {
+                                "file-name": "first.e218.3",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first.o218.4",
+                                "md5sum": "62ba46d142633bad6e07a26b35a7f10c"
+                            },
+                            {
+                                "file-name": "first.e218.4",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first.o218.5",
+                                "md5sum": "b81f5c4e9e3b3d1bc01fc61882d2ee45"
+                            },
+                            {
+                                "file-name": "first.e218.5",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first.o218.6",
+                                "md5sum": "ef786c2015b94af5f94e6df2e31036db"
+                            },
+                            {
+                                "file-name": "first.e218.6",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first.o218.7",
+                                "md5sum": "980446056328e58b58cd8b64fab2e31d"
+                            },
+                            {
+                                "file-name": "first.e218.7",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first.o218.8",
+                                "md5sum": "37baa6d02a99ce457faaaa26c91519eb"
+                            },
+                            {
+                                "file-name": "first.e218.8",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first.o218.9",
+                                "md5sum": "68635c7efc0835a0be5a58e761fc6c61"
+                            },
+                            {
+                                "file-name": "first.e218.9",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first.o218.10",
+                                "md5sum": "cc59ef215c97e46ff879f536ad94f2f0"
+                            },
+                            {
+                                "file-name": "first.e218.10",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first.o218.11",
+                                "md5sum": "2852f3184acc414a3aae790afb397446"
+                            },
+                            {
+                                "file-name": "first.e218.11",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first.o218.12",
+                                "md5sum": "165576c69d33f1d5190d124024cd68d0"
+                            },
+                            {
+                                "file-name": "first.e218.12",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first.o218.13",
+                                "md5sum": "3ab9da334c3504db41ddd6f860e18cd6"
+                            },
+                            {
+                                "file-name": "first.e218.13",
+                                "md5sum": "42fdb61cf9e2b2498d8199bfbeeaa306"
+                            },
+                            {
+                                "file-name": "first.o218.14",
+                                "md5sum": "b284c5788f5204efa0c098c62bb23edd"
+                            },
+                            {
+                                "file-name": "first.e218.14",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first.o218.15",
+                                "md5sum": "727004a4c8cfddc2b60b49d75c657179"
+                            },
+                            {
+                                "file-name": "first.e218.15",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first_post.o6471.1",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "first_post.e6471.1",
+                                "md5sum": "6b1aa79bb814d1f9bf4bb8e5da3e47ed"
+                            },
+                            {
+                                "file-name": "clean_up.o6486.1",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            },
+                            {
+                                "file-name": "clean_up.e6486.1",
+                                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "output.com",
+                        "md5sum": "05a2e2dfe11adda0b489222e89e1d049"
+                    },
+                    {
+                        "file-name": "output-L_Accu_first.bvars",
+                        "md5sum": "a31290ec8bff14fdf5852779359e34bd"
+                    },
+                    {
+                        "file-name": "output-L_Accu_first.vtk",
+                        "md5sum": "ee90d0592655aca81f62e14e8fac13d7"
+                    },
+                    {
+                        "file-name": "output-R_Accu_first.bvars",
+                        "md5sum": "14d014c737a075f929e0308cb196e5b3"
+                    },
+                    {
+                        "file-name": "output-BrStem_first.vtk",
+                        "md5sum": "4e6649c8d419f8ba8e05d42ff53053e6"
+                    },
+                    {
+                        "file-name": "output-L_Amyg_first.bvars",
+                        "md5sum": "66ca43af4cad2c6e784eb4d74045a1e2"
+                    },
+                    {
+                        "file-name": "output-L_Amyg_first.vtk",
+                        "md5sum": "7e47bdaa4d6417e14023c69a5841d246"
+                    },
+                    {
+                        "file-name": "output-R_Accu_first.vtk",
+                        "md5sum": "439925f6984a75e01df79c70f377c668"
+                    },
+                    {
+                        "file-name": "output-R_Amyg_first.vtk",
+                        "md5sum": "291525d3bd8221f6d3820add2551fa4c"
+                    },
+                    {
+                        "file-name": "output-R_Caud_first.bvars",
+                        "md5sum": "8d2911737bce6c5c9ec6eeb43691ede6"
+                    },
+                    {
+                        "file-name": "output-R_Hipp_first.vtk",
+                        "md5sum": "09b47abdb396772d78f32756422923a3"
+                    },
+                    {
+                        "file-name": "output-R_Pall_first.vtk",
+                        "md5sum": "7645db1799370c8f9a2f84a971991051"
+                    },
+                    {
+                        "file-name": "output-R_Puta_first.vtk",
+                        "md5sum": "022352cfa3bb069b05bf8d9c26512c55"
+                    },
+                    {
+                        "file-name": "output-R_Thal_first.bvars",
+                        "md5sum": "349c97d18c6ab4a49e2a8b15ca90dac9"
+                    },
+                    {
+                        "file-name": "output-L_Caud_first.bvars",
+                        "md5sum": "87a162281ce292c83e894f9204231753"
+                    },
+                    {
+                        "file-name": "output-L_Caud_first.vtk",
+                        "md5sum": "4de70eb536b26efe4e2863766c769016"
+                    },
+                    {
+                        "file-name": "output-R_Amyg_first.bvars",
+                        "md5sum": "b24eae5a1121c3ce7ed87c7fef0a37d0"
+                    },
+                    {
+                        "file-name": "output-R_Caud_first.vtk",
+                        "md5sum": "71bf76a4133b99f5ba9ba784ceeb584d"
+                    },
+                    {
+                        "file-name": "output-R_Hipp_first.bvars",
+                        "md5sum": "b8d03cec075c97f6affbcb5a572bfda8"
+                    },
+                    {
+                        "file-name": "output.com2",
+                        "md5sum": "5bf7fd872f3a0fdc2fddc1f521da5947"
+                    },
+                    {
+                        "file-name": "output.com3",
+                        "md5sum": "0141472d5a21bd425208aae78ca97882"
+                    },
+                    {
+                        "file-name": "output_all_fast_origsegs.nii.gz",
+                        "md5sum": "aef40eb6a7d26200d0b03ca548abbbca"
+                    },
+                    {
+                        "file-name": "output-L_Hipp_first.bvars",
+                        "md5sum": "6aad55a51d59cae84e8e3bd9fb0b091a"
+                    },
+                    {
+                        "file-name": "output-L_Hipp_first.vtk",
+                        "md5sum": "6528e8c9d1cefb46444f6b460d650e70"
+                    },
+                    {
+                        "file-name": "output-L_Pall_first.bvars",
+                        "md5sum": "c3a2047ed1a0e4d11f0584f56472ea9b"
+                    },
+                    {
+                        "file-name": "output-L_Pall_first.vtk",
+                        "md5sum": "8b4a51c8eea3a5776d7fc64f0d982d79"
+                    },
+                    {
+                        "file-name": "output-L_Puta_first.bvars",
+                        "md5sum": "778c6e4923770f154eaf10c6dec7be4d"
+                    },
+                    {
+                        "file-name": "output-L_Puta_first.vtk",
+                        "md5sum": "716466700534bd30df37ac85beb4ce28"
+                    },
+                    {
+                        "file-name": "output-L_Thal_first.bvars",
+                        "md5sum": "895508a6ddbcf73fb7f964246f15e2ab"
+                    },
+                    {
+                        "file-name": "output-L_Thal_first.vtk",
+                        "md5sum": "d912a74bab0847cb4d8863dfe8472f80"
+                    },
+                    {
+                        "file-name": "output-R_Pall_first.bvars",
+                        "md5sum": "d60d7dec1b3a3e89a357c2e5d3a9e1c9"
+                    },
+                    {
+                        "file-name": "output-R_Puta_first.bvars",
+                        "md5sum": "7ae979d925b24eb7b870f963b43b0769"
+                    },
+                    {
+                        "file-name": "output-R_Thal_first.vtk",
+                        "md5sum": "d56eee72ae16d3a7c6eda3ea0f72921e"
+                    },
+                    {
+                        "file-name": "output-BrStem_first.bvars",
+                        "md5sum": "a9ef24e5bd937ab367ee87213e26ff34"
+                    }
+                ]
+            },
+            "std_sub_outputs": {
+                "file-name": "t1-copy_to_std_sub.mat",
+                "md5sum": "a74934863cc17e6596a0b79aaadc8d2b"
+            }
+        }
+    },
+    "additional-information": null
+}

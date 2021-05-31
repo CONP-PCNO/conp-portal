@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "fsl_fast",
+        "descriptor-doi": "10.5281/zenodo.1494308",
+        "date-time": "2021-02-17_09h02m22s009790ms"
+    },
+    "public-invocation": {
+        "output_basename": "fast",
+        "in_files": {
+            "file-name": "preventad_1000173_NAPBL00_task-retrieval-bold_001.mnc",
+            "md5sum": "30525d9e5354cf0460e73efd3606ac85"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "fast -o fast /home/mandana/CONP/conp-dataset/projects/preventad-open/1000173/NAPBL00/images/preventad_1000173_NAPBL00_task-retrieval-bold_001.mnc; mkdir fast; mv fast_* fast",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "fast",
+                "files": []
+            }
+        }
+    },
+    "additional-information": null
+}

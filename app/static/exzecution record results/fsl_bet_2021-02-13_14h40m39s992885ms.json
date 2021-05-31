@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "fsl_bet",
+        "descriptor-doi": "10.5281/zenodo.1482743",
+        "date-time": "2021-02-13_14h40m39s992885ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "sub-01_task-rest_bold.nii.gz",
+            "md5sum": "1f1822c8131f5af21f5f9ef797165ce9"
+        },
+        "maskfile": "mask-9"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "bet /home/mandana/CONP/conp-dataset/projects/openpain/placebo_predict_tetreault/sub-01/func/sub-01_task-rest_bold.nii.gz mask-9",
+        "missing-files": {},
+        "output-files": {
+            "outfile": {
+                "file-name": "mask-9.nii.gz",
+                "md5sum": "4c73671ec2fa36280f17eaf118757826"
+            }
+        }
+    },
+    "additional-information": null
+}

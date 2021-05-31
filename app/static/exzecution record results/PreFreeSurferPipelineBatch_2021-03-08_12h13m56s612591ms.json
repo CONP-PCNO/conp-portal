@@ -1,0 +1,26 @@
+{
+    "summary": {
+        "name": "PreFreeSurferPipelineBatch",
+        "descriptor-doi": "10.5281/zenodo.1450995",
+        "date-time": "2021-03-08_12h13m56s612591ms"
+    },
+    "public-invocation": {
+        "subject_folder": {
+            "file-name": "",
+            "not_found": true
+        },
+        "execution_name": "101309"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "command-line-script.sh /haome/mandana/CONP/pipelines/ali/test/101309/ 101309",
+        "missing-files": {
+            "results": "/haome/mandana/CONP/pipelines/ali/test/101309/-101309"
+        },
+        "output-files": {}
+    },
+    "additional-information": null
+}

@@ -1,0 +1,2303 @@
+{
+    "summary": {
+        "name": "FreeSurferPipelineBatch-CentOS7",
+        "descriptor-doi": "10.5281/zenodo.1450997",
+        "date-time": "2021-02-02_20h19m59s854105ms"
+    },
+    "public-invocation": {
+        "subject_folder": {
+            "file-name": "",
+            "files": [
+                {
+                    "file-name": ".git",
+                    "files": [
+                        {
+                            "file-name": "branches",
+                            "files": []
+                        },
+                        {
+                            "file-name": "description",
+                            "md5sum": "a0a7c3fff21f2aea3cfa1d0316dd816c"
+                        },
+                        {
+                            "file-name": "hooks",
+                            "files": [
+                                {
+                                    "file-name": "applypatch-msg.sample",
+                                    "md5sum": "ce562e08d8098926a3862fc6e7905199"
+                                },
+                                {
+                                    "file-name": "commit-msg.sample",
+                                    "md5sum": "579a3c1e12a1e74a98169175fb913012"
+                                },
+                                {
+                                    "file-name": "fsmonitor-watchman.sample",
+                                    "md5sum": "ecbb0cb5ffb7d773cd5b2407b210cc3b"
+                                },
+                                {
+                                    "file-name": "post-update.sample",
+                                    "md5sum": "2b7ea5cee3c49ff53d41e00785eb974c"
+                                },
+                                {
+                                    "file-name": "pre-applypatch.sample",
+                                    "md5sum": "054f9ffb8bfe04a599751cc757226dda"
+                                },
+                                {
+                                    "file-name": "pre-commit.sample",
+                                    "md5sum": "e4db8c12ee125a8a085907b757359ef0"
+                                },
+                                {
+                                    "file-name": "pre-push.sample",
+                                    "md5sum": "3c5989301dd4b949dfa1f43738a22819"
+                                },
+                                {
+                                    "file-name": "pre-rebase.sample",
+                                    "md5sum": "56e45f2bcbc8226d2b4200f7c46371bf"
+                                },
+                                {
+                                    "file-name": "pre-receive.sample",
+                                    "md5sum": "2ad18ec82c20af7b5926ed9cea6aeedd"
+                                },
+                                {
+                                    "file-name": "prepare-commit-msg.sample",
+                                    "md5sum": "2b5c047bdb474555e1787db32b2d2fc5"
+                                },
+                                {
+                                    "file-name": "update.sample",
+                                    "md5sum": "517f14b9239689dff8bda3022ebd9004"
+                                },
+                                {
+                                    "file-name": "pre-commit",
+                                    "md5sum": "937d5eb6dc491af149be06e62bf88ee1"
+                                },
+                                {
+                                    "file-name": "post-receive",
+                                    "md5sum": "0b11786ce3c75aa6193fe020b43b1e40"
+                                },
+                                {
+                                    "file-name": "post-checkout",
+                                    "md5sum": "15117886209495e9612a7efbc4d425f3"
+                                },
+                                {
+                                    "file-name": "post-merge",
+                                    "md5sum": "15117886209495e9612a7efbc4d425f3"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "info",
+                            "files": [
+                                {
+                                    "file-name": "exclude",
+                                    "md5sum": "036208b4a1ab4a235d75c181e685e5a3"
+                                },
+                                {
+                                    "file-name": "attributes",
+                                    "md5sum": "66ef2376f9c0d65430c42dfb000d7d8d"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "refs",
+                            "files": [
+                                {
+                                    "file-name": "heads",
+                                    "files": [
+                                        {
+                                            "file-name": "master",
+                                            "md5sum": "e1f1760f1496142ddcc58a2ee4cf942b"
+                                        },
+                                        {
+                                            "file-name": "git-annex",
+                                            "md5sum": "c585e73b1d5ab2af5dc6521ef592e2ef"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "tags",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "remotes",
+                                    "files": [
+                                        {
+                                            "file-name": "origin",
+                                            "files": [
+                                                {
+                                                    "file-name": "HEAD",
+                                                    "md5sum": "73a00957034783b7b5c8294c54cd3e12"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "HEAD",
+                            "md5sum": "4cf2d64e44205fe628ddd534e1151b58"
+                        },
+                        {
+                            "file-name": "config",
+                            "md5sum": "9abdac63ffac50973787c106fe904a40"
+                        },
+                        {
+                            "file-name": "objects",
+                            "files": [
+                                {
+                                    "file-name": "pack",
+                                    "files": [
+                                        {
+                                            "file-name": "pack-773291f8640d50e0c27dde4a575e88abba9bc886.pack",
+                                            "md5sum": "d9ce1eb29f0c6b1fc11572caf896e44e"
+                                        },
+                                        {
+                                            "file-name": "pack-773291f8640d50e0c27dde4a575e88abba9bc886.idx",
+                                            "md5sum": "ce80946ededa9a1af8c1e29c47860b38"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "info",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "48",
+                                    "files": [
+                                        {
+                                            "file-name": "cbcb077ee2be793050a4169e0b73c73649d698",
+                                            "md5sum": "19825a351a14c958c8c3ea6ee61147d6"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "43",
+                                    "files": [
+                                        {
+                                            "file-name": "c99451642316c1adf306f96b17bc627545133d",
+                                            "md5sum": "96e6772335d056c1d84ccebddf89b74a"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "68",
+                                    "files": [
+                                        {
+                                            "file-name": "513085b2ab53057f15757f2c883c97549824d6",
+                                            "md5sum": "5a20e54efcfa44e1ec024701d6b4f2ed"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "1a",
+                                    "files": [
+                                        {
+                                            "file-name": "729a7811431a9774a589229f88cfa8c7d4be2e",
+                                            "md5sum": "45ce609912ff1078ecc989cbe2ea6fe6"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "7f",
+                                    "files": [
+                                        {
+                                            "file-name": "2d54bad3314fd804b37c371dbd71fd2186af57",
+                                            "md5sum": "303645de5bca953b64d56e092250c849"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "8f",
+                                    "files": [
+                                        {
+                                            "file-name": "7f029b9556123daded4eba68cda313f77dc64b",
+                                            "md5sum": "d4480d381c729fd38b4df7ef012f315b"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "19",
+                                    "files": [
+                                        {
+                                            "file-name": "54e31201fe00a9ebce2a5bb5ed75d5674c1d81",
+                                            "md5sum": "6ddb24e5b68e354eed02661dc67687d7"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "61",
+                                    "files": [
+                                        {
+                                            "file-name": "ed909aabd9263a6ab66e29403aea9041cbc3a2",
+                                            "md5sum": "cf2fe49848c175c744c962f01c342d4e"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "05",
+                                    "files": [
+                                        {
+                                            "file-name": "94eff9e4c029150ea00cf681db2b4acbed3866",
+                                            "md5sum": "cdeb89719791a18b98c37b486c9305e0"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "d1",
+                                    "files": [
+                                        {
+                                            "file-name": "b76d1af9789575eadf8d8e5a3baf208f996c9b",
+                                            "md5sum": "62efbdbf7f49e2c0521cfdb25b966923"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "57",
+                                    "files": [
+                                        {
+                                            "file-name": "efae3e0022e6ea12a9761155d207fed464995b",
+                                            "md5sum": "99aed56298144ea3aa90b07314a99cf3"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "4e",
+                                    "files": [
+                                        {
+                                            "file-name": "7e6cdae9cee70d2143c422bd30887c3eb11ce5",
+                                            "md5sum": "9d642eb59f010e76b95ed57c15923eee"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "87",
+                                    "files": [
+                                        {
+                                            "file-name": "d5ff145a0e28716057addf4c6b554b4e836a35",
+                                            "md5sum": "17457aba224fb243cbff7da2c0379dd3"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "c7",
+                                    "files": [
+                                        {
+                                            "file-name": "b8c009c727ff8596f8ab179dde27ad49083904",
+                                            "md5sum": "9f62f54bf8761dcbfb963429d8254a84"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "69",
+                                    "files": [
+                                        {
+                                            "file-name": "1d7715b4e19145e30a9ed2a0b983c68f99eef0",
+                                            "md5sum": "7ed16bfd721d45c5a7c1d2763d2157d3"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "c9",
+                                    "files": [
+                                        {
+                                            "file-name": "f339aac0eb8223d9a15eb2996229dfd515c343",
+                                            "md5sum": "9d46e3ba5ff07ce8a4695648efa93fca"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "39",
+                                    "files": [
+                                        {
+                                            "file-name": "fabea8723e481dd5df898a89342226b5f842dd",
+                                            "md5sum": "ad6d38fd7cd35991cf8927854f09c8ad"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "2a",
+                                    "files": [
+                                        {
+                                            "file-name": "c8ff1059a36d4f30eb2828c2b2a38b72571961",
+                                            "md5sum": "a97c3f961831f1e31c9df0cdeda5a9b3"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "c4",
+                                    "files": [
+                                        {
+                                            "file-name": "9239ed21c4526b406c101cddbc159865fdc976",
+                                            "md5sum": "96aa75d3e5f8d9bceac4695c0f5c483c"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "8d",
+                                    "files": [
+                                        {
+                                            "file-name": "eeea9988d3e9598cc638d917f5a35602e7e1ae",
+                                            "md5sum": "a4c8c49ebcf55c7a13c295bebab7debe"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "packed-refs",
+                            "md5sum": "b9749d9082c0c99ecb980e43d8766514"
+                        },
+                        {
+                            "file-name": "logs",
+                            "files": [
+                                {
+                                    "file-name": "refs",
+                                    "files": [
+                                        {
+                                            "file-name": "remotes",
+                                            "files": [
+                                                {
+                                                    "file-name": "origin",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "HEAD",
+                                                            "md5sum": "d0f999a0258ce7223759b9cbe5401726"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "heads",
+                                            "files": [
+                                                {
+                                                    "file-name": "master",
+                                                    "md5sum": "d0f999a0258ce7223759b9cbe5401726"
+                                                },
+                                                {
+                                                    "file-name": "git-annex",
+                                                    "md5sum": "b1fad84a9b1862351b504397277b9def"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "HEAD",
+                                    "md5sum": "4efb1574e1c24b1b4e3ae3bb1348a862"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "index",
+                            "md5sum": "6435bd970a64f01ee6450d5010c2e887"
+                        },
+                        {
+                            "file-name": "annex",
+                            "files": [
+                                {
+                                    "file-name": "index",
+                                    "md5sum": "c6907821bd66cdef8b4210c15ecad654"
+                                },
+                                {
+                                    "file-name": "index.lck",
+                                    "md5sum": "c585e73b1d5ab2af5dc6521ef592e2ef"
+                                },
+                                {
+                                    "file-name": "journal.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "mergedrefs",
+                                    "md5sum": "45365247615f26d2a3d3c30ac9de847e"
+                                },
+                                {
+                                    "file-name": "keys.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "keys",
+                                    "files": [
+                                        {
+                                            "file-name": "db",
+                                            "md5sum": "3304dbe9f9d45a5af7a3f4adc3895f51"
+                                        },
+                                        {
+                                            "file-name": "db-wal",
+                                            "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                        },
+                                        {
+                                            "file-name": "db-shm",
+                                            "md5sum": "b7c14ec6110fa820ca6b65f5aec85911"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "keys.cache",
+                                    "md5sum": "90b4864f30de0a3f4dea4eb455abe225"
+                                },
+                                {
+                                    "file-name": "smudge.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "sentinal",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "sentinal.cache",
+                                    "md5sum": "bfabb49af692cb203f4417b06f254c60"
+                                },
+                                {
+                                    "file-name": "othertmp.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "journal",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "tmp",
+                                    "files": [
+                                        {
+                                            "file-name": "URL-s153760314--https&c%%zenodo.org%api%files%84-6fd753e8cccc692542b87dcf66439881",
+                                            "md5sum": "b98c5ff97dd6f6bd6d64529db94a1c6f"
+                                        },
+                                        {
+                                            "file-name": "URL-s153391319--https&c%%zenodo.org%api%files%84-a433f101fb553c036e2d98a6c5a00a2d",
+                                            "md5sum": "089d0b73774847d533011a294e9a5288"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "transfer",
+                                    "files": [
+                                        {
+                                            "file-name": "download",
+                                            "files": [
+                                                {
+                                                    "file-name": "00000000-0000-0000-0000-000000000001",
+                                                    "files": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "failed",
+                                            "files": [
+                                                {
+                                                    "file-name": "download",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "00000000-0000-0000-0000-000000000001",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s153391319--https&c%%zenodo.org%api%files%84-a433f101fb553c036e2d98a6c5a00a2d",
+                                                                    "md5sum": "0648540572aa3937621bbaedd2fecd61"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "objects",
+                                    "files": [
+                                        {
+                                            "file-name": "3F",
+                                            "files": [
+                                                {
+                                                    "file-name": "8x",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s488880--https&c%%zenodo.org%api%files%84-c15e74afa12717dc040509721464123d",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s488880--https&c%%zenodo.org%api%files%84-c15e74afa12717dc040509721464123d",
+                                                                    "md5sum": "59f80b4008e581bcf4f3510869ee6200"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "99",
+                                            "files": [
+                                                {
+                                                    "file-name": "jV",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s486858--https&c%%zenodo.org%api%files%84-aa3cc4e140fbd783b839f83a5e938d7a",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s486858--https&c%%zenodo.org%api%files%84-aa3cc4e140fbd783b839f83a5e938d7a",
+                                                                    "md5sum": "ff4867c067b8151e2d651ee08eccba91"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "8X",
+                                            "files": [
+                                                {
+                                                    "file-name": "F1",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s154346250--https&c%%zenodo.org%api%files%84-09fb3df6e73de702ca5cc99951e55b18",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s154346250--https&c%%zenodo.org%api%files%84-09fb3df6e73de702ca5cc99951e55b18",
+                                                                    "md5sum": "6bc511f045128ea070dbcddbb50f7aeb"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "FETCH_HEAD",
+                            "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                        }
+                    ]
+                },
+                {
+                    "file-name": ".conp-zenodo-crawler.json",
+                    "md5sum": "de8b6c5c534f8b2fde4424c55daa963d"
+                },
+                {
+                    "file-name": ".datalad",
+                    "files": [
+                        {
+                            "file-name": ".gitattributes",
+                            "md5sum": "d4a36c9475aabe1d427d85f34d2b9914"
+                        },
+                        {
+                            "file-name": "config",
+                            "md5sum": "7a48b3d9bce53088832bfd459af2fd79"
+                        }
+                    ]
+                },
+                {
+                    "file-name": ".gitattributes",
+                    "md5sum": "8e853db135f9079870c54a2fb8282af2"
+                },
+                {
+                    "file-name": "DATS.json",
+                    "md5sum": "4e8792cefffb5afa396d365172bddd77"
+                },
+                {
+                    "file-name": "LICENSE.txt",
+                    "not_found": true
+                },
+                {
+                    "file-name": "README",
+                    "not_found": true
+                },
+                {
+                    "file-name": "README.md",
+                    "md5sum": "0b41d767717707dcbaee15ab65b770d3"
+                },
+                {
+                    "file-name": "participants.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-01_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "md5sum": "59f80b4008e581bcf4f3510869ee6200"
+                },
+                {
+                    "file-name": "sub-01_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-01_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-01_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-01_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-01_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-01_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-01_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-01_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-01_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-01_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-01_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-01_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-02_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-02_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-02_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-02_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-02_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-02_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-02_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-02_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-02_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-02_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-02_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-02_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-02_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-02_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-03_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-03_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-03_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-03_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-03_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-03_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-03_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-03_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-03_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-03_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-03_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-03_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-03_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-03_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-04_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-04_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-04_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-04_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-04_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-04_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-04_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-04_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-04_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-04_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-04_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-04_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-04_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-04_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-05_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-05_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-05_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-05_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-05_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-05_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-05_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-05_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-05_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-05_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-05_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-05_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-05_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-05_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-06_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "md5sum": "ff4867c067b8151e2d651ee08eccba91"
+                },
+                {
+                    "file-name": "sub-06_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-06_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-06_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-06_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-06_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "md5sum": "6bc511f045128ea070dbcddbb50f7aeb"
+                },
+                {
+                    "file-name": "sub-06_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-06_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-06_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-06_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-06_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-06_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-06_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-06_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-07_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-07_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-07_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-07_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-07_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-07_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-07_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-07_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-07_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-07_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-07_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-07_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-07_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-07_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-08_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-08_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-08_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-08_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-08_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-08_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-08_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-08_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-08_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-08_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-08_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-08_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-08_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-08_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-09_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-09_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-09_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-09_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-09_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-09_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-09_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-09_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-09_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-09_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-09_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-09_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-09_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-10_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-10_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-10_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-10_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-10_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-10_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-10_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-10_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-10_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-10_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-10_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-10_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-10_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-10_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-11_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-11_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-11_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-11_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-11_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-11_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-11_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-11_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-11_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-11_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-11_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-11_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-11_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-12_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-11_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-12_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-12_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-12_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-12_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-12_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-12_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-12_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-12_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-12_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-12_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-12_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-12_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-12_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-13_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-13_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-13_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-13_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-13_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-13_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-13_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-13_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-13_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-13_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-13_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-13_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-13_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-13_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-14_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-14_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-14_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-14_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-14_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-14_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-14_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-14_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-14_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-14_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-14_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-14_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-14_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-15_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-15_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-15_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-15_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-15_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-15_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-15_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-15_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-15_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-15_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-16_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-15_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-15_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-15_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-15_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-16_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-16_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-16_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-16_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-16_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-16_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-16_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-16_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-16_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-16_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-16_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-16_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-17_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-17_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-17_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-17_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-17_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-17_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-17_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-17_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-17_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-17_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-17_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-17_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-17_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-17_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-18_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-18_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-18_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-18_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-18_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-18_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-18_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-18_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-18_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-18_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-18_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-18_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-18_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-18_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-19_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-19_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-19_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-19_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-19_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-19_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-19_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-20_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-19_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-19_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-19_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-19_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-19_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-19_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-19_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-20_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-20_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-20_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-20_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-20_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-20_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-20_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-20_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-20_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-20_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-20_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-20_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-20_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-21_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-21_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-21_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-21_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-21_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-21_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-21_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-21_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-21_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-21_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-21_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-21_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-21_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-21_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-22_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-22_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-22_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-22_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-22_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-22_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-22_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-22_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-22_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-22_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-22_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-22_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-22_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-22_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-23_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-23_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-23_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-24_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-23_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-23_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-23_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-23_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-23_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-23_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-23_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-23_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-23_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-23_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-23_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-24_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-24_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-24_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-24_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-24_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-24_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-24_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-24_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-24_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-24_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-24_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-24_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-24_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-25_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-25_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-25_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-25_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-25_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-25_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-25_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-25_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-25_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-25_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-25_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-25_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-25_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-25_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-26_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-26_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-26_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-26_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-26_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-26_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-26_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-26_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-26_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-26_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-26_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-26_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-26_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-26_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-27_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-27_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-27_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-27_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-27_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-27_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-27_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-27_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-27_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-27_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-27_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-27_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-27_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-27_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-28_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-28_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-28_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-28_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-28_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-28_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-28_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-28_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-28_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-28_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-28_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-28_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-28_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-28_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-29_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-29_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-29_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-29_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-29_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-29_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-29_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-29_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-29_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-29_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-29_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-29_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-29_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-29_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-30_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-30_task-movie_labels.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-30_task-movie_run-01_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-30_task-movie_run-01_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-30_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-30_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-30_task-movie_run-02_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-30_task-movie_run-02_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-30_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-30_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-30_task-movie_run-03_desc-reducedConfounds_regressors.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-30_task-movie_run-03_desc-reducedConfounds_regressors.tsv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-30_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "sub-30_task-movie_run-03_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+                    "not_found": true
+                }
+            ]
+        },
+        "execution_name": "Exec-CentOS7-FreeSurferbuild-CentOS4",
+        "freesurfer_license": {
+            "file-name": "license.txt",
+            "not_found": true
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "freesurfer-command-line-script.sh conp-dataset/projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset/ Exec-CentOS7-FreeSurferbuild-CentOS4 license.txt",
+        "missing-files": {},
+        "output-files": {
+            "results": {
+                "file-name": "-Exec-CentOS7-FreeSurferbuild-CentOS4",
+                "not_found": true
+            }
+        }
+    },
+    "additional-information": null
+}

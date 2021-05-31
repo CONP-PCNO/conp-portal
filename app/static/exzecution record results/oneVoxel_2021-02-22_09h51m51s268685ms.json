@@ -1,0 +1,121 @@
+{
+    "summary": {
+        "name": "oneVoxel",
+        "descriptor-doi": "10.5281/zenodo.3308620",
+        "date-time": "2021-02-22_09h51m51s268685ms"
+    },
+    "public-invocation": {
+        "image_file": {
+            "file-name": "sub-032633_ses-010_run-1_T2w.nii.gz",
+            "md5sum": "3f386608e2b1e18c65fe517372299652"
+        },
+        "mask_file": {
+            "file-name": "mask-11.nii.gz",
+            "md5sum": "83f1fc54e0dcec49ea3a7c93f52c1035"
+        },
+        "output_directory": {
+            "file-name": "",
+            "files": [
+                {
+                    "file-name": "inner_binarymask_1vox-3d192916.json",
+                    "md5sum": "7e4f4ecdbc23e022208ca70c828cb537"
+                },
+                {
+                    "file-name": "inner_binarymask_1vox-3d192916.nii.gz",
+                    "md5sum": "f0bcab9eaf9dbb33ea869d7d7e129a1f"
+                },
+                {
+                    "file-name": "inner_binarymask_1vox-16b1826e.json",
+                    "md5sum": "f5f2575ede7f30a2fcf259cd16e90090"
+                },
+                {
+                    "file-name": "inner_binarymask_1vox-16b1826e.nii.gz",
+                    "md5sum": "abf3de133cb0e5bb974b9540c7d0e7b3"
+                },
+                {
+                    "file-name": "inner_binarymask_1vox-1750109a.json",
+                    "md5sum": "861887ff2b91a8497f5d25772ed1946d"
+                },
+                {
+                    "file-name": "inner_binarymask_1vox-1750109a.nii.gz",
+                    "md5sum": "ee8649a3fdb55546cc9706916740f0d2"
+                },
+                {
+                    "file-name": "BigBrain-to-ICBM2009sym-nonlin-1mm_1vox-3b205228.json",
+                    "md5sum": "a5c47cb6371f22141cfc472a5ecb65ff"
+                },
+                {
+                    "file-name": "BigBrain-to-ICBM2009sym-nonlin-1mm_1vox-3b205228.nii.gz",
+                    "md5sum": "d2966210521b1c450dcb51a2d454d8c0"
+                },
+                {
+                    "file-name": "sub-HCPUR100_t1w_1vox-3fac1e1c.json",
+                    "md5sum": "bc2b13a0836d61c2fe863c00449d4e53"
+                },
+                {
+                    "file-name": "sub-HCPUR100_t1w_1vox-3fac1e1c.nii.gz",
+                    "md5sum": "2f880729da9a16e0c41e644753e9d23c"
+                },
+                {
+                    "file-name": "sub-10_T1w_1vox-688033d2.json",
+                    "md5sum": "0e163a8d921d7c687284ecaf9cbeec13"
+                },
+                {
+                    "file-name": "sub-10_T1w_1vox-688033d2.nii.gz",
+                    "md5sum": "f93981802dbc8fa5a9417edc33b6e52c"
+                },
+                {
+                    "file-name": "sub_10_control_site_2_T1w_1vox-6c66914e.json",
+                    "md5sum": "87fd1e0222bd85b47b88498a7530cb63"
+                },
+                {
+                    "file-name": "sub_10_control_site_2_T1w_1vox-6c66914e.nii.gz",
+                    "md5sum": "6a8cdd0f6c4adbe70a8443b8d3949bac"
+                },
+                {
+                    "file-name": "sub-010_ses-visit4_T1w_1vox-705d8dc0.json",
+                    "md5sum": "845197177b5d432c490afbad49b87887"
+                },
+                {
+                    "file-name": "sub-010_ses-visit4_T1w_1vox-705d8dc0.nii.gz",
+                    "md5sum": "5012fce16f0481f9b557444be52000cd"
+                },
+                {
+                    "file-name": "sub-01_task-rest_bold_1vox-749e2aa2.json",
+                    "md5sum": "e0b00b3c5249d66124c72649d899bc22"
+                },
+                {
+                    "file-name": "sub-01_task-rest_bold_1vox-749e2aa2.nii.gz",
+                    "md5sum": "7abf5377cf38bb9e2561689fa592e54f"
+                },
+                {
+                    "file-name": "t1_1vox-79afde5a.json",
+                    "md5sum": "4eb3eac598b1a7b57273c4216cd29e0a"
+                },
+                {
+                    "file-name": "t1_1vox-79afde5a.nii.gz",
+                    "md5sum": "c382c4e2c8aea66f3d71255173d59d7a"
+                }
+            ]
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "onevox /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-010/anat/sub-032633_ses-010_run-1_T2w.nii.gz /home/mandana/CONP/pipelines/oneVoxel/output/ --mask_file /home/mandana/CONP/pipelines/oneVoxel/fslbet/masks/mask-11.nii.gz --intensity 0.01 --erode 3 --repeat 1 --mode single",
+        "missing-files": {},
+        "output-files": {
+            "noisy_image": {
+                "file-name": "inner_binarymask_1vox-3d192916.nii.gz",
+                "md5sum": "f0bcab9eaf9dbb33ea869d7d7e129a1f"
+            },
+            "noise_summary": {
+                "file-name": "inner_binarymask_1vox-3d192916.json",
+                "md5sum": "7e4f4ecdbc23e022208ca70c828cb537"
+            }
+        }
+    },
+    "additional-information": null
+}

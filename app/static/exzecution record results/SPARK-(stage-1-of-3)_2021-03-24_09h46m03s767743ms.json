@@ -1,0 +1,92 @@
+{
+    "summary": {
+        "name": "SPARK (stage 1 of 3)",
+        "descriptor-doi": "10.5281/zenodo.4010734",
+        "date-time": "2021-03-24_09h46m03s767743ms"
+    },
+    "public-invocation": {
+        "fmri": {
+            "file-name": "sub-10_task-WM_run-01_bold.nii.gz",
+            "md5sum": "50356afd00c7b9b0110ff9f8afe951f8"
+        },
+        "out_dir": "/home/mandana/CONP/conp-dataset/projects/visual-working-memory/sub-10/func/",
+        "mask": {
+            "file-name": "MASK_fsl_SPARK.nii",
+            "not_found": true
+        },
+        "nb_resamplings": 100,
+        "network_scales": [
+            10,
+            2,
+            30
+        ],
+        "nb_iterations": 20,
+        "p_value": 0.05
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 127,
+        "error-message": "",
+        "shell-command": "spark --SETUP --fmri /home/mandana/CONP/conp-dataset/projects/visual-working-memory/sub-10/func/sub-10_task-WM_run-01_bold.nii.gz --out-dir /home/mandana/CONP/conp-dataset/projects/visual-working-memory/sub-10/func/ --mask /home/mandana/CONP/pipelines/SPARK_1of3.4010734/masks/MASK_fsl_SPARK.nii --nb-resamplings 100 --network-scales 10 2 30 --nb-iterations 20 --p-value 0.05 --resampling-method CBB --block-window-length 10 1 30 --dict-init-method GivenMatrix --sparse-coding-method Thresholding && spark --RUN --stage A --fmri /home/mandana/CONP/conp-dataset/projects/visual-working-memory/sub-10/func/sub-10_task-WM_run-01_bold.nii.gz --out-dir /home/mandana/CONP/conp-dataset/projects/visual-working-memory/sub-10/func/",
+        "missing-files": {},
+        "output-files": {
+            "result": {
+                "file-name": "",
+                "files": [
+                    {
+                        "file-name": "sub-10_task-WM_run-01_bold.json",
+                        "md5sum": "35ace51311f4e458bf67f3bdffa93c7d"
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-01_bold.nii.gz",
+                        "md5sum": "50356afd00c7b9b0110ff9f8afe951f8"
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-01_events.tsv",
+                        "md5sum": "9cdeace7fd6e267e77a74a0808d9a941"
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-02_bold.json",
+                        "md5sum": "ef8d231a414c07a35550a72c57495f69"
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-02_bold.nii.gz",
+                        "not_found": true
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-02_events.tsv",
+                        "md5sum": "cc0a824d0ce186eec23ebc7aadf1d7d6"
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-03_bold.json",
+                        "md5sum": "b5aa81534cd8f66178f6c8ff3103e434"
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-03_bold.nii.gz",
+                        "not_found": true
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-03_events.tsv",
+                        "md5sum": "9b56cfe14d80f93141c1e93375596ecb"
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-01_bold",
+                        "files": [
+                            {
+                                "file-name": "pipelines",
+                                "files": [
+                                    {
+                                        "file-name": "sub-10_task-WM_run-01_bold.opt",
+                                        "md5sum": "bd3eb2b1c8a2d032008f2844ff23d373"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "fslstats",
+        "descriptor-doi": "10.5281/zenodo.4472771",
+        "date-time": "2021-04-15_13h19m29s730920ms"
+    },
+    "public-invocation": {
+        "input_file": {
+            "file-name": "mni_adni_hi_t1w_tal_nlin_sym.nii.gz",
+            "md5sum": "96dc6d6b54f34672705f8df3575f294d"
+        },
+        "V": true
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fslstats /home/mandana/CONP/conp-dataset/projects/BigBrain/3D_Volumes/MNI-ADNI_Space/nii/mni_adni_hi_t1w_tal_nlin_sym.nii.gz -V > /home/mandana/CONP/conp-dataset/projects/BigBrain/3D_Volumes/MNI-ADNI_Space/nii/mni_adni_hi_t1w_tal_nlin_sym.txt",
+        "missing-files": {},
+        "output-files": {
+            "output": {
+                "file-name": "mni_adni_hi_t1w_tal_nlin_sym.txt",
+                "md5sum": "7c4f0ebde7b9554f1a3a83d43e43fab1"
+            }
+        }
+    },
+    "additional-information": null
+}

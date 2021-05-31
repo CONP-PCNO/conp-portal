@@ -1,0 +1,24 @@
+{
+    "summary": {
+        "name": "fsl_bet",
+        "descriptor-doi": "10.5281/zenodo.1482743",
+        "date-time": "2021-02-13_14h08m52s352069ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "",
+            "not_found": true
+        },
+        "maskfile": "mask-14"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "bet '' mask-14",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

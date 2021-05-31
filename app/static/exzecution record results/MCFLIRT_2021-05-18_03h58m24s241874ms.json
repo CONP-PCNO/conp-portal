@@ -1,0 +1,23 @@
+{
+    "summary": {
+        "name": "MCFLIRT",
+        "descriptor-doi": "10.5281/zenodo.2602109",
+        "date-time": "2021-05-18_03h58m24s241874ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "sub-01_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+            "md5sum": "6bea645cb589b33c2b4f54bb5831aba1"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 125,
+        "error-message": "",
+        "shell-command": "mcflirt -in /home/mandana/CONP/conp-dataset/projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset/sub-01_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

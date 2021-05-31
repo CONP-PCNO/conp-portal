@@ -1,0 +1,24 @@
+{
+    "summary": {
+        "name": "fsl_bet",
+        "descriptor-doi": "10.5281/zenodo.1482743",
+        "date-time": "2021-02-13_13h41m52s119169ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "sub-01_task-rest_bold.nii.gz",
+            "md5sum": "1f1822c8131f5af21f5f9ef797165ce9"
+        },
+        "maskfile": "/home/mandana/CONP/pipelines/oneVoxel/fslbet/mask-9"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "bet /home/mandana/CONP/conp-dataset/projects/openpain/placebo_predict_tetreault/sub-01/func/sub-01_task-rest_bold.nii.gz /home/mandana/CONP/pipelines/oneVoxel/fslbet/mask-9",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

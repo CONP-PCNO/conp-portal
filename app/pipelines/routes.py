@@ -253,3 +253,105 @@ def pipeline_info():
         title='CONP | Pipeline',
         pipeline=element
     )
+
+
+@pipelines_bp.route('/pipelines-execution-records')
+def pipelines_execution_records():
+
+    """ Pipelines Execution Records Route
+
+        The route that leads to the pipelines exxecution record page
+
+        Args:
+            page: the page that you want to display (default: 1)
+            max_per_page: the number of items per page (default: 10)
+
+        Returns:
+            Rendered template for pipelinesExecutionRecords.html
+    """
+    page = 1
+    max_per_page = request.args.get('max_per_page') or 10
+    if max_per_page != 'All':
+        max_per_page = int(max_per_page)
+    search = request.args.get('search') or ""
+    searchPipelineName = ""
+    searchDatasetName = ""
+
+    filters = {
+        "page": page,
+        "max_per_page": max_per_page,
+        "searchPipelineName" : searchPipelineName,
+        "searchDatasetName" : searchPipelineName,
+    }
+
+    return render_template('pipelinesExecutionRecords.html',
+                        title='CONP | Pipelines Provenance Records',
+                        filters=filters)
+
+@pipelines_bp.route('/pipeline-execution-records-search', methods=['GET'])
+def pipelines_execution_records_search():
+    authorized = True if current_user.is_authenticated else False
+
+    elements = []
+
+    with open("app/static/execution records/Execution Records.json") as f:
+        data = json.load(f)
+    for item in data:
+        newElement = {
+            "pipelineName":item["pipeline"],
+            "pipelineUrl": item["pipeline_link"],
+            "datasetName": item["dataset"],
+            "datasetUrl": item["dataset_link"],
+            "executionRecord": item["status"],
+            "executionRecordUrl": item["status_link"]
+            }
+        elements += [newElement]
+
+    # get request variables
+    pipelineSearchQuery = request.args.get(
+        "searchPipelineName").lower() if request.args.get("searchPipelineName") else ''
+    datasetSearchQuery = request.args.get(
+        "searchDatasetName").lower() if request.args.get("searchDatasetName") else ''
+
+    max_per_page = len(elements)
+    if request.args.get('max_per_page') != 'All':
+        max_per_page = int(request.args.get("max_per_page") or 999999)
+
+    elements_on_page = []
+    for item in elements:
+        if len(elements_on_page) >= max_per_page:
+            continue
+        if pipelineSearchQuery:
+            if datasetSearchQuery:
+                if (pipelineSearchQuery in item["pipelineName"].lower()) and (datasetSearchQuery in item["datasetName"].lower()):
+                    elements_on_page += [item].copy() 
+            else:
+                if (pipelineSearchQuery in item["pipelineName"].lower()):
+                    elements_on_page += [item].copy() 
+        else:
+            if datasetSearchQuery:
+                if (datasetSearchQuery in item["datasetName"].lower()):
+                    elements_on_page += [item].copy() 
+            else:
+                elements_on_page = elements.copy() 
+                continue
+
+    # extract the appropriate page
+    page = int(request.args.get("page") or 1)
+
+    if max_per_page is not None:
+        if len(elements_on_page) > max_per_page:
+            start_index = (page - 1) * max_per_page
+            end_index = start_index + max_per_page
+            if end_index > len(elements_on_page):
+                end_index = len(elements_on_page)
+            elements_on_page = elements_on_page[start_index:end_index]
+
+    # construct payload
+    payload = {
+        "authorized": False,
+        "total": len(elements),
+        "elements": elements_on_page
+    }
+
+    return json.dumps(payload)

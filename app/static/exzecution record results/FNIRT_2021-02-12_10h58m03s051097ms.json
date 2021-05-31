@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FNIRT",
+        "descriptor-doi": "10.5281/zenodo.2639849",
+        "date-time": "2021-02-12_10h58m03s051097ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "sub_10_control_site_2_T1w.nii.gz",
+            "md5sum": "c3f1f1e07de28fc1d22bcdd1f69190fe"
+        },
+        "ref_file": {
+            "file-name": "sub_10_control_site_2_T1w.nii.gz",
+            "md5sum": "c3f1f1e07de28fc1d22bcdd1f69190fe"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fnirt --in=/home/mandana/CONP/conp-dataset/projects/openpain/BrainNetworkChange_Mano/sub_10_control_site_2/anat/sub_10_control_site_2_T1w.nii.gz --ref=/home/mandana/CONP/conp-dataset/projects/openpain/BrainNetworkChange_Mano/sub_10_control_site_2/anat/sub_10_control_site_2_T1w.nii.gz",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

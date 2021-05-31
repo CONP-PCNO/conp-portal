@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "fsl_bet",
+        "descriptor-doi": "10.5281/zenodo.1482743",
+        "date-time": "2021-02-13_14h11m46s353895ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "sub-010_ses-visit4_T1w.nii.gz",
+            "md5sum": "eab621315f5e8d1c7efbcb4f949ba712"
+        },
+        "maskfile": "mask-8"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "bet /home/mandana/CONP/conp-dataset/projects/openpain/subacute_longitudinal_study/sub-010/ses-visit4/anat/sub-010_ses-visit4_T1w.nii.gz mask-8",
+        "missing-files": {},
+        "output-files": {
+            "outfile": {
+                "file-name": "mask-8.nii.gz",
+                "md5sum": "db5d72898b5b638fb4e0e81003d5bef1"
+            }
+        }
+    },
+    "additional-information": null
+}

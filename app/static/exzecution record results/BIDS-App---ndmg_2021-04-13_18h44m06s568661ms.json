@@ -1,0 +1,476 @@
+{
+    "summary": {
+        "name": "BIDS App - ndmg",
+        "descriptor-doi": "10.5281/zenodo.4457865",
+        "date-time": "2021-04-13_18h44m06s568661ms"
+    },
+    "public-invocation": {
+        "bids_dir": {
+            "file-name": "data_BIDS",
+            "files": [
+                {
+                    "file-name": "dataset_description.json",
+                    "md5sum": "d0e86d0d911d9cae0c45c882bedc1229"
+                },
+                {
+                    "file-name": "sub-032633",
+                    "files": [
+                        {
+                            "file-name": "ses-010",
+                            "files": [
+                                {
+                                    "file-name": "anat",
+                                    "files": [
+                                        {
+                                            "file-name": "sub-032633_ses-010_run-1_PD.json",
+                                            "md5sum": "7fe6a545abd12648e77139e956d6e6ff"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-010_run-1_PD.nii.gz",
+                                            "md5sum": "dd80f5b58615c4cfedf6c67f7a3ec397"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-010_run-1_T1w.json",
+                                            "md5sum": "5335ec3cd821b7bc77a5746e0048f800"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-010_run-1_T1w.nii.gz",
+                                            "md5sum": "477232e03babac76361b92e5fc760c7b"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-010_run-1_T2w.json",
+                                            "md5sum": "869e5924b0153b71c0c412ee9298c5b7"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-010_run-1_T2w.nii.gz",
+                                            "md5sum": "3f386608e2b1e18c65fe517372299652"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "ses-020",
+                            "files": [
+                                {
+                                    "file-name": "anat",
+                                    "files": [
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_FLAIR",
+                                            "files": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "ses-005",
+                            "files": [
+                                {
+                                    "file-name": "anat",
+                                    "files": [
+                                        {
+                                            "file-name": "sub-032633_ses-005_run-1_T1w.json",
+                                            "md5sum": "1b1376b0cc6765f02d12cdaa37213b4e"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-005_run-1_T1w.nii.gz",
+                                            "md5sum": "6c0088105c76936091fc57efc7ab05cc"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "dwi",
+                                    "files": [
+                                        {
+                                            "file-name": "sub-032633_ses-005_run-1_dwi.bval",
+                                            "md5sum": "2276896ed44ac74911f55fc9071f49d1"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-005_run-1_dwi.bvec",
+                                            "md5sum": "18d2d400cc9f176c1ee77ef926e70fec"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-005_run-1_dwi.json",
+                                            "md5sum": "4b9b41b867ffe36149b9a43043c9d571"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-005_run-1_dwi.nii.gz",
+                                            "md5sum": "6a2f0faf3d33cc9123ae8d2c64601ad0"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "func",
+                                    "files": [
+                                        {
+                                            "file-name": "sub-032633_ses-005_task-rest_run-1_bold.json",
+                                            "md5sum": "80b0618fd181e9333b0f9dca260ccf22"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-005_task-rest_run-1_bold.nii.gz",
+                                            "md5sum": "22fa83f7c1aad9b0065d8e30818f24b1"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "output_dir": {
+            "file-name": "derivatives",
+            "not_found": true
+        },
+        "analysis_level": "participant",
+        "session_label": [
+            "005"
+        ]
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "ndmg_bids /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/derivatives participant --session_label 005",
+        "missing-files": {},
+        "output-files": {
+            "output_directory": {
+                "file-name": "derivatives",
+                "files": [
+                    {
+                        "file-name": "tmp",
+                        "files": [
+                            {
+                                "file-name": "sub-032633_ses-005_run-1_dwi_1.bvec",
+                                "md5sum": "4b9f41be52cf5653864754fac45a823e"
+                            },
+                            {
+                                "file-name": "sub-032633_ses-005_run-1_dwi_t1.nii.gz",
+                                "md5sum": "86e7c262022c2031e9b797f0f037682e"
+                            },
+                            {
+                                "file-name": "sub-032633_ses-005_run-1_dwi_t1_ta_fast_wmseg.nii.gz",
+                                "md5sum": "411b32aa93d0a2f3916b4086e1b42337"
+                            },
+                            {
+                                "file-name": "sub-032633_ses-005_run-1_dwi_t1_ta_init.mat",
+                                "md5sum": "9a8860d356a878bce3ee49c35e2f6561"
+                            },
+                            {
+                                "file-name": "sub-032633_ses-005_run-1_dwi_t1_ta2.nii.gz",
+                                "md5sum": "cfbb9bdb1b4b638ca73602770e3998b2"
+                            },
+                            {
+                                "file-name": "sub-032633_ses-005_run-1_T1w_ss_mask.nii.gz",
+                                "md5sum": "2db3333be554740b2b8e3f20dcc847ce"
+                            },
+                            {
+                                "file-name": "sub-032633_ses-005_run-1_dwi_t1_t2.ecclog",
+                                "md5sum": "b4c941e87165aca4d890c37d3482aeec"
+                            },
+                            {
+                                "file-name": "sub-032633_ses-005_run-1_dwi_t1_ta_fast_wmedge.nii.gz",
+                                "md5sum": "1f5013a635c5a4804dc54e61f620c28e"
+                            },
+                            {
+                                "file-name": "sub-032633_ses-005_run-1_dwi_t1_ta.mat",
+                                "md5sum": "c5bff54896554738b20d847c49116891"
+                            },
+                            {
+                                "file-name": "sub-032633_ses-005_run-1_T1w_ss.nii.gz",
+                                "md5sum": "93cd4dace8b742a7ef707a70f6a1a90d"
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "reg",
+                        "files": [
+                            {
+                                "file-name": "dwi",
+                                "files": []
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "tensors",
+                        "files": [
+                            {
+                                "file-name": "sub-032633_ses-005_run-1_dwi_tensors_fa_rgb.nii.gz",
+                                "md5sum": "1a388ca1d3a055bd1dc779e2ac8feedc"
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "fibers",
+                        "files": []
+                    },
+                    {
+                        "file-name": "graphs",
+                        "files": [
+                            {
+                                "file-name": "AAL",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_AAL.edgelist",
+                                        "md5sum": "cede5d7db7eddaa289135d3406cd78fb"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "desikan",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_desikan.edgelist",
+                                        "md5sum": "a001dc1bc8457a9f17909c75119085d2"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "Desikan2012",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_Desikan2012.edgelist",
+                                        "md5sum": "ad1967199f7ecc270612cd70cdbf40f7"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "HarvardOxford",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_HarvardOxford.edgelist",
+                                        "md5sum": "5422bac752f939c8da8cc558f6adc8d4"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "CPAC200",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_CPAC200.edgelist",
+                                        "md5sum": "2539e3a607ca0406712e91f7dc28c01f"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "Talairach",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_Talairach.edgelist",
+                                        "md5sum": "fd8a95b68801f7299c43d76c408bf6f9"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "JHU",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_JHU.edgelist",
+                                        "md5sum": "4259afce74bd077646608fd641ae7b0f"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "slab907",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_slab907.edgelist",
+                                        "md5sum": "776d46ba47f309e4c245eb9444ea0d05"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "slab1068",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_slab1068.edgelist",
+                                        "md5sum": "e576527a6b8d3dc86f865af89abe7125"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS00071",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS00071.edgelist",
+                                        "md5sum": "c884609dc416d07f0518aa67a6ba59a0"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS00096",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS00096.edgelist",
+                                        "md5sum": "b443d75cce12176b9a4715bf63c42aa0"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS00108",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS00108.edgelist",
+                                        "md5sum": "a64b4658ef98e29ace0623ff46ab1813"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS00140",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS00140.edgelist",
+                                        "md5sum": "4adc5d0a85d504ab8216a2b7ff577c36"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS00195",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS00195.edgelist",
+                                        "md5sum": "5a3f7c6c5f8135915503759bd6360d27"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS00278",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS00278.edgelist",
+                                        "md5sum": "902f76fc38a3b30af7caf1536d32482b"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS00350",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS00350.edgelist",
+                                        "md5sum": "ff8d7fef3c49eea7e2730901c26fb82f"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS00446",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS00446.edgelist",
+                                        "md5sum": "23d0a3ff8a9463635dcf0495c915c1e9"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS00583",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS00583.edgelist",
+                                        "md5sum": "0eaa6ab58e1df01866008128e0822be2"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS00833",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS00833.edgelist",
+                                        "md5sum": "cf1b8d8c156430f37623c65ec725b5f8"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS01216",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS01216.edgelist",
+                                        "md5sum": "ef380a58fa3684561c5de8df948c2697"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS01876",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS01876.edgelist",
+                                        "md5sum": "9e99e093c796f169d655b0731c568e71"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS03231",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS03231.edgelist",
+                                        "md5sum": "be5960586fce377441435683966f68dd"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS06481",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS06481.edgelist",
+                                        "md5sum": "9ad7aa3ce658a1fa022be0f0d7409652"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS16784",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS16784.edgelist",
+                                        "md5sum": "51d1493fce8963073b1b1272e1648cf6"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "DS72784",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_DS72784.edgelist",
+                                        "md5sum": "f22a5a8218e53a91ad8b0ee72bab0395"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "qa",
+                        "files": [
+                            {
+                                "file-name": "tensors",
+                                "files": [
+                                    {
+                                        "file-name": "sub-032633_ses-005_run-1_dwi_tensors_fa_rgb.png",
+                                        "md5sum": "7e4934b16322f20b3ee9b237f0dc600f"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "fibers",
+                                "files": []
+                            },
+                            {
+                                "file-name": "reg",
+                                "files": [
+                                    {
+                                        "file-name": "dwi",
+                                        "files": [
+                                            {
+                                                "file-name": "sub-032633_ses-005_run-1_dwi_aligned.png",
+                                                "md5sum": "216c07444ad486c63471cf79e80ae8f9"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

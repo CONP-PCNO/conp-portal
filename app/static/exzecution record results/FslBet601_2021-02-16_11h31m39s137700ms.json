@@ -1,0 +1,24 @@
+{
+    "summary": {
+        "name": "FslBet601",
+        "descriptor-doi": "10.5281/zenodo.3267250",
+        "date-time": "2021-02-16_11h31m39s137700ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "PL011_visit2_t1_defaced.nii.gz",
+            "not_found": true
+        },
+        "maskfile": "mask-4"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "bet /home/mandana/CONP/conp-dataset/projects/openpain/placebo_1/PL011/visit2/anat/PL011_visit2_t1_defaced.nii.gz mask-4",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

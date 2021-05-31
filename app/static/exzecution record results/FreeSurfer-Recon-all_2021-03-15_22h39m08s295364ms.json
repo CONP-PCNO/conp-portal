@@ -1,0 +1,31 @@
+{
+    "summary": {
+        "name": "FreeSurfer-Recon-all",
+        "descriptor-doi": "10.5281/zenodo.4043546",
+        "date-time": "2021-03-15_22h39m08s295364ms"
+    },
+    "public-invocation": {
+        "license": {
+            "file-name": "license.tex",
+            "not_found": true
+        },
+        "subjid": "1000173",
+        "input": {
+            "file-name": "preventad_1000173_NAPBL00_task-retrieval-bold_001.mnc",
+            "md5sum": "30525d9e5354cf0460e73efd3606ac85"
+        },
+        "directives": "-all"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 127,
+        "error-message": "",
+        "shell-command": "export SUBJECTS_DIR=`pwd`; export FS_LICENSE=`pwd`//home/mandana/CONP/FreeSurfer-Recon-all/license.tex; recon-all -subjid 1000173 -i conp-dataset/projects/preventad-open/1000173/NAPBL00/images/preventad_1000173_NAPBL00_task-retrieval-bold_001.mnc -all",
+        "missing-files": {
+            "subjid_output": "1000173"
+        },
+        "output-files": {}
+    },
+    "additional-information": null
+}

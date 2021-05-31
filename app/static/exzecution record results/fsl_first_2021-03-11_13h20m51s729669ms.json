@@ -1,0 +1,31 @@
+{
+    "summary": {
+        "name": "fsl_first",
+        "descriptor-doi": "10.5281/zenodo.1494312",
+        "date-time": "2021-03-11_13h20m51s729669ms"
+    },
+    "public-invocation": {
+        "input_file": {
+            "file-name": "PL011_visit2_t1_defaced-copy.nii.gz",
+            "not_found": true
+        },
+        "prefix": "output"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "mkdir -p /home/mandana/CONP/conp-dataset/projects/openpain/placebo_1/PL011/visit2/anat/PL011_visit2_t1_defaced-copy; run_first_all -i /home/mandana/CONP/conp-dataset/projects/openpain/placebo_1/PL011/visit2/anat/PL011_visit2_t1_defaced-copy.nii.gz -o /home/mandana/CONP/conp-dataset/projects/openpain/placebo_1/PL011/visit2/anat/PL011_visit2_t1_defaced-copy/output",
+        "missing-files": {
+            "std_sub_outputs": "/home/mandana/CONP/conp-dataset/projects/openpain/placebo_1/PL011/visit2/anat/PL011_visit2_t1_defaced-copy_to_std_sub*"
+        },
+        "output-files": {
+            "outputs": {
+                "file-name": "PL011_visit2_t1_defaced-copy",
+                "files": []
+            }
+        }
+    },
+    "additional-information": null
+}

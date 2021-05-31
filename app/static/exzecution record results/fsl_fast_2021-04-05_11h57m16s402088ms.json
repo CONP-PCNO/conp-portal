@@ -1,0 +1,54 @@
+{
+    "summary": {
+        "name": "fsl_fast",
+        "descriptor-doi": "10.5281/zenodo.1494308",
+        "date-time": "2021-04-05_11h57m16s402088ms"
+    },
+    "public-invocation": {
+        "output_basename": "output_fsl_fast_SIMON_dwi",
+        "in_files": {
+            "file-name": "sub-032633_ses-005_run-1_dwi.nii.gz",
+            "md5sum": "6a2f0faf3d33cc9123ae8d2c64601ad0"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fast -o output_fsl_fast_SIMON_dwi /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-005/dwi/sub-032633_ses-005_run-1_dwi.nii.gz; mkdir output_fsl_fast_SIMON_dwi; mv output_fsl_fast_SIMON_dwi_* output_fsl_fast_SIMON_dwi",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "output_fsl_fast_SIMON_dwi",
+                "files": [
+                    {
+                        "file-name": "output_fsl_fast_SIMON_dwi_mixeltype.nii.gz",
+                        "md5sum": "3cf55c3627075ae0d1d2c1baf27ffea9"
+                    },
+                    {
+                        "file-name": "output_fsl_fast_SIMON_dwi_pve_0.nii.gz",
+                        "md5sum": "790bc98284d3cb528c49ad957ced350d"
+                    },
+                    {
+                        "file-name": "output_fsl_fast_SIMON_dwi_pve_1.nii.gz",
+                        "md5sum": "3964e8eb70ffe350349f6231028d92a8"
+                    },
+                    {
+                        "file-name": "output_fsl_fast_SIMON_dwi_pve_2.nii.gz",
+                        "md5sum": "928572cb4d3a88ba74612bc3d670a42f"
+                    },
+                    {
+                        "file-name": "output_fsl_fast_SIMON_dwi_pveseg.nii.gz",
+                        "md5sum": "a2086b7cc6101ceb53271eb82f4b8794"
+                    },
+                    {
+                        "file-name": "output_fsl_fast_SIMON_dwi_seg.nii.gz",
+                        "md5sum": "9b5482d8082d824ca39ad6b754c89cc7"
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

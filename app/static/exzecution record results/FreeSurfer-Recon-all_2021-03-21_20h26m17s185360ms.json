@@ -1,0 +1,31 @@
+{
+    "summary": {
+        "name": "FreeSurfer-Recon-all",
+        "descriptor-doi": "10.5281/zenodo.4043546",
+        "date-time": "2021-03-21_20h26m17s185360ms"
+    },
+    "public-invocation": {
+        "license": {
+            "file-name": "license.tex",
+            "not_found": true
+        },
+        "subjid": "032633",
+        "input": {
+            "file-name": "sub-032633_ses-010_run-1_T1w.nii.gz",
+            "md5sum": "477232e03babac76361b92e5fc760c7b"
+        },
+        "directives": "-all"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 127,
+        "error-message": "",
+        "shell-command": "export SUBJECTS_DIR=`pwd`; export FS_LICENSE=`pwd`//home/mandana/CONP/FreeSurfer-Recon-all/license.tex; recon-all -subjid 032633 -i conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-010/anat/sub-032633_ses-010_run-1_T1w.nii.gz -all",
+        "missing-files": {
+            "subjid_output": "032633"
+        },
+        "output-files": {}
+    },
+    "additional-information": null
+}

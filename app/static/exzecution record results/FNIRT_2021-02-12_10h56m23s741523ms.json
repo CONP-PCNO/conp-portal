@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FNIRT",
+        "descriptor-doi": "10.5281/zenodo.2639849",
+        "date-time": "2021-02-12_10h56m23s741523ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "highres001_full_normfilter.nii.gz",
+            "not_found": true
+        },
+        "ref_file": {
+            "file-name": "highres001_full_normfilter.nii.gz",
+            "not_found": true
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "fnirt --in=/home/mandana/CONP/conp-dataset/projects/openpain/thermal/healthy010/t1/highres001_full_normfilter.nii.gz --ref=/home/mandana/CONP/conp-dataset/projects/openpain/thermal/healthy010/t1/highres001_full_normfilter.nii.gz",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "fsl_fast",
+        "descriptor-doi": "10.5281/zenodo.1494308",
+        "date-time": "2021-02-17_09h02m19s926878ms"
+    },
+    "public-invocation": {
+        "output_basename": "fast",
+        "in_files": {
+            "file-name": "phantom_999876_MNI_20130903_t2w_001.mnc",
+            "md5sum": "ba4cdeffd258e4879673b748ee4502c9"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "fast -o fast /home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_999876_MNI_20130903_t2w_001.mnc; mkdir fast; mv fast_* fast",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "fast",
+                "files": []
+            }
+        }
+    },
+    "additional-information": null
+}

@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FNIRT",
+        "descriptor-doi": "10.5281/zenodo.2639849",
+        "date-time": "2021-02-12_10h56m14s464028ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "sub-032633_ses-010_run-1_T2w.nii.gz",
+            "md5sum": "3f386608e2b1e18c65fe517372299652"
+        },
+        "ref_file": {
+            "file-name": "sub-032633_ses-010_run-1_T2w.nii.gz",
+            "md5sum": "3f386608e2b1e18c65fe517372299652"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fnirt --in=/home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-010/anat/sub-032633_ses-010_run-1_T2w.nii.gz --ref=/home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-010/anat/sub-032633_ses-010_run-1_T2w.nii.gz",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

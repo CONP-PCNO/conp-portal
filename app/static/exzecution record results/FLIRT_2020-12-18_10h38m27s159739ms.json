@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FLIRT",
+        "descriptor-doi": "10.5281/zenodo.2597643",
+        "date-time": "2020-12-18_10h38m27s159739ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "sub-032633_ses-020_run-1_FLAIR.nii.gz",
+            "not_found": true
+        },
+        "reference": {
+            "file-name": "sub-032633_ses-020_run-1_T1w.nii.gz",
+            "not_found": true
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 134,
+        "error-message": "",
+        "shell-command": "flirt -in '~/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-020/anat/sub-032633_ses-020_run-1_FLAIR.nii.gz' -ref '~/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-020/anat/sub-032633_ses-020_run-1_T1w.nii.gz' -out '~/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-020/anat/sub-032633_ses-020_run-1_FLAIR_flirt' -omat '~/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-020/anat/sub-032633_ses-020_run-1_FLAIR_flirt.mat'",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

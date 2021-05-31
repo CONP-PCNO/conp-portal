@@ -1,0 +1,72 @@
+{
+    "summary": {
+        "name": "BrainExtraction",
+        "descriptor-doi": "10.5281/zenodo.2636973",
+        "date-time": "2021-03-26_15h49m32s512020ms"
+    },
+    "public-invocation": {
+        "anatomical_image": {
+            "file-name": "sub-9962084_ses-NAPEN00_run-001_FLAIR.nii.gz",
+            "md5sum": "74fcb434daf8ae500d6c6460d9a24671"
+        },
+        "brain_probability_mask": {
+            "file-name": "sub-9962084_ses-NAPEN00_run-001_FLAIR.nii.gz",
+            "md5sum": "74fcb434daf8ae500d6c6460d9a24671"
+        },
+        "brain_template": {
+            "file-name": "sub-9962084_ses-NAPEN00_run-001_FLAIR.nii.gz",
+            "md5sum": "74fcb434daf8ae500d6c6460d9a24671"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "${ANTSPATH}/antsBrainExtraction.sh -a /home/mandana/CONP/conp-dataset/projects/preventad-open-bids/BIDS_dataset/sub-9962084/ses-NAPEN00/anat/sub-9962084_ses-NAPEN00_run-001_FLAIR.nii.gz -m /home/mandana/CONP/conp-dataset/projects/preventad-open-bids/BIDS_dataset/sub-9962084/ses-NAPEN00/anat/sub-9962084_ses-NAPEN00_run-001_FLAIR.nii.gz -e /home/mandana/CONP/conp-dataset/projects/preventad-open-bids/BIDS_dataset/sub-9962084/ses-NAPEN00/anat/sub-9962084_ses-NAPEN00_run-001_FLAIR.nii.gz -d 3 -s nii.gz -o highres001_",
+        "missing-files": {},
+        "output-files": {
+            "BrainExtractionInitialAffine": {
+                "file-name": "highres001_BrainExtractionInitialAffine.mat",
+                "md5sum": "aa5ffbcfcdfa7520c091ad97a1c8a24d"
+            },
+            "BrainExtractionInitialAffineFixed": {
+                "file-name": "highres001_BrainExtractionInitialAffineFixed.nii.gz",
+                "md5sum": "77137283c2647862024d383301100c6f"
+            },
+            "BrainExtractionInitialAffineMoving": {
+                "file-name": "highres001_BrainExtractionInitialAffineMoving.nii.gz",
+                "md5sum": "1152408ba2ffe5f25a0cd9a8913cd438"
+            },
+            "BrainExtractionLaplacian": {
+                "file-name": "highres001_BrainExtractionLaplacian.nii.gz",
+                "md5sum": "156cbbd13eb1a32ac99ed483ec480f77"
+            },
+            "BrainExtractionPrior0GenericAffine": {
+                "file-name": "highres001_BrainExtractionPrior0GenericAffine.mat",
+                "md5sum": "1fbe9deec77ea0cbc8dc57621f57e6cd"
+            },
+            "BrainExtractionPrior1InverseWarp": {
+                "file-name": "highres001_BrainExtractionPrior1InverseWarp.nii.gz",
+                "md5sum": "b149b510c097c4b6bf61acf9b7411a7e"
+            },
+            "BrainExtractionPrior1Warp": {
+                "file-name": "highres001_BrainExtractionPrior1Warp.nii.gz",
+                "md5sum": "0e2ffca1dc9851a5ead767b2e90a433c"
+            },
+            "BrainExtractionTemplateLaplacian": {
+                "file-name": "highres001_BrainExtractionTemplateLaplacian.nii.gz",
+                "md5sum": "e34035e5be757bfc701553fbf8e8a480"
+            },
+            "N4Corrected0": {
+                "file-name": "highres001_N4Corrected0.nii.gz",
+                "md5sum": "af265ca765a1350b222a62ec5a65cecf"
+            },
+            "N4Truncated0": {
+                "file-name": "highres001_N4Truncated0.nii.gz",
+                "md5sum": "665624d36258894672e05df2e9ab8136"
+            }
+        }
+    },
+    "additional-information": null
+}

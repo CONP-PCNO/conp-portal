@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FNIRT",
+        "descriptor-doi": "10.5281/zenodo.2639849",
+        "date-time": "2021-02-12_10h56m20s299555ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "sub-06_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+            "md5sum": "ff4867c067b8151e2d651ee08eccba91"
+        },
+        "ref_file": {
+            "file-name": "sub-06_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+            "md5sum": "ff4867c067b8151e2d651ee08eccba91"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fnirt --in=/home/mandana/CONP/conp-dataset/projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset/sub-06_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz --ref=/home/mandana/CONP/conp-dataset/projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset/sub-06_space-MNI152NLin2009cAsym_desc-grey_mask.nii.gz",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

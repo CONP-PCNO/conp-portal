@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FLIRT",
+        "descriptor-doi": "10.5281/zenodo.2597643",
+        "date-time": "2021-05-18_02h47m15s006532ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "PL011_visit4_t1_defaced.nii.gz",
+            "md5sum": "5eaac6f1e0ac4a3859de1b61c870dad2"
+        },
+        "reference": {
+            "file-name": "PL011_visit4_t1_defaced.nii.gz",
+            "md5sum": "5eaac6f1e0ac4a3859de1b61c870dad2"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 125,
+        "error-message": "",
+        "shell-command": "flirt -in /home/mandana/CONP/conp-dataset/projects/openpain/placebo_1/PL011/visit4/anat/PL011_visit4_t1_defaced.nii.gz -ref /home/mandana/CONP/conp-dataset/projects/openpain/placebo_1/PL011/visit4/anat/PL011_visit4_t1_defaced.nii.gz -out /home/mandana/CONP/conp-dataset/projects/openpain/placebo_1/PL011/visit4/anat/PL011_visit4_t1_defaced_flirt -omat /home/mandana/CONP/conp-dataset/projects/openpain/placebo_1/PL011/visit4/anat/PL011_visit4_t1_defaced_flirt.mat",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

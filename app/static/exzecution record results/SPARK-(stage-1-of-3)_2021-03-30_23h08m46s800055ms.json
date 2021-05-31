@@ -1,0 +1,78 @@
+{
+    "summary": {
+        "name": "SPARK (stage 1 of 3)",
+        "descriptor-doi": "10.5281/zenodo.4010734",
+        "date-time": "2021-03-30_23h08m46s800055ms"
+    },
+    "public-invocation": {
+        "fmri": {
+            "file-name": "mni_adni_hi_t1w_tal_nlin_sym.nii.gz",
+            "md5sum": "96dc6d6b54f34672705f8df3575f294d"
+        },
+        "out_dir": "/home/mandana/CONP/conp-dataset/projects/BigBrain_3DClassifiedVolumes/bigbrain-datalad/3D_Volumes/MNI-ADNI_Space/nii/",
+        "mask": {
+            "file-name": "MASK_fsl_SPARK_1.nii",
+            "md5sum": "19703d5b114b15a82c2529a8e5a36924"
+        },
+        "nb_resamplings": 100,
+        "network_scales": [
+            10,
+            2,
+            30
+        ],
+        "nb_iterations": 20,
+        "p_value": 0.05
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "spark --SETUP --fmri /home/mandana/CONP/conp-dataset/projects/BigBrain_3DClassifiedVolumes/bigbrain-datalad/3D_Volumes/MNI-ADNI_Space/nii/mni_adni_hi_t1w_tal_nlin_sym.nii.gz --out-dir /home/mandana/CONP/conp-dataset/projects/BigBrain_3DClassifiedVolumes/bigbrain-datalad/3D_Volumes/MNI-ADNI_Space/nii/ --mask /home/mandana/CONP/pipelines/SPARK_1of3.4010734/masks/MASK_fsl_SPARK_1.nii --nb-resamplings 100 --network-scales 10 2 30 --nb-iterations 20 --p-value 0.05 --resampling-method CBB --block-window-length 10 1 30 --dict-init-method GivenMatrix --sparse-coding-method Thresholding && spark --RUN --stage A --fmri /home/mandana/CONP/conp-dataset/projects/BigBrain_3DClassifiedVolumes/bigbrain-datalad/3D_Volumes/MNI-ADNI_Space/nii/mni_adni_hi_t1w_tal_nlin_sym.nii.gz --out-dir /home/mandana/CONP/conp-dataset/projects/BigBrain_3DClassifiedVolumes/bigbrain-datalad/3D_Volumes/MNI-ADNI_Space/nii/",
+        "missing-files": {},
+        "output-files": {
+            "result": {
+                "file-name": "",
+                "files": [
+                    {
+                        "file-name": "full16_100um_adni.nii.gz",
+                        "not_found": true
+                    },
+                    {
+                        "file-name": "full16_200um_adni.nii.gz",
+                        "not_found": true
+                    },
+                    {
+                        "file-name": "full16_300um_adni.nii.gz",
+                        "not_found": true
+                    },
+                    {
+                        "file-name": "full16_400um_adni.nii.gz",
+                        "not_found": true
+                    },
+                    {
+                        "file-name": "full8_100um_adni.nii.gz",
+                        "not_found": true
+                    },
+                    {
+                        "file-name": "full8_200um_adni.nii.gz",
+                        "not_found": true
+                    },
+                    {
+                        "file-name": "full8_300um_adni.nii.gz",
+                        "not_found": true
+                    },
+                    {
+                        "file-name": "full8_400um_adni.nii.gz",
+                        "not_found": true
+                    },
+                    {
+                        "file-name": "mni_adni_hi_t1w_tal_nlin_sym.nii.gz",
+                        "md5sum": "96dc6d6b54f34672705f8df3575f294d"
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

@@ -1,0 +1,24 @@
+{
+    "summary": {
+        "name": "fsl_bet",
+        "descriptor-doi": "10.5281/zenodo.1482743",
+        "date-time": "2021-02-13_13h41m31s319392ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "full16_100um_optbal.nii.gz",
+            "md5sum": "32f45ba92652eb8b2bfee1f1865ee9d5"
+        },
+        "maskfile": "/home/mandana/CONP/pipelines/oneVoxel/fslbet/mask-4"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "bet /home/mandana/CONP/conp-dataset/projects/BigBrain/3D_Volumes/Histological_Space/nii/full16_100um_optbal.nii.gz /home/mandana/CONP/pipelines/oneVoxel/fslbet/mask-4",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

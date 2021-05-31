@@ -1,0 +1,188 @@
+{
+    "summary": {
+        "name": "FreeSurfer-Recon-all",
+        "descriptor-doi": "10.5281/zenodo.4043546",
+        "date-time": "2021-04-02_09h56m30s701742ms"
+    },
+    "public-invocation": {
+        "license": {
+            "file-name": "license.txt",
+            "md5sum": "f606798c4c204e59ee84e220a6d26426"
+        },
+        "subjid": "healthy010",
+        "input": {
+            "file-name": "highres001_full_normfilter.nii.gz",
+            "md5sum": "b745b83518ad96db7109b63db57f5f30"
+        },
+        "directives": "-all"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "Crashed",
+        "shell-command": "export SUBJECTS_DIR=`pwd`; export FS_LICENSE=`pwd`/license_FreeSurfer/license.txt; recon-all -subjid healthy010 -i conp-dataset/projects/openpain/thermal/healthy010/t1/highres001_full_normfilter.nii.gz -all",
+        "missing-files": {},
+        "output-files": {
+            "subjid_output": {
+                "file-name": "healthy010",
+                "files": [
+                    {
+                        "file-name": "scripts",
+                        "files": [
+                            {
+                                "file-name": "build-stamp.txt",
+                                "md5sum": "507407bea2674bd0417252556017bace"
+                            },
+                            {
+                                "file-name": "patchdir.txt",
+                                "md5sum": "68b329da9893e34099c7d8ad5cb9c940"
+                            },
+                            {
+                                "file-name": "lastcall.build-stamp.txt",
+                                "md5sum": "507407bea2674bd0417252556017bace"
+                            },
+                            {
+                                "file-name": "recon-config.yaml",
+                                "md5sum": "1409d719f9e768aebd20106fd9942180"
+                            },
+                            {
+                                "file-name": "unknown-args.txt",
+                                "md5sum": "8df4f6bd355783309598c1d42f3195b5"
+                            },
+                            {
+                                "file-name": "recon-all.cmd",
+                                "md5sum": "731d9b845b089e98fddf0dee117eef65"
+                            },
+                            {
+                                "file-name": "recon-all.env",
+                                "md5sum": "c707204229e2ebcd5d6269992766ecf5"
+                            },
+                            {
+                                "file-name": "recon-all.log",
+                                "md5sum": "67d01882c1423ed11180e55440c1bcf1"
+                            },
+                            {
+                                "file-name": "IsRunning.lh+rh",
+                                "md5sum": "f37b055d3e7dfbc9930522e18647b92e"
+                            },
+                            {
+                                "file-name": "recon-all-status.log",
+                                "md5sum": "dc23769a0e8e1e7e6b7337a49ec02aa1"
+                            },
+                            {
+                                "file-name": "recon-all.local-copy",
+                                "md5sum": "1ca3508b301f82ad7abf6c21726184b9"
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "mri",
+                        "files": [
+                            {
+                                "file-name": "transforms",
+                                "files": [
+                                    {
+                                        "file-name": "bak",
+                                        "files": []
+                                    },
+                                    {
+                                        "file-name": "talairach_avi.log",
+                                        "md5sum": "a5fb07e9b22b881928c1253eebfe4c77"
+                                    },
+                                    {
+                                        "file-name": "talairach.auto.xfm",
+                                        "md5sum": "9a5e480cf4ed8036eaafc81980c8ecb4"
+                                    },
+                                    {
+                                        "file-name": "talsrcimg_to_711-2C_as_mni_average_305_t4_vox2vox.txt",
+                                        "md5sum": "5b3304e0e9a343a3b5a657dfdc02e872"
+                                    },
+                                    {
+                                        "file-name": "talairach.auto.xfm.lta",
+                                        "md5sum": "e093ce1ea784ab49553286da56f2110e"
+                                    },
+                                    {
+                                        "file-name": "talairach.xfm",
+                                        "md5sum": "9a5e480cf4ed8036eaafc81980c8ecb4"
+                                    },
+                                    {
+                                        "file-name": "talairach.xfm.lta",
+                                        "md5sum": "2774dac978bf698b80900016163b1082"
+                                    },
+                                    {
+                                        "file-name": "talairach_avi_QA.log",
+                                        "md5sum": "05373dbebf1b75d7bfd55f2aec4e3dc5"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "orig",
+                                "files": [
+                                    {
+                                        "file-name": "001.mgz",
+                                        "md5sum": "d1270144513f89543c15a8f2da85a341"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "rawavg.mgz",
+                                "md5sum": "d1270144513f89543c15a8f2da85a341"
+                            },
+                            {
+                                "file-name": "orig.mgz",
+                                "md5sum": "d25c39fe356ab111488e6857754c4551"
+                            },
+                            {
+                                "file-name": "orig_nu.mgz",
+                                "md5sum": "ae05ff686b3743d10ed93bf50606a2b1"
+                            },
+                            {
+                                "file-name": "mri_nu_correct.mni.log.bak",
+                                "md5sum": "0e6555ecd092709ff96e8543504c1206"
+                            },
+                            {
+                                "file-name": "mri_nu_correct.mni.log",
+                                "md5sum": "cbc70895f026ed7006ae920f1d350be3"
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "surf",
+                        "files": []
+                    },
+                    {
+                        "file-name": "tmp",
+                        "files": []
+                    },
+                    {
+                        "file-name": "label",
+                        "files": []
+                    },
+                    {
+                        "file-name": "touch",
+                        "files": [
+                            {
+                                "file-name": "conform.touch",
+                                "md5sum": "461465bd16744404dbfcc9edc5b76b5e"
+                            },
+                            {
+                                "file-name": "talairach.touch",
+                                "md5sum": "b81f486efc083dc9f5654744f1b3defc"
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "stats",
+                        "files": []
+                    },
+                    {
+                        "file-name": "trash",
+                        "files": []
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FNIRT",
+        "descriptor-doi": "10.5281/zenodo.2639849",
+        "date-time": "2021-02-12_10h57m58s617416ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "t1.nii.gz",
+            "md5sum": "1ededd81a26cf226985475f49068953e"
+        },
+        "ref_file": {
+            "file-name": "t1.nii.gz",
+            "md5sum": "1ededd81a26cf226985475f49068953e"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fnirt --in=/home/mandana/CONP/conp-dataset/projects/openpain/cbp_resting/cbp10/t1/t1.nii.gz --ref=/home/mandana/CONP/conp-dataset/projects/openpain/cbp_resting/cbp10/t1/t1.nii.gz",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

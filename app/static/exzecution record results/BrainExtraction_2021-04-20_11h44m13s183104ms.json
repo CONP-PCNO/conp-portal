@@ -1,0 +1,44 @@
+{
+    "summary": {
+        "name": "BrainExtraction",
+        "descriptor-doi": "10.5281/zenodo.2636973",
+        "date-time": "2021-04-20_11h44m13s183104ms"
+    },
+    "public-invocation": {
+        "anatomical_image": {
+            "file-name": "sub-HCPUR100_t1w.nii.gz",
+            "md5sum": "6248ded9a528636072aba8b4ec857dfb"
+        },
+        "brain_probability_mask": {
+            "file-name": "T_template0_BrainCerebellumProbabilityMask.nii.gz",
+            "md5sum": "e1018562e3a5e31ab35f5c7b1bbe99de"
+        },
+        "brain_template": {
+            "file-name": "T_template0.nii.gz",
+            "md5sum": "f95dbe37ab40e8ad59c1b1eabc7f230c"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "${ANTSPATH}/antsBrainExtraction.sh -a /home/mandana/CONP/conp-dataset/projects/Khanlab/HCPUR100-Template/sub-HCPUR100/anat/sub-HCPUR100_t1w.nii.gz -m /home/mandana/CONP/MICCAI2012-Multi-Atlas-Challenge-Data/T_template0_BrainCerebellumProbabilityMask.nii.gz -e /home/mandana/CONP/MICCAI2012-Multi-Atlas-Challenge-Data/T_template0.nii.gz -d 3 -s nii.gz -o highres001_",
+        "missing-files": {},
+        "output-files": {
+            "BrainExtractionBrain": {
+                "file-name": "highres001_BrainExtractionBrain.nii.gz",
+                "md5sum": "ec49b3c8cfa058447284978943de66a6"
+            },
+            "BrainExtractionMask": {
+                "file-name": "highres001_BrainExtractionMask.nii.gz",
+                "md5sum": "6234ee854357dae8dc04c9ad54517348"
+            },
+            "BrainExtractionPrior0GenericAffine": {
+                "file-name": "highres001_BrainExtractionPrior0GenericAffine.mat",
+                "md5sum": "c29fc4e3dc91d33b9a1f43d9e041c428"
+            }
+        }
+    },
+    "additional-information": null
+}

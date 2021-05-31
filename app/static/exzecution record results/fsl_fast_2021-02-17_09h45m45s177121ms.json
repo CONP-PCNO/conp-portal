@@ -1,0 +1,54 @@
+{
+    "summary": {
+        "name": "fsl_fast",
+        "descriptor-doi": "10.5281/zenodo.1494308",
+        "date-time": "2021-02-17_09h45m45s177121ms"
+    },
+    "public-invocation": {
+        "output_basename": "fast",
+        "in_files": {
+            "file-name": "sub-01_task-rest_bold.nii.gz",
+            "md5sum": "1f1822c8131f5af21f5f9ef797165ce9"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fast -o fast /home/mandana/CONP/conp-dataset/projects/openpain/placebo_predict_tetreault/sub-01/func/sub-01_task-rest_bold.nii.gz; mkdir fast; mv fast_* fast",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "fast",
+                "files": [
+                    {
+                        "file-name": "fast_mixeltype.nii.gz",
+                        "md5sum": "f7dd9d5c4937e187e710532ceebb7b7b"
+                    },
+                    {
+                        "file-name": "fast_pve_0.nii.gz",
+                        "md5sum": "a9ee3f3e7a3e0edac3877692dc277019"
+                    },
+                    {
+                        "file-name": "fast_pve_1.nii.gz",
+                        "md5sum": "a4fa9500081e59d73ba58a9be2dd46a8"
+                    },
+                    {
+                        "file-name": "fast_pve_2.nii.gz",
+                        "md5sum": "2bbafd413bb7159dee37a7aa247ec28d"
+                    },
+                    {
+                        "file-name": "fast_pveseg.nii.gz",
+                        "md5sum": "edd29346de631b22aab5272db830c78a"
+                    },
+                    {
+                        "file-name": "fast_seg.nii.gz",
+                        "md5sum": "8c4c4a16368a356977a6a21f6588d4c5"
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

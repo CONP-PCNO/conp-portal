@@ -1,0 +1,44 @@
+{
+    "summary": {
+        "name": "BrainExtraction",
+        "descriptor-doi": "10.5281/zenodo.2636973",
+        "date-time": "2021-04-20_16h13m45s963396ms"
+    },
+    "public-invocation": {
+        "anatomical_image": {
+            "file-name": "sub_10_control_site_2_T1w.nii.gz",
+            "md5sum": "c3f1f1e07de28fc1d22bcdd1f69190fe"
+        },
+        "brain_probability_mask": {
+            "file-name": "T_template0_BrainCerebellumProbabilityMask.nii.gz",
+            "md5sum": "e1018562e3a5e31ab35f5c7b1bbe99de"
+        },
+        "brain_template": {
+            "file-name": "T_template0.nii.gz",
+            "md5sum": "f95dbe37ab40e8ad59c1b1eabc7f230c"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "${ANTSPATH}/antsBrainExtraction.sh -a /home/mandana/CONP/conp-dataset/projects/openpain/BrainNetworkChange_Mano/sub_10_control_site_2/anat/sub_10_control_site_2_T1w.nii.gz -m /home/mandana/CONP/MICCAI2012-Multi-Atlas-Challenge-Data/T_template0_BrainCerebellumProbabilityMask.nii.gz -e /home/mandana/CONP/MICCAI2012-Multi-Atlas-Challenge-Data/T_template0.nii.gz -d 3 -s nii.gz -o highres001_",
+        "missing-files": {},
+        "output-files": {
+            "BrainExtractionBrain": {
+                "file-name": "highres001_BrainExtractionBrain.nii.gz",
+                "md5sum": "064473c5d38dab0b606f668b0bee3b2e"
+            },
+            "BrainExtractionMask": {
+                "file-name": "highres001_BrainExtractionMask.nii.gz",
+                "md5sum": "d6e3133dc5a0792da2428c8fd6440837"
+            },
+            "BrainExtractionPrior0GenericAffine": {
+                "file-name": "highres001_BrainExtractionPrior0GenericAffine.mat",
+                "md5sum": "ab1dca46023256c81446c3393148d8e5"
+            }
+        }
+    },
+    "additional-information": null
+}

@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "fsl_bet",
+        "descriptor-doi": "10.5281/zenodo.1482743",
+        "date-time": "2021-03-17_13h29m06s251302ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "sub-032633_ses-005_run-1_dwi.nii.gz",
+            "md5sum": "6a2f0faf3d33cc9123ae8d2c64601ad0"
+        },
+        "maskfile": "fsl-bet_mask_DTIFit"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "bet /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-005/dwi/sub-032633_ses-005_run-1_dwi.nii.gz fsl-bet_mask_DTIFit",
+        "missing-files": {},
+        "output-files": {
+            "outfile": {
+                "file-name": "fsl-bet_mask_DTIFit.nii.gz",
+                "md5sum": "c3b6313098ff1d8460c24b22e1535db5"
+            }
+        }
+    },
+    "additional-information": null
+}

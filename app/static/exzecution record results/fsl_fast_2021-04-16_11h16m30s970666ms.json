@@ -1,0 +1,54 @@
+{
+    "summary": {
+        "name": "fsl_fast",
+        "descriptor-doi": "10.5281/zenodo.1494308",
+        "date-time": "2021-04-16_11h16m30s970666ms"
+    },
+    "public-invocation": {
+        "output_basename": "fast",
+        "in_files": {
+            "file-name": "PL011_visit4_t1_defaced.nii.gz",
+            "md5sum": "5eaac6f1e0ac4a3859de1b61c870dad2"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fast -o fast /home/mandana/CONP/conp-dataset/projects/openpain/placebo_1/PL011/visit4/anat/PL011_visit4_t1_defaced.nii.gz; mkdir fast; mv fast_* fast",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "fast",
+                "files": [
+                    {
+                        "file-name": "fast_mixeltype.nii.gz",
+                        "md5sum": "3395013032ceb3b6b5359520a532647d"
+                    },
+                    {
+                        "file-name": "fast_pve_0.nii.gz",
+                        "md5sum": "5104602f93a7618448931d1a63a94c84"
+                    },
+                    {
+                        "file-name": "fast_pve_1.nii.gz",
+                        "md5sum": "8ffcb76242416fd9a8bace5988410afd"
+                    },
+                    {
+                        "file-name": "fast_pve_2.nii.gz",
+                        "md5sum": "26d7ce6eda6aea0a9faed1ef38a6d8f1"
+                    },
+                    {
+                        "file-name": "fast_pveseg.nii.gz",
+                        "md5sum": "7b635008bc5e381334e9e056ba1d14de"
+                    },
+                    {
+                        "file-name": "fast_seg.nii.gz",
+                        "md5sum": "fabe4e295563f73f13fb504b47090f3d"
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

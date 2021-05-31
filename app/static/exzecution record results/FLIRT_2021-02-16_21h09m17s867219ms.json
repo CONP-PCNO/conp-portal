@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FLIRT",
+        "descriptor-doi": "10.5281/zenodo.2597643",
+        "date-time": "2021-02-16_21h09m17s867219ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "phantom_999876_MNI_20130903_t2w_001.mnc",
+            "md5sum": "ba4cdeffd258e4879673b748ee4502c9"
+        },
+        "reference": {
+            "file-name": "phantom_999876_MNI_20130903_t2w_001.mnc",
+            "md5sum": "ba4cdeffd258e4879673b748ee4502c9"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 134,
+        "error-message": "",
+        "shell-command": "flirt -in /home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_999876_MNI_20130903_t2w_001.mnc -ref /home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_999876_MNI_20130903_t2w_001.mnc -out /home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_999876_MNI_20130903_t2w_001.mnc_flirt -omat /home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_999876_MNI_20130903_t2w_001.mnc_flirt.mat",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

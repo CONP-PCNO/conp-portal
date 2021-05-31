@@ -1,0 +1,36 @@
+{
+    "summary": {
+        "name": "ApplyWarp",
+        "descriptor-doi": "10.5281/zenodo.2650440",
+        "date-time": "2021-03-17_22h10m46s328260ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "sub-01_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+            "md5sum": "6bea645cb589b33c2b4f54bb5831aba1"
+        },
+        "out_file": {
+            "file-name": "applywrap-out.nii.gz",
+            "md5sum": "3b64e58bd82586a348dfc252ac50feb0"
+        },
+        "ref_file": {
+            "file-name": "sub-01_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+            "md5sum": "c8cd107257a414fe22be7b4a9421688f"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "applywarp --in=/home/mandana/CONP/conp-dataset/projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset/sub-01_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz --ref=/home/mandana/CONP/conp-dataset/projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset/sub-01_task-movie_run-02_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz --out=/home/mandana/CONP/conp-dataset/projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset/applywrap-out.nii.gz",
+        "missing-files": {},
+        "output-files": {
+            "out_file_outfile": {
+                "file-name": "applywrap-out.nii.gz",
+                "md5sum": "9863e92374d5f47ee5cd79aa28df2804"
+            }
+        }
+    },
+    "additional-information": null
+}

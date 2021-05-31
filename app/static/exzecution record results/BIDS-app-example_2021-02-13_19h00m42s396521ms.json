@@ -1,0 +1,102 @@
+{
+    "summary": {
+        "name": "BIDS app example",
+        "descriptor-doi": "10.5281/zenodo.1451001",
+        "date-time": "2021-02-13_19h00m42s396521ms"
+    },
+    "public-invocation": {
+        "bids_dir": {
+            "file-name": "",
+            "files": [
+                {
+                    "file-name": ".bids-validator-config.json",
+                    "not_found": true
+                },
+                {
+                    "file-name": "dataset_description.json",
+                    "md5sum": "cb114bbf356cb90a926d2b047d16622e"
+                },
+                {
+                    "file-name": "participants.json",
+                    "md5sum": "78f007bcc8b40e6175175bcd5becee6a"
+                },
+                {
+                    "file-name": "README",
+                    "md5sum": "7cd315d6e5e35288d22d61eb71d25718"
+                },
+                {
+                    "file-name": "sub-9962084",
+                    "files": [
+                        {
+                            "file-name": "ses-NAPEN00",
+                            "files": [
+                                {
+                                    "file-name": "anat",
+                                    "files": [
+                                        {
+                                            "file-name": "sub-9962084_ses-NAPEN00_run-001_FLAIR.json",
+                                            "md5sum": "6bc91f82590140c7856ed2c43ec13b45"
+                                        },
+                                        {
+                                            "file-name": "sub-9962084_ses-NAPEN00_run-001_FLAIR.nii.gz",
+                                            "md5sum": "74fcb434daf8ae500d6c6460d9a24671"
+                                        },
+                                        {
+                                            "file-name": "sub-9962084_ses-NAPEN00_run-001_T1w.json",
+                                            "md5sum": "caaaede16a05d8ae77b1beda12212cb1"
+                                        },
+                                        {
+                                            "file-name": "sub-9962084_ses-NAPEN00_run-001_T1w.nii.gz",
+                                            "md5sum": "84f41615e1fe7abadc1c3f4ba1e3ffc6"
+                                        },
+                                        {
+                                            "file-name": "sub-9962084_ses-NAPEN00_run-001_T1w_flirt.mat",
+                                            "md5sum": "ba2d9bc3fe18985fa673761ff7e3315c"
+                                        },
+                                        {
+                                            "file-name": "sub-9962084_ses-NAPEN00_run-001_T1w_flirt.nii.gz",
+                                            "md5sum": "94e4da04b4867e9e8d0de5fdb80cfe72"
+                                        },
+                                        {
+                                            "file-name": "sub-9962084_ses-NAPEN00_run-001_T1w_to_sub-9962084_ses-NAPEN00_run-001_T1w.log",
+                                            "md5sum": "7debbc9506b49337396f52d6654fb83e"
+                                        },
+                                        {
+                                            "file-name": "sub-9962084_ses-NAPEN00_run-001_T1w_warpcoef.nii.gz",
+                                            "md5sum": "ed4daa5e0ccd84e789e310a84078e613"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "sub-9962084_ses-NAPEN00_scans.json",
+                                    "md5sum": "b806c2eb777b51dd5a351818a1399add"
+                                },
+                                {
+                                    "file-name": "sub-9962084_ses-NAPEN00_scans.tsv",
+                                    "md5sum": "d5259b2ac324e665a472afdf1f089bed"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "output_dir_name": "/home/mandana/CONP/pipelines/BIDS-App-Example/output/",
+        "analysis_level": "participant"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "mkdir -p /home/mandana/CONP/pipelines/BIDS-App-Example/output/; /run.py /home/mandana/CONP/conp-dataset/projects/preventad-open-bids/BIDS_dataset/ /home/mandana/CONP/pipelines/BIDS-App-Example/output/ participant",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "",
+                "files": []
+            }
+        }
+    },
+    "additional-information": null
+}

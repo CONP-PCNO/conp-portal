@@ -1,0 +1,54 @@
+{
+    "summary": {
+        "name": "fsl_fast",
+        "descriptor-doi": "10.5281/zenodo.1494308",
+        "date-time": "2021-02-17_09h51m46s543335ms"
+    },
+    "public-invocation": {
+        "output_basename": "fast",
+        "in_files": {
+            "file-name": "sub-032633_ses-010_run-1_T2w.nii.gz",
+            "md5sum": "3f386608e2b1e18c65fe517372299652"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fast -o fast /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-010/anat/sub-032633_ses-010_run-1_T2w.nii.gz; mkdir fast; mv fast_* fast",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "fast",
+                "files": [
+                    {
+                        "file-name": "fast_mixeltype.nii.gz",
+                        "md5sum": "5149ba698d4292e238642e633f1a3613"
+                    },
+                    {
+                        "file-name": "fast_pve_0.nii.gz",
+                        "md5sum": "36cccc7879bb511b4545712de80e821a"
+                    },
+                    {
+                        "file-name": "fast_pve_1.nii.gz",
+                        "md5sum": "8f208b831dc6a8997ab7a74bb86474de"
+                    },
+                    {
+                        "file-name": "fast_pve_2.nii.gz",
+                        "md5sum": "a28f7a1f6a5136e9a926cd81c4dc0588"
+                    },
+                    {
+                        "file-name": "fast_pveseg.nii.gz",
+                        "md5sum": "33c563308ba2a4e06202d50ee4ed8580"
+                    },
+                    {
+                        "file-name": "fast_seg.nii.gz",
+                        "md5sum": "55cc13adb1d100a0c327787bf638bb37"
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

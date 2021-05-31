@@ -1,0 +1,136 @@
+{
+    "summary": {
+        "name": "BIDS app example",
+        "descriptor-doi": "10.5281/zenodo.1451001",
+        "date-time": "2020-12-15_13h22m07s155462ms"
+    },
+    "public-invocation": {
+        "bids_dir": {
+            "file-name": "data_BIDS",
+            "files": [
+                {
+                    "file-name": "dataset_description.json",
+                    "md5sum": "d0e86d0d911d9cae0c45c882bedc1229"
+                },
+                {
+                    "file-name": "sub-032633",
+                    "files": [
+                        {
+                            "file-name": "ses-020",
+                            "files": [
+                                {
+                                    "file-name": "anat",
+                                    "files": [
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_FLAIR.json",
+                                            "md5sum": "3d720bac9d8bf08a61d74c034d53126f"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_FLAIR.nii.gz",
+                                            "md5sum": "89c3bdb78fa1505905b1e132b4fffbe7"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_PD.json",
+                                            "md5sum": "82bf88aefe31d979a7f0e24b63f0ffc0"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_PD.nii.gz",
+                                            "md5sum": "7d45cd8352bb313598521757c03b5d3c"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_T1w.json",
+                                            "md5sum": "113ecff83f1d1883c83a29847a016375"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_T1w.nii.gz",
+                                            "md5sum": "c6e23c21a6476f2f47a9210b9c6d0da1"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_T2star.json",
+                                            "md5sum": "3ee9d37a10563e6aff708a416cc9158e"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_T2star.nii.gz",
+                                            "md5sum": "daef9827f9ba82486e75be68771c446c"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_T2w.json",
+                                            "md5sum": "19f920666826b499242bf0b9f3b82e1f"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_T2w.nii.gz",
+                                            "md5sum": "94ef907e3b14f8c517047f090220da0b"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "dwi",
+                                    "files": [
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_dwi.bval",
+                                            "md5sum": "2a75fbc7f6067d08bf36b6509ae6a9b0"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_dwi.bvec",
+                                            "md5sum": "70ff0a03e5c80635421d6c29c88be711"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_dwi.json",
+                                            "md5sum": "090810cfa9708c13c87515d5332dcd23"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-020_run-1_dwi.nii.gz",
+                                            "md5sum": "1306a8a9bae777cd4d4b559d9bf10f76"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "func",
+                                    "files": [
+                                        {
+                                            "file-name": "sub-032633_ses-020_task-rest_run-1_bold.json",
+                                            "md5sum": "2a8408d765fd2985f942838764de2e69"
+                                        },
+                                        {
+                                            "file-name": "sub-032633_ses-020_task-rest_run-1_bold.nii.gz",
+                                            "md5sum": "82d015fb9b812c3fd27f4fdceab69747"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "results-bids-app-example",
+                            "files": []
+                        }
+                    ]
+                },
+                {
+                    "file-name": "results_pr",
+                    "md5sum": "0a3ccd6a6bd45f4bb2d05210d5b6277a"
+                },
+                {
+                    "file-name": "results-bids-app-example",
+                    "files": []
+                }
+            ]
+        },
+        "output_dir_name": "results-bids-app-example",
+        "analysis_level": "participant"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "mkdir -p results-bids-app-example; /run.py /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS results-bids-app-example participant",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "results-bids-app-example",
+                "files": []
+            }
+        }
+    },
+    "additional-information": null
+}

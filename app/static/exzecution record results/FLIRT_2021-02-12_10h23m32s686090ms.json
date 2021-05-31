@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FLIRT",
+        "descriptor-doi": "10.5281/zenodo.2597643",
+        "date-time": "2021-02-12_10h23m32s686090ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "preventad_1000173_NAPBL00_asl_001.mnc",
+            "md5sum": "d15646c2bd449644fc134f6ec71403d8"
+        },
+        "reference": {
+            "file-name": "preventad_1000173_NAPBL00_asl_001.mnc",
+            "md5sum": "d15646c2bd449644fc134f6ec71403d8"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 134,
+        "error-message": "",
+        "shell-command": "flirt -in /home/mandana/CONP/conp-dataset/projects/preventad-open/1000173/NAPBL00/images/preventad_1000173_NAPBL00_asl_001.mnc -ref /home/mandana/CONP/conp-dataset/projects/preventad-open/1000173/NAPBL00/images/preventad_1000173_NAPBL00_asl_001.mnc -out /home/mandana/CONP/conp-dataset/projects/preventad-open/1000173/NAPBL00/images/preventad_1000173_NAPBL00_asl_001.mnc_flirt -omat /home/mandana/CONP/conp-dataset/projects/preventad-open/1000173/NAPBL00/images/preventad_1000173_NAPBL00_asl_001.mnc_flirt.mat",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

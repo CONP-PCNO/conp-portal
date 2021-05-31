@@ -1,0 +1,135 @@
+{
+    "summary": {
+        "name": "FreeSurfer-Recon-all",
+        "descriptor-doi": "10.5281/zenodo.4043546",
+        "date-time": "2021-04-02_09h40m09s612562ms"
+    },
+    "public-invocation": {
+        "license": {
+            "file-name": "license.txt",
+            "md5sum": "f606798c4c204e59ee84e220a6d26426"
+        },
+        "subjid": "010",
+        "input": {
+            "file-name": "sub-010_ses-visit1_task-mv_bold.nii.gz",
+            "md5sum": "be19b03b99d1c628e2c607ec83e2db98"
+        },
+        "directives": "-all"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "Crashed",
+        "shell-command": "export SUBJECTS_DIR=`pwd`; export FS_LICENSE=`pwd`/license_FreeSurfer/license.txt; recon-all -subjid 010 -i conp-dataset/projects/openpain/subacute_longitudinal_study/sub-010/ses-visit1/func/sub-010_ses-visit1_task-mv_bold.nii.gz -all",
+        "missing-files": {},
+        "output-files": {
+            "subjid_output": {
+                "file-name": "010",
+                "files": [
+                    {
+                        "file-name": "scripts",
+                        "files": [
+                            {
+                                "file-name": "build-stamp.txt",
+                                "md5sum": "507407bea2674bd0417252556017bace"
+                            },
+                            {
+                                "file-name": "patchdir.txt",
+                                "md5sum": "68b329da9893e34099c7d8ad5cb9c940"
+                            },
+                            {
+                                "file-name": "lastcall.build-stamp.txt",
+                                "md5sum": "507407bea2674bd0417252556017bace"
+                            },
+                            {
+                                "file-name": "recon-config.yaml",
+                                "md5sum": "1409d719f9e768aebd20106fd9942180"
+                            },
+                            {
+                                "file-name": "unknown-args.txt",
+                                "md5sum": "54b775eb7590f17e0a831a92f62910c7"
+                            },
+                            {
+                                "file-name": "recon-all.cmd",
+                                "md5sum": "e5a5802364bc84b83badfac78f23f5e9"
+                            },
+                            {
+                                "file-name": "recon-all.env",
+                                "md5sum": "51149ea643481a368faa7fd2711aaebd"
+                            },
+                            {
+                                "file-name": "recon-all.log",
+                                "md5sum": "52c88541881bdba73f2a3a3c7805b5b0"
+                            },
+                            {
+                                "file-name": "recon-all-status.log",
+                                "md5sum": "eb3af7bdbd5e8adf0cea9f899e60f6ba"
+                            },
+                            {
+                                "file-name": "recon-all.local-copy",
+                                "md5sum": "1ca3508b301f82ad7abf6c21726184b9"
+                            },
+                            {
+                                "file-name": "recon-all.error",
+                                "md5sum": "dbe8da917d3d52d3e1daf2b490f1afa1"
+                            },
+                            {
+                                "file-name": "recon-all.done",
+                                "md5sum": "b026324c6904b2a9cb4b88d6d61c81d1"
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "mri",
+                        "files": [
+                            {
+                                "file-name": "transforms",
+                                "files": [
+                                    {
+                                        "file-name": "bak",
+                                        "files": []
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "orig",
+                                "files": [
+                                    {
+                                        "file-name": "001.mgz",
+                                        "md5sum": "917e8ad6ef3e057ccffcda558c37b73b"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "surf",
+                        "files": []
+                    },
+                    {
+                        "file-name": "tmp",
+                        "files": []
+                    },
+                    {
+                        "file-name": "label",
+                        "files": []
+                    },
+                    {
+                        "file-name": "touch",
+                        "files": []
+                    },
+                    {
+                        "file-name": "stats",
+                        "files": []
+                    },
+                    {
+                        "file-name": "trash",
+                        "files": []
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

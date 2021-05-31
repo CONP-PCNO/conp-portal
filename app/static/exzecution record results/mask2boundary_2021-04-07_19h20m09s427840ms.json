@@ -1,0 +1,31 @@
+{
+    "summary": {
+        "name": "mask2boundary",
+        "descriptor-doi": "10.5281/zenodo.2566443",
+        "date-time": "2021-04-07_19h20m09s427840ms"
+    },
+    "public-invocation": {
+        "mask": "/home/mandana/CONP/output_fsl_fast_SIMON_dwi/output_fsl_fast_SIMON_dwi_pve_2.nii.gz",
+        "output": "/home/mandana/CONP/output_mask2boundary/"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "python3 /opt/mask2boundary.py /home/mandana/CONP/output_fsl_fast_SIMON_dwi/output_fsl_fast_SIMON_dwi_pve_2.nii.gz /home/mandana/CONP/output_mask2boundary/ --width 3",
+        "missing-files": {},
+        "output-files": {
+            "mask_boundary": {
+                "file-name": "",
+                "files": [
+                    {
+                        "file-name": ".nii",
+                        "md5sum": "6fb57bcfcfc35819fe7b55ff4687b4c4"
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

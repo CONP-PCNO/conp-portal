@@ -1,0 +1,24 @@
+{
+    "summary": {
+        "name": "fsl_bet",
+        "descriptor-doi": "10.5281/zenodo.1482743",
+        "date-time": "2021-02-11_10h42m03s341245ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "phantom_397552_SLC_20150814_bold_001.mnc",
+            "not_found": true
+        },
+        "maskfile": "mask.nii.gz"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "bet /home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_397552_SLC_20150814_bold_001.mnc mask.nii.gz",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

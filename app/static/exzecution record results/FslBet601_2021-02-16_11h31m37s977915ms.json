@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "FslBet601",
+        "descriptor-doi": "10.5281/zenodo.3267250",
+        "date-time": "2021-02-16_11h31m37s977915ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "sub_10_control_site_2_T1w.nii.gz",
+            "md5sum": "c3f1f1e07de28fc1d22bcdd1f69190fe"
+        },
+        "maskfile": "mask-3"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "bet /home/mandana/CONP/conp-dataset/projects/openpain/BrainNetworkChange_Mano/sub_10_control_site_2/anat/sub_10_control_site_2_T1w.nii.gz mask-3",
+        "missing-files": {},
+        "output-files": {
+            "outfile": {
+                "file-name": "mask-3.nii.gz",
+                "md5sum": "341a4bcde787686a6f91ce8f1cdead5d"
+            }
+        }
+    },
+    "additional-information": null
+}

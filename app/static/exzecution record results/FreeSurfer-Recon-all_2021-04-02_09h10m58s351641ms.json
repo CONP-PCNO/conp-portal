@@ -1,0 +1,1423 @@
+{
+    "summary": {
+        "name": "FreeSurfer-Recon-all",
+        "descriptor-doi": "10.5281/zenodo.4043546",
+        "date-time": "2021-04-02_09h10m58s351641ms"
+    },
+    "public-invocation": {
+        "license": {
+            "file-name": "license.txt",
+            "md5sum": "f606798c4c204e59ee84e220a6d26426"
+        },
+        "subjid": "01",
+        "input": {
+            "file-name": "sub-01_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+            "md5sum": "6bea645cb589b33c2b4f54bb5831aba1"
+        },
+        "directives": "-all"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "Crashed",
+        "shell-command": "export SUBJECTS_DIR=`pwd`; export FS_LICENSE=`pwd`/license_FreeSurfer/license.txt; recon-all -subjid 01 -i conp-dataset/projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset/sub-01_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz -all",
+        "missing-files": {},
+        "output-files": {
+            "subjid_output": {
+                "file-name": "01",
+                "files": [
+                    {
+                        "file-name": "scripts",
+                        "files": [
+                            {
+                                "file-name": "build-stamp.txt",
+                                "md5sum": "507407bea2674bd0417252556017bace"
+                            },
+                            {
+                                "file-name": "patchdir.txt",
+                                "md5sum": "68b329da9893e34099c7d8ad5cb9c940"
+                            },
+                            {
+                                "file-name": "lastcall.build-stamp.txt",
+                                "md5sum": "507407bea2674bd0417252556017bace"
+                            },
+                            {
+                                "file-name": "recon-config.yaml",
+                                "md5sum": "1409d719f9e768aebd20106fd9942180"
+                            },
+                            {
+                                "file-name": "unknown-args.txt",
+                                "md5sum": "4bcd3abf164969e1af0a01887ba863e0"
+                            },
+                            {
+                                "file-name": "recon-all.cmd",
+                                "md5sum": "70b449adbda99a69f83b6a366932770d"
+                            },
+                            {
+                                "file-name": "recon-all.env",
+                                "md5sum": "e6ad6e161828f3a8de879ef9a0f0a1ad"
+                            },
+                            {
+                                "file-name": "recon-all.log",
+                                "md5sum": "8785bb5bd46f6b4fc54f310194fa4554"
+                            },
+                            {
+                                "file-name": "recon-all-status.log",
+                                "md5sum": "593649b8fe71916d4b124fdba263453d"
+                            },
+                            {
+                                "file-name": "recon-all.local-copy",
+                                "md5sum": "1ca3508b301f82ad7abf6c21726184b9"
+                            },
+                            {
+                                "file-name": "ponscc.cut.log",
+                                "md5sum": "7f30b0c0951e884773631e696fc02bdd"
+                            },
+                            {
+                                "file-name": "defect2seg.log",
+                                "md5sum": "11687d0af45ac039fd94678f291cc891"
+                            },
+                            {
+                                "file-name": "pctsurfcon.log.old",
+                                "md5sum": "cf7dc2ee44854b61201649ea2ef9054f"
+                            },
+                            {
+                                "file-name": "pctsurfcon.log",
+                                "md5sum": "2b30c931b0b2640dd41d3da0cd0b99b5"
+                            },
+                            {
+                                "file-name": "recon-all.done",
+                                "md5sum": "4e17c1fc9ad6cbf7a93c589ae03330e9"
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "mri",
+                        "files": [
+                            {
+                                "file-name": "transforms",
+                                "files": [
+                                    {
+                                        "file-name": "bak",
+                                        "files": []
+                                    },
+                                    {
+                                        "file-name": "talairach_avi.log",
+                                        "md5sum": "f4b5e3d80acb83e0043321dd3c299d50"
+                                    },
+                                    {
+                                        "file-name": "talairach.auto.xfm",
+                                        "md5sum": "92b26e9e31c0c6a7576d4cea6798198d"
+                                    },
+                                    {
+                                        "file-name": "talsrcimg_to_711-2C_as_mni_average_305_t4_vox2vox.txt",
+                                        "md5sum": "88c1d147f9a787f621d30e6f139a6740"
+                                    },
+                                    {
+                                        "file-name": "talairach.auto.xfm.lta",
+                                        "md5sum": "5b83731897abd52e698e9094ea45b269"
+                                    },
+                                    {
+                                        "file-name": "talairach.xfm",
+                                        "md5sum": "92b26e9e31c0c6a7576d4cea6798198d"
+                                    },
+                                    {
+                                        "file-name": "talairach.xfm.lta",
+                                        "md5sum": "b38c269d0ff8f5f42f07fda009b61f3a"
+                                    },
+                                    {
+                                        "file-name": "talairach_avi_QA.log",
+                                        "md5sum": "074c3e5628c561998d4978d45ccf2324"
+                                    },
+                                    {
+                                        "file-name": "talairach_with_skull.lta",
+                                        "md5sum": "1b8e44617648d0d2ff0b696f1083c9e6"
+                                    },
+                                    {
+                                        "file-name": "talairach.lta",
+                                        "md5sum": "02c40b38414dbb1e0dcb08236b66933b"
+                                    },
+                                    {
+                                        "file-name": "talairach.m3z",
+                                        "md5sum": "19687ef2f11a09bafa3f5da3ee33b644"
+                                    },
+                                    {
+                                        "file-name": "cc_up.lta",
+                                        "md5sum": "1f7ef4c6ffaf0a56e6fff3485381899a"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "orig",
+                                "files": [
+                                    {
+                                        "file-name": "001.mgz",
+                                        "md5sum": "0fc3565d1f114d659d2ff238c174f1cd"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "rawavg.mgz",
+                                "md5sum": "0fc3565d1f114d659d2ff238c174f1cd"
+                            },
+                            {
+                                "file-name": "orig.mgz",
+                                "md5sum": "cfbf72f843eddc6a24f03413c0331dde"
+                            },
+                            {
+                                "file-name": "orig_nu.mgz",
+                                "md5sum": "9ff3823131220b17959018ef6ac27944"
+                            },
+                            {
+                                "file-name": "mri_nu_correct.mni.log.bak",
+                                "md5sum": "5bc5f87cbc86a37ba41424307d1639ef"
+                            },
+                            {
+                                "file-name": "mri_nu_correct.mni.log",
+                                "md5sum": "146afb828e0ff917dd27c32ede75e70e"
+                            },
+                            {
+                                "file-name": "nu.mgz",
+                                "md5sum": "08c03c4dd602146df3b4cb2d565b2ff0"
+                            },
+                            {
+                                "file-name": "T1.mgz",
+                                "md5sum": "51f7ddd2c54dfaba6f94a046879e8372"
+                            },
+                            {
+                                "file-name": "talairach_with_skull.log",
+                                "md5sum": "9d7f25a2e756f9c9060f781f3887d33d"
+                            },
+                            {
+                                "file-name": "brainmask.auto.mgz",
+                                "md5sum": "27b5dcf507e8fb4205063d2f9b374604"
+                            },
+                            {
+                                "file-name": "brainmask.mgz",
+                                "md5sum": "27b5dcf507e8fb4205063d2f9b374604"
+                            },
+                            {
+                                "file-name": "talairach.log",
+                                "md5sum": "9d7f25a2e756f9c9060f781f3887d33d"
+                            },
+                            {
+                                "file-name": "norm.mgz",
+                                "md5sum": "1015d17614e0cfadcdd5c21de3b245e3"
+                            },
+                            {
+                                "file-name": "ctrl_pts.mgz",
+                                "md5sum": "c648c160848ae75fd68b6bc8f84cc402"
+                            },
+                            {
+                                "file-name": "talairach.label_intensities.txt",
+                                "md5sum": "951d0f54366662e52c2b5949a430a7bd"
+                            },
+                            {
+                                "file-name": "aseg.auto_noCCseg.label_intensities.txt",
+                                "md5sum": "7386083035c9edd0de3aae7b461dbaf5"
+                            },
+                            {
+                                "file-name": "aseg.auto_noCCseg.mgz",
+                                "md5sum": "91351bfcb619d16f5c3dce1c4eccce87"
+                            },
+                            {
+                                "file-name": "aseg.auto.mgz",
+                                "md5sum": "f8e496c4563dfafd8ec19334d1fb96e3"
+                            },
+                            {
+                                "file-name": "aseg.presurf.mgz",
+                                "md5sum": "f8e496c4563dfafd8ec19334d1fb96e3"
+                            },
+                            {
+                                "file-name": "brain.mgz",
+                                "md5sum": "c78f6fbed23aaa0772fc9fdf54445662"
+                            },
+                            {
+                                "file-name": "brain.finalsurfs.mgz",
+                                "md5sum": "5a60697c423ccbcacfeee7a7172053e4"
+                            },
+                            {
+                                "file-name": "antsdn.brain.mgz",
+                                "md5sum": "b5200300b49945920e78167c9018ee12"
+                            },
+                            {
+                                "file-name": "segment.dat",
+                                "md5sum": "a642500e157f7d93df61b647a402dc83"
+                            },
+                            {
+                                "file-name": "wm.seg.mgz",
+                                "md5sum": "49bce6a7526d6a6102ba6393779c57da"
+                            },
+                            {
+                                "file-name": "wm.asegedit.mgz",
+                                "md5sum": "e17d212619b9faf84edc3fc9ee2140fd"
+                            },
+                            {
+                                "file-name": "wm.mgz",
+                                "md5sum": "a5d53041f7d36272c0c8af4be0e08d81"
+                            },
+                            {
+                                "file-name": "filled.mgz",
+                                "md5sum": "78c887778eecc955a4041b5a2d68ecda"
+                            },
+                            {
+                                "file-name": "surface.defects.mgz",
+                                "md5sum": "1bdf3a1bb43c6e012eb6982062a06e90"
+                            },
+                            {
+                                "file-name": "ribbon.mgz",
+                                "md5sum": "89ea41faadfab2255c48f6a22a95bc6c"
+                            },
+                            {
+                                "file-name": "lh.ribbon.mgz",
+                                "md5sum": "08f9f80fd5a08d8698b086ac90d0caf0"
+                            },
+                            {
+                                "file-name": "rh.ribbon.mgz",
+                                "md5sum": "a89b104750dc9982168990c5d8b2bf02"
+                            },
+                            {
+                                "file-name": "aseg.presurf.hypos.mgz",
+                                "md5sum": "5507ada00789367e2078b6c1ace35fd8"
+                            },
+                            {
+                                "file-name": "aseg.mgz",
+                                "md5sum": "89c3c3610425c6c90f074e64451a40d2"
+                            },
+                            {
+                                "file-name": "aparc+aseg.mgz",
+                                "md5sum": "a64a8ad556dceae9d93adb94528715aa"
+                            },
+                            {
+                                "file-name": "aparc.a2009s+aseg.mgz",
+                                "md5sum": "51faac8f3281666fb715c5fa1396ded1"
+                            },
+                            {
+                                "file-name": "aparc.DKTatlas+aseg.mgz",
+                                "md5sum": "4f14ccab5abee6eb98709d55d7abfb5f"
+                            },
+                            {
+                                "file-name": "wmparc.mgz",
+                                "md5sum": "9d53025a1df51f8dc9d750725f05e7ca"
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "surf",
+                        "files": [
+                            {
+                                "file-name": "lh.orig.nofix",
+                                "md5sum": "349c1f9ea32ad8124af8d00e48984158"
+                            },
+                            {
+                                "file-name": "rh.orig.nofix",
+                                "md5sum": "391039b76ab9ab313c2f96056ab940d4"
+                            },
+                            {
+                                "file-name": "lh.smoothwm.nofix",
+                                "md5sum": "4027ac5ddadf377619acfa681188c10f"
+                            },
+                            {
+                                "file-name": "rh.smoothwm.nofix",
+                                "md5sum": "ed878edb4d2a601ec443e1f4f2634ca3"
+                            },
+                            {
+                                "file-name": "lh.inflated.nofix",
+                                "md5sum": "0fff09193f7720d49fb9ced893b1dc29"
+                            },
+                            {
+                                "file-name": "rh.inflated.nofix",
+                                "md5sum": "8644236a391fc88a8be6ff5b4605d682"
+                            },
+                            {
+                                "file-name": "lh.qsphere.nofix",
+                                "md5sum": "6f5e76a562a1ba9d33be62a77433dd7a"
+                            },
+                            {
+                                "file-name": "rh.qsphere.nofix",
+                                "md5sum": "2d722bfcd0dc0606c1eb16a4d0d3f427"
+                            },
+                            {
+                                "file-name": "lh.defect_labels",
+                                "md5sum": "e69fea479fe7404af234f8dd0c20d2d3"
+                            },
+                            {
+                                "file-name": "lh.defect_borders",
+                                "md5sum": "4c7d10752d50783091e90a5f2fe72671"
+                            },
+                            {
+                                "file-name": "lh.defect_chull",
+                                "md5sum": "dd6bcee025385a15460400144bb43be2"
+                            },
+                            {
+                                "file-name": "lh.orig.premesh",
+                                "md5sum": "3cf384dc186e70a73632ab2ca68e616b"
+                            },
+                            {
+                                "file-name": "rh.defect_labels",
+                                "md5sum": "0e132f3f16e39432a32a255791601ebb"
+                            },
+                            {
+                                "file-name": "rh.defect_borders",
+                                "md5sum": "d9fd49501b66c83ed3b74c1eafe66ddc"
+                            },
+                            {
+                                "file-name": "rh.defect_chull",
+                                "md5sum": "7d3c3889a09f50c8261b2d66dd6e9a42"
+                            },
+                            {
+                                "file-name": "rh.orig.premesh",
+                                "md5sum": "177b56c4619980ac0ac0df328edee7cc"
+                            },
+                            {
+                                "file-name": "lh.defects.pointset",
+                                "md5sum": "ce3f49c7e970ed45b32d04418efddfe1"
+                            },
+                            {
+                                "file-name": "rh.defects.pointset",
+                                "md5sum": "f85c6c9c02dc702404840dc1de140951"
+                            },
+                            {
+                                "file-name": "lh.orig",
+                                "md5sum": "47f5cd67e2483d75d928425796626adf"
+                            },
+                            {
+                                "file-name": "rh.orig",
+                                "md5sum": "09b9b3873eb2c1086ff70bf3bf195858"
+                            },
+                            {
+                                "file-name": "autodet.gw.stats.lh.dat",
+                                "md5sum": "687ea270f805f59c501083efcc7156f5"
+                            },
+                            {
+                                "file-name": "autodet.gw.stats.rh.dat",
+                                "md5sum": "bee203291fad5eef167613e72e6e6c83"
+                            },
+                            {
+                                "file-name": "lh.white.preaparc",
+                                "md5sum": "1ef1cc355564f45302fb4016a8f777dc"
+                            },
+                            {
+                                "file-name": "rh.white.preaparc",
+                                "md5sum": "5835ccf25e63bf803e06681c9b89bf8d"
+                            },
+                            {
+                                "file-name": "lh.smoothwm",
+                                "md5sum": "e599094e4c58fd0d3f4e6791708c1cf3"
+                            },
+                            {
+                                "file-name": "rh.smoothwm",
+                                "md5sum": "847ae22003abbdbd5f5a4e1126fdf81b"
+                            },
+                            {
+                                "file-name": "lh.inflated",
+                                "md5sum": "9a953a0948c93fb6c9fd6d1a6c06035b"
+                            },
+                            {
+                                "file-name": "lh.sulc",
+                                "md5sum": "3884fea583e784b80e2733dfbad6a04f"
+                            },
+                            {
+                                "file-name": "rh.inflated",
+                                "md5sum": "b4a32e2d7d5eacc66a3301f5244f29c4"
+                            },
+                            {
+                                "file-name": "rh.sulc",
+                                "md5sum": "1c34944592668d1de3663ee136dbde0f"
+                            },
+                            {
+                                "file-name": "lh.white.preaparc.K",
+                                "md5sum": "a9b72838f17c84894c04399f5780fee8"
+                            },
+                            {
+                                "file-name": "lh.white.preaparc.H",
+                                "md5sum": "4bbb691a6d327968aa7a976948a75803"
+                            },
+                            {
+                                "file-name": "lh.white.H",
+                                "md5sum": "4bbb691a6d327968aa7a976948a75803"
+                            },
+                            {
+                                "file-name": "lh.white.K",
+                                "md5sum": "a9b72838f17c84894c04399f5780fee8"
+                            },
+                            {
+                                "file-name": "lh.inflated.K",
+                                "md5sum": "bf8f6f9b7c62a09f8629a1c1f77dfeba"
+                            },
+                            {
+                                "file-name": "lh.inflated.H",
+                                "md5sum": "e2fe3cf1ca062e8218ffd65af1d0c45d"
+                            },
+                            {
+                                "file-name": "rh.white.preaparc.K",
+                                "md5sum": "bd265f287263a6077c1fbc21c08228ec"
+                            },
+                            {
+                                "file-name": "rh.white.preaparc.H",
+                                "md5sum": "42bd86f41dd0708615d4be720bd2720e"
+                            },
+                            {
+                                "file-name": "rh.white.H",
+                                "md5sum": "42bd86f41dd0708615d4be720bd2720e"
+                            },
+                            {
+                                "file-name": "rh.white.K",
+                                "md5sum": "bd265f287263a6077c1fbc21c08228ec"
+                            },
+                            {
+                                "file-name": "rh.inflated.K",
+                                "md5sum": "43f670c2d51641a21579461f96015a93"
+                            },
+                            {
+                                "file-name": "rh.inflated.H",
+                                "md5sum": "60c6def71262549d0c9f5bb7d76c0a14"
+                            },
+                            {
+                                "file-name": "lh.sphere",
+                                "md5sum": "d2c80fb9b5135200c28bba296d8087d0"
+                            },
+                            {
+                                "file-name": "rh.sphere",
+                                "md5sum": "6868fd5c8cf33622e57993add469da5f"
+                            },
+                            {
+                                "file-name": "lh.sphere.reg",
+                                "md5sum": "b60613b73e11ffd77c1709c541870123"
+                            },
+                            {
+                                "file-name": "lh.fsaverage.sphere.reg",
+                                "md5sum": "b60613b73e11ffd77c1709c541870123"
+                            },
+                            {
+                                "file-name": "rh.sphere.reg",
+                                "md5sum": "e454cfae1ced34bb7702c4c167bfec66"
+                            },
+                            {
+                                "file-name": "rh.fsaverage.sphere.reg",
+                                "md5sum": "e454cfae1ced34bb7702c4c167bfec66"
+                            },
+                            {
+                                "file-name": "lh.jacobian_white",
+                                "md5sum": "9eed70e15228f9488d9429d770c53a33"
+                            },
+                            {
+                                "file-name": "rh.jacobian_white",
+                                "md5sum": "5523b21f8bd5254430594763c4cbb7f9"
+                            },
+                            {
+                                "file-name": "lh.avg_curv",
+                                "md5sum": "1880251b811f1aedc3ca4c69ae148bb3"
+                            },
+                            {
+                                "file-name": "rh.avg_curv",
+                                "md5sum": "1f37b1b38d27f679c0aebd5f6bf22196"
+                            },
+                            {
+                                "file-name": "lh.white",
+                                "md5sum": "4d939b44075877230b4d3656509f1347"
+                            },
+                            {
+                                "file-name": "rh.white",
+                                "md5sum": "56c72cb28d0a1c0ff545ea95e236dafe"
+                            },
+                            {
+                                "file-name": "lh.pial.T1",
+                                "md5sum": "05d830f453f0df1a34c759366ab0d91f"
+                            },
+                            {
+                                "file-name": "lh.pial",
+                                "md5sum": "05d830f453f0df1a34c759366ab0d91f"
+                            },
+                            {
+                                "file-name": "rh.pial.T1",
+                                "md5sum": "c55b53c4c601d82a7c380754f781b09d"
+                            },
+                            {
+                                "file-name": "rh.pial",
+                                "md5sum": "c55b53c4c601d82a7c380754f781b09d"
+                            },
+                            {
+                                "file-name": "lh.curv",
+                                "md5sum": "f5ff272b16258c0adea52fc036011471"
+                            },
+                            {
+                                "file-name": "lh.area",
+                                "md5sum": "6883d69f44f9019c5b6e2a80bc88884e"
+                            },
+                            {
+                                "file-name": "lh.curv.pial",
+                                "md5sum": "cd6b409a53641cd5640e30dc15152bc9"
+                            },
+                            {
+                                "file-name": "lh.area.pial",
+                                "md5sum": "7f2b2fcfa9730797ac7fd4ad8e299090"
+                            },
+                            {
+                                "file-name": "lh.thickness",
+                                "md5sum": "404e9fcc7b84855d97b248950b6183ed"
+                            },
+                            {
+                                "file-name": "lh.area.mid",
+                                "md5sum": "8e0bcf160970ab04c08b520d0e61dfcb"
+                            },
+                            {
+                                "file-name": "lh.volume",
+                                "md5sum": "759b42d88e8b5a856b1c4897db616fea"
+                            },
+                            {
+                                "file-name": "rh.curv",
+                                "md5sum": "0d6cd64c7bdd121439eb48eeeec8dcac"
+                            },
+                            {
+                                "file-name": "rh.area",
+                                "md5sum": "cb127b6e6cee53e6f013f80e81693461"
+                            },
+                            {
+                                "file-name": "rh.curv.pial",
+                                "md5sum": "41ef2cb84c1e4d08d801c36dfee7afa4"
+                            },
+                            {
+                                "file-name": "rh.area.pial",
+                                "md5sum": "6397418ddc8e3b44685e3ee21ee1f893"
+                            },
+                            {
+                                "file-name": "rh.thickness",
+                                "md5sum": "b04c047b123bcd1ec64e79d11885b6e9"
+                            },
+                            {
+                                "file-name": "rh.area.mid",
+                                "md5sum": "4581828a511afba1704943dd1366445b"
+                            },
+                            {
+                                "file-name": "rh.volume",
+                                "md5sum": "b3b63298214d156560e64d366f0f5ae0"
+                            },
+                            {
+                                "file-name": "lh.smoothwm.K.crv",
+                                "md5sum": "e98b1cd217f5a290831b379a265d1983"
+                            },
+                            {
+                                "file-name": "lh.smoothwm.H.crv",
+                                "md5sum": "7e275609fbd8567fb3a74170aa028a51"
+                            },
+                            {
+                                "file-name": "lh.smoothwm.K1.crv",
+                                "md5sum": "28cbbca46f0d87ce006785d047dfa966"
+                            },
+                            {
+                                "file-name": "lh.smoothwm.K2.crv",
+                                "md5sum": "36179c9f9b748cda449d38a834e7e534"
+                            },
+                            {
+                                "file-name": "lh.smoothwm.S.crv",
+                                "md5sum": "fc1b429bd7876f6fd044e2abe2deb17e"
+                            },
+                            {
+                                "file-name": "lh.smoothwm.C.crv",
+                                "md5sum": "cd8ee79cb0c60dccc7af07b25dc14ac3"
+                            },
+                            {
+                                "file-name": "lh.smoothwm.BE.crv",
+                                "md5sum": "c6b477f3a6ddbc97b9b805a57b00e828"
+                            },
+                            {
+                                "file-name": "lh.smoothwm.FI.crv",
+                                "md5sum": "fbe0b786d637f77f30e0aad297f97e2e"
+                            },
+                            {
+                                "file-name": "rh.smoothwm.K.crv",
+                                "md5sum": "3874a67f810597ba1c9f4f1da46d7369"
+                            },
+                            {
+                                "file-name": "rh.smoothwm.H.crv",
+                                "md5sum": "8c276055ca1e29a428ff94354e8bc658"
+                            },
+                            {
+                                "file-name": "rh.smoothwm.K1.crv",
+                                "md5sum": "7a7c817b110e911c5e4f04c9603075a2"
+                            },
+                            {
+                                "file-name": "rh.smoothwm.K2.crv",
+                                "md5sum": "33236cf0e5e365b264b447f345824373"
+                            },
+                            {
+                                "file-name": "rh.smoothwm.S.crv",
+                                "md5sum": "266bc050d42614e0628e91f8345337d1"
+                            },
+                            {
+                                "file-name": "rh.smoothwm.C.crv",
+                                "md5sum": "809531f63b425e8011343e1cdd98c303"
+                            },
+                            {
+                                "file-name": "rh.smoothwm.BE.crv",
+                                "md5sum": "0d0689d53dddd0d13fe1b2d1dd754004"
+                            },
+                            {
+                                "file-name": "rh.smoothwm.FI.crv",
+                                "md5sum": "4d8410dd9ee76bdba04c00f92e32e176"
+                            },
+                            {
+                                "file-name": "lh.w-g.pct.mgh",
+                                "md5sum": "15c752454b76dbfdf3f16a0730519272"
+                            },
+                            {
+                                "file-name": "rh.w-g.pct.mgh",
+                                "md5sum": "7149da8c1f89cb4d47387c3051dba970"
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "tmp",
+                        "files": []
+                    },
+                    {
+                        "file-name": "label",
+                        "files": [
+                            {
+                                "file-name": "lh.cortex.label",
+                                "md5sum": "545ba3b6f2fe0d968a35b0bea3ecc030"
+                            },
+                            {
+                                "file-name": "lh.cortex+hipamyg.label",
+                                "md5sum": "73e4a6848a77a80da0e11730a4c26f9f"
+                            },
+                            {
+                                "file-name": "rh.cortex.label",
+                                "md5sum": "91e3b2f9ea988188264c5a4cbb587a78"
+                            },
+                            {
+                                "file-name": "rh.cortex+hipamyg.label",
+                                "md5sum": "a45edb9ed802015865530ac39f05cd0c"
+                            },
+                            {
+                                "file-name": "lh.aparc.annot",
+                                "md5sum": "32ce2975b5562bad25dcb6a424486e88"
+                            },
+                            {
+                                "file-name": "rh.aparc.annot",
+                                "md5sum": "66f92c14e75e79a0603bb4329913fe21"
+                            },
+                            {
+                                "file-name": "lh.aparc.a2009s.annot",
+                                "md5sum": "248913fcd81fb1168be14f04583aee6f"
+                            },
+                            {
+                                "file-name": "rh.aparc.a2009s.annot",
+                                "md5sum": "1b443ea3f2a4a98ffdea20339064717c"
+                            },
+                            {
+                                "file-name": "lh.aparc.DKTatlas.annot",
+                                "md5sum": "2a7e2514e8537ae251134eff0b694fba"
+                            },
+                            {
+                                "file-name": "rh.aparc.DKTatlas.annot",
+                                "md5sum": "850247ccb72618951e458318055f5da0"
+                            },
+                            {
+                                "file-name": "aparc.annot.ctab",
+                                "md5sum": "757e7e27742ae27d720f8fc37fbdaf36"
+                            },
+                            {
+                                "file-name": "aparc.annot.a2009s.ctab",
+                                "md5sum": "cf32a567746bf18e8b52c323dc152570"
+                            },
+                            {
+                                "file-name": "aparc.annot.DKTatlas.ctab",
+                                "md5sum": "757e7e27742ae27d720f8fc37fbdaf36"
+                            },
+                            {
+                                "file-name": "lh.BA1_exvivo.label",
+                                "md5sum": "b159e4415b9794fdbec3d82a2f58becc"
+                            },
+                            {
+                                "file-name": "lh.BA2_exvivo.label",
+                                "md5sum": "4911e565349e88215ea70764cc9f6f12"
+                            },
+                            {
+                                "file-name": "lh.BA3a_exvivo.label",
+                                "md5sum": "ef8717c4e23e22cf572bb63507662f5f"
+                            },
+                            {
+                                "file-name": "lh.BA3b_exvivo.label",
+                                "md5sum": "065080e80f77aab194ad7db5b297a173"
+                            },
+                            {
+                                "file-name": "lh.BA4a_exvivo.label",
+                                "md5sum": "00cdf637233b1698f364bb7c8897b7f1"
+                            },
+                            {
+                                "file-name": "lh.BA4p_exvivo.label",
+                                "md5sum": "ed18de6ec8f9031a2d7243efbd2c4d36"
+                            },
+                            {
+                                "file-name": "lh.BA6_exvivo.label",
+                                "md5sum": "0c04b29427e5a1e358b4be3f7a77ddfb"
+                            },
+                            {
+                                "file-name": "lh.BA44_exvivo.label",
+                                "md5sum": "50a1e7d0ccd92c248ba534fb3ad97994"
+                            },
+                            {
+                                "file-name": "lh.BA45_exvivo.label",
+                                "md5sum": "192ee32e4e1c98c43be298b4bae8032a"
+                            },
+                            {
+                                "file-name": "lh.V1_exvivo.label",
+                                "md5sum": "ce30d3a4be71e6894468f11756021eeb"
+                            },
+                            {
+                                "file-name": "lh.V2_exvivo.label",
+                                "md5sum": "db607120699d42c12c88fae62b26de84"
+                            },
+                            {
+                                "file-name": "lh.MT_exvivo.label",
+                                "md5sum": "aa800a42442e7279bf7f6b65b22f9e5d"
+                            },
+                            {
+                                "file-name": "lh.entorhinal_exvivo.label",
+                                "md5sum": "4371b332ff05d07d67581833af9eb6ab"
+                            },
+                            {
+                                "file-name": "lh.perirhinal_exvivo.label",
+                                "md5sum": "df74b42b7eb485d781e03242580b157f"
+                            },
+                            {
+                                "file-name": "lh.FG1.mpm.vpnl.label",
+                                "md5sum": "786f8c917008e31ee1fe649dab849a66"
+                            },
+                            {
+                                "file-name": "lh.FG2.mpm.vpnl.label",
+                                "md5sum": "1cfbad91200a202a30424f6c7d968e6e"
+                            },
+                            {
+                                "file-name": "lh.FG3.mpm.vpnl.label",
+                                "md5sum": "4aea0f65ce79ceb668712ff2cc3bf245"
+                            },
+                            {
+                                "file-name": "lh.FG4.mpm.vpnl.label",
+                                "md5sum": "a805487c97a3b06142320aac564a67f2"
+                            },
+                            {
+                                "file-name": "lh.hOc1.mpm.vpnl.label",
+                                "md5sum": "9b10b5b7789ba850a6e9ab340dbd67e1"
+                            },
+                            {
+                                "file-name": "lh.hOc2.mpm.vpnl.label",
+                                "md5sum": "30ef839e36d102d07d3a361309922da4"
+                            },
+                            {
+                                "file-name": "lh.hOc3v.mpm.vpnl.label",
+                                "md5sum": "1f397963c3d1eba5720c9259ebde13cc"
+                            },
+                            {
+                                "file-name": "lh.hOc4v.mpm.vpnl.label",
+                                "md5sum": "9ce216d6dccd5d5ab397058587e90e52"
+                            },
+                            {
+                                "file-name": "lh.mpm.vpnl.annot",
+                                "md5sum": "bb94a261dd3641c52eb62f678845d179"
+                            },
+                            {
+                                "file-name": "lh.BA1_exvivo.thresh.label",
+                                "md5sum": "2bc1d8981f948beeccc47c6c847d353d"
+                            },
+                            {
+                                "file-name": "lh.BA2_exvivo.thresh.label",
+                                "md5sum": "afdd6112a326ff805b7fc4700e4c6792"
+                            },
+                            {
+                                "file-name": "lh.BA3a_exvivo.thresh.label",
+                                "md5sum": "c35dc4fbf040603e8a88ed247d294b60"
+                            },
+                            {
+                                "file-name": "lh.BA3b_exvivo.thresh.label",
+                                "md5sum": "a64ce2c430fe3c5ba802b12135991881"
+                            },
+                            {
+                                "file-name": "lh.BA4a_exvivo.thresh.label",
+                                "md5sum": "3585cc4facd1c263ae18aa66f477508a"
+                            },
+                            {
+                                "file-name": "lh.BA4p_exvivo.thresh.label",
+                                "md5sum": "b6628afa307191a7ac6ffcd9d931935e"
+                            },
+                            {
+                                "file-name": "lh.BA6_exvivo.thresh.label",
+                                "md5sum": "76cd389a2a264fd0bc1f30cdefc75a03"
+                            },
+                            {
+                                "file-name": "lh.BA44_exvivo.thresh.label",
+                                "md5sum": "bc55f6f10285f48f32a844bd08d739b6"
+                            },
+                            {
+                                "file-name": "lh.BA45_exvivo.thresh.label",
+                                "md5sum": "92b39ee8a53a9c86e78bdbb2ef1a2d4b"
+                            },
+                            {
+                                "file-name": "lh.V1_exvivo.thresh.label",
+                                "md5sum": "80a3bb6a89b8bb2a03c74ffd298483b6"
+                            },
+                            {
+                                "file-name": "lh.V2_exvivo.thresh.label",
+                                "md5sum": "4858dac44e7bfff1eda1511b964a5060"
+                            },
+                            {
+                                "file-name": "lh.MT_exvivo.thresh.label",
+                                "md5sum": "3fdec49502ec0209be6c5020f1f863dc"
+                            },
+                            {
+                                "file-name": "lh.entorhinal_exvivo.thresh.label",
+                                "md5sum": "d1c6398156ae23daeb1a396b627644af"
+                            },
+                            {
+                                "file-name": "lh.perirhinal_exvivo.thresh.label",
+                                "md5sum": "d7481ab1d5e229c76fb9b502b4ad1971"
+                            },
+                            {
+                                "file-name": "lh.BA_exvivo.annot",
+                                "md5sum": "80dcf0f5f20a4076dee8ae4722126358"
+                            },
+                            {
+                                "file-name": "lh.BA_exvivo.thresh.annot",
+                                "md5sum": "a58727d079e53ea9bfb9912fe1a0a682"
+                            },
+                            {
+                                "file-name": "BA_exvivo.ctab",
+                                "md5sum": "f27e92c69d630519d63cd36b8fbabe95"
+                            },
+                            {
+                                "file-name": "BA_exvivo.thresh.ctab",
+                                "md5sum": "f27e92c69d630519d63cd36b8fbabe95"
+                            },
+                            {
+                                "file-name": "rh.BA1_exvivo.label",
+                                "md5sum": "a3d1390d388637ed628e2f7d095e6510"
+                            },
+                            {
+                                "file-name": "rh.BA2_exvivo.label",
+                                "md5sum": "4f259db6a860c70dd2cc5ca525ec9c3f"
+                            },
+                            {
+                                "file-name": "rh.BA3a_exvivo.label",
+                                "md5sum": "1f20537d5496aa4697352d53b224b07c"
+                            },
+                            {
+                                "file-name": "rh.BA3b_exvivo.label",
+                                "md5sum": "e51a56eb120618dffe0226293a6d13ab"
+                            },
+                            {
+                                "file-name": "rh.BA4a_exvivo.label",
+                                "md5sum": "94141b4470197071033a4d160837e26f"
+                            },
+                            {
+                                "file-name": "rh.BA4p_exvivo.label",
+                                "md5sum": "89a821e776e24eb05ff88c50d4d561e9"
+                            },
+                            {
+                                "file-name": "rh.BA6_exvivo.label",
+                                "md5sum": "72ce41a58baaa6ec784a1684596c351c"
+                            },
+                            {
+                                "file-name": "rh.BA44_exvivo.label",
+                                "md5sum": "7cbdacf5ec9f4bb0fe11b318580bb22f"
+                            },
+                            {
+                                "file-name": "rh.BA45_exvivo.label",
+                                "md5sum": "4258b4d8fa02ef63bbb5965bf5d44f54"
+                            },
+                            {
+                                "file-name": "rh.V1_exvivo.label",
+                                "md5sum": "46db001545b9a7216a9b1201bb746692"
+                            },
+                            {
+                                "file-name": "rh.V2_exvivo.label",
+                                "md5sum": "8501646c0c1d08d339cb9156f1b1179a"
+                            },
+                            {
+                                "file-name": "rh.MT_exvivo.label",
+                                "md5sum": "4e712790cd10219dd2fbbe74d65568e1"
+                            },
+                            {
+                                "file-name": "rh.entorhinal_exvivo.label",
+                                "md5sum": "187613ee02cc1773e24abcbd8dcdd8d3"
+                            },
+                            {
+                                "file-name": "rh.perirhinal_exvivo.label",
+                                "md5sum": "2003302ddafeac677f95a48209c132a3"
+                            },
+                            {
+                                "file-name": "rh.FG1.mpm.vpnl.label",
+                                "md5sum": "9955fb70fb9a73dfbfa8bf7e2fb0e11c"
+                            },
+                            {
+                                "file-name": "rh.FG2.mpm.vpnl.label",
+                                "md5sum": "22009fc6383d29dcc4c7f30674439fea"
+                            },
+                            {
+                                "file-name": "rh.FG3.mpm.vpnl.label",
+                                "md5sum": "f885e993c8f643fec6af1d6676e403e0"
+                            },
+                            {
+                                "file-name": "rh.FG4.mpm.vpnl.label",
+                                "md5sum": "6c789663f2c1ab5c8492fd7d7214eb3d"
+                            },
+                            {
+                                "file-name": "rh.hOc1.mpm.vpnl.label",
+                                "md5sum": "beccdf365faa5c3c798def693be4cfaf"
+                            },
+                            {
+                                "file-name": "rh.hOc2.mpm.vpnl.label",
+                                "md5sum": "33ea6f7532d5c4cb7cd4d24446aa3fd9"
+                            },
+                            {
+                                "file-name": "rh.hOc3v.mpm.vpnl.label",
+                                "md5sum": "2d5e4949a98a6e202a8d53f9e3b46329"
+                            },
+                            {
+                                "file-name": "rh.hOc4v.mpm.vpnl.label",
+                                "md5sum": "ed5a08a2d9e173e231b33ba2f7980425"
+                            },
+                            {
+                                "file-name": "rh.mpm.vpnl.annot",
+                                "md5sum": "c5dc1f8bae1329d834c2d10bc567ea28"
+                            },
+                            {
+                                "file-name": "rh.BA1_exvivo.thresh.label",
+                                "md5sum": "e1dc1eadf55af451b974d82ad4483825"
+                            },
+                            {
+                                "file-name": "rh.BA2_exvivo.thresh.label",
+                                "md5sum": "7e5f142cface6024359990139296c890"
+                            },
+                            {
+                                "file-name": "rh.BA3a_exvivo.thresh.label",
+                                "md5sum": "aebcb78fa30c01fb7d1a26775cbdb3db"
+                            },
+                            {
+                                "file-name": "rh.BA3b_exvivo.thresh.label",
+                                "md5sum": "ffc71add88e56ee2eb1161e736a8153f"
+                            },
+                            {
+                                "file-name": "rh.BA4a_exvivo.thresh.label",
+                                "md5sum": "b6a4a7c096f198856e01d162423f4745"
+                            },
+                            {
+                                "file-name": "rh.BA4p_exvivo.thresh.label",
+                                "md5sum": "c0e5616d605d790532b02af8d9373d31"
+                            },
+                            {
+                                "file-name": "rh.BA6_exvivo.thresh.label",
+                                "md5sum": "6502a4deddd48c8004e59f0dceb95622"
+                            },
+                            {
+                                "file-name": "rh.BA44_exvivo.thresh.label",
+                                "md5sum": "7ab00fe5c7e1854d5bf9fd3e7253ed24"
+                            },
+                            {
+                                "file-name": "rh.BA45_exvivo.thresh.label",
+                                "md5sum": "be2d20d1834e3bd57a337ea9543b2fe3"
+                            },
+                            {
+                                "file-name": "rh.V1_exvivo.thresh.label",
+                                "md5sum": "09220ecb95268efbaa84b8a5d4366afb"
+                            },
+                            {
+                                "file-name": "rh.V2_exvivo.thresh.label",
+                                "md5sum": "3f749bc381b5da7b63dfabbd93dd3014"
+                            },
+                            {
+                                "file-name": "rh.MT_exvivo.thresh.label",
+                                "md5sum": "587cc9b8f81f4ccf05ea8b62379ca754"
+                            },
+                            {
+                                "file-name": "rh.entorhinal_exvivo.thresh.label",
+                                "md5sum": "abaf0aa3e449f499b386e2bebf882e08"
+                            },
+                            {
+                                "file-name": "rh.perirhinal_exvivo.thresh.label",
+                                "md5sum": "6361fb5f819712e2ea059b37ed3827c4"
+                            },
+                            {
+                                "file-name": "rh.BA_exvivo.annot",
+                                "md5sum": "9aa351f65fd3988d304c437f778e63f3"
+                            },
+                            {
+                                "file-name": "rh.BA_exvivo.thresh.annot",
+                                "md5sum": "e6a5967a57b023b6b51307fc6a362990"
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "touch",
+                        "files": [
+                            {
+                                "file-name": "conform.touch",
+                                "md5sum": "40dc21629f0db1e54619d3a2d962040e"
+                            },
+                            {
+                                "file-name": "talairach.touch",
+                                "md5sum": "b81f486efc083dc9f5654744f1b3defc"
+                            },
+                            {
+                                "file-name": "nu.touch",
+                                "md5sum": "a809be441f6930fbbf730755e0806001"
+                            },
+                            {
+                                "file-name": "inorm1.touch",
+                                "md5sum": "abc7831cf0431a603096efc9d74adac6"
+                            },
+                            {
+                                "file-name": "skull.lta.touch",
+                                "md5sum": "a6239144b250bd2e80084ec09d45d2a4"
+                            },
+                            {
+                                "file-name": "skull_strip.touch",
+                                "md5sum": "e8d0f65e2c1ee53241191fb11b5406cc"
+                            },
+                            {
+                                "file-name": "em_register.touch",
+                                "md5sum": "6d297290fcc2d257309a2a77f43baeb9"
+                            },
+                            {
+                                "file-name": "ca_normalize.touch",
+                                "md5sum": "b6f29e339f1017f03af933f51dead61f"
+                            },
+                            {
+                                "file-name": "ca_register.touch",
+                                "md5sum": "b6d4b790942f9488f48047eed4068ba2"
+                            },
+                            {
+                                "file-name": "ca_label.touch",
+                                "md5sum": "eaf685d617994b25256b30441b185a6f"
+                            },
+                            {
+                                "file-name": "asegmerge.touch",
+                                "md5sum": "bbcca4705300ca1849ff4e55071aba92"
+                            },
+                            {
+                                "file-name": "inorm2.touch",
+                                "md5sum": "ef94094f38552de711f9b36b50afd694"
+                            },
+                            {
+                                "file-name": "wmsegment.touch",
+                                "md5sum": "9d5b43abe2bc3d3eb3be78fd7d562ff1"
+                            },
+                            {
+                                "file-name": "fill.touch",
+                                "md5sum": "0dfd681b3b9253245537317c2d66ad18"
+                            },
+                            {
+                                "file-name": "lh.tessellate.touch",
+                                "md5sum": "bf965e117dff279f90fc72949694f931"
+                            },
+                            {
+                                "file-name": "rh.tessellate.touch",
+                                "md5sum": "f57b379b4afe9531c213fd8444cd603b"
+                            },
+                            {
+                                "file-name": "lh.smoothwm1.touch",
+                                "md5sum": "b8ffed1ee22a504731c39ef3a33ba9aa"
+                            },
+                            {
+                                "file-name": "rh.smoothwm1.touch",
+                                "md5sum": "4f0c2c4f377aef49b38a78ed88bfa13a"
+                            },
+                            {
+                                "file-name": "lh.inflate1.touch",
+                                "md5sum": "f52dad9629924298ee69acc1c3a1c652"
+                            },
+                            {
+                                "file-name": "rh.inflate1.touch",
+                                "md5sum": "57cad7f49edee894fda38c94b520b5ca"
+                            },
+                            {
+                                "file-name": "lh.qsphere.touch",
+                                "md5sum": "545f7e3099965a1f78f5ac84ad92375d"
+                            },
+                            {
+                                "file-name": "rh.qsphere.touch",
+                                "md5sum": "2eacd6dfedc4af32d83f803a6f7acb88"
+                            },
+                            {
+                                "file-name": "lh.topofix.touch",
+                                "md5sum": "3edec4dc4f85b33909fd92f44e03be92"
+                            },
+                            {
+                                "file-name": "rh.topofix.touch",
+                                "md5sum": "b3e02688509265a5315e4391527f6404"
+                            },
+                            {
+                                "file-name": "lh.autodet.gw.stats.touch",
+                                "md5sum": "e973c2b32d8ec5c984861a7a934f1349"
+                            },
+                            {
+                                "file-name": "rh.autodet.gw.stats.touch",
+                                "md5sum": "bb5109cb17047ff1cd4c5582195f56da"
+                            },
+                            {
+                                "file-name": "lh.white.preaparc.touch",
+                                "md5sum": "5a3eee06632ec07bde4fd40d448b5c11"
+                            },
+                            {
+                                "file-name": "rh.white.preaparc.touch",
+                                "md5sum": "cdb42dddfc8933a6766c669cb3012130"
+                            },
+                            {
+                                "file-name": "lh.cortex.touch",
+                                "md5sum": "596c3c2459f0d877a3420a8f63e661df"
+                            },
+                            {
+                                "file-name": "lh.cortex+hipamyg.touch",
+                                "md5sum": "8f87e26eaf5bb255fc650de950173bbe"
+                            },
+                            {
+                                "file-name": "rh.cortex.touch",
+                                "md5sum": "cd7c2b6efc8849eae9c3684d486787fd"
+                            },
+                            {
+                                "file-name": "rh.cortex+hipamyg.touch",
+                                "md5sum": "3e78fd5d5a94c9f418878a1c0813b8ef"
+                            },
+                            {
+                                "file-name": "lh.smoothwm2.touch",
+                                "md5sum": "b068b15ecff4cb8238382e1a028ddb38"
+                            },
+                            {
+                                "file-name": "rh.smoothwm2.touch",
+                                "md5sum": "6ace3898d8a677554350470a8ef0d504"
+                            },
+                            {
+                                "file-name": "lh.inflate2.touch",
+                                "md5sum": "35d96c8fe434330e1b0f2f083712538b"
+                            },
+                            {
+                                "file-name": "rh.inflate2.touch",
+                                "md5sum": "9bcdf48f11d014659e703e6af199c2f7"
+                            },
+                            {
+                                "file-name": "lh.white.H.K.touch",
+                                "md5sum": "c0278016cfb80d723b48390d41eda54d"
+                            },
+                            {
+                                "file-name": "lh.inflate.H.K.touch",
+                                "md5sum": "8041f4bdc7f2dce2ab252147727517b8"
+                            },
+                            {
+                                "file-name": "rh.white.H.K.touch",
+                                "md5sum": "ee57c1b9862251ca3af97cb22df65c00"
+                            },
+                            {
+                                "file-name": "rh.inflate.H.K.touch",
+                                "md5sum": "cb48285f1fbc58f331b64f01e42c3da8"
+                            },
+                            {
+                                "file-name": "lh.sphmorph.touch",
+                                "md5sum": "161d0e2d1502bc594334528d9ac5a106"
+                            },
+                            {
+                                "file-name": "rh.sphmorph.touch",
+                                "md5sum": "8f99840e77c14780b44d5c86450c0bcc"
+                            },
+                            {
+                                "file-name": "lh.sphreg.touch",
+                                "md5sum": "cf992a00af917939ee57352e305e35db"
+                            },
+                            {
+                                "file-name": "rh.sphreg.touch",
+                                "md5sum": "d6dfa83dd8a8eb65011d3776b0c5656d"
+                            },
+                            {
+                                "file-name": "lh.jacobian_white.touch",
+                                "md5sum": "bbbdb2678bfbad9f1a9956fd37c30342"
+                            },
+                            {
+                                "file-name": "rh.jacobian_white.touch",
+                                "md5sum": "a82f023bb20369b96d502fad8419ecfb"
+                            },
+                            {
+                                "file-name": "lh.avgcurv.touch",
+                                "md5sum": "a68983b8d25139520021d1ed50d793ea"
+                            },
+                            {
+                                "file-name": "rh.avgcurv.touch",
+                                "md5sum": "6d0656bdb000227772f4d8288a90dffb"
+                            },
+                            {
+                                "file-name": "lh.aparc.touch",
+                                "md5sum": "1226df36e52c77bcd673fe191fd7915b"
+                            },
+                            {
+                                "file-name": "rh.aparc.touch",
+                                "md5sum": "77cb382daf56e9866d8f41830511f28e"
+                            },
+                            {
+                                "file-name": "lh.white.touch",
+                                "md5sum": "87296d420b45b71a096337fd940d5bc2"
+                            },
+                            {
+                                "file-name": "rh.white.touch",
+                                "md5sum": "4b1705d5bcb2017c41e64aecf1396d7a"
+                            },
+                            {
+                                "file-name": "lh.curvstats.touch",
+                                "md5sum": "2ffbdb910c44221b251a80d9c73cf385"
+                            },
+                            {
+                                "file-name": "rh.curvstats.touch",
+                                "md5sum": "cb9cb22b162d53fa18008680bda7d3d3"
+                            },
+                            {
+                                "file-name": "cortical_ribbon.touch",
+                                "md5sum": "0ae74ba8a817dfd42fdb4e0d25b8ff68"
+                            },
+                            {
+                                "file-name": "lh.aparc2.touch",
+                                "md5sum": "2afcd2e90b5fa453d8dec484190ca976"
+                            },
+                            {
+                                "file-name": "rh.aparc2.touch",
+                                "md5sum": "1d13c363341bfc9d3b4d122f1e7ca35a"
+                            },
+                            {
+                                "file-name": "lh.pctsurfcon.touch",
+                                "md5sum": "4634a901a108709984674d05c9e1f457"
+                            },
+                            {
+                                "file-name": "rh.pctsurfcon.touch",
+                                "md5sum": "5af9ea93846d0087c0342fefe78c331a"
+                            },
+                            {
+                                "file-name": "relabelhypos.touch",
+                                "md5sum": "505c3d4493b7e2139f92bc5e6d7e02d2"
+                            },
+                            {
+                                "file-name": "apas2aseg.touch",
+                                "md5sum": "39b879d22663d1f2c3d4f908b7699702"
+                            },
+                            {
+                                "file-name": "wmaparc.stats.touch",
+                                "md5sum": "856ab6b2dd4d2c03a0a5532bd30ab217"
+                            },
+                            {
+                                "file-name": "lh.aparcstats.touch",
+                                "md5sum": "bbc19a7fbb4d5f3b88f715591740e7b6"
+                            },
+                            {
+                                "file-name": "rh.aparcstats.touch",
+                                "md5sum": "508ae043cf5d588b0c2a91693701bcef"
+                            },
+                            {
+                                "file-name": "lh.aparcstats2.touch",
+                                "md5sum": "2a06b7087e314d5b57dc4a76b1a3f297"
+                            },
+                            {
+                                "file-name": "rh.aparcstats2.touch",
+                                "md5sum": "95fdfba7bcc7f6b5fbb4dbe59830b63b"
+                            },
+                            {
+                                "file-name": "lh.aparcstats3.touch",
+                                "md5sum": "a19f7c62abca1d340d18a76debb7cebf"
+                            },
+                            {
+                                "file-name": "rh.aparcstats3.touch",
+                                "md5sum": "0e64115a1762b1e004aa0de4b9e63b66"
+                            },
+                            {
+                                "file-name": "segstats.touch",
+                                "md5sum": "52e51786865973e7fb33f377561ba728"
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "stats",
+                        "files": [
+                            {
+                                "file-name": "lh.curv.stats",
+                                "md5sum": "ccefacf76b2482308e60c9a559ea0a85"
+                            },
+                            {
+                                "file-name": "rh.curv.stats",
+                                "md5sum": "55bb2541d7006a3b8728f022cd3f1460"
+                            },
+                            {
+                                "file-name": "lh.w-g.pct.stats",
+                                "md5sum": "f811e8830df701ace8ef2843e105611d"
+                            },
+                            {
+                                "file-name": "rh.w-g.pct.stats",
+                                "md5sum": "02e8301c6714e1f6ba13d964cfc5685d"
+                            },
+                            {
+                                "file-name": "brainvol.stats",
+                                "md5sum": "44061f39658507accb77edf3aa07d7e6"
+                            },
+                            {
+                                "file-name": "wmparc.stats",
+                                "md5sum": "11a93ae9c130c41a8f5180ec04b1cac7"
+                            },
+                            {
+                                "file-name": "lh.aparc.stats",
+                                "md5sum": "0e18a9c966397c82766806b7f2bb00bc"
+                            },
+                            {
+                                "file-name": "lh.aparc.pial.stats",
+                                "md5sum": "51211bf9d4e802fea9a70b879457d157"
+                            },
+                            {
+                                "file-name": "rh.aparc.stats",
+                                "md5sum": "1fc1d91be499b8ca233f4cf9a02af59a"
+                            },
+                            {
+                                "file-name": "rh.aparc.pial.stats",
+                                "md5sum": "8517e7bcc6a1b1744f38756f94a9e1ec"
+                            },
+                            {
+                                "file-name": "lh.aparc.a2009s.stats",
+                                "md5sum": "ce4ac52a1a93d2220b106bfdfc94b875"
+                            },
+                            {
+                                "file-name": "rh.aparc.a2009s.stats",
+                                "md5sum": "3a22cfc13917e012b055eaa87cd3d029"
+                            },
+                            {
+                                "file-name": "lh.aparc.DKTatlas.stats",
+                                "md5sum": "4aa083e9171cbe5f862b34febd59fb3a"
+                            },
+                            {
+                                "file-name": "rh.aparc.DKTatlas.stats",
+                                "md5sum": "f6b4f08390d9c8bffb50589b3de7d4d6"
+                            },
+                            {
+                                "file-name": "aseg.stats",
+                                "md5sum": "faf41ec778ca978a5b77d6d14fb0b2a3"
+                            },
+                            {
+                                "file-name": "lh.BA_exvivo.stats",
+                                "md5sum": "b8d9da1cc2aab4ada1c4ee2aaa43affc"
+                            },
+                            {
+                                "file-name": "lh.BA_exvivo.thresh.stats",
+                                "md5sum": "8af61946760afa07714fe16f56f17be0"
+                            },
+                            {
+                                "file-name": "rh.BA_exvivo.stats",
+                                "md5sum": "c403a9b3493d956b5d06452044994b8c"
+                            },
+                            {
+                                "file-name": "rh.BA_exvivo.thresh.stats",
+                                "md5sum": "a1bced23da0d16b9635ddcd15064e3b3"
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "trash",
+                        "files": []
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

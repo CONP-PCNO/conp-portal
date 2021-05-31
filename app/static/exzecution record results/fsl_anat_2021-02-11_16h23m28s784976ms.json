@@ -1,0 +1,26 @@
+{
+    "summary": {
+        "name": "fsl_anat",
+        "descriptor-doi": "10.5281/zenodo.3899496",
+        "date-time": "2021-02-11_16h23m28s784976ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "phantom_999876_MNI_20130903_t2w_001.mnc",
+            "md5sum": "ba4cdeffd258e4879673b748ee4502c9"
+        },
+        "outdir": "/home/mandana/CONP/pipelines/fsl_anat/results"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "fsl_anat -i /home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_999876_MNI_20130903_t2w_001.mnc -o /home/mandana/CONP/pipelines/fsl_anat/results",
+        "missing-files": {
+            "folder_out": "/home/mandana/CONP/pipelines/fsl_anat/results.anat"
+        },
+        "output-files": {}
+    },
+    "additional-information": null
+}

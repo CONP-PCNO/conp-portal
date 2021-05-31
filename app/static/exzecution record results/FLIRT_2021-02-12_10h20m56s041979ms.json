@@ -1,0 +1,32 @@
+{
+    "summary": {
+        "name": "FLIRT",
+        "descriptor-doi": "10.5281/zenodo.2597643",
+        "date-time": "2021-02-12_10h20m56s041979ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "sub-01_T1w.nii.gz",
+            "md5sum": "1a15c8065b8eb994765065ad2ee93ca4"
+        },
+        "reference": {
+            "file-name": "sub-01_T1w.nii.gz",
+            "md5sum": "1a15c8065b8eb994765065ad2ee93ca4"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "flirt -in /home/mandana/CONP/conp-dataset/projects/openpain/placebo_predict_tetreault/sub-01/anat/sub-01_T1w.nii.gz -ref /home/mandana/CONP/conp-dataset/projects/openpain/placebo_predict_tetreault/sub-01/anat/sub-01_T1w.nii.gz -out /home/mandana/CONP/conp-dataset/projects/openpain/placebo_predict_tetreault/sub-01/anat/sub-01_T1w_flirt -omat /home/mandana/CONP/conp-dataset/projects/openpain/placebo_predict_tetreault/sub-01/anat/sub-01_T1w_flirt.mat",
+        "missing-files": {},
+        "output-files": {
+            "out_matrix_file": {
+                "file-name": "sub-01_T1w_flirt.mat",
+                "md5sum": "eeba13d256d446dbeac9f6f6de984939"
+            }
+        }
+    },
+    "additional-information": null
+}

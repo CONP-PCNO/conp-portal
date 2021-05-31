@@ -1,0 +1,54 @@
+{
+    "summary": {
+        "name": "fsl_fast",
+        "descriptor-doi": "10.5281/zenodo.1494308",
+        "date-time": "2021-02-17_10h06m05s337410ms"
+    },
+    "public-invocation": {
+        "output_basename": "fast",
+        "in_files": {
+            "file-name": "sub-9962084_ses-NAPEN00_run-001_T1w.nii.gz",
+            "md5sum": "84f41615e1fe7abadc1c3f4ba1e3ffc6"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fast -o fast /home/mandana/CONP/conp-dataset/projects/preventad-open-bids/BIDS_dataset/sub-9962084/ses-NAPEN00/anat/sub-9962084_ses-NAPEN00_run-001_T1w.nii.gz; mkdir fast; mv fast_* fast",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "fast",
+                "files": [
+                    {
+                        "file-name": "fast_mixeltype.nii.gz",
+                        "md5sum": "78bc87b367adc1c70e752b6db701fe5a"
+                    },
+                    {
+                        "file-name": "fast_pve_0.nii.gz",
+                        "md5sum": "2136e6ae75ac11bec21c80730679cebd"
+                    },
+                    {
+                        "file-name": "fast_pve_1.nii.gz",
+                        "md5sum": "11fb6a73106f6e35001b965a683d012b"
+                    },
+                    {
+                        "file-name": "fast_pve_2.nii.gz",
+                        "md5sum": "27ecd581dfd3ae86809cc8032fdb42c3"
+                    },
+                    {
+                        "file-name": "fast_pveseg.nii.gz",
+                        "md5sum": "3c6418e09f12d5f95a2a7a0928137938"
+                    },
+                    {
+                        "file-name": "fast_seg.nii.gz",
+                        "md5sum": "80b75e0fcdb60dd378459a05bcfcffb1"
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

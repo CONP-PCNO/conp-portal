@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FNIRT",
+        "descriptor-doi": "10.5281/zenodo.2639849",
+        "date-time": "2021-02-12_10h55m59s684328ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "sub-01_T1w.nii.gz",
+            "md5sum": "1a15c8065b8eb994765065ad2ee93ca4"
+        },
+        "ref_file": {
+            "file-name": "sub-01_T1w.nii.gz",
+            "md5sum": "1a15c8065b8eb994765065ad2ee93ca4"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fnirt --in=/home/mandana/CONP/conp-dataset/projects/openpain/placebo_predict_tetreault/sub-01/anat/sub-01_T1w.nii.gz --ref=/home/mandana/CONP/conp-dataset/projects/openpain/placebo_predict_tetreault/sub-01/anat/sub-01_T1w.nii.gz",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

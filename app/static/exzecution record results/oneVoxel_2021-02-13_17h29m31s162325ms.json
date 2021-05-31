@@ -1,0 +1,31 @@
+{
+    "summary": {
+        "name": "oneVoxel",
+        "descriptor-doi": "10.5281/zenodo.3308620",
+        "date-time": "2021-02-13_17h29m31s162325ms"
+    },
+    "public-invocation": {
+        "image_file": {
+            "file-name": "sub_10_control_site_2_T1w.nii.gz",
+            "md5sum": "c3f1f1e07de28fc1d22bcdd1f69190fe"
+        },
+        "mask_file": {
+            "file-name": "mask-7.nii.gz",
+            "md5sum": "7e6d36cc130cf6341816d3e85f955acb"
+        },
+        "output_directory": {
+            "file-name": "",
+            "not_found": true
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "onevox /home/mandana/CONP/conp-dataset/projects/openpain/BrainNetworkChange_Mano/sub_10_control_site_2/anat/sub_10_control_site_2_T1w.nii.gz /home/mandana/CONP/oneVoxel/output/ --mask_file /home/mandana/CONP/pipelines/oneVoxel/fslbet/masks/mask-7.nii.gz --intensity 0.01 --erode 3 --repeat 1 --mode single",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

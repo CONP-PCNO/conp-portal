@@ -1,0 +1,30 @@
+{
+    "summary": {
+        "name": "BIDS app example",
+        "descriptor-doi": "10.5281/zenodo.1451001",
+        "date-time": "2021-02-13_18h55m36s384246ms"
+    },
+    "public-invocation": {
+        "bids_dir": {
+            "file-name": "f_bids_dir_57.nii.gz",
+            "not_found": true
+        },
+        "participant_level_analysis_dir": {
+            "file-name": "f_participant_level_analysis_dir_22.nii.gz",
+            "not_found": true
+        },
+        "analysis_level": "group"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 2,
+        "error-message": "",
+        "shell-command": "mkdir -p; /run.py f_bids_dir_57.nii.gz group",
+        "missing-files": {
+            "output_dir": "f_participant_level_analysis_dir_22.nii.gz"
+        },
+        "output-files": {}
+    },
+    "additional-information": null
+}

@@ -1,0 +1,54 @@
+{
+    "summary": {
+        "name": "fsl_fast",
+        "descriptor-doi": "10.5281/zenodo.1494308",
+        "date-time": "2021-02-17_09h45m35s572131ms"
+    },
+    "public-invocation": {
+        "output_basename": "fast",
+        "in_files": {
+            "file-name": "highres001_full_normfilter.nii.gz",
+            "md5sum": "b745b83518ad96db7109b63db57f5f30"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fast -o fast /home/mandana/CONP/conp-dataset/projects/openpain/thermal/healthy010/t1/highres001_full_normfilter.nii.gz; mkdir fast; mv fast_* fast",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "fast",
+                "files": [
+                    {
+                        "file-name": "fast_mixeltype.nii.gz",
+                        "md5sum": "b51a4928231dd087618387ccbc6aa053"
+                    },
+                    {
+                        "file-name": "fast_pve_0.nii.gz",
+                        "md5sum": "14fab050f9c31871c0afa5631fdcf289"
+                    },
+                    {
+                        "file-name": "fast_pve_1.nii.gz",
+                        "md5sum": "85741fbdbd3a525873455cf242623242"
+                    },
+                    {
+                        "file-name": "fast_pve_2.nii.gz",
+                        "md5sum": "7262077cbd0695e77b5dd3e150e90c41"
+                    },
+                    {
+                        "file-name": "fast_pveseg.nii.gz",
+                        "md5sum": "6b81df21d5a905d5db5379957a47aba1"
+                    },
+                    {
+                        "file-name": "fast_seg.nii.gz",
+                        "md5sum": "f81815020af582e82867579e3b12e56b"
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

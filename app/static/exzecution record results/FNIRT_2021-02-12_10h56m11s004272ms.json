@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FNIRT",
+        "descriptor-doi": "10.5281/zenodo.2639849",
+        "date-time": "2021-02-12_10h56m11s004272ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "sub-9962084_ses-NAPEN00_run-001_T1w.nii.gz",
+            "md5sum": "84f41615e1fe7abadc1c3f4ba1e3ffc6"
+        },
+        "ref_file": {
+            "file-name": "sub-9962084_ses-NAPEN00_run-001_T1w.nii.gz",
+            "md5sum": "84f41615e1fe7abadc1c3f4ba1e3ffc6"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fnirt --in=/home/mandana/CONP/conp-dataset/projects/preventad-open-bids/BIDS_dataset/sub-9962084/ses-NAPEN00/anat/sub-9962084_ses-NAPEN00_run-001_T1w.nii.gz --ref=/home/mandana/CONP/conp-dataset/projects/preventad-open-bids/BIDS_dataset/sub-9962084/ses-NAPEN00/anat/sub-9962084_ses-NAPEN00_run-001_T1w.nii.gz",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FNIRT",
+        "descriptor-doi": "10.5281/zenodo.2639849",
+        "date-time": "2021-02-12_10h58m25s906382ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "preventad_1000173_NAPBL00_asl_001.mnc",
+            "md5sum": "d15646c2bd449644fc134f6ec71403d8"
+        },
+        "ref_file": {
+            "file-name": "preventad_1000173_NAPBL00_asl_001.mnc",
+            "md5sum": "d15646c2bd449644fc134f6ec71403d8"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "fnirt --in=/home/mandana/CONP/conp-dataset/projects/preventad-open/1000173/NAPBL00/images/preventad_1000173_NAPBL00_asl_001.mnc --ref=/home/mandana/CONP/conp-dataset/projects/preventad-open/1000173/NAPBL00/images/preventad_1000173_NAPBL00_asl_001.mnc",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

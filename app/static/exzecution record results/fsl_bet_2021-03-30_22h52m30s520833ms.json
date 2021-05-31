@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "fsl_bet",
+        "descriptor-doi": "10.5281/zenodo.1482743",
+        "date-time": "2021-03-30_22h52m30s520833ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "sub-10_task-WM_run-01_bold.nii.gz",
+            "md5sum": "50356afd00c7b9b0110ff9f8afe951f8"
+        },
+        "maskfile": "MASK_fsl_SPARK"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "bet /home/mandana/CONP/conp-dataset/projects/visual-working-memory/sub-10/func/sub-10_task-WM_run-01_bold.nii.gz MASK_fsl_SPARK",
+        "missing-files": {},
+        "output-files": {
+            "outfile": {
+                "file-name": "MASK_fsl_SPARK.nii.gz",
+                "md5sum": "d944033bd2ec8f10c4b142a7e48db673"
+            }
+        }
+    },
+    "additional-information": null
+}

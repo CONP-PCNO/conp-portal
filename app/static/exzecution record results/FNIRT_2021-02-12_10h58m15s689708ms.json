@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FNIRT",
+        "descriptor-doi": "10.5281/zenodo.2639849",
+        "date-time": "2021-02-12_10h58m15s689708ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "sub-010_ses-visit4_T1w.nii.gz",
+            "md5sum": "eab621315f5e8d1c7efbcb4f949ba712"
+        },
+        "ref_file": {
+            "file-name": "sub-010_ses-visit4_T1w.nii.gz",
+            "md5sum": "eab621315f5e8d1c7efbcb4f949ba712"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fnirt --in=/home/mandana/CONP/conp-dataset/projects/openpain/subacute_longitudinal_study/sub-010/ses-visit4/anat/sub-010_ses-visit4_T1w.nii.gz --ref=/home/mandana/CONP/conp-dataset/projects/openpain/subacute_longitudinal_study/sub-010/ses-visit4/anat/sub-010_ses-visit4_T1w.nii.gz",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

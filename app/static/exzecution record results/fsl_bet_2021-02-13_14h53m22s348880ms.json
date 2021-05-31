@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "fsl_bet",
+        "descriptor-doi": "10.5281/zenodo.1482743",
+        "date-time": "2021-02-13_14h53m22s348880ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "sub-10_T1w.nii.gz",
+            "md5sum": "ea80cfc8ce43714669fbc201eaea159e"
+        },
+        "maskfile": "mask-6"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "bet /home/mandana/CONP/conp-dataset/projects/visual-working-memory/sub-10/anat/sub-10_T1w.nii.gz mask-6",
+        "missing-files": {},
+        "output-files": {
+            "outfile": {
+                "file-name": "mask-6.nii.gz",
+                "md5sum": "aea782e23c916af8bec09630011a0e47"
+            }
+        }
+    },
+    "additional-information": null
+}

@@ -1,0 +1,35 @@
+{
+    "summary": {
+        "name": "DTIFit",
+        "descriptor-doi": "10.5281/zenodo.2601876",
+        "date-time": "2021-03-17_13h37m11s334675ms"
+    },
+    "public-invocation": {
+        "bvals": {
+            "file-name": "sub-032633_ses-005_run-1_dwi.bval",
+            "md5sum": "2276896ed44ac74911f55fc9071f49d1"
+        },
+        "bvecs": {
+            "file-name": "sub-032633_ses-005_run-1_dwi.bvec",
+            "md5sum": "18d2d400cc9f176c1ee77ef926e70fec"
+        },
+        "dwi": {
+            "file-name": "sub-032633_ses-005_run-1_dwi.nii.gz",
+            "md5sum": "6a2f0faf3d33cc9123ae8d2c64601ad0"
+        },
+        "mask": {
+            "file-name": "fsl-bet_mask_DTIFit.nii.gz",
+            "md5sum": "c3b6313098ff1d8460c24b22e1535db5"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "dtifit -k /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-005/dwi/sub-032633_ses-005_run-1_dwi.nii.gz -o dtifit_ -m /home/mandana/CONP/pipelines/DTIFit/bet_mask/fsl-bet_mask_DTIFit.nii.gz -r /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-005/dwi/sub-032633_ses-005_run-1_dwi.bvec -b /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-005/dwi/sub-032633_ses-005_run-1_dwi.bval",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

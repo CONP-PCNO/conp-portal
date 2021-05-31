@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FNIRT",
+        "descriptor-doi": "10.5281/zenodo.2639849",
+        "date-time": "2021-04-15_12h32m28s296353ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "PL011_visit4_t1_defaced.nii.gz",
+            "md5sum": "5eaac6f1e0ac4a3859de1b61c870dad2"
+        },
+        "ref_file": {
+            "file-name": "PL011_visit4_t1_defaced.nii.gz",
+            "md5sum": "5eaac6f1e0ac4a3859de1b61c870dad2"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fnirt --in=/home/mandana/CONP/conp-dataset/projects/openpain/placebo_1/PL011/visit4/anat/PL011_visit4_t1_defaced.nii.gz --ref=/home/mandana/CONP/conp-dataset/projects/openpain/placebo_1/PL011/visit4/anat/PL011_visit4_t1_defaced.nii.gz",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

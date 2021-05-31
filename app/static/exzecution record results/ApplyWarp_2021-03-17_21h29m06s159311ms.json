@@ -1,0 +1,36 @@
+{
+    "summary": {
+        "name": "ApplyWarp",
+        "descriptor-doi": "10.5281/zenodo.2650440",
+        "date-time": "2021-03-17_21h29m06s159311ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "sub-032633_ses-005_run-1_T1w.nii.gz",
+            "md5sum": "6c0088105c76936091fc57efc7ab05cc"
+        },
+        "out_file": {
+            "file-name": "out_2.nini.gz",
+            "md5sum": "73121c9d74bd5652fd271005b1b1a634"
+        },
+        "ref_file": {
+            "file-name": "sub-032633_ses-005_run-1_T1w.nii.gz",
+            "md5sum": "6c0088105c76936091fc57efc7ab05cc"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "applywarp --in=/home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-005/anat/sub-032633_ses-005_run-1_T1w.nii.gz --ref=/home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-005/anat/sub-032633_ses-005_run-1_T1w.nii.gz --out=/home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-005/anat/out_2.nini.gz",
+        "missing-files": {},
+        "output-files": {
+            "out_file_outfile": {
+                "file-name": "out_2.nini.gz",
+                "md5sum": "73121c9d74bd5652fd271005b1b1a634"
+            }
+        }
+    },
+    "additional-information": null
+}

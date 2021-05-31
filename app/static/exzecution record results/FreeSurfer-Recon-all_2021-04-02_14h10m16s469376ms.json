@@ -1,0 +1,31 @@
+{
+    "summary": {
+        "name": "FreeSurfer-Recon-all",
+        "descriptor-doi": "10.5281/zenodo.4043546",
+        "date-time": "2021-04-02_14h10m16s469376ms"
+    },
+    "public-invocation": {
+        "license": {
+            "file-name": "license.txt",
+            "md5sum": "f606798c4c204e59ee84e220a6d26426"
+        },
+        "subjid": "healthy010",
+        "input": {
+            "file-name": "highres001_full_normfilter.nii.gz",
+            "md5sum": "b745b83518ad96db7109b63db57f5f30"
+        },
+        "directives": "-all"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "Crashed",
+        "shell-command": "export SUBJECTS_DIR=`pwd`; export FS_LICENSE=`pwd`/license_FreeSurfer/license.txt; recon-all -subjid healthy010 -i conp-dataset/projects/openpain/thermal/healthy010/t1/highres001_full_normfilter.nii.gz -all",
+        "missing-files": {
+            "subjid_output": "healthy010"
+        },
+        "output-files": {}
+    },
+    "additional-information": null
+}

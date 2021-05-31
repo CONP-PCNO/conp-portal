@@ -1,0 +1,24 @@
+{
+    "summary": {
+        "name": "fsl_bet",
+        "descriptor-doi": "10.5281/zenodo.1482743",
+        "date-time": "2021-02-04_21h55m56s568059ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "sub-HCPUR100_t1w.nii.gz",
+            "not_found": true
+        },
+        "maskfile": "BrainExtraction_2636973/mask_sub-HCPUR100_t1w.nii.gz"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "bet conp-dataset/projects/Khanlab/HCPUR100-Template/sub-HCPUR100/anat/sub-HCPUR100_t1w.nii.gz BrainExtraction_2636973/mask_sub-HCPUR100_t1w.nii.gz",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

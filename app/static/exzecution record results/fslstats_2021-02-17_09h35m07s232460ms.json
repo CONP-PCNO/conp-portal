@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "fslstats",
+        "descriptor-doi": "10.5281/zenodo.4472771",
+        "date-time": "2021-02-17_09h35m07s232460ms"
+    },
+    "public-invocation": {
+        "input_file": {
+            "file-name": "phantom_999876_MNI_20130903_t2w_001.mnc",
+            "md5sum": "ba4cdeffd258e4879673b748ee4502c9"
+        },
+        "V": true
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 255,
+        "error-message": "",
+        "shell-command": "fslstats /home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_999876_MNI_20130903_t2w_001.mnc -V > /home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_999876_MNI_20130903_t2w_001.mnc.txt",
+        "missing-files": {},
+        "output-files": {
+            "output": {
+                "file-name": "phantom_999876_MNI_20130903_t2w_001.mnc.txt",
+                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+            }
+        }
+    },
+    "additional-information": null
+}

@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FNIRT",
+        "descriptor-doi": "10.5281/zenodo.2639849",
+        "date-time": "2021-02-12_10h58m31s804534ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "phantom_999876_MNI_20130903_t2w_001.mnc",
+            "md5sum": "ba4cdeffd258e4879673b748ee4502c9"
+        },
+        "ref_file": {
+            "file-name": "phantom_999876_MNI_20130903_t2w_001.mnc",
+            "md5sum": "ba4cdeffd258e4879673b748ee4502c9"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "fnirt --in=/home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_999876_MNI_20130903_t2w_001.mnc --ref=/home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_999876_MNI_20130903_t2w_001.mnc",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

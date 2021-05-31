@@ -1,0 +1,533 @@
+{
+    "summary": {
+        "name": "SPARK (stage 1 of 3)",
+        "descriptor-doi": "10.5281/zenodo.4010734",
+        "date-time": "2021-03-30_14h59m40s202708ms"
+    },
+    "public-invocation": {
+        "fmri": {
+            "file-name": "sub-10_task-WM_run-01_bold.nii.gz",
+            "md5sum": "50356afd00c7b9b0110ff9f8afe951f8"
+        },
+        "out_dir": "/home/mandana/CONP/conp-dataset/projects/visual-working-memory/sub-10/func/",
+        "mask": {
+            "file-name": "MASK_fsl_SPARK.nii",
+            "md5sum": "56bd682b0d989c390b5c9d8cf894a65c"
+        },
+        "nb_resamplings": 100,
+        "network_scales": [
+            10,
+            2,
+            30
+        ],
+        "nb_iterations": 20,
+        "p_value": 0.05
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "spark --SETUP --fmri /home/mandana/CONP/conp-dataset/projects/visual-working-memory/sub-10/func/sub-10_task-WM_run-01_bold.nii.gz --out-dir /home/mandana/CONP/conp-dataset/projects/visual-working-memory/sub-10/func/ --mask /home/mandana/CONP/pipelines/SPARK_1of3.4010734/masks/MASK_fsl_SPARK.nii --nb-resamplings 100 --network-scales 10 2 30 --nb-iterations 20 --p-value 0.05 --resampling-method CBB --block-window-length 10 1 30 --dict-init-method GivenMatrix --sparse-coding-method Thresholding && spark --RUN --stage A --fmri /home/mandana/CONP/conp-dataset/projects/visual-working-memory/sub-10/func/sub-10_task-WM_run-01_bold.nii.gz --out-dir /home/mandana/CONP/conp-dataset/projects/visual-working-memory/sub-10/func/",
+        "missing-files": {},
+        "output-files": {
+            "result": {
+                "file-name": "",
+                "files": [
+                    {
+                        "file-name": "sub-10_task-WM_run-01_bold.json",
+                        "md5sum": "35ace51311f4e458bf67f3bdffa93c7d"
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-01_bold.nii.gz",
+                        "md5sum": "50356afd00c7b9b0110ff9f8afe951f8"
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-01_events.tsv",
+                        "md5sum": "9cdeace7fd6e267e77a74a0808d9a941"
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-02_bold.json",
+                        "md5sum": "ef8d231a414c07a35550a72c57495f69"
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-02_bold.nii.gz",
+                        "not_found": true
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-02_events.tsv",
+                        "md5sum": "cc0a824d0ce186eec23ebc7aadf1d7d6"
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-03_bold.json",
+                        "md5sum": "b5aa81534cd8f66178f6c8ff3103e434"
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-03_bold.nii.gz",
+                        "not_found": true
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-03_events.tsv",
+                        "md5sum": "9b56cfe14d80f93141c1e93375596ecb"
+                    },
+                    {
+                        "file-name": "sub-10_task-WM_run-01_bold",
+                        "files": [
+                            {
+                                "file-name": "pipelines",
+                                "files": [
+                                    {
+                                        "file-name": "sub-10_task-WM_run-01_bold.opt",
+                                        "md5sum": "bd3eb2b1c8a2d032008f2844ff23d373"
+                                    },
+                                    {
+                                        "file-name": "sub-10_task-WM_run-01_bold.mat",
+                                        "md5sum": "67cc85ef6620bbf227733f1b1787d43e"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "single_kmap",
+                                "files": [
+                                    {
+                                        "file-name": "single_kmap_sub_10_ses_cspark_1_run_01.mat",
+                                        "md5sum": "b82828564686ac02cb3f42b3ee51b5a2"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "intermediate",
+                                "files": [
+                                    {
+                                        "file-name": "tseries_boot",
+                                        "files": [
+                                            {
+                                                "file-name": "tseries_boot1_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "595048d1f5affc8c83a7cf281cb57fb1"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot2_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "55a93dca425f11d0e95f22fb4f23bd05"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot3_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "afab111f6e1ccca99ed9ff90a6b3864f"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot4_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "8e2d0aaed1c347b0b98e4166134952c3"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot5_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "b79959b2becc98c7bddf5a6530de1233"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot6_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "3a8a10a2f893a735e379ffc5bc2d7e97"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot7_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "6ce860cc45c26e64311b581142397626"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot8_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "490ac59ed0db4de38f23d25df7c95f32"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot9_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "31e20ce9f13f3aa6aab543fcac9d3d3d"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot10_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "d26c36f9efa5aac2d76a952811a55d6d"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot11_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "1d83e113498c6f21ad1615b0cdc52ade"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot12_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "c135792a232802121c3b483fa00825c9"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot13_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "06680e631f98203742ee997abf569ebd"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot14_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "39f07aad0e58d89baaddc1568a675ef5"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot15_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "7cca7e3c34714d1d6c6ddf314ce20f44"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot16_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "f766d228d95ef16da30b07f83a096c18"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot17_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "006f7f3c2ad5277af7a88081c817eb56"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot18_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "ffbe1ae35ac09bd4df63e944b56239cc"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot19_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "bccdaabdc1e28c711e441c7bcb8fd543"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot20_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "4b98d8d492a21b419c8db8abc35eff1d"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot21_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "a2e8323ab387dff0f2cd563e79359855"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot22_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "e6c0813f66d46b0317b17e2c0891be9e"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot23_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "b733e59789b3eb6b3449afdd3782e75d"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot24_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "7a7d7768b85215c29ff9050d59fa9c91"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot25_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "dbb114296a9b812e29036ddd0d8fa410"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot26_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "a4722fc38080c7f7793fb6f4346b3a2c"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot27_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "2059ed0949fa0404cf0775be84bcbc29"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot28_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "a58ee79a329f27d7519eaec83a2e508d"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot29_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "1e2524f3b3277c781401905a5003c845"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot30_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "5b808bcb98f5dd7ef6079a6f6724526e"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot31_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "f7bff83628acf8196c0d86240a5c2642"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot32_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "2a3e0f6479cddbc0e7e21fbc1de05c05"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot33_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "02836d2a2252996d4431a15c6db2e8d9"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot34_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "6a0ffad29132e0dfa61744068eb8fd45"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot35_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "bd71b584e4d3814b0aebac5a15753a5b"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot36_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "4e0f59d78f7d18a9d1bfceed8f40af08"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot37_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "f3232ee0bc277dc262b7bc9eaf355108"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot38_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "b07602453f7491dc3c2fda34fd196a52"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot39_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "279b2745b8afbae37985fd3282a2e59b"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot40_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "76e6506f02897ece6d583ef9a1467a1f"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot41_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "195042664a9c6f95affe704274da11b6"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot42_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "79a50f96fbf7148d6dd4f07bc31b27f2"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot43_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "811c69f6be372bacd810a8d8f41d1b9b"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot44_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "738621a357b4b9e61b55fde4174307d6"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot45_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "89a1673c085854ef7a03078020af12e3"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot46_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "036cb58081e335c3148691bb0b0ff203"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot47_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "de422b9c3ad6feccd64bf0e1da434fbd"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot48_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "298132f5fda9bccb6e05e6ff8740cc12"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot49_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "b38046ece7b1af5cd36f37a8b45acd9e"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot50_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "6567b390dfb65c8b4b2d7bee66312507"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot51_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "a3904688f1e85a5aa11bcd72ccb8c38f"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot52_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "e0219969f22a98720771607d913ebe85"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot53_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "4f9bd7586660daaff62a32337535db86"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot54_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "8cd6b945fdea5905158c2164a4e06683"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot55_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "01f74147b41930e3f98e08f435adfb17"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot56_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "e93a1e577f9254b62e16d839da013ac0"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot57_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "f960005336e88df13ec56995da5e89a2"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot58_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "a5f4dc9d637bb2b2c2682132993eaa3d"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot59_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "54f821aa6e6fe26fb84324a6667de4ae"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot60_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "8d7f183c91ab1b110960b73e51c01e74"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot61_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "c13d25aaa8d47cce45c4bd24c8af9fd6"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot62_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "699d94ef1440fd0b99143c632d969450"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot63_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "7b5a260387de07f5ebf9b95b4151924d"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot64_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "cf3ceae5baa6489450f3c03c429f9463"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot65_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "e5878cf7b83476c93fa26924d93f350a"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot66_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "6ca55c7fe3cbc5fcdad27451130c62a3"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot67_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "97028c119114e48ee6ca18551d05b3f5"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot68_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "13a4ad34581a154670b2dbfa89eb62d3"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot69_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "66a9feef69233fff813a7bc58924278c"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot70_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "8ce3e9500bfbbccfd6915427e4fa1fb9"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot71_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "48822eb4e121f7ace586b46cb72201cc"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot72_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "eada089a4af3cdd726f78e352246e109"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot73_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "b65fc7719173c9fd76ee09102de156db"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot74_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "cc12e3caa5005a2743f24072be3e0254"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot75_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "40ee9e6cca63189de920ee1e9f488181"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot76_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "e4f48875b476cee95ec46ffeffd97a1f"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot77_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "49325bc667b0012ed53a02b86dbaf3fb"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot78_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "9a713fe91f0e4bcd33c4855a2bb3e5ce"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot79_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "11c0ee06458ccc91211e75f592c6c128"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot80_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "add6785699ca056be6d8ede476dbd2ea"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot81_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "0dc357422ea786d235b806571183eae1"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot82_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "61908eeeaae7d777681381f5ab1b19e1"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot83_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "897aa54c96f27cf9c4bc935fd6e6f9ae"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot84_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "798899e8411a1b9965fd2749f9b42e4e"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot85_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "c9f0bab93ffda1e92a7b68c8aa1ea604"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot86_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "9c988355d666a9cd01ba14ca47283943"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot87_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "00452f1c6645c722a904f46cd45f1cc4"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot88_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "a80527a41fe7aa9ad934f0d8c26532fc"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot89_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "949363725fe4579550a5166ccee0956e"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot90_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "36c0d391eef18d72475b07791cec6fdf"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot91_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "c6e9392c230f8713fdc1b01614c5c962"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot92_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "2c1d1f3dedb423e4592bc3268b8de0b8"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot93_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "bf3a77a52cc0768311f018f80d1cb92e"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot94_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "f6b9f1c340c58359b6b9c1fbced6faf0"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot95_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "27bb213bb949317eeeb79bfc6e589e9b"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot96_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "4b553acfa111a6dea62c719bd978915a"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot97_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "c368f0ff028523d7f916ad1ce815b600"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot98_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "44cfe72455856d702761bc684c6ace48"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot99_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "d28b08ed123a3c757cc84cbbe11adc1b"
+                                            },
+                                            {
+                                                "file-name": "tseries_boot100_sub_10_ses_cspark_1_run_01.mat",
+                                                "md5sum": "7efeea5f5270d46462715694f3fad8af"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "file-name": "kmdl",
+                                        "files": [
+                                            {
+                                                "file-name": "sub_10_ses_cspark_1_run_01",
+                                                "files": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "kmap_p0.05",
+                                "files": [
+                                    {
+                                        "file-name": "sub_10_ses_cspark_1_run_01",
+                                        "files": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

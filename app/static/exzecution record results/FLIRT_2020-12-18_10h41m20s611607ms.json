@@ -1,0 +1,32 @@
+{
+    "summary": {
+        "name": "FLIRT",
+        "descriptor-doi": "10.5281/zenodo.2597643",
+        "date-time": "2020-12-18_10h41m20s611607ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "sub-032633_ses-020_run-1_FLAIR.nii.gz",
+            "md5sum": "89c3bdb78fa1505905b1e132b4fffbe7"
+        },
+        "reference": {
+            "file-name": "sub-032633_ses-020_run-1_T1w.nii.gz",
+            "md5sum": "c6e23c21a6476f2f47a9210b9c6d0da1"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "flirt -in /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-020/anat/sub-032633_ses-020_run-1_FLAIR.nii.gz -ref /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-020/anat/sub-032633_ses-020_run-1_T1w.nii.gz -out /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-020/anat/sub-032633_ses-020_run-1_FLAIR_flirt -omat /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-020/anat/sub-032633_ses-020_run-1_FLAIR_flirt.mat",
+        "missing-files": {},
+        "output-files": {
+            "out_matrix_file": {
+                "file-name": "sub-032633_ses-020_run-1_FLAIR_flirt.mat",
+                "md5sum": "bbbb6a37173438e772b7d7660479ccf5"
+            }
+        }
+    },
+    "additional-information": null
+}

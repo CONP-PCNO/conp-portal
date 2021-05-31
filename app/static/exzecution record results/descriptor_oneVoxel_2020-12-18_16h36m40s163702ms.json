@@ -1,0 +1,201 @@
+{
+    "author": "Greg Kiar <gkiar.github.io>",
+    "command-line": "onevox [IMAGE_FILE] [OUTPUT_DIRECTORY] [MASK_FILE] [NO_SCALE] [INTENSITY] [ERODE] [REPEAT] [LOCATION] [FORCE] [MODE] [CLEAN] [APPLY_NOISE] [VERBOSE] [BOUTIQUES]",
+    "container-image": {
+        "image": "gkiar/onevoxel:v0.3.0rc3",
+        "index": "docker://",
+        "type": "singularity"
+    },
+    "description": "Adds 1-voxel noise to a Nifti image at either a provided or random location within a mask.",
+    "groups": [
+        {
+            "id": "noise_position_group",
+            "members": [
+                "mask_file",
+                "apply_noise"
+            ],
+            "name": "noise_position_group",
+            "one-is-required": true
+        }
+    ],
+    "inputs": [
+        {
+            "description": "Nifti image to be injected with one-voxel noise. Default behaviour is that this will be done at a random location within an image mask.",
+            "id": "image_file",
+            "name": "image_file",
+            "optional": false,
+            "type": "File",
+            "value-key": "[IMAGE_FILE]"
+        },
+        {
+            "description": "Path for where the resulting Nifti image with one voxel noise will be stored.",
+            "id": "output_directory",
+            "name": "output_directory",
+            "optional": false,
+            "type": "File",
+            "value-key": "[OUTPUT_DIRECTORY]"
+        },
+        {
+            "command-line-flag": "--mask_file",
+            "description": "Nifti image containing a binary mask for the input image. The noise location will be selected randomly within this mask, unless a location is provided.",
+            "id": "mask_file",
+            "name": "mask_file",
+            "optional": true,
+            "type": "File",
+            "value-key": "[MASK_FILE]"
+        },
+        {
+            "command-line-flag": "--no_scale",
+            "description": "Dictates the way in which noise is aplpied to the image. If set, the value specified with the intensity flag will be set to the new value. If not set, the intensity value will be multiplied by the original image value at the location.",
+            "id": "scale",
+            "name": "scale",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[NO_SCALE]"
+        },
+        {
+            "command-line-flag": "--intensity",
+            "default-value": 0.01,
+            "description": "The intensity of the noise to be injected in the image. Default value is 0.01 so specifying the scale flag alone will result in a 1%% intensity change at the target location.",
+            "id": "intensity",
+            "minimum": 0,
+            "name": "intensity",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[INTENSITY]"
+        },
+        {
+            "command-line-flag": "--erode",
+            "default-value": 3,
+            "description": "Value dictating how much to erode the binary mask before selecting a location for noise. The default value assumes a slightly generous mask.",
+            "id": "erode",
+            "integer": true,
+            "minimum": 0,
+            "name": "erode",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[ERODE]"
+        },
+        {
+            "command-line-flag": "--repeat",
+            "default-value": 1,
+            "description": "Value dictating how many times to generate noise in the target image. This cannot be used with the 'location' parameter.",
+            "id": "repeat",
+            "integer": true,
+            "minimum": 0,
+            "name": "repeat",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[REPEAT]"
+        },
+        {
+            "command-line-flag": "--location",
+            "description": "Specifies a target location for injecting noise. This location must live within the provided mask in voxel coordinates. If not provided, a random location within the mask will be used.",
+            "id": "location",
+            "integer": true,
+            "list": true,
+            "name": "location",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[LOCATION]"
+        },
+        {
+            "command-line-flag": "--force",
+            "description": "Disables checks and restrictions on noise that may be not recommended for a typical workflow. By default, locations can only be specified within the mask, but this overrides that behaviour.",
+            "id": "force",
+            "name": "force",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[FORCE]"
+        },
+        {
+            "command-line-flag": "--mode",
+            "default-value": "single",
+            "description": "Determines where noise will be injected in the case of higher-dimensional images than masks. 'Single' (default) will choose a single position in all higher dimensions, resulting in 1 point of noise. 'Uniform' will choose a location within the mask and apply it uniformly across all other dimensions. 'Independent' will generate a random location within the mask for each volume in the remaining dimensions, and is mutually exclusive with providing a location.",
+            "id": "mode",
+            "name": "mode",
+            "optional": true,
+            "type": "String",
+            "value-choices": [
+                "single",
+                "uniform",
+                "independent"
+            ],
+            "value-key": "[MODE]"
+        },
+        {
+            "command-line-flag": "--clean",
+            "description": "Deletes the noisy Nifti image from disk. This is intended to be used to save space, and the images can be regenerated using the 'apply' option and providing the associated JSON file.",
+            "id": "clean",
+            "name": "clean",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[CLEAN]"
+        },
+        {
+            "command-line-flag": "--apply_noise",
+            "description": "Provided with a path to 1-voxel noise associated JSON file, will apply noise to the image. A hash is stored in this file to verify that the same noise is injected each time the file is created.",
+            "id": "apply_noise",
+            "name": "apply_noise",
+            "optional": true,
+            "type": "File",
+            "value-key": "[APPLY_NOISE]"
+        },
+        {
+            "command-line-flag": "--verbose",
+            "description": "Toggles verbose output printing.",
+            "id": "verbose",
+            "name": "verbose",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[VERBOSE]"
+        },
+        {
+            "command-line-flag": "--boutiques",
+            "description": "Toggles creation of a Boutiques descriptor and invocation from the tool and inputs.",
+            "id": "boutiques",
+            "name": "boutiques",
+            "optional": true,
+            "type": "Flag",
+            "value-key": "[BOUTIQUES]"
+        }
+    ],
+    "name": "oneVoxel",
+    "output-files": [
+        {
+            "id": "noisy_image",
+            "name": "Noisy Image",
+            "optional": true,
+            "path-template": "[OUTPUT_DIRECTORY]*_1vox-*.nii.gz",
+            "path-template-stripped-extensions": [
+                ".nii.gz",
+                ".nii"
+            ]
+        },
+        {
+            "id": "noise_summary",
+            "name": "Noise Summary",
+            "optional": true,
+            "path-template": "[OUTPUT_DIRECTORY]*_1vox-*.json",
+            "path-template-stripped-extensions": [
+                ".nii.gz",
+                ".nii"
+            ]
+        }
+    ],
+    "schema-version": "0.5",
+    "suggested-resources": {
+        "cpu-cores": 1,
+        "ram": 2,
+        "walltime-estimate": 20
+    },
+    "tags": {
+        "domain": [
+            "neuroinformatics",
+            "image processing",
+            "mri",
+            "noise"
+        ]
+    },
+    "tool-version": "v0.3.0rc3"
+}

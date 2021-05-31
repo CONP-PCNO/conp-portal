@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "fslstats",
+        "descriptor-doi": "10.5281/zenodo.4472771",
+        "date-time": "2021-04-15_13h42m28s699249ms"
+    },
+    "public-invocation": {
+        "input_file": {
+            "file-name": "Isovolume.L_layering_depth.nii.gz",
+            "md5sum": "446509fc0d9f78641b263cd023afada4"
+        },
+        "V": true
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fslstats /home/mandana/CONP/conp-dataset/projects/Khanlab/BigBrainHippoUnfold/BIDSscripts/nighres/Isovolume.L_layering_depth.nii.gz -V > /home/mandana/CONP/conp-dataset/projects/Khanlab/BigBrainHippoUnfold/BIDSscripts/nighres/Isovolume.L_layering_depth.txt",
+        "missing-files": {},
+        "output-files": {
+            "output": {
+                "file-name": "Isovolume.L_layering_depth.txt",
+                "md5sum": "4aa5b07098830afd8fea14b5410c8957"
+            }
+        }
+    },
+    "additional-information": null
+}

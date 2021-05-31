@@ -1,0 +1,90 @@
+{
+    "summary": {
+        "name": "CorticalThickness",
+        "descriptor-doi": "10.5281/zenodo.2634608",
+        "date-time": "2021-04-19_13h07m46s852728ms"
+    },
+    "public-invocation": {
+        "anatomical_image": {
+            "file-name": "sub-9962084_ses-NAPEN00_run-001_T1w.nii.gz",
+            "md5sum": "84f41615e1fe7abadc1c3f4ba1e3ffc6"
+        },
+        "brain_probability_mask": {
+            "file-name": "T_template0_BrainCerebellumProbabilityMask.nii.gz",
+            "md5sum": "e1018562e3a5e31ab35f5c7b1bbe99de"
+        },
+        "brain_template": {
+            "file-name": "T_template0.nii.gz",
+            "md5sum": "f95dbe37ab40e8ad59c1b1eabc7f230c"
+        },
+        "segmentation_priors": [
+            {
+                "file-name": "priors%d.nii.gz",
+                "not_found": true
+            }
+        ],
+        "t1_registration_template": {
+            "file-name": "T_template0_BrainCerebellum.nii.gz",
+            "md5sum": "b29d90d8c8d125b7d6af65c203b02f9a"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "${ANTSPATH}/antsCorticalThickness.sh -a /home/mandana/CONP/conp-dataset/projects/preventad-open-bids/BIDS_dataset/sub-9962084/ses-NAPEN00/anat/sub-9962084_ses-NAPEN00_run-001_T1w.nii.gz -m /home/mandana/CONP/MICCAI2012-Multi-Atlas-Challenge-Data/T_template0_BrainCerebellumProbabilityMask.nii.gz -e /home/mandana/CONP/MICCAI2012-Multi-Atlas-Challenge-Data/T_template0.nii.gz -d 3 -s nii.gz -o antsCT_ -p /home/mandana/CONP/MICCAI2012-Multi-Atlas-Challenge-Data/Priors2/priors%d.nii.gz -t /home/mandana/CONP/MICCAI2012-Multi-Atlas-Challenge-Data/T_template0_BrainCerebellum.nii.gz",
+        "missing-files": {},
+        "output-files": {
+            "BrainExtractionMask": {
+                "file-name": "antsCT_BrainExtractionMask.nii.gz",
+                "md5sum": "7b00b6c03743eac265515843df5539d4"
+            },
+            "BrainSegmentation": {
+                "file-name": "antsCT_BrainSegmentation.nii.gz",
+                "md5sum": "0b5116e3cb1ed346310b7c40eecab356"
+            },
+            "BrainSegmentationN4": {
+                "file-name": "antsCT_BrainSegmentation0N4.nii.gz",
+                "md5sum": "d022fd4449654f939452b35c2d7f552d"
+            },
+            "BrainSegmentationPosteriors": {
+                "file-name": "antsCT_BrainSegmentationPosteriors1.nii.gz",
+                "md5sum": "0bbf47fd6b1e515c0b5b6ce7b6ea9552"
+            },
+            "BrainVolumes": {
+                "file-name": "antsCT_brainvols.csv",
+                "md5sum": "3a1f63f986cf91150eec5890bbdaf898"
+            },
+            "CorticalThickness": {
+                "file-name": "antsCT_CorticalThickness.nii.gz",
+                "md5sum": "dad3e3420b22b813ca2cc035ab37e922"
+            },
+            "ExtractedBrainN4": {
+                "file-name": "antsCT_ExtractedBrain0N4.nii.gz",
+                "md5sum": "934c6dfeac10803a5d860708e294d18e"
+            },
+            "SubjectToTemplate0GenericAffine": {
+                "file-name": "antsCT_SubjectToTemplate0GenericAffine.mat",
+                "md5sum": "bb54b37101a2cdde310c90c26d3cc9ad"
+            },
+            "SubjectToTemplate1Warp": {
+                "file-name": "antsCT_SubjectToTemplate1Warp.nii.gz",
+                "md5sum": "cb4949c17098761bace7a72a91fd87df"
+            },
+            "SubjectToTemplateLogJacobian": {
+                "file-name": "antsCT_SubjectToTemplateLogJacobian.nii.gz",
+                "md5sum": "a2e0597655965d9ffa64ac1b1e43eb99"
+            },
+            "TemplateToSubject0Warp": {
+                "file-name": "antsCT_TemplateToSubject0Warp.nii.gz",
+                "md5sum": "4780b7c566500263eb16ad3b3caa538a"
+            },
+            "TemplateToSubject1GenericAffine": {
+                "file-name": "antsCT_TemplateToSubject1GenericAffine.mat",
+                "md5sum": "397730eb601f6dbef1fe72a47c532feb"
+            }
+        }
+    },
+    "additional-information": null
+}

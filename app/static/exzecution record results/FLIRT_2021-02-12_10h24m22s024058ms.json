@@ -1,0 +1,27 @@
+{
+    "summary": {
+        "name": "FLIRT",
+        "descriptor-doi": "10.5281/zenodo.2597643",
+        "date-time": "2021-02-12_10h24m22s024058ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "highres001_full_normfilter.nii.gz",
+            "not_found": true
+        },
+        "reference": {
+            "file-name": "highres001_full_normfilter.nii.gz",
+            "not_found": true
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 134,
+        "error-message": "",
+        "shell-command": "flirt -in /home/mandana/CONP/conp-dataset/projects/openpain/thermal/healthy010/t1/highres001_full_normfilter.nii.gz -ref /home/mandana/CONP/conp-dataset/projects/openpain/thermal/healthy010/t1/highres001_full_normfilter.nii.gz -out /home/mandana/CONP/conp-dataset/projects/openpain/thermal/healthy010/t1/highres001_full_normfilter_flirt -omat /home/mandana/CONP/conp-dataset/projects/openpain/thermal/healthy010/t1/highres001_full_normfilter_flirt.mat",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

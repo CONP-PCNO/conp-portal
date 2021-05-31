@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "fslstats",
+        "descriptor-doi": "10.5281/zenodo.4472771",
+        "date-time": "2021-04-15_13h11m30s724656ms"
+    },
+    "public-invocation": {
+        "input_file": {
+            "file-name": "sub-01_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz",
+            "md5sum": "6bea645cb589b33c2b4f54bb5831aba1"
+        },
+        "V": true
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fslstats /home/mandana/CONP/conp-dataset/projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset/sub-01_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.nii.gz -V > /home/mandana/CONP/conp-dataset/projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset/sub-01_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.txt",
+        "missing-files": {},
+        "output-files": {
+            "output": {
+                "file-name": "sub-01_task-movie_run-01_space-MNI152NLin2009cAsym_desc-postproc_bold.txt",
+                "md5sum": "68e3120045399e1971f8faa5ad3600f6"
+            }
+        }
+    },
+    "additional-information": null
+}

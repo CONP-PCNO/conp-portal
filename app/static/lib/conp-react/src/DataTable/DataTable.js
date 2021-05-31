@@ -132,6 +132,8 @@ const DataTable = ({
                 </div>
               </div>
               : null}
+              
+              {renderElement.name === "PipelineElement" || renderElement.name === "DatasetElement" ?
             <div className="input-group m-2">
               <input
                 className="form-control p-2"
@@ -149,13 +151,60 @@ const DataTable = ({
                 </span>
               </span>
             </div>
+            :null}
+            {renderElement.name === "PipelineExecutionRecordElement" ?
+            <div className="input-group m-2">
+                <input
+                  className="form-control p-2"
+                  id="Search for Pipeline"
+                  type="text"
+                  placeholder="Search for pipeline"
+                  aria-label="Search for pipeline"
+                  value={query.searchPipelineName}
+                  onChange={e =>
+                    setQuery({ ...query, searchPipelineName: e.currentTarget.value, page: 1 })
+                  }
+                />
+                <span className="input-group-append pr-2">
+                  <span className="input-group-text" id="basic-addon2">
+                    <i className="fa fa-search" />
+                  </span>
+                </span>
+
+                <input
+                  className="form-control p-2"
+                  id="Search for Dataset"
+                  type="text"
+                  placeholder="Search for dataset"
+                  aria-label="Search for dataset"
+                  value={query.searchDatasetName}
+                  onChange={e =>
+                    setQuery({ ...query, searchDatasetName: e.currentTarget.value, page: 1 })
+                  }
+                />
+                <span className="input-group-append ">
+                  <span className="input-group-text" id="basic-addon2">
+                    <i className="fa fa-search" />
+                  </span>
+                </span>
+              </div>
+		: null
+            }
+            
           </div>
+            {renderElement.name === "PipelineElement" ?
+              <div className="d-flex justify-content-end pb-1">
+              <p className="text-reset px-1" >To browse pipelines execution records <a href="/pipelines-execution-records" ><u>click here</u></a></p>
+              </div>
+              : null}
+              
           {renderElement.name === "DatasetElement" ?
             <div className="d-flex justify-content-end pb-1">
               <a className="text-reset px-1" href="/sparql">Advanced Search Page (NEXUS)</a>
             </div>
             : null}
         </div>
+        
         <div className="d-flex justify-content-between">
           <div className="d-flex p-2 justify-content-start align-items-center">
             {query.max_per_page === 'All' ?
@@ -194,6 +243,9 @@ const DataTable = ({
               </div>
             </span>)
           </div>
+          
+          {renderElement.name === "PipelineElement" || renderElement.name === "DatasetElement" ?
+          
           <div className="d-flex align-items-center dropdown p-2">
             <label className="dropdown-label text-nowrap m-2">Sort By: </label>
             <select
@@ -210,7 +262,34 @@ const DataTable = ({
               ))}
             </select>
           </div>
+          : null}
+
         </div>
+        
+        {renderElement.name === "PipelineExecutionRecordElement" ?
+        <div className="card flex-row" style={{ minHeight: '50px' }} data-type="pipeline">
+          <div className="d-flex col-md-12">
+            <div className="d-flex py-1 w-100" style={{ fontSize: 20 }}>
+              <div className="col-5">
+                <span >
+                  <a >Pipeline Name</a>
+                </span>
+              </div>
+              <div className="col-5">
+                <span >
+                  <a >Dataset Name</a>
+                </span>
+              </div>
+              <div className="col-2">
+                <span >
+                  <a >Execution Result</a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        : null}
+        
         {
           elements.map((element, i) => (
             <div key={"" + element.id}>
@@ -230,11 +309,13 @@ const DataTable = ({
                   onClick={handlePageChange}> &lt; </button>
                 {R.range(1, Math.ceil(total / query.max_per_page) + 1).map(
                   (page, i) => {
-                    return <button className={page === query.page ? "btn btn-dark" : "btn btn-outline-dark"} value={page}
+                    { 
+                    return ((page < (10 + query.page)) && (page >= query.page))? <button className={page === query.page ? "btn btn-dark" : "btn btn-outline-dark"} value={page}
                       onClick={handlePageChange}
                       key={i}>
                       {page}
-                    </button>
+                    </button> : null
+                    }
                   }
                 )}
                 <button className="btn btn-outline-dark" value="forward"
@@ -267,6 +348,8 @@ DataTable.propTypes = {
   renderElement: PropTypes.func,
   query: PropTypes.shape({
     search: PropTypes.string,
+    searchPipelineName: PropTypes.string,
+    searchDatasetName: PropTypes.string,
     sortKey: PropTypes.string,
     page: PropTypes.number,
     max_per_page: PropTypes.number,

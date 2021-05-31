@@ -1,0 +1,55 @@
+{
+    "summary": {
+        "name": "BIDS App - FSL Diffusion Preprocessing",
+        "descriptor-doi": "10.5281/zenodo.2566455",
+        "date-time": "2021-01-06_11h46m56s665438ms"
+    },
+    "public-invocation": {
+        "bids_dir": "/home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/",
+        "output_dir": "/home/mandana/CONP/BIDS-App-FSL-DiffusionPreprocessing",
+        "analysis_level": "session"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "python3 /opt/preprocessing_pipeline.py /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/ /home/mandana/CONP/BIDS-App-FSL-DiffusionPreprocessing session --fsldir /usr/share/fsl/",
+        "missing-files": {},
+        "output-files": {
+            "output_dir_path": {
+                "file-name": "BIDS-App-FSL-DiffusionPreprocessing",
+                "files": [
+                    {
+                        "file-name": "invocation.json",
+                        "md5sum": "b2bb40785119fc20a63b7d861e3fbb6f"
+                    },
+                    {
+                        "file-name": "sub-032633",
+                        "files": [
+                            {
+                                "file-name": "ses-020",
+                                "files": [
+                                    {
+                                        "file-name": "dwi",
+                                        "files": [
+                                            {
+                                                "file-name": "sub-032633_ses-020_run-1_dwi_b0_0.nii.gz",
+                                                "md5sum": "9e17afcc2d58e6d548a50c173b3117cf"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "file-name": "anat",
+                                        "files": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

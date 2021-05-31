@@ -1,0 +1,468 @@
+{
+    "summary": {
+        "name": "fsl_anat",
+        "descriptor-doi": "10.5281/zenodo.3899496",
+        "date-time": "2021-04-09_09h05m24s002489ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "sub-9962084_ses-NAPEN00_run-001_T1w.nii.gz",
+            "md5sum": "84f41615e1fe7abadc1c3f4ba1e3ffc6"
+        },
+        "outdir": "/home/mandana/CONP/pipelines/fsl_anat/results/.anat"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fsl_anat -i /home/mandana/CONP/conp-dataset/projects/preventad-open-bids/BIDS_dataset/sub-9962084/ses-NAPEN00/anat/sub-9962084_ses-NAPEN00_run-001_T1w.nii.gz -o /home/mandana/CONP/pipelines/fsl_anat/results/.anat",
+        "missing-files": {},
+        "output-files": {
+            "folder_out": {
+                "file-name": ".anat.anat",
+                "files": [
+                    {
+                        "file-name": "log.txt",
+                        "md5sum": "f043e31e10655a310a6e63c21a7f1792"
+                    },
+                    {
+                        "file-name": "T1_orig.nii.gz",
+                        "md5sum": "acd179a55c1dd220f160ae7bb0a2bcda"
+                    },
+                    {
+                        "file-name": "T1_orig2std.mat",
+                        "md5sum": "bfc8a58d27241257ac57c7ac626096bd"
+                    },
+                    {
+                        "file-name": "T1_std2orig.mat",
+                        "md5sum": "113e3f9c51fa1cd2cfa69aea23380b8d"
+                    },
+                    {
+                        "file-name": "T1_fullfov.nii.gz",
+                        "md5sum": "6bf6681120c86e6b383950dfecf16f14"
+                    },
+                    {
+                        "file-name": "T1_roi.log",
+                        "md5sum": "953f9fbfd62278e93d0652a9cbd21a66"
+                    },
+                    {
+                        "file-name": "T1_roi2nonroi.mat",
+                        "md5sum": "82a534f1af0564b76bddc7ee2d1409b6"
+                    },
+                    {
+                        "file-name": "T1.nii.gz",
+                        "md5sum": "cad978b90f0744da8a9606cb9c53c7da"
+                    },
+                    {
+                        "file-name": "T1_nonroi2roi.mat",
+                        "md5sum": "33c6f09396e994eadedc850946a68864"
+                    },
+                    {
+                        "file-name": "T1_orig2roi.mat",
+                        "md5sum": "4082c02b83fea48efb005c232c61cf64"
+                    },
+                    {
+                        "file-name": "T1_roi2orig.mat",
+                        "md5sum": "f109316659f0e5dc32cb2a7068939329"
+                    },
+                    {
+                        "file-name": "lesionmask.nii.gz",
+                        "md5sum": "f86064bf21dfe99d85a3f81424db30f5"
+                    },
+                    {
+                        "file-name": "lesionmaskinv.nii.gz",
+                        "md5sum": "b367c30f2179073eeff8d2514a8167c7"
+                    },
+                    {
+                        "file-name": "T1_fast_seg.nii.gz",
+                        "md5sum": "8463de6a96857606c4141766f50cfbfb"
+                    },
+                    {
+                        "file-name": "T1_fast_restore.nii.gz",
+                        "md5sum": "882c1879668e6c3b33a93b17eb442e2b"
+                    },
+                    {
+                        "file-name": "T1_fast_bias.nii.gz",
+                        "md5sum": "61c5c0cf0d8af312430a21091bb2df34"
+                    },
+                    {
+                        "file-name": "T1_to_MNI_lin.mat",
+                        "md5sum": "07eebf86c6e6ca9268f65a709ce98663"
+                    },
+                    {
+                        "file-name": "T1_to_MNI_lin.nii.gz",
+                        "md5sum": "3ce3711e8c7cea833d9a27414216d5da"
+                    },
+                    {
+                        "file-name": "MNI152_T1_2mm_brain_mask_dil1.nii.gz",
+                        "md5sum": "f4c2e3c9febdc1a4d5aaec4b0a558a76"
+                    },
+                    {
+                        "file-name": "T1_to_MNI_nonlin.txt",
+                        "md5sum": "12ebf8ea372e1d297c6104fa414d9113"
+                    },
+                    {
+                        "file-name": "T1_to_MNI_nonlin_coeff.nii.gz",
+                        "md5sum": "5ae6cba29c665e1ecbe9d2658b379a16"
+                    },
+                    {
+                        "file-name": "T1_to_MNI_nonlin_field.nii.gz",
+                        "md5sum": "bf137300b3103d703b157244584f24db"
+                    },
+                    {
+                        "file-name": "T1_to_MNI_nonlin_jac.nii.gz",
+                        "md5sum": "6c887efa40b41ec40f2641736b7f901d"
+                    },
+                    {
+                        "file-name": "T1_to_MNI_nonlin.nii.gz",
+                        "md5sum": "a4b9c13fc8975dd40f5a41bbd9e25436"
+                    },
+                    {
+                        "file-name": "MNI_to_T1_nonlin_field.nii.gz",
+                        "md5sum": "2baefaeb303b6984b780472dde923a65"
+                    },
+                    {
+                        "file-name": "T1_biascorr_brain_mask.nii.gz",
+                        "md5sum": "706cb21b8ebf165b45f0c3240d8c3db8"
+                    },
+                    {
+                        "file-name": "T1_biascorr_brain.nii.gz",
+                        "md5sum": "882c1879668e6c3b33a93b17eb442e2b"
+                    },
+                    {
+                        "file-name": "T1_fast_pve_0.nii.gz",
+                        "md5sum": "d2e20cca4de0c73006e330b2b27f950f"
+                    },
+                    {
+                        "file-name": "T1_fast_pve_1.nii.gz",
+                        "md5sum": "8f88f5ad3edfb07a9f029a2b58489f7b"
+                    },
+                    {
+                        "file-name": "T1_fast_pve_2.nii.gz",
+                        "md5sum": "4de58ca850c5fa826205b12446ec5154"
+                    },
+                    {
+                        "file-name": "T1_fast_pveseg.nii.gz",
+                        "md5sum": "4128a9b6cf6773adf754614b99a87aa2"
+                    },
+                    {
+                        "file-name": "T1_fast_mixeltype.nii.gz",
+                        "md5sum": "97279bbbb0f522be0ce66a53327ed3da"
+                    },
+                    {
+                        "file-name": "T1_biascorr.nii.gz",
+                        "md5sum": "19fba3bd3f90dbda17070a4d7601fa9f"
+                    },
+                    {
+                        "file-name": "T1_biascorr_bet_skull.nii.gz",
+                        "md5sum": "2851a0d5b76b8ef5d17fb7bff5f99852"
+                    },
+                    {
+                        "file-name": "T12std_skullcon.mat",
+                        "md5sum": "e12a75c9a392df9160ec9f7ca282d2f5"
+                    },
+                    {
+                        "file-name": "T1_vols.txt",
+                        "md5sum": "36185650a49c74e311bcaa8c4ce1c5eb"
+                    },
+                    {
+                        "file-name": "T1_biascorr_to_std_sub.mat",
+                        "md5sum": "cb5a972bbca943818a702582e0fefc57"
+                    },
+                    {
+                        "file-name": "first_results",
+                        "files": [
+                            {
+                                "file-name": "T1_first.logs",
+                                "files": [
+                                    {
+                                        "file-name": "first.o909.1",
+                                        "md5sum": "fff5ee5cdd3788ea5f9dfd7260fcda46"
+                                    },
+                                    {
+                                        "file-name": "first.e909.1",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first.o909.2",
+                                        "md5sum": "88c4414602809b7c40bb41798001964e"
+                                    },
+                                    {
+                                        "file-name": "first.e909.2",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first.o909.3",
+                                        "md5sum": "d67c664b5c59ec19a572e347f26ccc2a"
+                                    },
+                                    {
+                                        "file-name": "first.e909.3",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first.o909.4",
+                                        "md5sum": "d905cbb434d518f644327815e3b16cf2"
+                                    },
+                                    {
+                                        "file-name": "first.e909.4",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first.o909.5",
+                                        "md5sum": "89ad8f5562c7a789516022f5f9337090"
+                                    },
+                                    {
+                                        "file-name": "first.e909.5",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first.o909.6",
+                                        "md5sum": "6800f44dc9e589bcf27b23b4dab1aed1"
+                                    },
+                                    {
+                                        "file-name": "first.e909.6",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first.o909.7",
+                                        "md5sum": "0b5dede167395f608f85a5237610ee84"
+                                    },
+                                    {
+                                        "file-name": "first.e909.7",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first.o909.8",
+                                        "md5sum": "3fb3be03c343b9ff8e1747b7656dc954"
+                                    },
+                                    {
+                                        "file-name": "first.e909.8",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first.o909.9",
+                                        "md5sum": "bcb429ead6fc5d15f7fae2d8bd45f376"
+                                    },
+                                    {
+                                        "file-name": "first.e909.9",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first.o909.10",
+                                        "md5sum": "00819a87bdab99af2a042f898b52d031"
+                                    },
+                                    {
+                                        "file-name": "first.e909.10",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first.o909.11",
+                                        "md5sum": "2fd4a25259f3d73fc3c37df982c73a55"
+                                    },
+                                    {
+                                        "file-name": "first.e909.11",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first.o909.12",
+                                        "md5sum": "02bbacc6f11d37ced343abc66b8cdc3a"
+                                    },
+                                    {
+                                        "file-name": "first.e909.12",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first.o909.13",
+                                        "md5sum": "16bc8622a65b706bf8f6ec45a9bf6339"
+                                    },
+                                    {
+                                        "file-name": "first.e909.13",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first.o909.14",
+                                        "md5sum": "a60d875bebac3067a536f1965566a9fc"
+                                    },
+                                    {
+                                        "file-name": "first.e909.14",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first.o909.15",
+                                        "md5sum": "77691a732a3348ebedf883f6c49eb173"
+                                    },
+                                    {
+                                        "file-name": "first.e909.15",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first_post.o7243.1",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "first_post.e7243.1",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "clean_up.o7258.1",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    },
+                                    {
+                                        "file-name": "clean_up.e7258.1",
+                                        "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                    }
+                                ]
+                            },
+                            {
+                                "file-name": "T1_first.com",
+                                "md5sum": "e64f145ae92507e2908819c11156c1dc"
+                            },
+                            {
+                                "file-name": "T1_first-L_Accu_first.bvars",
+                                "md5sum": "2342cd4ea10700a88acd492503d0d163"
+                            },
+                            {
+                                "file-name": "T1_first-L_Accu_first.vtk",
+                                "md5sum": "989e29a758ce6830c316c45619528301"
+                            },
+                            {
+                                "file-name": "T1_first.com2",
+                                "md5sum": "15c44f0905cac1bd1bf862046c234d09"
+                            },
+                            {
+                                "file-name": "T1_first.com3",
+                                "md5sum": "b84fc7d2fdeb80ee1e32c4ef0856cdee"
+                            },
+                            {
+                                "file-name": "T1_first-L_Amyg_first.bvars",
+                                "md5sum": "c4e473207c4fd5089d7302ab72e51cf0"
+                            },
+                            {
+                                "file-name": "T1_first-L_Amyg_first.vtk",
+                                "md5sum": "44c683a762d44a7423ad659117750de4"
+                            },
+                            {
+                                "file-name": "T1_first-L_Thal_first.vtk",
+                                "md5sum": "18bef2b57dceed7b24e93491e6c9534c"
+                            },
+                            {
+                                "file-name": "T1_first-R_Accu_first.bvars",
+                                "md5sum": "14e9270b34aebb749e46b4b498f080ad"
+                            },
+                            {
+                                "file-name": "T1_first-R_Amyg_first.vtk",
+                                "md5sum": "af65012f959633f0ae3803c9228114b4"
+                            },
+                            {
+                                "file-name": "T1_first-R_Caud_first.bvars",
+                                "md5sum": "32387d1c7724f972974b91cf30ceafb0"
+                            },
+                            {
+                                "file-name": "T1_first-R_Thal_first.vtk",
+                                "md5sum": "9bd84d245c92b72237c4403f3abb16bf"
+                            },
+                            {
+                                "file-name": "T1_first-BrStem_first.vtk",
+                                "md5sum": "cd21b330c3ea024fd3ddb307154ddb9c"
+                            },
+                            {
+                                "file-name": "T1_first-R_Thal_first.bvars",
+                                "md5sum": "6ae229914939d59f056d8a624b4d5a7e"
+                            },
+                            {
+                                "file-name": "T1_first-BrStem_first.bvars",
+                                "md5sum": "28ba56742695e9a9d093fcbb42931ba7"
+                            },
+                            {
+                                "file-name": "T1_first_all_fast_origsegs.nii.gz",
+                                "md5sum": "d08bc4155b7eb86ad0a70f8f4b73cdcd"
+                            },
+                            {
+                                "file-name": "T1_first-L_Caud_first.bvars",
+                                "md5sum": "67e30d12b27d357024ab582ec3f7bfc8"
+                            },
+                            {
+                                "file-name": "T1_first-L_Caud_first.vtk",
+                                "md5sum": "bacfa690bba4f922b857bec744e4f8dc"
+                            },
+                            {
+                                "file-name": "T1_first-R_Accu_first.vtk",
+                                "md5sum": "6829f24d7a4cb1735e26cfb5c3fb92fb"
+                            },
+                            {
+                                "file-name": "T1_first-R_Amyg_first.bvars",
+                                "md5sum": "f8b288ccfab338d1602e0895babe85b0"
+                            },
+                            {
+                                "file-name": "T1_first-R_Caud_first.vtk",
+                                "md5sum": "29c2486f4f61e07a105dfe34987939f7"
+                            },
+                            {
+                                "file-name": "T1_first-R_Hipp_first.bvars",
+                                "md5sum": "cd26bbe4293cc00d59e29b7ccb6e362d"
+                            },
+                            {
+                                "file-name": "T1_first-R_Pall_first.bvars",
+                                "md5sum": "20f2c2c5adb1ebeb64ce8dd6eed16143"
+                            },
+                            {
+                                "file-name": "T1_first-R_Puta_first.bvars",
+                                "md5sum": "a3ab1a733192614fe3542ee46bade3fe"
+                            },
+                            {
+                                "file-name": "T1_first_all_fast_firstseg.nii.gz",
+                                "md5sum": "49013555ad02698141314122680b0988"
+                            },
+                            {
+                                "file-name": "T1_first-L_Hipp_first.bvars",
+                                "md5sum": "e89e8cdf31b20fb820f21e9fcea86a3f"
+                            },
+                            {
+                                "file-name": "T1_first-L_Hipp_first.vtk",
+                                "md5sum": "e87772dc09c4a4f4867d7a881dea15c1"
+                            },
+                            {
+                                "file-name": "T1_first-L_Pall_first.bvars",
+                                "md5sum": "621c35c1bcec08c53b1754a9cbdf153c"
+                            },
+                            {
+                                "file-name": "T1_first-L_Pall_first.vtk",
+                                "md5sum": "73c4e55f48a0bc9e13c150a3da0c07fc"
+                            },
+                            {
+                                "file-name": "T1_first-L_Puta_first.bvars",
+                                "md5sum": "7b2508958c8cc1e313fe7830f977773d"
+                            },
+                            {
+                                "file-name": "T1_first-L_Puta_first.vtk",
+                                "md5sum": "613433e802d4eb13e060c9d4e2970150"
+                            },
+                            {
+                                "file-name": "T1_first-L_Thal_first.bvars",
+                                "md5sum": "3f85407825871157d77d0d14ec76f823"
+                            },
+                            {
+                                "file-name": "T1_first-R_Hipp_first.vtk",
+                                "md5sum": "d54d6959ab11498e2545ed04b8a50983"
+                            },
+                            {
+                                "file-name": "T1_first-R_Pall_first.vtk",
+                                "md5sum": "d51962a5d0cd5028573e838572f5f00c"
+                            },
+                            {
+                                "file-name": "T1_first-R_Puta_first.vtk",
+                                "md5sum": "4337dad646416782c31e79c2f118caa5"
+                            }
+                        ]
+                    },
+                    {
+                        "file-name": "T1_subcort_seg.nii.gz",
+                        "md5sum": "49013555ad02698141314122680b0988"
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

@@ -1,0 +1,31 @@
+{
+    "summary": {
+        "name": "oneVoxel",
+        "descriptor-doi": "10.5281/zenodo.3308620",
+        "date-time": "2021-01-30_15h06m24s124213ms"
+    },
+    "public-invocation": {
+        "image_file": {
+            "file-name": "bigbrain.loris.ca_BigBrainRelease.2015_3D_Volumes_Histological_Space_full8_400um_optbal.nii.gz",
+            "md5sum": "44a2aead3f1710e6f28cb52d4c648bb9"
+        },
+        "mask_file": {
+            "file-name": "mask_mask.nii.gz",
+            "md5sum": "efe6b94de798257021ac188c2be4d5cd"
+        },
+        "output_directory": {
+            "file-name": "output_BigBrain",
+            "files": []
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "onevox /home/mandana/CONP/conp-dataset/projects/BigBrain/3D_Volumes/Histological_Space/bigbrain.loris.ca_BigBrainRelease.2015_3D_Volumes_Histological_Space_full8_400um_optbal.nii.gz /home/mandana/CONP/oneVoxel/output_BigBrain --mask_file /home/mandana/CONP/oneVoxel/mask_mask.nii.gz --intensity 0.01 --erode 3 --repeat 1 --mode single",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

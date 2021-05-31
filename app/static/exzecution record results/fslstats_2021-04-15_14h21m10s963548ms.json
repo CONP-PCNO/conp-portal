@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "fslstats",
+        "descriptor-doi": "10.5281/zenodo.4472771",
+        "date-time": "2021-04-15_14h21m10s963548ms"
+    },
+    "public-invocation": {
+        "input_file": {
+            "file-name": "BigBrain-to-ICBM2009sym-nonlin-1mm.nii",
+            "md5sum": "0a1a9afa61cb409690fbb56e4d5530b2"
+        },
+        "V": true
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fslstats /home/mandana/CONP/conp-dataset/projects/Khanlab/BigBrainMRICoreg/Atlases/NifTI/BigBrain-to-ICBM2009sym-nonlin-1mm.nii -V > /home/mandana/CONP/conp-dataset/projects/Khanlab/BigBrainMRICoreg/Atlases/NifTI/BigBrain-to-ICBM2009sym-nonlin-1mm.txt",
+        "missing-files": {},
+        "output-files": {
+            "output": {
+                "file-name": "BigBrain-to-ICBM2009sym-nonlin-1mm.txt",
+                "md5sum": "ade9b44f01edc28d7b62a45b7a8e5556"
+            }
+        }
+    },
+    "additional-information": null
+}

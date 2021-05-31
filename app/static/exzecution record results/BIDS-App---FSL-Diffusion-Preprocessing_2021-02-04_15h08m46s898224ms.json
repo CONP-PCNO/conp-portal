@@ -1,0 +1,32 @@
+{
+    "summary": {
+        "name": "BIDS App - FSL Diffusion Preprocessing",
+        "descriptor-doi": "10.5281/zenodo.2566455",
+        "date-time": "2021-02-04_15h08m46s898224ms"
+    },
+    "public-invocation": {
+        "bids_dir": "conp-dataset/projects/preventad-open-bids/BIDS_dataset/",
+        "analysis_level": "session",
+        "output_dir": "/home/mandana/CONP/output_dir"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "python3 /opt/preprocessing_pipeline.py conp-dataset/projects/preventad-open-bids/BIDS_dataset/ /home/mandana/CONP/output_dir session --fsldir /usr/share/fsl/",
+        "missing-files": {},
+        "output-files": {
+            "output_dir_path": {
+                "file-name": "output_dir",
+                "files": [
+                    {
+                        "file-name": "sub-9962084_ses-NAPEN00_run-001_brain.nii.gz",
+                        "md5sum": "b02a07829077ec7a43d1a230c557e0a3"
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

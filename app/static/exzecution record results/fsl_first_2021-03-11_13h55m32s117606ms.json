@@ -1,0 +1,31 @@
+{
+    "summary": {
+        "name": "fsl_first",
+        "descriptor-doi": "10.5281/zenodo.1494312",
+        "date-time": "2021-03-11_13h55m32s117606ms"
+    },
+    "public-invocation": {
+        "input_file": {
+            "file-name": "preventad_1000173_NAPBL00_asl_001-copy.mnc",
+            "md5sum": "d15646c2bd449644fc134f6ec71403d8"
+        },
+        "prefix": "output"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 255,
+        "error-message": "",
+        "shell-command": "mkdir -p /home/mandana/CONP/conp-dataset/projects/preventad-open/1000173/NAPBL00/images/preventad_1000173_NAPBL00_asl_001-copy.mnc; run_first_all -i /home/mandana/CONP/conp-dataset/projects/preventad-open/1000173/NAPBL00/images/preventad_1000173_NAPBL00_asl_001-copy.mnc -o /home/mandana/CONP/conp-dataset/projects/preventad-open/1000173/NAPBL00/images/preventad_1000173_NAPBL00_asl_001-copy.mnc/output",
+        "missing-files": {
+            "std_sub_outputs": "/home/mandana/CONP/conp-dataset/projects/preventad-open/1000173/NAPBL00/images/preventad_1000173_NAPBL00_asl_001-copy.mnc_to_std_sub*"
+        },
+        "output-files": {
+            "outputs": {
+                "file-name": "preventad_1000173_NAPBL00_asl_001-copy.mnc",
+                "md5sum": "d15646c2bd449644fc134f6ec71403d8"
+            }
+        }
+    },
+    "additional-information": null
+}

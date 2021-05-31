@@ -1,0 +1,24 @@
+{
+    "summary": {
+        "name": "BIDS App - FreeSurfer 6.0",
+        "descriptor-doi": "10.5281/zenodo.1484547",
+        "date-time": "2021-03-25_13h41m05s926958ms"
+    },
+    "public-invocation": {
+        "bids_dir": "/home/mandana/CONP/conp-dataset/projects/preventad-open-bids/BIDS_dataset/",
+        "analysis_level": "participant",
+        "refine_pial": "None",
+        "license_file": "/home/mandana/CONP/pipelines/license_FreeSurfer/license.txt",
+        "output_dir": "/home/mandana/CONP/output_dir"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "mkdir -p /home/mandana/CONP/output_dir ; /run.py /home/mandana/CONP/conp-dataset/projects/preventad-open-bids/BIDS_dataset/ /home/mandana/CONP/output_dir participant --n_cpus 1 --stages autorecon-all --steps cross-sectional template longitudinal --template_name average --license_file /home/mandana/CONP/pipelines/license_FreeSurfer/license.txt --multiple_sessions longitudinal --refine_pial None --hires_mode auto --parcellations aparc --measurements thickness --3T true",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

@@ -1,0 +1,54 @@
+{
+    "summary": {
+        "name": "fsl_fast",
+        "descriptor-doi": "10.5281/zenodo.1494308",
+        "date-time": "2021-02-17_09h05m27s557895ms"
+    },
+    "public-invocation": {
+        "output_basename": "fast",
+        "in_files": {
+            "file-name": "bigbrain.loris.ca_BigBrainRelease.2015_3D_Classified_Volumes_Histological_Space_full_cls_1000um.nii.gz",
+            "not_found": true
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "fast -o fast /home/mandana/CONP/conp-dataset/projects/BigBrain_3DClassifiedVolumes/bigbrain.loris.ca_BigBrainRelease.2015_3D_Classified_Volumes_Histological_Space_full_cls_1000um.nii.gz; mkdir fast; mv fast_* fast",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "fast",
+                "files": [
+                    {
+                        "file-name": "fast_mixeltype.nii.gz",
+                        "md5sum": "4d17752956e3fab15ed9e0ba91fe5b4a"
+                    },
+                    {
+                        "file-name": "fast_pve_0.nii.gz",
+                        "md5sum": "78044146b9933f942f2151e349a418ec"
+                    },
+                    {
+                        "file-name": "fast_pve_1.nii.gz",
+                        "md5sum": "4418258507d542c01c31f57f8b2ddbba"
+                    },
+                    {
+                        "file-name": "fast_pve_2.nii.gz",
+                        "md5sum": "fc01f6cd33f9a6fd71b6a6d03e07b26f"
+                    },
+                    {
+                        "file-name": "fast_pveseg.nii.gz",
+                        "md5sum": "a74288a52c444a918675a9f977fea250"
+                    },
+                    {
+                        "file-name": "fast_seg.nii.gz",
+                        "md5sum": "2551ceaa79eba090e76b5eaedbca5f6a"
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

@@ -1,0 +1,36 @@
+{
+    "summary": {
+        "name": "ApplyWarp",
+        "descriptor-doi": "10.5281/zenodo.2650440",
+        "date-time": "2021-03-17_22h45m17s127649ms"
+    },
+    "public-invocation": {
+        "in_file": {
+            "file-name": "sub-9962084_ses-NAPEN00_run-001_FLAIR.nii.gz",
+            "md5sum": "74fcb434daf8ae500d6c6460d9a24671"
+        },
+        "out_file": {
+            "file-name": "applywrap-out.nii.gz",
+            "md5sum": "9a9d14cb69d3cc91562a085853837f59"
+        },
+        "ref_file": {
+            "file-name": "sub-9962084_ses-NAPEN00_run-001_T1w.nii.gz",
+            "md5sum": "84f41615e1fe7abadc1c3f4ba1e3ffc6"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "applywarp --in=/home/mandana/CONP/conp-dataset/projects/preventad-open-bids/BIDS_dataset/sub-9962084/ses-NAPEN00/anat/sub-9962084_ses-NAPEN00_run-001_FLAIR.nii.gz --ref=/home/mandana/CONP/conp-dataset/projects/preventad-open-bids/BIDS_dataset/sub-9962084/ses-NAPEN00/anat/sub-9962084_ses-NAPEN00_run-001_T1w.nii.gz --out=/home/mandana/CONP/conp-dataset/projects/preventad-open-bids/BIDS_dataset/sub-9962084/ses-NAPEN00/anat/applywrap-out.nii.gz",
+        "missing-files": {},
+        "output-files": {
+            "out_file_outfile": {
+                "file-name": "applywrap-out.nii.gz",
+                "md5sum": "560eb54cf01e415460d2f912f22c162d"
+            }
+        }
+    },
+    "additional-information": null
+}

@@ -1,0 +1,54 @@
+{
+    "summary": {
+        "name": "fsl_fast",
+        "descriptor-doi": "10.5281/zenodo.1494308",
+        "date-time": "2021-02-17_09h15m50s766227ms"
+    },
+    "public-invocation": {
+        "output_basename": "fast",
+        "in_files": {
+            "file-name": "sub-10_T1w.nii.gz",
+            "md5sum": "ea80cfc8ce43714669fbc201eaea159e"
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fast -o fast /home/mandana/CONP/conp-dataset/projects/visual-working-memory/sub-10/anat/sub-10_T1w.nii.gz; mkdir fast; mv fast_* fast",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "fast",
+                "files": [
+                    {
+                        "file-name": "fast_mixeltype.nii.gz",
+                        "md5sum": "1e0216d4d8782f07396b5305c03614d7"
+                    },
+                    {
+                        "file-name": "fast_pve_0.nii.gz",
+                        "md5sum": "def1227bb6b787bb3c66d1ee878f035a"
+                    },
+                    {
+                        "file-name": "fast_pve_1.nii.gz",
+                        "md5sum": "34ab2c8f5a47c1d9cf3fa64561dbdd45"
+                    },
+                    {
+                        "file-name": "fast_pve_2.nii.gz",
+                        "md5sum": "070c9e0a8d287bed4a835265c906e25c"
+                    },
+                    {
+                        "file-name": "fast_pveseg.nii.gz",
+                        "md5sum": "02a9d7de453ee70ed0ae92380ceea211"
+                    },
+                    {
+                        "file-name": "fast_seg.nii.gz",
+                        "md5sum": "e3e54ec8aab703920e10df94b6337258"
+                    }
+                ]
+            }
+        }
+    },
+    "additional-information": null
+}

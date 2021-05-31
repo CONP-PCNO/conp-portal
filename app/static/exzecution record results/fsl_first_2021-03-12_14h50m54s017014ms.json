@@ -1,0 +1,31 @@
+{
+    "summary": {
+        "name": "fsl_first",
+        "descriptor-doi": "10.5281/zenodo.1494312",
+        "date-time": "2021-03-12_14h50m54s017014ms"
+    },
+    "public-invocation": {
+        "input_file": {
+            "file-name": "phantom_999876_MNI_20130903_t2w_001-copy.mnc",
+            "md5sum": "ba4cdeffd258e4879673b748ee4502c9"
+        },
+        "prefix": "output"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 255,
+        "error-message": "",
+        "shell-command": "mkdir -p /home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_999876_MNI_20130903_t2w_001-copy.mnc; run_first_all -i /home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_999876_MNI_20130903_t2w_001-copy.mnc -o /home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_999876_MNI_20130903_t2w_001-copy.mnc/output",
+        "missing-files": {
+            "std_sub_outputs": "/home/mandana/CONP/conp-dataset/projects/multicenter-phantom/phantom_999876_MNI_20130903_t2w_001-copy.mnc_to_std_sub*"
+        },
+        "output-files": {
+            "outputs": {
+                "file-name": "phantom_999876_MNI_20130903_t2w_001-copy.mnc",
+                "md5sum": "ba4cdeffd258e4879673b748ee4502c9"
+            }
+        }
+    },
+    "additional-information": null
+}

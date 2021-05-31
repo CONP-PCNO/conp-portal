@@ -1,0 +1,28 @@
+{
+    "summary": {
+        "name": "BIDS App - fmriprep",
+        "descriptor-doi": "10.5281/zenodo.1895219",
+        "date-time": "2021-02-26_13h00m31s304290ms"
+    },
+    "public-invocation": {
+        "bids_dir": "/home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/",
+        "output_dir": "/home/mandana/CONP/pipelines/BIDS-App-fmriprep.1895219/output",
+        "run_reconall": true,
+        "anat_only": true,
+        "fs_license_file": {
+            "file-name": "license.txt",
+            "md5sum": "f606798c4c204e59ee84e220a6d26426"
+        },
+        "analysis_level": "participant"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "fmriprep /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/ /home/mandana/CONP/pipelines/BIDS-App-fmriprep.1895219/output participant --anat-only --bold2t1w-dof 6 --output-space template fsaverage5 --template MNI152NLin2009cAsym --template-resampling-grid native --aroma-melodic-dimensionality -200 --skull-strip-template OASIS --fs-license-file /home/mandana/CONP/pipelines/FreeSurfer-Recon-all/license.txt --fs-no-reconall",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

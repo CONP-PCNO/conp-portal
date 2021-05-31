@@ -1,0 +1,532 @@
+{
+    "summary": {
+        "name": "BIDS app example",
+        "descriptor-doi": "10.5281/zenodo.1451001",
+        "date-time": "2021-02-13_18h35m14s602669ms"
+    },
+    "public-invocation": {
+        "bids_dir": {
+            "file-name": "",
+            "files": [
+                {
+                    "file-name": ".git",
+                    "files": [
+                        {
+                            "file-name": "branches",
+                            "files": []
+                        },
+                        {
+                            "file-name": "description",
+                            "md5sum": "a0a7c3fff21f2aea3cfa1d0316dd816c"
+                        },
+                        {
+                            "file-name": "hooks",
+                            "files": [
+                                {
+                                    "file-name": "applypatch-msg.sample",
+                                    "md5sum": "ce562e08d8098926a3862fc6e7905199"
+                                },
+                                {
+                                    "file-name": "commit-msg.sample",
+                                    "md5sum": "579a3c1e12a1e74a98169175fb913012"
+                                },
+                                {
+                                    "file-name": "fsmonitor-watchman.sample",
+                                    "md5sum": "ecbb0cb5ffb7d773cd5b2407b210cc3b"
+                                },
+                                {
+                                    "file-name": "post-update.sample",
+                                    "md5sum": "2b7ea5cee3c49ff53d41e00785eb974c"
+                                },
+                                {
+                                    "file-name": "pre-applypatch.sample",
+                                    "md5sum": "054f9ffb8bfe04a599751cc757226dda"
+                                },
+                                {
+                                    "file-name": "pre-commit.sample",
+                                    "md5sum": "e4db8c12ee125a8a085907b757359ef0"
+                                },
+                                {
+                                    "file-name": "pre-push.sample",
+                                    "md5sum": "3c5989301dd4b949dfa1f43738a22819"
+                                },
+                                {
+                                    "file-name": "pre-rebase.sample",
+                                    "md5sum": "56e45f2bcbc8226d2b4200f7c46371bf"
+                                },
+                                {
+                                    "file-name": "pre-receive.sample",
+                                    "md5sum": "2ad18ec82c20af7b5926ed9cea6aeedd"
+                                },
+                                {
+                                    "file-name": "prepare-commit-msg.sample",
+                                    "md5sum": "2b5c047bdb474555e1787db32b2d2fc5"
+                                },
+                                {
+                                    "file-name": "update.sample",
+                                    "md5sum": "517f14b9239689dff8bda3022ebd9004"
+                                },
+                                {
+                                    "file-name": "pre-commit",
+                                    "md5sum": "937d5eb6dc491af149be06e62bf88ee1"
+                                },
+                                {
+                                    "file-name": "post-receive",
+                                    "md5sum": "0b11786ce3c75aa6193fe020b43b1e40"
+                                },
+                                {
+                                    "file-name": "post-checkout",
+                                    "md5sum": "15117886209495e9612a7efbc4d425f3"
+                                },
+                                {
+                                    "file-name": "post-merge",
+                                    "md5sum": "15117886209495e9612a7efbc4d425f3"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "info",
+                            "files": [
+                                {
+                                    "file-name": "exclude",
+                                    "md5sum": "036208b4a1ab4a235d75c181e685e5a3"
+                                },
+                                {
+                                    "file-name": "attributes",
+                                    "md5sum": "66ef2376f9c0d65430c42dfb000d7d8d"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "refs",
+                            "files": [
+                                {
+                                    "file-name": "heads",
+                                    "files": [
+                                        {
+                                            "file-name": "master",
+                                            "md5sum": "7e7905bdda31eccf7a79e9b46b995620"
+                                        },
+                                        {
+                                            "file-name": "git-annex",
+                                            "md5sum": "b2de0cf1ad493be31e70b2178befb563"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "tags",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "remotes",
+                                    "files": [
+                                        {
+                                            "file-name": "origin",
+                                            "files": [
+                                                {
+                                                    "file-name": "HEAD",
+                                                    "md5sum": "73a00957034783b7b5c8294c54cd3e12"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "HEAD",
+                            "md5sum": "4cf2d64e44205fe628ddd534e1151b58"
+                        },
+                        {
+                            "file-name": "config",
+                            "md5sum": "dbd45845ce8945fc0c5b163d16b58068"
+                        },
+                        {
+                            "file-name": "objects",
+                            "files": [
+                                {
+                                    "file-name": "pack",
+                                    "files": [
+                                        {
+                                            "file-name": "pack-7671fb1b2171b2d01fd45febf4f8c05ff55248b0.pack",
+                                            "md5sum": "dadd78b69ae174077b0dbaf00b849464"
+                                        },
+                                        {
+                                            "file-name": "pack-7671fb1b2171b2d01fd45febf4f8c05ff55248b0.idx",
+                                            "md5sum": "9db30d83866fff3485381e3701f81b2a"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "info",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "24",
+                                    "files": [
+                                        {
+                                            "file-name": "1dc8350ba46949fe8645f64669c2c68798d4d6",
+                                            "md5sum": "2b08d638700064bb03187ede13ec272d"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "ba",
+                                    "files": [
+                                        {
+                                            "file-name": "37fbc01ef7bbc8f744b38a5293ada82f002cdc",
+                                            "md5sum": "571ff4954c9388d645da5ac320e51f33"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "76",
+                                    "files": [
+                                        {
+                                            "file-name": "ce057295167853956332ba8b8df06d51ce67f6",
+                                            "md5sum": "2fa6a1de8a4703be802bfb0c9e47f044"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "a3",
+                                    "files": [
+                                        {
+                                            "file-name": "ec3dcff315ed24605160ef23cc5e59a6d9db2c",
+                                            "md5sum": "1dc47d66a1fd27a4923bd0b96f91a879"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "23",
+                                    "files": [
+                                        {
+                                            "file-name": "453e3667e5a2c444b8224283ed7d34a1233436",
+                                            "md5sum": "e338adf4793b22a4c06988e9142d6832"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "cf",
+                                    "files": [
+                                        {
+                                            "file-name": "2f98e36b5c191378ed2a4849cc57f4e9d3c155",
+                                            "md5sum": "42d81c9b65317ae5bbd70c671ad2f54d"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "8a",
+                                    "files": [
+                                        {
+                                            "file-name": "74e36f85997497055e24d5403e71e4c2b0d254",
+                                            "md5sum": "3171422f83b75fc644e27b63857982a4"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "69",
+                                    "files": [
+                                        {
+                                            "file-name": "13fe74de8608a143b246d23c091beaa898c5c5",
+                                            "md5sum": "f9dc5a7ffe2671a532077d8e0414c0f7"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "d4",
+                                    "files": [
+                                        {
+                                            "file-name": "aaae95882721cc6945eb8dbaa5113ac40b78ce",
+                                            "md5sum": "8203cdd96b0f6a97e8242c0ad727dedf"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "84",
+                                    "files": [
+                                        {
+                                            "file-name": "f75f72ab23857b0e2cce9ca218ee6dcaaeb751",
+                                            "md5sum": "82daa0aa2c6f623b4876257d7caf1b22"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "packed-refs",
+                            "md5sum": "0f0cac674286f29910662f604e61a8c2"
+                        },
+                        {
+                            "file-name": "logs",
+                            "files": [
+                                {
+                                    "file-name": "refs",
+                                    "files": [
+                                        {
+                                            "file-name": "remotes",
+                                            "files": [
+                                                {
+                                                    "file-name": "origin",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "HEAD",
+                                                            "md5sum": "64d00c5c2132f2ed31afade177cd671c"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "heads",
+                                            "files": [
+                                                {
+                                                    "file-name": "master",
+                                                    "md5sum": "64d00c5c2132f2ed31afade177cd671c"
+                                                },
+                                                {
+                                                    "file-name": "git-annex",
+                                                    "md5sum": "a4e669e18af260d552b32365934716b1"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "HEAD",
+                                    "md5sum": "1618d29e3c08efe072f8a46444a562df"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "index",
+                            "md5sum": "868b0367a2bd59e9807d403540b464f1"
+                        },
+                        {
+                            "file-name": "annex",
+                            "files": [
+                                {
+                                    "file-name": "index",
+                                    "md5sum": "77248e7500eda5974aa43ca15ce9fd69"
+                                },
+                                {
+                                    "file-name": "index.lck",
+                                    "md5sum": "b2de0cf1ad493be31e70b2178befb563"
+                                },
+                                {
+                                    "file-name": "journal.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "mergedrefs",
+                                    "md5sum": "45d1a87f8cb12163d5ddc45fc44021a3"
+                                },
+                                {
+                                    "file-name": "keys.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "keys",
+                                    "files": [
+                                        {
+                                            "file-name": "db",
+                                            "md5sum": "3304dbe9f9d45a5af7a3f4adc3895f51"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "keys.cache",
+                                    "md5sum": "358340421314e7f5eb762b1ae13da502"
+                                },
+                                {
+                                    "file-name": "smudge.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "sentinal",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "sentinal.cache",
+                                    "md5sum": "f03dc68b48a3149ae7b0e669c4fa4bc2"
+                                },
+                                {
+                                    "file-name": "othertmp.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "journal",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "tmp",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "transfer",
+                                    "files": [
+                                        {
+                                            "file-name": "download",
+                                            "files": [
+                                                {
+                                                    "file-name": "00000000-0000-0000-0000-000000000001",
+                                                    "files": []
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "objects",
+                                    "files": [
+                                        {
+                                            "file-name": "v3",
+                                            "files": [
+                                                {
+                                                    "file-name": "kG",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s2291377--ftp&c%%openpain.org%cbp_resting%cbp10%t1%t1.nii.gz",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s2291377--ftp&c%%openpain.org%cbp_resting%cbp10%t1%t1.nii.gz",
+                                                                    "md5sum": "1ededd81a26cf226985475f49068953e"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": ".datalad",
+                    "files": [
+                        {
+                            "file-name": ".gitattributes",
+                            "md5sum": "d4a36c9475aabe1d427d85f34d2b9914"
+                        },
+                        {
+                            "file-name": "config",
+                            "md5sum": "d60583f97d3b3b15e46fcfb52b6f6ce5"
+                        }
+                    ]
+                },
+                {
+                    "file-name": ".gitattributes",
+                    "md5sum": "39156450220ab6553898aebbcf64aa90"
+                },
+                {
+                    "file-name": "cbp10",
+                    "files": [
+                        {
+                            "file-name": "bold",
+                            "files": [
+                                {
+                                    "file-name": "task001_run001",
+                                    "files": [
+                                        {
+                                            "file-name": "bold.nii.gz",
+                                            "not_found": true
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "t1",
+                            "files": [
+                                {
+                                    "file-name": "t1.nii.gz",
+                                    "md5sum": "1ededd81a26cf226985475f49068953e"
+                                },
+                                {
+                                    "file-name": "t1_flirt.mat",
+                                    "md5sum": "63cd6f954c9bc31ebd3fb9f42f7e53d4"
+                                },
+                                {
+                                    "file-name": "t1_flirt.nii.gz",
+                                    "md5sum": "62303ae50b223c4983183a9d9c7b6204"
+                                },
+                                {
+                                    "file-name": "t1_to_t1.log",
+                                    "md5sum": "c0c843423084a62bcaed6ce6a956fb98"
+                                },
+                                {
+                                    "file-name": "t1_warpcoef.nii.gz",
+                                    "md5sum": "6c8ed23d58479041b9ef1a6b4790dd27"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "changes.txt",
+                    "not_found": true
+                },
+                {
+                    "file-name": "clinical_parameters.csv",
+                    "not_found": true
+                },
+                {
+                    "file-name": "DATS.json",
+                    "md5sum": "dc7e5242a4da504d1685920a87bec0cb"
+                },
+                {
+                    "file-name": "demographics.txt",
+                    "not_found": true
+                },
+                {
+                    "file-name": "license.txt",
+                    "not_found": true
+                },
+                {
+                    "file-name": "open_data_commons_pdd_license.pdf",
+                    "not_found": true
+                },
+                {
+                    "file-name": "OP_Pic1.jpg",
+                    "md5sum": "6f00a251645299f56ab831281a5d75b0"
+                },
+                {
+                    "file-name": "README.md",
+                    "md5sum": "64309ee755eb097724b4189eed52e584"
+                },
+                {
+                    "file-name": "scan_key.txt",
+                    "not_found": true
+                },
+                {
+                    "file-name": "study_key.txt",
+                    "not_found": true
+                },
+                {
+                    "file-name": "task_key.txt",
+                    "not_found": true
+                }
+            ]
+        },
+        "output_dir_name": "/home/mandana/CONP/pipelines/BIDS-App-Example/output/",
+        "analysis_level": "participant"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "mkdir -p /home/mandana/CONP/pipelines/BIDS-App-Example/output/; /run.py /home/mandana/CONP/conp-dataset/projects/openpain/cbp_resting/ /home/mandana/CONP/pipelines/BIDS-App-Example/output/ participant",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "",
+                "files": []
+            }
+        }
+    },
+    "additional-information": null
+}

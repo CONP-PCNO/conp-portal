@@ -1,0 +1,786 @@
+{
+    "summary": {
+        "name": "BIDS app example",
+        "descriptor-doi": "10.5281/zenodo.1451001",
+        "date-time": "2021-02-13_18h35m17s649293ms"
+    },
+    "public-invocation": {
+        "bids_dir": {
+            "file-name": "",
+            "files": [
+                {
+                    "file-name": ".git",
+                    "files": [
+                        {
+                            "file-name": "branches",
+                            "files": []
+                        },
+                        {
+                            "file-name": "description",
+                            "md5sum": "a0a7c3fff21f2aea3cfa1d0316dd816c"
+                        },
+                        {
+                            "file-name": "hooks",
+                            "files": [
+                                {
+                                    "file-name": "applypatch-msg.sample",
+                                    "md5sum": "ce562e08d8098926a3862fc6e7905199"
+                                },
+                                {
+                                    "file-name": "commit-msg.sample",
+                                    "md5sum": "579a3c1e12a1e74a98169175fb913012"
+                                },
+                                {
+                                    "file-name": "fsmonitor-watchman.sample",
+                                    "md5sum": "ecbb0cb5ffb7d773cd5b2407b210cc3b"
+                                },
+                                {
+                                    "file-name": "post-update.sample",
+                                    "md5sum": "2b7ea5cee3c49ff53d41e00785eb974c"
+                                },
+                                {
+                                    "file-name": "pre-applypatch.sample",
+                                    "md5sum": "054f9ffb8bfe04a599751cc757226dda"
+                                },
+                                {
+                                    "file-name": "pre-commit.sample",
+                                    "md5sum": "e4db8c12ee125a8a085907b757359ef0"
+                                },
+                                {
+                                    "file-name": "pre-push.sample",
+                                    "md5sum": "3c5989301dd4b949dfa1f43738a22819"
+                                },
+                                {
+                                    "file-name": "pre-rebase.sample",
+                                    "md5sum": "56e45f2bcbc8226d2b4200f7c46371bf"
+                                },
+                                {
+                                    "file-name": "pre-receive.sample",
+                                    "md5sum": "2ad18ec82c20af7b5926ed9cea6aeedd"
+                                },
+                                {
+                                    "file-name": "prepare-commit-msg.sample",
+                                    "md5sum": "2b5c047bdb474555e1787db32b2d2fc5"
+                                },
+                                {
+                                    "file-name": "update.sample",
+                                    "md5sum": "517f14b9239689dff8bda3022ebd9004"
+                                },
+                                {
+                                    "file-name": "pre-commit",
+                                    "md5sum": "937d5eb6dc491af149be06e62bf88ee1"
+                                },
+                                {
+                                    "file-name": "post-receive",
+                                    "md5sum": "0b11786ce3c75aa6193fe020b43b1e40"
+                                },
+                                {
+                                    "file-name": "post-checkout",
+                                    "md5sum": "15117886209495e9612a7efbc4d425f3"
+                                },
+                                {
+                                    "file-name": "post-merge",
+                                    "md5sum": "15117886209495e9612a7efbc4d425f3"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "info",
+                            "files": [
+                                {
+                                    "file-name": "exclude",
+                                    "md5sum": "036208b4a1ab4a235d75c181e685e5a3"
+                                },
+                                {
+                                    "file-name": "attributes",
+                                    "md5sum": "66ef2376f9c0d65430c42dfb000d7d8d"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "refs",
+                            "files": [
+                                {
+                                    "file-name": "heads",
+                                    "files": [
+                                        {
+                                            "file-name": "master",
+                                            "md5sum": "13f88a59abaf4cdd74d5b64316ce5c3f"
+                                        },
+                                        {
+                                            "file-name": "git-annex",
+                                            "md5sum": "91badf53b4290646cd900de231f16509"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "tags",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "remotes",
+                                    "files": [
+                                        {
+                                            "file-name": "origin",
+                                            "files": [
+                                                {
+                                                    "file-name": "HEAD",
+                                                    "md5sum": "73a00957034783b7b5c8294c54cd3e12"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "HEAD",
+                            "md5sum": "4cf2d64e44205fe628ddd534e1151b58"
+                        },
+                        {
+                            "file-name": "config",
+                            "md5sum": "eea6bb3423c3ac9ac000536761aacf12"
+                        },
+                        {
+                            "file-name": "objects",
+                            "files": [
+                                {
+                                    "file-name": "pack",
+                                    "files": [
+                                        {
+                                            "file-name": "pack-91bba6926476b13d7d4b8f78fcc3fea03df3e903.pack",
+                                            "md5sum": "b71468e1f04bb6844b2b38579c7e8583"
+                                        },
+                                        {
+                                            "file-name": "pack-91bba6926476b13d7d4b8f78fcc3fea03df3e903.idx",
+                                            "md5sum": "6d774fba5313d5548855d660f436f70d"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "info",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "9b",
+                                    "files": [
+                                        {
+                                            "file-name": "4a48def8d067538f3a5c8d324396663cdf8077",
+                                            "md5sum": "1cfe530b8e0ac05bb274e06f9aa8a9a2"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "b9",
+                                    "files": [
+                                        {
+                                            "file-name": "d848fe2e069c3c77c64c60953992f72af6ddc2",
+                                            "md5sum": "cf1ac7648969cfa19ce350eb78cd28ea"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "36",
+                                    "files": [
+                                        {
+                                            "file-name": "1ed3ada617e623ee820b6f7b867693ba310529",
+                                            "md5sum": "bbabd1fb3d73d8f99a30cffd4176434f"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "0c",
+                                    "files": [
+                                        {
+                                            "file-name": "08398dc492345fa096efa931c15f9d934288b3",
+                                            "md5sum": "dfe6c09801a1e185d652b679429ea044"
+                                        },
+                                        {
+                                            "file-name": "56c10178f57cfa00b0d6efbbd94e0172a35380",
+                                            "md5sum": "1890b8b66922ff9c02b291f6d7b16794"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "60",
+                                    "files": [
+                                        {
+                                            "file-name": "e48abc1bc15bcd2da4bab056b39ad1f8cfed41",
+                                            "md5sum": "a286f3520223ed1f230862f9cb92158c"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "13",
+                                    "files": [
+                                        {
+                                            "file-name": "a2aa09a591377f3d4078356083e8ca56b79fab",
+                                            "md5sum": "6242b95854fd4b1c1db895012190e908"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "8d",
+                                    "files": [
+                                        {
+                                            "file-name": "93ae542568564e7803fa355a9cf958adef3ccf",
+                                            "md5sum": "eb4bf4813bba73cec84c3e67b591d495"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "bc",
+                                    "files": [
+                                        {
+                                            "file-name": "43d7dd96f3b5922d4ae9aea53eed7c4b804960",
+                                            "md5sum": "7b62904a236b06929851b085d68288a4"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "a9",
+                                    "files": [
+                                        {
+                                            "file-name": "66464bd888f751e57473a5ce6dbef2dc44ffc8",
+                                            "md5sum": "14889997cfee61e52fbb4d0417966587"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "7c",
+                                    "files": [
+                                        {
+                                            "file-name": "cedd05088772d84a0b188f6421685f6cc0faa0",
+                                            "md5sum": "b115765cc0956fbf1f0796d0e387732a"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "52",
+                                    "files": [
+                                        {
+                                            "file-name": "b1980bd77df9267e18013f09d620e7ce6fabe8",
+                                            "md5sum": "3ba9e6d291958fad821087be79f45fd9"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "b2",
+                                    "files": [
+                                        {
+                                            "file-name": "086cfa7321f62a78e8cb48418e52b8077cfa04",
+                                            "md5sum": "efe1bc2295a7fa11973c5239ac75efd6"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "aa",
+                                    "files": [
+                                        {
+                                            "file-name": "3f1a48bc8e9a3b972d4373c1740ed3e26642c8",
+                                            "md5sum": "eb8573487db13694cc4a1635648e2503"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "1b",
+                                    "files": [
+                                        {
+                                            "file-name": "b8ebb6bd70c9b146a84edaf05bd136973c4bcc",
+                                            "md5sum": "93ce3b226c084115cf11458645259188"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "6f",
+                                    "files": [
+                                        {
+                                            "file-name": "96117b02c8639c6a235ba01fd5a6a3ad2de634",
+                                            "md5sum": "576ea18fd4b364cd7855044f9cf80374"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "a1",
+                                    "files": [
+                                        {
+                                            "file-name": "0c5e94e80adf43580e6b15259d2ce4081509a7",
+                                            "md5sum": "0b291c0902f7509f89534270ad9b686b"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "5a",
+                                    "files": [
+                                        {
+                                            "file-name": "6b8ccfa30677d4617c27c8e547ce4398c23346",
+                                            "md5sum": "9a22eca259463f0c857b894b8c4e29ef"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "db",
+                                    "files": [
+                                        {
+                                            "file-name": "cc9ec7ec3d53d629ca18b913466f5dcd1eb5df",
+                                            "md5sum": "01205b29b491581e221dbe4c1c7ecedf"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "62",
+                                    "files": [
+                                        {
+                                            "file-name": "4969c832a0794f100bddc946c5b579d94f5c2f",
+                                            "md5sum": "7fc313b868daa8a629b804b9769cb17d"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "4f",
+                                    "files": [
+                                        {
+                                            "file-name": "063f8d10bdce420f056db6562d0500d5c29ff9",
+                                            "md5sum": "007ffe1161e9f36d8ecd154f917b83c8"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "7a",
+                                    "files": [
+                                        {
+                                            "file-name": "3d5922e40183b093bb6f50a2354ddc07b3f3ae",
+                                            "md5sum": "ea1c8324ff99e06a60e251094d70b459"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "66",
+                                    "files": [
+                                        {
+                                            "file-name": "1f1d6a42144388eb09c528ffdf9acfadbc04cf",
+                                            "md5sum": "8aa3b6dcf879d87c8485792a122035c3"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "9e",
+                                    "files": [
+                                        {
+                                            "file-name": "a5399ce1c2bce3147ed7e17b8cc2fbdb629e7f",
+                                            "md5sum": "57c34a2999f1b56e2c54822588b1ac74"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "55",
+                                    "files": [
+                                        {
+                                            "file-name": "fb8fb42b5ec4154d4c4d5123435e60a555513a",
+                                            "md5sum": "4045571b5520c16fe9ea587f9dcf4a5e"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "99",
+                                    "files": [
+                                        {
+                                            "file-name": "3f3add270d9614bffe71d62a56bba362d5e904",
+                                            "md5sum": "0c18ed056335d189c3d4342ee7971aad"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "a7",
+                                    "files": [
+                                        {
+                                            "file-name": "f7f2f128704693045ead4f0ccf9878c5d52026",
+                                            "md5sum": "672d968744741fc0ff91d94ced8e2a63"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "8e",
+                                    "files": [
+                                        {
+                                            "file-name": "1081f9a8944166cba0ac52a744d4b62d7e94f7",
+                                            "md5sum": "b788b78dc3de582bd03094c78bb1f6dc"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "packed-refs",
+                            "md5sum": "990bfe11bc0b6ea926f33826907c4aa8"
+                        },
+                        {
+                            "file-name": "logs",
+                            "files": [
+                                {
+                                    "file-name": "refs",
+                                    "files": [
+                                        {
+                                            "file-name": "remotes",
+                                            "files": [
+                                                {
+                                                    "file-name": "origin",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "HEAD",
+                                                            "md5sum": "e70001890e951c314659b56658f2ffc6"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "heads",
+                                            "files": [
+                                                {
+                                                    "file-name": "master",
+                                                    "md5sum": "e70001890e951c314659b56658f2ffc6"
+                                                },
+                                                {
+                                                    "file-name": "git-annex",
+                                                    "md5sum": "091cb43154fc1df28206c44831f32ab3"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "HEAD",
+                                    "md5sum": "c69d603ef639dbd4bfced5ed51654b88"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "index",
+                            "md5sum": "5b536fda18d66fb32a06ace8ae1f05e6"
+                        },
+                        {
+                            "file-name": "annex",
+                            "files": [
+                                {
+                                    "file-name": "index",
+                                    "md5sum": "f9961149069271dcf18efeeeede5b2fc"
+                                },
+                                {
+                                    "file-name": "index.lck",
+                                    "md5sum": "91badf53b4290646cd900de231f16509"
+                                },
+                                {
+                                    "file-name": "journal.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "mergedrefs",
+                                    "md5sum": "4a5445a1dcaa1348063d5a06e3db4d86"
+                                },
+                                {
+                                    "file-name": "keys.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "keys",
+                                    "files": [
+                                        {
+                                            "file-name": "db",
+                                            "md5sum": "3304dbe9f9d45a5af7a3f4adc3895f51"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "keys.cache",
+                                    "md5sum": "fa87c592fbadadfc47e43f9f8e2dd2b3"
+                                },
+                                {
+                                    "file-name": "smudge.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "sentinal",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "sentinal.cache",
+                                    "md5sum": "1bb97592b2ffad8cb3e006f571803698"
+                                },
+                                {
+                                    "file-name": "othertmp.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "journal",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "tmp",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "transfer",
+                                    "files": [
+                                        {
+                                            "file-name": "download",
+                                            "files": [
+                                                {
+                                                    "file-name": "00000000-0000-0000-0000-000000000001",
+                                                    "files": []
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "objects",
+                                    "files": [
+                                        {
+                                            "file-name": "pZ",
+                                            "files": [
+                                                {
+                                                    "file-name": "Xw",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s1406--ftp&c%%openpain.org%BrainNetworkChange_Mano%func_site1.json",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s1406--ftp&c%%openpain.org%BrainNetworkChange_Mano%func_site1.json",
+                                                                    "md5sum": "d9113d3f5cde565e612da14e8244a5cc"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "pp",
+                                            "files": [
+                                                {
+                                                    "file-name": "Vk",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s1434--ftp&c%%openpain.org%BrainNetwork-033627498a04a5835befaffb69687ee3",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s1434--ftp&c%%openpain.org%BrainNetwork-033627498a04a5835befaffb69687ee3",
+                                                                    "md5sum": "0bfda08108f79dc1705059d73ca31176"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "KQ",
+                                            "files": [
+                                                {
+                                                    "file-name": "vq",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s1336--ftp&c%%openpain.org%BrainNetworkChange_Mano%func_site2.json",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s1336--ftp&c%%openpain.org%BrainNetworkChange_Mano%func_site2.json",
+                                                                    "md5sum": "4663ac66785fa5033fdfa7a1a1b99388"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "gz",
+                                            "files": [
+                                                {
+                                                    "file-name": "wG",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s1113--ftp&c%%openpain.org%BrainNetwork-d8aeeefc2923a13a3fcf50fcef7b8513",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s1113--ftp&c%%openpain.org%BrainNetwork-d8aeeefc2923a13a3fcf50fcef7b8513",
+                                                                    "md5sum": "47aa8af5de6b99e7f01cb2d083c1a35d"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "G7",
+                                            "files": [
+                                                {
+                                                    "file-name": "kX",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s11284478--ftp&c%%openpain.org%BrainNetwork-821e77c5baa0dfd1208e2bee8bb3ddfa",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s11284478--ftp&c%%openpain.org%BrainNetwork-821e77c5baa0dfd1208e2bee8bb3ddfa",
+                                                                    "md5sum": "c3f1f1e07de28fc1d22bcdd1f69190fe"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "q8",
+                                            "files": [
+                                                {
+                                                    "file-name": "Qp",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s49447902--ftp&c%%openpain.org%BrainNetwork-dd65e8f1012f302aca91c9555bdbb7c4",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s49447902--ftp&c%%openpain.org%BrainNetwork-dd65e8f1012f302aca91c9555bdbb7c4",
+                                                                    "md5sum": "065eaf2bbf6737ac98dcc4b47c9b9fb0"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "gx",
+                                            "files": [
+                                                {
+                                                    "file-name": "MG",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s1986--ftp&c%%openpain.org%BrainNetwork-397bc16440eccd5dbdc3829bfd047914",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s1986--ftp&c%%openpain.org%BrainNetwork-397bc16440eccd5dbdc3829bfd047914",
+                                                                    "md5sum": "f1b35c481b99816896cd4ed115b2b278"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": ".datalad",
+                    "files": [
+                        {
+                            "file-name": ".gitattributes",
+                            "md5sum": "d4a36c9475aabe1d427d85f34d2b9914"
+                        },
+                        {
+                            "file-name": "config",
+                            "md5sum": "8052b3dd56e7344dd97f6f5acfddc07e"
+                        }
+                    ]
+                },
+                {
+                    "file-name": ".gitattributes",
+                    "md5sum": "39156450220ab6553898aebbcf64aa90"
+                },
+                {
+                    "file-name": "dataset_description.json",
+                    "md5sum": "0bfda08108f79dc1705059d73ca31176"
+                },
+                {
+                    "file-name": "DATS.json",
+                    "md5sum": "ceefeb000d98db6b450cae612d334b5e"
+                },
+                {
+                    "file-name": "Demographic_Information_for_Site1.tsv",
+                    "md5sum": "f1b35c481b99816896cd4ed115b2b278"
+                },
+                {
+                    "file-name": "Demographic_Information_for_Site2.tsv",
+                    "md5sum": "47aa8af5de6b99e7f01cb2d083c1a35d"
+                },
+                {
+                    "file-name": "func_site1.json",
+                    "md5sum": "d9113d3f5cde565e612da14e8244a5cc"
+                },
+                {
+                    "file-name": "func_site2.json",
+                    "md5sum": "4663ac66785fa5033fdfa7a1a1b99388"
+                },
+                {
+                    "file-name": "OP_Pic1.jpg",
+                    "md5sum": "6f00a251645299f56ab831281a5d75b0"
+                },
+                {
+                    "file-name": "README.md",
+                    "md5sum": "20e4317da63374aa07e944c1dbabc93d"
+                },
+                {
+                    "file-name": "sub_10_control_site_2",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub_10_control_site_2_T1w.nii.gz",
+                                    "md5sum": "c3f1f1e07de28fc1d22bcdd1f69190fe"
+                                },
+                                {
+                                    "file-name": "sub_10_control_site_2_T1w_flirt.mat",
+                                    "md5sum": "850c615534d646962dbfe3f23c1c5182"
+                                },
+                                {
+                                    "file-name": "sub_10_control_site_2_T1w_flirt.nii.gz",
+                                    "md5sum": "972ddb925e13ee1a088c7893e7ed8df4"
+                                },
+                                {
+                                    "file-name": "sub_10_control_site_2_T1w_to_sub_10_control_site_2_T1w.log",
+                                    "md5sum": "3e1f9fe3845d206692bb4c2358b1c309"
+                                },
+                                {
+                                    "file-name": "sub_10_control_site_2_T1w_warpcoef.nii.gz",
+                                    "md5sum": "4cef8c2058b86781f161be67311017d8"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub_10_control_site_2_task_rest_acq_singleband_bold.nii.gz",
+                                    "md5sum": "065eaf2bbf6737ac98dcc4b47c9b9fb0"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "output_dir_name": "/home/mandana/CONP/pipelines/BIDS-App-Example/output/",
+        "analysis_level": "participant"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "mkdir -p /home/mandana/CONP/pipelines/BIDS-App-Example/output/; /run.py /home/mandana/CONP/conp-dataset/projects/openpain/BrainNetworkChange_Mano/ /home/mandana/CONP/pipelines/BIDS-App-Example/output/ participant",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "",
+                "files": []
+            }
+        }
+    },
+    "additional-information": null
+}

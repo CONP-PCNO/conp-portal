@@ -1,0 +1,24 @@
+{
+    "summary": {
+        "name": "fsl_bet",
+        "descriptor-doi": "10.5281/zenodo.1482743",
+        "date-time": "2021-02-22_14h37m02s016458ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "f_infile_32.nii.gz",
+            "not_found": true
+        },
+        "maskfile": "str_maskfile_0r"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "bet f_infile_32.nii.gz str_maskfile_0r",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

@@ -1,0 +1,73 @@
+{
+    "summary": {
+        "name": "oneVoxel",
+        "descriptor-doi": "10.5281/zenodo.3308620",
+        "date-time": "2021-02-22_09h50m09s291171ms"
+    },
+    "public-invocation": {
+        "image_file": {
+            "file-name": "sub-HCPUR100_t1w.nii.gz",
+            "md5sum": "6248ded9a528636072aba8b4ec857dfb"
+        },
+        "mask_file": {
+            "file-name": "mask-2.nii.gz",
+            "md5sum": "33cdcaf6e76a08cf922c0e0d999eee83"
+        },
+        "output_directory": {
+            "file-name": "",
+            "files": [
+                {
+                    "file-name": "inner_binarymask_1vox-3d192916.json",
+                    "md5sum": "7e4f4ecdbc23e022208ca70c828cb537"
+                },
+                {
+                    "file-name": "inner_binarymask_1vox-3d192916.nii.gz",
+                    "md5sum": "f0bcab9eaf9dbb33ea869d7d7e129a1f"
+                },
+                {
+                    "file-name": "inner_binarymask_1vox-16b1826e.json",
+                    "md5sum": "f5f2575ede7f30a2fcf259cd16e90090"
+                },
+                {
+                    "file-name": "inner_binarymask_1vox-16b1826e.nii.gz",
+                    "md5sum": "abf3de133cb0e5bb974b9540c7d0e7b3"
+                },
+                {
+                    "file-name": "inner_binarymask_1vox-1750109a.json",
+                    "md5sum": "861887ff2b91a8497f5d25772ed1946d"
+                },
+                {
+                    "file-name": "inner_binarymask_1vox-1750109a.nii.gz",
+                    "md5sum": "ee8649a3fdb55546cc9706916740f0d2"
+                },
+                {
+                    "file-name": "BigBrain-to-ICBM2009sym-nonlin-1mm_1vox-3b205228.json",
+                    "md5sum": "a5c47cb6371f22141cfc472a5ecb65ff"
+                },
+                {
+                    "file-name": "BigBrain-to-ICBM2009sym-nonlin-1mm_1vox-3b205228.nii.gz",
+                    "md5sum": "d2966210521b1c450dcb51a2d454d8c0"
+                }
+            ]
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "onevox /home/mandana/CONP/conp-dataset/projects/Khanlab/HCPUR100-Template/sub-HCPUR100/anat/sub-HCPUR100_t1w.nii.gz /home/mandana/CONP/pipelines/oneVoxel/output/ --mask_file /home/mandana/CONP/pipelines/oneVoxel/fslbet/masks/mask-2.nii.gz --intensity 0.01 --erode 3 --repeat 1 --mode single",
+        "missing-files": {},
+        "output-files": {
+            "noisy_image": {
+                "file-name": "inner_binarymask_1vox-3d192916.nii.gz",
+                "md5sum": "f0bcab9eaf9dbb33ea869d7d7e129a1f"
+            },
+            "noise_summary": {
+                "file-name": "inner_binarymask_1vox-3d192916.json",
+                "md5sum": "7e4f4ecdbc23e022208ca70c828cb537"
+            }
+        }
+    },
+    "additional-information": null
+}

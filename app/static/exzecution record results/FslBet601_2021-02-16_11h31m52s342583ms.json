@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "FslBet601",
+        "descriptor-doi": "10.5281/zenodo.3267250",
+        "date-time": "2021-02-16_11h31m52s342583ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "sub-032633_ses-010_run-1_T2w.nii.gz",
+            "md5sum": "3f386608e2b1e18c65fe517372299652"
+        },
+        "maskfile": "mask-8"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "bet /home/mandana/CONP/conp-dataset/projects/SIMON-dataset/data_BIDS/sub-032633/ses-010/anat/sub-032633_ses-010_run-1_T2w.nii.gz mask-8",
+        "missing-files": {},
+        "output-files": {
+            "outfile": {
+                "file-name": "mask-8.nii.gz",
+                "md5sum": "0b15b18f77c9da38562c4cab228c31f9"
+            }
+        }
+    },
+    "additional-information": null
+}

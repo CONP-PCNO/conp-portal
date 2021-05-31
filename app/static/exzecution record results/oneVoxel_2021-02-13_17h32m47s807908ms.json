@@ -1,0 +1,31 @@
+{
+    "summary": {
+        "name": "oneVoxel",
+        "descriptor-doi": "10.5281/zenodo.3308620",
+        "date-time": "2021-02-13_17h32m47s807908ms"
+    },
+    "public-invocation": {
+        "image_file": {
+            "file-name": "sub-HCPUR100_t1w.nii.gz",
+            "md5sum": "6248ded9a528636072aba8b4ec857dfb"
+        },
+        "mask_file": {
+            "file-name": "mask-2.nii.gz",
+            "md5sum": "33cdcaf6e76a08cf922c0e0d999eee83"
+        },
+        "output_directory": {
+            "file-name": "",
+            "not_found": true
+        }
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "onevox /home/mandana/CONP/conp-dataset/projects/Khanlab/HCPUR100-Template/sub-HCPUR100/anat/sub-HCPUR100_t1w.nii.gz /home/mandana/CONP/oneVoxel/output/ --mask_file /home/mandana/CONP/pipelines/oneVoxel/fslbet/masks/mask-2.nii.gz --intensity 0.01 --erode 3 --repeat 1 --mode single",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}

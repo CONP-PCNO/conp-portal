@@ -1,0 +1,903 @@
+{
+    "summary": {
+        "name": "BIDS app example",
+        "descriptor-doi": "10.5281/zenodo.1451001",
+        "date-time": "2021-02-13_18h34m47s824419ms"
+    },
+    "public-invocation": {
+        "bids_dir": {
+            "file-name": "",
+            "files": [
+                {
+                    "file-name": ".git",
+                    "files": [
+                        {
+                            "file-name": "branches",
+                            "files": []
+                        },
+                        {
+                            "file-name": "description",
+                            "md5sum": "a0a7c3fff21f2aea3cfa1d0316dd816c"
+                        },
+                        {
+                            "file-name": "hooks",
+                            "files": [
+                                {
+                                    "file-name": "applypatch-msg.sample",
+                                    "md5sum": "ce562e08d8098926a3862fc6e7905199"
+                                },
+                                {
+                                    "file-name": "commit-msg.sample",
+                                    "md5sum": "579a3c1e12a1e74a98169175fb913012"
+                                },
+                                {
+                                    "file-name": "fsmonitor-watchman.sample",
+                                    "md5sum": "ecbb0cb5ffb7d773cd5b2407b210cc3b"
+                                },
+                                {
+                                    "file-name": "post-update.sample",
+                                    "md5sum": "2b7ea5cee3c49ff53d41e00785eb974c"
+                                },
+                                {
+                                    "file-name": "pre-applypatch.sample",
+                                    "md5sum": "054f9ffb8bfe04a599751cc757226dda"
+                                },
+                                {
+                                    "file-name": "pre-commit.sample",
+                                    "md5sum": "e4db8c12ee125a8a085907b757359ef0"
+                                },
+                                {
+                                    "file-name": "pre-push.sample",
+                                    "md5sum": "3c5989301dd4b949dfa1f43738a22819"
+                                },
+                                {
+                                    "file-name": "pre-rebase.sample",
+                                    "md5sum": "56e45f2bcbc8226d2b4200f7c46371bf"
+                                },
+                                {
+                                    "file-name": "pre-receive.sample",
+                                    "md5sum": "2ad18ec82c20af7b5926ed9cea6aeedd"
+                                },
+                                {
+                                    "file-name": "prepare-commit-msg.sample",
+                                    "md5sum": "2b5c047bdb474555e1787db32b2d2fc5"
+                                },
+                                {
+                                    "file-name": "update.sample",
+                                    "md5sum": "517f14b9239689dff8bda3022ebd9004"
+                                },
+                                {
+                                    "file-name": "pre-commit",
+                                    "md5sum": "937d5eb6dc491af149be06e62bf88ee1"
+                                },
+                                {
+                                    "file-name": "post-receive",
+                                    "md5sum": "0b11786ce3c75aa6193fe020b43b1e40"
+                                },
+                                {
+                                    "file-name": "post-checkout",
+                                    "md5sum": "15117886209495e9612a7efbc4d425f3"
+                                },
+                                {
+                                    "file-name": "post-merge",
+                                    "md5sum": "15117886209495e9612a7efbc4d425f3"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "info",
+                            "files": [
+                                {
+                                    "file-name": "exclude",
+                                    "md5sum": "036208b4a1ab4a235d75c181e685e5a3"
+                                },
+                                {
+                                    "file-name": "attributes",
+                                    "md5sum": "66ef2376f9c0d65430c42dfb000d7d8d"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "refs",
+                            "files": [
+                                {
+                                    "file-name": "heads",
+                                    "files": [
+                                        {
+                                            "file-name": "master",
+                                            "md5sum": "ea5f34cbba26f0dc1868611befadb82f"
+                                        },
+                                        {
+                                            "file-name": "git-annex",
+                                            "md5sum": "233569728427e6a75c4f27c5b890c819"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "tags",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "remotes",
+                                    "files": [
+                                        {
+                                            "file-name": "origin",
+                                            "files": [
+                                                {
+                                                    "file-name": "HEAD",
+                                                    "md5sum": "73a00957034783b7b5c8294c54cd3e12"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "HEAD",
+                            "md5sum": "4cf2d64e44205fe628ddd534e1151b58"
+                        },
+                        {
+                            "file-name": "config",
+                            "md5sum": "9a49f0c2addf032f747856887d1975d4"
+                        },
+                        {
+                            "file-name": "objects",
+                            "files": [
+                                {
+                                    "file-name": "pack",
+                                    "files": [
+                                        {
+                                            "file-name": "pack-9a5745fb768744bbf8e7b51b7b1242941a0e0a9a.pack",
+                                            "md5sum": "ba06c083f1088eaab766f7895d1e21fa"
+                                        },
+                                        {
+                                            "file-name": "pack-9a5745fb768744bbf8e7b51b7b1242941a0e0a9a.idx",
+                                            "md5sum": "81e6af2565888f9e239c81034dd2b14f"
+                                        },
+                                        {
+                                            "file-name": "pack-a71ebc8e127b74c66897878a6b751e045e744097.pack",
+                                            "md5sum": "7f90ce7b239ba6a5ccaaeef342e2b22f"
+                                        },
+                                        {
+                                            "file-name": "pack-a71ebc8e127b74c66897878a6b751e045e744097.idx",
+                                            "md5sum": "d3ac181547a5dd3c14167b582716fdcd"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "info",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "2f",
+                                    "files": [
+                                        {
+                                            "file-name": "b82822ae07d180b1965de4f9242b2140cb02c3",
+                                            "md5sum": "149bb762a5d5e7e99e0d39de856c6e50"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "1e",
+                                    "files": [
+                                        {
+                                            "file-name": "360303ba164f5fc0e9c13490be047c6a035558",
+                                            "md5sum": "80c52175a995f8ee1609b25a2fdda398"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "8a",
+                                    "files": [
+                                        {
+                                            "file-name": "cf76b5a72b63f49f26c59aca3d62dbe64717b7",
+                                            "md5sum": "46e28e7022951e42d0f5535789bd8976"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "35",
+                                    "files": [
+                                        {
+                                            "file-name": "93449bfb621e588f21106e7a7394c9405f7f62",
+                                            "md5sum": "505e59c786bee4893864d749a75f0d30"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "2d",
+                                    "files": [
+                                        {
+                                            "file-name": "be51fa14575dcf55d58dccc55f2be5ca6034bd",
+                                            "md5sum": "deb7ed5330a4d1255c947530c27475e1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "22",
+                                    "files": [
+                                        {
+                                            "file-name": "4d732044f04605dad500ea60ae881f065c40d8",
+                                            "md5sum": "e2e8cb0d163ab6040181b4d1a87f9577"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "c8",
+                                    "files": [
+                                        {
+                                            "file-name": "48acba2b9d1b469527ab5e64bc0357702a4470",
+                                            "md5sum": "da272d21eee1796c663624a6492976c4"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "26",
+                                    "files": [
+                                        {
+                                            "file-name": "f026711663754d7c96651412d741c61ced5e2d",
+                                            "md5sum": "a66ba62a2e00c73dabb7d06eb1ab1e7a"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "3a",
+                                    "files": [
+                                        {
+                                            "file-name": "4ce65a486d2a2cd42437e595e1e61528a4f03c",
+                                            "md5sum": "b32805ee410b5faa4c821e56e94ae0cd"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "51",
+                                    "files": [
+                                        {
+                                            "file-name": "99517af946ee54abb77c4356d4909869a740ea",
+                                            "md5sum": "be2577e73232875cf0238877a9c503f7"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "e7",
+                                    "files": [
+                                        {
+                                            "file-name": "839c58b277e5d82e85106c9f4a295878602c24",
+                                            "md5sum": "a6299420336f52b3c0003de29e6c3149"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "3b",
+                                    "files": [
+                                        {
+                                            "file-name": "dee1f90cee2009de541bb3abf1ec992734d6dd",
+                                            "md5sum": "254f57130ab148e9a3dc811fab0662dc"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "30",
+                                    "files": [
+                                        {
+                                            "file-name": "91a63f2b6ea3020d55e6187310b5246751f756",
+                                            "md5sum": "db53a72989d56536a7cb6e4ed83fb447"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "bb",
+                                    "files": [
+                                        {
+                                            "file-name": "cc4b49a33af129549b187ad36e992fdf3e13a4",
+                                            "md5sum": "a83f824d0ec2a9d631dbcf964519dd69"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "85",
+                                    "files": [
+                                        {
+                                            "file-name": "bcd07bfc8473e94f73fca07ce3057d07a35532",
+                                            "md5sum": "6fb9906acd6ea87152eb311f901479e0"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "1f",
+                                    "files": [
+                                        {
+                                            "file-name": "9e43db052bcf1412c274f9bc2c47cfb8504f02",
+                                            "md5sum": "26114542b6a7f30d8c43c7de5bcada06"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "4c",
+                                    "files": [
+                                        {
+                                            "file-name": "bf11d5db2a3d430a4fe9ec13e0c35c2a9e0156",
+                                            "md5sum": "13a744cc7dccf696d6ee3f6df73f9e2d"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "packed-refs",
+                            "md5sum": "d673238e91f94b83a06e469de34bcebe"
+                        },
+                        {
+                            "file-name": "logs",
+                            "files": [
+                                {
+                                    "file-name": "refs",
+                                    "files": [
+                                        {
+                                            "file-name": "remotes",
+                                            "files": [
+                                                {
+                                                    "file-name": "origin",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "HEAD",
+                                                            "md5sum": "635e0c471a12c950f1dcc965be1f4354"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "heads",
+                                            "files": [
+                                                {
+                                                    "file-name": "master",
+                                                    "md5sum": "635e0c471a12c950f1dcc965be1f4354"
+                                                },
+                                                {
+                                                    "file-name": "git-annex",
+                                                    "md5sum": "ca91e83e4f047cfffd9eb294c9b08427"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "HEAD",
+                                    "md5sum": "6c5cfe3b3b4247cb71d3268e07548d32"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "index",
+                            "md5sum": "3ed27a01dc5f931bb5166585ce5f0dbd"
+                        },
+                        {
+                            "file-name": "annex",
+                            "files": [
+                                {
+                                    "file-name": "index",
+                                    "md5sum": "c0d7015c73e83a2efb9644a7acb11cf7"
+                                },
+                                {
+                                    "file-name": "index.lck",
+                                    "md5sum": "233569728427e6a75c4f27c5b890c819"
+                                },
+                                {
+                                    "file-name": "journal.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "mergedrefs",
+                                    "md5sum": "7b14a5f7fb68217224bcd1f35fb6229e"
+                                },
+                                {
+                                    "file-name": "keys.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "keys",
+                                    "files": [
+                                        {
+                                            "file-name": "db",
+                                            "md5sum": "21f6e41fbf2ad36344e574adb6bff2b5"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "keys.cache",
+                                    "md5sum": "2850672c5072739495ff68bb1de43231"
+                                },
+                                {
+                                    "file-name": "smudge.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "sentinal",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "sentinal.cache",
+                                    "md5sum": "a976ddaeb6072b06629c86c4cba7071e"
+                                },
+                                {
+                                    "file-name": "othertmp.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "journal",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "objects",
+                                    "files": [
+                                        {
+                                            "file-name": "qv",
+                                            "files": [
+                                                {
+                                                    "file-name": "08",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "MD5E-s4584--1aa0aa2cbce1fd5c7f0ddd1862a6749a.md",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "MD5E-s4584--1aa0aa2cbce1fd5c7f0ddd1862a6749a.md",
+                                                                    "md5sum": "1aa0aa2cbce1fd5c7f0ddd1862a6749a"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "4K",
+                                            "files": [
+                                                {
+                                                    "file-name": "mK",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s590--ftp&c%%openpain.org%thermal%clinical_parameters.csv",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s590--ftp&c%%openpain.org%thermal%clinical_parameters.csv",
+                                                                    "md5sum": "d3411ea0bae4fd2e08aed2c2baf7418e"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "tmp",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "transfer",
+                                    "files": [
+                                        {
+                                            "file-name": "download",
+                                            "files": [
+                                                {
+                                                    "file-name": "00000000-0000-0000-0000-000000000001",
+                                                    "files": []
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "FETCH_HEAD",
+                            "md5sum": "943b79e658e733e8333e3c2aa51f1d48"
+                        },
+                        {
+                            "file-name": "ORIG_HEAD",
+                            "md5sum": "ea5f34cbba26f0dc1868611befadb82f"
+                        },
+                        {
+                            "file-name": "MERGE_HEAD",
+                            "md5sum": "2aa4ba2b50a279546050e8931b97d125"
+                        },
+                        {
+                            "file-name": "MERGE_MSG",
+                            "md5sum": "004161fd67ac7a36e93c74e134406b86"
+                        },
+                        {
+                            "file-name": "MERGE_MODE",
+                            "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                        }
+                    ]
+                },
+                {
+                    "file-name": ".datalad",
+                    "files": [
+                        {
+                            "file-name": ".gitattributes",
+                            "md5sum": "58a76d5f559902fbbb4b2b8d5cf583f2"
+                        },
+                        {
+                            "file-name": "config",
+                            "md5sum": "b84b8e1309a12aadb3055921c2b5e71e"
+                        }
+                    ]
+                },
+                {
+                    "file-name": "clinical_parameters.csv",
+                    "md5sum": "d3411ea0bae4fd2e08aed2c2baf7418e"
+                },
+                {
+                    "file-name": "DATS.json",
+                    "md5sum": "98708efba62d2e1b9f595c09f00075ec"
+                },
+                {
+                    "file-name": "demographics.txt",
+                    "not_found": true
+                },
+                {
+                    "file-name": "healthy010",
+                    "files": [
+                        {
+                            "file-name": "bold",
+                            "files": [
+                                {
+                                    "file-name": "task001_run001",
+                                    "files": [
+                                        {
+                                            "file-name": "behavior.txt",
+                                            "not_found": true
+                                        },
+                                        {
+                                            "file-name": "bold.nii.gz",
+                                            "not_found": true
+                                        },
+                                        {
+                                            "file-name": "stimulus.txt",
+                                            "not_found": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "task001_run002",
+                                    "files": [
+                                        {
+                                            "file-name": "behavior.txt",
+                                            "not_found": true
+                                        },
+                                        {
+                                            "file-name": "bold.nii.gz",
+                                            "not_found": true
+                                        },
+                                        {
+                                            "file-name": "stimulus.txt",
+                                            "not_found": true
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "t1",
+                            "files": [
+                                {
+                                    "file-name": "highres001_full_normfilter.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "license.txt",
+                    "not_found": true
+                },
+                {
+                    "file-name": "open_data_commons_pdd_license.pdf",
+                    "not_found": true
+                },
+                {
+                    "file-name": "OP_Pic1.jpg",
+                    "md5sum": "6f00a251645299f56ab831281a5d75b0"
+                },
+                {
+                    "file-name": "references.txt",
+                    "not_found": true
+                },
+                {
+                    "file-name": "release_history.txt",
+                    "not_found": true
+                },
+                {
+                    "file-name": "scan_key.txt",
+                    "not_found": true
+                },
+                {
+                    "file-name": "study_key.txt",
+                    "not_found": true
+                },
+                {
+                    "file-name": "task_key.txt",
+                    "not_found": true
+                },
+                {
+                    "file-name": ".circleci",
+                    "files": [
+                        {
+                            "file-name": "config.yml",
+                            "md5sum": "c44fb36da10f5c637946de69b922604c"
+                        },
+                        {
+                            "file-name": "images",
+                            "files": [
+                                {
+                                    "file-name": "Dockerfile",
+                                    "md5sum": "f6458d82f8b12369da92d125bd3885d0"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": ".dockerignore",
+                    "md5sum": "63bde23affaa78eef94394d3b1db8a63"
+                },
+                {
+                    "file-name": ".github",
+                    "files": [
+                        {
+                            "file-name": "CODE_OF_CONDUCT.md",
+                            "md5sum": "bec38f2ec3f7e2890b9fdb8c6df3ebe5"
+                        },
+                        {
+                            "file-name": "CONTRIBUTING.md",
+                            "md5sum": "5716a8aac19079612664c7913b7ea49b"
+                        },
+                        {
+                            "file-name": "ISSUE_TEMPLATE",
+                            "files": [
+                                {
+                                    "file-name": "bug-report.md",
+                                    "md5sum": "97d2e7ab870de050a27fb2879fd6b113"
+                                },
+                                {
+                                    "file-name": "dataset-error.md",
+                                    "md5sum": "2eaccd1a8f037f9cb50f4cb6b45f97f9"
+                                },
+                                {
+                                    "file-name": "feature-request.md",
+                                    "md5sum": "344fe82033fd3328ab1e0120b77f635d"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "PULL_REQUEST_TEMPLATE.md",
+                            "md5sum": "593eb670b1e86f60c33751c426793c7e"
+                        },
+                        {
+                            "file-name": "auto_assign.yml",
+                            "md5sum": "320d822649f47a784c4a54b15a67ad3e"
+                        },
+                        {
+                            "file-name": "workflows",
+                            "files": [
+                                {
+                                    "file-name": "docker_build.yml",
+                                    "md5sum": "663f5923f8d964135e72e7e2cc4889fe"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": ".gitignore",
+                    "md5sum": "82b592031097aee2a03ef9276a6813c4"
+                },
+                {
+                    "file-name": ".gitmodules",
+                    "md5sum": "dc9e74aed6dc4923af65c6617d2867d8"
+                },
+                {
+                    "file-name": "Dockerfile",
+                    "md5sum": "c751754acba9e2f06c27e8ca33dfc6f2"
+                },
+                {
+                    "file-name": "LICENSE",
+                    "md5sum": "39d7ff73ad3f983200bc8bb916d17e27"
+                },
+                {
+                    "file-name": "requirements.txt",
+                    "md5sum": "a422fe0d4fe41a4b836d06cbc972ba36"
+                },
+                {
+                    "file-name": "scripts",
+                    "files": [
+                        {
+                            "file-name": "Crawlers",
+                            "files": [
+                                {
+                                    "file-name": "BaseCrawler.py",
+                                    "md5sum": "9bbb2c7c58466b5395413d8d8c24455e"
+                                },
+                                {
+                                    "file-name": "OSFCrawler.py",
+                                    "md5sum": "946b4be5c1a6a86af8950e03b434c4e6"
+                                },
+                                {
+                                    "file-name": "ZenodoCrawler.py",
+                                    "md5sum": "5710aefd687dce79d8fe3d24a11fca6e"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "crawl.py",
+                            "md5sum": "269bcd0cbcca821418658cb165f966ab"
+                        },
+                        {
+                            "file-name": "crawl.sh",
+                            "md5sum": "6a291b608143298ea23787569f900e63"
+                        },
+                        {
+                            "file-name": "data_aggregation_summary_scripts",
+                            "files": [
+                                {
+                                    "file-name": "README.md",
+                                    "md5sum": "b6a24801bb48d01fcd1b5cd32b8ae3a9"
+                                },
+                                {
+                                    "file-name": "create_data_provenance_summary.py",
+                                    "md5sum": "0962b1a0440250d89bb5a71a7d807804"
+                                },
+                                {
+                                    "file-name": "create_dataset_statistcs_per_data_providers.py",
+                                    "md5sum": "f647be58dad99f57df8acfd46c5d3062"
+                                },
+                                {
+                                    "file-name": "create_tools_statistics_per_domain.py",
+                                    "md5sum": "877931c84f07adba31e40efa0cd82ddd"
+                                },
+                                {
+                                    "file-name": "lib",
+                                    "files": [
+                                        {
+                                            "file-name": "Utility.py",
+                                            "md5sum": "1d04072c1c6f746770eaad818ee2ed91"
+                                        },
+                                        {
+                                            "file-name": "__init__.py",
+                                            "md5sum": "39658dd164670a6b8f45830a35edd86d"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "dats_validator",
+                            "files": [
+                                {
+                                    "file-name": "README.md",
+                                    "md5sum": "81d5d3574c29fcf0847a37f1a852c20a"
+                                },
+                                {
+                                    "file-name": "__init__.py",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "conp-dats",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "examples",
+                                    "files": [
+                                        {
+                                            "file-name": "invalid_dats.json",
+                                            "md5sum": "ece7e51e615010e5a51def9a030b3ae6"
+                                        },
+                                        {
+                                            "file-name": "valid_dats.json",
+                                            "md5sum": "6f16f0b85b76b33c31c0a14e37d469f9"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "requirements.txt",
+                                    "md5sum": "4f1b135b9cae9eabe2958642fe388819"
+                                },
+                                {
+                                    "file-name": "validator.py",
+                                    "md5sum": "02e2a7d74d9b066829a80f845208f228"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "requirements.txt",
+                            "md5sum": "dcf74fb5569da83be7aa84b27639a56e"
+                        },
+                        {
+                            "file-name": "unlock.py",
+                            "md5sum": "ec13a67b95c4cd849d1afa596df61a2f"
+                        }
+                    ]
+                },
+                {
+                    "file-name": "tests",
+                    "files": [
+                        {
+                            "file-name": "README.md",
+                            "md5sum": "5d545744d3d6407b3eb866ae6eedc3f3"
+                        },
+                        {
+                            "file-name": "__init__.py",
+                            "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                        },
+                        {
+                            "file-name": "create_tests.py",
+                            "md5sum": "be1a6b2f5267a2cebaf9eb784fc88fbc"
+                        },
+                        {
+                            "file-name": "functions.py",
+                            "md5sum": "ecf589195afe956e10a662eeee33e36c"
+                        },
+                        {
+                            "file-name": "parse_results.py",
+                            "md5sum": "29ad27cb271c9e2af1392224b993374c"
+                        },
+                        {
+                            "file-name": "requirements.txt",
+                            "md5sum": "ff79a7e74a45535fe3b810e070f701f7"
+                        },
+                        {
+                            "file-name": "template.py",
+                            "md5sum": "bfbd2ba1e46242eee549637ea3f9de56"
+                        },
+                        {
+                            "file-name": "test_dats_validator.py",
+                            "md5sum": "1ea4013edc438d3d6e85132a7f8fd66a"
+                        },
+                        {
+                            "file-name": "test_minimal_tests.py",
+                            "md5sum": "b891bc5d537becf861b268664966ca3d"
+                        },
+                        {
+                            "file-name": "test_osf_crawler.py",
+                            "md5sum": "cdf0b9d03bf9dce5bfb2512c7bc18d69"
+                        },
+                        {
+                            "file-name": "test_zenodo_crawler.py",
+                            "md5sum": "6b283a0bc03e2b4e2644ffc9d5a2f3ae"
+                        }
+                    ]
+                },
+                {
+                    "file-name": "README.md",
+                    "md5sum": "1aa0aa2cbce1fd5c7f0ddd1862a6749a"
+                },
+                {
+                    "file-name": ".gitattributes",
+                    "md5sum": "975a1b763e8d762566823454b2386571"
+                }
+            ]
+        },
+        "output_dir_name": "/home/mandana/CONP/pipelines/BIDS-App-Example/output/",
+        "analysis_level": "participant"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "mkdir -p /home/mandana/CONP/pipelines/BIDS-App-Example/output/; /run.py /home/mandana/CONP/conp-dataset/projects/openpain/thermal/ /home/mandana/CONP/pipelines/BIDS-App-Example/output/ participant",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "",
+                "files": []
+            }
+        }
+    },
+    "additional-information": null
+}

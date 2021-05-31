@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "FslBet601",
+        "descriptor-doi": "10.5281/zenodo.3267250",
+        "date-time": "2021-02-16_11h31m25s715563ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "sub-HCPUR100_t1w.nii.gz",
+            "md5sum": "6248ded9a528636072aba8b4ec857dfb"
+        },
+        "maskfile": "mask-0"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "bet /home/mandana/CONP/conp-dataset/projects/Khanlab/HCPUR100-Template/sub-HCPUR100/anat/sub-HCPUR100_t1w.nii.gz mask-0",
+        "missing-files": {},
+        "output-files": {
+            "outfile": {
+                "file-name": "mask-0.nii.gz",
+                "md5sum": "dccdebf326594674554283016b44dcf7"
+            }
+        }
+    },
+    "additional-information": null
+}

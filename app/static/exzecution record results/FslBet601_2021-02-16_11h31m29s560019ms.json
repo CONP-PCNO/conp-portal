@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "FslBet601",
+        "descriptor-doi": "10.5281/zenodo.3267250",
+        "date-time": "2021-02-16_11h31m29s560019ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "t1.nii.gz",
+            "md5sum": "1ededd81a26cf226985475f49068953e"
+        },
+        "maskfile": "mask-1"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "bet /home/mandana/CONP/conp-dataset/projects/openpain/cbp_resting/cbp10/t1/t1.nii.gz mask-1",
+        "missing-files": {},
+        "output-files": {
+            "outfile": {
+                "file-name": "mask-1.nii.gz",
+                "md5sum": "9c397fcb54035aab8e0be7c474550b8e"
+            }
+        }
+    },
+    "additional-information": null
+}

@@ -1,0 +1,29 @@
+{
+    "summary": {
+        "name": "fslstats",
+        "descriptor-doi": "10.5281/zenodo.4472771",
+        "date-time": "2021-04-15_13h31m07s277458ms"
+    },
+    "public-invocation": {
+        "input_file": {
+            "file-name": "full_cls_100um.nii.gz",
+            "md5sum": "63b13d54f91d35931e5e43adc6188e5d"
+        },
+        "V": true
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 255,
+        "error-message": "",
+        "shell-command": "fslstats conp-dataset/projects/BigBrain_3DClassifiedVolumes/Histological_Space/nii/full_cls_100um.nii.gz -V > conp-dataset/projects/BigBrain_3DClassifiedVolumes/Histological_Space/nii/full_cls_100um.txt",
+        "missing-files": {},
+        "output-files": {
+            "output": {
+                "file-name": "full_cls_100um.txt",
+                "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+            }
+        }
+    },
+    "additional-information": null
+}

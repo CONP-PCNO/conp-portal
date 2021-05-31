@@ -1,0 +1,2738 @@
+{
+    "summary": {
+        "name": "BIDS app example",
+        "descriptor-doi": "10.5281/zenodo.1451001",
+        "date-time": "2021-02-03_14h26m00s998019ms"
+    },
+    "public-invocation": {
+        "bids_dir": {
+            "file-name": "placebo_predict_tetreault",
+            "files": [
+                {
+                    "file-name": ".git",
+                    "files": [
+                        {
+                            "file-name": "branches",
+                            "files": []
+                        },
+                        {
+                            "file-name": "description",
+                            "md5sum": "a0a7c3fff21f2aea3cfa1d0316dd816c"
+                        },
+                        {
+                            "file-name": "hooks",
+                            "files": [
+                                {
+                                    "file-name": "applypatch-msg.sample",
+                                    "md5sum": "ce562e08d8098926a3862fc6e7905199"
+                                },
+                                {
+                                    "file-name": "commit-msg.sample",
+                                    "md5sum": "579a3c1e12a1e74a98169175fb913012"
+                                },
+                                {
+                                    "file-name": "fsmonitor-watchman.sample",
+                                    "md5sum": "ecbb0cb5ffb7d773cd5b2407b210cc3b"
+                                },
+                                {
+                                    "file-name": "post-update.sample",
+                                    "md5sum": "2b7ea5cee3c49ff53d41e00785eb974c"
+                                },
+                                {
+                                    "file-name": "pre-applypatch.sample",
+                                    "md5sum": "054f9ffb8bfe04a599751cc757226dda"
+                                },
+                                {
+                                    "file-name": "pre-commit.sample",
+                                    "md5sum": "e4db8c12ee125a8a085907b757359ef0"
+                                },
+                                {
+                                    "file-name": "pre-push.sample",
+                                    "md5sum": "3c5989301dd4b949dfa1f43738a22819"
+                                },
+                                {
+                                    "file-name": "pre-rebase.sample",
+                                    "md5sum": "56e45f2bcbc8226d2b4200f7c46371bf"
+                                },
+                                {
+                                    "file-name": "pre-receive.sample",
+                                    "md5sum": "2ad18ec82c20af7b5926ed9cea6aeedd"
+                                },
+                                {
+                                    "file-name": "prepare-commit-msg.sample",
+                                    "md5sum": "2b5c047bdb474555e1787db32b2d2fc5"
+                                },
+                                {
+                                    "file-name": "update.sample",
+                                    "md5sum": "517f14b9239689dff8bda3022ebd9004"
+                                },
+                                {
+                                    "file-name": "pre-commit",
+                                    "md5sum": "937d5eb6dc491af149be06e62bf88ee1"
+                                },
+                                {
+                                    "file-name": "post-receive",
+                                    "md5sum": "0b11786ce3c75aa6193fe020b43b1e40"
+                                },
+                                {
+                                    "file-name": "post-checkout",
+                                    "md5sum": "15117886209495e9612a7efbc4d425f3"
+                                },
+                                {
+                                    "file-name": "post-merge",
+                                    "md5sum": "15117886209495e9612a7efbc4d425f3"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "info",
+                            "files": [
+                                {
+                                    "file-name": "exclude",
+                                    "md5sum": "036208b4a1ab4a235d75c181e685e5a3"
+                                },
+                                {
+                                    "file-name": "attributes",
+                                    "md5sum": "66ef2376f9c0d65430c42dfb000d7d8d"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "refs",
+                            "files": [
+                                {
+                                    "file-name": "heads",
+                                    "files": [
+                                        {
+                                            "file-name": "master",
+                                            "md5sum": "e40b06fb7ba83c21d6c96b05322592cd"
+                                        },
+                                        {
+                                            "file-name": "git-annex",
+                                            "md5sum": "75d9ba0e719ead314cf24676be692d50"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "tags",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "remotes",
+                                    "files": [
+                                        {
+                                            "file-name": "origin",
+                                            "files": [
+                                                {
+                                                    "file-name": "HEAD",
+                                                    "md5sum": "73a00957034783b7b5c8294c54cd3e12"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "HEAD",
+                            "md5sum": "4cf2d64e44205fe628ddd534e1151b58"
+                        },
+                        {
+                            "file-name": "config",
+                            "md5sum": "59df8aaebfef35e56d1c319d4eb70bfe"
+                        },
+                        {
+                            "file-name": "objects",
+                            "files": [
+                                {
+                                    "file-name": "pack",
+                                    "files": [
+                                        {
+                                            "file-name": "pack-b6c5dc61b8c47b2b79f3d43318aae0b2753095ef.pack",
+                                            "md5sum": "290491d504f543d5f303cf4206df64a9"
+                                        },
+                                        {
+                                            "file-name": "pack-b6c5dc61b8c47b2b79f3d43318aae0b2753095ef.idx",
+                                            "md5sum": "384bc45c3990e38e18f8c161899c78c7"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "info",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "e5",
+                                    "files": [
+                                        {
+                                            "file-name": "c2b106d4db299b4136ab161ebf491b0f0d9c14",
+                                            "md5sum": "fb51cbb5c5bf48229ed2ba0273eede03"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "f6",
+                                    "files": [
+                                        {
+                                            "file-name": "9d094008580c01807c1f20fbea43b3796adf5d",
+                                            "md5sum": "36bc2533e635ecc6acb5257d7d4954d1"
+                                        },
+                                        {
+                                            "file-name": "2a5885b250ff4f78322ed08a26d73f0045b16e",
+                                            "md5sum": "f8624bdeeb9f843c2069759d1a6db27d"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "d7",
+                                    "files": [
+                                        {
+                                            "file-name": "5512ee05cd29679d1efcba4a4110090f8b0087",
+                                            "md5sum": "20044268673609743fcfa57317220398"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "ed",
+                                    "files": [
+                                        {
+                                            "file-name": "1f90cdeab2f19b1fe04e60b21e03e9164f95d7",
+                                            "md5sum": "2156147a6a1b8bcf163ca6ee4bd5bd73"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "a6",
+                                    "files": [
+                                        {
+                                            "file-name": "f0e39e4a1bc62f525184a0e98ba7d7d8acbc3c",
+                                            "md5sum": "f0969e4b898d4b26c534e2dbd98b99f6"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "3a",
+                                    "files": [
+                                        {
+                                            "file-name": "0831c9d4e0380a9b61b656b6fa261e89cbc159",
+                                            "md5sum": "fa2fcf2d701ba4991678028f969590ca"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "c7",
+                                    "files": [
+                                        {
+                                            "file-name": "5ff38749d0e036c6f5e3307370bf30d27ec5f0",
+                                            "md5sum": "a61e959654e296ea319e8f361c128b02"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "8d",
+                                    "files": [
+                                        {
+                                            "file-name": "6b46539bb844b33f47bca4e660d50746d73527",
+                                            "md5sum": "7a876e4791a426860bac4f08a00cf6a0"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "f8",
+                                    "files": [
+                                        {
+                                            "file-name": "27977c038778c6c1d730075c13d9727b58b1a7",
+                                            "md5sum": "d25d58e35fc19a0f0699ad4b5b58e72c"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "7f",
+                                    "files": [
+                                        {
+                                            "file-name": "36d2ff019241a17c712bf731c3c9abd7e53b75",
+                                            "md5sum": "f23e1f0d8fef9da5fc758ac288319351"
+                                        },
+                                        {
+                                            "file-name": "ce6990a3eb7073fe622d5f5c6666099d9a88b9",
+                                            "md5sum": "27a348b603b325680adade28a6ad847e"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "99",
+                                    "files": [
+                                        {
+                                            "file-name": "6333e4d2d4522f96aadff2f0047c4f240de39c",
+                                            "md5sum": "3da3c8861260c3714c6495279e1ede1d"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "c6",
+                                    "files": [
+                                        {
+                                            "file-name": "de05c13b1025a3b079142286da535505441524",
+                                            "md5sum": "894614aa5147e954fc923ddb5414c953"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "52",
+                                    "files": [
+                                        {
+                                            "file-name": "6da38b5c978127093de6a1d939a32d19df5de7",
+                                            "md5sum": "9c880feccc89a96d2cc8468139f5d3b7"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "ec",
+                                    "files": [
+                                        {
+                                            "file-name": "988e3fc6c671c1c8daa155aae2cb089d27f8d4",
+                                            "md5sum": "8c0022e1be1b0608368e98b86c7aa85d"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "70",
+                                    "files": [
+                                        {
+                                            "file-name": "31c80defe9c2f50f72ae3d1097fc6ad2bbfadc",
+                                            "md5sum": "c982eb45a201ddf3bad57f7427297771"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "75",
+                                    "files": [
+                                        {
+                                            "file-name": "23da1eae745f105f80ede31e7290ec779488ad",
+                                            "md5sum": "04142c57e94b8f46f38ef14bc8cc957a"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "6e",
+                                    "files": [
+                                        {
+                                            "file-name": "26771ddd8e26a401458c1a15283a62bd1a42b4",
+                                            "md5sum": "30520fdf1fb34f52dcebbe2e9c437183"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "bc",
+                                    "files": [
+                                        {
+                                            "file-name": "3bf6e56393498a1ec6cf9a9e33d2621ef72f9d",
+                                            "md5sum": "a649f5b573d5cb41853f26a874a053ec"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "02",
+                                    "files": [
+                                        {
+                                            "file-name": "ffae2a547e71500e9f766c785c00cc0e1ed7a4",
+                                            "md5sum": "45bc5e622fce2e024d72dd800bc6d8c5"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "89",
+                                    "files": [
+                                        {
+                                            "file-name": "6da7795af1351e8ea34e14c9dd1d0caa0c5ddf",
+                                            "md5sum": "e21e595c6dcbf0df0343cd4220b1e7bf"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "64",
+                                    "files": [
+                                        {
+                                            "file-name": "31462e9269c4c9eb516d243efdd0c5f862933e",
+                                            "md5sum": "6c856a2c0c81cc9463c0b7c28b7f75ac"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "33",
+                                    "files": [
+                                        {
+                                            "file-name": "dd56afa63b6297b740d5925b71cfc9b11a6a1a",
+                                            "md5sum": "08112bf3361d57a46237b0ed0f326274"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "37",
+                                    "files": [
+                                        {
+                                            "file-name": "dfca21a6503c769c2da4b381bda07042cfbe84",
+                                            "md5sum": "26f253978530316843d826ba20e30e8b"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "4c",
+                                    "files": [
+                                        {
+                                            "file-name": "14224386e12febca73bd6c2a662425bb20465e",
+                                            "md5sum": "4f4076ea7bb906d65892dfc1e0e7c075"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "e0",
+                                    "files": [
+                                        {
+                                            "file-name": "78f96a10763c9898af9160b4ddff2d3595035a",
+                                            "md5sum": "51b0f9b147676068936b15940e2de61b"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "packed-refs",
+                            "md5sum": "5857c82a229be98ff89bc8a3f33e579d"
+                        },
+                        {
+                            "file-name": "logs",
+                            "files": [
+                                {
+                                    "file-name": "refs",
+                                    "files": [
+                                        {
+                                            "file-name": "remotes",
+                                            "files": [
+                                                {
+                                                    "file-name": "origin",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "HEAD",
+                                                            "md5sum": "f9df20c865a1df4914afc8d5de4eb642"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "heads",
+                                            "files": [
+                                                {
+                                                    "file-name": "master",
+                                                    "md5sum": "f9df20c865a1df4914afc8d5de4eb642"
+                                                },
+                                                {
+                                                    "file-name": "git-annex",
+                                                    "md5sum": "ab4426fb396475fcdef49dfe6a0120a5"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "HEAD",
+                                    "md5sum": "052078951d71fa700898ed8896332134"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "index",
+                            "md5sum": "b5c4907bc16986e8b397640b0f41761f"
+                        },
+                        {
+                            "file-name": "annex",
+                            "files": [
+                                {
+                                    "file-name": "index",
+                                    "md5sum": "1e5b5ef4b7d7c8e6b6e4781b75be6125"
+                                },
+                                {
+                                    "file-name": "index.lck",
+                                    "md5sum": "75d9ba0e719ead314cf24676be692d50"
+                                },
+                                {
+                                    "file-name": "journal.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "mergedrefs",
+                                    "md5sum": "4d1c7d059efc0905ec774f2a4a4dc958"
+                                },
+                                {
+                                    "file-name": "keys.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "keys",
+                                    "files": [
+                                        {
+                                            "file-name": "db",
+                                            "md5sum": "3304dbe9f9d45a5af7a3f4adc3895f51"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "keys.cache",
+                                    "md5sum": "530d5aaa8c5afcfd30247ff66731b631"
+                                },
+                                {
+                                    "file-name": "smudge.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "sentinal",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "sentinal.cache",
+                                    "md5sum": "4918cc1431b5aa7f36461409aa0ffb3b"
+                                },
+                                {
+                                    "file-name": "othertmp.lck",
+                                    "md5sum": "d41d8cd98f00b204e9800998ecf8427e"
+                                },
+                                {
+                                    "file-name": "journal",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "tmp",
+                                    "files": []
+                                },
+                                {
+                                    "file-name": "transfer",
+                                    "files": [
+                                        {
+                                            "file-name": "download",
+                                            "files": [
+                                                {
+                                                    "file-name": "00000000-0000-0000-0000-000000000001",
+                                                    "files": []
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "objects",
+                                    "files": [
+                                        {
+                                            "file-name": "WZ",
+                                            "files": [
+                                                {
+                                                    "file-name": "Kx",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s9766757--ftp&c%%openpain.org%placebo_pred-d0be86ff18b5a3ade04d253183d788f6",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s9766757--ftp&c%%openpain.org%placebo_pred-d0be86ff18b5a3ade04d253183d788f6",
+                                                                    "md5sum": "1a15c8065b8eb994765065ad2ee93ca4"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "K1",
+                                            "files": [
+                                                {
+                                                    "file-name": "xz",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s54509425--ftp&c%%openpain.org%placebo_pred-653dfa038d8e0a66ce78766f17cee2d9",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s54509425--ftp&c%%openpain.org%placebo_pred-653dfa038d8e0a66ce78766f17cee2d9",
+                                                                    "md5sum": "1f1822c8131f5af21f5f9ef797165ce9"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "6W",
+                                            "files": [
+                                                {
+                                                    "file-name": "0g",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s285--ftp&c%%openpain.org%placebo_pred-5631c3e0501bcb5b3bf376e70caf1071",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s285--ftp&c%%openpain.org%placebo_pred-5631c3e0501bcb5b3bf376e70caf1071",
+                                                                    "md5sum": "334e0099ac14cdcfc24e627fdd73aa9b"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "p5",
+                                            "files": [
+                                                {
+                                                    "file-name": "Jz",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s3649--ftp&c%%openpain.org%placebo_predict_tetreault%participants.tsv",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s3649--ftp&c%%openpain.org%placebo_predict_tetreault%participants.tsv",
+                                                                    "md5sum": "7da673a62226e6123da048c5b1175e8a"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "36",
+                                            "files": [
+                                                {
+                                                    "file-name": "w9",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s69--ftp&c%%openpain.org%placebo_predict_tetreault%T1w.json",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s69--ftp&c%%openpain.org%placebo_predict_tetreault%T1w.json",
+                                                                    "md5sum": "9790da8de6a438d50435c437ba448e7a"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "Zf",
+                                            "files": [
+                                                {
+                                                    "file-name": "zx",
+                                                    "files": [
+                                                        {
+                                                            "file-name": "URL-s500--ftp&c%%openpain.org%placebo_pred-fb1e64b515b7ffaac3b9e00d561f69db",
+                                                            "files": [
+                                                                {
+                                                                    "file-name": "URL-s500--ftp&c%%openpain.org%placebo_pred-fb1e64b515b7ffaac3b9e00d561f69db",
+                                                                    "md5sum": "b6240ab9532bac2b427b0549c54f20a4"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": ".datalad",
+                    "files": [
+                        {
+                            "file-name": ".gitattributes",
+                            "md5sum": "d4a36c9475aabe1d427d85f34d2b9914"
+                        },
+                        {
+                            "file-name": "config",
+                            "md5sum": "2805adf78f6b708ff5ae5d7fabba4020"
+                        }
+                    ]
+                },
+                {
+                    "file-name": ".gitattributes",
+                    "md5sum": "39156450220ab6553898aebbcf64aa90"
+                },
+                {
+                    "file-name": "DATS.json",
+                    "md5sum": "3c9f8cd7492bd7551de92562305c95cd"
+                },
+                {
+                    "file-name": "OP_Pic1.jpg",
+                    "md5sum": "6f00a251645299f56ab831281a5d75b0"
+                },
+                {
+                    "file-name": "README.md",
+                    "md5sum": "6df272efcb982ef812e170f4c65ba759"
+                },
+                {
+                    "file-name": "T1w.json",
+                    "md5sum": "9790da8de6a438d50435c437ba448e7a"
+                },
+                {
+                    "file-name": "code",
+                    "files": [
+                        {
+                            "file-name": "maskface",
+                            "files": [
+                                {
+                                    "file-name": "bin",
+                                    "files": [
+                                        {
+                                            "file-name": "ATLAS",
+                                            "files": [
+                                                {
+                                                    "file-name": "CAPIIO.hdr",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "CAPIIO.img",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "earl_atl.lst",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "earr_atl.lst",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "face_atl.lst",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "stealth_atlas_11to18.hdr",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "stealth_atlas_11to18.img",
+                                                    "not_found": true
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "analyze2dcm",
+                                            "not_found": true
+                                        },
+                                        {
+                                            "file-name": "dcm2analyze",
+                                            "not_found": true
+                                        },
+                                        {
+                                            "file-name": "impsc",
+                                            "not_found": true
+                                        },
+                                        {
+                                            "file-name": "license.txt",
+                                            "not_found": true
+                                        },
+                                        {
+                                            "file-name": "loc2xnat",
+                                            "not_found": true
+                                        },
+                                        {
+                                            "file-name": "mask_face",
+                                            "not_found": true
+                                        },
+                                        {
+                                            "file-name": "parse_impsc_log",
+                                            "not_found": true
+                                        },
+                                        {
+                                            "file-name": "xnat2loc",
+                                            "not_found": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "license.txt",
+                                    "not_found": true
+                                },
+                                {
+                                    "file-name": "maskface_setup.sh",
+                                    "not_found": true
+                                },
+                                {
+                                    "file-name": "matlab",
+                                    "files": [
+                                        {
+                                            "file-name": "routines",
+                                            "files": [
+                                                {
+                                                    "file-name": "avw_hdr_make.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "avw_hdr_read.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "avw_hdr_write.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "avw_img_read.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "avw_img_write.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "avw_write.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "blur3.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "dispvol.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "dispvol3D.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "license.txt",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "mask_surf_auto.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "read_vol.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "reflect.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "saveVol.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "save_vol.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "select_threshold.m",
+                                                    "not_found": true
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "file-name": "surf",
+                                            "files": [
+                                                {
+                                                    "file-name": "RectangularMesh.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "SaveRegion.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "adjust_face_ROI.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "blur3_thin.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "calcROIpts.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "face_coord.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "fill_layer.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "license.txt",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "maskVol.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "mask_surf.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "plane_eq.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "projectVol.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "renderVol.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "showmesh.m",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "test_rect_mesh.m",
+                                                    "not_found": true
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "file-name": "xnat_pipeline",
+                                    "files": [
+                                        {
+                                            "file-name": "FaceMasking.xml",
+                                            "not_found": true
+                                        },
+                                        {
+                                            "file-name": "maskface_setup.sh",
+                                            "not_found": true
+                                        },
+                                        {
+                                            "file-name": "resource",
+                                            "files": [
+                                                {
+                                                    "file-name": "impsc.xml",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "loc2xnat.xml",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "mask_face.xml",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "mask_face.xml~",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "parse_impsc_log.xml",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "unzip.xml",
+                                                    "not_found": true
+                                                },
+                                                {
+                                                    "file-name": "xnat2loc.xml",
+                                                    "not_found": true
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "dataset_description.json",
+                    "md5sum": "b6240ab9532bac2b427b0549c54f20a4"
+                },
+                {
+                    "file-name": "open_data_commons_pdd_license.pdf",
+                    "not_found": true
+                },
+                {
+                    "file-name": "participants.tsv",
+                    "md5sum": "7da673a62226e6123da048c5b1175e8a"
+                },
+                {
+                    "file-name": "sub-01",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-01_T1w.nii.gz",
+                                    "md5sum": "1a15c8065b8eb994765065ad2ee93ca4"
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-01_task-rest_bold.nii.gz",
+                                    "md5sum": "1f1822c8131f5af21f5f9ef797165ce9"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-02",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-02_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-02_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-03",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-03_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-03_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-04",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-04_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-04_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-05",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-05_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-05_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-06",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-06_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-06_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-07",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-07_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-07_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-08",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-08_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-08_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-09",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-09_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-09_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-10",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-10_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-10_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-11",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-11_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-11_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-12",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-12_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-12_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-13",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-13_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-13_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-14",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-14_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-14_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-15",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-15_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-15_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-16",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-16_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-16_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-17",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-17_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-17_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-18",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-18_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-18_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-19",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-19_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-19_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-20",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-20_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-20_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-21",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-21_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-21_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-22",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-22_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-22_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-23",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-23_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-23_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-24",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-24_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-24_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-25",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-25_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-25_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-26",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-26_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-26_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-27",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-27_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-27_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-28",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-28_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-28_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-29",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-29_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-29_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-30",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-30_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-30_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-31",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-31_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-31_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-32",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-32_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-32_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-33",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-33_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-33_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-34",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-34_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-34_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-35",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-35_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-35_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-36",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-36_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-36_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-37",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-37_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-37_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-38",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-38_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-38_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-39",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-39_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-39_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-40",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-40_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-40_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-41",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-41_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-41_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-42",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-42_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-42_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-43",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-43_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-43_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-44",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-44_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-44_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-45",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-45_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-45_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-46",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-46_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-46_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-47",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-47_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-47_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-48",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-48_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-48_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-49",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-49_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-49_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-50",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-50_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-50_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-51",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-51_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-51_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-52",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-52_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-52_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-53",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-53_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-53_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-54",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-54_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-54_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-55",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-55_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-55_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-56",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-56_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-56_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-57",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-57_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-57_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-58",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-58_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-58_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-59",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-59_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-59_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-60",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-60_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-60_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-61",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-61_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-61_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-62",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-62_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-62_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-63",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-63_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-63_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-64",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-64_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-64_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-65",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-65_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-65_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-66",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-66_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-66_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-67",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-67_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-67_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-68",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-68_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-68_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-69",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-69_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-69_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-70",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-70_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-70_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-71",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-71_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-71_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-72",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-72_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-72_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-73",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-73_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-73_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-74",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-74_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-74_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-75",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-75_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-75_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "sub-76",
+                    "files": [
+                        {
+                            "file-name": "anat",
+                            "files": [
+                                {
+                                    "file-name": "sub-76_T1w.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        },
+                        {
+                            "file-name": "func",
+                            "files": [
+                                {
+                                    "file-name": "sub-76_task-rest_bold.nii.gz",
+                                    "not_found": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file-name": "task-resting_bold.json",
+                    "md5sum": "334e0099ac14cdcfc24e627fdd73aa9b"
+                }
+            ]
+        },
+        "output_dir_name": "output_dir_name",
+        "analysis_level": "participant",
+        "participant_label": [
+            "01"
+        ]
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 1,
+        "error-message": "",
+        "shell-command": "mkdir -p output_dir_name; /run.py conp-dataset/projects/openpain/placebo_predict_tetreault output_dir_name participant --participant_label 01",
+        "missing-files": {},
+        "output-files": {
+            "output_dir": {
+                "file-name": "output_dir_name",
+                "files": []
+            }
+        }
+    },
+    "additional-information": null
+}

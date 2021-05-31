@@ -1,0 +1,24 @@
+{
+    "summary": {
+        "name": "fsl_bet",
+        "descriptor-doi": "10.5281/zenodo.1482743",
+        "date-time": "2021-03-30_22h23m21s410674ms"
+    },
+    "public-invocation": {
+        "infile": {
+            "file-name": "full_cls_100um_2009b_sym.nii.gz",
+            "md5sum": "71799c4796e74d56feba5009ac4a238c"
+        },
+        "maskfile": "MASK_fsl_SPARK_1"
+    },
+    "public-output": {
+        "stdout": null,
+        "stderr": null,
+        "exit-code": 0,
+        "error-message": "",
+        "shell-command": "bet /home/mandana/CONP/conp-dataset/projects/BigBrain_3DClassifiedVolumes/MNI-ICBM152_Space/nii/full_cls_100um_2009b_sym.nii.gz MASK_fsl_SPARK_1",
+        "missing-files": {},
+        "output-files": {}
+    },
+    "additional-information": null
+}
