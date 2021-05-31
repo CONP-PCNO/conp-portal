@@ -284,8 +284,8 @@ def pipelines_execution_records():
     }
 
     return render_template('pipelinesExecutionRecords.html',
-        title='CONP | Pipelines Provenance Records',
-        filters=filters)
+                           title='CONP | Pipelines Provenance Records',
+                           filters=filters)
 
 
 @pipelines_bp.route('/pipeline-execution-records-search', methods=['GET'])
