@@ -284,7 +284,7 @@ def pipelines_execution_records():
     }
 
     return render_template('pipelineExecutionRecords.html',
-                           title='CONP | Pipelines Provenance Records',
+                           title='CONP Portal | Pipeline Execution Records',
                            filters=filters)
 
 
