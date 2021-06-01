@@ -289,7 +289,7 @@ def pipelines_execution_records():
 
 
 @pipelines_bp.route('/pipeline-execution-records-search', methods=['GET'])
-def pipelines_execution_records_search():
+def pipeline_execution_records_search():
     authorized = True if current_user.is_authenticated else False
 
     elements = []
