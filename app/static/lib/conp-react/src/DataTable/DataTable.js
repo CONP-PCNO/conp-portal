@@ -194,7 +194,9 @@ const DataTable = ({
           </div>
             {renderElement.name === "PipelineElement" ?
               <div className="d-flex justify-content-end pb-1">
-              <p className="text-reset px-1" >To browse pipelines execution records <a href="/pipelines-execution-records" ><u>click here</u></a></p>
+              <p className="text-reset px-1" >
+                <a href="/pipeline-execution-records" >Browse pipeline execution records</a>
+              </p>
               </div>
               : null}
               
