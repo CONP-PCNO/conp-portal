@@ -267,7 +267,7 @@ def pipelines_execution_records():
             max_per_page: the number of items per page (default: 10)
 
         Returns:
-            Rendered template for pipelinesExecutionRecords.html
+            Rendered template for pipelineExecutionRecords.html
     """
     page = 1
     max_per_page = request.args.get('max_per_page') or 10
