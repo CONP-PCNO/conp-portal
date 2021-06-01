@@ -283,7 +283,7 @@ def pipelines_execution_records():
         "searchDatasetName": searchDatasetName,
     }
 
-    return render_template('pipelinesExecutionRecords.html',
+    return render_template('pipelineExecutionRecords.html',
                            title='CONP | Pipelines Provenance Records',
                            filters=filters)
 
