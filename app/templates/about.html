@@ -15,27 +15,26 @@
     <a target="_blank" rel="noopener noreferrer" href="https://conp.ca">
       Canadian Open Neuroscience Platform (CONP)
     </a>
-    to facilitate open science in the neuroscience community. CONP simplifies global
-    researcher access and sharing of datasets and tools. The portal internalizes the
-    cycle of a typical research project: starting with data acquisition, followed by
-    processing using already existing/published tools, and ultimately publication of
-    the obtained results including a link to the original dataset.
+    Portal is a web interface that facilitates open science for the neuroscience community
+    by simplifying global access and sharing of datasets and tools. The Portal internalizes
+    the typical data cycle of a research project, beginning with data acquisition, followed
+    by data processing with published tools, and ultimately publication of the results with
+    a link to the original dataset.
   </p>
   <p>
-    This infrastructure was built using technologies and best practices employed to make
+    The CONP Portal was built using technologies and best practices that make
     sharing easier and reproducible. Datasets are tracked and indexed using
     <a target="_blank" rel="noopener noreferrer" href="http://www.datalad.org">
-      DataLad
+      DataLad,
     </a>
-    and
     <a target="_blank", rel="noopener noreferrer" href="https://git-annex.branchable.com/">
-      Git-Annex.
+      Git-Annex and,
     </a>
-    To ensure reproducibility of results, tools and pipelines can be run using
+    to ensure reproducibility of results, tools and pipelines can be run using
     <a target="_blank", rel="noopener noreferrer" href="https://boutiques.github.io/">
       Boutiques
     </a>
-    and a container engine (
+    and a (
     <a target="_blank", rel="noopener noreferrer" href="http://www.docker.com">
       Docker
     </a>
@@ -43,18 +42,14 @@
     <a target="_blank", rel="noopener noreferrer" href="https://sylabs.io/docs/">
       Singularity
     </a>
-    ). In addition, some pipelines can also be run using High Performance Computing (HPC)
-    via hooks to the
+    ) container engine. In addition, some pipelines can also be run using High Performance
+    Computing (HPC) via hooks to the
     <a target="_blank", rel="noopener noreferrer" href="https://mcin.ca/technology/cbrain/">
       CBRAIN
     </a>
     platform.
   </p>
-  <p>More information about CONP can be found
-    <a target="_blank", rel="noopener noreferrer" href="https://conp.ca/">
-      here.
-    </a>
-    A tutorial on how to use the CONP portal can be found
+  <p>A tutorial on how to use the CONP Portal can be found
     <a target="_blank", rel="noopener noreferrer" href="{{url_for('main.tutorial')}}">
       here.
     </a>
@@ -63,37 +58,70 @@
 
   <h2>What are the portal capabilities?</h2>
   <p>
-    The portal is a conduit that incorporates best practices for data sharing and
-    reproducibility. The graph below highlights the portal capabilities.
+    The CONP Portal offers:
   </p>
+  <ul>
+    <li>
+      a
+      <a target="_blank", rel="noopener noreferrer" href="/analytics">
+        dashboard
+      </a>
+      representation of the CONP Portal content and activities
+    </li>
+    <li>
+      <a target="_blank", rel="noopener noreferrer" href="/search">
+        datasets
+      </a>
+      and
+      <a target="_blank", rel="noopener noreferrer" href="/pipelines">
+        tools
+      </a>
+      search engine
+    </li>
+    <li>
+      detailed dataset descriptions in the form of a
+      <a target="_blank", rel="noopener noreferrer"
+       href="https://github.com/CONP-PCNO/conp-documentation/blob/master/CONP_DATS_fields.md">
+        DATS.json
+      </a>
+      file ( based on
+      <a target="_blank", rel="noopener noreferrer" href="https://schema.org/">schema.org</a>
+      )
+    </li>
+    <li>
+      streamlined data download capabilities
+    </li>
+    <li>
+      <a target="_blank", rel="noopener noreferrer" href="/sparql">
+        advanced dataset querying
+      </a>
+      with
+      <a target="_blank", rel="noopener noreferrer" href="https://bluebrainnexus.io">
+        Nexus
+      </a>
+    </li>
+    <li>
+      an
+      <a target="_blank", rel="noopener noreferrer" href="/dats-editor">
+        interface
+      </a>
+      to facilitate the creation of the dataset descriptor ( DATS.json )
+    </li>
+  </ul>
   <img class="img-fluid" style="width:80%;margin-left:auto;margin-right:auto"
        alt="CONP graph" src="/static/img/CONP-features.png" />
   <p></p>
   <p>
-    In the future, the portal will offer streamlined data download capabilities and an
-    interface to facilitate the creation of the dataset descriptor (
-    <a target="_blank", rel="noopener noreferrer"
-       href="https://github.com/CONP-PCNO/conp-documentation/blob/master/CONP_DATS_fields.md">
-      DATS.json
-    </a>
-    ). Additional analytics and advanced querying (e.g.
-    <a target="_blank", rel="noopener noreferrer" href="https://bluebrainnexus.io">
-      Nexus
-    </a>
-    ) will also be available. Finally, we are working on integrating citation capabilities
-    and data publishing of Notebooks via
-    <a target="_blank", rel="noopener noreferrer" href="http://neurolibre.conp.ca/">
-      Neurolibre.
-    </a>
+    We are working on integrating citation capabilities and data publishing of Notebooks via
+    <a target="_blank", rel="noopener noreferrer" href="http://neurolibre.conp.ca/">Neurolibre.</a>
   </p>
 
 
   <h2>What kinds of data can I find on the CONP Portal?</h2>
   <p>
-    The CONP Portal provides a gateway to a diverse range of
-    {{ countDatasets }} datasets,
-    primarily neuroimaging but also transcriptomics, genomics, and other related
-    data modalities. Many of these datasets have been made accessible by neuroscience
+    The CONP Portal provides a gateway to a diverse range of approximately {{ countDatasets }}
+    datasets including neuroimaging, histology, electrophysiology, transcriptomics, genomics,
+    and many other data modalities. Many of these datasets have been provided by neuroscience
     research institutes across Canada, while others link to publicly available
     resources that may be of interest to neuroscientists. A full list can be found
     <a target="_blank", rel="noopener noreferrer" href="/search">
@@ -103,76 +131,73 @@
   <img class="img-fluid" style="width:50%;margin-left:auto;margin-right:auto"
        alt="Dataset Graph" src="/static/img/CONP-datasets.png" />
   <p>
-    One of the key dataset available through the portal is the PREVENT-AD open dataset
-    that includes longitudinal MRI follow-up and some basic demographics on a population
-    of individuals with a family history of Alzheimer’s Disease. In the near future,
-    additional data will be shared via a registered access for this PREVENT-AD cohort
-    with clinical, cognitive and other biomarkers measures that were collected on this
-    rich cohort. The original PREVENT-AD dataset is available
-    <a target="_blank", rel="noopener noreferrer" href="/dataset?id=projects/preventad-open">
-      here.
+    Among them, for instance, is the Pre-symptomatic Evaluation of Experimental or Novel
+    Treatments for Alzheimer Disease (PREVENT-AD)
+    <a
+      target="_blank",
+      rel="noopener noreferrer"
+      href="/search?sortKey=conpStatus&sortComparitor=asc&page=1&max_per_page=10&cursor=0&limit=10&search=PREVENT-AD"
+    >
+      datasets.
     </a>
-    The same dataset organized according to the BIDS standard can be found
-    <a target="_blank", rel="noopener noreferrer" href="/dataset?id=projects/preventad-open-bids">
-      here.
-    </a>
+    Those datasets include longitudinal MRI scans and basic demographics on over 300 individuals
+    with a family history of Alzheimer's Disease. In addition, more sensitive data are also
+    available to Principal Investigators through a registered-access database of the PREVENT-AD
+    dataset. These registered-access data include clinical, cognitive, CSF protein levels and
+    other biomarkers measures.
   </p>
 
 
   <h2>How can I access datasets</h2>
   <p>
-    CONP allows you to access and process data on public and private infrastructures
-    via the CONP Portal. Data stored in private projects can be accessed by
-    registered users and portal administrators. The ownership of all data uploaded,
-    stored on the CONP remains with the original owner of the data along with all
-    copyright and license attributes. The data generated within the CONP would belong
-    to the registered users.
+    The CONP Portal allows you to access and process data on public and private
+    infrastructures. Data stored in private projects can be accessed by
+    registered users and portal administrators. The ownership of all data uploaded and
+    stored on the CONP Portal is retained by the original owner, along with all
+    copyright and license attributes.
   </p>
   <p>
-    The CONP portal was designed to parse existing datasets both externally and within
-    the CONP context. As such, a variety of datasets are available for download within
-    this portal. To access the data, the user will first go to the
+    The CONP Portal was designed to parse existing datasets from both external and
+    internal sources, allowing it to source a very wide variety of datasets. To access
+    data, the user will first go to the
     <a target="_blank", rel="noopener noreferrer" href="/search">
-      Data page
+      Data Search page
     </a>
     and filter for data of interest. Clicking on an individual dataset will provide
-    more detailed information and download instructions. There are a number of data
-    download methodologies that will be available to match different user preferences.
-    At the moment, access to datasets is available using the
+    more detailed information and download instructions. Depending on the dataset, data
+    download may be available through both the
     <a target="_blank", rel="noopener noreferrer" href="http://www.datalad.org">
       DataLad
     </a>
-    data management system. One-click data download functionality is under development
-    and will be available in the future.
+    data management system and a one-click direct download function.
   </p>
   <p>
-    Once the user has downloaded a dataset, what can they do with it? We also provide
-    a wide range of
+    Once a dataset has been chosen, we also provide a wide range of
     <a target="_blank", rel="noopener noreferrer" href="/pipelines">
-      tools and pipelines.
+      tools and pipelines
     </a>
-    Read the following sections to find out more.
+    with which to process them. Read the following sections to find out more.
   </p>
 
 
   <h2>What tool/pipelines are accessible via the CONP Portal?</h2>
   <p>
-    The CONP portal aggregates a diverse range of
-    {{ countPipelines }} tools and pipelines.
-    Many of these tools/pipelines are well-established and have been provided by
+    The CONP Portal aggregates a diverse range of {{ countPipelines }} tools and
+    pipelines. Many of these are well-established and have been provided by
     neuroscience or genomics research institutes. A full list can be found
     <a target="_blank", rel="noopener noreferrer" href="/pipelines">
       here.
     </a>
   </p>
 
+
   <h2>How can I use tools/pipelines?</h2>
   <p>
-    Several mechanisms are available to run tools and pipelines found on the CONP portal:
+    Several mechanisms are available to run tools and pipelines found on the CONP Portal:
   </p>
   <ul>
     <li>
-      Tools and pipelines can be run locally on any system using
+      locally on any system using
       <a target="_blank", rel="noopener noreferrer" href="https://boutiques.github.io/">
         Boutiques
       </a>
@@ -188,34 +213,40 @@
       <a target="_blank", rel="noopener noreferrer" href="https://zenodo.org/">
         Zenodo
       </a>
-      ID of the tool. If you have never used Boutiques in the past, we recommend the
+      ID of the tool. ( If you have never used Boutiques in the past, we recommend the
       following
       <a target="_blank", rel="noopener noreferrer"
-         href="https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb#reusing_tools">
-        tutorial.
+         href="https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb">
+        tutorial
       </a>
+      )
     </li>
     <li>
-      Some tools and pipelines can be run on HPCs via the
+      on High Perfomance Computing (HPC) infrastructure via
       <a target="_blank", rel="noopener noreferrer" href="https://mcin.ca/technology/cbrain/">
         CBRAIN
       </a>
-      infrastructure.
     </li>
   </ul>
 
 
   <h2>How can I share/upload a dataset?</h2>
   <p>
-    The idea of this portal is to have a distributed, automated and simple manner of
-    sharing data. We recognize that having one system to rule them all is not feasible,
-    so our goal is interoperability. Sharing will occur, ideally through API connections
-    for existing platforms, or by providing resources to users without storage/sharing
-    infrastructure.
+    The CONP Portal offers a distributed, automated, and simple manner for sharing data
+    according to the
+    <a target="_blank", rel="noopener noreferrer" href="https://www.go-fair.org/fair-principles/">
+      FAIR principles
+    </a>
+    , which includes interoperability. This allows the Portal to share data either through API connections
+    to existing platforms or by providing resources to users who lack storage/sharing infrastructure.
   </p>
   <p>
-    Data can be uploaded to CONP via the following mechanisms, using:
-  </p>
+    Data can be uploaded to the CONP Portal via the following mechanisms (
+    <a target="_blank", rel="noopener noreferrer"
+        href="https://github.com/CONP-PCNO/conp-documentation/blob/master/datalad_dataset_addition_procedure.md">
+      Detailed instructions
+    </a>
+    are available for all these options ):
   <ul>
     <li>
       <a target="_blank", rel="noopener noreferrer" href="https://zenodo.org/">
@@ -224,6 +255,7 @@
       by tagging your dataset with the keyword
       <code>canadian-open-neuroscience-platform</code>
     </li>
+    <li>
       The Open Science Framework (
       <a target="_blank", rel="noopener noreferrer" href="https://osf.io/">
         OSF
@@ -240,13 +272,7 @@
       within the context of CONP
     </li>
   </ul>
-  <p>
-    <a target="_blank", rel="noopener noreferrer"
-        href="https://github.com/CONP-PCNO/conp-documentation/blob/master/datalad_dataset_addition_procedure.md">
-      Detailed technical instructions
-    </a>
-    are available for all these options.
-  </p>
+
 
 </div>
 
