@@ -260,7 +260,7 @@ def pipelines_execution_records():
 
     """ Pipelines Execution Records Route
 
-        The route that leads to the pipelines exxecution record page
+        The route that leads to the pipeline execution record page
 
         Args:
             page: the page that you want to display (default: 1)
