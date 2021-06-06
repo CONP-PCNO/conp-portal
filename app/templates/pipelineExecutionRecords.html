@@ -25,15 +25,15 @@
 
 {% block appcontent %}
 <div>
-  <div id="pipelines-execution-records-datatable-mount"></div>
+  <div id="pipeline-execution-records-datatable-mount"></div>
   <script type="text/javascript">
     const reactElement = React.createElement(CONPReact.DataTableContainer, {
-      endpointURL: "{{ url_for('pipelines.pipelines_execution_records_search') }}",
+      endpointURL: "{{ url_for('pipelines.pipeline_execution_records_search') }}",
       imagePath: "/static/img",
       renderElement: CONPReact.PipelineExecutionRecordElement,
       filters: {{ filters|tojson }}
     });
-    ReactDOM.render(reactElement, document.querySelector("#pipelines-execution-records-datatable-mount"));
+    ReactDOM.render(reactElement, document.querySelector("#pipeline-execution-records-datatable-mount"));
   </script>
 </div>
 {% endblock %}

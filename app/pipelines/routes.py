@@ -255,8 +255,8 @@ def pipeline_info():
     )
 
 
-@pipelines_bp.route('/pipelines-execution-records')
-def pipelines_execution_records():
+@pipelines_bp.route('/pipeline-execution-records')
+def pipeline_execution_records():
 
     """ Pipelines Execution Records Route
 
