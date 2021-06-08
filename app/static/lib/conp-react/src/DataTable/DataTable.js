@@ -152,7 +152,7 @@ const DataTable = ({
               </span>
             </div>
             :null}
-            {renderElement.name === "PipelineExecutionRecordElement" ?
+            {renderElement.name === "ExecutionRecordElement" ?
             <div className="input-group m-2">
                 <input
                   className="form-control p-2"
@@ -195,7 +195,7 @@ const DataTable = ({
             {renderElement.name === "PipelineElement" ?
               <div className="d-flex justify-content-end pb-1">
               <p className="text-reset px-1" >
-                <a href="/pipeline-execution-records" >Browse pipeline execution records</a>
+                <a href="/execution-records" >Browse pipeline execution records</a>
               </p>
               </div>
               : null}
@@ -268,7 +268,7 @@ const DataTable = ({
 
         </div>
         
-        {renderElement.name === "PipelineExecutionRecordElement" ?
+        {renderElement.name === "ExecutionRecordElement" ?
         <div className="card flex-row" style={{ minHeight: '50px' }} data-type="pipeline">
           <div className="d-flex col-md-12">
             <div className="d-flex py-1 w-100" style={{ fontSize: 20 }}>

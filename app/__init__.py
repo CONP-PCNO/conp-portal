@@ -59,6 +59,9 @@ def create_app(config_settings=None):
     from app.pipelines import pipelines_bp  # noqa: E402
     app.register_blueprint(pipelines_bp)
 
+    from app.execution_records import execution_records_bp  # noqa: E402
+    app.register_blueprint(execution_records_bp)
+
     from app.utils import utils_bp  # noqa: E402
     app.register_blueprint(utils_bp)
 
