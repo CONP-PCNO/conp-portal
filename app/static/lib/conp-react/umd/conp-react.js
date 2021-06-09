@@ -17133,6 +17133,7 @@ __webpack_require__.d(__webpack_exports__, "DatasetElement", function() { return
 __webpack_require__.d(__webpack_exports__, "PipelineElement", function() { return /* reexport */ src_PipelineElement; });
 __webpack_require__.d(__webpack_exports__, "ChartContainer", function() { return /* reexport */ src_ChartContainer; });
 __webpack_require__.d(__webpack_exports__, "DatsEditorForm", function() { return /* reexport */ index_modern_DatsEditorForm; });
+__webpack_require__.d(__webpack_exports__, "ExecutionRecordElement", function() { return /* reexport */ src_ExecutionRecordElement; });
 
 // CONCATENATED MODULE: ./node_modules/ramda/es/internal/_isPlaceholder.js
 function _isPlaceholder(a) {
@@ -17408,7 +17409,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       className: "form-check-label",
       htmlFor: "filter" + format
     }, format)) : null;
-  }) : null))) : null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }) : null))) : null, renderElement.name === "PipelineElement" || renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "input-group m-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
     className: "form-control p-2",
@@ -17429,7 +17430,55 @@ var DataTable_DataTable = function DataTable(_ref) {
     id: "basic-addon2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", {
     className: "fa fa-search"
-  }))))), renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  })))) : null, renderElement.name === "ExecutionRecordElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "input-group m-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+    className: "form-control p-2",
+    id: "Search for Pipeline",
+    type: "text",
+    placeholder: "Search for pipeline",
+    "aria-label": "Search for pipeline",
+    value: query.searchPipelineName,
+    onChange: function onChange(e) {
+      return setQuery(_extends({}, query, {
+        searchPipelineName: e.currentTarget.value,
+        page: 1
+      }));
+    }
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    className: "input-group-append pr-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    className: "input-group-text",
+    id: "basic-addon2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", {
+    className: "fa fa-search"
+  }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+    className: "form-control p-2",
+    id: "Search for Dataset",
+    type: "text",
+    placeholder: "Search for dataset",
+    "aria-label": "Search for dataset",
+    value: query.searchDatasetName,
+    onChange: function onChange(e) {
+      return setQuery(_extends({}, query, {
+        searchDatasetName: e.currentTarget.value,
+        page: 1
+      }));
+    }
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    className: "input-group-append "
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    className: "input-group-text",
+    id: "basic-addon2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", {
+    className: "fa fa-search"
+  })))) : null), renderElement.name === "PipelineElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex justify-content-end pb-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "text-reset px-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    href: "/execution-records"
+  }, "Browse pipeline execution records"))) : null, renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex justify-content-end pb-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     className: "text-reset px-1",
@@ -17497,7 +17546,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     value: "All",
     id: "max_per_page.all",
     onClick: handleMaxPerPageChange
-  }, "All")))), ")"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "All")))), ")"), renderElement.name === "PipelineElement" || renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex align-items-center dropdown p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
     className: "dropdown-label text-nowrap m-2"
@@ -17518,7 +17567,20 @@ var DataTable_DataTable = function DataTable(_ref) {
       key: i,
       value: sortKey
     }, label);
-  })))), elements.map(function (element, i) {
+  }))) : null), renderElement.name === "ExecutionRecordElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card flex-row",
+    "data-type": "pipeline"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex col-md-12"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex py-1 w-100"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-5"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", null, "Pipeline Name"))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-5"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", null, "Dataset Name"))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", null, "Execution Result")))))) : null, elements.map(function (element, i) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       key: "" + element.id
     }, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, {
@@ -17538,12 +17600,14 @@ var DataTable_DataTable = function DataTable(_ref) {
     value: "back",
     onClick: handlePageChange
   }, " < "), es_range(1, Math.ceil(total / query.max_per_page) + 1).map(function (page, i) {
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-      className: page === query.page ? "btn btn-dark" : "btn btn-outline-dark",
-      value: page,
-      onClick: handlePageChange,
-      key: i
-    }, page);
+    {
+      return page < 10 + query.page && page >= query.page ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+        className: page === query.page ? "btn btn-dark" : "btn btn-outline-dark",
+        value: page,
+        onClick: handlePageChange,
+        key: i
+      }, page) : null;
+    }
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-outline-dark",
     value: "forward",
@@ -17567,6 +17631,8 @@ DataTable_DataTable.propTypes = {
   renderElement: prop_types_default.a.func,
   query: prop_types_default.a.shape({
     search: prop_types_default.a.string,
+    searchPipelineName: prop_types_default.a.string,
+    searchDatasetName: prop_types_default.a.string,
     sortKey: prop_types_default.a.string,
     page: prop_types_default.a.number,
     max_per_page: prop_types_default.a.number,
@@ -24737,6 +24803,53 @@ PipelineElement_PipelineElement.propTypes = {
 //};
 
 /* harmony default export */ var src_PipelineElement = (PipelineElement_PipelineElement);
+// CONCATENATED MODULE: ./src/ExecutionRecordElement/index.js
+function ExecutionRecordElement_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+
+
+var ExecutionRecordElement_ExecutionRecordElement = function ExecutionRecordElement(props) {
+  var authorized = props.authorized,
+      element = ExecutionRecordElement_objectWithoutPropertiesLoose(props, ["authorized"]);
+
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "card flex-row",
+    "data-type": "pipeline"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex col-md-12"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex py-1 w-100"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-5"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    target: "_blank",
+    href: element.pipelineUrl,
+    title: "Browse Pipeline"
+  }, element.pipelineName))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-5"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    target: "_blank",
+    href: element.datasetUrl,
+    title: "Browse Dataset"
+  }, element.datasetName))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    target: "_blank",
+    href: "/execution-record-info?file-name=" + element.executionRecordUrl + "&pipeline-name=" + element.pipelineName + "&dataset-name=" + element.datasetName,
+    title: "Browse Execution Record"
+  }, element.executionRecord))))));
+};
+
+ExecutionRecordElement_ExecutionRecordElement.propTypes = {
+  pipelineName: prop_types_default.a.string,
+  pipelineUrl: prop_types_default.a.string,
+  datasetName: prop_types_default.a.string,
+  datasetUrl: prop_types_default.a.string,
+  executionRecord: prop_types_default.a.string,
+  executionRecordUrl: prop_types_default.a.string
+};
+/* harmony default export */ var src_ExecutionRecordElement = (ExecutionRecordElement_ExecutionRecordElement);
 // EXTERNAL MODULE: ./node_modules/highcharts/highcharts.js
 var highcharts = __webpack_require__(13);
 var highcharts_default = /*#__PURE__*/__webpack_require__.n(highcharts);
@@ -57702,13 +57815,15 @@ var index_modern_DatsEditorForm = function DatsEditorForm(props) {
 
 
 
+
 /* harmony default export */ var src = __webpack_exports__["default"] = ({
   DataTable: src_DataTable_DataTable,
   DataTableContainer: DataTable_DataTableContainer,
   DatasetElement: src_DatasetElement,
   PipelineElement: src_PipelineElement,
   ChartContainer: src_ChartContainer,
-  DatsEditorForm: index_modern_DatsEditorForm
+  DatsEditorForm: index_modern_DatsEditorForm,
+  ExecutionRecordElement: src_ExecutionRecordElement
 });
 
 /***/ }),
