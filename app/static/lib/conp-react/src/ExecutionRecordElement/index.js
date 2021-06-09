@@ -20,7 +20,10 @@ const ExecutionRecordElement = props => {
           </div>
           <div className="col-2">
             <span >
-              <a target="_blank" href ={"/execution-record-info?file-name=" + element.executionRecordUrl} title="Browse Execution Record">{element.executionRecord}</a>
+              <a target="_blank" href ={
+                "/execution-record-info?file-name=" + element.executionRecordUrl
+                + "&pipeline-name=" + element.pipelineName
+                + "&dataset-name=" + element.datasetName} title="Browse Execution Record">{element.executionRecord}</a>
             </span>
           </div>
         </div>

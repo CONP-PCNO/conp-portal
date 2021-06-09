@@ -129,6 +129,8 @@ def execution_record_info():
     """
 
     file_name = request.args.get('file-name')
+    pipeline_name = request.args.get('pipeline-name')
+    dataset_name = request.args.get('dataset-name')
     archived_file_name = os.path.join("app/static/execution-records-details/", file_name + ".json.zip")
 
     archiveFile = zipfile.ZipFile(archived_file_name, 'r')
@@ -138,4 +140,6 @@ def execution_record_info():
 
     return render_template('execution-record-info.html',
                            title='CONP Portal | Pipeline Execution Record Informations',
-                           jsonfile=fileContent.replace('\n', '<br>').replace('    ', '&emsp;'))
+                           jsonfile=fileContent.replace('\n', '<br>').replace('    ', '&emsp;'),
+                           pipeline_name=pipeline_name,
+                           dataset_name=dataset_name)

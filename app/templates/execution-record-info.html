@@ -24,7 +24,12 @@
 <!-- Content Block -->
 
 {% block appcontent %}
-  <div style="font-size:20px">
-    {{jsonfile|safe}}
+  <p>Below is the execution pipeline record for pipeline {{pipeline_name}} run on dataset {{dataset_name}}:</p>
+  <div class="container-fluid card">
+    <br/>
+    <code>
+        {{jsonfile|safe}}
+    </code>
+    <br/>
   </div>
 {% endblock %}
