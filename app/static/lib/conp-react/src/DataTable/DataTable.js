@@ -269,9 +269,9 @@ const DataTable = ({
         </div>
         
         {renderElement.name === "ExecutionRecordElement" ?
-        <div className="card flex-row" style={{ minHeight: '50px' }} data-type="pipeline">
+        <div className="card flex-row" data-type="pipeline">
           <div className="d-flex col-md-12">
-            <div className="d-flex py-1 w-100" style={{ fontSize: 20 }}>
+            <div className="d-flex py-1 w-100">
               <div className="col-5">
                 <span >
                   <a >Pipeline Name</a>
