@@ -24506,7 +24506,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "card container-fluid",
     "data-type": "dataset"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "row"
+    className: "row pr-4"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col col-lg-2 d-flex flex-column p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -24596,28 +24596,30 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     rel: "noopener noreferrer",
     href: element.sources
   }, element.sources))) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-lg-1 d-flex flex-column justify-content-top align-items-center p-2"
+    className: "col col-lg-2 d-flex flex-column justify-content-top align-items-center p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "row align-items-top width-auto"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col col-lg-4 d-flex flex-column justify-content-top align-items-center p-2 pr-4"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, "PROCESS"), element.cbrain_id ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     target: "_blank",
     href: "" + element.cbrain_id
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-    alt: "dataset format",
-    className: "img-fluid",
+    className: "cbrain-img justify-content-center align-items-center",
+    src: "static/img/cbrain-icon-blue.png",
     style: {
-      alignSelf: 'center'
-    },
-    src: "static/img/cbrain-icon-blue.png"
+      maxWidth: '60px'
+    }
   })) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     target: "_blank"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-    alt: "dataset format",
-    className: "img-fluid",
+    className: "cbrain-img justify-content-center align-items-center",
+    src: "static/img/cbrain-icon-grey.png",
     style: {
-      alignSelf: 'center'
-    },
-    src: "static/img/cbrain-icon-grey.png"
+      maxWidth: '60px'
+    }
   }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-lg-1 d-flex flex-column justify-content-top align-items-center p-2"
+    className: "col col-lg-8 d-flex flex-column justify-content-top align-items-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, "DOWNLOAD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-column"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
@@ -24657,7 +24659,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       key: "authIcon_" + index,
       className: "text-center p-1"
     }, icon);
-  })))));
+  })))))));
 };
 
 DatasetElement_DatasetElement.propTypes = {
