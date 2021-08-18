@@ -244,15 +244,20 @@
   {% if showDownloadButton %}
     <div class="d-flex flex-row align-items-center">
     <div class="col-md-2">
-      <a href="{{ zipLocation }}" class="btn btn-outline-secondary " id="downloadButton">
-        Download Current Version
+      <a
+        href="{{ zipLocation }}"
+        onclick="return confirm('You are about to download a {{ data.size }} file. Are you sure?')"
+        class="btn btn-outline-secondary "
+        id="downloadButton"
+      >
+        Download Current Version ({{ data.size }})
       </a>
     </div>
   </div>
   {% else %}
   <div class="d-flex flex-row align-items-center">
     <div class="col-md-2">
-      <a class="btn btn-outline-secondary disabled" id="UnvailableDownloadButton">
+      <a class="btn btn-outline-secondary disabled" id="UnavailableDownloadButton">
         Not Available
       </a>
     </div>
