@@ -254,7 +254,7 @@
           <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="cancelDownload">
             Cancel
           </button>
-          <a href="{{ zipLocation }}" class="btn btn-secondary" id="downloadButton">
+          <a href="{{ zipLocation }}" class="btn btn-secondary" id="confirmDownload">
             Download
           </a>
         </div>
@@ -446,6 +446,13 @@ datalad get &ltfilepath&gt</pre
 <script>
   $(function () {
       $("#cancelDownload").on("click", function (event) {
+          $("#confirmDownloadModal").modal("hide");
+      })
+  })
+</script>
+<script>
+  $(function () {
+      $("#confirmDownload").on("click", function (event) {
           $("#confirmDownloadModal").modal("hide");
       })
   })
