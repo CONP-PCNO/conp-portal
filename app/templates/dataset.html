@@ -244,10 +244,20 @@
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-body">
-        <h4 class="modal-title w-100 text-center" id="modalLongTitle">
-          You are about to download a {{ data.size }} file.
-        </h4>
-        <h4 class="modal-title w-100 text-center" id="modalLongTitle">Are you sure?</h4>
+        <table>
+          <tr>
+            <td style="width:150px">
+              <img src="../static/img/conp.png" class="text-center" style="width:100%">
+            </td>
+            <td style="width:25px"></td>
+            <td colspan="41">
+              <h4 class="modal-title w-100 text-center" id="modalLongTitle">
+                You are about to download a {{ data.size }} file.
+              </h4>
+              <h4 class="modal-title w-100 text-center" id="modalLongTitle">Are you sure?</h4>
+            </td>
+          </tr>
+        </table>
       </div>
       <div class="modal-footer">
         <div class="btn-group btn-group-lg" style="width:100%">
