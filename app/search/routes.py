@@ -12,6 +12,7 @@ from flask_login import current_user
 from app.models import Dataset, DatasetAncestry
 from app.search import search_bp
 from app.search.models import DATSDataset, DatasetCache
+from app.search.queries import example_query_1, example_query_2
 from app.services import github
 from config import Config
 
@@ -529,8 +530,13 @@ def sparql():
     """
 
     sparql_endpoint = Config.NEXUS_SPARQL_ENDPOINT
+    queries = {
+        "Example 1": example_query_1,
+        "Example 2": example_query_2
+    }
 
-    return render_template('sparql.html', title='CONP | SPARQL', user=current_user, sparql_endpoint=sparql_endpoint)
+    return render_template('sparql.html', title='CONP | SPARQL', user=current_user,
+                           sparql_endpoint=sparql_endpoint, queries=queries)
 
 
 def get_dataset_metadata_information(dataset):
