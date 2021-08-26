@@ -37,7 +37,7 @@ SELECT DISTINCT ?dataset ?title ?format WHERE {
 FILTER (regex(?format, "MINC", "i"))
 }"""
 
-example_query_4 = """# This query search for datasets that have an authorization type set to "Public".
+example_query_4 = """# This query searches for datasets that have an authorization type set to "Public".
 
 PREFIX sdo: <https://schema.org/>
 PREFIX conp: <https://reservoir.global/v1/vocabs/Public/CONP/>
