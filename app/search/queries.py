@@ -12,7 +12,7 @@ FILTER (?license_name = "CC BY-NC-SA"^^sdo:Text)
 }
 """
 
-example_query_2 = """# The query searches for all datasets that are about Alzheimer's.
+example_query_2 = """# The query searches for all datasets that are about Alzheimer's disease.
 
 PREFIX sdo: <https://schema.org/>
 PREFIX conp: <https://reservoir.global/v1/vocabs/Public/CONP/>
@@ -53,17 +53,16 @@ FILTER regex(lcase(str(?value)), "public", "i")
 }
 """
 
-example_query_5 = """# The query returns all datasets and their content size.
+example_query_5 = """# The query returns a list of cited papers (including their doi) with datasets that cited them.
 
 PREFIX sdo: <https://schema.org/>
-PREFIX conp: <https://reservoir.global/v1/vocabs/Public/CONP/>
-SELECT DISTINCT ?dataset_name ?content_size ?value
-WHERE {
-    ?dataset a sdo:Dataset;
-        sdo:name ?dataset_name;
-        sdo:distribution ?distribution.
-  ?distribution sdo:contentSize ?content_size;
-                conp:unit ?unit.
-  ?unit sdo:value ?value.
+SELECT DISTINCT ?citation_name ?doi (GROUP_CONCAT(DISTINCT ?title; separator=" | ") as ?datasets) (COUNT(DISTINCT ?title) as ?citation_count) WHERE {
+?dataset a sdo:Dataset;
+  sdo:name ?title;
+  sdo:citation ?citation.
+  ?citation sdo:identifier ?value;
+            sdo:name ?citation_name.
+  ?value sdo:identifier ?doi
 }
+GROUP BY ?citation_name ?doi
 """
