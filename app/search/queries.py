@@ -15,7 +15,6 @@ FILTER (?license_name = "CC BY-NC-SA"^^sdo:Text)
 example_query_2 = """# The query searches for all datasets that are about Alzheimer's disease.
 
 PREFIX sdo: <https://schema.org/>
-PREFIX conp: <https://reservoir.global/v1/vocabs/Public/CONP/>
 SELECT DISTINCT ?dataset ?title ?about_name WHERE {
 ?dataset a sdo:Dataset;
   sdo:name ?title;
