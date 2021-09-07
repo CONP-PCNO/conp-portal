@@ -233,7 +233,46 @@
     <div class="card-body">{{readme|safe}}</div>
   </div>
 </div>
-    
+
+<div
+  class="modal fade"
+  id="confirmDownloadModal"
+  role="dialog"
+  aria-labelledby="modalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <table>
+          <tr>
+            <td style="width:150px">
+              <img src="../static/img/conp.png" class="text-center" style="width:100%">
+            </td>
+            <td style="width:25px"></td>
+            <td colspan="41">
+              <h4 class="modal-title w-100 text-center" id="modalLongTitle">
+                You are about to download a {{ data.size }} file.
+              </h4>
+              <h4 class="modal-title w-100 text-center" id="modalLongTitle">Are you sure?</h4>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group btn-group-lg" style="width:100%">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="cancelDownload">
+            Cancel
+          </button>
+          <a href="{{ zipLocation }}" class="btn btn-secondary" id="confirmDownload">
+            Download
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="d-flex flex-column p-2">
   <div class="d-flex flex-row align-items-center">
     <a name="downloadInstructions"></a>
@@ -244,15 +283,19 @@
   {% if showDownloadButton %}
     <div class="d-flex flex-row align-items-center">
     <div class="col-md-2">
-      <a href="{{ zipLocation }}" class="btn btn-outline-secondary " id="downloadButton">
-        Download Current Version
-      </a>
+      <button
+        onclick=$("#confirmDownloadModal").modal("show")
+        class="btn btn-outline-secondary "
+        id="downloadButton"
+      >
+        Download Current Version ({{ data.size }})
+      </button>
     </div>
   </div>
   {% else %}
   <div class="d-flex flex-row align-items-center">
     <div class="col-md-2">
-      <a class="btn btn-outline-secondary disabled" id="UnvailableDownloadButton">
+      <a class="btn btn-outline-secondary disabled" id="UnavailableDownloadButton">
         Not Available
       </a>
     </div>
@@ -408,6 +451,21 @@ datalad get &ltfilepath&gt</pre
   element.showDownload = true;
   const reactElement = React.createElement(CONPReact.DatasetElement, element);
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));
+</script>
+
+<script>
+  $(function () {
+      $("#cancelDownload").on("click", function (event) {
+          $("#confirmDownloadModal").modal("hide");
+      })
+  })
+</script>
+<script>
+  $(function () {
+      $("#confirmDownload").on("click", function (event) {
+          $("#confirmDownloadModal").modal("hide");
+      })
+  })
 </script>
 <!--/span-->
 {% endblock %}
