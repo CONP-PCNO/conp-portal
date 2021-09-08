@@ -24,6 +24,8 @@
 {% block appcontent %}
 <div id="yasgui" style="padding:10px 0px;"></div>
 <script>
+// main yasgui block
+
   const yasgui = new Yasgui(document.getElementById("yasgui"),
   {
     requestConfig:
@@ -34,6 +36,24 @@
     copyEndpointOnNewTab: true
   }
   );
+
+// keep the default query tab active
+
+for (tab in yasgui.tabElements._tabs) {
+    yasgui.getTab(tab).close()
+}
+yasgui.addTab(true, { name: 'Query' });
+
+// read predefined queries
+
+const queries = {{queries | tojson | safe}};
+
+for (query in queries) {
+    value = queries[query];
+    yasgui.addTab(
+      false, { name: query, yasqe:{value:value} }
+    );
+}
 </script>
 <style>
   .yasgui .autocompleteWrapper {
@@ -44,6 +64,14 @@
   }
   .yasr .yasr_results .CodeMirror {
     height: fit-content;
+  }
+
+  #yasr_plugin_control > div > div:nth-child(1) > label > span {
+    padding: 0px 5px 0px 0px;
+  }
+
+  #yasr_plugin_control > div > div:nth-child(1) > label {
+    margin-bottom: 0;
   }
 </style>
 {% endblock %}
