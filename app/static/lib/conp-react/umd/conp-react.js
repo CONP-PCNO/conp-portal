@@ -95,7 +95,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 103);
+/******/ 	return __webpack_require__(__webpack_require__.s = 104);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -142,7 +142,7 @@ function _extends() {
 if (false) { var throwOnDirectAccess, ReactIs; } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(104)();
+  module.exports = __webpack_require__(105)();
 }
 
 
@@ -240,17 +240,17 @@ var external_root_React_commonjs2_react_commonjs_react_amd_react_default = /*#__
 var prop_types = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
-var hoist_non_react_statics_cjs = __webpack_require__(40);
+var hoist_non_react_statics_cjs = __webpack_require__(41);
 var hoist_non_react_statics_cjs_default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics_cjs);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/makeStyles/makeStyles.js + 19 modules
-var makeStyles = __webpack_require__(159);
+var makeStyles = __webpack_require__(160);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/getThemeProps/getThemeProps.js
-var getThemeProps = __webpack_require__(158);
+var getThemeProps = __webpack_require__(159);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/useTheme/useTheme.js + 1 modules
-var useTheme = __webpack_require__(160);
+var useTheme = __webpack_require__(161);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/styles/esm/withStyles/withStyles.js
 
@@ -337,7 +337,7 @@ var withStyles_withStyles = function withStyles(stylesOrCreator) {
 
 /* harmony default export */ var esm_withStyles_withStyles = (withStyles_withStyles);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/defaultTheme.js + 16 modules
-var styles_defaultTheme = __webpack_require__(37);
+var styles_defaultTheme = __webpack_require__(38);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/withStyles.js
 
@@ -358,7 +358,7 @@ function styles_withStyles_withStyles(stylesOrCreator, options) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return capitalize; });
-/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(88);
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(89);
 
 // It should to be noted that this function isn't equivalent to `text-transform: capitalize`.
 //
@@ -402,7 +402,7 @@ function _defineProperty(obj, key, value) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return useForkRef; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _setRef__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27);
+/* harmony import */ var _setRef__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28);
 
 
 function useForkRef(refA, refB) {
@@ -433,13 +433,14 @@ function useForkRef(refA, refB) {
 /* unused harmony export hslToRgb */
 /* unused harmony export decomposeColor */
 /* unused harmony export recomposeColor */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getContrastRatio; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getContrastRatio; });
 /* unused harmony export getLuminance */
 /* unused harmony export emphasize */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return fade; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return darken; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return lighten; });
-/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(88);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return fade; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return alpha; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return darken; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return lighten; });
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(89);
 
 
 /* eslint-disable no-use-before-define */
@@ -652,6 +653,7 @@ function emphasize(color) {
   var coefficient = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.15;
   return getLuminance(color) > 0.5 ? darken(color, coefficient) : lighten(color, coefficient);
 }
+var warnedOnce = false;
 /**
  * Set the absolute transparency of a color.
  * Any existing alpha values are overwritten.
@@ -659,9 +661,26 @@ function emphasize(color) {
  * @param {string} color - CSS color, i.e. one of: #nnn, #nnnnnn, rgb(), rgba(), hsl(), hsla()
  * @param {number} value - value to set the alpha channel to in the range 0 -1
  * @returns {string} A CSS color string. Hex input values are returned as rgb
+ *
+ * @deprecated
+ * Use `import { alpha } from '@material-ui/core/styles'` instead.
  */
 
 function fade(color, value) {
+  if (false) {}
+
+  return alpha(color, value);
+}
+/**
+ * Set the absolute transparency of a color.
+ * Any existing alpha value is overwritten.
+ *
+ * @param {string} color - CSS color, i.e. one of: #nnn, #nnnnnn, rgb(), rgba(), hsl(), hsla()
+ * @param {number} value - value to set the alpha channel to in the range 0-1
+ * @returns {string} A CSS color string. Hex input values are returned as rgb
+ */
+
+function alpha(color, value) {
   color = decomposeColor(color);
   value = clamp(value);
 
@@ -1298,7 +1317,7 @@ e.objectEach=b.objectEach;e.offset=b.offset;e.pad=b.pad;e.pick=b.pick;e.pInt=b.p
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(106);
+module.exports = __webpack_require__(107);
 
 
 /***/ }),
@@ -1331,7 +1350,7 @@ if (true) {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(117);
+  module.exports = __webpack_require__(118);
 } else {}
 
 
@@ -1344,7 +1363,7 @@ if (true) {
 /* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(89);
+/* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(90);
 
 
 
@@ -1375,7 +1394,7 @@ function createSvgIcon(path, displayName) {
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ _slicedToArray; });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
-var arrayWithHoles = __webpack_require__(85);
+var arrayWithHoles = __webpack_require__(86);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
 function _iterableToArrayLimit(arr, i) {
@@ -1405,10 +1424,10 @@ function _iterableToArrayLimit(arr, i) {
   return _arr;
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-var unsupportedIterableToArray = __webpack_require__(61);
+var unsupportedIterableToArray = __webpack_require__(62);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
-var nonIterableRest = __webpack_require__(86);
+var nonIterableRest = __webpack_require__(87);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js
 
@@ -1424,7 +1443,7 @@ function _slicedToArray(arr, i) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(59);
+/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(60);
 
 
 /** Detect free variable `self`. */
@@ -1592,7 +1611,7 @@ function debounce(func) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _inheritsLoose; });
-/* harmony import */ var _setPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(60);
+/* harmony import */ var _setPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(61);
 
 function _inheritsLoose(subClass, superClass) {
   subClass.prototype = Object.create(superClass.prototype);
@@ -1602,6 +1621,31 @@ function _inheritsLoose(subClass, superClass) {
 
 /***/ }),
 /* 27 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return deprecatedPropType; });
+function deprecatedPropType(validator, reason) {
+  if (true) {
+    return function () {
+      return null;
+    };
+  }
+
+  return function (props, propName, componentName, location, propFullName) {
+    var componentNameSafe = componentName || '<<anonymous>>';
+    var propFullNameSafe = propFullName || propName;
+
+    if (typeof props[propName] !== 'undefined') {
+      return new Error("The ".concat(location, " `").concat(propFullNameSafe, "` of ") + "`".concat(componentNameSafe, "` is deprecated. ").concat(reason));
+    }
+
+    return null;
+  };
+}
+
+/***/ }),
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1616,7 +1660,7 @@ function setRef(ref, value) {
 }
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1625,7 +1669,7 @@ function setRef(ref, value) {
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ _toConsumableArray; });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
-var arrayLikeToArray = __webpack_require__(50);
+var arrayLikeToArray = __webpack_require__(51);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js
 
@@ -1633,10 +1677,10 @@ function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return Object(arrayLikeToArray["a" /* default */])(arr);
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
-var iterableToArray = __webpack_require__(84);
+var iterableToArray = __webpack_require__(85);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-var unsupportedIterableToArray = __webpack_require__(61);
+var unsupportedIterableToArray = __webpack_require__(62);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
 function _nonIterableSpread() {
@@ -1652,7 +1696,7 @@ function _toConsumableArray(arr) {
 }
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1690,11 +1734,32 @@ function createChainedFunction() {
 }
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(59);
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(127);
+
+
+function merge(acc, item) {
+  if (!item) {
+    return acc;
+  }
+
+  return Object(_material_ui_utils__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(acc, item, {
+    clone: false // No need to clone deep, it's way faster.
+
+  });
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (merge);
+
+/***/ }),
+/* 32 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(60);
 
 
 /** Detect free variable `exports`. */
@@ -1726,10 +1791,10 @@ var nodeUtil = (function() {
 
 /* harmony default export */ __webpack_exports__["a"] = (nodeUtil);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(72)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(73)(module)))
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1830,7 +1895,7 @@ module.exports = function exportedEqual(a, b) {
 
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1866,7 +1931,7 @@ function useControlled(_ref) {
 }
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1879,7 +1944,7 @@ function ownerWindow(node) {
 }
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2044,28 +2109,7 @@ function shouldBeQuoted(part) {
 
 
 /***/ }),
-/* 35 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(126);
-
-
-function merge(acc, item) {
-  if (!item) {
-    return acc;
-  }
-
-  return Object(_material_ui_utils__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(acc, item, {
-    clone: false // No need to clone deep, it's way faster.
-
-  });
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (merge);
-
-/***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2078,7 +2122,7 @@ function isMuiElement(element, muiNames) {
 }
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2090,7 +2134,7 @@ var defineProperty = __webpack_require__(7);
 var objectWithoutProperties = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/utils/esm/deepmerge.js
-var deepmerge = __webpack_require__(126);
+var deepmerge = __webpack_require__(127);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
 var esm_extends = __webpack_require__(1);
@@ -2149,7 +2193,11 @@ function createBreakpoints(breakpoints) {
     return between(key, key);
   }
 
+  var warnedOnce = false;
+
   function width(key) {
+    if (false) {}
+
     return values[key];
   }
 
@@ -2172,22 +2220,7 @@ function createMixins(breakpoints, spacing, mixins) {
   return Object(esm_extends["a" /* default */])({
     gutters: function gutters() {
       var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      // To deprecate in v4.1
-      //       warning(
-      //         false,
-      //         [
-      //           'Material-UI: Theme.mixins.gutters() is deprecated.',
-      //           'You can use the source of the mixin directly:',
-      //           `
-      // paddingLeft: theme.spacing(2),
-      // paddingRight: theme.spacing(2),
-      // [theme.breakpoints.up('sm')]: {
-      //   paddingLeft: theme.spacing(3),
-      //   paddingRight: theme.spacing(3),
-      // },
-      // `,
-      //         ].join('\n'),
-      //       );
+      console.warn(['Material-UI: theme.mixins.gutters() is deprecated.', 'You can use the source of the mixin directly:', "\n      paddingLeft: theme.spacing(2),\n      paddingRight: theme.spacing(2),\n      [theme.breakpoints.up('sm')]: {\n        paddingLeft: theme.spacing(3),\n        paddingRight: theme.spacing(3),\n      },\n      "].join('\n'));
       return Object(esm_extends["a" /* default */])({
         paddingLeft: spacing(2),
         paddingRight: spacing(2)
@@ -2206,7 +2239,7 @@ function createMixins(breakpoints, spacing, mixins) {
   }, mixins);
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/utils/esm/formatMuiErrorMessage.js
-var formatMuiErrorMessage = __webpack_require__(88);
+var formatMuiErrorMessage = __webpack_require__(89);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/colors/common.js
 var common = {
@@ -2433,9 +2466,9 @@ function addLightOrDark(intent, direction, shade, tonalOffset) {
     if (intent.hasOwnProperty(shade)) {
       intent[direction] = intent[shade];
     } else if (direction === 'light') {
-      intent.light = Object(colorManipulator["d" /* lighten */])(intent.main, tonalOffsetLight);
+      intent.light = Object(colorManipulator["e" /* lighten */])(intent.main, tonalOffsetLight);
     } else if (direction === 'dark') {
-      intent.dark = Object(colorManipulator["a" /* darken */])(intent.main, tonalOffsetDark);
+      intent.dark = Object(colorManipulator["b" /* darken */])(intent.main, tonalOffsetDark);
     }
   }
 }
@@ -2489,7 +2522,7 @@ function createPalette(palette) {
 
 
   function getContrastText(background) {
-    var contrastText = Object(colorManipulator["c" /* getContrastRatio */])(background, dark.text.primary) >= contrastThreshold ? dark.text.primary : light.text.primary;
+    var contrastText = Object(colorManipulator["d" /* getContrastRatio */])(background, dark.text.primary) >= contrastThreshold ? dark.text.primary : light.text.primary;
 
     if (false) { var contrast; }
 
@@ -2573,6 +2606,14 @@ function round(value) {
   return Math.round(value * 1e5) / 1e5;
 }
 
+var createTypography_warnedOnce = false;
+
+function roundWithDeprecationWarning(value) {
+  if (false) {}
+
+  return round(value);
+}
+
 var caseAllCaps = {
   textTransform: 'uppercase'
 };
@@ -2640,7 +2681,7 @@ function createTypography(palette, typography) {
   return Object(deepmerge["a" /* default */])(Object(esm_extends["a" /* default */])({
     htmlFontSize: htmlFontSize,
     pxToRem: pxToRem,
-    round: round,
+    round: roundWithDeprecationWarning,
     // TODO v5: remove
     fontFamily: fontFamily,
     fontSize: fontSize,
@@ -2671,7 +2712,7 @@ var shape = {
 };
 /* harmony default export */ var styles_shape = (shape);
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/spacing.js + 1 modules
-var esm_spacing = __webpack_require__(161);
+var esm_spacing = __webpack_require__(162);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/createSpacing.js
 
@@ -2728,14 +2769,12 @@ function createSpacing() {
   return spacing;
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/transitions.js
-var transitions = __webpack_require__(38);
+var transitions = __webpack_require__(39);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/zIndex.js
-var zIndex = __webpack_require__(63);
+var zIndex = __webpack_require__(64);
 
-// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/createMuiTheme.js
-
-
+// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/createTheme.js
 
 
 
@@ -2747,7 +2786,9 @@ var zIndex = __webpack_require__(63);
 
 
 
-function createMuiTheme() {
+
+
+function createTheme() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
   var _options$breakpoints = options.breakpoints,
@@ -2794,14 +2835,20 @@ function createMuiTheme() {
   return muiTheme;
 }
 
-/* harmony default export */ var styles_createMuiTheme = (createMuiTheme);
+var createTheme_warnedOnce = false;
+function createMuiTheme() {
+  if (false) {}
+
+  return createTheme.apply(void 0, arguments);
+}
+/* harmony default export */ var styles_createTheme = (createTheme);
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/defaultTheme.js
 
-var defaultTheme = styles_createMuiTheme();
+var defaultTheme = styles_createTheme();
 /* harmony default export */ var styles_defaultTheme = __webpack_exports__["a"] = (defaultTheme);
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2884,7 +2931,7 @@ function formatMs(milliseconds) {
 });
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2906,13 +2953,13 @@ function _typeof(obj) {
 }
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var reactIs = __webpack_require__(114);
+var reactIs = __webpack_require__(115);
 
 /**
  * Copyright 2015, Yahoo! Inc.
@@ -3016,12 +3063,12 @@ module.exports = hoistNonReactStatics;
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _root_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(16);
-/* harmony import */ var _stubFalse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(80);
+/* harmony import */ var _stubFalse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(81);
 
 
 
@@ -3061,10 +3108,10 @@ var isBuffer = nativeIsBuffer || _stubFalse_js__WEBPACK_IMPORTED_MODULE_1__[/* d
 
 /* harmony default export */ __webpack_exports__["a"] = (isBuffer);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(72)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(73)(module)))
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3078,11 +3125,11 @@ function _assertThisInitialized(self) {
 }
 
 /***/ }),
-/* 43 */,
 /* 44 */,
 /* 45 */,
 /* 46 */,
-/* 47 */
+/* 47 */,
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3562,7 +3609,7 @@ module.exports = {
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports) {
 
 var g;
@@ -3588,19 +3635,19 @@ module.exports = g;
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(116);
+  module.exports = __webpack_require__(117);
 } else {}
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3616,7 +3663,7 @@ function _arrayLikeToArray(arr, len) {
 }
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6067,15 +6114,15 @@ var autoReplace = function autoReplace() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(48), __webpack_require__(111).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(49), __webpack_require__(112).setImmediate))
 
 /***/ }),
-/* 52 */,
 /* 53 */,
 /* 54 */,
 /* 55 */,
 /* 56 */,
-/* 57 */
+/* 57 */,
+/* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6240,7 +6287,7 @@ function useIsFocusVisible() {
 }
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6270,7 +6317,7 @@ function useId(idOverride) {
 }
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6279,10 +6326,10 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 
 /* harmony default export */ __webpack_exports__["a"] = (freeGlobal);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(48)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(49)))
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6297,12 +6344,12 @@ function _setPrototypeOf(o, p) {
 }
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _unsupportedIterableToArray; });
-/* harmony import */ var _arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(50);
+/* harmony import */ var _arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51);
 
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
@@ -6314,17 +6361,17 @@ function _unsupportedIterableToArray(o, minLen) {
 }
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return handleBreakpoints; });
-/* harmony import */ var _babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(28);
+/* harmony import */ var _babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(29);
 /* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
-/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(39);
+/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _merge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(35);
+/* harmony import */ var _merge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(31);
 
 
 
@@ -6396,7 +6443,7 @@ function breakpoints(styleFunction) {
 /* unused harmony default export */ var _unused_webpack_default_export = (breakpoints);
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6414,7 +6461,6 @@ var zIndex = {
 /* harmony default export */ __webpack_exports__["a"] = (zIndex);
 
 /***/ }),
-/* 64 */,
 /* 65 */,
 /* 66 */,
 /* 67 */,
@@ -6422,7 +6468,8 @@ var zIndex = {
 /* 69 */,
 /* 70 */,
 /* 71 */,
-/* 72 */
+/* 72 */,
+/* 73 */
 /***/ (function(module, exports) {
 
 module.exports = function(originalModule) {
@@ -6452,7 +6499,7 @@ module.exports = function(originalModule) {
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6480,7 +6527,7 @@ function requirePropFactory(componentNameInError) {
 }
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6500,7 +6547,7 @@ function unsupportedProp(props, propName, componentName, location, propFullName)
 }
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports) {
 
 function _typeof(obj) {
@@ -6527,8 +6574,8 @@ module.exports = _typeof;
 module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
-/* 76 */,
-/* 77 */
+/* 77 */,
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -6731,7 +6778,7 @@ f=a.center;if("colorAxis"!==a.coll){var g=b.chartX-f[0]-c.plotLeft;f=b.chartY-f[
 //# sourceMappingURL=highcharts-more.js.map
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -7354,15 +7401,15 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 }));
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-const strictUriEncode = __webpack_require__(107);
-const decodeComponent = __webpack_require__(108);
-const splitOnFirst = __webpack_require__(109);
-const filterObject = __webpack_require__(110);
+const strictUriEncode = __webpack_require__(108);
+const decodeComponent = __webpack_require__(109);
+const splitOnFirst = __webpack_require__(110);
+const filterObject = __webpack_require__(111);
 
 const isNullOrUndefined = value => value === null || value === undefined;
 
@@ -7765,7 +7812,7 @@ exports.exclude = (input, filter, options) => {
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7790,7 +7837,7 @@ function stubFalse() {
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7831,10 +7878,10 @@ function cloneBuffer(buffer, isDeep) {
 
 /* harmony default export */ __webpack_exports__["a"] = (cloneBuffer);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(72)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(73)(module)))
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports) {
 
 
@@ -7938,7 +7985,7 @@ function makeNodesHash(arr){
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7970,7 +8017,7 @@ exports.default = function (file, acceptedFiles) {
 };
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7980,7 +8027,7 @@ function _iterableToArray(iter) {
 }
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7990,7 +8037,7 @@ function _arrayWithHoles(arr) {
 }
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8000,15 +8047,15 @@ function _nonIterableRest() {
 }
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(121);
+var _interopRequireDefault = __webpack_require__(122);
 
-var _interopRequireWildcard = __webpack_require__(122);
+var _interopRequireWildcard = __webpack_require__(123);
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8017,7 +8064,7 @@ exports.default = void 0;
 
 var React = _interopRequireWildcard(__webpack_require__(0));
 
-var _createSvgIcon = _interopRequireDefault(__webpack_require__(123));
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(124));
 
 var _default = (0, _createSvgIcon.default)( /*#__PURE__*/React.createElement("path", {
   d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
@@ -8026,7 +8073,7 @@ var _default = (0, _createSvgIcon.default)( /*#__PURE__*/React.createElement("pa
 exports.default = _default;
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8055,7 +8102,7 @@ function formatMuiErrorMessage(code) {
 }
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8069,6 +8116,7 @@ function formatMuiErrorMessage(code) {
 /* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4);
 /* harmony import */ var _styles_withStyles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5);
 /* harmony import */ var _utils_capitalize__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6);
+
 
 
 
@@ -8142,7 +8190,7 @@ var SvgIcon = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__["forwardRef"](func
       _props$component = props.component,
       Component = _props$component === void 0 ? 'svg' : _props$component,
       _props$fontSize = props.fontSize,
-      fontSize = _props$fontSize === void 0 ? 'default' : _props$fontSize,
+      fontSize = _props$fontSize === void 0 ? 'medium' : _props$fontSize,
       htmlColor = props.htmlColor,
       titleAccess = props.titleAccess,
       _props$viewBox = props.viewBox,
@@ -8150,7 +8198,7 @@ var SvgIcon = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__["forwardRef"](func
       other = Object(_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"])(props, ["children", "classes", "className", "color", "component", "fontSize", "htmlColor", "titleAccess", "viewBox"]);
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__["createElement"](Component, Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])({
-    className: Object(clsx__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"])(classes.root, className, color !== 'inherit' && classes["color".concat(Object(_utils_capitalize__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])(color))], fontSize !== 'default' && classes["fontSize".concat(Object(_utils_capitalize__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])(fontSize))]),
+    className: Object(clsx__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"])(classes.root, className, color !== 'inherit' && classes["color".concat(Object(_utils_capitalize__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])(color))], fontSize !== 'default' && fontSize !== 'medium' && classes["fontSize".concat(Object(_utils_capitalize__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])(fontSize))]),
     focusable: "false",
     viewBox: viewBox,
     color: htmlColor,
@@ -8166,7 +8214,6 @@ SvgIcon.muiName = 'SvgIcon';
 })(SvgIcon));
 
 /***/ }),
-/* 90 */,
 /* 91 */,
 /* 92 */,
 /* 93 */,
@@ -8179,14 +8226,15 @@ SvgIcon.muiName = 'SvgIcon';
 /* 100 */,
 /* 101 */,
 /* 102 */,
-/* 103 */
+/* 103 */,
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(124);
+module.exports = __webpack_require__(126);
 
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8199,7 +8247,7 @@ module.exports = __webpack_require__(124);
 
 
 
-var ReactPropTypesSecret = __webpack_require__(105);
+var ReactPropTypesSecret = __webpack_require__(106);
 
 function emptyFunction() {}
 function emptyFunctionWithReset() {}
@@ -8257,7 +8305,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8276,7 +8324,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -9030,7 +9078,7 @@ try {
 
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9039,7 +9087,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9140,7 +9188,7 @@ module.exports = function (encodedURI) {
 
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9169,7 +9217,7 @@ module.exports = (string, separator) => {
 
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9193,7 +9241,7 @@ module.exports = function (obj, predicate) {
 
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -9249,7 +9297,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(112);
+__webpack_require__(113);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -9260,10 +9308,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(48)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(49)))
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -9453,10 +9501,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(48), __webpack_require__(113)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(49), __webpack_require__(114)))
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -9646,19 +9694,19 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(115);
+  module.exports = __webpack_require__(116);
 } else {}
 
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9680,7 +9728,7 @@ exports.isValidElementType=function(a){return"string"===typeof a||"function"===t
 
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9701,7 +9749,7 @@ exports.typeOf=y;
 
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9717,7 +9765,7 @@ exports.typeOf=y;
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),n=__webpack_require__(118),r=__webpack_require__(119);function ba(a,b,c,d,e,f,g,h){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var l=[c,d,e,f,g,h],k=0;a=Error(b.replace(/%s/g,function(){return l[k++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
+var aa=__webpack_require__(0),n=__webpack_require__(119),r=__webpack_require__(120);function ba(a,b,c,d,e,f,g,h){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var l=[c,d,e,f,g,h],k=0;a=Error(b.replace(/%s/g,function(){return l[k++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
 function x(a){for(var b=arguments.length-1,c="https://reactjs.org/docs/error-decoder.html?invariant="+a,d=0;d<b;d++)c+="&args[]="+encodeURIComponent(arguments[d+1]);ba(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",c)}aa?void 0:x("227");function ca(a,b,c,d,e,f,g,h,l){var k=Array.prototype.slice.call(arguments,3);try{b.apply(c,k)}catch(m){this.onError(m)}}
 var da=!1,ea=null,fa=!1,ha=null,ia={onError:function(a){da=!0;ea=a}};function ja(a,b,c,d,e,f,g,h,l){da=!1;ea=null;ca.apply(ia,arguments)}function ka(a,b,c,d,e,f,g,h,l){ja.apply(this,arguments);if(da){if(da){var k=ea;da=!1;ea=null}else x("198"),k=void 0;fa||(fa=!0,ha=k)}}var la=null,ma={};
 function na(){if(la)for(var a in ma){var b=ma[a],c=la.indexOf(a);-1<c?void 0:x("96",a);if(!oa[c]){b.extractEvents?void 0:x("97",a);oa[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],g=b,h=d;pa.hasOwnProperty(h)?x("99",h):void 0;pa[h]=f;var l=f.phasedRegistrationNames;if(l){for(e in l)l.hasOwnProperty(e)&&qa(l[e],g,h);e=!0}else f.registrationName?(qa(f.registrationName,g,h),e=!0):e=!1;e?void 0:x("98",d,a)}}}}
@@ -9977,7 +10025,7 @@ X;X=!0;try{ki(a)}finally{(X=b)||W||Yh(1073741823,!1)}},__SECRET_INTERNALS_DO_NOT
 
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10074,19 +10122,19 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(120);
+  module.exports = __webpack_require__(121);
 } else {}
 
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10112,10 +10160,10 @@ exports.unstable_scheduleCallback=function(a,b){var c=-1!==k?k:exports.unstable_
 b=c.previous;b.next=c.previous=a;a.next=c;a.previous=b}return a};exports.unstable_cancelCallback=function(a){var b=a.next;if(null!==b){if(b===a)d=null;else{a===d&&(d=b);var c=a.previous;c.next=b;b.previous=c}a.next=a.previous=null}};exports.unstable_wrapCallback=function(a){var b=g;return function(){var c=g,f=k;g=b;k=exports.unstable_now();try{return a.apply(this,arguments)}finally{g=c,k=f,v()}}};exports.unstable_getCurrentPriorityLevel=function(){return g};
 exports.unstable_shouldYield=function(){return!e&&(null!==d&&d.expirationTime<l||w())};exports.unstable_continueExecution=function(){null!==d&&p()};exports.unstable_pauseExecution=function(){};exports.unstable_getFirstCallbackNode=function(){return d};
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(48)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(49)))
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, exports) {
 
 function _interopRequireDefault(obj) {
@@ -10128,10 +10176,10 @@ module.exports = _interopRequireDefault;
 module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _typeof = __webpack_require__(75)["default"];
+var _typeof = __webpack_require__(76)["default"];
 
 function _getRequireWildcardCache() {
   if (typeof WeakMap !== "function") return null;
@@ -10189,7 +10237,7 @@ module.exports = _interopRequireWildcard;
 module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10208,7 +10256,79 @@ Object.defineProperty(exports, "default", {
 var _utils = __webpack_require__(125);
 
 /***/ }),
-/* 124 */
+/* 125 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _capitalize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "capitalize", function() { return _capitalize__WEBPACK_IMPORTED_MODULE_0__["a"]; });
+
+/* harmony import */ var _createChainedFunction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(30);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createChainedFunction", function() { return _createChainedFunction__WEBPACK_IMPORTED_MODULE_1__["a"]; });
+
+/* harmony import */ var _createSvgIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(14);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createSvgIcon", function() { return _createSvgIcon__WEBPACK_IMPORTED_MODULE_2__["a"]; });
+
+/* harmony import */ var _debounce__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(25);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "debounce", function() { return _debounce__WEBPACK_IMPORTED_MODULE_3__["a"]; });
+
+/* harmony import */ var _deprecatedPropType__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(27);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "deprecatedPropType", function() { return _deprecatedPropType__WEBPACK_IMPORTED_MODULE_4__["a"]; });
+
+/* harmony import */ var _isMuiElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(37);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isMuiElement", function() { return _isMuiElement__WEBPACK_IMPORTED_MODULE_5__["a"]; });
+
+/* harmony import */ var _ownerDocument__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(17);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ownerDocument", function() { return _ownerDocument__WEBPACK_IMPORTED_MODULE_6__["a"]; });
+
+/* harmony import */ var _ownerWindow__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(35);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ownerWindow", function() { return _ownerWindow__WEBPACK_IMPORTED_MODULE_7__["a"]; });
+
+/* harmony import */ var _requirePropFactory__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(74);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "requirePropFactory", function() { return _requirePropFactory__WEBPACK_IMPORTED_MODULE_8__["a"]; });
+
+/* harmony import */ var _setRef__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(28);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "setRef", function() { return _setRef__WEBPACK_IMPORTED_MODULE_9__["a"]; });
+
+/* harmony import */ var _unsupportedProp__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(75);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "unsupportedProp", function() { return _unsupportedProp__WEBPACK_IMPORTED_MODULE_10__["a"]; });
+
+/* harmony import */ var _useControlled__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(34);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "useControlled", function() { return _useControlled__WEBPACK_IMPORTED_MODULE_11__["a"]; });
+
+/* harmony import */ var _useEventCallback__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(19);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "useEventCallback", function() { return _useEventCallback__WEBPACK_IMPORTED_MODULE_12__["a"]; });
+
+/* harmony import */ var _useForkRef__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(9);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "useForkRef", function() { return _useForkRef__WEBPACK_IMPORTED_MODULE_13__["a"]; });
+
+/* harmony import */ var _unstable_useId__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(59);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "unstable_useId", function() { return _unstable_useId__WEBPACK_IMPORTED_MODULE_14__["a"]; });
+
+/* harmony import */ var _useIsFocusVisible__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(58);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "useIsFocusVisible", function() { return _useIsFocusVisible__WEBPACK_IMPORTED_MODULE_15__["a"]; });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // eslint-disable-next-line camelcase
+
+
+
+
+/***/ }),
+/* 126 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10750,7 +10870,7 @@ var regenerator = __webpack_require__(12);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/query-string/index.js
-var query_string = __webpack_require__(79);
+var query_string = __webpack_require__(80);
 
 // CONCATENATED MODULE: ./src/DataTable/DataTableContainer.js
 
@@ -10945,7 +11065,7 @@ DataTableContainer_DataTableContainer.defaultProps = {
 
 
 // EXTERNAL MODULE: ./node_modules/@fortawesome/fontawesome-svg-core/index.es.js
-var index_es = __webpack_require__(51);
+var index_es = __webpack_require__(52);
 
 // CONCATENATED MODULE: ./node_modules/@fortawesome/react-fontawesome/index.es.js
 
@@ -18259,9 +18379,9 @@ function DatasetModalities_asyncToGenerator(fn) { return function () { var self 
 
 
 
-__webpack_require__(77)(highcharts_default.a);
-
 __webpack_require__(78)(highcharts_default.a);
+
+__webpack_require__(79)(highcharts_default.a);
 
 var DatasetModalities_defaultOptions = {
   chart: {
@@ -18471,9 +18591,9 @@ function PipelineTags_asyncToGenerator(fn) { return function () { var self = thi
 
 
 
-__webpack_require__(77)(highcharts_default.a);
-
 __webpack_require__(78)(highcharts_default.a);
+
+__webpack_require__(79)(highcharts_default.a);
 
 var PipelineTags_defaultOptions = {
   chart: {
@@ -19347,7 +19467,7 @@ var ChartContainer_ChartContainer = function ChartContainer(props) {
 
 /* harmony default export */ var src_ChartContainer = (ChartContainer_ChartContainer);
 // EXTERNAL MODULE: ./node_modules/react-fast-compare/index.js
-var react_fast_compare = __webpack_require__(31);
+var react_fast_compare = __webpack_require__(33);
 var react_fast_compare_default = /*#__PURE__*/__webpack_require__.n(react_fast_compare);
 
 // CONCATENATED MODULE: ./node_modules/deepmerge/dist/es.js
@@ -20824,7 +20944,7 @@ var isArray = Array.isArray;
 /* harmony default export */ var lodash_es_isArray = (isArray);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/isBuffer.js
-var isBuffer = __webpack_require__(41);
+var isBuffer = __webpack_require__(42);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/_isIndex.js
 /** Used as references for various `Number` constants. */
@@ -20969,7 +21089,7 @@ function baseUnary(func) {
 /* harmony default export */ var _baseUnary = (baseUnary);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/_nodeUtil.js
-var _nodeUtil = __webpack_require__(30);
+var _nodeUtil = __webpack_require__(32);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/isTypedArray.js
 
@@ -21315,7 +21435,7 @@ function baseAssignIn(object, source) {
 /* harmony default export */ var _baseAssignIn = (baseAssignIn);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/_cloneBuffer.js
-var _cloneBuffer = __webpack_require__(81);
+var _cloneBuffer = __webpack_require__(82);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/_copyArray.js
 /**
@@ -22544,7 +22664,7 @@ function toPath(value) {
 var tiny_warning_esm = __webpack_require__(21);
 
 // EXTERNAL MODULE: ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
-var hoist_non_react_statics_cjs = __webpack_require__(40);
+var hoist_non_react_statics_cjs = __webpack_require__(41);
 var hoist_non_react_statics_cjs_default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics_cjs);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/cloneDeep.js
@@ -24533,15 +24653,16 @@ var FastField = /*#__PURE__*/connect(formik_esm_FastFieldInner);
 //# sourceMappingURL=formik.esm.js.map
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 2 modules
-var toConsumableArray = __webpack_require__(28);
+var toConsumableArray = __webpack_require__(29);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
 var esm_extends = __webpack_require__(1);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/merge.js
-var esm_merge = __webpack_require__(35);
+var esm_merge = __webpack_require__(31);
 
-// CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/css.js
+// CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/styleFunctionSx.js
+
 
 
 
@@ -24557,7 +24678,9 @@ function omit(input, fields) {
   return output;
 }
 
-function css(styleFunction) {
+var warnedOnce = false;
+
+function styleFunctionSx(styleFunction) {
   var newStyleFunction = function newStyleFunction(props) {
     var output = styleFunction(props);
 
@@ -24567,15 +24690,32 @@ function css(styleFunction) {
       }, props.css))), omit(props.css, [styleFunction.filterProps]));
     }
 
+    if (props.sx) {
+      return Object(esm_extends["a" /* default */])({}, Object(esm_merge["a" /* default */])(output, styleFunction(Object(esm_extends["a" /* default */])({
+        theme: props.theme
+      }, props.sx))), omit(props.sx, [styleFunction.filterProps]));
+    }
+
     return output;
   };
 
   newStyleFunction.propTypes =  false ? undefined : {};
-  newStyleFunction.filterProps = ['css'].concat(Object(toConsumableArray["a" /* default */])(styleFunction.filterProps));
+  newStyleFunction.filterProps = ['css', 'sx'].concat(Object(toConsumableArray["a" /* default */])(styleFunction.filterProps));
   return newStyleFunction;
 }
+/**
+ *
+ * @deprecated
+ * The css style function is deprecated. Use the `styleFunctionSx` instead.
+ */
 
-/* harmony default export */ var esm_css = (css);
+
+function css(styleFunction) {
+  if (false) {}
+
+  return styleFunctionSx(styleFunction);
+}
+/* harmony default export */ var esm_styleFunctionSx = (styleFunctionSx);
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/compose.js
 
 
@@ -24624,7 +24764,7 @@ function compose() {
 var esm_defineProperty = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/breakpoints.js
-var breakpoints = __webpack_require__(62);
+var breakpoints = __webpack_require__(63);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/style.js
 
@@ -24777,7 +24917,7 @@ var flexDirection = esm_style({
 var flexWrap = esm_style({
   prop: 'flexWrap'
 });
-var justifyContent = esm_style({
+var flexbox_justifyContent = esm_style({
   prop: 'justifyContent'
 });
 var flexbox_alignItems = esm_style({
@@ -24807,7 +24947,7 @@ var justifyItems = esm_style({
 var justifySelf = esm_style({
   prop: 'justifySelf'
 });
-var flexbox = esm_compose(flexBasis, flexDirection, flexWrap, justifyContent, flexbox_alignItems, flexbox_alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf);
+var flexbox = esm_compose(flexBasis, flexDirection, flexWrap, flexbox_justifyContent, flexbox_alignItems, flexbox_alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf);
 /* harmony default export */ var esm_flexbox = (flexbox);
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/grid.js
 
@@ -24942,7 +25082,7 @@ var boxSizing = esm_style({
 var sizing = esm_compose(width, sizing_maxWidth, minWidth, height, maxHeight, minHeight, boxSizing);
 /* harmony default export */ var esm_sizing = (sizing);
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/spacing.js + 1 modules
-var esm_spacing = __webpack_require__(161);
+var esm_spacing = __webpack_require__(162);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/typography.js
 
@@ -24981,7 +25121,7 @@ var objectWithoutProperties = __webpack_require__(3);
 var clsx_m = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/makeStyles/makeStyles.js + 19 modules
-var makeStyles = __webpack_require__(159);
+var makeStyles = __webpack_require__(160);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/styles/esm/styled/styled.js
 
@@ -25095,7 +25235,7 @@ function styled_styled(Component) {
   return componentCreator;
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/defaultTheme.js + 16 modules
-var defaultTheme = __webpack_require__(37);
+var defaultTheme = __webpack_require__(38);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/styled.js
 
@@ -25115,7 +25255,7 @@ var styles_styled_styled = function styled(Component) {
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Box/Box.js
 
 
-var Box_styleFunction = esm_css(esm_compose(esm_borders, esm_display, esm_flexbox, esm_grid, positions, esm_palette, shadows, esm_sizing, esm_spacing["b" /* default */], esm_typography));
+var Box_styleFunction = esm_styleFunctionSx(esm_compose(esm_borders, esm_display, esm_flexbox, esm_grid, positions, esm_palette, shadows, esm_sizing, esm_spacing["b" /* default */], esm_typography));
 /**
  * @ignore - do not document.
  */
@@ -25328,13 +25468,13 @@ var useForkRef = __webpack_require__(9);
 var utils_useEventCallback = __webpack_require__(19);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useIsFocusVisible.js
-var useIsFocusVisible = __webpack_require__(57);
+var useIsFocusVisible = __webpack_require__(58);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
 var objectWithoutPropertiesLoose = __webpack_require__(20);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(42);
+var assertThisInitialized = __webpack_require__(43);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js
 var inheritsLoose = __webpack_require__(26);
@@ -25985,6 +26125,7 @@ var TouchRipple_TouchRipple = /*#__PURE__*/external_root_React_commonjs2_react_c
 
 
 
+
 var ButtonBase_styles = {
   /* Styles applied to the root element. */
   root: {
@@ -26322,7 +26463,7 @@ var IconButton_styles = function styles(theme) {
         duration: theme.transitions.duration.shortest
       }),
       '&:hover': {
-        backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.action.active, theme.palette.action.hoverOpacity),
+        backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.action.active, theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: 'transparent'
@@ -26359,7 +26500,7 @@ var IconButton_styles = function styles(theme) {
     colorPrimary: {
       color: theme.palette.primary.main,
       '&:hover': {
-        backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+        backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.primary.main, theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: 'transparent'
@@ -26371,7 +26512,7 @@ var IconButton_styles = function styles(theme) {
     colorSecondary: {
       color: theme.palette.secondary.main,
       '&:hover': {
-        backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
+        backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: 'transparent'
@@ -26466,7 +26607,7 @@ function isAdornedStart(obj) {
   return obj.startAdornment;
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/isMuiElement.js
-var isMuiElement = __webpack_require__(36);
+var isMuiElement = __webpack_require__(37);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/FormControl/FormControlContext.js
 
@@ -26963,7 +27104,7 @@ var Divider_styles = function styles(theme) {
 
     /* Styles applied to the root element if `light={true}`. */
     light: {
-      backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.divider, 0.08)
+      backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.divider, 0.08)
     },
 
     /* Styles applied to the root element if `variant="middle"`. */
@@ -27129,7 +27270,7 @@ var FormControlLabel_FormControlLabel = /*#__PURE__*/external_root_React_commonj
 var slicedToArray = __webpack_require__(15);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useControlled.js
-var useControlled = __webpack_require__(32);
+var useControlled = __webpack_require__(34);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/internal/SwitchBase.js
 
@@ -27350,7 +27491,7 @@ function RadioButtonIcon(props) {
   name: 'PrivateRadioButtonIcon'
 })(RadioButtonIcon));
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createChainedFunction.js
-var createChainedFunction = __webpack_require__(29);
+var createChainedFunction = __webpack_require__(30);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/RadioGroup/RadioGroupContext.js
 
@@ -27401,7 +27542,7 @@ var Radio_styles = function styles(theme) {
       '&$checked': {
         color: theme.palette.primary.main,
         '&:hover': {
-          backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+          backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.primary.main, theme.palette.action.hoverOpacity),
           // Reset on touch devices, it doesn't add specificity
           '@media (hover: none)': {
             backgroundColor: 'transparent'
@@ -27418,7 +27559,7 @@ var Radio_styles = function styles(theme) {
       '&$checked': {
         color: theme.palette.secondary.main,
         '&:hover': {
-          backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
+          backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
           // Reset on touch devices, it doesn't add specificity
           '@media (hover: none)': {
             backgroundColor: 'transparent'
@@ -27465,10 +27606,10 @@ var Radio_Radio = /*#__PURE__*/external_root_React_commonjs2_react_commonjs_reac
     color: color,
     type: "radio",
     icon: /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_["cloneElement"](defaultIcon, {
-      fontSize: size === 'small' ? 'small' : 'default'
+      fontSize: size === 'small' ? 'small' : 'medium'
     }),
     checkedIcon: /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_["cloneElement"](defaultCheckedIcon, {
-      fontSize: size === 'small' ? 'small' : 'default'
+      fontSize: size === 'small' ? 'small' : 'medium'
     }),
     classes: {
       root: Object(clsx_m["a" /* default */])(classes.root, classes["color".concat(Object(utils_capitalize["a" /* default */])(color))]),
@@ -27509,7 +27650,7 @@ var Button_styles = function styles(theme) {
       }),
       '&:hover': {
         textDecoration: 'none',
-        backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.text.primary, theme.palette.action.hoverOpacity),
+        backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.text.primary, theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: 'transparent'
@@ -27541,7 +27682,7 @@ var Button_styles = function styles(theme) {
     textPrimary: {
       color: theme.palette.primary.main,
       '&:hover': {
-        backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+        backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.primary.main, theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: 'transparent'
@@ -27553,7 +27694,7 @@ var Button_styles = function styles(theme) {
     textSecondary: {
       color: theme.palette.secondary.main,
       '&:hover': {
-        backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
+        backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: 'transparent'
@@ -27573,10 +27714,10 @@ var Button_styles = function styles(theme) {
     /* Styles applied to the root element if `variant="outlined"` and `color="primary"`. */
     outlinedPrimary: {
       color: theme.palette.primary.main,
-      border: "1px solid ".concat(Object(colorManipulator["b" /* fade */])(theme.palette.primary.main, 0.5)),
+      border: "1px solid ".concat(Object(colorManipulator["a" /* alpha */])(theme.palette.primary.main, 0.5)),
       '&:hover': {
         border: "1px solid ".concat(theme.palette.primary.main),
-        backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+        backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.primary.main, theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: 'transparent'
@@ -27587,10 +27728,10 @@ var Button_styles = function styles(theme) {
     /* Styles applied to the root element if `variant="outlined"` and `color="secondary"`. */
     outlinedSecondary: {
       color: theme.palette.secondary.main,
-      border: "1px solid ".concat(Object(colorManipulator["b" /* fade */])(theme.palette.secondary.main, 0.5)),
+      border: "1px solid ".concat(Object(colorManipulator["a" /* alpha */])(theme.palette.secondary.main, 0.5)),
       '&:hover': {
         border: "1px solid ".concat(theme.palette.secondary.main),
-        backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
+        backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: 'transparent'
@@ -28201,6 +28342,7 @@ var ListSubheader_ListSubheader = /*#__PURE__*/external_root_React_commonjs2_rea
 
 
 
+
 var SPACINGS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 var GRID_SIZES = ['auto', true, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
@@ -28373,28 +28515,28 @@ var Grid_styles = function styles(theme) {
       alignContent: 'space-around'
     },
 
-    /* Styles applied to the root element if `justify="center"`. */
-    'justify-xs-center': {
+    /* Styles applied to the root element if `justifyContent="center"`. */
+    'justify-content-xs-center': {
       justifyContent: 'center'
     },
 
-    /* Styles applied to the root element if `justify="flex-end"`. */
-    'justify-xs-flex-end': {
+    /* Styles applied to the root element if `justifyContent="flex-end"`. */
+    'justify-content-xs-flex-end': {
       justifyContent: 'flex-end'
     },
 
-    /* Styles applied to the root element if `justify="space-between"`. */
-    'justify-xs-space-between': {
+    /* Styles applied to the root element if `justifyContent="space-between"`. */
+    'justify-content-xs-space-between': {
       justifyContent: 'space-between'
     },
 
-    /* Styles applied to the root element if `justify="space-around"`. */
-    'justify-xs-space-around': {
+    /* Styles applied to the root element if `justifyContent="space-around"`. */
+    'justify-content-xs-space-around': {
       justifyContent: 'space-around'
     },
 
-    /* Styles applied to the root element if `justify="space-evenly"`. */
-    'justify-xs-space-evenly': {
+    /* Styles applied to the root element if `justifyContent="space-evenly"`. */
+    'justify-content-xs-space-evenly': {
       justifyContent: 'space-evenly'
     }
   }, generateGutter(theme, 'xs'), theme.breakpoints.keys.reduce(function (accumulator, key) {
@@ -28418,8 +28560,9 @@ var Grid_Grid = /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_
       direction = _props$direction === void 0 ? 'row' : _props$direction,
       _props$item = props.item,
       item = _props$item === void 0 ? false : _props$item,
-      _props$justify = props.justify,
-      justify = _props$justify === void 0 ? 'flex-start' : _props$justify,
+      justify = props.justify,
+      _props$justifyContent = props.justifyContent,
+      justifyContent = _props$justifyContent === void 0 ? 'flex-start' : _props$justifyContent,
       _props$lg = props.lg,
       lg = _props$lg === void 0 ? false : _props$lg,
       _props$md = props.md,
@@ -28436,9 +28579,9 @@ var Grid_Grid = /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_
       xs = _props$xs === void 0 ? false : _props$xs,
       _props$zeroMinWidth = props.zeroMinWidth,
       zeroMinWidth = _props$zeroMinWidth === void 0 ? false : _props$zeroMinWidth,
-      other = Object(objectWithoutProperties["a" /* default */])(props, ["alignContent", "alignItems", "classes", "className", "component", "container", "direction", "item", "justify", "lg", "md", "sm", "spacing", "wrap", "xl", "xs", "zeroMinWidth"]);
+      other = Object(objectWithoutProperties["a" /* default */])(props, ["alignContent", "alignItems", "classes", "className", "component", "container", "direction", "item", "justify", "justifyContent", "lg", "md", "sm", "spacing", "wrap", "xl", "xs", "zeroMinWidth"]);
 
-  var className = Object(clsx_m["a" /* default */])(classes.root, classNameProp, container && [classes.container, spacing !== 0 && classes["spacing-xs-".concat(String(spacing))]], item && classes.item, zeroMinWidth && classes.zeroMinWidth, direction !== 'row' && classes["direction-xs-".concat(String(direction))], wrap !== 'wrap' && classes["wrap-xs-".concat(String(wrap))], alignItems !== 'stretch' && classes["align-items-xs-".concat(String(alignItems))], alignContent !== 'stretch' && classes["align-content-xs-".concat(String(alignContent))], justify !== 'flex-start' && classes["justify-xs-".concat(String(justify))], xs !== false && classes["grid-xs-".concat(String(xs))], sm !== false && classes["grid-sm-".concat(String(sm))], md !== false && classes["grid-md-".concat(String(md))], lg !== false && classes["grid-lg-".concat(String(lg))], xl !== false && classes["grid-xl-".concat(String(xl))]);
+  var className = Object(clsx_m["a" /* default */])(classes.root, classNameProp, container && [classes.container, spacing !== 0 && classes["spacing-xs-".concat(String(spacing))]], item && classes.item, zeroMinWidth && classes.zeroMinWidth, direction !== 'row' && classes["direction-xs-".concat(String(direction))], wrap !== 'wrap' && classes["wrap-xs-".concat(String(wrap))], alignItems !== 'stretch' && classes["align-items-xs-".concat(String(alignItems))], alignContent !== 'stretch' && classes["align-content-xs-".concat(String(alignContent))], (justify || justifyContent) !== 'flex-start' && classes["justify-content-xs-".concat(String(justify || justifyContent))], xs !== false && classes["grid-xs-".concat(String(xs))], sm !== false && classes["grid-sm-".concat(String(sm))], md !== false && classes["grid-md-".concat(String(md))], lg !== false && classes["grid-lg-".concat(String(lg))], xl !== false && classes["grid-xl-".concat(String(xl))]);
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"](Component, Object(esm_extends["a" /* default */])({
     className: className,
     ref: ref
@@ -28684,7 +28827,7 @@ var Stepper_Stepper = /*#__PURE__*/external_root_React_commonjs2_react_commonjs_
   name: 'MuiStepper'
 })(Stepper_Stepper));
 // EXTERNAL MODULE: ./node_modules/react-is/index.js
-var react_is = __webpack_require__(49);
+var react_is = __webpack_require__(50);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Step/Step.js
 
@@ -28796,7 +28939,7 @@ var Step_Step = /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_
   d: "M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
 }), 'Warning'));
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/SvgIcon/SvgIcon.js
-var SvgIcon = __webpack_require__(89);
+var SvgIcon = __webpack_require__(90);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/StepIcon/StepIcon.js
 
@@ -29965,7 +30108,7 @@ var Condition_Condition = /*#__PURE__*/function () {
 
 /* harmony default export */ var es_Condition = (Condition_Condition);
 // EXTERNAL MODULE: ./node_modules/synchronous-promise/index.js
-var synchronous_promise = __webpack_require__(47);
+var synchronous_promise = __webpack_require__(48);
 
 // CONCATENATED MODULE: ./node_modules/yup/es/ValidationError.js
 
@@ -31183,7 +31326,7 @@ function mapValues(object, iteratee) {
 /* harmony default export */ var lodash_es_mapValues = (mapValues);
 
 // EXTERNAL MODULE: ./node_modules/property-expr/index.js
-var property_expr = __webpack_require__(34);
+var property_expr = __webpack_require__(36);
 
 // CONCATENATED MODULE: ./node_modules/yup/es/Reference.js
 
@@ -33166,7 +33309,7 @@ function mapKeys(object, iteratee) {
 /* harmony default export */ var lodash_es_mapKeys = (mapKeys);
 
 // EXTERNAL MODULE: ./node_modules/toposort/index.js
-var toposort = __webpack_require__(82);
+var toposort = __webpack_require__(83);
 var toposort_default = /*#__PURE__*/__webpack_require__.n(toposort);
 
 // CONCATENATED MODULE: ./node_modules/yup/es/util/sortFields.js
@@ -34031,7 +34174,7 @@ function __spreadArray(to, from, pack) {
             ar[i] = from[i];
         }
     }
-    return to.concat(ar || from);
+    return to.concat(ar || Array.prototype.slice.call(from));
 }
 
 function __await(v) {
@@ -34329,7 +34472,7 @@ function fromFileEntry(entry) {
 
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ./node_modules/attr-accept/dist/es/index.js
-var dist_es = __webpack_require__(83);
+var dist_es = __webpack_require__(84);
 var es_default = /*#__PURE__*/__webpack_require__.n(dist_es);
 
 // CONCATENATED MODULE: ./node_modules/react-dropzone/dist/es/utils/index.js
@@ -35195,7 +35338,7 @@ function useDropzone() {
     dispatch({
       type: 'reset'
     });
-  }, [multiple, accept, minSize, maxSize, maxFiles, getFilesFromEvent, onDrop, onDropAccepted, onDropRejected, noDragEventsBubbling]);
+  }, [multiple, accept, minSize, maxSize, maxFiles, getFilesFromEvent, onDrop, onDropAccepted, onDropRejected, noDragEventsBubbling, validator]);
 
   var composeHandler = function composeHandler(fn) {
     return disabled ? null : fn;
@@ -35333,29 +35476,24 @@ function reducer(state, action) {
       });
 
     case 'reset':
-      return _objectSpread(_objectSpread({}, state), {}, {
-        isFileDialogActive: false,
-        isDragActive: false,
-        draggedFiles: [],
-        acceptedFiles: [],
-        fileRejections: []
-      });
+      return _objectSpread({}, initialState);
 
     default:
       return state;
   }
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/icons/Cancel.js
-var Cancel = __webpack_require__(87);
+var Cancel = __webpack_require__(88);
 var Cancel_default = /*#__PURE__*/__webpack_require__.n(Cancel);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/utils/esm/formatMuiErrorMessage.js
-var formatMuiErrorMessage = __webpack_require__(88);
+var formatMuiErrorMessage = __webpack_require__(89);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/debounce.js
 var debounce = __webpack_require__(25);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/TextareaAutosize/TextareaAutosize.js
+
 
 
 
@@ -35388,13 +35526,16 @@ var TextareaAutosize_TextareaAutosize = /*#__PURE__*/external_root_React_commonj
   var onChange = props.onChange,
       rows = props.rows,
       rowsMax = props.rowsMax,
-      _props$rowsMin = props.rowsMin,
-      rowsMinProp = _props$rowsMin === void 0 ? 1 : _props$rowsMin,
+      rowsMinProp = props.rowsMin,
+      maxRowsProp = props.maxRows,
+      _props$minRows = props.minRows,
+      minRowsProp = _props$minRows === void 0 ? 1 : _props$minRows,
       style = props.style,
       value = props.value,
-      other = Object(objectWithoutProperties["a" /* default */])(props, ["onChange", "rows", "rowsMax", "rowsMin", "style", "value"]);
+      other = Object(objectWithoutProperties["a" /* default */])(props, ["onChange", "rows", "rowsMax", "rowsMin", "maxRows", "minRows", "style", "value"]);
 
-  var rowsMin = rows || rowsMinProp;
+  var maxRows = maxRowsProp || rowsMax;
+  var minRows = rows || rowsMinProp || minRowsProp;
 
   var _React$useRef = external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"](value != null),
       isControlled = _React$useRef.current;
@@ -35433,12 +35574,12 @@ var TextareaAutosize_TextareaAutosize = /*#__PURE__*/external_root_React_commonj
 
     var outerHeight = innerHeight;
 
-    if (rowsMin) {
-      outerHeight = Math.max(Number(rowsMin) * singleRowHeight, outerHeight);
+    if (minRows) {
+      outerHeight = Math.max(Number(minRows) * singleRowHeight, outerHeight);
     }
 
-    if (rowsMax) {
-      outerHeight = Math.min(Number(rowsMax) * singleRowHeight, outerHeight);
+    if (maxRows) {
+      outerHeight = Math.min(Number(maxRows) * singleRowHeight, outerHeight);
     }
 
     outerHeight = Math.max(outerHeight, singleRowHeight); // Take the box sizing into account for applying this value as a style.
@@ -35460,7 +35601,7 @@ var TextareaAutosize_TextareaAutosize = /*#__PURE__*/external_root_React_commonj
 
       return prevState;
     });
-  }, [rowsMax, rowsMin, props.placeholder]);
+  }, [maxRows, minRows, props.placeholder]);
   external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"](function () {
     var handleResize = Object(debounce["a" /* default */])(function () {
       renders.current = 0;
@@ -35496,7 +35637,7 @@ var TextareaAutosize_TextareaAutosize = /*#__PURE__*/external_root_React_commonj
     onChange: handleChange,
     ref: handleRef // Apply the rows prop to get a "correct" first SSR paint
     ,
-    rows: rowsMin,
+    rows: minRows,
     style: Object(esm_extends["a" /* default */])({
       height: state.outerHeightStyle,
       // Need a large enough difference to allow scrolling.
@@ -35743,11 +35884,13 @@ var InputBase_InputBase = /*#__PURE__*/external_root_React_commonjs2_react_commo
       rows = props.rows,
       rowsMax = props.rowsMax,
       rowsMin = props.rowsMin,
+      maxRows = props.maxRows,
+      minRows = props.minRows,
       startAdornment = props.startAdornment,
       _props$type = props.type,
       type = _props$type === void 0 ? 'text' : _props$type,
       valueProp = props.value,
-      other = Object(objectWithoutProperties["a" /* default */])(props, ["aria-describedby", "autoComplete", "autoFocus", "classes", "className", "color", "defaultValue", "disabled", "endAdornment", "error", "fullWidth", "id", "inputComponent", "inputProps", "inputRef", "margin", "multiline", "name", "onBlur", "onChange", "onClick", "onFocus", "onKeyDown", "onKeyUp", "placeholder", "readOnly", "renderSuffix", "rows", "rowsMax", "rowsMin", "startAdornment", "type", "value"]);
+      other = Object(objectWithoutProperties["a" /* default */])(props, ["aria-describedby", "autoComplete", "autoFocus", "classes", "className", "color", "defaultValue", "disabled", "endAdornment", "error", "fullWidth", "id", "inputComponent", "inputProps", "inputRef", "margin", "multiline", "name", "onBlur", "onChange", "onClick", "onFocus", "onKeyDown", "onKeyUp", "placeholder", "readOnly", "renderSuffix", "rows", "rowsMax", "rowsMin", "maxRows", "minRows", "startAdornment", "type", "value"]);
 
   var value = inputPropsProp.value != null ? inputPropsProp.value : valueProp;
 
@@ -35904,12 +36047,13 @@ var InputBase_InputBase = /*#__PURE__*/external_root_React_commonjs2_react_commo
       ref: null
     });
   } else if (multiline) {
-    if (rows && !rowsMax && !rowsMin) {
+    if (rows && !maxRows && !minRows && !rowsMax && !rowsMin) {
       InputComponent = 'textarea';
     } else {
       inputProps = Object(esm_extends["a" /* default */])({
-        rows: rows,
-        rowsMax: rowsMax
+        minRows: rows || minRows,
+        rowsMax: rowsMax,
+        maxRows: maxRows
       }, inputProps);
       InputComponent = esm_TextareaAutosize_TextareaAutosize;
     }
@@ -36312,7 +36456,7 @@ FilledInput_FilledInput.muiName = 'Input';
   name: 'MuiFilledInput'
 })(FilledInput_FilledInput));
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/useTheme/useTheme.js + 1 modules
-var useTheme = __webpack_require__(160);
+var useTheme = __webpack_require__(161);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/useTheme.js
 
@@ -36700,24 +36844,25 @@ var FormHelperText_FormHelperText = /*#__PURE__*/external_root_React_commonjs2_r
   name: 'MuiFormHelperText'
 })(FormHelperText_FormHelperText));
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/mergeClasses/mergeClasses.js
-var mergeClasses = __webpack_require__(157);
+var mergeClasses = __webpack_require__(158);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
-var esm_typeof = __webpack_require__(39);
+var esm_typeof = __webpack_require__(40);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerDocument.js
 var ownerDocument = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerWindow.js
-var ownerWindow = __webpack_require__(33);
+var ownerWindow = __webpack_require__(35);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/getThemeProps/getThemeProps.js
-var getThemeProps = __webpack_require__(158);
+var getThemeProps = __webpack_require__(159);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/setRef.js
-var setRef = __webpack_require__(27);
+var setRef = __webpack_require__(28);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Portal/Portal.js
+
 
 
 
@@ -36788,7 +36933,7 @@ if (false) {}
 
 /* harmony default export */ var esm_Portal_Portal = (Portal_Portal);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/zIndex.js
-var styles_zIndex = __webpack_require__(63);
+var styles_zIndex = __webpack_require__(64);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js
 function _classCallCheck(instance, Constructor) {
@@ -37259,6 +37404,7 @@ var SimpleBackdrop_SimpleBackdrop = /*#__PURE__*/external_root_React_commonjs2_r
  false ? undefined : void 0;
 /* harmony default export */ var Modal_SimpleBackdrop = (SimpleBackdrop_SimpleBackdrop);
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Modal/Modal.js
+
 
 
 
@@ -38177,6 +38323,7 @@ Grow_Grow.muiSupportAuto = true;
 
 
 
+
 function getOffsetTop(rect, vertical) {
   var offset = 0;
 
@@ -38830,6 +38977,7 @@ var MenuList_MenuList = /*#__PURE__*/external_root_React_commonjs2_react_commonj
 
 
 
+
 var RTL_ORIGIN = {
   vertical: 'top',
   horizontal: 'right'
@@ -38865,16 +39013,21 @@ var Menu_Menu = /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_
       _props$MenuListProps = props.MenuListProps,
       MenuListProps = _props$MenuListProps === void 0 ? {} : _props$MenuListProps,
       onClose = props.onClose,
-      onEntering = props.onEntering,
+      onEnteringProp = props.onEntering,
       open = props.open,
       _props$PaperProps = props.PaperProps,
       PaperProps = _props$PaperProps === void 0 ? {} : _props$PaperProps,
       PopoverClasses = props.PopoverClasses,
       _props$transitionDura = props.transitionDuration,
       transitionDuration = _props$transitionDura === void 0 ? 'auto' : _props$transitionDura,
+      _props$TransitionProp = props.TransitionProps;
+  _props$TransitionProp = _props$TransitionProp === void 0 ? {} : _props$TransitionProp;
+
+  var onEntering = _props$TransitionProp.onEntering,
+      TransitionProps = Object(objectWithoutProperties["a" /* default */])(_props$TransitionProp, ["onEntering"]),
       _props$variant = props.variant,
       variant = _props$variant === void 0 ? 'selectedMenu' : _props$variant,
-      other = Object(objectWithoutProperties["a" /* default */])(props, ["autoFocus", "children", "classes", "disableAutoFocusItem", "MenuListProps", "onClose", "onEntering", "open", "PaperProps", "PopoverClasses", "transitionDuration", "variant"]);
+      other = Object(objectWithoutProperties["a" /* default */])(props, ["autoFocus", "children", "classes", "disableAutoFocusItem", "MenuListProps", "onClose", "onEntering", "open", "PaperProps", "PopoverClasses", "transitionDuration", "TransitionProps", "variant"]);
 
   var theme = useTheme_useTheme();
   var autoFocusItem = autoFocus && !disableAutoFocusItem && open;
@@ -38888,6 +39041,10 @@ var Menu_Menu = /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_
   var handleEntering = function handleEntering(element, isAppearing) {
     if (menuListActionsRef.current) {
       menuListActionsRef.current.adjustStyleForScrollbar(element, theme);
+    }
+
+    if (onEnteringProp) {
+      onEnteringProp(element, isAppearing);
     }
 
     if (onEntering) {
@@ -38947,7 +39104,9 @@ var Menu_Menu = /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_
     getContentAnchorEl: getContentAnchorEl,
     classes: PopoverClasses,
     onClose: onClose,
-    onEntering: handleEntering,
+    TransitionProps: Object(esm_extends["a" /* default */])({
+      onEntering: handleEntering
+    }, TransitionProps),
     anchorOrigin: theme.direction === 'rtl' ? RTL_ORIGIN : LTR_ORIGIN,
     transformOrigin: theme.direction === 'rtl' ? RTL_ORIGIN : LTR_ORIGIN,
     PaperProps: Object(esm_extends["a" /* default */])({}, PaperProps, {
@@ -39791,6 +39950,8 @@ var TextField_TextField = /*#__PURE__*/external_root_React_commonjs2_react_commo
       required = _props$required === void 0 ? false : _props$required,
       rows = props.rows,
       rowsMax = props.rowsMax,
+      maxRows = props.maxRows,
+      minRows = props.minRows,
       _props$select = props.select,
       select = _props$select === void 0 ? false : _props$select,
       SelectProps = props.SelectProps,
@@ -39798,7 +39959,7 @@ var TextField_TextField = /*#__PURE__*/external_root_React_commonjs2_react_commo
       value = props.value,
       _props$variant = props.variant,
       variant = _props$variant === void 0 ? 'standard' : _props$variant,
-      other = Object(objectWithoutProperties["a" /* default */])(props, ["autoComplete", "autoFocus", "children", "classes", "className", "color", "defaultValue", "disabled", "error", "FormHelperTextProps", "fullWidth", "helperText", "hiddenLabel", "id", "InputLabelProps", "inputProps", "InputProps", "inputRef", "label", "multiline", "name", "onBlur", "onChange", "onFocus", "placeholder", "required", "rows", "rowsMax", "select", "SelectProps", "type", "value", "variant"]);
+      other = Object(objectWithoutProperties["a" /* default */])(props, ["autoComplete", "autoFocus", "children", "classes", "className", "color", "defaultValue", "disabled", "error", "FormHelperTextProps", "fullWidth", "helperText", "hiddenLabel", "id", "InputLabelProps", "inputProps", "InputProps", "inputRef", "label", "multiline", "name", "onBlur", "onChange", "onFocus", "placeholder", "required", "rows", "rowsMax", "maxRows", "minRows", "select", "SelectProps", "type", "value", "variant"]);
 
   if (false) {}
 
@@ -39839,6 +40000,8 @@ var TextField_TextField = /*#__PURE__*/external_root_React_commonjs2_react_commo
     name: name,
     rows: rows,
     rowsMax: rowsMax,
+    maxRows: maxRows,
+    minRows: minRows,
     type: type,
     value: value,
     id: id,
@@ -39949,7 +40112,7 @@ var Switch_styles = function styles(theme) {
       '&$checked': {
         color: theme.palette.primary.main,
         '&:hover': {
-          backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+          backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.primary.main, theme.palette.action.hoverOpacity),
           '@media (hover: none)': {
             backgroundColor: 'transparent'
           }
@@ -39971,7 +40134,7 @@ var Switch_styles = function styles(theme) {
       '&$checked': {
         color: theme.palette.secondary.main,
         '&:hover': {
-          backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
+          backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
           '@media (hover: none)': {
             backgroundColor: 'transparent'
           }
@@ -40143,7 +40306,7 @@ var Checkbox_styles = function styles(theme) {
       '&$checked': {
         color: theme.palette.primary.main,
         '&:hover': {
-          backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+          backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.primary.main, theme.palette.action.hoverOpacity),
           // Reset on touch devices, it doesn't add specificity
           '@media (hover: none)': {
             backgroundColor: 'transparent'
@@ -40160,7 +40323,7 @@ var Checkbox_styles = function styles(theme) {
       '&$checked': {
         color: theme.palette.secondary.main,
         '&:hover': {
-          backgroundColor: Object(colorManipulator["b" /* fade */])(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
+          backgroundColor: Object(colorManipulator["a" /* alpha */])(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
           // Reset on touch devices, it doesn't add specificity
           '@media (hover: none)': {
             backgroundColor: 'transparent'
@@ -40262,7 +40425,7 @@ var FormGroup_FormGroup = /*#__PURE__*/external_root_React_commonjs2_react_commo
   name: 'MuiFormGroup'
 })(FormGroup_FormGroup));
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/unstable_useId.js
-var unstable_useId = __webpack_require__(58);
+var unstable_useId = __webpack_require__(59);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/RadioGroup/RadioGroup.js
 
@@ -40687,7 +40850,7 @@ var DialogContent_DialogContent = /*#__PURE__*/external_root_React_commonjs2_rea
   name: 'MuiDialogContent'
 })(DialogContent_DialogContent));
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/transitions.js
-var transitions = __webpack_require__(38);
+var transitions = __webpack_require__(39);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Fade/Fade.js
 
@@ -40872,6 +41035,7 @@ var Backdrop_Backdrop = /*#__PURE__*/external_root_React_commonjs2_react_commonj
   name: 'MuiBackdrop'
 })(Backdrop_Backdrop));
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Dialog/Dialog.js
+
 
 
 
@@ -41101,8 +41265,10 @@ var Dialog_Dialog = /*#__PURE__*/external_root_React_commonjs2_react_commonjs_re
     BackdropProps: Object(esm_extends["a" /* default */])({
       transitionDuration: transitionDuration
     }, BackdropProps),
-    closeAfterTransition: true,
-    disableBackdropClick: disableBackdropClick,
+    closeAfterTransition: true
+  }, disableBackdropClick ? {
+    disableBackdropClick: disableBackdropClick
+  } : {}, {
     disableEscapeKeyDown: disableEscapeKeyDown,
     onEscapeKeyDown: onEscapeKeyDown,
     onClose: onClose,
@@ -41472,10 +41638,7 @@ var InputAdornment_InputAdornment = /*#__PURE__*/external_root_React_commonjs2_r
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"](FormControl_FormControlContext.Provider, {
     value: null
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"](Component, Object(esm_extends["a" /* default */])({
-    className: Object(clsx_m["a" /* default */])(classes.root, className, disablePointerEvents && classes.disablePointerEvents, muiFormControl.hiddenLabel && classes.hiddenLabel, variant === 'filled' && classes.filled, {
-      'start': classes.positionStart,
-      'end': classes.positionEnd
-    }[position], muiFormControl.margin === 'dense' && classes.marginDense),
+    className: Object(clsx_m["a" /* default */])(classes.root, className, position === 'end' ? classes.positionEnd : classes.positionStart, disablePointerEvents && classes.disablePointerEvents, muiFormControl.hiddenLabel && classes.hiddenLabel, variant === 'filled' && classes.filled, muiFormControl.margin === 'dense' && classes.marginDense),
     ref: ref
   }, other), typeof children === 'string' && !disableTypography ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"](esm_Typography_Typography, {
     color: "textSecondary"
@@ -41632,7 +41795,7 @@ function (_React$Component) {
 
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(75);
+var helpers_typeof = __webpack_require__(76);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js
@@ -41653,7 +41816,7 @@ function _getPrototypeOf(o) {
   return _getPrototypeOf(o);
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
-var setPrototypeOf = __webpack_require__(60);
+var setPrototypeOf = __webpack_require__(61);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/inherits.js
 
@@ -43817,7 +43980,7 @@ var makePickerWithState_5a79cb8a_useStyles = styles_makeStyles(function (theme) 
   var textColor = theme.palette.type === 'light' ? theme.palette.primary.contrastText : theme.palette.getContrastText(theme.palette.background["default"]);
   return {
     toolbarTxt: {
-      color: Object(colorManipulator["b" /* fade */])(textColor, 0.54)
+      color: Object(colorManipulator["c" /* fade */])(textColor, 0.54)
     },
     toolbarBtnSelected: {
       color: textColor
@@ -46823,8 +46986,9 @@ function formatDistance(token, count, options) {
 }
 // CONCATENATED MODULE: ./node_modules/date-fns/esm/locale/_lib/buildFormatLongFn/index.js
 function buildFormatLongFn(args) {
-  return function (dirtyOptions) {
-    var options = dirtyOptions || {};
+  return function () {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    // TODO: Remove String()
     var width = options.width ? String(options.width) : args.defaultWidth;
     var format = args.formats[width] || args.formats[args.defaultWidth];
     return format;
@@ -46896,7 +47060,8 @@ function buildLocalizeFn(args) {
       valuesArray = args.values[_width] || args.values[_defaultWidth];
     }
 
-    var index = args.argumentCallback ? args.argumentCallback(dirtyIndex) : dirtyIndex;
+    var index = args.argumentCallback ? args.argumentCallback(dirtyIndex) : dirtyIndex; // @ts-ignore: For some reason TypeScript just don't want to match it, no matter how hard we try. I challange you to try to remove it!
+
     return valuesArray[index];
   };
 }
@@ -46910,12 +47075,12 @@ var eraValues = {
 var quarterValues = {
   narrow: ['1', '2', '3', '4'],
   abbreviated: ['Q1', 'Q2', 'Q3', 'Q4'],
-  wide: ['1st quarter', '2nd quarter', '3rd quarter', '4th quarter'] // Note: in English, the names of days of the week and months are capitalized.
-  // If you are making a new locale based on this one, check if the same is true for the language you're working on.
-  // Generally, formatted dates should look like they are in the middle of a sentence,
-  // e.g. in Spanish language the weekdays and months should be in the lowercase.
+  wide: ['1st quarter', '2nd quarter', '3rd quarter', '4th quarter']
+}; // Note: in English, the names of days of the week and months are capitalized.
+// If you are making a new locale based on this one, check if the same is true for the language you're working on.
+// Generally, formatted dates should look like they are in the middle of a sentence,
+// e.g. in Spanish language the weekdays and months should be in the lowercase.
 
-};
 var monthValues = {
   narrow: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
   abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -47052,35 +47217,26 @@ var localize_localize = {
 /* harmony default export */ var _lib_localize = (localize_localize);
 // CONCATENATED MODULE: ./node_modules/date-fns/esm/locale/_lib/buildMatchPatternFn/index.js
 function buildMatchPatternFn(args) {
-  return function (dirtyString, dirtyOptions) {
-    var string = String(dirtyString);
-    var options = dirtyOptions || {};
+  return function (string) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     var matchResult = string.match(args.matchPattern);
-
-    if (!matchResult) {
-      return null;
-    }
-
+    if (!matchResult) return null;
     var matchedString = matchResult[0];
     var parseResult = string.match(args.parsePattern);
-
-    if (!parseResult) {
-      return null;
-    }
-
+    if (!parseResult) return null;
     var value = args.valueCallback ? args.valueCallback(parseResult[0]) : parseResult[0];
     value = options.valueCallback ? options.valueCallback(value) : value;
+    var rest = string.slice(matchedString.length);
     return {
       value: value,
-      rest: string.slice(matchedString.length)
+      rest: rest
     };
   };
 }
 // CONCATENATED MODULE: ./node_modules/date-fns/esm/locale/_lib/buildMatchFn/index.js
 function buildMatchFn(args) {
-  return function (dirtyString, dirtyOptions) {
-    var string = String(dirtyString);
-    var options = dirtyOptions || {};
+  return function (string) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     var width = options.width;
     var matchPattern = width && args.matchPatterns[width] || args.matchPatterns[args.defaultMatchWidth];
     var matchResult = string.match(matchPattern);
@@ -47091,23 +47247,18 @@ function buildMatchFn(args) {
 
     var matchedString = matchResult[0];
     var parsePatterns = width && args.parsePatterns[width] || args.parsePatterns[args.defaultParseWidth];
+    var key = Array.isArray(parsePatterns) ? buildMatchFn_findIndex(parsePatterns, function (pattern) {
+      return pattern.test(matchedString);
+    }) : findKey(parsePatterns, function (pattern) {
+      return pattern.test(matchedString);
+    });
     var value;
-
-    if (Object.prototype.toString.call(parsePatterns) === '[object Array]') {
-      value = buildMatchFn_findIndex(parsePatterns, function (pattern) {
-        return pattern.test(matchedString);
-      });
-    } else {
-      value = findKey(parsePatterns, function (pattern) {
-        return pattern.test(matchedString);
-      });
-    }
-
-    value = args.valueCallback ? args.valueCallback(value) : value;
+    value = args.valueCallback ? args.valueCallback(key) : key;
     value = options.valueCallback ? options.valueCallback(value) : value;
+    var rest = string.slice(matchedString.length);
     return {
       value: value,
-      rest: string.slice(matchedString.length)
+      rest: rest
     };
   };
 }
@@ -47118,6 +47269,8 @@ function findKey(object, predicate) {
       return key;
     }
   }
+
+  return undefined;
 }
 
 function buildMatchFn_findIndex(array, predicate) {
@@ -47126,6 +47279,8 @@ function buildMatchFn_findIndex(array, predicate) {
       return key;
     }
   }
+
+  return undefined;
 }
 // CONCATENATED MODULE: ./node_modules/date-fns/esm/locale/en-US/_lib/match/index.js
 
@@ -47626,53 +47781,53 @@ var dayPeriodEnum = {
   afternoon: 'afternoon',
   evening: 'evening',
   night: 'night'
-  /*
-   * |     | Unit                           |     | Unit                           |
-   * |-----|--------------------------------|-----|--------------------------------|
-   * |  a  | AM, PM                         |  A* | Milliseconds in day            |
-   * |  b  | AM, PM, noon, midnight         |  B  | Flexible day period            |
-   * |  c  | Stand-alone local day of week  |  C* | Localized hour w/ day period   |
-   * |  d  | Day of month                   |  D  | Day of year                    |
-   * |  e  | Local day of week              |  E  | Day of week                    |
-   * |  f  |                                |  F* | Day of week in month           |
-   * |  g* | Modified Julian day            |  G  | Era                            |
-   * |  h  | Hour [1-12]                    |  H  | Hour [0-23]                    |
-   * |  i! | ISO day of week                |  I! | ISO week of year               |
-   * |  j* | Localized hour w/ day period   |  J* | Localized hour w/o day period  |
-   * |  k  | Hour [1-24]                    |  K  | Hour [0-11]                    |
-   * |  l* | (deprecated)                   |  L  | Stand-alone month              |
-   * |  m  | Minute                         |  M  | Month                          |
-   * |  n  |                                |  N  |                                |
-   * |  o! | Ordinal number modifier        |  O  | Timezone (GMT)                 |
-   * |  p! | Long localized time            |  P! | Long localized date            |
-   * |  q  | Stand-alone quarter            |  Q  | Quarter                        |
-   * |  r* | Related Gregorian year         |  R! | ISO week-numbering year        |
-   * |  s  | Second                         |  S  | Fraction of second             |
-   * |  t! | Seconds timestamp              |  T! | Milliseconds timestamp         |
-   * |  u  | Extended year                  |  U* | Cyclic year                    |
-   * |  v* | Timezone (generic non-locat.)  |  V* | Timezone (location)            |
-   * |  w  | Local week of year             |  W* | Week of month                  |
-   * |  x  | Timezone (ISO-8601 w/o Z)      |  X  | Timezone (ISO-8601)            |
-   * |  y  | Year (abs)                     |  Y  | Local week-numbering year      |
-   * |  z  | Timezone (specific non-locat.) |  Z* | Timezone (aliases)             |
-   *
-   * Letters marked by * are not implemented but reserved by Unicode standard.
-   *
-   * Letters marked by ! are non-standard, but implemented by date-fns:
-   * - `o` modifies the previous token to turn it into an ordinal (see `format` docs)
-   * - `i` is ISO day of week. For `i` and `ii` is returns numeric ISO week days,
-   *   i.e. 7 for Sunday, 1 for Monday, etc.
-   * - `I` is ISO week of year, as opposed to `w` which is local week of year.
-   * - `R` is ISO week-numbering year, as opposed to `Y` which is local week-numbering year.
-   *   `R` is supposed to be used in conjunction with `I` and `i`
-   *   for universal ISO week-numbering date, whereas
-   *   `Y` is supposed to be used in conjunction with `w` and `e`
-   *   for week-numbering date specific to the locale.
-   * - `P` is long localized date format
-   * - `p` is long localized time format
-   */
-
 };
+/*
+ * |     | Unit                           |     | Unit                           |
+ * |-----|--------------------------------|-----|--------------------------------|
+ * |  a  | AM, PM                         |  A* | Milliseconds in day            |
+ * |  b  | AM, PM, noon, midnight         |  B  | Flexible day period            |
+ * |  c  | Stand-alone local day of week  |  C* | Localized hour w/ day period   |
+ * |  d  | Day of month                   |  D  | Day of year                    |
+ * |  e  | Local day of week              |  E  | Day of week                    |
+ * |  f  |                                |  F* | Day of week in month           |
+ * |  g* | Modified Julian day            |  G  | Era                            |
+ * |  h  | Hour [1-12]                    |  H  | Hour [0-23]                    |
+ * |  i! | ISO day of week                |  I! | ISO week of year               |
+ * |  j* | Localized hour w/ day period   |  J* | Localized hour w/o day period  |
+ * |  k  | Hour [1-24]                    |  K  | Hour [0-11]                    |
+ * |  l* | (deprecated)                   |  L  | Stand-alone month              |
+ * |  m  | Minute                         |  M  | Month                          |
+ * |  n  |                                |  N  |                                |
+ * |  o! | Ordinal number modifier        |  O  | Timezone (GMT)                 |
+ * |  p! | Long localized time            |  P! | Long localized date            |
+ * |  q  | Stand-alone quarter            |  Q  | Quarter                        |
+ * |  r* | Related Gregorian year         |  R! | ISO week-numbering year        |
+ * |  s  | Second                         |  S  | Fraction of second             |
+ * |  t! | Seconds timestamp              |  T! | Milliseconds timestamp         |
+ * |  u  | Extended year                  |  U* | Cyclic year                    |
+ * |  v* | Timezone (generic non-locat.)  |  V* | Timezone (location)            |
+ * |  w  | Local week of year             |  W* | Week of month                  |
+ * |  x  | Timezone (ISO-8601 w/o Z)      |  X  | Timezone (ISO-8601)            |
+ * |  y  | Year (abs)                     |  Y  | Local week-numbering year      |
+ * |  z  | Timezone (specific non-locat.) |  Z* | Timezone (aliases)             |
+ *
+ * Letters marked by * are not implemented but reserved by Unicode standard.
+ *
+ * Letters marked by ! are non-standard, but implemented by date-fns:
+ * - `o` modifies the previous token to turn it into an ordinal (see `format` docs)
+ * - `i` is ISO day of week. For `i` and `ii` is returns numeric ISO week days,
+ *   i.e. 7 for Sunday, 1 for Monday, etc.
+ * - `I` is ISO week of year, as opposed to `w` which is local week of year.
+ * - `R` is ISO week-numbering year, as opposed to `Y` which is local week-numbering year.
+ *   `R` is supposed to be used in conjunction with `I` and `i`
+ *   for universal ISO week-numbering date, whereas
+ *   `Y` is supposed to be used in conjunction with `w` and `e`
+ *   for week-numbering date specific to the locale.
+ * - `P` is long localized date format
+ * - `p` is long localized time format
+ */
+
 var formatters_formatters = {
   // Era
   G: function (date, token, localize) {
@@ -49437,7 +49592,7 @@ function assign_assign(target, dirtyObject) {
   dirtyObject = dirtyObject || {};
 
   for (var property in dirtyObject) {
-    if (dirtyObject.hasOwnProperty(property)) {
+    if (Object.prototype.hasOwnProperty.call(dirtyObject, property)) {
       target[property] = dirtyObject[property];
     }
   }
@@ -51416,9 +51571,9 @@ function parse(dirtyDateString, dirtyFormatString, dirtyReferenceDate, dirtyOpti
   var subFnOptions = {
     firstWeekContainsDate: firstWeekContainsDate,
     weekStartsOn: weekStartsOn,
-    locale: locale // If timezone isn't specified, it will be set to the system timezone
+    locale: locale
+  }; // If timezone isn't specified, it will be set to the system timezone
 
-  };
   var setters = [{
     priority: TIMEZONE_UNIT_PRIORITY,
     subPriority: -1,
@@ -51637,7 +51792,7 @@ function setHours(dirtyDate, dirtyHours) {
  *
  * @example
  * // Set 45 minutes to 1 September 2014 11:30:40:
- * var result = setMinutes(new Date(2014, 8, 1, 11, 30, 40), 45)
+ * const result = setMinutes(new Date(2014, 8, 1, 11, 30, 40), 45)
  * //=> Mon Sep 01 2014 11:45:40
  */
 
@@ -52493,9 +52648,11 @@ function GeneralForm(props) {
         label: "Abbreviation",
         name: "creators." + index + ".abbreviation"
       })) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
+        required: true,
         label: "Full Name",
         name: "creators." + index + ".fullName"
       }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
+        required: true,
         label: "First Name",
         name: "creators." + index + ".firstName"
       }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
@@ -52503,11 +52660,16 @@ function GeneralForm(props) {
         name: "creators." + index + ".middleInitial"
       }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
         fullWidth: true,
+        required: true,
         label: "Last Name",
         name: "creators." + index + ".lastName"
       }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
         label: "Email",
         name: "creators." + index + ".email"
+      }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
+        required: true,
+        label: "ORCID iD (https://orcid.org/XXXX-XXXX-XXXX-XXXX)",
+        name: "creators." + index + ".orcid"
       }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FieldArray, {
         name: "creators." + index + ".affiliations"
       }, function (arrayHelpers) {
@@ -52616,10 +52778,10 @@ function GeneralForm(props) {
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Privacy",
+    name: "Privacy *",
     tooltip: "A qualifier to describe the data protection applied to the dataset. This is relevant for clinical data. <ul> <li><i><strong>open</strong>: freely and publicly available</i></li> <li><i><strong>registered</strong>: available to bona fide researchers/clinical care professionals only</i></li> <li><i><strong>controlled</strong>: available to qualified researchers approved by a committee after review of their research proposal; also known as managed or restricted access</i></li> <li><i><strong>private</strong>: available only to researchers of the project; also known as closed</i></li> </ul>"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomSelectField, {
-    label: "Privacy",
+    label: "Privacy *",
     name: "privacy"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
     value: "open"
@@ -52830,7 +52992,7 @@ function DistributionForm(props) {
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomSelectField, {
     required: true,
     name: "conpStatus",
-    label: "CONP Status"
+    label: "CONP Status *"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
     value: "CONP"
   }, "CONP"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
@@ -52883,8 +53045,8 @@ function ExtraPropertiesForm(props) {
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Derived From",
-    tooltip: "The sources this dataset is derived from."
+    name: "Derived From (For Derived Datasets Only)",
+    tooltip: "Required for derived datasets only. Provide information about the source dataset this dataset has been derived from."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
     subsection: true,
     name: "Derived From",
@@ -53133,12 +53295,14 @@ function ExtraPropertiesForm(props) {
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Contact",
+    name: "Contact *",
     tooltip: "Provide contact information (name and email address) of the person responsible for the dataset."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
+    required: true,
     label: "Name",
     name: "contact.name"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
+    required: true,
     label: "Email",
     name: "contact.email"
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
@@ -53163,7 +53327,9 @@ function ExtraPropertiesForm(props) {
   }) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
     label: "Path to File",
     name: "logo.fileName"
-  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
+  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
+    variant: "middle"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
     name: "Dates",
     tooltip: "Relevant dates for the dataset. If you provide a date, it must come with a description of the date (i.e.: first data collection, last data collection, date of first publication, ...)."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FieldArray, {
@@ -53215,29 +53381,56 @@ function ExtraPropertiesForm(props) {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
     name: "Is About",
-    tooltip: "Entities (biological entity, taxonomic information, disease, molecular entity, anatomical part, treatment) associated with this dataset."
+    tooltip: "Entities (biological entity, taxonomic information, disease, molecular entity, anatomical part, treatment) associated with this dataset. At least a species needs to be provided in isAbout."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FieldArray, {
     name: "isAbout"
   }, function (arrayHelpers) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
       display: "flex flex-column"
-    }, values.isAbout.map(function (s, index) {
+    }, values.isAbout.map(function (isAbout, index) {
       return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_FieldGroup, {
         key: 'isAbout_' + index,
         name: 'isAbout_' + index,
         index: index,
         arrayHelpers: arrayHelpers
-      }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
+      }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomRadioGroup, {
+        name: "isAbout." + index + ".type",
+        label: "Type"
+      }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormControlLabel_FormControlLabel, {
+        value: "Species",
+        control: /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Radio_Radio, null),
+        label: "Species"
+      }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormControlLabel_FormControlLabel, {
+        value: "Other Entity",
+        control: /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Radio_Radio, null),
+        label: "Other Entity"
+      })), isAbout.type === 'Species' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomSelectField, {
+        name: "isAbout." + index + ".name",
+        label: "Species Name",
+        required: true
+      }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+        value: "Homo sapiens"
+      }, "Homo Sapiens"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+        value: "Mus musculus"
+      }, "Mus musculus"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+        value: "Callithrix jacchus"
+      }, "Callithrix jacchus"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+        value: "Ondatra zibethicus"
+      }, "Ondatra zibethicus"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+        value: "Macaca mulatta"
+      }, "Macaca mulatta"))) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
         label: "Name",
-        name: "isAbout." + index
-      }));
+        name: "isAbout." + index + ".name"
+      })));
     }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
       py: 1
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Button_Button, {
       variant: "outlined",
       color: "secondary",
       onClick: function onClick() {
-        arrayHelpers.push('');
+        arrayHelpers.push({
+          type: 'Species'
+        });
       }
     }, values.isAbout.length > 0 ? 'Add another Entity' : 'Add an Entity')));
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
@@ -53310,13 +53503,49 @@ function ExtraPropertiesForm(props) {
         });
       }
     }, values.spatialCoverage.length > 0 ? 'Add another Spatial Coverage' : 'Add a Spatial Coverage')));
+  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
+    variant: "middle"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
+    name: "Ethical Information *",
+    tooltip: "In submitting this dataset for inclusion, I certify that *"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomSelectField, {
+    label: "Select a statement *",
+    name: "reb_info",
+    style: {
+      minWidth: 200,
+      maxWidth: 700
+    }
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+    value: "option_1",
+    style: {
+      wordBreak: 'break-word',
+      whiteSpace: 'unset',
+      maxWidth: 700
+    }
+  }, "Participants have consented to the de-identification and deposit of the data in an open-access portal."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+    value: "option_2",
+    style: {
+      wordBreak: 'break-word',
+      whiteSpace: 'unset',
+      maxWidth: 700
+    }
+  }, "I have obtained a waiver or other authorization to deposit de-identified data in an open-access portal from my ethics committee (REB, IRB, REC, etc.)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+    value: "option_3",
+    style: {
+      wordBreak: 'break-word',
+      whiteSpace: 'unset',
+      maxWidth: 700
+    }
+  }, "My data is not derived from human participants.")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
+    label: "Ethics committee approval number (required for human research data)",
+    name: "reb_number"
   })));
 }
 
-var index_modern_downloadDats = function downloadDats(dats) {
+var downloadDats = function downloadDats(dats) {
   var element = document.createElement('a');
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(dats, null, 2)));
-  element.setAttribute('download', "DATS_" + format_format(new Date(), 'yyMMddHHmmss') + ".json");
+  element.setAttribute('download', "DATS.json");
   element.style.display = 'none';
   document.body.appendChild(element);
   element.click();
@@ -53341,7 +53570,7 @@ function CreateDatsSuccess(props) {
   }, "To start the creation of a new DATS.json file, click on 'CREATE A NEW DATS'."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: classes.wrapper
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Button_Button, {
-    onClick: index_modern_downloadDats(dats),
+    onClick: downloadDats(dats),
     variant: "contained",
     color: "primary",
     className: classes.button
@@ -53370,11 +53599,31 @@ var index_modern_FormToDats = /*#__PURE__*/function () {
       }),
       creators: this.data.creators.map(function (creator) {
         var c = creator;
-        delete c.type;
-        delete c.role;
+
+        if (c.type === 'Person' && Object.keys(c).includes('name')) {
+          c.fullName = c.name;
+          delete c.name;
+        } else if (c.type === 'Organization' && Object.keys(c).includes('fullName')) {
+          c.name = c.fullName;
+          delete c.fullName;
+        }
+
         if (creator.role) c.roles = [{
           value: creator.role
         }];
+
+        if (c.type === 'Person' && creator.orcid) {
+          c.extraProperties = [{
+            category: 'ORCID',
+            values: [{
+              value: creator.orcid
+            }]
+          }];
+        }
+
+        delete c.type;
+        delete c.role;
+        delete c.orcid;
         return c;
       }),
       types: this.data.types.map(function (type) {
@@ -53433,9 +53682,26 @@ var index_modern_FormToDats = /*#__PURE__*/function () {
         });
       }),
       isAbout: this.data.isAbout.map(function (item) {
-        return {
-          name: item
+        var i = item;
+        var species = {
+          'Homo sapiens': '9606',
+          'Mus musculus': '10090',
+          'Callithrix jacchus': '9483',
+          'Ondatra zibethicus': '10060',
+          'Macaca mulatta': '9544'
         };
+        console.log(i);
+        console.log(i.name);
+
+        if (i.type === 'Species' && Object.keys(species).includes(i.name)) {
+          i.identifier = {
+            identifier: species[i.name],
+            identifierSource: 'https://www.ncbi.nlm.nih.gov/taxonomy/' + species[i.name]
+          };
+        }
+
+        delete i.type;
+        return i;
       }),
       spatialCoverage: this.data.spatialCoverage,
       aggregation: this.data.aggregation,
@@ -53509,6 +53775,37 @@ var index_modern_FormToDats = /*#__PURE__*/function () {
         value: this.data.parentDatasetId
       }]
     }];
+    var rebNumber = {
+      category: 'REB_number',
+      values: [{
+        value: this.data.reb_number
+      }]
+    };
+    var ethicsStatement = 'In submitting this dataset for inclusion, I certify that ';
+
+    if (this.data.reb_info === 'option_1') {
+      extraProperties.push({
+        category: 'REB_statement',
+        values: [{
+          value: ethicsStatement + 'participants have consented to the de-identification' + ' and deposit of the data in an open-access portal.'
+        }]
+      }, rebNumber);
+    } else if (this.data.reb_info === 'option_2') {
+      extraProperties.push({
+        category: 'REB_statement',
+        values: [{
+          value: ethicsStatement + 'I have obtained a waiver or other authorization to deposit' + ' de-identified data in an open-access portal from my ethics committee' + ' (REB, IRB, REC, etc.).'
+        }]
+      }, rebNumber);
+    } else if (this.data.reb_info === 'option_3') {
+      extraProperties.push({
+        category: 'REB_statement',
+        values: [{
+          value: ethicsStatement + 'my data is not derived from human participants.'
+        }]
+      }, rebNumber);
+    }
+
     extraProperties.forEach(function (p) {
       if (p.values[0].value) {
         json.extraProperties.push(p);
@@ -53693,13 +53990,18 @@ var DatsToForm = /*#__PURE__*/function () {
       citations: [],
       producedBy: '',
       isAbout: ((_this$data$isAbout = this.data.isAbout) === null || _this$data$isAbout === void 0 ? void 0 : _this$data$isAbout.map(function (a) {
-        return a.name;
+        return index_modern_extends({}, a, {
+          type: Object.keys(a).includes('identifier') && a.identifier.identifierSource.match(/taxonomy/) ? 'Species' : 'Other Entity',
+          name: a.name
+        });
       })) || [],
       hasPart: '',
       acknowledges: ((_this$data$acknowledg = this.data.acknowledges) === null || _this$data$acknowledg === void 0 ? void 0 : _this$data$acknowledg[0].funders) || [],
       refinement: '',
       aggregation: this.data.aggregation || '',
-      spatialCoverage: this.data.spatialCoverage || []
+      spatialCoverage: this.data.spatialCoverage || [],
+      reb_info: this.data.reb_info || '',
+      reb_number: this.data.reb_number || ''
     };
 
     if (json.logo.includes('www')) {
@@ -53753,11 +54055,18 @@ var defaultValidationSchema = ObjectSchema({
   title: StringSchema().required(),
   creators: es_array().of(ObjectSchema({
     name: StringSchema(),
-    email: StringSchema().email()
+    email: StringSchema().email(),
+    orcid: StringSchema().when('type', {
+      is: function is(type) {
+        return type === 'Person';
+      },
+      then: StringSchema().matches(/^https:\/\/orcid.org\/\d\d\d\d-\d\d\d\d-\d\d\d\d-\d\d\d\d$/).required('An ORCID (https://orcid.org/XXXX-XXXX-XXXX-XXXX) is required'),
+      otherwise: StringSchema()
+    })
   })),
   contact: ObjectSchema().shape({
-    name: StringSchema(),
-    email: StringSchema().email()
+    name: StringSchema().required(),
+    email: StringSchema().email().required()
   }),
   description: StringSchema().required(),
   types: es_array().of(StringSchema()).min(1).required(),
@@ -53773,10 +54082,14 @@ var defaultValidationSchema = ObjectSchema({
     landingPage: StringSchema().url().required(),
     authorization: StringSchema().required()
   }).required(),
-  privacy: StringSchema(),
+  privacy: StringSchema().matches(/(open|registered|controlled|private)/, {
+    excludeEmptyString: true
+  }).required(),
   files: NumberSchema().integer().positive().required(),
   subjects: NumberSchema().integer().positive().required(),
-  conpStatus: StringSchema().required(),
+  conpStatus: StringSchema().matches(/(CONP|Canadian|external)/, {
+    excludeEmptyString: true
+  }).required(),
   derivedFrom: StringSchema(),
   parentDatasetId: StringSchema(),
   primaryPublications: es_array().of(StringSchema()),
@@ -53801,7 +54114,15 @@ var defaultValidationSchema = ObjectSchema({
   acknowledges: StringSchema(),
   refinement: StringSchema(),
   aggregation: StringSchema(),
-  spatialCoverage: es_array().of(StringSchema())
+  spatialCoverage: es_array().of(StringSchema()),
+  reb_info: StringSchema().oneOf(['option_1', 'option_2', 'option_3']).required(),
+  reb_number: StringSchema().when('reb_info', {
+    is: function is(RebInfo) {
+      return RebInfo === 'option_1' || RebInfo === 'option_2';
+    },
+    then: StringSchema().required('An REB number is required for human research data'),
+    otherwise: StringSchema()
+  })
 });
 var index_modern_useStyles$2 = styles_makeStyles(function (theme) {
   var _layout, _paper;
@@ -53856,7 +54177,8 @@ var defaultValues = {
   title: '',
   creators: [{
     type: 'Organization',
-    role: 'Principal Investigator'
+    role: 'Principal Investigator',
+    orcid: ''
   }],
   contact: {
     name: '',
@@ -53905,13 +54227,17 @@ var defaultValues = {
   dates: [],
   citations: [],
   producedBy: '',
-  isAbout: [],
+  isAbout: [{
+    type: 'Species'
+  }],
   hasPart: '',
   acknowledges: [],
   refinement: '',
   aggregation: '',
   spatialCoverage: [],
-  attachments: []
+  attachments: [],
+  reb_info: '',
+  reb_number: ''
 };
 var index_modern_steps = ['General Info', 'Distribution', 'Extra Properties', 'Review & Download'];
 
@@ -54082,7 +54408,7 @@ var index_modern_DatsEditorForm = function DatsEditorForm(props) {
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
       variant: "h6",
       gutterBottom: true
-    }, "To succesfully create the DATS.json file, you must first resolve issues with the following fields:"), Object.keys(errors).map(function (key) {
+    }, "To successfully create the DATS.json file, you must first resolve issues with the following fields:"), Object.keys(errors).map(function (key) {
       return Object.keys(touched).includes(key) ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
         key: '' + Math.random(),
         variant: "subtitle1",
@@ -54116,123 +54442,14 @@ var index_modern_DatsEditorForm = function DatsEditorForm(props) {
 });
 
 /***/ }),
-/* 125 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, "capitalize", function() { return /* reexport */ capitalize["a" /* default */]; });
-__webpack_require__.d(__webpack_exports__, "createChainedFunction", function() { return /* reexport */ createChainedFunction["a" /* default */]; });
-__webpack_require__.d(__webpack_exports__, "createSvgIcon", function() { return /* reexport */ createSvgIcon["a" /* default */]; });
-__webpack_require__.d(__webpack_exports__, "debounce", function() { return /* reexport */ debounce["a" /* default */]; });
-__webpack_require__.d(__webpack_exports__, "deprecatedPropType", function() { return /* reexport */ deprecatedPropType; });
-__webpack_require__.d(__webpack_exports__, "isMuiElement", function() { return /* reexport */ isMuiElement["a" /* default */]; });
-__webpack_require__.d(__webpack_exports__, "ownerDocument", function() { return /* reexport */ ownerDocument["a" /* default */]; });
-__webpack_require__.d(__webpack_exports__, "ownerWindow", function() { return /* reexport */ ownerWindow["a" /* default */]; });
-__webpack_require__.d(__webpack_exports__, "requirePropFactory", function() { return /* reexport */ requirePropFactory["a" /* default */]; });
-__webpack_require__.d(__webpack_exports__, "setRef", function() { return /* reexport */ setRef["a" /* default */]; });
-__webpack_require__.d(__webpack_exports__, "unsupportedProp", function() { return /* reexport */ unsupportedProp["a" /* default */]; });
-__webpack_require__.d(__webpack_exports__, "useControlled", function() { return /* reexport */ useControlled["a" /* default */]; });
-__webpack_require__.d(__webpack_exports__, "useEventCallback", function() { return /* reexport */ useEventCallback["a" /* default */]; });
-__webpack_require__.d(__webpack_exports__, "useForkRef", function() { return /* reexport */ useForkRef["a" /* default */]; });
-__webpack_require__.d(__webpack_exports__, "unstable_useId", function() { return /* reexport */ unstable_useId["a" /* default */]; });
-__webpack_require__.d(__webpack_exports__, "useIsFocusVisible", function() { return /* reexport */ useIsFocusVisible["a" /* default */]; });
-
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/capitalize.js
-var capitalize = __webpack_require__(6);
-
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createChainedFunction.js
-var createChainedFunction = __webpack_require__(29);
-
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createSvgIcon.js
-var createSvgIcon = __webpack_require__(14);
-
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/debounce.js
-var debounce = __webpack_require__(25);
-
-// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/deprecatedPropType.js
-function deprecatedPropType(validator, reason) {
-  if (true) {
-    return function () {
-      return null;
-    };
-  }
-
-  return function (props, propName, componentName, location, propFullName) {
-    var componentNameSafe = componentName || '<<anonymous>>';
-    var propFullNameSafe = propFullName || propName;
-
-    if (typeof props[propName] !== 'undefined') {
-      return new Error("The ".concat(location, " `").concat(propFullNameSafe, "` of ") + "`".concat(componentNameSafe, "` is deprecated. ").concat(reason));
-    }
-
-    return null;
-  };
-}
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/isMuiElement.js
-var isMuiElement = __webpack_require__(36);
-
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerDocument.js
-var ownerDocument = __webpack_require__(17);
-
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerWindow.js
-var ownerWindow = __webpack_require__(33);
-
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/requirePropFactory.js
-var requirePropFactory = __webpack_require__(73);
-
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/setRef.js
-var setRef = __webpack_require__(27);
-
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/unsupportedProp.js
-var unsupportedProp = __webpack_require__(74);
-
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useControlled.js
-var useControlled = __webpack_require__(32);
-
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useEventCallback.js
-var useEventCallback = __webpack_require__(19);
-
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useForkRef.js
-var useForkRef = __webpack_require__(9);
-
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/unstable_useId.js
-var unstable_useId = __webpack_require__(58);
-
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useIsFocusVisible.js
-var useIsFocusVisible = __webpack_require__(57);
-
-// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/index.js
-
-
-
-
-
-
-
-
-
-
-
-
-
- // eslint-disable-next-line camelcase
-
-
-
-
-/***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export isPlainObject */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return deepmerge; });
 /* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(39);
+/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
 
 
 function isPlainObject(item) {
@@ -54263,7 +54480,6 @@ function deepmerge(target, source) {
 }
 
 /***/ }),
-/* 127 */,
 /* 128 */,
 /* 129 */,
 /* 130 */,
@@ -54293,7 +54509,8 @@ function deepmerge(target, source) {
 /* 154 */,
 /* 155 */,
 /* 156 */,
-/* 157 */
+/* 157 */,
+/* 158 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54326,7 +54543,7 @@ function mergeClasses() {
 }
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54356,7 +54573,7 @@ function getThemeProps(params) {
 }
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54391,7 +54608,7 @@ var createClass = __webpack_require__(18);
 var inheritsLoose = __webpack_require__(26);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(42);
+var assertThisInitialized = __webpack_require__(43);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
 var objectWithoutPropertiesLoose = __webpack_require__(20);
@@ -54527,7 +54744,7 @@ function toCss(selector, style, options) {
 
           if (value != null) {
             if (result) result += '\n';
-            result += "" + indentStr(prop + ": " + toCssValue(value) + ";", indent);
+            result += indentStr(prop + ": " + toCssValue(value) + ";", indent);
           }
         }
       }
@@ -54538,7 +54755,7 @@ function toCss(selector, style, options) {
 
         if (_value != null) {
           if (result) result += '\n';
-          result += "" + indentStr(_prop + ": " + toCssValue(_value) + ";", indent);
+          result += indentStr(_prop + ": " + toCssValue(_value) + ";", indent);
         }
       }
     }
@@ -54549,7 +54766,7 @@ function toCss(selector, style, options) {
 
     if (_value2 != null && _prop2 !== 'fallbacks') {
       if (result) result += '\n';
-      result += "" + indentStr(_prop2 + ": " + toCssValue(_value2) + ";", indent);
+      result += indentStr(_prop2 + ": " + toCssValue(_value2) + ";", indent);
     }
   } // Allow empty style in this case, because properties will be added dynamically.
 
@@ -55880,7 +56097,8 @@ var createGenerateId = function createGenerateId(options) {
   }
 
   var ruleCounter = 0;
-  return function (rule, sheet) {
+
+  var generateId = function generateId(rule, sheet) {
     ruleCounter += 1;
 
     if (ruleCounter > maxRules) {
@@ -55907,6 +56125,8 @@ var createGenerateId = function createGenerateId(options) {
 
     return prefix + rule.key + "-" + moduleId + (jssId ? "-" + jssId : '') + "-" + ruleCounter;
   };
+
+  return generateId;
 };
 
 /**
@@ -56376,7 +56596,7 @@ var jss_esm_Jss =
 function () {
   function Jss(options) {
     this.id = instanceCounter++;
-    this.version = "10.6.0";
+    this.version = "10.7.1";
     this.plugins = new PluginsRegistry();
     this.options = {
       id: {
@@ -56652,7 +56872,7 @@ var jss_esm_jss = jss_esm_create();
 
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/mergeClasses/mergeClasses.js
-var mergeClasses = __webpack_require__(157);
+var mergeClasses = __webpack_require__(158);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/styles/esm/makeStyles/multiKeyStore.js
 // Used https://github.com/thinkloop/multi-key-cache as inspiration
@@ -56678,7 +56898,7 @@ var multiKeyStore = {
 };
 /* harmony default export */ var makeStyles_multiKeyStore = (multiKeyStore);
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/useTheme/useTheme.js + 1 modules
-var useTheme = __webpack_require__(160);
+var useTheme = __webpack_require__(161);
 
 // EXTERNAL MODULE: ./node_modules/prop-types/index.js
 var prop_types = __webpack_require__(2);
@@ -57462,7 +57682,7 @@ function defaultUnit(options) {
 /* harmony default export */ var jss_plugin_default_unit_esm = (defaultUnit);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 2 modules
-var toConsumableArray = __webpack_require__(28);
+var toConsumableArray = __webpack_require__(29);
 
 // CONCATENATED MODULE: ./node_modules/css-vendor/dist/css-vendor.esm.js
 
@@ -58237,10 +58457,10 @@ function increment() {
   return indexCounter;
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
-var esm_typeof = __webpack_require__(39);
+var esm_typeof = __webpack_require__(40);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/utils/esm/deepmerge.js
-var deepmerge = __webpack_require__(126);
+var deepmerge = __webpack_require__(127);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/styles/esm/getStylesCreator/getStylesCreator.js
 
@@ -58547,7 +58767,7 @@ function makeStyles(stylesOrCreator) {
 }
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58578,7 +58798,7 @@ function useTheme() {
 }
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58590,10 +58810,10 @@ __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding *
 var slicedToArray = __webpack_require__(15);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/breakpoints.js
-var breakpoints = __webpack_require__(62);
+var breakpoints = __webpack_require__(63);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/merge.js
-var merge = __webpack_require__(35);
+var merge = __webpack_require__(31);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/system/esm/memoize.js
 function memoize(fn) {
