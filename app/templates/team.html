@@ -1,0 +1,48 @@
+{% extends 'common/base_main.html' %}
+
+<!-- Title Block -->
+
+{% block contenttitle %}
+    <h2><span style="color:red;">CONP Portal </span> | Developer Team</h2>
+{% endblock %}
+
+<!-- Content Block -->
+
+{% block appcontent %}
+    <div class="d-flex flex-column p-2">
+        <div class="card-img d-flex justify-content-center">
+            <img
+                alt="Project image"
+                class="img-fluid"
+                src="/static/img/developer-team.png"
+            />
+        </div>
+
+        <div class="flex-column p-2 justify-content-center">
+            <h1 class="text-center">Developer Team Members</h1>
+            <ul class="flex align-content-center list-unstyled">
+                <li class="text-center">Jean-Baptiste Poline - CONP Technical Steering Committee co-chair</li>
+                <li class="text-center">Natacha Beck</li>
+                <li class="text-center">Samir Das</li>
+                <li class="text-center">Mathieu Dugré</li>
+                <li class="text-center">Tristan Glatard</li>
+                <li class="text-center">Tristan Kuehn</li>
+                <li class="text-center">Xavier Lecours</li>
+                <li class="text-center">Mélanie Legault</li>
+                <li class="text-center">Cécile Madjar</li>
+                <li class="text-center">Mandana Mazaheri</li>
+                <li class="text-center">Emmet A. O'Brien</li>
+                <li class="text-center">Sebastian Urchs</li>
+                <li class="text-center">Ksenia Zaytseva</li>
+                <li class="text-center">Joey Zhou</li>
+            </ul>
+            <h5 class="text-center">Past Collaborators</h5>
+            <ul class="flex align-content-center list-unstyled">
+                <li class="text-center">Shawn Brown, PhD</li>
+                <li class="text-center">Liam O'Callaghan</li>
+                <li class="text-center">Santiago Paiva</li>
+            </ul>
+        </div>
+    </div>
+    {{ content|safe }}
+{% endblock %}
