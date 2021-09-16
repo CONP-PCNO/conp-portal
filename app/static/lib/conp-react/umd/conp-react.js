@@ -53380,8 +53380,8 @@ function ExtraPropertiesForm(props) {
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "Is About",
-    tooltip: "Entities (biological entity, taxonomic information, disease, molecular entity, anatomical part, treatment) associated with this dataset. At least a species needs to be provided in isAbout."
+    name: "Is About *",
+    tooltip: "Entities (biological entity, taxonomic information, disease, molecular entity, anatomical part, treatment) associated with this dataset. You must provide a species, and other entities are optional."
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FieldArray, {
     name: "isAbout"
   }, function (arrayHelpers) {
@@ -53690,8 +53690,6 @@ var index_modern_FormToDats = /*#__PURE__*/function () {
           'Ondatra zibethicus': '10060',
           'Macaca mulatta': '9544'
         };
-        console.log(i);
-        console.log(i.name);
 
         if (i.type === 'Species' && Object.keys(species).includes(i.name)) {
           i.identifier = {
@@ -53850,6 +53848,18 @@ var index_modern_FormToDats = /*#__PURE__*/function () {
 
     if (json.keywords.length === 0) {
       delete json.keywords;
+    }
+
+    if (json.dates.length === 0) {
+      delete json.dates;
+    }
+
+    if (json.identifier.identifier === '') {
+      delete json.identifier;
+    }
+
+    if (json.primaryPublications.length === 0) {
+      delete json.primaryPublications;
     }
 
     Object.keys(json).forEach(function (key) {
