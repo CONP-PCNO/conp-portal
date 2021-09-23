@@ -379,9 +379,6 @@ def dataset_search():
             {
                 "key": "formats",
                 "values": formats
-            },
-            {
-                "key": "in_cbrain"
             }
         ],
         "elements": paginated

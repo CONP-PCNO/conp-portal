@@ -1,7 +1,6 @@
 import * as R from "ramda";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {ifElse} from "ramda";
 
 const DataTable = ({
   authorized,
