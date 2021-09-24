@@ -17536,8 +17536,55 @@ var ViewsIcon_ViewsIcon = function ViewsIcon(props) {
 };
 
 /* harmony default export */ var social_ViewsIcon = (ViewsIcon_ViewsIcon);
+// CONCATENATED MODULE: ./src/social/DownloadsIcon/index.js
+
+
+
+
+var DownloadsIcon_DownloadsIcon = function DownloadsIcon(props) {
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(),
+      downloads = _useState[0],
+      setDownloads = _useState[1];
+
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(true),
+      isLoading = _useState2[0],
+      setIsLoading = _useState2[1];
+
+  var url = props.type === "dataset" ? "/analytics/datasets/downloads?id=" + props.id : "/analytics/pipelines/views?id=" + props.id;
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    fetchDownloads();
+  }, []);
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    if (!isLoading && downloads) {
+      setIsLoading(false);
+    }
+  }, [downloads]);
+
+  var fetchDownloads = function fetchDownloads() {
+    try {
+      fetch(url).then(function (res) {
+        return res.json();
+      }).then(function (json) {
+        return setDownloads(json[0]);
+      }).then(setIsLoading(false));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex flex-column align-items-center mx-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
+    icon: faDownload,
+    color: "dimgray",
+    size: "md"
+  }), !!downloads && downloads.nb_hits || 0);
+};
+
+/* harmony default export */ var social_DownloadsIcon = (DownloadsIcon_DownloadsIcon);
 // CONCATENATED MODULE: ./src/DatasetElement/index.js
 function DatasetElement_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
 
 
 
@@ -17689,6 +17736,9 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(social_ViewsIcon, {
     type: "dataset",
     id: element.id
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(social_DownloadsIcon, {
+    type: "dataset",
+    id: element.id + "_version-" + element.version + '.tar.gz'
   }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col col-lg-8 card-body d-flex"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -17847,22 +17897,6 @@ DatasetElement_DatasetElement.defaultProps = {
   downloadPath: ""
 };
 /* harmony default export */ var src_DatasetElement = (DatasetElement_DatasetElement);
-// CONCATENATED MODULE: ./src/social/DownloadsIcon/index.js
-
-
-
-
-var DownloadsIcon_DownloadsIcon = function DownloadsIcon(props) {
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-column align-items-center mx-2"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
-    icon: faDownload,
-    color: "dimgray",
-    size: "md"
-  }), props.downloads);
-};
-
-/* harmony default export */ var social_DownloadsIcon = (DownloadsIcon_DownloadsIcon);
 // CONCATENATED MODULE: ./src/PipelineElement/index.js
 function PipelineElement_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
