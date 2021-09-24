@@ -12,7 +12,7 @@ from flask_login import current_user
 from app.analytics import analytics_bp
 from app.pipelines import pipelines
 
-from app.models import MatomoDailyVisitsSummary, MatomoDailyGetDatasetPageViewsSummary, MatomoDailyGetSiteSearchKeywords, MatomoDailyGetPageUrlsSummary, Dataset
+from app.models import MatomoDailyVisitsSummary, MatomoDailyGetDatasetPageViewsSummary, MatomoDailyGetSiteSearchKeywords, MatomoDailyGetPageUrlsSummary, Dataset, MatomoDailyGetPortalDownloadSummary
 
 
 @analytics_bp.route('/analytics')
@@ -97,6 +97,61 @@ def datasets_views():
 
     for v in page_views:
         exists = False
+        for e in elements:
+            dataset_id = e.get("dataset_id", None)
+            if dataset_id is not None and dataset_id == v.dataset_id:
+                exists = True
+                e["nb_hits"] += v.nb_hits
+                e["nb_visits"] += v.nb_visits
+                e["nb_uniq_visitors"] += (
+                    v.nb_uniq_visitors if v.nb_uniq_visitors is not None else 0)
+
+        if not exists and v.dataset_id is not None:
+            element = {
+                "dataset_id": v.dataset_id,
+                "url": v.url,
+                "label": v.label,
+                "nb_hits": v.nb_hits,
+                "nb_visits": v.nb_visits,
+                "nb_uniq_visitors": v.nb_uniq_visitors if v.nb_uniq_visitors is not None else 0,
+            }
+            elements.append(element)
+
+    elements.sort(key=lambda e: e["nb_hits"], reverse=True)
+
+    return json.dumps(elements)
+
+
+@analytics_bp.route('/analytics/datasets/downloads')
+def datasets_downloads():
+    """ Analytics/Datasets/Downloads Route
+        Endpoint for returning analytics related to dataset page downloads on the portal
+        Args:
+            None
+        Returns:
+            Object
+    """
+
+    elements = []
+
+    page_downloads = []
+
+    id = request.args.get('id', None)
+    url_id = id.replace('projects/', 'https://portal.conp.ca/data/') if id else None
+
+    if id is not None:
+        page_downloads = MatomoDailyGetPortalDownloadSummary.query.filter_by(
+            url=url_id).all()
+    else:
+        page_downloads = MatomoDailyGetPortalDownloadSummary.query.order_by(
+            MatomoDailyGetPortalDownloadSummary.id).all()
+
+    for v in page_downloads:
+        # skip entries not pertinent to the actual dataset download
+        if 'https://portal.conp.ca/data/' not in v.url:
+            continue
+        exists = False
+        v.dataset_id = v.url.replace('https://portal.conp.ca/data/', 'projects/')
         for e in elements:
             dataset_id = e.get("dataset_id", None)
             if dataset_id is not None and dataset_id == v.dataset_id:
