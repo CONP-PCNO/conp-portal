@@ -125,6 +125,21 @@ def about():
                            countDatasets=countDatasets, countPipelines=countPipelines)
 
 
+@main_bp.route('/team')
+def team():
+    """ Team Route
+
+        Route to lead to the team page
+
+        Args:
+            None
+
+        Returns:
+            rendered template for team.html
+    """
+    return render_template('team.html', title='CONP | Developer Team', user=current_user)
+
+
 @main_bp.route('/tutorial')
 def tutorial():
     """ Tutorial Route
