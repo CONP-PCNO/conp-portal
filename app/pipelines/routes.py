@@ -27,6 +27,7 @@ def pipelines():
     max_per_page = request.args.get('max_per_page') or 10
     if max_per_page != 'All':
         max_per_page = int(max_per_page)
+    cbrain = request.args.get('cbrain')
     search = request.args.get('search') or ""
     tags = request.args.get('tags') or ""
     sortComparitor = request.args.get('sortComparitor')
@@ -35,6 +36,7 @@ def pipelines():
     filters = {
         "page": page,
         "max_per_page": max_per_page,
+        "cbrain": cbrain,
         "search": search,
         "tags": tags,
         "sortComparitor": sortComparitor,
@@ -79,6 +81,14 @@ def pipeline_search():
     # filter out the deprecated pipelines
     elements = list(
         filter(lambda e: (not e.get("DEPRECATED", None)), elements))
+
+    if request.args.get('cbrain'):
+        with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json"), "r") as f:
+            zenodo_urls = json.load(f)
+        print(zenodo_urls.keys())
+        elements = list(
+            filter(lambda e: e["ID"] in zenodo_urls.keys(), elements)
+        )
 
     blocked_pipelines_ids = list()
     with open(os.path.join(os.getcwd(), "app/static/pipelines/block-list-pipeline.json"), "r") as f:
