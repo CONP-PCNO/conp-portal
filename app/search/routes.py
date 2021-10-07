@@ -39,6 +39,7 @@ def search():
     formats = request.args.get('formats')
     if formats is not None:
         formats = formats.split(",")
+    cbrain = request.args.get('cbrain')
     search = request.args.get('search')
     sortComparitor = request.args.get('sortComparitor')
     sortKey = request.args.get('sortKey')
@@ -48,6 +49,7 @@ def search():
     filters = {
         "modalities": modalities,
         "formats": formats,
+        "cbrain": cbrain,
         "search": search,
         "sortComparitor": sortComparitor,
         "sortKey": sortKey,
@@ -209,7 +211,6 @@ def dataset_search():
                 formats.append('RNA-Seq')
             else:
                 formats.append(m.upper())
-
     formats = sorted(list(set(formats)), key=str.casefold)
 
     query_all = bool(request.args.get('elements') == 'all')
@@ -228,6 +229,10 @@ def dataset_search():
             )
             elements = list(filter(lambda e: all(item.lower() in (
                 f.lower() for f in e['formats']) for item in filter_formats), elements)
+            )
+        if request.args.get('cbrain'):
+            elements = list(
+                filter(lambda e: e['cbrain_id'] is not '', elements)
             )
 
         cursor = None

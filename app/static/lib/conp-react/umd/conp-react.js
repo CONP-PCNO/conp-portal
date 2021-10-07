@@ -10468,6 +10468,9 @@ var DataTable_DataTable = function DataTable(_ref) {
   }, {
     key: "formats",
     values: query.formats || []
+  }, {
+    key: "cbrain",
+    values: query.cbrain || []
   }]),
       filters = _useState[0],
       setFilters = _useState[1];
@@ -10493,6 +10496,9 @@ var DataTable_DataTable = function DataTable(_ref) {
       })[0].values,
       formats: filters.filter(function (f) {
         return f["key"] === "formats";
+      })[0].values,
+      cbrain: filters.filter(function (f) {
+        return f["key"] === "cbrain";
       })[0].values,
       page: 1
     }));
@@ -10681,18 +10687,35 @@ var DataTable_DataTable = function DataTable(_ref) {
     id: "basic-addon2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", {
     className: "fa fa-search"
-  })))) : null), renderElement.name === "PipelineElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex justify-content-end pb-1"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
-    className: "text-reset px-1"
+  })))) : null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex justify-content-between"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex justify-content-start align-items-center pb-1 pl-3 ml-4"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    key: "cbrain".id
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+    className: "form-check-input",
+    type: "checkbox",
+    id: "filterCBRAIN",
+    checked: filters.filter(function (f) {
+      return f["key"] === "cbrain";
+    })[0].values.includes("cbrain_id"),
+    value: "cbrain.cbrain_id",
+    onChange: handleFiltersChange
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+    className: "form-check-label",
+    htmlFor: "filterCBRAIN"
+  }, "Available in CBRAIN"))), renderElement.name === "PipelineElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex justify-content-end align-items-center pb-1 pr-3"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    className: "text-reset px-1",
     href: "/execution-records"
-  }, "Browse pipeline execution records"))) : null, renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex justify-content-end pb-1"
+  }, "Browse pipeline execution records")) : null, renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex justify-content-end align-items-center pb-1 pr-3"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     className: "text-reset px-1",
     href: "/sparql"
-  }, "Advanced Search Page (NEXUS)")) : null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "Advanced Search Page (NEXUS)")) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex justify-content-between"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex p-2 justify-content-start align-items-center"
@@ -10858,6 +10881,9 @@ DataTable_DataTable.defaultProps = {
     values: []
   }, {
     key: "formats",
+    values: []
+  }, {
+    key: "cbrain",
     values: []
   }],
   elements: [],
