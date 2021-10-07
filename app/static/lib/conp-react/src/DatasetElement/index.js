@@ -6,6 +6,7 @@ import { faUserLock } from '@fortawesome/free-solid-svg-icons'
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
 
 import ViewsIcon from '../social/ViewsIcon'
+import DownloadsIcon from '../social/DownloadsIcon'
 
 const DatasetElement = props => {
   const { authorized, imagePath, ...element } = props;
@@ -120,6 +121,7 @@ const DatasetElement = props => {
             {element.conpStatus !== 'external' ? (<img height="36" width="36" src={statusCONP} alt="CONP status"/>) :
                 <div style={{width: 36}}/>}
             <ViewsIcon type="dataset" id={element.id}/>
+            <DownloadsIcon type="dataset" id={element.id + "_version-" + element.version + '.tar.gz'}/>
           </div>
         </div>
         <div className="col col-lg-8 card-body d-flex">
