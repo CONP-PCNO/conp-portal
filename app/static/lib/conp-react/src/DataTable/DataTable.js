@@ -26,6 +26,10 @@ const DataTable = ({
     {
       key: "cbrain",
       values: query.cbrain || []
+    },
+    {
+      key: "authorizations",
+      values: query.authorizations || []
     }
   ]);
 
@@ -49,6 +53,7 @@ const DataTable = ({
       modalities: filters.filter(f => f["key"] === "modalities")[0].values,
       formats: filters.filter(f => f["key"] === "formats")[0].values,
       cbrain: filters.filter(f => f["key"] === "cbrain")[0].values,
+      authorizations: filters.filter(f => f["key"] === "authorizations")[0].values,
       page: 1
     })
   }
@@ -137,6 +142,30 @@ const DataTable = ({
                                              onChange={handleFiltersChange}/>
                                       <label className="form-check-label" htmlFor={"filter" + format}>
                                         {format}
+                                      </label>
+                                    </div>
+                                    : null
+                            ))
+                            : null}
+                      </div>
+                    </div>
+                    <div className="dropdown">
+                      <button className="btn btn-outline-secondary dropdown-toggle p-2" type="button"
+                              id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                              data-display="static">
+                        Authorization:
+                      </button>
+                      <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {filterKeys.filter(f => f["key"] === "authorizations").length > 0 ?
+                            filterKeys.filter(f => f["key"] === "authorizations")[0]["values"].map(authorizations => (
+                                authorizations !== '' ?
+                                    <div key={authorizations.id} className="dropdown-item ml-2">
+                                      <input className="form-check-input" type="checkbox"
+                                             checked={filters.filter(f => f["key"] === "authorizations")[0]["values"].includes(authorizations)}
+                                             value={"authorizations." + authorizations} id={"filter" + authorizations}
+                                             onChange={handleFiltersChange}/>
+                                      <label className="form-check-label" htmlFor={"filter" + authorizations}>
+                                        {authorizations}
                                       </label>
                                     </div>
                                     : null
@@ -415,6 +444,10 @@ DataTable.defaultProps = {
     },
     {
       key: "cbrain",
+      values: []
+    },
+    {
+      key: "authorizations",
       values: []
     }
   ],

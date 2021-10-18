@@ -39,6 +39,11 @@ def search():
     formats = request.args.get('formats')
     if formats is not None:
         formats = formats.split(",")
+
+    authorizations = request.args.get('authorizations')
+    if authorizations is not None:
+        authorizations = authorizations.split(",")
+
     cbrain = request.args.get('cbrain')
     search = request.args.get('search')
     sortComparitor = request.args.get('sortComparitor')
@@ -49,6 +54,7 @@ def search():
     filters = {
         "modalities": modalities,
         "formats": formats,
+        "authorizations": authorizations,
         "cbrain": cbrain,
         "search": search,
         "sortComparitor": sortComparitor,
@@ -213,6 +219,8 @@ def dataset_search():
                 formats.append(m.upper())
     formats = sorted(list(set(formats)), key=str.casefold)
 
+    authorizations = ['Third-party account required', 'No third-party account required']
+
     query_all = bool(request.args.get('elements') == 'all')
     if not query_all:
 
@@ -230,9 +238,18 @@ def dataset_search():
             elements = list(filter(lambda e: all(item.lower() in (
                 f.lower() for f in e['formats']) for item in filter_formats), elements)
             )
+        if request.args.get('authorizations'):
+            filter_auth = request.args.get('authorizations').split(',')
+            elements = list(filter(lambda e: e['authorizations'] is not None, elements))
+            for item in filter_auth:
+                if item == "Third-party account required":
+                    elements = list(filter(lambda e: e['authorizations'] in ['private', 'registered'], elements))
+                if item == "No third-party account required":
+                    elements = list(filter(lambda e: e['authorizations'] not in ['private', 'registered'], elements))
+
         if request.args.get('cbrain'):
             elements = list(
-                filter(lambda e: e['cbrain_id'] is not '', elements)
+                filter(lambda e: e['cbrain_id'] != '', elements)
             )
 
         cursor = None
@@ -379,6 +396,10 @@ def dataset_search():
             {
                 "key": "formats",
                 "values": formats
+            },
+            {
+                "key": "authorizations",
+                "values": authorizations
             }
         ],
         "elements": paginated
