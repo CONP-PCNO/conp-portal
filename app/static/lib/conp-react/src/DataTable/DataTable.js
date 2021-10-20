@@ -153,7 +153,7 @@ const DataTable = ({
                       <button className="btn btn-outline-secondary dropdown-toggle p-2" type="button"
                               id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                               data-display="static">
-                        Authorization:
+                        Third-party account required:
                       </button>
                       <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         {filterKeys.filter(f => f["key"] === "authorizations").length > 0 ?

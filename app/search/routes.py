@@ -219,7 +219,7 @@ def dataset_search():
                 formats.append(m.upper())
     formats = sorted(list(set(formats)), key=str.casefold)
 
-    authorizations = ['Third-party account required', 'No third-party account required']
+    authorizations = ['Yes', 'No']
 
     query_all = bool(request.args.get('elements') == 'all')
     if not query_all:
@@ -242,9 +242,9 @@ def dataset_search():
             filter_auth = request.args.get('authorizations').split(',')
             elements = list(filter(lambda e: e['authorizations'] is not None, elements))
             for item in filter_auth:
-                if item == "Third-party account required":
+                if item == "Yes":
                     elements = list(filter(lambda e: e['authorizations'] in ['private', 'registered'], elements))
-                if item == "No third-party account required":
+                if item == "No":
                     elements = list(filter(lambda e: e['authorizations'] not in ['private', 'registered'], elements))
 
         if request.args.get('cbrain'):

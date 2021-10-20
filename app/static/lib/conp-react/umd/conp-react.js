@@ -10640,7 +10640,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     "aria-haspopup": "true",
     "aria-expanded": "false",
     "data-display": "static"
-  }, "Authorization:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "Third-party account required:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "dropdown-menu",
     "aria-labelledby": "dropdownMenuButton"
   }, filterKeys.filter(function (f) {
