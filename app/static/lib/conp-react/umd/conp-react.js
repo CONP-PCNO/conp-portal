@@ -10471,6 +10471,9 @@ var DataTable_DataTable = function DataTable(_ref) {
   }, {
     key: "cbrain",
     values: query.cbrain || []
+  }, {
+    key: "authorizations",
+    values: query.authorizations || []
   }]),
       filters = _useState[0],
       setFilters = _useState[1];
@@ -10499,6 +10502,9 @@ var DataTable_DataTable = function DataTable(_ref) {
       })[0].values,
       cbrain: filters.filter(function (f) {
         return f["key"] === "cbrain";
+      })[0].values,
+      authorizations: filters.filter(function (f) {
+        return f["key"] === "authorizations";
       })[0].values,
       page: 1
     }));
@@ -10624,6 +10630,40 @@ var DataTable_DataTable = function DataTable(_ref) {
       className: "form-check-label",
       htmlFor: "filter" + format
     }, format)) : null;
+  }) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-outline-secondary dropdown-toggle p-2",
+    type: "button",
+    id: "dropdownMenuButton",
+    "data-toggle": "dropdown",
+    "aria-haspopup": "true",
+    "aria-expanded": "false",
+    "data-display": "static"
+  }, "Third-party account required:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown-menu",
+    "aria-labelledby": "dropdownMenuButton"
+  }, filterKeys.filter(function (f) {
+    return f["key"] === "authorizations";
+  }).length > 0 ? filterKeys.filter(function (f) {
+    return f["key"] === "authorizations";
+  })[0]["values"].map(function (authorizations) {
+    return authorizations !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      key: authorizations.id,
+      className: "dropdown-item ml-2"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+      className: "form-check-input",
+      type: "checkbox",
+      checked: filters.filter(function (f) {
+        return f["key"] === "authorizations";
+      })[0]["values"].includes(authorizations),
+      value: "authorizations." + authorizations,
+      id: "filter" + authorizations,
+      onChange: handleFiltersChange
+    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+      className: "form-check-label",
+      htmlFor: "filter" + authorizations
+    }, authorizations)) : null;
   }) : null))) : null, renderElement.name === "PipelineElement" || renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "input-group m-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
@@ -10884,6 +10924,9 @@ DataTable_DataTable.defaultProps = {
     values: []
   }, {
     key: "cbrain",
+    values: []
+  }, {
+    key: "authorizations",
     values: []
   }],
   elements: [],
