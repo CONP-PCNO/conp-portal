@@ -28,7 +28,7 @@ def render_content(raw):
 def get_share_content():
     content = None
     try:
-        url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/datalad_dataset_addition_procedure.md'
+        url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/Documentation_displayed_on_the_portal/Share_Instruction_Page.md'
         headers = {'Content-type': 'text/html; charset=UTF-8'}
         response = requests.get(url, headers=headers)
 
