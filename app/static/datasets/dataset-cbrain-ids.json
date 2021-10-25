@@ -1,6 +1,8 @@
 {
 	"1000 Genomes Project":"https://portal.cbrain.mcgill.ca/groups/switch?id=8481",
 	"BigBrain dataset":"https://portal.cbrain.mcgill.ca/groups/switch?id=7686",
+    "BigBrain dataset - 3D Classified Volumes (derived dataset)":"https://portal.cbrain.mcgill.ca/groups/switch?id=9225",
+    "BigBrain dataset - 3D Surfaces (derived dataset)":"https://portal.cbrain.mcgill.ca/groups/switch?id=9228",
 	"CFMM-7T: MP2RAGE T1 mapping":"https://portal.cbrain.mcgill.ca/groups/switch?id=8469",
 	"Intracellular Recordings of Murine Neocortical Neurons":"https://portal.cbrain.mcgill.ca/groups/switch?id=8475",
 	"NIH Blueprint Non-Human Primate Atlas":"https://portal.cbrain.mcgill.ca/groups/switch?id=8478",
