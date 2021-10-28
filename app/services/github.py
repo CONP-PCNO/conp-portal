@@ -44,7 +44,7 @@ def get_share_content():
 def get_faq_content():
     content = None
     try:
-        url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/CONP_FAQ.md'
+        url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/Documentation_displayed_on_the_portal/CONP_FAQ.md'
         headers = {'Content-type': 'text/html; charset=UTF-8'}
         response = requests.get(url, headers=headers)
 
@@ -60,7 +60,7 @@ def get_faq_content():
 def get_tutorial_content():
     content = None
     try:
-        url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/CONP_portal_tutorial.md'
+        url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/Documentation_displayed_on_the_portal/CONP_portal_tutorial.md'
         headers = {'Content-type': 'text/html; charset=UTF-8'}
         response = requests.get(url, headers=headers)
 
