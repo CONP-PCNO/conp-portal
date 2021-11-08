@@ -17601,7 +17601,7 @@ var ViewsIcon_ViewsIcon = function ViewsIcon(props) {
     icon: faEye,
     color: "dimgray",
     size: "md"
-  }), !!views && views.nb_hits);
+  }), !!views && views.nb_hits || 0);
 };
 
 /* harmony default export */ var social_ViewsIcon = (ViewsIcon_ViewsIcon);
@@ -17647,7 +17647,7 @@ var DownloadsIcon_DownloadsIcon = function DownloadsIcon(props) {
     icon: faDownload,
     color: "dimgray",
     size: "md"
-  }), !!downloads && downloads.nb_hits || 0);
+  }), !!downloads && downloads.nb_hits || "NA");
 };
 
 /* harmony default export */ var social_DownloadsIcon = (DownloadsIcon_DownloadsIcon);

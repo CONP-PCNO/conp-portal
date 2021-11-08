@@ -35,7 +35,7 @@ const DownloadsIcon = (props) => {
     return (
         <div className="d-flex flex-column align-items-center mx-2" >
             <FontAwesomeIcon icon={faDownload} color="dimgray" size="md"/>
-            {(!!downloads && downloads.nb_hits) || 0}
+            {(!!downloads && downloads.nb_hits || "NA")}
         </div>
 
     );

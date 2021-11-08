@@ -40,7 +40,7 @@ const ViewsIcon = (props) => {
         isLoading ? <LoadingSpinner /> :
             <div className="d-flex flex-column align-items-center mx-2" >
                 <FontAwesomeIcon icon={faEye} color="dimgray" size="md" />
-                {!!views && views.nb_hits}
+                {!!views && views.nb_hits || 0}
             </div>
 
     );
