@@ -232,6 +232,38 @@ def pipelines_views():
     return json.dumps(elements)
 
 
+@analytics_bp.route('/analytics/pipelines/downloads')
+def pipelines_downloads():
+    """ Analytics/Pipelines/Downloads Route
+
+        Endpoint for returning analytics related to pipeline downloads from the Boutiques descriptor
+
+        Args:
+            None
+
+        Returns:
+            Object
+    """
+
+    pipeline_id = request.args.get('id', None)
+
+    pipelines_data = pipelines.get_pipelines_from_cache()
+    elements = []
+
+    for pipeline in pipelines_data:
+        if pipeline_id is not None and pipeline_id == pipeline["ID"]:
+            elements.append(
+                {
+                    "id": pipeline["ID"],
+                    "nb_hits": pipeline["DOWNLOADS"]
+                }
+            )
+
+    elements.sort(key=lambda e: e["nb_hits"], reverse=True)
+
+    return json.dumps(elements)
+
+
 @analytics_bp.route('/analytics/keywords')
 def keywords():
     """ Analytics/Keywords Route

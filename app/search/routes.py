@@ -138,7 +138,6 @@ def dataset_search():
     # Get the number of views of datasets
     views = json.loads(datasets_views())
     downloads = json.loads(datasets_downloads())
-    print(downloads)
 
     # Build dataset response
     for d in datasets:

@@ -7,7 +7,7 @@ const DownloadsIcon = (props) => {
 
     const [downloads, setDownloads] = useState()
     const [isLoading, setIsLoading] = useState(true)
-    const url = props.type === "dataset" ? `/analytics/datasets/downloads?id=${props.id}` : `/analytics/pipelines/views?id=${props.id}`
+    const url = props.type === "dataset" ? `/analytics/datasets/downloads?id=${props.id}` : `/analytics/pipelines/downloads?id=${props.id}`
 
     useEffect(() => {
         fetchDownloads();

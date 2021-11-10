@@ -38,7 +38,7 @@ const PipelineElement = props => {
         <div className="d-flex">
           <ViewsIcon type="pipeline" id={element.id} />
           {element.downloads ?
-            <DownloadsIcon downloads={element.downloads} /> : null}
+            <DownloadsIcon type="pipeline" id={element.id} /> : null}
         </div>
       </div>
       <div className="card-body d-md-flex flex-wrap">
