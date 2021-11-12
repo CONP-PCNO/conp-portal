@@ -17619,7 +17619,7 @@ var DownloadsIcon_DownloadsIcon = function DownloadsIcon(props) {
       isLoading = _useState2[0],
       setIsLoading = _useState2[1];
 
-  var url = props.type === "dataset" ? "/analytics/datasets/downloads?id=" + props.id : "/analytics/pipelines/views?id=" + props.id;
+  var url = props.type === "dataset" ? "/analytics/datasets/downloads?id=" + props.id : "/analytics/pipelines/downloads?id=" + props.id;
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
     fetchDownloads();
   }, []);
@@ -18035,7 +18035,8 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     type: "pipeline",
     id: element.id
   }), element.downloads ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(social_DownloadsIcon, {
-    downloads: element.downloads
+    type: "pipeline",
+    id: element.id
   }) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-body d-md-flex flex-wrap"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
