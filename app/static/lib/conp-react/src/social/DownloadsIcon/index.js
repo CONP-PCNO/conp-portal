@@ -7,7 +7,7 @@ const DownloadsIcon = (props) => {
 
     const [downloads, setDownloads] = useState()
     const [isLoading, setIsLoading] = useState(true)
-    const url = props.type === "dataset" ? `/analytics/datasets/downloads?id=${props.id}` : `/analytics/pipelines/views?id=${props.id}`
+    const url = props.type === "dataset" ? `/analytics/datasets/downloads?id=${props.id}` : `/analytics/pipelines/downloads?id=${props.id}`
 
     useEffect(() => {
         fetchDownloads();
@@ -35,7 +35,7 @@ const DownloadsIcon = (props) => {
     return (
         <div className="d-flex flex-column align-items-center mx-2" >
             <FontAwesomeIcon icon={faDownload} color="dimgray" size="md"/>
-            {(!!downloads && downloads.nb_hits) || 0}
+            {(!!downloads && downloads.nb_hits || "NA")}
         </div>
 
     );

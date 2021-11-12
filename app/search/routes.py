@@ -5,6 +5,7 @@
 """
 import json
 import os
+import re
 
 from flask import render_template, request, current_app, send_from_directory
 from flask_login import current_user
@@ -15,6 +16,7 @@ from app.search.models import DATSDataset, DatasetCache
 from app.search.queries import (
     example_query_1, example_query_2, example_query_3, example_query_4, example_query_5
 )
+from app.analytics.routes import datasets_views, datasets_downloads
 from app.services import github
 from config import Config
 
@@ -133,6 +135,10 @@ def dataset_search():
         cbrain_dataset_ids = json.load(f)
         f.close()
 
+    # Get the number of views of datasets
+    views = json.loads(datasets_views())
+    downloads = json.loads(datasets_downloads())
+
     # Build dataset response
     for d in datasets:
         try:
@@ -160,6 +166,12 @@ def dataset_search():
         else:
             dataset_cbrain_id = ""
 
+        views_nb = [v["nb_hits"] for v in views if v["dataset_id"] == d.dataset_id]
+        download_id = os.path.basename(d.fspath) + "_version"
+        downloads_nb = [
+            e["nb_hits"] for e in downloads if e["dataset_id"].startswith(download_id)
+        ]
+
         dataset = {
             "authorized": authorized,
             "id": d.dataset_id,
@@ -169,6 +181,8 @@ def dataset_search():
             "thumbnailURL": "/dataset_logo?id={}".format(d.dataset_id),
             "downloadPath": d.dataset_id,
             "URL": '?',
+            "downloads": downloads_nb,
+            "views": views_nb,
             "dateAdded": str(d.date_created.date()),
             "dateUpdated": str(d.date_updated.date()),
             "creators": datsdataset.creators,
@@ -326,6 +340,18 @@ def dataset_search():
             paginated.sort(key=lambda o: (
                 o["dateUpdated"] is None, o["dateUpdated"]), reverse=reverse)
 
+        elif sort_key == "viewsDes" or sort_key == "viewsAsc":
+
+            reverse = (sort_key == "viewsDes")
+            paginated.sort(key=lambda o: (
+                o["views"] is None, o["views"]), reverse=reverse)
+
+        elif sort_key == "downloadsDes" or sort_key == "downloadsAsc":
+
+            reverse = (sort_key == "downloadsDes")
+            paginated.sort(key=lambda o: (
+                o["downloads"] is None, o["downloads"]), reverse=reverse)
+
         else:
             paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
 
@@ -386,6 +412,22 @@ def dataset_search():
             {
                 "key": "subjectsAsc",
                 "label": "Number of Subjects (Smallest First)"
+            },
+            {
+                "key": "viewsDes",
+                "label": "Number of Views (Largest First)"
+            },
+            {
+                "key": "viewsAsc",
+                "label": "Number of Views (Smallest First)"
+            },
+            {
+                "key": "downloadsDes",
+                "label": "Number of Direct Downloads (Largest First)"
+            },
+            {
+                "key": "downloadsAsc",
+                "label": "Number of Direct Downloads (Smallest First)"
             }
         ],
         "filterKeys": [

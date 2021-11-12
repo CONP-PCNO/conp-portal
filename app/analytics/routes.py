@@ -148,10 +148,10 @@ def datasets_downloads():
 
     for v in page_downloads:
         # skip entries not pertinent to the actual dataset download
-        if 'https://portal.conp.ca/data/' not in v.url:
+        if not v.url or 'https://portal.conp.ca/data/' not in v.url:
             continue
         exists = False
-        v.dataset_id = v.url.replace('https://portal.conp.ca/data/', 'projects/')
+        v.dataset_id = v.url.replace('https://portal.conp.ca/data/', '')
         for e in elements:
             dataset_id = e.get("dataset_id", None)
             if dataset_id is not None and dataset_id == v.dataset_id:
@@ -226,6 +226,38 @@ def pipelines_views():
                     "nb_uniq_visitors": v.nb_uniq_visitors if v.nb_uniq_visitors is not None else 0,
                 }
                 elements.append(element)
+
+    elements.sort(key=lambda e: e["nb_hits"], reverse=True)
+
+    return json.dumps(elements)
+
+
+@analytics_bp.route('/analytics/pipelines/downloads')
+def pipelines_downloads():
+    """ Analytics/Pipelines/Downloads Route
+
+        Endpoint for returning analytics related to pipeline downloads from the Boutiques descriptor
+
+        Args:
+            None
+
+        Returns:
+            Object
+    """
+
+    pipeline_id = request.args.get('id', None)
+
+    pipelines_data = pipelines.get_pipelines_from_cache()
+    elements = []
+
+    for pipeline in pipelines_data:
+        if pipeline_id is not None and pipeline_id == pipeline["ID"]:
+            elements.append(
+                {
+                    "id": pipeline["ID"],
+                    "nb_hits": pipeline["DOWNLOADS"]
+                }
+            )
 
     elements.sort(key=lambda e: e["nb_hits"], reverse=True)
 
