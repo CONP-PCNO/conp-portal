@@ -423,11 +423,11 @@ def dataset_search():
             },
             {
                 "key": "downloadsDes",
-                "label": "Number of Direct Download (Largest First)"
+                "label": "Number of Direct Downloads (Largest First)"
             },
             {
                 "key": "downloadsAsc",
-                "label": "Number of Direct Download (Smallest First)"
+                "label": "Number of Direct Downloads (Smallest First)"
             }
         ],
         "filterKeys": [
