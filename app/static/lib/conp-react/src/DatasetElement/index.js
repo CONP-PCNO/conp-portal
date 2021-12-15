@@ -218,16 +218,33 @@ const DatasetElement = props => {
             <div className="col col-lg-4 d-flex flex-column justify-content-top align-items-center p-2 pr-4">
               <h7>PROCESS</h7>
               {element.cbrain_id ?
+                  <>
                   <a target="_blank" href={`${element.cbrain_id}`}>
                     <img
                         className="cbrain-img justify-content-center align-items-center"
                         src="static/img/cbrain-icon-blue.png" style={{maxWidth: '60px'}}/>
-                  </a> :
+                  </a>
+                  <select
+                      className="form-select form-select-sm"
+                      aria-label="pipeline">
+                    <option selected>Pipeline to run</option>
+                    {props.cbrainIds.map(pipeline => <option value={pipeline.url}>{pipeline.title}</option>)}
+                  </select>
+                  </> :
+                  <>
                   <a target="_blank">
                     <img
                         className="cbrain-img justify-content-center align-items-center"
                         src="static/img/cbrain-icon-grey.png" style={{maxWidth: '60px'}}/>
-                  </a>}
+                  </a>
+                  <select
+                      className="form-select form-select-sm"
+                      aria-label="pipeline"
+                      disabled>
+                    <option selected>Pipeline to run</option>
+                    <option value="1">One</option>
+                  </select>
+                  </>}
             </div>
             <div className="col col-lg-8 d-flex flex-column justify-content-top align-items-center p-2">
               <h7>DOWNLOAD</h7>
@@ -286,6 +303,7 @@ DatasetElement.propTypes = {
   modalities: PropTypes.string,
   sources: PropTypes.number,
   cbrain_id: PropTypes.string,
+  cbrainIds: PropTypes.arrayOf(PropTypes.Object),
 };
 
 DatasetElement.defaultProps = {

@@ -10,6 +10,7 @@ const DataTable = ({
   imagePath,
   total,
   renderElement,
+  cbrainIds,
   query,
   setQuery,
   isLoading
@@ -362,7 +363,7 @@ const DataTable = ({
           {
             elements.map((element, i) => (
                 <div key={"" + element.id}>
-                  {React.createElement(renderElement, {...element, authorized, imagePath})}
+                  {React.createElement(renderElement, {...element, authorized, imagePath, cbrainIds})}
                 </div>
             ))
           }
@@ -417,6 +418,7 @@ DataTable.propTypes = {
   imagePath: PropTypes.string,
   total: PropTypes.number,
   renderElement: PropTypes.func,
+  cbrainIds: PropTypes.arrayOf(PropTypes.string),
   query: PropTypes.shape({
     search: PropTypes.string,
     searchPipelineName: PropTypes.string,
