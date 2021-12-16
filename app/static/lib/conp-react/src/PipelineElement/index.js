@@ -8,16 +8,33 @@ const PipelineElement = props => {
   const { authorized, ...element } = props;
   const platforms = element.platforms.map((item, key) =>
     item.uri ?
-      <span key={key} data-toggle="tooltip" title="Run Pipeline" style={{ maxWidth: "140px" }}>
-        <a target="_blank" rel="noreferrer" className="btn" href={item.uri}>
-          <img className="img-fluid" alt="Online platform" src={item.img} />
-        </a>
-      </span> :
-      <span key={key} data-toggle="tooltip" title="Unavailable" style={{ maxWidth: "140px" }}>
-        <a className="btn disabled" href={item.uri} disabled>
-          <img className="img-fluid" alt="Online platform" src={item.img} />
-        </a>
-      </span>
+      <>
+        <span key={key} data-toggle="tooltip" title="Run Pipeline" style={{ maxWidth: "140px" }}>
+          <a target="_blank" rel="noreferrer" className="btn" href={item.uri}>
+            <img className="img-fluid" alt="Online platform" src={item.img} />
+          </a>
+        </span>
+        <select
+            className="form-select form-select-sm"
+            aria-label="pipeline"
+            style={{ maxWidth: "140px" }}>
+          <option selected>Dataset to use</option>
+          {props.cbrainIds.map(pipeline => <option value={pipeline.url}>{pipeline.title}</option>)}
+        </select>
+      </> :
+      <>
+        <span key={key} data-toggle="tooltip" title="Unavailable" style={{ maxWidth: "140px" }}>
+          <a className="btn disabled" href={item.uri} disabled>
+            <img className="img-fluid" alt="Online platform" src={item.img} />
+          </a>
+        </span>
+        <select
+            className="form-select form-select-sm"
+            aria-label="pipeline"
+            disabled>
+          <option selected>Pipeline to run</option>
+        </select>
+      </>
   );
 
   return (
@@ -83,6 +100,7 @@ const PipelineElement = props => {
       <div className="col-sm-12 col-md-3 d-flex align-items-center justify-content-end">
         <div className="d-flex justify-content-end align-items-center">
           {platforms}
+          
         </div>
       </div>
     </div>
@@ -107,7 +125,8 @@ PipelineElement.propTypes = {
   tags: PropTypes.object,
   url: PropTypes.string,
   img: PropTypes.string,
-  imagePath: PropTypes.string
+  imagePath: PropTypes.string,
+  cbrainIds: PropTypes.arrayOf(PropTypes.Object),
 };
 
 //PipelineElement.defaultProps = {

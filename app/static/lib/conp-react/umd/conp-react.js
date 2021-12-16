@@ -17964,7 +17964,10 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     }
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("select", {
     className: "form-select form-select-sm",
-    "aria-label": "pipeline"
+    "aria-label": "pipeline",
+    style: {
+      maxWidth: '120px'
+    }
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
     selected: true
   }, "Pipeline to run"), props.cbrainIds.map(function (pipeline) {
@@ -17985,9 +17988,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     disabled: true
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
     selected: true
-  }, "Pipeline to run"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
-    value: "1"
-  }, "One")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "Pipeline to run")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col col-lg-8 d-flex flex-column justify-content-top align-items-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, "DOWNLOAD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-column"
@@ -18073,7 +18074,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       element = PipelineElement_objectWithoutPropertiesLoose(props, ["authorized"]);
 
   var platforms = element.platforms.map(function (item, key) {
-    return item.uri ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    return item.uri ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
       key: key,
       "data-toggle": "tooltip",
       title: "Run Pipeline",
@@ -18089,7 +18090,19 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       className: "img-fluid",
       alt: "Online platform",
       src: item.img
-    }))) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("select", {
+      className: "form-select form-select-sm",
+      "aria-label": "pipeline",
+      style: {
+        maxWidth: "140px"
+      }
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
+      selected: true
+    }, "Dataset to use"), props.cbrainIds.map(function (pipeline) {
+      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
+        value: pipeline.url
+      }, pipeline.title);
+    }))) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
       key: key,
       "data-toggle": "tooltip",
       title: "Unavailable",
@@ -18104,7 +18117,13 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       className: "img-fluid",
       alt: "Online platform",
       src: item.img
-    })));
+    }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("select", {
+      className: "form-select form-select-sm",
+      "aria-label": "pipeline",
+      disabled: true
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
+      selected: true
+    }, "Pipeline to run")));
   });
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card flex-row",
@@ -18204,7 +18223,8 @@ PipelineElement_PipelineElement.propTypes = {
   tags: prop_types_default.a.object,
   url: prop_types_default.a.string,
   img: prop_types_default.a.string,
-  imagePath: prop_types_default.a.string
+  imagePath: prop_types_default.a.string,
+  cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object)
 }; //PipelineElement.defaultProps = {
 //  imagePath: ""
 //};

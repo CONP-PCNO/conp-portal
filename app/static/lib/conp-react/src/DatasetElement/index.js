@@ -226,7 +226,8 @@ const DatasetElement = props => {
                   </a>
                   <select
                       className="form-select form-select-sm"
-                      aria-label="pipeline">
+                      aria-label="pipeline"
+                      style={{maxWidth: '120px'}}>
                     <option selected>Pipeline to run</option>
                     {props.cbrainIds.map(pipeline => <option value={pipeline.url}>{pipeline.title}</option>)}
                   </select>
@@ -242,7 +243,6 @@ const DatasetElement = props => {
                       aria-label="pipeline"
                       disabled>
                     <option selected>Pipeline to run</option>
-                    <option value="1">One</option>
                   </select>
                   </>}
             </div>
