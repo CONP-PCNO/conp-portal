@@ -10459,6 +10459,8 @@ var DataTable_DataTable = function DataTable(_ref) {
       total = _ref.total,
       renderElement = _ref.renderElement,
       cbrainIds = _ref.cbrainIds,
+      activeCbrainIds = _ref.activeCbrainIds,
+      updateActiveCbrainId = _ref.updateActiveCbrainId,
       query = _ref.query,
       setQuery = _ref.setQuery,
       isLoading = _ref.isLoading;
@@ -10854,12 +10856,15 @@ var DataTable_DataTable = function DataTable(_ref) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", null, "Dataset Name"))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", null, "Execution Result")))))) : null, elements.map(function (element, i) {
+    var activeCbrainId = activeCbrainIds[element.id];
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       key: "" + element.id
     }, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, {
       authorized: authorized,
       imagePath: imagePath,
-      cbrainIds: cbrainIds
+      cbrainIds: cbrainIds,
+      updateActiveCbrainId: updateActiveCbrainId,
+      activeCbrainId: activeCbrainId
     })));
   }), query.max_per_page !== 'All' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "search-dataset-footer d-flex align-items-center p-2"
@@ -10904,6 +10909,8 @@ DataTable_DataTable.propTypes = {
   total: prop_types_default.a.number,
   renderElement: prop_types_default.a.func,
   cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.string),
+  activeCbrainIds: prop_types_default.a.object,
+  updateActiveCbrainId: prop_types_default.a.func,
   query: prop_types_default.a.shape({
     search: prop_types_default.a.string,
     searchPipelineName: prop_types_default.a.string,
@@ -11015,6 +11022,10 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       cbrainIdsState = _useState8[0],
       setCbrainIdsState = _useState8[1];
 
+  var _useState9 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}),
+      activeCbrainIdsState = _useState9[0],
+      setActiveCbrainIdsState = _useState9[1];
+
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
     setQuery(DataTableContainer_extends({}, query, {
       limit: limit
@@ -11068,7 +11079,11 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
             case 9:
               parsed = _context.sent;
               setCbrainIdsState(parsed.elements.map(function (element) {
-                return {
+                return element.platforms ? {
+                  url: element.platforms[0].uri,
+                  id: element.id,
+                  title: element.title
+                } : {
                   url: element.cbrain_id,
                   id: element.id,
                   title: element.title
@@ -11135,29 +11150,34 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
               setSortKeysState(parsed.sortKeys);
               setFilterKeysState(parsed.filterKeys);
               setAuthorizedState(parsed.authorized);
-              _context2.next = 21;
+              setActiveCbrainIdsState(parsed.elements.reduce(function (acc, cur) {
+                var _extends2;
+
+                return DataTableContainer_extends({}, acc, (_extends2 = {}, _extends2[cur.id] = "", _extends2));
+              }, {}));
+              _context2.next = 22;
               break;
 
-            case 17:
-              _context2.prev = 17;
+            case 18:
+              _context2.prev = 18;
               _context2.t0 = _context2["catch"](1);
               alert("There was an error retrieving the search results.");
               console.error(_context2.t0);
 
-            case 21:
-              _context2.prev = 21;
+            case 22:
+              _context2.prev = 22;
               isLoading && setIsLoading(false);
               setTimeout(function () {
                 window.scrollTo(0, 0);
               }, 100);
-              return _context2.finish(21);
+              return _context2.finish(22);
 
-            case 25:
+            case 26:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[1, 17, 21, 25]]);
+      }, _callee2, null, [[1, 18, 22, 26]]);
     }));
 
     return function fetchElements() {
@@ -11168,6 +11188,15 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
     fetchElements();
   }, [query]);
+
+  var updateActiveCbrainId = function updateActiveCbrainId(elementId, activeValue) {
+    setActiveCbrainIdsState(function (prevState) {
+      var _extends3;
+
+      return DataTableContainer_extends({}, prevState, (_extends3 = {}, _extends3[elementId] = activeValue, _extends3));
+    });
+  };
+
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_DataTable_DataTable, DataTableContainer_extends({
     authorized: authorizedState,
     elements: fetchedElements,
@@ -11178,7 +11207,9 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
     query: query,
     setQuery: setQuery,
     isLoading: isLoading,
-    cbrainIds: cbrainIdsState
+    cbrainIds: cbrainIdsState,
+    activeCbrainIds: activeCbrainIdsState,
+    updateActiveCbrainId: updateActiveCbrainId
   }, dataTableProps));
 };
 
@@ -17851,6 +17882,10 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     });
   };
 
+  var updateSelect = function updateSelect(event) {
+    props.updateActiveCbrainId(props.id, event.target.value);
+  };
+
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card container-fluid",
     "data-type": "dataset"
@@ -17967,9 +18002,11 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     "aria-label": "pipeline",
     style: {
       maxWidth: '120px'
-    }
+    },
+    value: props.activeCbrainId,
+    onChange: updateSelect
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
-    selected: true
+    value: ""
   }, "Pipeline to run"), props.cbrainIds.map(function (pipeline) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
       value: pipeline.url
@@ -17985,9 +18022,10 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("select", {
     className: "form-select form-select-sm",
     "aria-label": "pipeline",
-    disabled: true
+    disabled: true,
+    value: ""
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
-    selected: true
+    value: ""
   }, "Pipeline to run")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col col-lg-8 d-flex flex-column justify-content-top align-items-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, "DOWNLOAD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -18054,7 +18092,9 @@ DatasetElement_DatasetElement.propTypes = {
   modalities: prop_types_default.a.string,
   sources: prop_types_default.a.number,
   cbrain_id: prop_types_default.a.string,
-  cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object)
+  cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object),
+  activeCbrainId: prop_types_default.a.string,
+  updateActiveCbrainId: prop_types_default.a.func
 };
 DatasetElement_DatasetElement.defaultProps = {
   imagePath: "",
@@ -18072,6 +18112,10 @@ function PipelineElement_objectWithoutPropertiesLoose(source, excluded) { if (so
 var PipelineElement_PipelineElement = function PipelineElement(props) {
   var authorized = props.authorized,
       element = PipelineElement_objectWithoutPropertiesLoose(props, ["authorized"]);
+
+  var updateSelect = function updateSelect(event) {
+    props.updateActiveCbrainId(props.id, event.target.value);
+  };
 
   var platforms = element.platforms.map(function (item, key) {
     return item.uri ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
@@ -18095,9 +18139,11 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       "aria-label": "pipeline",
       style: {
         maxWidth: "140px"
-      }
+      },
+      value: props.activeCbrainId,
+      onChange: updateSelect
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
-      selected: true
+      value: ""
     }, "Dataset to use"), props.cbrainIds.map(function (pipeline) {
       return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
         value: pipeline.url
@@ -18120,9 +18166,10 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("select", {
       className: "form-select form-select-sm",
       "aria-label": "pipeline",
-      disabled: true
+      disabled: true,
+      value: ""
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
-      selected: true
+      value: ""
     }, "Pipeline to run")));
   });
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -18224,7 +18271,9 @@ PipelineElement_PipelineElement.propTypes = {
   url: prop_types_default.a.string,
   img: prop_types_default.a.string,
   imagePath: prop_types_default.a.string,
-  cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object)
+  cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object),
+  activeCbrainId: prop_types_default.a.string,
+  updateActiveCbrainId: prop_types_default.a.func
 }; //PipelineElement.defaultProps = {
 //  imagePath: ""
 //};

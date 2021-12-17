@@ -105,6 +105,10 @@ const DatasetElement = props => {
       );
   }
 
+  const updateSelect = (event) => {
+    props.updateActiveCbrainId(props.id, event.target.value)
+  }
+
   return (
     <div className="card container-fluid" data-type="dataset">
       <div className="row pr-4">
@@ -227,8 +231,10 @@ const DatasetElement = props => {
                   <select
                       className="form-select form-select-sm"
                       aria-label="pipeline"
-                      style={{maxWidth: '120px'}}>
-                    <option selected>Pipeline to run</option>
+                      style={{maxWidth: '120px'}}
+                      value={props.activeCbrainId}
+                      onChange={updateSelect}>
+                    <option value="">Pipeline to run</option>
                     {props.cbrainIds.map(pipeline => <option value={pipeline.url}>{pipeline.title}</option>)}
                   </select>
                   </> :
@@ -241,8 +247,9 @@ const DatasetElement = props => {
                   <select
                       className="form-select form-select-sm"
                       aria-label="pipeline"
-                      disabled>
-                    <option selected>Pipeline to run</option>
+                      disabled
+                      value="">
+                    <option value="">Pipeline to run</option>
                   </select>
                   </>}
             </div>
@@ -304,6 +311,8 @@ DatasetElement.propTypes = {
   sources: PropTypes.number,
   cbrain_id: PropTypes.string,
   cbrainIds: PropTypes.arrayOf(PropTypes.Object),
+  activeCbrainId: PropTypes.string,
+  updateActiveCbrainId: PropTypes.func,
 };
 
 DatasetElement.defaultProps = {

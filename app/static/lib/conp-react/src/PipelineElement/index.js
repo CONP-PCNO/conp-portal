@@ -6,6 +6,9 @@ import DownloadsIcon from "../social/DownloadsIcon"
 
 const PipelineElement = props => {
   const { authorized, ...element } = props;
+  const updateSelect = (event) => {
+    props.updateActiveCbrainId(props.id, event.target.value)
+  }
   const platforms = element.platforms.map((item, key) =>
     item.uri ?
       <>
@@ -17,8 +20,10 @@ const PipelineElement = props => {
         <select
             className="form-select form-select-sm"
             aria-label="pipeline"
-            style={{ maxWidth: "140px" }}>
-          <option selected>Dataset to use</option>
+            style={{ maxWidth: "140px" }}
+            value={props.activeCbrainId}
+            onChange={updateSelect}>
+          <option value="">Dataset to use</option>
           {props.cbrainIds.map(pipeline => <option value={pipeline.url}>{pipeline.title}</option>)}
         </select>
       </> :
@@ -31,8 +36,9 @@ const PipelineElement = props => {
         <select
             className="form-select form-select-sm"
             aria-label="pipeline"
-            disabled>
-          <option selected>Pipeline to run</option>
+            disabled
+            value="">
+          <option value="">Pipeline to run</option>
         </select>
       </>
   );
@@ -127,6 +133,8 @@ PipelineElement.propTypes = {
   img: PropTypes.string,
   imagePath: PropTypes.string,
   cbrainIds: PropTypes.arrayOf(PropTypes.Object),
+  activeCbrainId: PropTypes.string,
+  updateActiveCbrainId: PropTypes.func,
 };
 
 //PipelineElement.defaultProps = {
