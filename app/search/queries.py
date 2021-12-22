@@ -11,8 +11,7 @@ SELECT DISTINCT ?title ?license_name ?data_portal WHERE {
   sdo:name ?title;
   nexus:deprecated false;
   conp:conp_portal_website ?data_portal;
-  sdo:license ?license.
-?license sdo:name ?license_name.
+  sdo:license/sdo:name ?license_name.
 FILTER (?license_name = "CC BY-NC-SA"^^sdo:Text)
 }
 """
@@ -28,8 +27,7 @@ SELECT DISTINCT ?data_portal ?title ?about_name WHERE {
   sdo:name ?title;
   nexus:deprecated false;
   conp:conp_portal_website ?data_portal;
-  sdo:about ?about.
-?about sdo:name ?about_name.         
+  sdo:about/sdo:name ?about_name.         
 FILTER regex(lcase(str(?about_name)), "alzheimer", "i")
 }
 """
@@ -45,8 +43,7 @@ SELECT DISTINCT ?data_portal ?title ?format WHERE {
   sdo:name ?title;
   nexus:deprecated false;
   conp:conp_portal_website ?data_portal;
-  sdo:distribution ?distribution.
-?distribution sdo:encodingFormat ?format.
+  sdo:distribution/sdo:encodingFormat ?format.
 FILTER (regex(str(?format), "MINC", "i"))
 }
 """
@@ -62,10 +59,7 @@ SELECT DISTINCT ?data_portal ?dataset_name ?value WHERE {
   sdo:name ?dataset_name;
   nexus:deprecated false;
   conp:conp_portal_website ?data_portal;
-  sdo:distribution ?distribution.
-?distribution sdo:accessMode ?access_mode.
-?access_mode sdo:permissionType ?authorization.
-?authorization sdo:value ?value.
+  sdo:distribution/sdo:accessMode/sdo:permissionType/sdo:value ?value.
 FILTER regex(lcase(str(?value)), "public", "i")
 }
 """
@@ -82,9 +76,9 @@ SELECT DISTINCT ?citation_name ?doi
   sdo:name ?title;
   nexus:deprecated false;
   sdo:citation ?citation.
-?citation sdo:identifier ?value;
+?citation sdo:identifier/sdo:identifier ?doi;
           sdo:name ?citation_name.
-?value sdo:identifier ?doi.
+
 }
 GROUP BY ?citation_name ?doi
 """
