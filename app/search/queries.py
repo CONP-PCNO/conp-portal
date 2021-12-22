@@ -41,8 +41,8 @@ SELECT DISTINCT ?dataset ?title ?format WHERE {
   sdo:name ?title;
   nexus:deprecated false;
   sdo:distribution ?distribution.
-?distribution conp:formats ?format.
-FILTER (regex(?format, "MINC", "i"))
+?distribution sdo:encodingFormat ?format.
+FILTER (regex(str(?format), "MINC", "i"))
 }
 """
 
@@ -58,7 +58,7 @@ SELECT DISTINCT ?dataset_name ?value WHERE {
   nexus:deprecated false;
   sdo:distribution ?distribution.
 ?distribution sdo:accessMode ?access_mode.
-?access_mode conp:authorizations ?authorization.
+?access_mode sdo:permissionType ?authorization.
 ?authorization sdo:value ?value.
 FILTER regex(lcase(str(?value)), "public", "i")
 }
