@@ -17886,6 +17886,12 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     props.updateActiveCbrainId(props.id, event.target.value);
   };
 
+  var openPipeline = function openPipeline() {
+    if (props.activeCbrainId !== "") {
+      window.open(props.activeCbrainId);
+    }
+  };
+
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card container-fluid",
     "data-type": "dataset"
@@ -17990,7 +17996,8 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "col col-lg-4 d-flex flex-column justify-content-top align-items-center p-2 pr-4"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, "PROCESS"), element.cbrain_id ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     target: "_blank",
-    href: "" + element.cbrain_id
+    href: "" + element.cbrain_id,
+    onClick: openPipeline
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     className: "cbrain-img justify-content-center align-items-center",
     src: "static/img/cbrain-icon-blue.png",
@@ -18117,6 +18124,12 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     props.updateActiveCbrainId(props.id, event.target.value);
   };
 
+  var openPipeline = function openPipeline() {
+    if (props.activeCbrainId !== "") {
+      window.open(props.activeCbrainId);
+    }
+  };
+
   var platforms = element.platforms.map(function (item, key) {
     return item.uri ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
       key: key,
@@ -18129,7 +18142,8 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       target: "_blank",
       rel: "noreferrer",
       className: "btn",
-      href: item.uri
+      href: item.uri,
+      onClick: openPipeline
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
       className: "img-fluid",
       alt: "Online platform",

@@ -9,11 +9,16 @@ const PipelineElement = props => {
   const updateSelect = (event) => {
     props.updateActiveCbrainId(props.id, event.target.value)
   }
+  const openPipeline = () => {
+    if (props.activeCbrainId !== "") {
+      window.open(props.activeCbrainId);
+    }
+  }
   const platforms = element.platforms.map((item, key) =>
     item.uri ?
       <>
         <span key={key} data-toggle="tooltip" title="Run Pipeline" style={{ maxWidth: "140px" }}>
-          <a target="_blank" rel="noreferrer" className="btn" href={item.uri}>
+          <a target="_blank" rel="noreferrer" className="btn" href={item.uri} onClick={openPipeline}>
             <img className="img-fluid" alt="Online platform" src={item.img} />
           </a>
         </span>

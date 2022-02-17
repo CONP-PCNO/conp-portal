@@ -109,6 +109,12 @@ const DatasetElement = props => {
     props.updateActiveCbrainId(props.id, event.target.value)
   }
 
+  const openPipeline = () => {
+    if (props.activeCbrainId !== "") {
+      window.open(props.activeCbrainId);
+    }
+  }
+
   return (
     <div className="card container-fluid" data-type="dataset">
       <div className="row pr-4">
@@ -223,7 +229,7 @@ const DatasetElement = props => {
               <h7>PROCESS</h7>
               {element.cbrain_id ?
                   <>
-                  <a target="_blank" href={`${element.cbrain_id}`}>
+                  <a target="_blank" href={`${element.cbrain_id}`} onClick={openPipeline}>
                     <img
                         className="cbrain-img justify-content-center align-items-center"
                         src="static/img/cbrain-icon-blue.png" style={{maxWidth: '60px'}}/>
