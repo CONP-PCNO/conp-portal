@@ -425,7 +425,6 @@ class ArkId(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     ark_id = db.Column(db.String(128), unique=True)
-    intended_for = db.Column(db.String(12))
     dataset_id = db.Column(db.String(256))
     pipeline_id = db.Column(db.String(64))
 

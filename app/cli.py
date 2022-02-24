@@ -63,6 +63,13 @@ def register(app):
         """
         _update_analytics(app)
 
+    @app.cli.command('generate_ark_ids')
+    def generate_ark_ids():
+        """
+        Wrapper to call the update of the analytics tables
+        """
+        _generate_ark_ids(app)
+
 
 def _seed_aff_types_db(app):
     """
@@ -653,3 +660,34 @@ def determine_dates_to_query_on_matomo(dates_in_database):
         start_date += delta
 
     return dates_to_process
+
+
+def _generate_ark_ids(app):
+
+    from app import db
+    from app.models import ArkId
+    from app.models import Dataset as DBDataset
+    from app.services.pynoid import mint
+
+    dataset_id_list = [row[0] for row in db.session.query(DBDataset.dataset_id).all()]
+    dataset_with_ark_id_list = [row[0] for row in db.session.query(ArkId.dataset_id).all()]
+    already_used_ark_id_list = [row[0] for row in db.session.query(ArkId.ark_id).all()]
+
+    for dataset_id in dataset_id_list:
+        if dataset_id in dataset_with_ark_id_list:
+            continue
+
+        new_ark_id = mint(
+            template='d7.reeeeeeedeeedeeek',
+            scheme='ark:',
+            naa="99999"
+        )
+
+        if new_ark_id not in already_used_ark_id_list:
+            ark_id_summary = ArkId()
+            ark_id_summary.ark_id = new_ark_id
+            ark_id_summary.dataset_id = dataset_id
+
+            db.session.merge(ark_id_summary)
+            db.session.commit()
+            print(f'[INFO   ] Created ARK ID {new_ark_id} for dataset {dataset_id}')
