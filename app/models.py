@@ -417,3 +417,17 @@ class MatomoDailyGetSiteSearchKeywords(db.Model):
 
     def __repr__(self):
         return '<MatomoDailyGetSiteSearchKeywords {}>'.format(self.id)
+
+
+class ArkId(db.Model):
+
+    __tablename__ = 'ark_id'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    ark_id = db.Column(db.String(128), unique=True)
+    intended_for = db.Column(db.String(12))
+    dataset_id = db.Column(db.String(256))
+    pipeline_id = db.Column(db.String(64))
+
+    def __repr__(self):
+        return '<ArkId {}>'.format(self.id)
