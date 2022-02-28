@@ -677,14 +677,22 @@ def _generate_missing_ark_ids(app):
     from app import db
     from app.models import ArkId
     from app.models import Dataset as DBDataset
+    from app.models import Pipeline as DBPipeline
 
     dataset_id_list = [row[0] for row in db.session.query(DBDataset.dataset_id).all()]
     dataset_with_ark_id_list = [row[0] for row in db.session.query(ArkId.dataset_id).all()]
+    pipeline_id_list = [row[0] for row in db.session.query(DBPipeline.pipeline_id).all()]
+    pipeline_with_ark_id_list = [row[0] for row in db.session.query(ArkId.pipeline_id).all()]
 
     for dataset_id in dataset_id_list:
         if dataset_id not in dataset_with_ark_id_list:
             new_ark_id = ark_id_minter(app, 'dataset')
             save_ark_id_in_database(app, 'dataset', new_ark_id, dataset_id)
+
+    for pipeline_id in pipeline_id_list:
+        if pipeline_id not in pipeline_with_ark_id_list:
+            new_ark_id = ark_id_minter(app, 'pipeline')
+            save_ark_id_in_database(app, 'pipeline', new_ark_id, pipeline_id)
 
 
 def ark_id_minter(app, ark_id_type):
