@@ -697,6 +697,8 @@ def ark_id_minter(app, ark_id_type):
     :return: a new minted ARK identifier
     """
 
+    from app import db
+    from app.models import ArkId
     from app.services.pynoid import mint
 
     # arkid shoulder will be d7 for datasets and p7 for pipelines
@@ -706,6 +708,12 @@ def ark_id_minter(app, ark_id_type):
         scheme='ark:',
         naa=app.config["ARK_CONP_NAAN"]
     )
+
+    # remint ARK ID until we get an ARK ID not already present in `ark_id` table
+    # get the list of existing ARK IDs
+    already_used_ark_id_list = [row[0] for row in db.session.query(ArkId.ark_id).all()]
+    while new_ark_id in already_used_ark_id_list:
+        new_ark_id = ark_id_minter(app, 'dataset')
 
     return new_ark_id
 
