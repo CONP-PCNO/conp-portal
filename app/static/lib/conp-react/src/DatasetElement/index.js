@@ -115,6 +115,16 @@ const DatasetElement = props => {
     }
   }
 
+  const openModal = () => {
+    if (props.activeCbrainId !== "") {
+      $("#cbrainModal").modal("show");
+      $("#btnCbrainLoaded").attr("href", props.activeCbrainId)
+      $("#btnCbrainLoaded").on("click", function (event) {
+        $("#cbrainModal").modal("hide");
+      });
+    }
+  }
+
   return (
     <div className="card container-fluid" data-type="dataset">
       <div className="row pr-4">
@@ -229,7 +239,7 @@ const DatasetElement = props => {
               <h7>PROCESS</h7>
               {element.cbrain_id ?
                   <>
-                  <a target="_blank" href={`${element.cbrain_id}`} onClick={openPipeline}>
+                  <a target="_blank" href={`${element.cbrain_id}`} onClick={openModal}>
                     <img
                         className="cbrain-img justify-content-center align-items-center"
                         src="static/img/cbrain-icon-blue.png" style={{maxWidth: '60px'}}/>

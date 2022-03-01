@@ -17892,6 +17892,16 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     }
   };
 
+  var openModal = function openModal() {
+    if (props.activeCbrainId !== "") {
+      $("#cbrainModal").modal("show");
+      $("#btnCbrainLoaded").attr("href", props.activeCbrainId);
+      $("#btnCbrainLoaded").on("click", function (event) {
+        $("#cbrainModal").modal("hide");
+      });
+    }
+  };
+
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card container-fluid",
     "data-type": "dataset"
@@ -17997,7 +18007,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, "PROCESS"), element.cbrain_id ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     target: "_blank",
     href: "" + element.cbrain_id,
-    onClick: openPipeline
+    onClick: openModal
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     className: "cbrain-img justify-content-center align-items-center",
     src: "static/img/cbrain-icon-blue.png",
