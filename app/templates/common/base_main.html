@@ -918,6 +918,19 @@
   });
 </script>
 
+<script>
+    $(document).ready(function () {
+        if (window.location.href.indexOf('#terms') != -1) {
+            $("#termsModal").modal("show");
+        }
+    });
+    $(document).ready(function () {
+        if (window.location.href.indexOf('#privacy') != -1) {
+            $("#privacyPolicyModal").modal("show");
+        }
+    });
+</script>
+
 <div id="page">
   {% block navigation_bar %} {% include "fragments/navigation_bar.html" %} {%
   endblock %}

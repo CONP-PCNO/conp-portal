@@ -53867,7 +53867,7 @@ function ExtraPropertiesForm(props) {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
     name: "Ethical Information *",
-    tooltip: "In submitting this dataset for inclusion, I certify that *"
+    tooltip: "In submitting this dataset for inclusion, I declare that *"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomSelectField, {
     label: "Select a statement *",
     name: "reb_info",
@@ -53882,22 +53882,29 @@ function ExtraPropertiesForm(props) {
       whiteSpace: 'unset',
       maxWidth: 700
     }
-  }, "Participants have consented to the de-identification and deposit of the data in an open-access portal."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+  }, "Participants have provided a valid informed consent to the de-identification and deposit of their data in an open-access portal."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
     value: "option_2",
     style: {
       wordBreak: 'break-word',
       whiteSpace: 'unset',
       maxWidth: 700
     }
-  }, "I have obtained a waiver or other authorization to deposit de-identified data in an open-access portal from my ethics committee (REB, IRB, REC, etc.)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+  }, "A waiver or other authorization to deposit these de-identified data in an open-access portal was obtained from a research ethics body (REB, IRB, REC, etc.)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
     value: "option_3",
     style: {
       wordBreak: 'break-word',
       whiteSpace: 'unset',
       maxWidth: 700
     }
-  }, "My data is not derived from human participants.")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
-    label: "Ethics committee approval number (required for human research data)",
+  }, "Local law or a relevant institutional authorization otherwise enables the deposit of these data in an open-access portal."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+    value: "option_4",
+    style: {
+      wordBreak: 'break-word',
+      whiteSpace: 'unset',
+      maxWidth: 700
+    }
+  }, "These data are not derived from human participants.")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomTextField, {
+    label: "Ethics committee approval number",
     name: "reb_number"
   })));
 }
@@ -54139,27 +54146,34 @@ var index_modern_FormToDats = /*#__PURE__*/function () {
         value: this.data.reb_number
       }]
     };
-    var ethicsStatement = 'In submitting this dataset for inclusion, I certify that ';
+    var ethicsStatement = 'In submitting this dataset for inclusion, I declare that ';
 
     if (this.data.reb_info === 'option_1') {
       extraProperties.push({
         category: 'REB_statement',
         values: [{
-          value: ethicsStatement + 'participants have consented to the de-identification' + ' and deposit of the data in an open-access portal.'
+          value: ethicsStatement + 'participants have provided a valid informed consent to' + ' the de-identification and deposit of their data' + ' in an open-access portal.'
         }]
       }, rebNumber);
     } else if (this.data.reb_info === 'option_2') {
       extraProperties.push({
         category: 'REB_statement',
         values: [{
-          value: ethicsStatement + 'I have obtained a waiver or other authorization to deposit' + ' de-identified data in an open-access portal from my ethics committee' + ' (REB, IRB, REC, etc.).'
+          value: ethicsStatement + 'a waiver or other authorization to deposit these' + ' de-identified data in an open-access portal was' + ' obtained from a research ethics body' + ' (REB, IRB, REC, etc.).'
         }]
       }, rebNumber);
     } else if (this.data.reb_info === 'option_3') {
       extraProperties.push({
         category: 'REB_statement',
         values: [{
-          value: ethicsStatement + 'my data is not derived from human participants.'
+          value: ethicsStatement + 'local law or a relevant institutional authorization' + ' otherwise enables the deposit of these data in an' + ' open-access portal.'
+        }]
+      }, rebNumber);
+    } else if (this.data.reb_info === 'option_4') {
+      extraProperties.push({
+        category: 'REB_statement',
+        values: [{
+          value: ethicsStatement + 'these data are not derived from human participants.'
         }]
       }, rebNumber);
     }
@@ -54244,11 +54258,12 @@ var DatsToForm = /*#__PURE__*/function () {
     var json = {
       title: this.data.title || '',
       creators: this.data.creators.map(function (a) {
-        var _a$roles;
+        var _a$roles, _a$extraProperties, _a$extraProperties$0$;
 
         return index_modern_extends({}, a, {
           type: Object.keys(a).includes('fullName') ? 'Person' : 'Organization',
-          role: ((_a$roles = a.roles) === null || _a$roles === void 0 ? void 0 : _a$roles[0].value) || ''
+          role: ((_a$roles = a.roles) === null || _a$roles === void 0 ? void 0 : _a$roles[0].value) || '',
+          orcid: (_a$extraProperties = a.extraProperties) === null || _a$extraProperties === void 0 ? void 0 : (_a$extraProperties$0$ = _a$extraProperties[0].values) === null || _a$extraProperties$0$ === void 0 ? void 0 : _a$extraProperties$0$[0].value
         });
       }) || [],
       contact: ((_this$data$extraPrope = this.data.extraProperties.filter(function (p) {
@@ -54485,14 +54500,8 @@ var defaultValidationSchema = ObjectSchema({
   refinement: StringSchema(),
   aggregation: StringSchema(),
   spatialCoverage: es_array().of(StringSchema()),
-  reb_info: StringSchema().oneOf(['option_1', 'option_2', 'option_3']).required(),
-  reb_number: StringSchema().when('reb_info', {
-    is: function is(RebInfo) {
-      return RebInfo === 'option_1' || RebInfo === 'option_2';
-    },
-    then: StringSchema().required('An REB number is required for human research data'),
-    otherwise: StringSchema()
-  })
+  reb_info: StringSchema().oneOf(['option_1', 'option_2', 'option_3', 'option_4']).required(),
+  reb_number: StringSchema()
 });
 var index_modern_useStyles$2 = styles_makeStyles(function (theme) {
   var _layout, _paper;
