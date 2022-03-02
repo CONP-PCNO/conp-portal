@@ -17886,12 +17886,6 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     props.updateActiveCbrainId(props.id, event.target.value);
   };
 
-  var openPipeline = function openPipeline() {
-    if (props.activeCbrainId !== "") {
-      window.open(props.activeCbrainId);
-    }
-  };
-
   var openModal = function openModal() {
     if (props.activeCbrainId !== "") {
       $("#cbrainModal").modal("show");
@@ -18140,6 +18134,16 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     }
   };
 
+  var openModal = function openModal(pipelineUrl) {
+    if (props.activeCbrainId !== "") {
+      $("#cbrainModal").modal("show");
+      $("#btnCbrainLoaded").attr("href", pipelineUrl);
+      $("#btnCbrainLoaded").on("click", function (event) {
+        $("#cbrainModal").modal("hide");
+      });
+    }
+  };
+
   var platforms = element.platforms.map(function (item, key) {
     return item.uri ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
       key: key,
@@ -18152,8 +18156,10 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       target: "_blank",
       rel: "noreferrer",
       className: "btn",
-      href: item.uri,
-      onClick: openPipeline
+      href: props.activeCbrainId,
+      onClick: function onClick() {
+        return openModal(item.uri);
+      }
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
       className: "img-fluid",
       alt: "Online platform",

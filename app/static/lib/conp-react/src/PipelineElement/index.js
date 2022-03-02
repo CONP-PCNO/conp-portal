@@ -14,11 +14,22 @@ const PipelineElement = props => {
       window.open(props.activeCbrainId);
     }
   }
+
+  const openModal = (pipelineUrl) => {
+    if (props.activeCbrainId !== "") {
+      $("#cbrainModal").modal("show");
+      $("#btnCbrainLoaded").attr("href", pipelineUrl);
+      $("#btnCbrainLoaded").on("click", function (event) {
+        $("#cbrainModal").modal("hide");
+      });
+    }
+  }
+
   const platforms = element.platforms.map((item, key) =>
     item.uri ?
       <>
         <span key={key} data-toggle="tooltip" title="Run Pipeline" style={{ maxWidth: "140px" }}>
-          <a target="_blank" rel="noreferrer" className="btn" href={item.uri} onClick={openPipeline}>
+          <a target="_blank" rel="noreferrer" className="btn" href={props.activeCbrainId} onClick={() => openModal(item.uri)}>
             <img className="img-fluid" alt="Online platform" src={item.img} />
           </a>
         </span>

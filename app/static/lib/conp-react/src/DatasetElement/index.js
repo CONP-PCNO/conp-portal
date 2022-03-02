@@ -109,16 +109,10 @@ const DatasetElement = props => {
     props.updateActiveCbrainId(props.id, event.target.value)
   }
 
-  const openPipeline = () => {
-    if (props.activeCbrainId !== "") {
-      window.open(props.activeCbrainId);
-    }
-  }
-
   const openModal = () => {
     if (props.activeCbrainId !== "") {
       $("#cbrainModal").modal("show");
-      $("#btnCbrainLoaded").attr("href", props.activeCbrainId)
+      $("#btnCbrainLoaded").attr("href", props.activeCbrainId);
       $("#btnCbrainLoaded").on("click", function (event) {
         $("#cbrainModal").modal("hide");
       });
