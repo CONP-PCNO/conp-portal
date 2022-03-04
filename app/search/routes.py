@@ -175,7 +175,7 @@ def dataset_search():
         dataset = {
             "authorized": authorized,
             "id": d.dataset_id,
-            "title": d.name.replace("'", ""),
+            "title": d.name.replace("'", "\'"),
             "remoteUrl": d.remoteUrl,
             "isPrivate": d.is_private,
             "thumbnailURL": "/dataset_logo?id={}".format(d.dataset_id),
