@@ -63,6 +63,10 @@ def register(app):
         """
         _update_analytics(app)
 
+    @app.cli.command('update_github_clone_count')
+    def update_github_clone_counts():
+        _update_github_clone_count(app)
+
 
 def _seed_aff_types_db(app):
     """
@@ -653,3 +657,78 @@ def determine_dates_to_query_on_matomo(dates_in_database):
         start_date += delta
 
     return dates_to_process
+
+
+def _update_github_clone_count(app):
+
+    from app import db
+    from app.models import GithubDailyCloneCounts
+    from pathlib import Path
+    import git
+
+    datasetsdir = Path(app.config['DATA_PATH']) / 'conp-dataset'
+    try:
+        repo = git.Repo(datasetsdir)
+    except git.exc.InvalidGitRepositoryError:
+        repo = git.Repo.clone_from(
+            'https://github.com/CONP-PCNO/conp-dataset',
+            datasetsdir,
+            branch='master'
+        )
+
+    for submodule in repo.submodules:
+        sub_repo = submodule.url.replace('https://github.com/', '').replace('.git', '')
+        if sub_repo.startswith('CONP-PCNO/'):
+            continue
+
+        daily_stat_dict = get_repo_analytics(app, sub_repo, submodule.name)
+        if not daily_stat_dict:
+            continue
+
+        # get the list of dates already in the database for this repo
+        db_results = db.session.query(GithubDailyCloneCounts.date).filter_by(repo=sub_repo).all()
+        dates_in_database = [row[0] for row in db_results]
+
+        for date in daily_stat_dict:
+            if date in dates_in_database:
+                continue
+
+            clones_summary = GithubDailyCloneCounts()
+            clones_summary.date = date
+            clones_summary.repo = sub_repo
+            clones_summary.timestamp = daily_stat_dict[date]['timestamp']
+            clones_summary.count = daily_stat_dict[date]['count']
+            clones_summary.unique_count = daily_stat_dict[date]['unique_count']
+
+            db.session.merge(clones_summary)
+            db.session.commit()
+
+
+def get_repo_analytics(app, repo, dataset_name):
+
+    from github import Github
+
+    token = app.config['GITHUB_PAT']
+    g = Github(token)
+
+    try:
+        clones = g.get_repo(repo).get_clones_traffic(per='day')
+    except:
+        clones = None
+        print(f"No push permission for GitHub repository {repo}")
+
+    if not clones:
+        return
+
+    daily_stat_dict = {}
+    for day_data in clones['clones']:
+        timestamp = day_data.timestamp
+        date = timestamp.strftime('%Y-%m-%d')
+        daily_stat_dict[date] = {
+            "timestamp": timestamp,
+            "date": date,
+            "count": day_data.count,
+            "unique_count": day_data.uniques
+        }
+
+    return daily_stat_dict

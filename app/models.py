@@ -417,3 +417,18 @@ class MatomoDailyGetSiteSearchKeywords(db.Model):
 
     def __repr__(self):
         return '<MatomoDailyGetSiteSearchKeywords {}>'.format(self.id)
+
+
+class GithubDailyCloneCounts(db.Model):
+
+    __tablename__ = "github_daily_clone_counts"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    repo = db.Column(db.String(256))
+    date = db.Column(db.String(12))
+    timestamp = db.Column(db.String(30))
+    count = db.Column(db.Integer)
+    unique_count = db.Column(db.Integer)
+
+    def __repr__(self):
+        return '<GithubDailyCloneCounts {}>'.format(self.id)
