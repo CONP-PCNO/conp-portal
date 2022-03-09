@@ -658,6 +658,24 @@ def determine_dates_to_query_on_matomo(dates_in_database):
 
 
 def _update_github_traffic_counts(app):
+    """
+    Logic to update the GitHub traffic count tables of the portal to save
+    traffic information in our local database (clone and view counts).
+
+    Updates the following two tables based on GitHub API calls:
+      - github_daily_views_count
+      - github_daily_clones_count (a.k.a. DataLad download count estimation)
+
+    Warnings on major confounding factors in the number of dataset clones:
+      - the daily tests run on Circle CI create multiple clones per day (which
+      explains why there is always at least 1 unique clone counted per dataset
+      every day)
+      - the archiver and other automated script run by CONP contributes to the
+      number of clones every time a dataset is updated (including DATS and
+      README updates)
+      - CONP developers also contribute to the number of clones when testing,
+      updating or downloading datasets
+    """
 
     from app import db
     from app.models import GithubDailyClonesCount, GithubDailyViewsCount
@@ -674,11 +692,14 @@ def _update_github_traffic_counts(app):
             branch='master'
         )
 
+    # loop through the list of submodules present in CONP-PCNO/conp-dataset.git
     for submodule in repo.submodules:
         sub_repo = submodule.url.replace('https://github.com/', '').replace('.git', '')
         if sub_repo.startswith('CONP-PCNO/'):
+            # skip the repos under the CONP-PCNO organization as they are not datasets
             continue
 
+        # query the GitHub analytics API for number of clones and views
         daily_stat_dict = _get_repo_analytics(app, sub_repo)
         if not daily_stat_dict:
             continue
@@ -690,12 +711,16 @@ def _update_github_traffic_counts(app):
         db_views_results = db.session.query(GithubDailyViewsCount.date).filter_by(repo=sub_repo).all()
         dates_in_db_dict['views'] = [row[0] for row in db_views_results]
 
+        # loop through results returned by GitHub API calls and insert
+        # new data in the proper database table
         for analytic_type in daily_stat_dict.keys():
             if not daily_stat_dict[analytic_type]:
                 continue
 
             for date in daily_stat_dict[analytic_type]:
                 if date in dates_in_db_dict[analytic_type]:
+                    # go to next date if there is already an entry for the date
+                    # for that repo in the database table
                     continue
 
                 analytics_summary = None
@@ -716,6 +741,38 @@ def _update_github_traffic_counts(app):
 
 
 def _get_repo_analytics(app, repo):
+    """
+    Queries the GitHub API for views and clones traffic information and returns
+    a dictionary with the API response information.
+
+    Structure of the returned dictionary:
+        {
+            "clones": {
+                "2022-02-28": {
+                    "timestamp": "2022-02-28 00:00:00",
+                    "date": "2022-02-28",
+                    "count": "5",
+                    "unique_count": "1"
+                },
+                "2022-03-01": {
+                    "timestamp": "2022-03-01 00:00:00",
+                    "date": "2022-03-01",
+                    "count": "6",
+                    "unique_count": "2"
+                },
+                ...
+            },
+            "views": {
+                "2022-02-28": {
+                    "timestamp": "2022-02-28 00:00:00",
+                    "date": "2022-02-28",
+                    "count": "3",
+                    "unique_count": "1"
+                },
+                ...
+            }
+        }
+    """
 
     from github import Github
 
@@ -726,10 +783,10 @@ def _get_repo_analytics(app, repo):
     try:
         g_analytics['clones'] = g.get_repo(repo).get_clones_traffic(per='day')
         g_analytics['views'] = g.get_repo(repo).get_views_traffic(per='day')
-    except:
+    except Exception as e:
         g_analytics['clones'] = {}
         g_analytics['views'] = {}
-        print(f"No push permission for GitHub repository {repo}")
+        print(f"Error while fetching GitHub analytics for {repo}:\n\t{e}")
 
     daily_stat_dict = {
         'clones': {},
