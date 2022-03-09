@@ -63,10 +63,6 @@ def register(app):
         """
         _update_analytics(app)
 
-    @app.cli.command('update_github_clone_count')
-    def update_github_clone_counts():
-        _update_github_clone_count(app)
-
 
 def _seed_aff_types_db(app):
     """
@@ -342,6 +338,8 @@ def _update_analytics(app):
     _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_baseurl)
 
     _update_analytics_matomo_get_daily_portal_download_summary(app, matomo_api_baseurl)
+
+    _update_github_traffic_counts(app)
 
 
 def _update_analytics_matomo_visits_summary(app, matomo_api_baseurl):
@@ -659,10 +657,10 @@ def determine_dates_to_query_on_matomo(dates_in_database):
     return dates_to_process
 
 
-def _update_github_clone_count(app):
+def _update_github_traffic_counts(app):
 
     from app import db
-    from app.models import GithubDailyCloneCounts
+    from app.models import GithubDailyClonesCount, GithubDailyViewsCount
     from pathlib import Path
     import git
 
@@ -681,54 +679,72 @@ def _update_github_clone_count(app):
         if sub_repo.startswith('CONP-PCNO/'):
             continue
 
-        daily_stat_dict = get_repo_analytics(app, sub_repo, submodule.name)
+        daily_stat_dict = _get_repo_analytics(app, sub_repo)
         if not daily_stat_dict:
             continue
 
         # get the list of dates already in the database for this repo
-        db_results = db.session.query(GithubDailyCloneCounts.date).filter_by(repo=sub_repo).all()
-        dates_in_database = [row[0] for row in db_results]
+        dates_in_db_dict = {}
+        db_clones_results = db.session.query(GithubDailyClonesCount.date).filter_by(repo=sub_repo).all()
+        dates_in_db_dict['clones'] = [row[0] for row in db_clones_results]
+        db_views_results = db.session.query(GithubDailyViewsCount.date).filter_by(repo=sub_repo).all()
+        dates_in_db_dict['views'] = [row[0] for row in db_views_results]
 
-        for date in daily_stat_dict:
-            if date in dates_in_database:
+        for analytic_type in daily_stat_dict.keys():
+            if not daily_stat_dict[analytic_type]:
                 continue
 
-            clones_summary = GithubDailyCloneCounts()
-            clones_summary.date = date
-            clones_summary.repo = sub_repo
-            clones_summary.timestamp = daily_stat_dict[date]['timestamp']
-            clones_summary.count = daily_stat_dict[date]['count']
-            clones_summary.unique_count = daily_stat_dict[date]['unique_count']
+            for date in daily_stat_dict[analytic_type]:
+                if date in dates_in_db_dict[analytic_type]:
+                    continue
 
-            db.session.merge(clones_summary)
-            db.session.commit()
+                analytics_summary = None
+                if analytic_type == 'clones':
+                    analytics_summary = GithubDailyClonesCount()
+                elif analytic_type == 'views':
+                    analytics_summary = GithubDailyViewsCount()
+
+                if analytics_summary:
+                    analytics_summary.date = date
+                    analytics_summary.repo = sub_repo
+                    analytics_summary.timestamp = daily_stat_dict[analytic_type][date]['timestamp']
+                    analytics_summary.count = daily_stat_dict[analytic_type][date]['count']
+                    analytics_summary.unique_count = daily_stat_dict[analytic_type][date]['unique_count']
+
+                    db.session.merge(analytics_summary)
+                    db.session.commit()
 
 
-def get_repo_analytics(app, repo, dataset_name):
+def _get_repo_analytics(app, repo):
 
     from github import Github
 
     token = app.config['GITHUB_PAT']
     g = Github(token)
 
+    g_analytics = {}
     try:
-        clones = g.get_repo(repo).get_clones_traffic(per='day')
+        g_analytics['clones'] = g.get_repo(repo).get_clones_traffic(per='day')
+        g_analytics['views'] = g.get_repo(repo).get_views_traffic(per='day')
     except:
-        clones = None
+        g_analytics['clones'] = {}
+        g_analytics['views'] = {}
         print(f"No push permission for GitHub repository {repo}")
 
-    if not clones:
-        return
-
-    daily_stat_dict = {}
-    for day_data in clones['clones']:
-        timestamp = day_data.timestamp
-        date = timestamp.strftime('%Y-%m-%d')
-        daily_stat_dict[date] = {
-            "timestamp": timestamp,
-            "date": date,
-            "count": day_data.count,
-            "unique_count": day_data.uniques
-        }
+    daily_stat_dict = {
+        'clones': {},
+        'views': {}
+    }
+    for analytic_type in g_analytics.keys():
+        if g_analytics[analytic_type]:
+            for day_data in g_analytics[analytic_type][analytic_type]:
+                timestamp = day_data.timestamp
+                date = timestamp.strftime('%Y-%m-%d')
+                daily_stat_dict[analytic_type][date] = {
+                    "timestamp": timestamp,
+                    "date": date,
+                    "count": day_data.count,
+                    "unique_count": day_data.uniques
+                }
 
     return daily_stat_dict
