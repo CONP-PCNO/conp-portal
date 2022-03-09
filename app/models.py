@@ -420,6 +420,16 @@ class MatomoDailyGetSiteSearchKeywords(db.Model):
 
 
 class GithubDailyClonesCount(db.Model):
+    """
+    Provides GitHub daily clones' count to be stored in database table
+    github_daily_clones_count.
+
+    repo         = name of the GitHub repository
+    date         = date associated to the count
+    timestamp    = timestamp associated to the count
+    count        = number of clones of the GitHub repository for a given date
+    unique_count = number of unique clones for a given date
+    """
 
     __tablename__ = "github_daily_clones_count"
 
@@ -435,6 +445,16 @@ class GithubDailyClonesCount(db.Model):
 
 
 class GithubDailyViewsCount(db.Model):
+    """
+    Provides GitHub daily views' count to be stored in database table
+    github_daily_views_count.
+
+    repo         = name of the GitHub repository
+    date         = date associated to the count
+    timestamp    = timestamp associated to the count
+    count        = number of views of the GitHub repository for a given date
+    unique_count = number of unique views for a given date
+    """
 
     __tablename__ = "github_daily_views_count"
 
