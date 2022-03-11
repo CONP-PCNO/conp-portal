@@ -713,7 +713,7 @@ def _update_github_traffic_counts(app):
 
         # loop through results returned by GitHub API calls and insert
         # new data in the proper database table
-        for analytic_type in daily_stat_dict.keys():
+        for analytic_type in daily_stat_dict:
             if not daily_stat_dict[analytic_type]:
                 continue
 
@@ -728,6 +728,8 @@ def _update_github_traffic_counts(app):
                     analytics_summary = GithubDailyClonesCount()
                 elif analytic_type == 'views':
                     analytics_summary = GithubDailyViewsCount()
+                else:
+                    print("GitHub analytic type is neither 'clones' nor 'views'")
 
                 if analytics_summary:
                     analytics_summary.date = date
@@ -792,7 +794,7 @@ def _get_repo_analytics(app, repo):
         'clones': {},
         'views': {}
     }
-    for analytic_type in g_analytics.keys():
+    for analytic_type in g_analytics:
         if g_analytics[analytic_type]:
             for day_data in g_analytics[analytic_type][analytic_type]:
                 timestamp = day_data.timestamp
