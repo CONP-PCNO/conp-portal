@@ -18156,7 +18156,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       target: "_blank",
       rel: "noreferrer",
       className: "btn",
-      href: props.activeCbrainId,
+      href: props.activeCbrainId === "" ? item.uri : props.activeCbrainId,
       onClick: function onClick() {
         return openModal(item.uri);
       }
@@ -18200,7 +18200,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       value: ""
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
       value: ""
-    }, "Pipeline to run")));
+    }, "Dataset to use")));
   });
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card flex-row",

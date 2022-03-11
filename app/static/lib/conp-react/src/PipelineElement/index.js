@@ -29,7 +29,7 @@ const PipelineElement = props => {
     item.uri ?
       <>
         <span key={key} data-toggle="tooltip" title="Run Pipeline" style={{ maxWidth: "140px" }}>
-          <a target="_blank" rel="noreferrer" className="btn" href={props.activeCbrainId} onClick={() => openModal(item.uri)}>
+          <a target="_blank" rel="noreferrer" className="btn" href={props.activeCbrainId === "" ? item.uri : props.activeCbrainId} onClick={() => openModal(item.uri)}>
             <img className="img-fluid" alt="Online platform" src={item.img} />
           </a>
         </span>
@@ -54,7 +54,7 @@ const PipelineElement = props => {
             aria-label="pipeline"
             disabled
             value="">
-          <option value="">Pipeline to run</option>
+          <option value="">Dataset to use</option>
         </select>
       </>
   );
