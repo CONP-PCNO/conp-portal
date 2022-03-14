@@ -245,22 +245,20 @@ const DatasetElement = props => {
                       id={"dropdown" + element.id.replaceAll("/", "")}
                       data-toggle="dropdown"
                       data-display="static"
-                      aria-expanded="false"
-                      value={props.activeCbrainId}
-                      onChange={updateSelect}>
+                      aria-expanded="false">
                     Pipeline:
                   </button>
                   <ul className="dropdown-menu" aria-labelledby={"dropdown" + element.id.replaceAll("/", "")}>
                     <li>
                       <div className="form-check dropdown-item">
-                        <input className="form-check-input" type="radio" name={"dropdown" + element.id.replaceAll("/", "")} id="nonechoice" onChange={updateSelect} value="" checked={props.activeCbrainId === "" ? "checked" : null } />
+                        <input className="form-check-input" type="radio" name={"pipelines" + element.id.replaceAll("/", "")} id="nonechoice" onChange={updateSelect} value="" checked={props.activeCbrainId === "" ? "checked" : null } />
                         <label className="form-check-label" htmlFor="nonechoice">None</label>
                       </div>
                     </li>
                     {props.cbrainIds.map(pipeline => (
                       <li>
                         <div className="form-check dropdown-item">
-                          <input className="form-check-input" type="radio" name={"dropdown" + element.id.replaceAll("/", "")} id={pipeline.title} value={pipeline.url} onChange={updateSelect} />
+                          <input className="form-check-input" type="radio" name={"pipelines" + element.id.replaceAll("/", "")} id={pipeline.title} value={pipeline.url} onChange={updateSelect} />
                           <label className="form-check-label" htmlFor={pipeline.title}>{pipeline.title}</label>
                         </div>
                       </li>

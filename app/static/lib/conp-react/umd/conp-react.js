@@ -18017,9 +18017,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     id: "dropdown" + element.id.replaceAll("/", ""),
     "data-toggle": "dropdown",
     "data-display": "static",
-    "aria-expanded": "false",
-    value: props.activeCbrainId,
-    onChange: updateSelect
+    "aria-expanded": "false"
   }, "Pipeline:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
     className: "dropdown-menu",
     "aria-labelledby": "dropdown" + element.id.replaceAll("/", "")
@@ -18028,7 +18026,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
     className: "form-check-input",
     type: "radio",
-    name: "dropdown" + element.id.replaceAll("/", ""),
+    name: "pipelines" + element.id.replaceAll("/", ""),
     id: "nonechoice",
     onChange: updateSelect,
     value: "",
@@ -18042,7 +18040,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
       className: "form-check-input",
       type: "radio",
-      name: "dropdown" + element.id.replaceAll("/", ""),
+      name: "pipelines" + element.id.replaceAll("/", ""),
       id: pipeline.title,
       value: pipeline.url,
       onChange: updateSelect
@@ -18171,7 +18169,9 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
   };
 
   var platforms = element.platforms.map(function (item, key) {
-    return item.uri ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    return item.uri ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "col"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
       key: key,
       "data-toggle": "tooltip",
       title: "Run Pipeline",
@@ -18190,21 +18190,49 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       className: "img-fluid",
       alt: "Online platform",
       src: item.img
-    }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("select", {
-      className: "form-select form-select-sm",
-      "aria-label": "pipeline",
-      style: {
-        maxWidth: "140px"
-      },
-      value: props.activeCbrainId,
-      onChange: updateSelect
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
-      value: ""
-    }, "Dataset to use"), props.cbrainIds.map(function (pipeline) {
-      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
-        value: pipeline.url
-      }, pipeline.title);
-    }))) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "dropdown"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+      className: "btn btn-outline-secondary dropdown-toggle m-1",
+      type: "button",
+      id: "dropdown" + element.id,
+      "data-toggle": "dropdown",
+      "data-display": "static",
+      "aria-expanded": "false",
+      "aria-label": "pipeline"
+    }, "Dataset:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
+      className: "dropdown-menu dropdown-menu-right",
+      "aria-labelledby": "dropdown" + element.id
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "form-check dropdown-item"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+      className: "form-check-input",
+      type: "radio",
+      name: "datasets" + element.id,
+      id: "nonechoice",
+      onChange: updateSelect,
+      value: "",
+      checked: props.activeCbrainId === "" ? "checked" : null
+    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+      className: "form-check-label",
+      htmlFor: "nonechoice"
+    }, "None"))), props.cbrainIds.map(function (pipeline) {
+      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+        className: "form-check dropdown-item"
+      }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+        className: "form-check-input",
+        type: "radio",
+        name: "datasets" + element.id,
+        id: pipeline.id,
+        value: pipeline.url,
+        onChange: updateSelect
+      }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+        className: "form-check-label",
+        htmlFor: pipeline.id
+      }, pipeline.title)));
+    })))) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "col"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
       key: key,
       "data-toggle": "tooltip",
       title: "Unavailable",
@@ -18219,14 +18247,11 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       className: "img-fluid",
       alt: "Online platform",
       src: item.img
-    }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("select", {
-      className: "form-select form-select-sm",
-      "aria-label": "pipeline",
-      disabled: true,
-      value: ""
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
-      value: ""
-    }, "Dataset to use")));
+    }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+      type: "button",
+      className: "btn btn-outline-secondary dropdown-toggle m-1",
+      disabled: true
+    }, "Dataset:"));
   });
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card flex-row",

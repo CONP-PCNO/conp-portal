@@ -27,36 +27,49 @@ const PipelineElement = props => {
 
   const platforms = element.platforms.map((item, key) =>
     item.uri ?
-      <>
+      <div className="col">
         <span key={key} data-toggle="tooltip" title="Run Pipeline" style={{ maxWidth: "140px" }}>
           <a target="_blank" rel="noreferrer" className="btn" href={props.activeCbrainId === "" ? item.uri : props.activeCbrainId} onClick={() => openModal(item.uri)}>
             <img className="img-fluid" alt="Online platform" src={item.img} />
           </a>
         </span>
-        <select
-            className="form-select form-select-sm"
-            aria-label="pipeline"
-            style={{ maxWidth: "140px" }}
-            value={props.activeCbrainId}
-            onChange={updateSelect}>
-          <option value="">Dataset to use</option>
-          {props.cbrainIds.map(pipeline => <option value={pipeline.url}>{pipeline.title}</option>)}
-        </select>
-      </> :
-      <>
-        <span key={key} data-toggle="tooltip" title="Unavailable" style={{ maxWidth: "140px" }}>
-          <a className="btn disabled" href={item.uri} disabled>
-            <img className="img-fluid" alt="Online platform" src={item.img} />
-          </a>
-        </span>
-        <select
-            className="form-select form-select-sm"
-            aria-label="pipeline"
-            disabled
-            value="">
-          <option value="">Dataset to use</option>
-        </select>
-      </>
+        <div className="dropdown">
+          <button
+              className="btn btn-outline-secondary dropdown-toggle m-1"
+              type="button"
+              id={"dropdown" + element.id}
+              data-toggle="dropdown"
+              data-display="static"
+              aria-expanded="false"
+              aria-label="pipeline">
+            Dataset:
+          </button>
+          <ul className="dropdown-menu dropdown-menu-right" aria-labelledby={"dropdown" + element.id}>
+            <li>
+              <div className="form-check dropdown-item">
+                <input className="form-check-input" type="radio" name={"datasets" + element.id} id="nonechoice" onChange={updateSelect} value="" checked={props.activeCbrainId === "" ? "checked" : null } />
+                <label className="form-check-label" htmlFor="nonechoice">None</label>
+              </div>
+            </li>
+            {props.cbrainIds.map(pipeline => (
+              <li>
+                <div className="form-check dropdown-item">
+                  <input className="form-check-input" type="radio" name={"datasets" + element.id} id={pipeline.id} value={pipeline.url} onChange={updateSelect} />
+                  <label className="form-check-label" htmlFor={pipeline.id}>{pipeline.title}</label>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div> :
+          <div className="col">
+            <span key={key} data-toggle="tooltip" title="Unavailable" style={{ maxWidth: "140px" }}>
+              <a className="btn disabled" href={item.uri} disabled>
+                <img className="img-fluid" alt="Online platform" src={item.img} />
+              </a>
+            </span>
+            <button type="button" className="btn btn-outline-secondary dropdown-toggle m-1" disabled>Dataset:</button>
+          </div>
   );
 
   return (
