@@ -138,7 +138,7 @@ const DatasetElement = props => {
             <DownloadsIcon type="dataset" id={element.id + "_version-" + element.version + '.tar.gz'}/>
           </div>
         </div>
-        <div className="col col-lg-8 card-body d-flex">
+        <div className="col col-lg-7 card-body d-flex">
           <div className="d-flex flex-column justify-content-center">
             <h5 className="card-title text-card-title">
               <a className="text-reset" href={`dataset?id=${element.id}`}>
@@ -226,44 +226,59 @@ const DatasetElement = props => {
                 </div> : null}
           </div>
         </div>
-        <div className="col col-lg-2 d-flex flex-column justify-content-top align-items-center p-2">
+        <div className="col col-lg-3 d-flex flex-column justify-content-top align-items-center p-2">
           <div className="row align-items-top width-auto">
 
-            <div className="col col-lg-4 d-flex flex-column justify-content-top align-items-center p-2 pr-4">
+            <div className="col col-lg-6 d-flex flex-column justify-content-top align-items-center p-2">
               <h7>PROCESS</h7>
+              <div className="d-flex flex-column">
               {element.cbrain_id ?
                   <>
-                  <a target="_blank" href={`${element.cbrain_id}`} onClick={openModal}>
+                  <a target="_blank" href={`${element.cbrain_id}`} onClick={openModal} className="align-self-center">
                     <img
-                        className="cbrain-img justify-content-center align-items-center"
+                        className="cbrain-img"
                         src="static/img/cbrain-icon-blue.png" style={{maxWidth: '60px'}}/>
                   </a>
-                  <select
-                      className="form-select form-select-sm"
-                      aria-label="pipeline"
-                      style={{maxWidth: '120px'}}
+                  <button
+                      className="btn btn-outline-secondary dropdown-toggle m-1"
+                      type="button"
+                      id={"dropdown" + element.id.replaceAll("/", "")}
+                      data-toggle="dropdown"
+                      data-display="static"
+                      aria-expanded="false"
                       value={props.activeCbrainId}
                       onChange={updateSelect}>
-                    <option value="">Pipeline to run</option>
-                    {props.cbrainIds.map(pipeline => <option value={pipeline.url}>{pipeline.title}</option>)}
-                  </select>
+                    Pipeline:
+                  </button>
+                  <ul className="dropdown-menu" aria-labelledby={"dropdown" + element.id.replaceAll("/", "")}>
+                    <li>
+                      <div className="form-check dropdown-item">
+                        <input className="form-check-input" type="radio" name={"dropdown" + element.id.replaceAll("/", "")} id="nonechoice" onChange={updateSelect} value="" checked={props.activeCbrainId === "" ? "checked" : null } />
+                        <label className="form-check-label" htmlFor="nonechoice">None</label>
+                      </div>
+                    </li>
+                    {props.cbrainIds.map(pipeline => (
+                      <li>
+                        <div className="form-check dropdown-item">
+                          <input className="form-check-input" type="radio" name={"dropdown" + element.id.replaceAll("/", "")} id={pipeline.title} value={pipeline.url} onChange={updateSelect} />
+                          <label className="form-check-label" htmlFor={pipeline.title}>{pipeline.title}</label>
+                        </div>
+                      </li>
+                    ))
+                  }
+                  </ul>
                   </> :
                   <>
-                  <a target="_blank">
+                  <a target="_blank" className="align-self-center">
                     <img
                         className="cbrain-img justify-content-center align-items-center"
                         src="static/img/cbrain-icon-grey.png" style={{maxWidth: '60px'}}/>
                   </a>
-                  <select
-                      className="form-select form-select-sm"
-                      aria-label="pipeline"
-                      disabled
-                      value="">
-                    <option value="">Pipeline to run</option>
-                  </select>
+                  <button type="button" className="btn btn-outline-secondary dropdown-toggle m-1" disabled>Pipeline:</button>
                   </>}
+              </div>
             </div>
-            <div className="col col-lg-8 d-flex flex-column justify-content-top align-items-center p-2">
+            <div className="col col-lg-6 d-flex flex-column justify-content-top align-items-center p-2">
               <h7>DOWNLOAD</h7>
               <div className="d-flex flex-column">
                 <button type="button" className="btn btn-outline-secondary m-1" onClick={() => downloadMetadata()}>

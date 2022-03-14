@@ -17930,7 +17930,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     type: "dataset",
     id: element.id + "_version-" + element.version + '.tar.gz'
   }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-lg-8 card-body d-flex"
+    className: "col col-lg-7 card-body d-flex"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-column justify-content-center"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
@@ -17993,52 +17993,78 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     rel: "noopener noreferrer",
     href: element.sources
   }, element.sources))) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-lg-2 d-flex flex-column justify-content-top align-items-center p-2"
+    className: "col col-lg-3 d-flex flex-column justify-content-top align-items-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "row align-items-top width-auto"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-lg-4 d-flex flex-column justify-content-top align-items-center p-2 pr-4"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, "PROCESS"), element.cbrain_id ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    className: "col col-lg-6 d-flex flex-column justify-content-top align-items-center p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, "PROCESS"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex flex-column"
+  }, element.cbrain_id ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     target: "_blank",
     href: "" + element.cbrain_id,
-    onClick: openModal
+    onClick: openModal,
+    className: "align-self-center"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-    className: "cbrain-img justify-content-center align-items-center",
+    className: "cbrain-img",
     src: "static/img/cbrain-icon-blue.png",
     style: {
       maxWidth: '60px'
     }
-  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("select", {
-    className: "form-select form-select-sm",
-    "aria-label": "pipeline",
-    style: {
-      maxWidth: '120px'
-    },
+  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-outline-secondary dropdown-toggle m-1",
+    type: "button",
+    id: "dropdown" + element.id.replaceAll("/", ""),
+    "data-toggle": "dropdown",
+    "data-display": "static",
+    "aria-expanded": "false",
     value: props.activeCbrainId,
     onChange: updateSelect
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
-    value: ""
-  }, "Pipeline to run"), props.cbrainIds.map(function (pipeline) {
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
-      value: pipeline.url
-    }, pipeline.title);
+  }, "Pipeline:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
+    className: "dropdown-menu",
+    "aria-labelledby": "dropdown" + element.id.replaceAll("/", "")
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "form-check dropdown-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+    className: "form-check-input",
+    type: "radio",
+    name: "dropdown" + element.id.replaceAll("/", ""),
+    id: "nonechoice",
+    onChange: updateSelect,
+    value: "",
+    checked: props.activeCbrainId === "" ? "checked" : null
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+    className: "form-check-label",
+    htmlFor: "nonechoice"
+  }, "None"))), props.cbrainIds.map(function (pipeline) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "form-check dropdown-item"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+      className: "form-check-input",
+      type: "radio",
+      name: "dropdown" + element.id.replaceAll("/", ""),
+      id: pipeline.title,
+      value: pipeline.url,
+      onChange: updateSelect
+    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+      className: "form-check-label",
+      htmlFor: pipeline.title
+    }, pipeline.title)));
   }))) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
-    target: "_blank"
+    target: "_blank",
+    className: "align-self-center"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     className: "cbrain-img justify-content-center align-items-center",
     src: "static/img/cbrain-icon-grey.png",
     style: {
       maxWidth: '60px'
     }
-  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("select", {
-    className: "form-select form-select-sm",
-    "aria-label": "pipeline",
-    disabled: true,
-    value: ""
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("option", {
-    value: ""
-  }, "Pipeline to run")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-lg-8 d-flex flex-column justify-content-top align-items-center p-2"
+  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-outline-secondary dropdown-toggle m-1",
+    disabled: true
+  }, "Pipeline:")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col col-lg-6 d-flex flex-column justify-content-top align-items-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, "DOWNLOAD"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-column"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
