@@ -9,17 +9,15 @@ const PipelineElement = props => {
   const updateSelect = (event) => {
     props.updateActiveCbrainId(props.id, event.target.value)
   }
-  const openPipeline = () => {
-    if (props.activeCbrainId !== "") {
-      window.open(props.activeCbrainId);
-    }
-  }
 
-  const openModal = (pipelineUrl) => {
+  const openModal = (datasetTitle, datasetUrl, pipelineTitle, pipelineUrl) => {
     if (props.activeCbrainId !== "") {
+      $("#cbrainTool").text(pipelineTitle);
+      $("#cbrainDataset").text(datasetTitle);
       $("#cbrainModal").modal("show");
-      $("#btnCbrainLoaded").attr("href", pipelineUrl);
-      $("#btnCbrainLoaded").on("click", function (event) {
+      $("#btnCbrainLoaded").attr("href", datasetUrl);
+      $("#btnCbrainPipeline").attr("href", pipelineUrl);
+      $("#btnCbrainPipeline").on("click", function (event) {
         $("#cbrainModal").modal("hide");
       });
     }
@@ -29,9 +27,15 @@ const PipelineElement = props => {
     item.uri ?
       <div className="col">
         <span key={key} data-toggle="tooltip" title="Run Pipeline" style={{ maxWidth: "140px" }}>
-          <a target="_blank" rel="noreferrer" className="btn" href={props.activeCbrainId === "" ? item.uri : props.activeCbrainId} onClick={() => openModal(item.uri)}>
-            <img className="img-fluid" alt="Online platform" src={item.img} />
-          </a>
+	  {props.activeCbrainId === "" ?
+            <a target="_blank" rel="noreferrer" className="btn" href={item.uri}>
+              <img className="img-fluid" alt="Online platform" src={item.img} />
+            </a>
+           :
+            <button className="btn" onClick={() => openModal(props.cbrainIds.filter(dataset => dataset.url === props.activeCbrainId)[0].title, props.activeCbrainId, element.title, item.uri)}>
+              <img className="img-fluid" alt="Online platform" src={item.img} />
+            </button>
+          }
         </span>
         <div className="dropdown">
           <button
@@ -47,7 +51,7 @@ const PipelineElement = props => {
           <ul className="dropdown-menu dropdown-menu-right" aria-labelledby={"dropdown" + element.id}>
             <li>
               <div className="form-check dropdown-item">
-                <input className="form-check-input" type="radio" name={"datasets" + element.id} id="nonechoice" onChange={updateSelect} value="" checked={props.activeCbrainId === "" ? "checked" : null } />
+                <input className="form-check-input" type="radio" name={"datasets" + element.id} id="nonechoice" onChange={updateSelect} value="" defaultChecked={props.activeCbrainId === "" ? "checked" : null } />
                 <label className="form-check-label" htmlFor="nonechoice">None</label>
               </div>
             </li>

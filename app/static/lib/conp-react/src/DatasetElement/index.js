@@ -109,11 +109,14 @@ const DatasetElement = props => {
     props.updateActiveCbrainId(props.id, event.target.value)
   }
 
-  const openModal = () => {
+  const openModal = (datasetTitle, datasetUrl, pipelineTitle, pipelineUrl) => {
     if (props.activeCbrainId !== "") {
+      $("#cbrainTool").text(pipelineTitle);
+      $("#cbrainDataset").text(datasetTitle);
       $("#cbrainModal").modal("show");
-      $("#btnCbrainLoaded").attr("href", props.activeCbrainId);
-      $("#btnCbrainLoaded").on("click", function (event) {
+      $("#btnCbrainLoaded").attr("href", datasetUrl);
+      $("#btnCbrainPipeline").attr("href", pipelineUrl);
+      $("#btnCbrainPipeline").on("click", function (event) {
         $("#cbrainModal").modal("hide");
       });
     }
@@ -234,11 +237,25 @@ const DatasetElement = props => {
               <div className="d-flex flex-column">
               {element.cbrain_id ?
                   <>
-                  <a target="_blank" href={`${element.cbrain_id}`} onClick={openModal} className="align-self-center">
-                    <img
-                        className="cbrain-img"
-                        src="static/img/cbrain-icon-blue.png" style={{maxWidth: '60px'}}/>
-                  </a>
+		  {props.activeCbrainId === "" ?
+                      <a target="_blank" rel="noreferrer" href={element.cbrain_id} className="align-self-center btn">
+                        <img
+                          className="cbrain-img"
+                          src="static/img/cbrain-icon-blue.png"
+                          style={{maxWidth: '60px'}}
+			  alt="Open Dataset"
+                        />
+                      </a>
+                    :
+                      <button className="btn" onClick={() => openModal(element.title, element.cbrain_id, props.cbrainIds.filter(pipeline => pipeline.url === props.activeCbrainId)[0].title, props.activeCbrainId)}>
+                        <img
+                          className="cbrain-img"
+                          src="static/img/cbrain-icon-blue.png"
+                          style={{maxWidth: '60px'}}
+			  alt="Open Dataset"
+                        />
+                        </button>
+                    }
                   <button
                       className="btn btn-outline-secondary dropdown-toggle m-1"
                       type="button"
@@ -251,7 +268,7 @@ const DatasetElement = props => {
                   <ul className="dropdown-menu" aria-labelledby={"dropdown" + element.id.replaceAll("/", "")}>
                     <li>
                       <div className="form-check dropdown-item">
-                        <input className="form-check-input" type="radio" name={"pipelines" + element.id.replaceAll("/", "")} id="nonechoice" onChange={updateSelect} value="" checked={props.activeCbrainId === "" ? "checked" : null } />
+                        <input className="form-check-input" type="radio" name={"pipelines" + element.id.replaceAll("/", "")} id="nonechoice" onChange={updateSelect} value="" defaultChecked={props.activeCbrainId === "" ? "checked" : null } />
                         <label className="form-check-label" htmlFor="nonechoice">None</label>
                       </div>
                     </li>

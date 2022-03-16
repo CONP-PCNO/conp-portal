@@ -17886,11 +17886,14 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     props.updateActiveCbrainId(props.id, event.target.value);
   };
 
-  var openModal = function openModal() {
+  var openModal = function openModal(datasetTitle, datasetUrl, pipelineTitle, pipelineUrl) {
     if (props.activeCbrainId !== "") {
+      $("#cbrainTool").text(pipelineTitle);
+      $("#cbrainDataset").text(datasetTitle);
       $("#cbrainModal").modal("show");
-      $("#btnCbrainLoaded").attr("href", props.activeCbrainId);
-      $("#btnCbrainLoaded").on("click", function (event) {
+      $("#btnCbrainLoaded").attr("href", datasetUrl);
+      $("#btnCbrainPipeline").attr("href", pipelineUrl);
+      $("#btnCbrainPipeline").on("click", function (event) {
         $("#cbrainModal").modal("hide");
       });
     }
@@ -18000,17 +18003,32 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "col col-lg-6 d-flex flex-column justify-content-top align-items-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, "PROCESS"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-column"
-  }, element.cbrain_id ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+  }, element.cbrain_id ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, props.activeCbrainId === "" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     target: "_blank",
-    href: "" + element.cbrain_id,
-    onClick: openModal,
-    className: "align-self-center"
+    rel: "noreferrer",
+    href: element.cbrain_id,
+    className: "align-self-center btn"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     className: "cbrain-img",
     src: "static/img/cbrain-icon-blue.png",
     style: {
       maxWidth: '60px'
+    },
+    alt: "Open Dataset"
+  })) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn",
+    onClick: function onClick() {
+      return openModal(element.title, element.cbrain_id, props.cbrainIds.filter(function (pipeline) {
+        return pipeline.url === props.activeCbrainId;
+      })[0].title, props.activeCbrainId);
     }
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    className: "cbrain-img",
+    src: "static/img/cbrain-icon-blue.png",
+    style: {
+      maxWidth: '60px'
+    },
+    alt: "Open Dataset"
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-outline-secondary dropdown-toggle m-1",
     type: "button",
@@ -18030,7 +18048,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     id: "nonechoice",
     onChange: updateSelect,
     value: "",
-    checked: props.activeCbrainId === "" ? "checked" : null
+    defaultChecked: props.activeCbrainId === "" ? "checked" : null
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
     className: "form-check-label",
     htmlFor: "nonechoice"
@@ -18152,17 +18170,14 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     props.updateActiveCbrainId(props.id, event.target.value);
   };
 
-  var openPipeline = function openPipeline() {
+  var openModal = function openModal(datasetTitle, datasetUrl, pipelineTitle, pipelineUrl) {
     if (props.activeCbrainId !== "") {
-      window.open(props.activeCbrainId);
-    }
-  };
-
-  var openModal = function openModal(pipelineUrl) {
-    if (props.activeCbrainId !== "") {
+      $("#cbrainTool").text(pipelineTitle);
+      $("#cbrainDataset").text(datasetTitle);
       $("#cbrainModal").modal("show");
-      $("#btnCbrainLoaded").attr("href", pipelineUrl);
-      $("#btnCbrainLoaded").on("click", function (event) {
+      $("#btnCbrainLoaded").attr("href", datasetUrl);
+      $("#btnCbrainPipeline").attr("href", pipelineUrl);
+      $("#btnCbrainPipeline").on("click", function (event) {
         $("#cbrainModal").modal("hide");
       });
     }
@@ -18178,13 +18193,21 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       style: {
         maxWidth: "140px"
       }
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    }, props.activeCbrainId === "" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
       target: "_blank",
       rel: "noreferrer",
       className: "btn",
-      href: props.activeCbrainId === "" ? item.uri : props.activeCbrainId,
+      href: item.uri
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+      className: "img-fluid",
+      alt: "Online platform",
+      src: item.img
+    })) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+      className: "btn",
       onClick: function onClick() {
-        return openModal(item.uri);
+        return openModal(props.cbrainIds.filter(function (dataset) {
+          return dataset.url === props.activeCbrainId;
+        })[0].title, props.activeCbrainId, element.title, item.uri);
       }
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
       className: "img-fluid",
@@ -18212,7 +18235,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       id: "nonechoice",
       onChange: updateSelect,
       value: "",
-      checked: props.activeCbrainId === "" ? "checked" : null
+      defaultChecked: props.activeCbrainId === "" ? "checked" : null
     }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
       className: "form-check-label",
       htmlFor: "nonechoice"

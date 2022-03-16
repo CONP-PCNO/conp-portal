@@ -835,13 +835,20 @@
       </div>
       <div class="modal-body">
         <p>
-          We've opened a new window with the CBRAIN dataset selected. Please log in and allow that page to load before continuing. This will select your chosen dataset in your CBRAIN session.
-        </p>
+	  You are about to go to CBRAIN to run tool <strong id="cbrainTool"></strong> on dataset <strong id="cbrainDataset"></strong>. To do this:
+	</p>
+	<ol>
+          <li>Press the "Load dataset" button to log into CBRAIN and load the dataset.</li>
+	  <li>Press the "Prepare tool" button to open a CBRAIN window with the tool and dataset prepared.</li>
+        </ol>
       </div>
       <div class="modal-footer">
-        <a role="button" href="#" class="btn btn-primary" target="_blank" id="btnCbrainLoaded">
-          Load my selected pipeline with my selected dataset.
+        <a role="button" href="#" class="btn btn-secondary" target="_blank" id="btnCbrainLoaded">
+          Load dataset
         </a>
+	<a role="button" href="#" class="btn btn-primary" target="_blank" id="btnCbrainPipeline">
+          Prepare tool
+	</a>
       </div>
     </div>
   </div>
