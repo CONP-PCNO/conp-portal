@@ -448,8 +448,9 @@ datalad get &ltfilepath&gt</pre
 <script type="text/javascript">
 
   const element = {{ data | tojson }};
+  const complementUrl = "{{ url_for('pipelines.pipeline_search') }}";
   element.showDownload = true;
-  const reactElement = React.createElement(CONPReact.DatasetElement, element);
+  const reactElement = React.createElement(CONPReact.ElementContainer, {"element": CONPReact.DatasetElement, "elementProps": element, "complementUrl": complementUrl} );
   ReactDOM.render(reactElement, document.querySelector("#mount-display"));
 </script>
 
