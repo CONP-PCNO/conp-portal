@@ -430,3 +430,53 @@ class ArkId(db.Model):
 
     def __repr__(self):
         return '<ArkId {}>'.format(self.id)
+
+
+class GithubDailyClonesCount(db.Model):
+    """
+    Provides GitHub daily clones' count to be stored in database table
+    github_daily_clones_count.
+
+    repo         = name of the GitHub repository
+    date         = date associated to the count
+    timestamp    = timestamp associated to the count
+    count        = number of clones of the GitHub repository for a given date
+    unique_count = number of unique clones for a given date
+    """
+
+    __tablename__ = "github_daily_clones_count"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    repo = db.Column(db.String(256))
+    date = db.Column(db.String(12))
+    timestamp = db.Column(db.String(30))
+    count = db.Column(db.Integer)
+    unique_count = db.Column(db.Integer)
+
+    def __repr__(self):
+        return '<GithubDailyClonesCount {}>'.format(self.id)
+
+
+class GithubDailyViewsCount(db.Model):
+    """
+    Provides GitHub daily views' count to be stored in database table
+    github_daily_views_count.
+
+    repo         = name of the GitHub repository
+    date         = date associated to the count
+    timestamp    = timestamp associated to the count
+    count        = number of views of the GitHub repository for a given date
+    unique_count = number of unique views for a given date
+    """
+
+    __tablename__ = "github_daily_views_count"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    repo = db.Column(db.String(256))
+    date = db.Column(db.String(12))
+    timestamp = db.Column(db.String(30))
+    count = db.Column(db.Integer)
+    unique_count = db.Column(db.Integer)
+
+    def __repr__(self):
+        return '<GithubDailyViewsCount {}>'.format(self.id)

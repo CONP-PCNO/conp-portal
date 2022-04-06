@@ -353,6 +353,8 @@ def _update_analytics(app):
 
     _update_analytics_matomo_get_daily_portal_download_summary(app, matomo_api_baseurl)
 
+    _update_github_traffic_counts(app)
+
 
 def _update_analytics_matomo_visits_summary(app, matomo_api_baseurl):
     """
@@ -744,3 +746,155 @@ def save_ark_id_in_database(app, ark_id_type, new_ark_id, source_id):
         db.session.merge(ark_id_summary)
         db.session.commit()
         print(f'[INFO   ] Created ARK ID {new_ark_id} for {ark_id_type} {source_id}')
+
+
+def _update_github_traffic_counts(app):
+    """
+    Logic to update the GitHub traffic count tables of the portal to save
+    traffic information in our local database (clone and view counts).
+
+    Updates the following two tables based on GitHub API calls:
+      - github_daily_views_count
+      - github_daily_clones_count (a.k.a. DataLad download count estimation)
+
+    Warnings on major confounding factors in the number of dataset clones:
+      - the daily tests run on Circle CI create multiple clones per day (which
+      explains why there is always at least 1 unique clone counted per dataset
+      every day)
+      - the archiver and other automated script run by CONP contributes to the
+      number of clones every time a dataset is updated (including DATS and
+      README updates)
+      - CONP developers also contribute to the number of clones when testing,
+      updating or downloading datasets
+    """
+
+    from app import db
+    from app.models import GithubDailyClonesCount, GithubDailyViewsCount
+    from pathlib import Path
+    import git
+
+    datasetsdir = Path(app.config['DATA_PATH']) / 'conp-dataset'
+    try:
+        repo = git.Repo(datasetsdir)
+    except git.exc.InvalidGitRepositoryError:
+        repo = git.Repo.clone_from(
+            'https://github.com/CONP-PCNO/conp-dataset',
+            datasetsdir,
+            branch='master'
+        )
+
+    # loop through the list of submodules present in CONP-PCNO/conp-dataset.git
+    for submodule in repo.submodules:
+        sub_repo = submodule.url.replace('https://github.com/', '').replace('.git', '')
+        if sub_repo.startswith('CONP-PCNO/'):
+            # skip the repos under the CONP-PCNO organization as they are not datasets
+            continue
+
+        # query the GitHub analytics API for number of clones and views
+        daily_stat_dict = _get_repo_analytics(app, sub_repo)
+        if not daily_stat_dict:
+            continue
+
+        # get the list of dates already in the database for this repo
+        dates_in_db_dict = {}
+        db_clones_results = db.session.query(GithubDailyClonesCount.date).filter_by(repo=sub_repo).all()
+        dates_in_db_dict['clones'] = [row[0] for row in db_clones_results]
+        db_views_results = db.session.query(GithubDailyViewsCount.date).filter_by(repo=sub_repo).all()
+        dates_in_db_dict['views'] = [row[0] for row in db_views_results]
+
+        # loop through results returned by GitHub API calls and insert
+        # new data in the proper database table
+        for analytic_type in daily_stat_dict:
+            if not daily_stat_dict[analytic_type]:
+                continue
+
+            for date in daily_stat_dict[analytic_type]:
+                if date in dates_in_db_dict[analytic_type]:
+                    # go to next date if there is already an entry for the date
+                    # for that repo in the database table
+                    continue
+
+                analytics_summary = None
+                if analytic_type == 'clones':
+                    analytics_summary = GithubDailyClonesCount()
+                elif analytic_type == 'views':
+                    analytics_summary = GithubDailyViewsCount()
+                else:
+                    print("GitHub analytic type is neither 'clones' nor 'views'")
+
+                if analytics_summary:
+                    analytics_summary.date = date
+                    analytics_summary.repo = sub_repo
+                    analytics_summary.timestamp = daily_stat_dict[analytic_type][date]['timestamp']
+                    analytics_summary.count = daily_stat_dict[analytic_type][date]['count']
+                    analytics_summary.unique_count = daily_stat_dict[analytic_type][date]['unique_count']
+
+                    db.session.merge(analytics_summary)
+                    db.session.commit()
+
+
+def _get_repo_analytics(app, repo):
+    """
+    Queries the GitHub API for views and clones traffic information and returns
+    a dictionary with the API response information.
+
+    Structure of the returned dictionary:
+        {
+            "clones": {
+                "2022-02-28": {
+                    "timestamp": "2022-02-28 00:00:00",
+                    "date": "2022-02-28",
+                    "count": "5",
+                    "unique_count": "1"
+                },
+                "2022-03-01": {
+                    "timestamp": "2022-03-01 00:00:00",
+                    "date": "2022-03-01",
+                    "count": "6",
+                    "unique_count": "2"
+                },
+                ...
+            },
+            "views": {
+                "2022-02-28": {
+                    "timestamp": "2022-02-28 00:00:00",
+                    "date": "2022-02-28",
+                    "count": "3",
+                    "unique_count": "1"
+                },
+                ...
+            }
+        }
+    """
+
+    from github import Github
+
+    token = app.config['GITHUB_PAT']
+    g = Github(token)
+
+    g_analytics = {}
+    try:
+        g_analytics['clones'] = g.get_repo(repo).get_clones_traffic(per='day')
+        g_analytics['views'] = g.get_repo(repo).get_views_traffic(per='day')
+    except Exception as e:
+        g_analytics['clones'] = {}
+        g_analytics['views'] = {}
+        print(f"Error while fetching GitHub analytics for {repo}:\n\t{e}")
+
+    daily_stat_dict = {
+        'clones': {},
+        'views': {}
+    }
+    for analytic_type in g_analytics:
+        if g_analytics[analytic_type]:
+            for day_data in g_analytics[analytic_type][analytic_type]:
+                timestamp = day_data.timestamp
+                date = timestamp.strftime('%Y-%m-%d')
+                daily_stat_dict[analytic_type][date] = {
+                    "timestamp": timestamp,
+                    "date": date,
+                    "count": day_data.count,
+                    "unique_count": day_data.uniques
+                }
+
+    return daily_stat_dict
