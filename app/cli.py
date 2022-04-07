@@ -679,11 +679,13 @@ def _generate_missing_ark_ids(app):
     from app import db
     from app.models import ArkId
     from app.models import Dataset as DBDataset
-    from app.models import Pipeline as DBPipeline
+    from app.pipelines.pipelines import get_pipelines_from_cache
+
+    pipelines = get_pipelines_from_cache()
 
     dataset_id_list = [row[0] for row in db.session.query(DBDataset.dataset_id).all()]
     dataset_with_ark_id_list = [row[0] for row in db.session.query(ArkId.dataset_id).all()]
-    pipeline_id_list = [row[0] for row in db.session.query(DBPipeline.pipeline_id).all()]
+    pipeline_id_list = [row['ID'] for row in pipelines]
     pipeline_with_ark_id_list = [row[0] for row in db.session.query(ArkId.pipeline_id).all()]
 
     for dataset_id in dataset_id_list:
