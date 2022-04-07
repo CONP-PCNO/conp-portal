@@ -146,6 +146,8 @@ def _update_pipeline_data(app):
     t.start()
     t.join()
 
+    _generate_missing_ark_ids(app)
+
 
 def _update_datasets(app):
     """
