@@ -719,7 +719,7 @@ def ark_id_minter(app, ark_id_type):
     template = 'd7.reeeeeeedeeedeeek' if ark_id_type == 'dataset' else 'p7.reeeeeeedeeedeeek'
     new_ark_id = mint(
         template=template,
-        scheme='ark:',
+        scheme='ark:/',
         naa=app.config["ARK_CONP_NAAN"]
     )
 
