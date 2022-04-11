@@ -178,7 +178,7 @@ def dats_editor():
     return render_template('dats-editor.html', title='CONP | DATS Editor', user=current_user, content=content)
 
 
-@main_bp.route('/ark:<url_naan>/<url_ark_id>')
+@main_bp.route('/ark:/<url_naan>/<url_ark_id>')
 def redirect_ark_ids(url_naan, url_ark_id):
 
     from flask import current_app
@@ -193,7 +193,7 @@ def redirect_ark_ids(url_naan, url_ark_id):
             f" ID does not match the portal's NAAN ({config_naan})."
         )
 
-    requested_full_ark_id = f"ark:{url_naan}/{url_ark_id}"
+    requested_full_ark_id = f"ark:/{url_naan}/{url_ark_id}"
     redirect_url = None
 
     if url_ark_id.startswith('d7'):
