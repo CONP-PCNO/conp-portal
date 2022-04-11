@@ -15,8 +15,13 @@ const PipelineElement = props => {
       $("#cbrainTool").text(pipelineTitle);
       $("#cbrainDataset").text(datasetTitle);
       $("#cbrainModal").modal("show");
+      $("#btnCbrainPipeline").removeAttr("href");
+      $("#btnCbrainPipeline").addClass("disabled");
       $("#btnCbrainLoaded").attr("href", datasetUrl);
-      $("#btnCbrainPipeline").attr("href", pipelineUrl);
+      $("#btnCbrainLoaded").on("click", function (event) {
+        $("#btnCbrainPipeline").attr("href", pipelineUrl);
+        $("#btnCbrainPipeline").removeClass("disabled");
+      });
       $("#btnCbrainPipeline").on("click", function (event) {
         $("#cbrainModal").modal("hide");
       });
