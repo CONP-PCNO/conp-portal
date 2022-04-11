@@ -79,6 +79,16 @@ const PipelineElement = props => {
             </div>
           </div>
         </div>
+        <div className="d-flex col-md-12">
+          <div className="card-description d-flex py-1 w-100">
+            <div className="col-3">
+              <strong>ARK ID: </strong>
+            </div>
+            <div className="col-9">
+              <p className="card-text pr-1">{element.ark_id}</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="col-sm-12 col-md-3 d-flex align-items-center justify-content-end">
         <div className="d-flex justify-content-end align-items-center">

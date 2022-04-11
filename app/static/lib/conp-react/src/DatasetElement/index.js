@@ -193,6 +193,13 @@ const DatasetElement = props => {
                     </li> : null}
               </ul>
             </div>
+            <div>
+              <div className="card-list-item">
+                <p className="card-text pr-1">
+                  <strong>ARK ID: </strong>{element.ark_id}
+                </p>
+              </div>
+            </div>
             {element.sources ?
                 <div className="card-list-item">
                   <p className="card-text pr-1">
@@ -286,6 +293,7 @@ DatasetElement.propTypes = {
   modalities: PropTypes.string,
   sources: PropTypes.number,
   cbrain_id: PropTypes.string,
+  ark_id: PropTypes.string,
 };
 
 DatasetElement.defaultProps = {

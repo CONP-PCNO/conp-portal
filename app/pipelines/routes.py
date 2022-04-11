@@ -8,6 +8,7 @@ import os
 from flask import render_template, request, url_for
 from flask_login import current_user
 from app.pipelines import pipelines_bp, pipelines as pipelines_utils
+from app.models import ArkId
 
 
 @pipelines_bp.route('/pipelines', methods=['GET'])
@@ -97,6 +98,8 @@ def pipeline_search():
     for index, element in enumerate(elements):
         if element['ID'] in blocked_pipelines_ids:
             blocked_pipelines_indexes += [index]
+        ark_id_row = ArkId.query.filter_by(pipeline_id=element['ID']).first()
+        element['ark_id'] = ark_id_row.ark_id
     for index in reversed(blocked_pipelines_indexes):
         elements.pop(index)
 
