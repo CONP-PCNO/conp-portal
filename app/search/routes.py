@@ -488,8 +488,10 @@ def dataset_info():
     else:
         dataset_cbrain_id = ""
 
+    ark_id_row = ArkId.query.filter_by(dataset_id=d.dataset_id).first()
     dataset = {
         "authorized": authorized,
+        "ark_id": ark_id_row.ark_id,
         "name": datsdataset.name,
         "id": d.dataset_id,
         "title": d.name.replace("'", ""),

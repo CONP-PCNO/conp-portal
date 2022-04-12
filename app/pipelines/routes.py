@@ -258,6 +258,10 @@ def pipeline_info():
             'static', filename="img/run_on_cbrain_gray.png")
         element["platforms"][0]["uri"] = ""
 
+    # get pipeline ARK ID
+    ark_id_row = ArkId.query.filter_by(pipeline_id=element['id']).first()
+    element['ark_id'] = ark_id_row.ark_id
+
     # make all keys lowercase and without spaces
     element = {k.lower().replace(" ", ""): v for k, v in element.items()}
 
