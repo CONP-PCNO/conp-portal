@@ -833,24 +833,7 @@
       <div class="modal-header">
         <h4 class="modal-title w-100 text-center" id="modalLongTitle">CBRAIN Dataset Select and Pipeline Launch</h4>
       </div>
-      <div class="modal-body">
-        <p>
-	  You are about to go to CBRAIN to run tool <strong id="cbrainTool"></strong> on dataset <strong id="cbrainDataset"></strong>. To do this:
-	</p>
-	<ol>
-          <li>Ensure that you are logged in to CBRAIN.</li>
-          <li>Press the "Load dataset" button to open a CBRAIN window that loads the dataset.</li>
-	  <li>Press the "Prepare tool" button to open a CBRAIN window with the tool and dataset prepared.</li>
-        </ol>
-        <p>Note: Not every tool is compatible with every dataset. If the run does not complete successfully, check that your chosen dataset provides input that your chosen pipeline expects.</p>
-      </div>
-      <div class="modal-footer">
-        <a role="button" href="#" class="btn btn-secondary" target="_blank" id="btnCbrainLoaded">
-          First, load dataset
-        </a>
-	<a role="button" href="#" class="btn btn-primary" target="_blank" id="btnCbrainPipeline">
-          Second, prepare tool
-	</a>
+      <div class="modal-body" id="cbrainModalBody">
       </div>
     </div>
   </div>
