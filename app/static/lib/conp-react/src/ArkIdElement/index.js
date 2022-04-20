@@ -54,11 +54,11 @@ const ArkIdElement = (props) => {
             </ReactToolTip>}
         : </strong>
         {ark_id} {showCopyIcon && <CopyToClipboard text={ark_id} onCopy={handleCopyToClipboard} data-tip data-for="copiedtip">
-          <button>
+          <button type="button" className="btn btn-outline-secondary" style={{width:"auto", padding:"0.2rem 0.4rem"}}>
             <FontAwesomeIcon icon={faCopy} color="dimgray" size="md"/>
           </button>
         </CopyToClipboard>}
-        {showCheckIcon && <button disabled>
+        {showCheckIcon && <button disabled type="button" className="btn btn-outline-secondary" style={{width:"auto", padding:"0.2rem 0.4rem"}}>
           <FontAwesomeIcon icon={faCheck} color="dimgray" size="md"/>
         </button>}
       </p>

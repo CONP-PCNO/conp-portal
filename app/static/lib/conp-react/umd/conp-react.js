@@ -21702,12 +21702,25 @@ var ArkIdElement_ArkIdElement = function ArkIdElement(props) {
     onCopy: handleCopyToClipboard,
     "data-tip": true,
     "data-for": "copiedtip"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-outline-secondary",
+    style: {
+      width: "auto",
+      padding: "0.2rem 0.4rem"
+    }
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
     icon: index_es_faCopy,
     color: "dimgray",
     size: "md"
   }))), showCheckIcon && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-    disabled: true
+    disabled: true,
+    type: "button",
+    className: "btn btn-outline-secondary",
+    style: {
+      width: "auto",
+      padding: "0.2rem 0.4rem"
+    }
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
     icon: faCheck,
     color: "dimgray",
