@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import ViewsIcon from "../social/ViewsIcon"
 import DownloadsIcon from "../social/DownloadsIcon"
+import ArkIdElement from "../ArkIdElement"
 
 const PipelineElement = props => {
   const { authorized, ...element } = props;
@@ -80,14 +81,7 @@ const PipelineElement = props => {
           </div>
         </div>
         <div className="d-flex col-md-12">
-          <div className="card-description d-flex py-1 w-100">
-            <div className="col-3">
-              <strong>ARK ID: </strong>
-            </div>
-            <div className="col-9">
-              <p className="card-text pr-1">{element.ark_id}</p>
-            </div>
-          </div>
+          <ArkIdElement id={element.ark_id}/>
         </div>
       </div>
       <div className="col-sm-12 col-md-3 d-flex align-items-center justify-content-end">

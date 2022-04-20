@@ -99,7 +99,7 @@ def pipeline_search():
         if element['ID'] in blocked_pipelines_ids:
             blocked_pipelines_indexes += [index]
         ark_id_row = ArkId.query.filter_by(pipeline_id=element['ID']).first()
-        element['ark_id'] = ark_id_row.ark_id
+        element['ark_id'] = 'https://n2t.net/' + ark_id_row.ark_id
     for index in reversed(blocked_pipelines_indexes):
         elements.pop(index)
 
@@ -260,7 +260,7 @@ def pipeline_info():
 
     # get pipeline ARK ID
     ark_id_row = ArkId.query.filter_by(pipeline_id=element['id']).first()
-    element['ark_id'] = ark_id_row.ark_id
+    element['ark_id'] = 'https://n2t.net/' + ark_id_row.ark_id
 
     # make all keys lowercase and without spaces
     element = {k.lower().replace(" ", ""): v for k, v in element.items()}

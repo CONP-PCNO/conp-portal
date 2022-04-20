@@ -7,6 +7,7 @@ import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
 
 import ViewsIcon from '../social/ViewsIcon'
 import DownloadsIcon from '../social/DownloadsIcon'
+import ArkIdElement from "../ArkIdElement"
 
 const DatasetElement = props => {
   const { authorized, imagePath, ...element } = props;
@@ -194,11 +195,7 @@ const DatasetElement = props => {
               </ul>
             </div>
             <div>
-              <div className="card-list-item">
-                <p className="card-text pr-1">
-                  <strong>ARK ID: </strong>{element.ark_id}
-                </p>
-              </div>
+              <ArkIdElement id={element.ark_id}/>
             </div>
             {element.sources ?
                 <div className="card-list-item">
