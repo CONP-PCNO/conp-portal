@@ -17793,48 +17793,74 @@ var CbrainModalDataset_CbrainModalDataset = function CbrainModalDataset(props) {
   };
 
   return react_dom["createPortal"]( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: phaseState === 0 ? null : "d-none"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "You're about to load the dataset ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, element.title), " on CBRAIN. Please select a pipeline to process this dataset (or \"None\" to load only the dataset)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Please ensure you're", " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
-    href: "https://portal.cbrain.mcgill.ca",
-    target: "_blank",
-    rel: "noreferrer"
-  }, "logged into CBRAIN"), " ", "before loading the dataset."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Note that not all pipelines are compatible with all datasets."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "list-group"
+    className: "container-fluid"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "row align-items-center"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-lg-4 " + (phaseState === 0 ? "" : "text-muted")
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "You're about to load the dataset ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, element.title), " ", "on CBRAIN. Please select a pipeline to process this dataset (or \"None\" to load only the dataset)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Note that not all pipelines are compatible with all datasets."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "dropdown"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     type: "button",
-    className: "list-group-item list-group-item-action",
+    className: "dropdown-toggle btn " + (phaseState === 0 ? "btn-primary" : "btn-secondary"),
+    "data-toggle": "dropdown",
+    "data-display": "static",
+    "aria-expanded": "false",
+    "aria-label": "pipeline"
+  }, "Pipeline:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
+    className: "dropdown-menu",
+    "aria-labelledby": "dropdown" + element.id
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "form-check dropdown-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+    className: "form-check-input",
+    type: "radio",
+    name: "pipelines" + element.id.replaceAll("/", ""),
     id: "nonechoice",
     key: "nonechoice",
-    onClick: updateSelect,
+    onChange: updateSelect,
     value: ""
-  }, "None"), props.cbrainIds.map(function (pipeline) {
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-      type: "button",
-      className: "list-group-item list-group-item-action",
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+    className: "form-check-label",
+    htmlFor: "nonechoice"
+  }, "None"))), props.cbrainIds.map(function (pipeline) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "form-check dropdown-item"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
+      type: "radio",
+      className: "form-check-input",
+      name: "pipelines" + element.id.replaceAll("/", ""),
       id: pipeline.title,
       key: pipeline.title,
       value: pipeline.url,
-      onClick: updateSelect
-    }, pipeline.title);
-  }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: phaseState === 1 ? null : "d-none"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Press the button to load the dataset ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, element.title), ", then return to this page to prepare the pipeline."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+      onChange: updateSelect
+    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
+      className: "form-check-label",
+      htmlFor: pipeline.title
+    }, pipeline.title)));
+  })))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-lg-4 " + (phaseState === 1 ? "" : "text-muted")
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Press the button to load the dataset", " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, element.title), ", then return to this page to prepare the pipeline."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Please ensure you're", " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    href: "https://portal.cbrain.mcgill.ca",
+    target: "_blank",
+    rel: "noreferrer"
+  }, "logged into CBRAIN"), " ", "before loading the dataset."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     href: props.cbrain_id,
     target: "_blank",
     rel: "noreferrer",
-    className: "btn btn-primary",
+    className: "btn " + (phaseState === 1 ? "btn-primary" : "btn-secondary"),
     onClick: element.activeCbrainId === "" ? finish : showPipelineButton
   }, "Load dataset")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: phaseState === 2 ? null : "d-none"
+    className: "col-lg-4 " + (phaseState === 2 ? "" : "text-muted")
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Press the button to prepare the pipeline", " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, element.activeCbrainId === "" ? null : element.cbrainIds.filter(function (pipeline) {
     return pipeline.url === element.activeCbrainId;
   })[0].title), " ", "for processing the dataset ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, element.title), "."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     href: props.activeCbrainId,
     target: "_blank",
     rel: "noreferrer",
-    className: "btn btn-primary",
+    className: "btn " + (phaseState === 2 ? "btn-primary" : "btn-secondary") + (props.activeCbrainId === "" ? " disabled" : ""),
     onClick: finish
-  }, "Prepare pipeline"))), document.querySelector("#cbrainModalBody"));
+  }, "Prepare pipeline"))))), document.querySelector("#cbrainModalBody"));
 };
 
 CbrainModalDataset_CbrainModalDataset.propTypes = {
