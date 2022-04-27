@@ -77,6 +77,9 @@ class Config(object):
     MATOMO_SITE_ID = os.environ.get("MATOMO_SITE_ID", "2")
     MATOMO_TOKEN_AUTH = os.environ.get("MATOMO_TOKEN_AUTH")
 
+    # ARK identifier NAAN for CONP
+    ARK_CONP_NAAN = os.environ.get("ARK_CONP_NAAN") or "99999"
+
     # Nexus SPARQL endpoint
     # TODO remove hardcoded url
     NEXUS_SPARQL_ENDPOINT = os.environ.get(

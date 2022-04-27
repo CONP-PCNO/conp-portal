@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import ViewsIcon from "../social/ViewsIcon"
 import DownloadsIcon from "../social/DownloadsIcon"
+import ArkIdElement from "../ArkIdElement"
 
 const PipelineElement = props => {
   const { authorized, ...element } = props;
@@ -78,6 +79,9 @@ const PipelineElement = props => {
               <a target="_blank" rel="noopener noreferrer" href={"https://www.zenodo.org/record/" + element.id.split(".")[1]}>{element.id}</a>
             </div>
           </div>
+        </div>
+        <div className="d-flex col-md-12">
+          <ArkIdElement id={element.ark_id}/>
         </div>
       </div>
       <div className="col-sm-12 col-md-3 d-flex align-items-center justify-content-end">

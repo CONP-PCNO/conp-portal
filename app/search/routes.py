@@ -10,6 +10,7 @@ import re
 from flask import render_template, request, current_app, send_from_directory
 from flask_login import current_user
 
+from app.models import ArkId
 from app.models import Dataset, DatasetAncestry
 from app.search import search_bp
 from app.search.models import DATSDataset, DatasetCache
@@ -172,8 +173,10 @@ def dataset_search():
             e["nb_hits"] for e in downloads if e["dataset_id"].startswith(download_id)
         ]
 
+        ark_id_row = ArkId.query.filter_by(dataset_id=d.dataset_id).first()
         dataset = {
             "authorized": authorized,
+            "ark_id": 'https://n2t.net/' + ark_id_row.ark_id,
             "id": d.dataset_id,
             "title": d.name.replace("'", "\'"),
             "remoteUrl": d.remoteUrl,
@@ -485,8 +488,10 @@ def dataset_info():
     else:
         dataset_cbrain_id = ""
 
+    ark_id_row = ArkId.query.filter_by(dataset_id=d.dataset_id).first()
     dataset = {
         "authorized": authorized,
+        "ark_id": 'https://n2t.net/' + ark_id_row.ark_id,
         "name": datsdataset.name,
         "id": d.dataset_id,
         "title": d.name.replace("'", ""),

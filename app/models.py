@@ -419,6 +419,19 @@ class MatomoDailyGetSiteSearchKeywords(db.Model):
         return '<MatomoDailyGetSiteSearchKeywords {}>'.format(self.id)
 
 
+class ArkId(db.Model):
+
+    __tablename__ = 'ark_id'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    ark_id = db.Column(db.String(128), unique=True)
+    dataset_id = db.Column(db.String(256))
+    pipeline_id = db.Column(db.String(64))
+
+    def __repr__(self):
+        return '<ArkId {}>'.format(self.id)
+
+
 class GithubDailyClonesCount(db.Model):
     """
     Provides GitHub daily clones' count to be stored in database table

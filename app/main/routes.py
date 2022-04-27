@@ -5,7 +5,10 @@
 """
 import os
 import json
-from flask import render_template
+from urllib import request
+
+from flask import render_template, redirect, abort
+from flask import current_app
 from flask_login import current_user
 from app.main import main_bp
 from app.models import Dataset
@@ -173,3 +176,42 @@ def dats_editor():
     content = github.get_tutorial_content()
 
     return render_template('dats-editor.html', title='CONP | DATS Editor', user=current_user, content=content)
+
+
+@main_bp.route('/ark:/<url_naan>/<url_ark_id>')
+def redirect_ark_ids(url_naan, url_ark_id):
+
+    from flask import current_app
+    from app import db
+    from app.models import ArkId
+
+    config_naan = current_app.config['ARK_CONP_NAAN']
+    if config_naan != url_naan:
+        abort(
+            404,
+            f"Invalid NAAN - The NAAN portion ({url_naan}) of the provided ARK "
+            f" ID does not match the portal's NAAN ({config_naan})."
+        )
+
+    requested_full_ark_id = f"ark:/{url_naan}/{url_ark_id}"
+    redirect_url = None
+
+    if url_ark_id.startswith('d7'):
+        db_entry = db.session.query(ArkId.dataset_id).filter_by(
+            ark_id=requested_full_ark_id
+        ).first()
+        redirect_url = f'/dataset?id={db_entry[0]}'
+    elif url_ark_id.startswith('p7'):
+        db_entry = db.session.query(ArkId.pipeline_id).filter_by(
+            ark_id=requested_full_ark_id
+        ).first()
+        redirect_url = f'/pipeline?id={db_entry[0]}'
+
+    if not redirect_url:
+        abort(
+            404,
+            f'The provided ARK ID {requested_full_ark_id} does not match any '
+            f' dataset or pipeline from the CONP portal. Please verify the URL.'
+        )
+
+    return redirect(redirect_url)
