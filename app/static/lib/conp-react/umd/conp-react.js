@@ -21741,8 +21741,6 @@ function DatasetElement_objectWithoutPropertiesLoose(source, excluded) { if (sou
 
 
 
-
-
 var DatasetElement_DatasetElement = function DatasetElement(props) {
   var _element$origin, _element$origin2;
 
@@ -21892,7 +21890,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col col-lg-8 card-body d-flex"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-column justify-content-center"
+    className: "d-flex flex-column justify-content-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
     className: "card-title text-card-title"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
@@ -21937,7 +21935,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Formats: "), element.formats.join(', ')) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_ArkIdElement, {
     id: element.ark_id
   })))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-lg-2 d-flex flex-column justify-content-top align-items-center p-2"
+    className: "col col-lg-2 d-flex flex-column justify-content-top align-items-center pr-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "row align-items-top width-auto"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -21969,13 +21967,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     onClick: function onClick() {
       return downloadMetadata();
     }
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
-    icon: faInfoCircle,
-    size: "lg",
-    style: {
-      color: 'red'
-    }
-  }), " Metadata", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "Metadata", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "spinner-border text-primary",
     role: "status",
     hidden: !metadataSpinnerState
@@ -21989,13 +21981,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     href: "dataset?id=" + element.id + "#downloadInstructions",
     role: "button",
     className: "btn btn-outline-secondary m-1"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
-    icon: faDownload,
-    size: "lg",
-    style: {
-      color: 'red'
-    }
-  }), " Dataset", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "Dataset", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "spinner-border text-primary",
     role: "status",
     hidden: !datasetSpinnerState
