@@ -661,6 +661,7 @@ def get_dataset_metadata_information(dataset):
         "acknowledges": datsdataset.acknowledges,
         "spatialCoverage": datsdataset.spatialCoverage,
         "dates": datsdataset.dates,
+        "remoteUrl": dataset.remoteUrl,
     }
 
 

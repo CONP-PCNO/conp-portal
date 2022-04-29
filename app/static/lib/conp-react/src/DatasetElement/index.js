@@ -126,7 +126,7 @@ const DatasetElement = props => {
           </div>
         </div>
         <div className="col col-lg-8 card-body d-flex">
-          <div className="d-flex flex-column justify-content-center">
+          <div className="d-flex flex-column justify-content-center p-2">
             <h5 className="card-title text-card-title">
               <a className="text-reset" href={`dataset?id=${element.id}`}>
                 {element.title}
@@ -197,30 +197,13 @@ const DatasetElement = props => {
             <div>
               <ArkIdElement id={element.ark_id}/>
             </div>
-            {element.sources ?
-                <div className="card-list-item">
-                  <p className="card-text pr-1">
-                    <strong>Browse on Github: </strong>
-                    <a className="text-reset" target="_blank" rel="noopener noreferrer" href={element.remoteUrl}>
-                      {element.remoteUrl}
-                    </a>
-                  </p>
-                </div> : null}
-            {element.sources ?
-                <div className="card-list-item">
-                  <p className="card-text pr-1">
-                    <strong>Source: </strong>
-                    <a className="text-reset" target="_blank" rel="noopener noreferrer"
-                       href={element.sources}>{element.sources}</a>
-                  </p>
-                </div> : null}
           </div>
         </div>
-        <div className="col col-lg-2 d-flex flex-column justify-content-top align-items-center p-2">
+        <div className="col col-lg-2 d-flex flex-column justify-content-top align-items-center pr-2">
           <div className="row align-items-top width-auto">
 
             <div className="col col-lg-4 d-flex flex-column justify-content-top align-items-center p-2 pr-4">
-              <h7>PROCESS</h7>
+              <h7><strong>PROCESS</strong></h7>
               {element.cbrain_id ?
                   <a target="_blank" href={`${element.cbrain_id}`}>
                     <img
@@ -234,7 +217,7 @@ const DatasetElement = props => {
                   </a>}
             </div>
             <div className="col col-lg-8 d-flex flex-column justify-content-top align-items-center p-2">
-              <h7>DOWNLOAD</h7>
+              <h7><strong>DOWNLOAD</strong></h7>
               <div className="d-flex flex-column">
                 <button type="button" className="btn btn-outline-secondary m-1" onClick={() => downloadMetadata()}>
                   Metadata
