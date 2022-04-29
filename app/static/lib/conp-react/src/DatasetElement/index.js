@@ -12,13 +12,10 @@ import ArkIdElement from "../ArkIdElement"
 const DatasetElement = props => {
   const { authorized, imagePath, ...element } = props;
 
-  const [metadataSpinnerState, setMetadataSpinnerState] = useState(false)
   const [datasetSpinnerState, setDatasetSpinnerState] = useState(false)
 
-  const [metadataErrorState, setMetadataErrorState] = useState(false)
   const [datasetErrorState, setDatasetErrorState] = useState(false)
 
-  const [metadataErrorText, setMetadataErrorText] = useState("")
   const [datasetErrorText, setDatasetErrorText] = useState("")
 
   const statusCONP = `${imagePath}/canada.svg`;
@@ -35,48 +32,12 @@ const DatasetElement = props => {
       break;
   }
 
-  const downloadMetadata = (event) => {
-
-    setMetadataSpinnerState(true)
-    setMetadataErrorState(false)
-
-    fetch(`${window.origin}/download_metadata?dataset=${element.id}`)
-      .then((response) => {
-        if (response.ok) {
-          return response.blob();
-        }
-        else {
-          return response.text().then(text => {
-            throw new Error(text)
-          })
-        }
-      })
-      .then(function (blob) {
-        var file = window.URL.createObjectURL(blob, { type: 'application/json' });
-        let link = document.createElement('a');
-        link.href = file;
-        link.download = `${element.title.toLowerCase().replace(" ", "_")}.dats.json`;
-        link.click();
-
-        // For Firefox it is necessary to delay revoking the ObjectURL.
-        setTimeout(() => { window.URL.revokeObjectURL(file); }, 250);
-      })
-      .catch(function (error) {
-        setMetadataErrorState(true)
-        setMetadataErrorText(`Something went wrong when trying to download the metadata: ${error}`)
-      })
-      .finally(function () {
-        setMetadataSpinnerState(false)
-      }
-      );
-  }
-
   const downloadDataset = (event) => {
 
     setDatasetSpinnerState(true)
     setDatasetErrorState(false)
 
-    fetch(`${window.origin}/download_content?id=${element.id}&version=${element.version}`)
+    fetch(`${element.zipLocation}`)
       .then((response) => {
         if (response.ok) {
           return response.blob();
@@ -91,7 +52,7 @@ const DatasetElement = props => {
         var file = window.URL.createObjectURL(blob);
         var a = document.createElement('a');
         a.href = file;
-        a.download = "{{ data.title }}.{{ metadata.version }}.tar.gz";
+        a.download = "{{ element.zipLocation }}";
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -108,7 +69,7 @@ const DatasetElement = props => {
 
   return (
     <div className="card container-fluid" data-type="dataset">
-      <div className="row pr-4">
+      <div className="row">
         <div className="col col-lg-2 d-flex flex-column p-2">
           <div className="flex-grow-2 d-flex flex-column justify-content-center align-items-center">
             <img
@@ -125,8 +86,8 @@ const DatasetElement = props => {
             <DownloadsIcon type="dataset" id={element.id + "_version-" + element.version + '.tar.gz'}/>
           </div>
         </div>
-        <div className="col col-lg-8 card-body d-flex">
-          <div className="d-flex flex-column justify-content-center p-2">
+        <div className="col col-lg-7 card-body d-flex p-2">
+          <div className="d-flex flex-column justify-content-center">
             <h5 className="card-title text-card-title">
               <a className="text-reset" href={`dataset?id=${element.id}`}>
                 {element.title}
@@ -199,16 +160,46 @@ const DatasetElement = props => {
             </div>
           </div>
         </div>
-        <div className="col col-lg-2 d-flex flex-column justify-content-top align-items-center pr-2">
-          <div className="row align-items-top width-auto">
+        <div className="col col-lg-3 d-flex flex-column justify-content-center align-items-center p-2">
+          <div className="col align-items-center justify-content-center width-auto">
 
-            <div className="col col-lg-4 d-flex flex-column justify-content-top align-items-center p-2 pr-4">
-              <h7><strong>PROCESS</strong></h7>
+            <div className="row justify-content-center align-items-center p-2">
+              <h7><strong>DOWNLOAD OPTIONS</strong></h7>
+            </div>
+            <div className="col justify-content-center align-items-center">
+              {element.showDownloadButton ?
+                <button type="button" className="btn btn-outline-success m-1" onClick={() => downloadDataset()}>
+                  Archived Dataset (XX MB)
+                  <div className="spinner-border text-primary" role="status" hidden={!datasetSpinnerState}>
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </button> :
+                <button type="button" className="btn btn-outline-secondary m-1 disabled">
+                  Archived Dataset (Not Available)
+                </button>
+              }
+              <div className="alert alert-danger" role="alert" hidden={!datasetErrorState}>
+                {datasetErrorText}
+              </div>
+              <a href={`dataset?id=${element.id}#dataladInstructions`} role="button"
+                   className="btn btn-outline-success m-1">
+                DataLad Instructions
+              </a>
+            </div>
+            <div className="d-flex">
+              {authIcons.map((icon, index) => <div key={"authIcon_" + index}
+                                                   className="text-center p-1">{icon}</div>)}
+            </div>
+
+            <div className="row justify-content-center align-items-center p-2">
+              <h7><strong>PROCESS ON</strong></h7>
+            </div>
+            <div className="row justify-content-center align-items-center">
               {element.cbrain_id ?
                   <a target="_blank" href={`${element.cbrain_id}`}>
                     <img
                         className="cbrain-img justify-content-center align-items-center"
-                        src="static/img/cbrain-icon-blue.png" style={{maxWidth: '60px'}}/>
+                        src="static/img/cbrain-long-logo-blue.png" style={{maxHeight: '40px'}}/>
                   </a> :
                   <a target="_blank">
                     <img
@@ -216,34 +207,7 @@ const DatasetElement = props => {
                         src="static/img/cbrain-icon-grey.png" style={{maxWidth: '60px'}}/>
                   </a>}
             </div>
-            <div className="col col-lg-8 d-flex flex-column justify-content-top align-items-center p-2">
-              <h7><strong>DOWNLOAD</strong></h7>
-              <div className="d-flex flex-column">
-                <button type="button" className="btn btn-outline-secondary m-1" onClick={() => downloadMetadata()}>
-                  Metadata
-                  <div className="spinner-border text-primary" role="status" hidden={!metadataSpinnerState}>
-                    <span className="sr-only">Loading...</span>
-                  </div>
-                </button>
-                <div className="alert alert-danger" role="alert" hidden={!metadataErrorState}>
-                  {metadataErrorText}
-                </div>
-                <a href={`dataset?id=${element.id}#downloadInstructions`} role="button"
-                   className="btn btn-outline-secondary m-1">
-                  Dataset
-                  <div className="spinner-border text-primary" role="status" hidden={!datasetSpinnerState}>
-                    <span className="sr-only">Loading...</span>
-                  </div>
-                </a>
-                <div className="alert alert-danger" role="alert" hidden={!datasetErrorState}>
-                  {datasetErrorText}
-                </div>
-              </div>
-              <div className="d-flex">
-                {authIcons.map((icon, index) => <div key={"authIcon_" + index}
-                                                     className="text-center p-1">{icon}</div>)}
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
@@ -274,6 +238,8 @@ DatasetElement.propTypes = {
   sources: PropTypes.number,
   cbrain_id: PropTypes.string,
   ark_id: PropTypes.string,
+  zipLocation: PropTypes.string,
+  showDownloadButton: PropTypes.bool
 };
 
 DatasetElement.defaultProps = {
