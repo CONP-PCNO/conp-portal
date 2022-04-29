@@ -60,30 +60,6 @@
   {% endif %} {% if metadata.version is defined and metadata.version is not none
   %}
   <div class="py-1"><strong>Version: </strong> {{ metadata.version }}</div>
-  {% endif %} {% if metadata.remoteUrl is defined and metadata.remoteUrl is not none
-  %}
-  <div class="py-1">
-    <strong>Browse on GitHub: </strong
-    ><a
-      class="text-reset"
-      target="_blank"
-      rel="noopener noreferrer"
-      href="{{ metadata.remoteUrl }}"
-      >{{ metadata.remoteUrl }}</a
-    >
-  </div>
-  {% endif %} {% if metadata.sources is defined and metadata.sources is not none
-  %}
-  <div class="py-1">
-    <strong>Source: </strong
-    ><a
-      class="text-reset"
-      target="_blank"
-      rel="noopener noreferrer"
-      href="{{ metadata.sources }}"
-      >{{ metadata.sources }}</a
-    >
-  </div>
   {% endif %} {% if data.modalities is defined and data.modalities is not none
   %}
   <div class="py-1">
@@ -167,7 +143,31 @@
     </a>
     {% endif %}
   </div>
-  {% endif %} {% endif %} {% if (metadata.dimensions is not none) or
+  {% endif %} {% endif %} {% if metadata.remoteUrl is defined and metadata.remoteUrl is not none
+  %}
+  <div class="py-1">
+    <strong>Browse on GitHub: </strong
+    ><a
+      class="text-reset"
+      target="_blank"
+      rel="noopener noreferrer"
+      href="{{ metadata.remoteUrl }}"
+      >{{ metadata.remoteUrl }}</a
+    >
+  </div>
+  {% endif %} {% if metadata.sources is defined and metadata.sources is not none
+  %}
+  <div class="py-1">
+    <strong>Source: </strong
+    ><a
+      class="text-reset"
+      target="_blank"
+      rel="noopener noreferrer"
+      href="{{ metadata.sources }}"
+      >{{ metadata.sources }}</a
+    >
+  </div>
+  {% endif %} {% if (metadata.dimensions is not none) or
   (metadata.producedBy is not none) or (metadata.isAbout is not none) or
   (metadata.acknowledges is not none) or (metadata.spatialCoverage is not none) or
   (metadata.dates is not none)
@@ -229,6 +229,16 @@
     </div>
   </div>
   {% endif %}
+  <div class="py-1 col-lg-3 p-0">
+    <button
+      class="btn btn-outline-secondary"
+      onclick=downloadMetadata()
+    >
+      Download DATS.json Metadata File
+    </button>
+    <div class="alert alert-danger" id="dats-download-alert" role="alert" hidden="hidden">
+    </div>
+  </div>
 </div>
 
 <div class="d-flex flex-column p-4">
@@ -246,81 +256,9 @@
   </div>
 </div>
 
-<div
-  class="modal fade"
-  id="confirmDownloadModal"
-  role="dialog"
-  aria-labelledby="modalCenterTitle"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <table>
-          <tr>
-            <td style="width:150px">
-              <img src="../static/img/conp.png" class="text-center" style="width:100%">
-            </td>
-            <td style="width:25px"></td>
-            <td colspan="41">
-              <h4 class="modal-title w-100 text-center" id="modalLongTitle">
-                You are about to download a {{ data.size }} file.
-              </h4>
-              <h4 class="modal-title w-100 text-center" id="modalLongTitle">Are you sure?</h4>
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <div class="btn-group btn-group-lg" style="width:100%">
-          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="cancelDownload">
-            Cancel
-          </button>
-          <a href="{{ zipLocation }}" class="btn btn-secondary" id="confirmDownload">
-            Download
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <div class="d-flex flex-column p-2">
-  <div class="d-flex flex-row align-items-center">
-    <a name="downloadInstructions"></a>
-  </div>
-  <div class="d-flex flex-row align-items-center">
-    <h2 class="px-2">Direct Download</h2>
-  </div>
-  {% if showDownloadButton %}
-    <div class="d-flex flex-row align-items-center">
-    <div class="col-md-2">
-      <button
-        onclick=$("#confirmDownloadModal").modal("show")
-        class="btn btn-outline-secondary "
-        id="downloadButton"
-      >
-        Download Current Version ({{ data.size }})
-      </button>
-    </div>
-  </div>
-  {% else %}
-  <div class="d-flex flex-row align-items-center">
-    <div class="col-md-2">
-      <a class="btn btn-outline-secondary disabled" id="UnavailableDownloadButton">
-        Not Available
-      </a>
-    </div>
-  </div>
-  <div class="d-flex flex-row align-items-center">
-    <p>
-      <br>This dataset is not available for direct download from the portal either because
-      of its large size or because it requires a third-party account to access the data.
-      <br>To download this dataset, please refer to the
-      <a href="#dataladInstructions">DataLad instructions in the next section</a>.
-    </p>
-  </div>
-  {% endif %}
   <div class="d-flex flex-row align-items-center">
     <a name="dataladInstructions"></a>
   </div>
@@ -466,18 +404,36 @@ datalad get &ltfilepath&gt</pre
 </script>
 
 <script>
-  $(function () {
-      $("#cancelDownload").on("click", function (event) {
-          $("#confirmDownloadModal").modal("hide");
+  const downloadMetadata = (event) => {
+
+    fetch(`${window.origin}/download_metadata?dataset=${element.id}`)
+      .then((response) => {
+        if (response.ok) {
+          return response.blob();
+        }
+        else {
+          return response.text().then(text => {
+            throw new Error(text)
+          })
+        }
       })
-  })
-</script>
-<script>
-  $(function () {
-      $("#confirmDownload").on("click", function (event) {
-          $("#confirmDownloadModal").modal("hide");
+      .then(function (blob) {
+        var file = window.URL.createObjectURL(blob, { type: 'application/json' });
+        let link = document.createElement('a');
+        link.href = file;
+        link.download = `${element.title.toLowerCase().replace(" ", "_")}.dats.json`;
+        link.click();
+
+        // For Firefox it is necessary to delay revoking the ObjectURL.
+        setTimeout(() => { window.URL.revokeObjectURL(file); }, 250);
       })
-  })
+      .catch(function (error) {
+        const message = "Something went wrong when trying to download the metadata: " + error
+        document.getElementById("dats-download-alert").innerHTML = message;
+        document.getElementById("dats-download-alert").hidden = false;
+      });
+  }
 </script>
+
 <!--/span-->
 {% endblock %}
