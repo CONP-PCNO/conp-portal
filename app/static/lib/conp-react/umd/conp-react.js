@@ -23277,7 +23277,7 @@ var DatasetPageViews_DatasetPageViews = function DatasetPageViews(props) {
       views: {}
     };
     chartData.views.forEach(function (element) {
-      var label = element.dataset_id.includes('projects/') ? element.dataset_id.split('projects/')[1] : element.dataset_id;
+      var label = element.dataset_name;
       axes.views[label] = element.nb_hits;
     });
     updateChart(axes);
