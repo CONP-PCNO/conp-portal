@@ -21946,7 +21946,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     target: "_blank"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     className: "cbrain-img justify-content-center align-items-center",
-    src: "static/img/cbrain-icon-grey.png",
+    src: "static/img/cbrain-long-logo-grey.png",
     style: {
       maxWidth: '60px'
     }

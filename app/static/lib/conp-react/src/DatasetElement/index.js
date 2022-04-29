@@ -204,7 +204,7 @@ const DatasetElement = props => {
                   <a target="_blank">
                     <img
                         className="cbrain-img justify-content-center align-items-center"
-                        src="static/img/cbrain-icon-grey.png" style={{maxWidth: '60px'}}/>
+                        src="static/img/cbrain-long-logo-grey.png" style={{maxWidth: '60px'}}/>
                   </a>}
             </div>
 
