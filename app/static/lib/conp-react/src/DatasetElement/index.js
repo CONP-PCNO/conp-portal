@@ -199,12 +199,12 @@ const DatasetElement = props => {
                   <a target="_blank" href={`${element.cbrain_id}`}>
                     <img
                         className="cbrain-img justify-content-center align-items-center"
-                        src="static/img/cbrain-long-logo-blue.png" style={{maxHeight: '40px'}}/>
+                        src="static/img/cbrain-long-logo-blue.png" style={{maxHeight: '50px'}}/>
                   </a> :
                   <a target="_blank">
                     <img
                         className="cbrain-img justify-content-center align-items-center"
-                        src="static/img/cbrain-long-logo-grey.png" style={{maxWidth: '60px'}}/>
+                        src="static/img/cbrain-long-logo-grey.png" style={{maxHeight: '50px'}}/>
                   </a>}
             </div>
 

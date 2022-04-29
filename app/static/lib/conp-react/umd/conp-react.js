@@ -21940,7 +21940,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "cbrain-img justify-content-center align-items-center",
     src: "static/img/cbrain-long-logo-blue.png",
     style: {
-      maxHeight: '40px'
+      maxHeight: '50px'
     }
   })) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     target: "_blank"
@@ -21948,7 +21948,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "cbrain-img justify-content-center align-items-center",
     src: "static/img/cbrain-long-logo-grey.png",
     style: {
-      maxWidth: '60px'
+      maxHeight: '50px'
     }
   })))))));
 };
