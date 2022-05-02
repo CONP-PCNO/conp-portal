@@ -494,7 +494,7 @@ def dataset_info():
         "ark_id": 'https://n2t.net/' + ark_id_row.ark_id,
         "name": datsdataset.name,
         "id": d.dataset_id,
-        "title": d.name.replace("'", ""),
+        "title": d.name.replace("'", "\'"),
         "remoteUrl": d.remoteUrl,
         "isPrivate": d.is_private,
         "thumbnailURL": "/dataset_logo?id={}".format(d.dataset_id),
