@@ -39,5 +39,7 @@
 	"Mouse models that differ in neurotransmitter release from striatal cholinergic interneurons":"https://portal.cbrain.mcgill.ca/groups/switch?id=9911",
 	"BigBrain dataset - MRISIM (derived dataset)":"https://portal.cbrain.mcgill.ca/groups/switch?id=9908",
 	"BigBrain dataset - Layer Segmentation (derived dataset)":"https://portal.cbrain.mcgill.ca/groups/switch?id=9914",
-	"BigBrain dataset - Hippocampus Segmentation (derived dataset)":"https://portal.cbrain.mcgill.ca/groups/switch?id=9917"
+	"BigBrain dataset - Hippocampus Segmentation (derived dataset)":"https://portal.cbrain.mcgill.ca/groups/switch?id=9917",
+	"Parkinsons Disease Datasets - Neurocon":"https://portal.cbrain.mcgill.ca/groups/switch?id=9926",
+	"Parkinsons Disease Datasets - Taowu":"https://portal.cbrain.mcgill.ca/groups/switch?id=9929"
 }
