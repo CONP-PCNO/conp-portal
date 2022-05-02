@@ -7,16 +7,13 @@ import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
 
 import ViewsIcon from '../social/ViewsIcon'
 import DownloadsIcon from '../social/DownloadsIcon'
-import ArkIdElement from "../ArkIdElement"
+import ArkIdElement from '../ArkIdElement'
+import DownloadModalWindowElement from './DownloadModalWindowElement'
 
 const DatasetElement = props => {
   const { authorized, imagePath, ...element } = props;
 
-  const [datasetSpinnerState, setDatasetSpinnerState] = useState(false)
-
-  const [datasetErrorState, setDatasetErrorState] = useState(false)
-
-  const [datasetErrorText, setDatasetErrorText] = useState("")
+  const [downloadModalOpen, setDownloadModalOpen] = useState(false);
 
   const statusCONP = `${imagePath}/canada.svg`;
 
@@ -32,40 +29,11 @@ const DatasetElement = props => {
       break;
   }
 
-  const downloadDataset = (event) => {
-
-    setDatasetSpinnerState(true)
-    setDatasetErrorState(false)
-
-    fetch(`${element.zipLocation}`)
-      .then((response) => {
-        if (response.ok) {
-          return response.blob();
-        }
-        else {
-          return response.text().then(text => {
-            throw new Error(text)
-          })
-        }
-      })
-      .then(function (blob) {
-        var file = window.URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = file;
-        a.download = "{{ element.zipLocation }}";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      })
-      .catch(function (error) {
-        setDatasetErrorState(true)
-        setDatasetErrorText(`Something went wrong when trying to download this dataset: ${error}`)
-      })
-      .finally(function () {
-        setDatasetSpinnerState(false)
-      }
-      );
-  }
+  const openDownloadModal = () => {
+    $("#downloadModal").modal("show");
+    setDownloadModalOpen(true);
+  };
+  $("#downloadModal").on("hidden.bd.modal", (event) => setDownloadModalOpen(false))
 
   return (
     <div className="card container-fluid" data-type="dataset">
@@ -168,19 +136,13 @@ const DatasetElement = props => {
             </div>
             <div className="col justify-content-center align-items-center">
               {element.showDownloadButton ?
-                <button type="button" className="btn btn-outline-success m-1" onClick={() => downloadDataset()}>
+                <button type="button" className="btn btn-outline-success m-1" onClick={() => openDownloadModal()}>
                   Archived Dataset ({element.size})
-                  <div className="spinner-border text-primary" role="status" hidden={!datasetSpinnerState}>
-                    <span className="sr-only">Loading...</span>
-                  </div>
                 </button> :
                 <button type="button" className="btn btn-outline-secondary m-1 disabled">
                   Archived Dataset (Not Available)
                 </button>
               }
-              <div className="alert alert-danger" role="alert" hidden={!datasetErrorState}>
-                {datasetErrorText}
-              </div>
               <a href={`dataset?id=${element.id}#dataladInstructions`} role="button"
                    className="btn btn-outline-success m-1">
                 DataLad Instructions
@@ -207,10 +169,10 @@ const DatasetElement = props => {
                         src="static/img/cbrain-long-logo-grey.png" style={{maxHeight: '50px'}}/>
                   </a>}
             </div>
-
           </div>
         </div>
       </div>
+      {downloadModalOpen ? <DownloadModalWindowElement {...props} /> : null}
     </div>
   );
 };
