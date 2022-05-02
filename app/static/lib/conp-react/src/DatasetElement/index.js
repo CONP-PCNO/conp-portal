@@ -169,7 +169,7 @@ const DatasetElement = props => {
             <div className="col justify-content-center align-items-center">
               {element.showDownloadButton ?
                 <button type="button" className="btn btn-outline-success m-1" onClick={() => downloadDataset()}>
-                  Archived Dataset (XX MB)
+                  Archived Dataset ({element.size})
                   <div className="spinner-border text-primary" role="status" hidden={!datasetSpinnerState}>
                     <span className="sr-only">Loading...</span>
                   </div>
@@ -186,7 +186,7 @@ const DatasetElement = props => {
                 DataLad Instructions
               </a>
             </div>
-            <div className="d-flex">
+            <div className="d-flex justify-content-center align-items-center">
               {authIcons.map((icon, index) => <div key={"authIcon_" + index}
                                                    className="text-center p-1">{icon}</div>)}
             </div>

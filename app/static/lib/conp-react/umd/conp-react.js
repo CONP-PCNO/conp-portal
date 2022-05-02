@@ -21905,7 +21905,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     onClick: function onClick() {
       return downloadDataset();
     }
-  }, "Archived Dataset (XX MB)", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "Archived Dataset (", element.size, ")", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "spinner-border text-primary",
     role: "status",
     hidden: !datasetSpinnerState
@@ -21923,7 +21923,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     role: "button",
     className: "btn btn-outline-success m-1"
   }, "DataLad Instructions")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex"
+    className: "d-flex justify-content-center align-items-center"
   }, authIcons.map(function (icon, index) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       key: "authIcon_" + index,
