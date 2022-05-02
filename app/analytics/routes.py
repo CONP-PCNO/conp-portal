@@ -107,8 +107,7 @@ def datasets_views():
                     v.nb_uniq_visitors if v.nb_uniq_visitors is not None else 0)
 
         if not exists and v.dataset_id is not None:
-            dataset_info = Dataset.query.filter_by(dataset_id=v.dataset_id).first()
-            print(dataset_info)
+            dataset_info = Dataset.query.filter_by(dataset_id=v.dataset_id).one()
             element = {
                 "dataset_id": v.dataset_id,
                 "dataset_name": dataset_info.name,
