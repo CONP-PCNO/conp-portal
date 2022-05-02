@@ -105,7 +105,7 @@ const DatasetPageViews = (props) => {
         };
 
         chartData.views.forEach(element => {
-            const label = element.dataset_id.includes('projects/') ? element.dataset_id.split('projects/')[1] : element.dataset_id
+            const label = element.dataset_name
             axes.views[label] = element.nb_hits
         });
 
