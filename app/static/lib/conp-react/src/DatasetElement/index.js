@@ -134,7 +134,7 @@ const DatasetElement = props => {
             <div className="row justify-content-center align-items-center p-2">
               <h7><strong>DOWNLOAD OPTIONS</strong></h7>
             </div>
-            <div className="col justify-content-center align-items-center">
+            <div className="d-flex row btn-group justify-content-center align-items-center">
               {element.showDownloadButton ?
                 <button type="button" className="btn btn-outline-success m-1" onClick={() => openDownloadModal()}>
                   Archived Dataset ({element.size})

@@ -17,7 +17,7 @@ const DownloadModalWindowElement = (props) => {
            <td style={{width:"150px"}}>
              <img src="static/img/conp.png" className="text-center" style={{width:"100%"}}/>
            </td>
-           <td style={{width:"25px"}}></td>
+           <td style={{width:"25px"}}/>
            <td colSpan="41">
              <h4 className="modal-title w-100 text-center" id="modalLongTitle">
                You are about to download a {element.size} file.
