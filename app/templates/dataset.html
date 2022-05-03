@@ -168,13 +168,20 @@
     >
   </div>
   <div class="py-1">
-    <strong>Metadata file: </strong
-    ><a
+    <strong>Metadata file: </strong>
+    <a
       class="text-reset"
       href="#"
       onclick=downloadMetadata()
-      >DATS.json</a
     >
+      DATS.json
+    </a>
+    <i
+      class="fa fa-question-circle"
+      data-toggle="tooltip"
+      title="DATS (DAta Tag Suite) is a data description model designed and produced to describe datasets."
+      style={color:dimgray}
+    ></i>
   </div>
   {% endif %} {% if (metadata.dimensions is not none) or
   (metadata.producedBy is not none) or (metadata.isAbout is not none) or
