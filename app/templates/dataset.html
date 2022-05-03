@@ -167,6 +167,15 @@
       >{{ metadata.sources }}</a
     >
   </div>
+  <div class="py-1">
+    <strong>Metadata file: </strong
+    ><a
+      class="text-reset"
+      href="#"
+      onclick=downloadMetadata()
+      >DATS.json</a
+    >
+  </div>
   {% endif %} {% if (metadata.dimensions is not none) or
   (metadata.producedBy is not none) or (metadata.isAbout is not none) or
   (metadata.acknowledges is not none) or (metadata.spatialCoverage is not none) or
@@ -229,16 +238,6 @@
     </div>
   </div>
   {% endif %}
-  <div class="py-1 col-lg-3 p-0">
-    <button
-      class="btn btn-outline-secondary"
-      onclick=downloadMetadata()
-    >
-      Download DATS.json Metadata File
-    </button>
-    <div class="alert alert-danger" id="dats-download-alert" role="alert" hidden="hidden">
-    </div>
-  </div>
 </div>
 
 <div class="d-flex flex-column p-4">
