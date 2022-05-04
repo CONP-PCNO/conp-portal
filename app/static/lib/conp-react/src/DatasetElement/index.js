@@ -76,7 +76,7 @@ const DatasetElement = props => {
     <div className="card container-fluid" data-type="dataset">
       <div className="row">
         <div className="col col-lg-2 d-flex flex-column p-2">
-          <div className="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+          <div className="flex-grow-1 d-flex flex-column justify-content-center align-items-center pb-3">
             <img
                 alt="dataset format"
                 className="img-fluid w-100"
