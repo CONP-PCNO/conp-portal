@@ -15,7 +15,6 @@ const DatasetElement = props => {
   const { authorized, imagePath, ...element } = props;
 
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
-  const [showUnavailableDownloadText, setShowUnavailableDownloadText] = useState(false);
   const [showCbrainTipText, setShowCbrainTipText] = useState(false);
   const [showDataLadTipText, setShowDataLadTipText] = useState(false);
   const [showDownloadTipText, setShowDownloadTipText] = useState(false);
@@ -32,14 +31,6 @@ const DatasetElement = props => {
       break;
     default:
       break;
-  }
-
-  const handleUnavailableDownloadMouseEnter = e => {
-    setShowUnavailableDownloadText(true);
-  }
-
-  const handleUnavailableDownloadMouseLeave = e => {
-    setShowUnavailableDownloadText(false);
   }
 
   const handleCrainMouseEnter = e => {
@@ -176,13 +167,7 @@ const DatasetElement = props => {
                 >
                   Direct Download ({element.size})
                 </button> :
-                <div
-                    className="btn btn-outline-secondary m-1 disabled"
-                    onMouseEnter={handleUnavailableDownloadMouseEnter}
-                    onMouseLeave={handleUnavailableDownloadMouseLeave}
-                    data-tip
-                    data-for="unavailableDownloadTip"
-                >
+                <div className="btn btn-outline-secondary m-1 disabled">
                   Direct Download (Not Available)
                 </div>
               }
@@ -201,21 +186,12 @@ const DatasetElement = props => {
                 {showDownloadTipText &&
                   <ReactToolTip id="downloadTip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
                     Direct download is available for datasets that do not require <br/>
-                    a third-party account to access the data.
+                    a third-party account to access the data. Datasets requiring a <br/>
+                    third-party account can be downloaded via DataLad.
                   </ReactToolTip>
                 }
               </p>
             </div>
-              {showUnavailableDownloadText &&
-                <ReactToolTip
-                  id="unavailableDownloadTip"
-                  multiline={true}
-                  style={{ Width: "70px", WhiteSpace: "pre-wrap" }}
-                >
-                  This dataset is not available for direct download from the <br/>
-                  portal since its access requires a third-party account.<br/>
-                  To download this dataset, please refer to the DataLad Instructions.
-                </ReactToolTip>}
           </div>
 
           <div className="row align-items-center w-100">
