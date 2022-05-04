@@ -247,7 +247,6 @@ const DatasetElement = props => {
 
           <div className="row w-100 align-items-center">
             <div className="col-10 p-0">
-
               {element.cbrain_id ?
                 <a target="_blank" href={`${element.cbrain_id}`} role="button" className="btn btn-outline-success m-1">
                   <div class="d-flex row align-items-center justify-content-center">
