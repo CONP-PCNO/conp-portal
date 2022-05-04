@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import ReactToolTip from "react-tooltip";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserLock } from '@fortawesome/free-solid-svg-icons'
+import {faQuestionCircle, faUserLock} from '@fortawesome/free-solid-svg-icons'
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
 
 import ViewsIcon from '../social/ViewsIcon'
@@ -14,6 +15,8 @@ const DatasetElement = props => {
   const { authorized, imagePath, ...element } = props;
 
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
+  const [showUnavailableDownloadText, setShowUnavailableDownloadText] = useState(false);
+  const [showCbrainTipText, setShowCbrainTipText] = useState(false);
 
   const statusCONP = `${imagePath}/canada.svg`;
 
@@ -27,6 +30,22 @@ const DatasetElement = props => {
       break;
     default:
       break;
+  }
+
+  const handleUnavailableDownloadMouseEnter = e => {
+    setShowUnavailableDownloadText(true);
+  }
+
+  const handleUnavailableDownloadMouseLeave = e => {
+    setShowUnavailableDownloadText(false);
+  }
+
+  const handleCrainMouseEnter = e => {
+    setShowCbrainTipText(true);
+  }
+
+  const handleCrainMouseLeave = e => {
+    setShowCbrainTipText(false);
   }
 
   const openDownloadModal = () => {
@@ -136,13 +155,34 @@ const DatasetElement = props => {
             </div>
             <div className="d-flex row btn-group justify-content-center align-items-center">
               {element.showDownloadButton ?
-                <button type="button" className="btn btn-outline-success m-1" onClick={() => openDownloadModal()}>
+                <button
+                  type="button"
+                  className="btn btn-outline-success m-1"
+                  onClick={() => openDownloadModal()}
+                >
                   Archived Dataset ({element.size})
                 </button> :
-                <button type="button" className="btn btn-outline-secondary m-1 disabled">
+                <div
+                    className="btn btn-outline-secondary m-1 disabled"
+                    onMouseEnter={handleUnavailableDownloadMouseEnter}
+                    onMouseLeave={handleUnavailableDownloadMouseLeave}
+                    data-tip
+                    data-for="unavailableDownloadTip"
+                >
                   Archived Dataset (Not Available)
-                </button>
+                </div>
               }
+              {showUnavailableDownloadText &&
+                <ReactToolTip
+                  id="unavailableDownloadTip"
+                  multiline={true}
+                  style={{ Width: "70px", WhiteSpace: "pre-wrap" }}
+                >
+                  This dataset is not available for direct download from the <br/>
+                  portal since its access requires a third-party account.<br/>
+                  To download this dataset, please refer to the DataLad Instructions.
+                </ReactToolTip>}
+
               <a href={`dataset?id=${element.id}#dataladInstructions`} role="button"
                    className="btn btn-outline-success m-1">
                 DataLad Instructions
@@ -158,16 +198,35 @@ const DatasetElement = props => {
             </div>
             <div className="row justify-content-center align-items-center">
               {element.cbrain_id ?
-                  <a target="_blank" href={`${element.cbrain_id}`}>
-                    <img
-                        className="cbrain-img justify-content-center align-items-center"
-                        src="static/img/cbrain-long-logo-blue.png" style={{maxHeight: '50px'}}/>
-                  </a> :
-                  <a target="_blank">
-                    <img
-                        className="cbrain-img justify-content-center align-items-center"
-                        src="static/img/cbrain-long-logo-grey.png" style={{maxHeight: '50px'}}/>
-                  </a>}
+                <a target="_blank" href={`${element.cbrain_id}`}>
+                  <img
+                      className="cbrain-img justify-content-center align-items-center"
+                      src="static/img/cbrain-long-logo-blue.png" style={{maxHeight: '50px'}}/>
+                </a> :
+                <a target="_blank">
+                  <img
+                      className="cbrain-img justify-content-center align-items-center"
+                      src="static/img/cbrain-long-logo-grey.png" style={{maxHeight: '50px'}}/>
+                </a>
+              }
+              <p className="card-text pl-1">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  color="dimgray"
+                  size="lg"
+                  onMouseEnter={handleCrainMouseEnter}
+                  onMouseLeave={handleCrainMouseLeave}
+                  data-tip
+                  data-for="cbrainTip"
+                />
+                {showCbrainTipText &&
+                  <ReactToolTip id="cbrainTip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
+                    CBRAIN is web-based software that allows researchers to perform <br/>
+                    computationally intensive analyses on data by connecting them to <br/>
+                    High-Performance Computing (HPC) facilities across Canada and around the world.
+                  </ReactToolTip>
+                }
+              </p>
             </div>
           </div>
         </div>
