@@ -3143,529 +3143,7 @@ function _assertThisInitialized(self) {
 }
 
 /***/ }),
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* jshint node: true */
-
-
-function makeArrayFrom(obj) {
-  return Array.prototype.slice.apply(obj);
-}
-
-var
-  PENDING = "pending",
-  RESOLVED = "resolved",
-  REJECTED = "rejected";
-
-function SynchronousPromise(handler) {
-  this.status = PENDING;
-  this._continuations = [];
-  this._parent = null;
-  this._paused = false;
-  if (handler) {
-    handler.call(
-      this,
-      this._continueWith.bind(this),
-      this._failWith.bind(this)
-    );
-  }
-}
-
-function looksLikeAPromise(obj) {
-  return obj && typeof (obj.then) === "function";
-}
-
-function passThrough(value) {
-  return value;
-}
-
-SynchronousPromise.prototype = {
-  then: function (nextFn, catchFn) {
-    var next = SynchronousPromise.unresolved()._setParent(this);
-    if (this._isRejected()) {
-      if (this._paused) {
-        this._continuations.push({
-          promise: next,
-          nextFn: nextFn,
-          catchFn: catchFn
-        });
-        return next;
-      }
-      if (catchFn) {
-        try {
-          var catchResult = catchFn(this._error);
-          if (looksLikeAPromise(catchResult)) {
-            this._chainPromiseData(catchResult, next);
-            return next;
-          } else {
-            return SynchronousPromise.resolve(catchResult)._setParent(this);
-          }
-        } catch (e) {
-          return SynchronousPromise.reject(e)._setParent(this);
-        }
-      }
-      return SynchronousPromise.reject(this._error)._setParent(this);
-    }
-    this._continuations.push({
-      promise: next,
-      nextFn: nextFn,
-      catchFn: catchFn
-    });
-    this._runResolutions();
-    return next;
-  },
-  catch: function (handler) {
-    if (this._isResolved()) {
-      return SynchronousPromise.resolve(this._data)._setParent(this);
-    }
-    var next = SynchronousPromise.unresolved()._setParent(this);
-    this._continuations.push({
-      promise: next,
-      catchFn: handler
-    });
-    this._runRejections();
-    return next;
-  },
-  finally: function (callback) {
-    var ran = false;
-
-    function runFinally(result, err) {
-      if (!ran) {
-        ran = true;
-        if (!callback) {
-          callback = passThrough;
-        }
-        var callbackResult = callback(result);
-        if (looksLikeAPromise(callbackResult)) {
-          return callbackResult.then(function () {
-            if (err) {
-              throw err;
-            }
-            return result;
-          });
-        } else {
-          return result;
-        }
-      }
-    }
-
-    return this
-      .then(function (result) {
-        return runFinally(result);
-      })
-      .catch(function (err) {
-        return runFinally(null, err);
-      });
-  },
-  pause: function () {
-    this._paused = true;
-    return this;
-  },
-  resume: function () {
-    var firstPaused = this._findFirstPaused();
-    if (firstPaused) {
-      firstPaused._paused = false;
-      firstPaused._runResolutions();
-      firstPaused._runRejections();
-    }
-    return this;
-  },
-  _findAncestry: function () {
-    return this._continuations.reduce(function (acc, cur) {
-      if (cur.promise) {
-        var node = {
-          promise: cur.promise,
-          children: cur.promise._findAncestry()
-        };
-        acc.push(node);
-      }
-      return acc;
-    }, []);
-  },
-  _setParent: function (parent) {
-    if (this._parent) {
-      throw new Error("parent already set");
-    }
-    this._parent = parent;
-    return this;
-  },
-  _continueWith: function (data) {
-    var firstPending = this._findFirstPending();
-    if (firstPending) {
-      firstPending._data = data;
-      firstPending._setResolved();
-    }
-  },
-  _findFirstPending: function () {
-    return this._findFirstAncestor(function (test) {
-      return test._isPending && test._isPending();
-    });
-  },
-  _findFirstPaused: function () {
-    return this._findFirstAncestor(function (test) {
-      return test._paused;
-    });
-  },
-  _findFirstAncestor: function (matching) {
-    var test = this;
-    var result;
-    while (test) {
-      if (matching(test)) {
-        result = test;
-      }
-      test = test._parent;
-    }
-    return result;
-  },
-  _failWith: function (error) {
-    var firstRejected = this._findFirstPending();
-    if (firstRejected) {
-      firstRejected._error = error;
-      firstRejected._setRejected();
-    }
-  },
-  _takeContinuations: function () {
-    return this._continuations.splice(0, this._continuations.length);
-  },
-  _runRejections: function () {
-    if (this._paused || !this._isRejected()) {
-      return;
-    }
-    var
-      error = this._error,
-      continuations = this._takeContinuations(),
-      self = this;
-    continuations.forEach(function (cont) {
-      if (cont.catchFn) {
-        try {
-          var catchResult = cont.catchFn(error);
-          self._handleUserFunctionResult(catchResult, cont.promise);
-        } catch (e) {
-          cont.promise.reject(e);
-        }
-      } else {
-        cont.promise.reject(error);
-      }
-    });
-  },
-  _runResolutions: function () {
-    if (this._paused || !this._isResolved() || this._isPending()) {
-      return;
-    }
-    var continuations = this._takeContinuations();
-    if (looksLikeAPromise(this._data)) {
-      return this._handleWhenResolvedDataIsPromise(this._data);
-    }
-    var data = this._data;
-    var self = this;
-    continuations.forEach(function (cont) {
-      if (cont.nextFn) {
-        try {
-          var result = cont.nextFn(data);
-          self._handleUserFunctionResult(result, cont.promise);
-        } catch (e) {
-          self._handleResolutionError(e, cont);
-        }
-      } else if (cont.promise) {
-        cont.promise.resolve(data);
-      }
-    });
-  },
-  _handleResolutionError: function (e, continuation) {
-    this._setRejected();
-    if (continuation.catchFn) {
-      try {
-        continuation.catchFn(e);
-        return;
-      } catch (e2) {
-        e = e2;
-      }
-    }
-    if (continuation.promise) {
-      continuation.promise.reject(e);
-    }
-  },
-  _handleWhenResolvedDataIsPromise: function (data) {
-    var self = this;
-    return data.then(function (result) {
-      self._data = result;
-      self._runResolutions();
-    }).catch(function (error) {
-      self._error = error;
-      self._setRejected();
-      self._runRejections();
-    });
-  },
-  _handleUserFunctionResult: function (data, nextSynchronousPromise) {
-    if (looksLikeAPromise(data)) {
-      this._chainPromiseData(data, nextSynchronousPromise);
-    } else {
-      nextSynchronousPromise.resolve(data);
-    }
-  },
-  _chainPromiseData: function (promiseData, nextSynchronousPromise) {
-    promiseData.then(function (newData) {
-      nextSynchronousPromise.resolve(newData);
-    }).catch(function (newError) {
-      nextSynchronousPromise.reject(newError);
-    });
-  },
-  _setResolved: function () {
-    this.status = RESOLVED;
-    if (!this._paused) {
-      this._runResolutions();
-    }
-  },
-  _setRejected: function () {
-    this.status = REJECTED;
-    if (!this._paused) {
-      this._runRejections();
-    }
-  },
-  _isPending: function () {
-    return this.status === PENDING;
-  },
-  _isResolved: function () {
-    return this.status === RESOLVED;
-  },
-  _isRejected: function () {
-    return this.status === REJECTED;
-  }
-};
-
-SynchronousPromise.resolve = function (result) {
-  return new SynchronousPromise(function (resolve, reject) {
-    if (looksLikeAPromise(result)) {
-      result.then(function (newResult) {
-        resolve(newResult);
-      }).catch(function (error) {
-        reject(error);
-      });
-    } else {
-      resolve(result);
-    }
-  });
-};
-
-SynchronousPromise.reject = function (result) {
-  return new SynchronousPromise(function (resolve, reject) {
-    reject(result);
-  });
-};
-
-SynchronousPromise.unresolved = function () {
-  return new SynchronousPromise(function (resolve, reject) {
-    this.resolve = resolve;
-    this.reject = reject;
-  });
-};
-
-SynchronousPromise.all = function () {
-  var args = makeArrayFrom(arguments);
-  if (Array.isArray(args[0])) {
-    args = args[0];
-  }
-  if (!args.length) {
-    return SynchronousPromise.resolve([]);
-  }
-  return new SynchronousPromise(function (resolve, reject) {
-    var
-      allData = [],
-      numResolved = 0,
-      doResolve = function () {
-        if (numResolved === args.length) {
-          resolve(allData);
-        }
-      },
-      rejected = false,
-      doReject = function (err) {
-        if (rejected) {
-          return;
-        }
-        rejected = true;
-        reject(err);
-      };
-    args.forEach(function (arg, idx) {
-      SynchronousPromise.resolve(arg).then(function (thisResult) {
-        allData[idx] = thisResult;
-        numResolved += 1;
-        doResolve();
-      }).catch(function (err) {
-        doReject(err);
-      });
-    });
-  });
-};
-
-function createAggregateErrorFrom(errors) {
-  /* jshint ignore:start */
-  if (typeof window !== "undefined" && "AggregateError" in window) {
-    return new window.AggregateError(errors);
-  }
-  /* jshint ignore:end */
-
-  return { errors: errors };
-}
-
-SynchronousPromise.any = function () {
-  var args = makeArrayFrom(arguments);
-  if (Array.isArray(args[0])) {
-    args = args[0];
-  }
-  if (!args.length) {
-    return SynchronousPromise.reject(createAggregateErrorFrom([]));
-  }
-  return new SynchronousPromise(function (resolve, reject) {
-    var
-      allErrors = [],
-      numRejected = 0,
-      doReject = function () {
-        if (numRejected === args.length) {
-          reject(createAggregateErrorFrom(allErrors));
-        }
-      },
-      resolved = false,
-      doResolve = function (result) {
-        if (resolved) {
-          return;
-        }
-        resolved = true;
-        resolve(result);
-      };
-    args.forEach(function (arg, idx) {
-      SynchronousPromise.resolve(arg).then(function (thisResult) {
-        doResolve(thisResult);
-      }).catch(function (err) {
-        allErrors[idx] = err;
-        numRejected += 1;
-        doReject();
-      });
-    });
-  });
-};
-
-SynchronousPromise.allSettled = function () {
-  var args = makeArrayFrom(arguments);
-  if (Array.isArray(args[0])) {
-    args = args[0];
-  }
-  if (!args.length) {
-    return SynchronousPromise.resolve([]);
-  }
-  return new SynchronousPromise(function (resolve) {
-    var
-      allData = [],
-      numSettled = 0,
-      doSettled = function () {
-        numSettled += 1;
-        if (numSettled === args.length) {
-          resolve(allData);
-        }
-      };
-    args.forEach(function (arg, idx) {
-      SynchronousPromise.resolve(arg).then(function (thisResult) {
-        allData[idx] = {
-          status: "fulfilled",
-          value: thisResult
-        };
-        doSettled();
-      }).catch(function (err) {
-        allData[idx] = {
-          status: "rejected",
-          reason: err
-        };
-        doSettled();
-      });
-    });
-  });
-};
-
-/* jshint ignore:start */
-if (Promise === SynchronousPromise) {
-  throw new Error("Please use SynchronousPromise.installGlobally() to install globally");
-}
-var RealPromise = Promise;
-SynchronousPromise.installGlobally = function (__awaiter) {
-  if (Promise === SynchronousPromise) {
-    return __awaiter;
-  }
-  var result = patchAwaiterIfRequired(__awaiter);
-  Promise = SynchronousPromise;
-  return result;
-};
-
-SynchronousPromise.uninstallGlobally = function () {
-  if (Promise === SynchronousPromise) {
-    Promise = RealPromise;
-  }
-};
-
-function patchAwaiterIfRequired(__awaiter) {
-  if (typeof (__awaiter) === "undefined" || __awaiter.__patched) {
-    return __awaiter;
-  }
-  var originalAwaiter = __awaiter;
-  __awaiter = function () {
-    var Promise = RealPromise;
-    originalAwaiter.apply(this, makeArrayFrom(arguments));
-  };
-  __awaiter.__patched = true;
-  return __awaiter;
-}
-
-/* jshint ignore:end */
-
-module.exports = {
-  SynchronousPromise: SynchronousPromise
-};
-
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-if (true) {
-  module.exports = __webpack_require__(127);
-} else {}
-
-
-/***/ }),
-/* 52 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6312,7 +5790,529 @@ function (_React$Component) {
 /* harmony default export */ __webpack_exports__["a"] = (ReactTooltip);
 //# sourceMappingURL=index.es.js.map
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(49)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(50)))
+
+/***/ }),
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* jshint node: true */
+
+
+function makeArrayFrom(obj) {
+  return Array.prototype.slice.apply(obj);
+}
+
+var
+  PENDING = "pending",
+  RESOLVED = "resolved",
+  REJECTED = "rejected";
+
+function SynchronousPromise(handler) {
+  this.status = PENDING;
+  this._continuations = [];
+  this._parent = null;
+  this._paused = false;
+  if (handler) {
+    handler.call(
+      this,
+      this._continueWith.bind(this),
+      this._failWith.bind(this)
+    );
+  }
+}
+
+function looksLikeAPromise(obj) {
+  return obj && typeof (obj.then) === "function";
+}
+
+function passThrough(value) {
+  return value;
+}
+
+SynchronousPromise.prototype = {
+  then: function (nextFn, catchFn) {
+    var next = SynchronousPromise.unresolved()._setParent(this);
+    if (this._isRejected()) {
+      if (this._paused) {
+        this._continuations.push({
+          promise: next,
+          nextFn: nextFn,
+          catchFn: catchFn
+        });
+        return next;
+      }
+      if (catchFn) {
+        try {
+          var catchResult = catchFn(this._error);
+          if (looksLikeAPromise(catchResult)) {
+            this._chainPromiseData(catchResult, next);
+            return next;
+          } else {
+            return SynchronousPromise.resolve(catchResult)._setParent(this);
+          }
+        } catch (e) {
+          return SynchronousPromise.reject(e)._setParent(this);
+        }
+      }
+      return SynchronousPromise.reject(this._error)._setParent(this);
+    }
+    this._continuations.push({
+      promise: next,
+      nextFn: nextFn,
+      catchFn: catchFn
+    });
+    this._runResolutions();
+    return next;
+  },
+  catch: function (handler) {
+    if (this._isResolved()) {
+      return SynchronousPromise.resolve(this._data)._setParent(this);
+    }
+    var next = SynchronousPromise.unresolved()._setParent(this);
+    this._continuations.push({
+      promise: next,
+      catchFn: handler
+    });
+    this._runRejections();
+    return next;
+  },
+  finally: function (callback) {
+    var ran = false;
+
+    function runFinally(result, err) {
+      if (!ran) {
+        ran = true;
+        if (!callback) {
+          callback = passThrough;
+        }
+        var callbackResult = callback(result);
+        if (looksLikeAPromise(callbackResult)) {
+          return callbackResult.then(function () {
+            if (err) {
+              throw err;
+            }
+            return result;
+          });
+        } else {
+          return result;
+        }
+      }
+    }
+
+    return this
+      .then(function (result) {
+        return runFinally(result);
+      })
+      .catch(function (err) {
+        return runFinally(null, err);
+      });
+  },
+  pause: function () {
+    this._paused = true;
+    return this;
+  },
+  resume: function () {
+    var firstPaused = this._findFirstPaused();
+    if (firstPaused) {
+      firstPaused._paused = false;
+      firstPaused._runResolutions();
+      firstPaused._runRejections();
+    }
+    return this;
+  },
+  _findAncestry: function () {
+    return this._continuations.reduce(function (acc, cur) {
+      if (cur.promise) {
+        var node = {
+          promise: cur.promise,
+          children: cur.promise._findAncestry()
+        };
+        acc.push(node);
+      }
+      return acc;
+    }, []);
+  },
+  _setParent: function (parent) {
+    if (this._parent) {
+      throw new Error("parent already set");
+    }
+    this._parent = parent;
+    return this;
+  },
+  _continueWith: function (data) {
+    var firstPending = this._findFirstPending();
+    if (firstPending) {
+      firstPending._data = data;
+      firstPending._setResolved();
+    }
+  },
+  _findFirstPending: function () {
+    return this._findFirstAncestor(function (test) {
+      return test._isPending && test._isPending();
+    });
+  },
+  _findFirstPaused: function () {
+    return this._findFirstAncestor(function (test) {
+      return test._paused;
+    });
+  },
+  _findFirstAncestor: function (matching) {
+    var test = this;
+    var result;
+    while (test) {
+      if (matching(test)) {
+        result = test;
+      }
+      test = test._parent;
+    }
+    return result;
+  },
+  _failWith: function (error) {
+    var firstRejected = this._findFirstPending();
+    if (firstRejected) {
+      firstRejected._error = error;
+      firstRejected._setRejected();
+    }
+  },
+  _takeContinuations: function () {
+    return this._continuations.splice(0, this._continuations.length);
+  },
+  _runRejections: function () {
+    if (this._paused || !this._isRejected()) {
+      return;
+    }
+    var
+      error = this._error,
+      continuations = this._takeContinuations(),
+      self = this;
+    continuations.forEach(function (cont) {
+      if (cont.catchFn) {
+        try {
+          var catchResult = cont.catchFn(error);
+          self._handleUserFunctionResult(catchResult, cont.promise);
+        } catch (e) {
+          cont.promise.reject(e);
+        }
+      } else {
+        cont.promise.reject(error);
+      }
+    });
+  },
+  _runResolutions: function () {
+    if (this._paused || !this._isResolved() || this._isPending()) {
+      return;
+    }
+    var continuations = this._takeContinuations();
+    if (looksLikeAPromise(this._data)) {
+      return this._handleWhenResolvedDataIsPromise(this._data);
+    }
+    var data = this._data;
+    var self = this;
+    continuations.forEach(function (cont) {
+      if (cont.nextFn) {
+        try {
+          var result = cont.nextFn(data);
+          self._handleUserFunctionResult(result, cont.promise);
+        } catch (e) {
+          self._handleResolutionError(e, cont);
+        }
+      } else if (cont.promise) {
+        cont.promise.resolve(data);
+      }
+    });
+  },
+  _handleResolutionError: function (e, continuation) {
+    this._setRejected();
+    if (continuation.catchFn) {
+      try {
+        continuation.catchFn(e);
+        return;
+      } catch (e2) {
+        e = e2;
+      }
+    }
+    if (continuation.promise) {
+      continuation.promise.reject(e);
+    }
+  },
+  _handleWhenResolvedDataIsPromise: function (data) {
+    var self = this;
+    return data.then(function (result) {
+      self._data = result;
+      self._runResolutions();
+    }).catch(function (error) {
+      self._error = error;
+      self._setRejected();
+      self._runRejections();
+    });
+  },
+  _handleUserFunctionResult: function (data, nextSynchronousPromise) {
+    if (looksLikeAPromise(data)) {
+      this._chainPromiseData(data, nextSynchronousPromise);
+    } else {
+      nextSynchronousPromise.resolve(data);
+    }
+  },
+  _chainPromiseData: function (promiseData, nextSynchronousPromise) {
+    promiseData.then(function (newData) {
+      nextSynchronousPromise.resolve(newData);
+    }).catch(function (newError) {
+      nextSynchronousPromise.reject(newError);
+    });
+  },
+  _setResolved: function () {
+    this.status = RESOLVED;
+    if (!this._paused) {
+      this._runResolutions();
+    }
+  },
+  _setRejected: function () {
+    this.status = REJECTED;
+    if (!this._paused) {
+      this._runRejections();
+    }
+  },
+  _isPending: function () {
+    return this.status === PENDING;
+  },
+  _isResolved: function () {
+    return this.status === RESOLVED;
+  },
+  _isRejected: function () {
+    return this.status === REJECTED;
+  }
+};
+
+SynchronousPromise.resolve = function (result) {
+  return new SynchronousPromise(function (resolve, reject) {
+    if (looksLikeAPromise(result)) {
+      result.then(function (newResult) {
+        resolve(newResult);
+      }).catch(function (error) {
+        reject(error);
+      });
+    } else {
+      resolve(result);
+    }
+  });
+};
+
+SynchronousPromise.reject = function (result) {
+  return new SynchronousPromise(function (resolve, reject) {
+    reject(result);
+  });
+};
+
+SynchronousPromise.unresolved = function () {
+  return new SynchronousPromise(function (resolve, reject) {
+    this.resolve = resolve;
+    this.reject = reject;
+  });
+};
+
+SynchronousPromise.all = function () {
+  var args = makeArrayFrom(arguments);
+  if (Array.isArray(args[0])) {
+    args = args[0];
+  }
+  if (!args.length) {
+    return SynchronousPromise.resolve([]);
+  }
+  return new SynchronousPromise(function (resolve, reject) {
+    var
+      allData = [],
+      numResolved = 0,
+      doResolve = function () {
+        if (numResolved === args.length) {
+          resolve(allData);
+        }
+      },
+      rejected = false,
+      doReject = function (err) {
+        if (rejected) {
+          return;
+        }
+        rejected = true;
+        reject(err);
+      };
+    args.forEach(function (arg, idx) {
+      SynchronousPromise.resolve(arg).then(function (thisResult) {
+        allData[idx] = thisResult;
+        numResolved += 1;
+        doResolve();
+      }).catch(function (err) {
+        doReject(err);
+      });
+    });
+  });
+};
+
+function createAggregateErrorFrom(errors) {
+  /* jshint ignore:start */
+  if (typeof window !== "undefined" && "AggregateError" in window) {
+    return new window.AggregateError(errors);
+  }
+  /* jshint ignore:end */
+
+  return { errors: errors };
+}
+
+SynchronousPromise.any = function () {
+  var args = makeArrayFrom(arguments);
+  if (Array.isArray(args[0])) {
+    args = args[0];
+  }
+  if (!args.length) {
+    return SynchronousPromise.reject(createAggregateErrorFrom([]));
+  }
+  return new SynchronousPromise(function (resolve, reject) {
+    var
+      allErrors = [],
+      numRejected = 0,
+      doReject = function () {
+        if (numRejected === args.length) {
+          reject(createAggregateErrorFrom(allErrors));
+        }
+      },
+      resolved = false,
+      doResolve = function (result) {
+        if (resolved) {
+          return;
+        }
+        resolved = true;
+        resolve(result);
+      };
+    args.forEach(function (arg, idx) {
+      SynchronousPromise.resolve(arg).then(function (thisResult) {
+        doResolve(thisResult);
+      }).catch(function (err) {
+        allErrors[idx] = err;
+        numRejected += 1;
+        doReject();
+      });
+    });
+  });
+};
+
+SynchronousPromise.allSettled = function () {
+  var args = makeArrayFrom(arguments);
+  if (Array.isArray(args[0])) {
+    args = args[0];
+  }
+  if (!args.length) {
+    return SynchronousPromise.resolve([]);
+  }
+  return new SynchronousPromise(function (resolve) {
+    var
+      allData = [],
+      numSettled = 0,
+      doSettled = function () {
+        numSettled += 1;
+        if (numSettled === args.length) {
+          resolve(allData);
+        }
+      };
+    args.forEach(function (arg, idx) {
+      SynchronousPromise.resolve(arg).then(function (thisResult) {
+        allData[idx] = {
+          status: "fulfilled",
+          value: thisResult
+        };
+        doSettled();
+      }).catch(function (err) {
+        allData[idx] = {
+          status: "rejected",
+          reason: err
+        };
+        doSettled();
+      });
+    });
+  });
+};
+
+/* jshint ignore:start */
+if (Promise === SynchronousPromise) {
+  throw new Error("Please use SynchronousPromise.installGlobally() to install globally");
+}
+var RealPromise = Promise;
+SynchronousPromise.installGlobally = function (__awaiter) {
+  if (Promise === SynchronousPromise) {
+    return __awaiter;
+  }
+  var result = patchAwaiterIfRequired(__awaiter);
+  Promise = SynchronousPromise;
+  return result;
+};
+
+SynchronousPromise.uninstallGlobally = function () {
+  if (Promise === SynchronousPromise) {
+    Promise = RealPromise;
+  }
+};
+
+function patchAwaiterIfRequired(__awaiter) {
+  if (typeof (__awaiter) === "undefined" || __awaiter.__patched) {
+    return __awaiter;
+  }
+  var originalAwaiter = __awaiter;
+  __awaiter = function () {
+    var Promise = RealPromise;
+    originalAwaiter.apply(this, makeArrayFrom(arguments));
+  };
+  __awaiter.__patched = true;
+  return __awaiter;
+}
+
+/* jshint ignore:end */
+
+module.exports = {
+  SynchronousPromise: SynchronousPromise
+};
+
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+if (true) {
+  module.exports = __webpack_require__(127);
+} else {}
+
 
 /***/ }),
 /* 53 */
@@ -8782,7 +8782,7 @@ var autoReplace = function autoReplace() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(49), __webpack_require__(115).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(50), __webpack_require__(115).setImmediate))
 
 /***/ }),
 /* 55 */,
@@ -8994,7 +8994,7 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 
 /* harmony default export */ __webpack_exports__["a"] = (freeGlobal);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(49)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(50)))
 
 /***/ }),
 /* 63 */
@@ -11989,7 +11989,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(49)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(50)))
 
 /***/ }),
 /* 116 */
@@ -12182,7 +12182,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(49), __webpack_require__(117)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(50), __webpack_require__(117)))
 
 /***/ }),
 /* 117 */
@@ -13071,7 +13071,7 @@ exports.unstable_scheduleCallback=function(a,b){var c=-1!==k?k:exports.unstable_
 b=c.previous;b.next=c.previous=a;a.next=c;a.previous=b}return a};exports.unstable_cancelCallback=function(a){var b=a.next;if(null!==b){if(b===a)d=null;else{a===d&&(d=b);var c=a.previous;c.next=b;b.previous=c}a.next=a.previous=null}};exports.unstable_wrapCallback=function(a){var b=g;return function(){var c=g,f=k;g=b;k=exports.unstable_now();try{return a.apply(this,arguments)}finally{g=c,k=f,v()}}};exports.unstable_getCurrentPriorityLevel=function(){return g};
 exports.unstable_shouldYield=function(){return!e&&(null!==d&&d.expirationTime<l||w())};exports.unstable_continueExecution=function(){null!==d&&p()};exports.unstable_pauseExecution=function(){};exports.unstable_getFirstCallbackNode=function(){return d};
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(49)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(50)))
 
 /***/ }),
 /* 125 */
@@ -14191,7 +14191,7 @@ DataTableContainer_DataTableContainer.defaultProps = {
 
 
 // EXTERNAL MODULE: ./node_modules/react-tooltip/dist/index.es.js
-var index_es = __webpack_require__(52);
+var index_es = __webpack_require__(45);
 
 // EXTERNAL MODULE: ./node_modules/@fortawesome/fontawesome-svg-core/index.es.js
 var fontawesome_svg_core_index_es = __webpack_require__(54);
@@ -21859,6 +21859,14 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       showCbrainTipText = _useState3[0],
       setShowCbrainTipText = _useState3[1];
 
+  var _useState4 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
+      showDataLadTipText = _useState4[0],
+      setShowDataLadTipText = _useState4[1];
+
+  var _useState5 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
+      showDownloadTipText = _useState5[0],
+      setShowDownloadTipText = _useState5[1];
+
   var statusCONP = imagePath + "/canada.svg";
   var authIcons = [];
 
@@ -21897,6 +21905,22 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
 
   var handleCrainMouseLeave = function handleCrainMouseLeave(e) {
     setShowCbrainTipText(false);
+  };
+
+  var handleDataLadMouseEnter = function handleDataLadMouseEnter(e) {
+    setShowDataLadTipText(true);
+  };
+
+  var handleDataLadMouseLeave = function handleDataLadMouseLeave(e) {
+    setShowDataLadTipText(false);
+  };
+
+  var handleDownloadMouseEnter = function handleDownloadMouseEnter(e) {
+    setShowDownloadTipText(true);
+  };
+
+  var handleDownloadMouseLeave = function handleDownloadMouseLeave(e) {
+    setShowDownloadTipText(false);
   };
 
   var openDownloadModal = function openDownloadModal() {
@@ -21986,63 +22010,106 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   })))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col col-lg-3 d-flex flex-column justify-content-center align-items-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col align-items-center justify-content-center width-auto"
+    className: "row align-items-center justify-content-center w-100"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "row justify-content-center align-items-center p-2"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "DOWNLOAD OPTIONS"))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex row btn-group justify-content-center align-items-center"
+    className: "col-10 p-0"
   }, element.showDownloadButton ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     type: "button",
-    className: "btn btn-outline-success m-1",
+    className: "btn btn-success m-1",
     onClick: function onClick() {
       return openDownloadModal();
     }
-  }, "Archived Dataset (", element.size, ")") : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "Direct Download (", element.size, ")") : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "btn btn-outline-secondary m-1 disabled",
     onMouseEnter: handleUnavailableDownloadMouseEnter,
     onMouseLeave: handleUnavailableDownloadMouseLeave,
     "data-tip": true,
     "data-for": "unavailableDownloadTip"
-  }, "Archived Dataset (Not Available)"), showUnavailableDownloadText && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_es["a" /* default */], {
+  }, "Direct Download (Not Available)")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-2 p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text pl-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
+    icon: faQuestionCircle,
+    color: "dimgray",
+    size: "lg",
+    onMouseEnter: handleDownloadMouseEnter,
+    onMouseLeave: handleDownloadMouseLeave,
+    "data-tip": true,
+    "data-for": "downloadTip"
+  }), showDownloadTipText && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_es["a" /* default */], {
+    id: "downloadTip",
+    multiline: true,
+    style: {
+      Width: "70px",
+      WhiteSpace: "pre-wrap"
+    }
+  }, "Direct download is available for datasets that do not require ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "a third-party account to access the data."))), showUnavailableDownloadText && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_es["a" /* default */], {
     id: "unavailableDownloadTip",
     multiline: true,
     style: {
       Width: "70px",
       WhiteSpace: "pre-wrap"
     }
-  }, "This dataset is not available for direct download from the ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "portal since its access requires a third-party account.", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "To download this dataset, please refer to the DataLad Instructions."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+  }, "This dataset is not available for direct download from the ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "portal since its access requires a third-party account.", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "To download this dataset, please refer to the DataLad Instructions.")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "row align-items-center w-100"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-10 p-0"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     href: "dataset?id=" + element.id + "#dataladInstructions",
     role: "button",
-    className: "btn btn-outline-success m-1"
-  }, "DataLad Instructions")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex justify-content-center align-items-center"
-  }, authIcons.map(function (icon, index) {
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      key: "authIcon_" + index,
-      className: "text-center p-1"
-    }, icon);
-  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "row justify-content-center align-items-center p-2"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "PROCESS ON"))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "row justify-content-center align-items-center"
+    className: "btn btn-success m-1"
+  }, "Download With DataLad")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-2 p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    className: "card-text pl-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
+    icon: faQuestionCircle,
+    color: "dimgray",
+    size: "lg",
+    onMouseEnter: handleDataLadMouseEnter,
+    onMouseLeave: handleDataLadMouseLeave,
+    "data-tip": true,
+    "data-for": "dataladTip"
+  }), showDataLadTipText && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_es["a" /* default */], {
+    id: "dataladTip",
+    multiline: true,
+    style: {
+      Width: "70px",
+      WhiteSpace: "pre-wrap"
+    }
+  }, "DataLad ...")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "row w-100 align-items-center"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-10 p-0"
   }, element.cbrain_id ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     target: "_blank",
-    href: "" + element.cbrain_id
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-    className: "cbrain-img justify-content-center align-items-center",
+    href: "" + element.cbrain_id,
+    role: "button",
+    className: "btn btn-outline-success m-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    "class": "d-flex row align-items-center justify-content-center"
+  }, "Process On ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    className: "cbrain-img justify-content-center align-items-center pl-4",
     src: "static/img/cbrain-long-logo-blue.png",
     style: {
-      maxHeight: '50px'
+      maxHeight: '30px'
     }
-  })) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
-    target: "_blank"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-    className: "cbrain-img justify-content-center align-items-center",
+  }))) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    target: "_blank",
+    role: "button",
+    className: "btn btn-outline-secondary disabled m-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex row align-items-center justify-content-center"
+  }, "Process On", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    className: "cbrain-img justify-content-center align-items-center pl-4",
     src: "static/img/cbrain-long-logo-grey.png",
     style: {
-      maxHeight: '50px'
+      maxHeight: '30px'
     }
-  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+  })))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-2 p-2"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
     className: "card-text pl-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
     icon: faQuestionCircle,
@@ -22059,7 +22126,14 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       Width: "70px",
       WhiteSpace: "pre-wrap"
     }
-  }, "CBRAIN is web-based software that allows researchers to perform ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "computationally intensive analyses on data by connecting them to ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "High-Performance Computing (HPC) facilities across Canada and around the world.")))))), downloadModalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(DatasetElement_DownloadModalWindowElement, props) : null);
+  }, "CBRAIN is web-based software that allows researchers to perform ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "computationally intensive analyses on data by connecting them to ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "High-Performance Computing (HPC) facilities across Canada and around the world.")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "d-flex justify-content-center align-items-center"
+  }, authIcons.map(function (icon, index) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      key: "authIcon_" + index,
+      className: "text-center p-1"
+    }, icon);
+  })))), downloadModalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(DatasetElement_DownloadModalWindowElement, props) : null);
 };
 
 DatasetElement_DatasetElement.propTypes = {
@@ -33059,7 +33133,7 @@ var Stepper_Stepper = /*#__PURE__*/external_root_React_commonjs2_react_commonjs_
   name: 'MuiStepper'
 })(Stepper_Stepper));
 // EXTERNAL MODULE: ./node_modules/react-is/index.js
-var react_is = __webpack_require__(51);
+var react_is = __webpack_require__(52);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Step/Step.js
 
@@ -34340,7 +34414,7 @@ var Condition_Condition = /*#__PURE__*/function () {
 
 /* harmony default export */ var es_Condition = (Condition_Condition);
 // EXTERNAL MODULE: ./node_modules/synchronous-promise/index.js
-var synchronous_promise = __webpack_require__(50);
+var synchronous_promise = __webpack_require__(51);
 
 // CONCATENATED MODULE: ./node_modules/yup/es/ValidationError.js
 

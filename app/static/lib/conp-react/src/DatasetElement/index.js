@@ -17,6 +17,8 @@ const DatasetElement = props => {
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
   const [showUnavailableDownloadText, setShowUnavailableDownloadText] = useState(false);
   const [showCbrainTipText, setShowCbrainTipText] = useState(false);
+  const [showDataLadTipText, setShowDataLadTipText] = useState(false);
+  const [showDownloadTipText, setShowDownloadTipText] = useState(false);
 
   const statusCONP = `${imagePath}/canada.svg`;
 
@@ -46,6 +48,22 @@ const DatasetElement = props => {
 
   const handleCrainMouseLeave = e => {
     setShowCbrainTipText(false);
+  }
+
+  const handleDataLadMouseEnter = e => {
+    setShowDataLadTipText(true);
+  }
+
+  const handleDataLadMouseLeave = e => {
+    setShowDataLadTipText(false);
+  }
+
+  const handleDownloadMouseEnter = e => {
+    setShowDownloadTipText(true);
+  }
+
+  const handleDownloadMouseLeave = e => {
+    setShowDownloadTipText(false);
   }
 
   const openDownloadModal = () => {
@@ -148,19 +166,15 @@ const DatasetElement = props => {
           </div>
         </div>
         <div className="col col-lg-3 d-flex flex-column justify-content-center align-items-center p-2">
-          <div className="col align-items-center justify-content-center width-auto">
-
-            <div className="row justify-content-center align-items-center p-2">
-              <h7><strong>DOWNLOAD OPTIONS</strong></h7>
-            </div>
-            <div className="d-flex row btn-group justify-content-center align-items-center">
+          <div className="row align-items-center justify-content-center w-100">
+            <div className="col-10 p-0">
               {element.showDownloadButton ?
                 <button
                   type="button"
-                  className="btn btn-outline-success m-1"
+                  className="btn btn-success m-1"
                   onClick={() => openDownloadModal()}
                 >
-                  Archived Dataset ({element.size})
+                  Direct Download ({element.size})
                 </button> :
                 <div
                     className="btn btn-outline-secondary m-1 disabled"
@@ -169,9 +183,29 @@ const DatasetElement = props => {
                     data-tip
                     data-for="unavailableDownloadTip"
                 >
-                  Archived Dataset (Not Available)
+                  Direct Download (Not Available)
                 </div>
               }
+            </div>
+            <div className="col-2 p-2">
+              <p className="card-text pl-1">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  color="dimgray"
+                  size="lg"
+                  onMouseEnter={handleDownloadMouseEnter}
+                  onMouseLeave={handleDownloadMouseLeave}
+                  data-tip
+                  data-for="downloadTip"
+                />
+                {showDownloadTipText &&
+                  <ReactToolTip id="downloadTip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
+                    Direct download is available for datasets that do not require <br/>
+                    a third-party account to access the data.
+                  </ReactToolTip>
+                }
+              </p>
+            </div>
               {showUnavailableDownloadText &&
                 <ReactToolTip
                   id="unavailableDownloadTip"
@@ -182,33 +216,58 @@ const DatasetElement = props => {
                   portal since its access requires a third-party account.<br/>
                   To download this dataset, please refer to the DataLad Instructions.
                 </ReactToolTip>}
+          </div>
 
+          <div className="row align-items-center w-100">
+            <div className="col-10 p-0">
               <a href={`dataset?id=${element.id}#dataladInstructions`} role="button"
-                   className="btn btn-outline-success m-1">
-                DataLad Instructions
+                   className="btn btn-success m-1">
+                Download With DataLad
               </a>
             </div>
-            <div className="d-flex justify-content-center align-items-center">
-              {authIcons.map((icon, index) => <div key={"authIcon_" + index}
-                                                   className="text-center p-1">{icon}</div>)}
+            <div className="col-2 p-2">
+              <p className="card-text pl-1">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  color="dimgray"
+                  size="lg"
+                  onMouseEnter={handleDataLadMouseEnter}
+                  onMouseLeave={handleDataLadMouseLeave}
+                  data-tip
+                  data-for="dataladTip"
+                />
+                {showDataLadTipText &&
+                  <ReactToolTip id="dataladTip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
+                    DataLad ...
+                  </ReactToolTip>
+                }
+              </p>
             </div>
+          </div>
 
-            <div className="row justify-content-center align-items-center p-2">
-              <h7><strong>PROCESS ON</strong></h7>
-            </div>
-            <div className="row justify-content-center align-items-center">
+          <div className="row w-100 align-items-center">
+            <div className="col-10 p-0">
+
               {element.cbrain_id ?
-                <a target="_blank" href={`${element.cbrain_id}`}>
-                  <img
-                      className="cbrain-img justify-content-center align-items-center"
-                      src="static/img/cbrain-long-logo-blue.png" style={{maxHeight: '50px'}}/>
+                <a target="_blank" href={`${element.cbrain_id}`} role="button" className="btn btn-outline-success m-1">
+                  <div class="d-flex row align-items-center justify-content-center">
+                    Process On <img
+                        className="cbrain-img justify-content-center align-items-center pl-4"
+                        src="static/img/cbrain-long-logo-blue.png" style={{maxHeight: '30px'}}
+                    />
+                  </div>
                 </a> :
-                <a target="_blank">
-                  <img
-                      className="cbrain-img justify-content-center align-items-center"
-                      src="static/img/cbrain-long-logo-grey.png" style={{maxHeight: '50px'}}/>
+                <a target="_blank" role="button" className="btn btn-outline-secondary disabled m-1">
+                  <div className="d-flex row align-items-center justify-content-center">
+                    Process On
+                    <img
+                        className="cbrain-img justify-content-center align-items-center pl-4"
+                        src="static/img/cbrain-long-logo-grey.png" style={{maxHeight: '30px'}}/>
+                  </div>
                 </a>
               }
+            </div>
+            <div className="col-2 p-2">
               <p className="card-text pl-1">
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
@@ -229,6 +288,12 @@ const DatasetElement = props => {
               </p>
             </div>
           </div>
+
+          <div className="d-flex justify-content-center align-items-center">
+              {authIcons.map((icon, index) => <div key={"authIcon_" + index}
+                                                   className="text-center p-1">{icon}</div>)}
+            </div>
+
         </div>
       </div>
       {downloadModalOpen ? <DownloadModalWindowElement {...props} /> : null}
