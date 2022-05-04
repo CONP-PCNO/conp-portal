@@ -125,10 +125,6 @@ const DatasetElement = (props) => {
       });
   };
 
-  const updateSelect = (event) => {
-    props.updateActiveCbrainId(props.id, event.target.value);
-  };
-
   const openModal = () => {
     $("#cbrainModal").modal("show");
     setModalOpen(true);
@@ -288,7 +284,13 @@ const DatasetElement = (props) => {
           </div>
         </div>
       </div>
-      {modalOpen ? <CbrainModalDataset {...props} /> : null}
+      {modalOpen ? (
+        <CbrainModalDataset
+          title={element.title}
+          cbrainIds={element.cbrainIds}
+          cbrain_id={element.cbrain_id}
+        />
+      ): null}
     </>
   );
 };
@@ -316,8 +318,6 @@ DatasetElement.propTypes = {
   sources: PropTypes.number,
   cbrain_id: PropTypes.string,
   cbrainIds: PropTypes.arrayOf(PropTypes.Object),
-  activeCbrainId: PropTypes.string,
-  updateActiveCbrainId: PropTypes.func,
   ark_id: PropTypes.string,
 };
 

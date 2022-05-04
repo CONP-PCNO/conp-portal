@@ -39,7 +39,6 @@ const DataTableContainer = ({
 
   const [isLoading, setIsLoading] = useState(true)
   const [cbrainIdsState, setCbrainIdsState] = useState([]);
-  const [activeCbrainIdsState, setActiveCbrainIdsState] = useState({})
 
   useEffect(() => {
     setQuery({ ...query, limit });
@@ -106,8 +105,6 @@ const DataTableContainer = ({
       setSortKeysState(parsed.sortKeys);
       setFilterKeysState(parsed.filterKeys);
       setAuthorizedState(parsed.authorized);
-
-      setActiveCbrainIdsState(parsed.elements.reduce((acc, cur) => ({...acc, [cur.id]: ""}), {}));
     }
     catch (err) {
       alert("There was an error retrieving the search results.");
@@ -125,9 +122,6 @@ const DataTableContainer = ({
     fetchElements()
   }, [query])
 
-  const updateActiveCbrainId = (elementId, activeValue) => {
-    setActiveCbrainIdsState(prevState => { return {...prevState, [elementId]: activeValue}; });
-  };
 
   return (
     <DataTable
@@ -141,8 +135,6 @@ const DataTableContainer = ({
       setQuery={setQuery}
       isLoading={isLoading}
       cbrainIds={cbrainIdsState}
-      activeCbrainIds={activeCbrainIdsState}
-      updateActiveCbrainId={updateActiveCbrainId}
       {...dataTableProps}
     />
   );

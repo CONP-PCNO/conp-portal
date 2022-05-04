@@ -11,8 +11,6 @@ const DataTable = ({
   total,
   renderElement,
   cbrainIds,
-  activeCbrainIds,
-  updateActiveCbrainId,
   query,
   setQuery,
   isLoading
@@ -363,10 +361,9 @@ const DataTable = ({
               : null}
           {
             elements.map((element, i) => {
-              const activeCbrainId = activeCbrainIds[element.id];
               return (
                 <div key={"" + element.id}>
-                  {React.createElement(renderElement, {...element, authorized, imagePath, cbrainIds, updateActiveCbrainId, activeCbrainId})}
+                  {React.createElement(renderElement, {...element, authorized, imagePath, cbrainIds})}
                 </div>
               );
             })
@@ -423,8 +420,6 @@ DataTable.propTypes = {
   total: PropTypes.number,
   renderElement: PropTypes.func,
   cbrainIds: PropTypes.arrayOf(PropTypes.string),
-  activeCbrainIds: PropTypes.object,
-  updateActiveCbrainId: PropTypes.func,
   query: PropTypes.shape({
     search: PropTypes.string,
     searchPipelineName: PropTypes.string,

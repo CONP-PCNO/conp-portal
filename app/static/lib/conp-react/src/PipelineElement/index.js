@@ -8,9 +8,6 @@ import CbrainModalPipeline from "../CbrainModalPipeline";
 
 const PipelineElement = (props) => {
   const { authorized, ...element } = props;
-  const updateSelect = (event) => {
-    props.updateActiveCbrainId(props.id, event.target.value);
-  };
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -153,7 +150,13 @@ const PipelineElement = (props) => {
           </div>
         </div>
       </div>
-      {modalOpen ? <CbrainModalPipeline {...props} /> : null}
+      {modalOpen ? (
+        <CbrainModalPipeline
+          platforms={element.platforms}
+          title={element.title}
+          cbrainIds={element.cbrainIds}
+        />
+      ) : null}
     </>
   );
 };
@@ -178,8 +181,6 @@ PipelineElement.propTypes = {
   img: PropTypes.string,
   imagePath: PropTypes.string,
   cbrainIds: PropTypes.arrayOf(PropTypes.Object),
-  activeCbrainId: PropTypes.string,
-  updateActiveCbrainId: PropTypes.func,
 };
 
 //PipelineElement.defaultProps = {

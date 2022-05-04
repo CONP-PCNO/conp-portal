@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import * as ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 const CbrainModalPipeline = (props) => {
-  const { authorized, imagePath, ...element } = props;
+  const { platforms, title, cbrainIds } = props;
   const finish = (event) => {
     $("#cbrainModal").modal("hide");
   };
-  const baseUrl = element.platforms[0].uri;
+  const baseUrl = platforms[0].uri;
   const getDatasetId = (datasetUrl) =>
     `switch_group_id=${datasetUrl.split("?id=")[1]}`;
   useEffect(() => {
@@ -16,7 +16,7 @@ const CbrainModalPipeline = (props) => {
   return ReactDOM.createPortal(
     <div>
       <p>
-        You're about to load the pipeline <strong>{element.title}</strong> on
+        You're about to load the pipeline <strong>{title}</strong> on
         CBRAIN. Please select a dataset to process with this pipeline (or "None"
         to load only the pipeline).
       </p>
@@ -43,7 +43,7 @@ const CbrainModalPipeline = (props) => {
         >
           None
         </a>
-        {props.cbrainIds.map((dataset) => (
+        {cbrainIds.map((dataset) => (
           <a
             href={`${baseUrl}&${getDatasetId(dataset.url)}`}
             className="list-group-item list-group-item-action"
@@ -62,35 +62,8 @@ const CbrainModalPipeline = (props) => {
 };
 
 CbrainModalPipeline.propTypes = {
-  authorized: PropTypes.bool,
-  onRunWithCBRAIN: PropTypes.func,
-  // element proptypes
-  id: PropTypes.string,
   title: PropTypes.string,
-  isPrivate: PropTypes.bool,
-  thumbnailURL: PropTypes.string,
-  imagePath: PropTypes.string,
-  downloadPath: PropTypes.string,
-  downloads: PropTypes.number,
-  views: PropTypes.number,
-  likes: PropTypes.number,
-  dateAdded: PropTypes.string,
-  dateUpdated: PropTypes.string,
-  size: PropTypes.string,
-  files: PropTypes.number,
-  subjects: PropTypes.number,
-  formats: PropTypes.string,
-  modalities: PropTypes.string,
-  sources: PropTypes.number,
-  cbrain_id: PropTypes.string,
   cbrainIds: PropTypes.arrayOf(PropTypes.Object),
-  activeCbrainId: PropTypes.string,
-  updateActiveCbrainId: PropTypes.func,
-};
-
-CbrainModalPipeline.defaultProps = {
-  imagePath: "",
-  downloadPath: "",
 };
 
 export default CbrainModalPipeline;

@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import * as ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 const CbrainModalDataset = (props) => {
-  const { authorized, imagePath, ...element } = props;
+  const { cbrain_id, cbrainIds, title } = props;
   const finish = (event) => {
     $("#cbrainModal").modal("hide");
   };
-  const datasetCbrainId = props.cbrain_id.split("?id=")[1];
+  const datasetCbrainId = cbrain_id.split("?id=")[1];
   const baseUrl = `https://portal.cbrain.mcgill.ca/userfiles?switch_group_id=${datasetCbrainId}`;
   const getPipelineId = (pipelineUrl) => pipelineUrl.split("/userfiles?")[1];
 
@@ -18,7 +18,7 @@ const CbrainModalDataset = (props) => {
   return ReactDOM.createPortal(
     <div>
       <p>
-        You're about to load the dataset <strong>{element.title}</strong> on
+        You're about to load the dataset <strong>{title}</strong> on
         CBRAIN. Please select a pipeline to process this dataset (or "None" to
         load only the dataset).
       </p>
@@ -44,7 +44,7 @@ const CbrainModalDataset = (props) => {
         >
           None
         </a>
-        {props.cbrainIds.map((pipeline) => (
+        {cbrainIds.map((pipeline) => (
           <a
             href={`${baseUrl}&${getPipelineId(pipeline.url)}`}
             className="list-group-item list-group-item-action"
@@ -63,30 +63,9 @@ const CbrainModalDataset = (props) => {
 };
 
 CbrainModalDataset.propTypes = {
-  authorized: PropTypes.bool,
-  onRunWithCBRAIN: PropTypes.func,
-  // element proptypes
-  id: PropTypes.string,
   title: PropTypes.string,
-  isPrivate: PropTypes.bool,
-  thumbnailURL: PropTypes.string,
-  imagePath: PropTypes.string,
-  downloadPath: PropTypes.string,
-  downloads: PropTypes.number,
-  views: PropTypes.number,
-  likes: PropTypes.number,
-  dateAdded: PropTypes.string,
-  dateUpdated: PropTypes.string,
-  size: PropTypes.string,
-  files: PropTypes.number,
-  subjects: PropTypes.number,
-  formats: PropTypes.string,
-  modalities: PropTypes.string,
-  sources: PropTypes.number,
   cbrain_id: PropTypes.string,
   cbrainIds: PropTypes.arrayOf(PropTypes.Object),
-  activeCbrainId: PropTypes.string,
-  updateActiveCbrainId: PropTypes.func,
 };
 
 CbrainModalDataset.defaultProps = {

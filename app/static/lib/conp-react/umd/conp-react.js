@@ -106,24 +106,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__0__;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (false) { var throwOnDirectAccess, ReactIs; } else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(107)();
-}
-
-
-/***/ }),
-/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -145,6 +127,24 @@ function _extends() {
 
   return _extends.apply(this, arguments);
 }
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (false) { var throwOnDirectAccess, ReactIs; } else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = __webpack_require__(107)();
+}
+
 
 /***/ }),
 /* 3 */
@@ -227,7 +227,7 @@ function toVal(mix) {
 "use strict";
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
-var esm_extends = __webpack_require__(2);
+var esm_extends = __webpack_require__(1);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js
 var objectWithoutProperties = __webpack_require__(3);
@@ -237,7 +237,7 @@ var external_root_React_commonjs2_react_commonjs_react_amd_react_ = __webpack_re
 var external_root_React_commonjs2_react_commonjs_react_amd_react_default = /*#__PURE__*/__webpack_require__.n(external_root_React_commonjs2_react_commonjs_react_amd_react_);
 
 // EXTERNAL MODULE: ./node_modules/prop-types/index.js
-var prop_types = __webpack_require__(1);
+var prop_types = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
 var hoist_non_react_statics_cjs = __webpack_require__(41);
@@ -1360,7 +1360,7 @@ e.objectEach=b.objectEach;e.offset=b.offset;e.pad=b.pad;e.pick=b.pick;e.pInt=b.p
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createSvgIcon; });
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(92);
@@ -2137,7 +2137,7 @@ var objectWithoutProperties = __webpack_require__(3);
 var deepmerge = __webpack_require__(132);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
-var esm_extends = __webpack_require__(2);
+var esm_extends = __webpack_require__(1);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/styles/createBreakpoints.js
 
@@ -6778,9 +6778,9 @@ function _unsupportedIterableToArray(o, minLen) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return handleBreakpoints; });
 /* harmony import */ var _babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(29);
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _merge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(31);
 
@@ -7818,7 +7818,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(133);
 
@@ -10770,11 +10770,11 @@ function formatMuiErrorMessage(code) {
 
 "use strict";
 /* unused harmony export styles */
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(0);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4);
 /* harmony import */ var _styles_withStyles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5);
@@ -13389,7 +13389,7 @@ var external_root_React_commonjs2_react_commonjs_react_amd_react_ = __webpack_re
 var external_root_React_commonjs2_react_commonjs_react_amd_react_default = /*#__PURE__*/__webpack_require__.n(external_root_React_commonjs2_react_commonjs_react_amd_react_);
 
 // EXTERNAL MODULE: ./node_modules/prop-types/index.js
-var prop_types = __webpack_require__(1);
+var prop_types = __webpack_require__(2);
 var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
 
 // CONCATENATED MODULE: ./src/DataTable/DataTable.js
@@ -13408,8 +13408,6 @@ var DataTable_DataTable = function DataTable(_ref) {
       total = _ref.total,
       renderElement = _ref.renderElement,
       cbrainIds = _ref.cbrainIds,
-      activeCbrainIds = _ref.activeCbrainIds,
-      updateActiveCbrainId = _ref.updateActiveCbrainId,
       query = _ref.query,
       setQuery = _ref.setQuery,
       isLoading = _ref.isLoading;
@@ -13805,15 +13803,12 @@ var DataTable_DataTable = function DataTable(_ref) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", null, "Dataset Name"))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", null, "Execution Result")))))) : null, elements.map(function (element, i) {
-    var activeCbrainId = activeCbrainIds[element.id];
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       key: "" + element.id
     }, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(renderElement, _extends({}, element, {
       authorized: authorized,
       imagePath: imagePath,
-      cbrainIds: cbrainIds,
-      updateActiveCbrainId: updateActiveCbrainId,
-      activeCbrainId: activeCbrainId
+      cbrainIds: cbrainIds
     })));
   }), query.max_per_page !== 'All' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "search-dataset-footer d-flex align-items-center p-2"
@@ -13858,8 +13853,6 @@ DataTable_DataTable.propTypes = {
   total: prop_types_default.a.number,
   renderElement: prop_types_default.a.func,
   cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.string),
-  activeCbrainIds: prop_types_default.a.object,
-  updateActiveCbrainId: prop_types_default.a.func,
   query: prop_types_default.a.shape({
     search: prop_types_default.a.string,
     searchPipelineName: prop_types_default.a.string,
@@ -13970,10 +13963,6 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   var _useState8 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([]),
       cbrainIdsState = _useState8[0],
       setCbrainIdsState = _useState8[1];
-
-  var _useState9 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({}),
-      activeCbrainIdsState = _useState9[0],
-      setActiveCbrainIdsState = _useState9[1];
 
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
     setQuery(DataTableContainer_extends({}, query, {
@@ -14099,34 +14088,29 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
               setSortKeysState(parsed.sortKeys);
               setFilterKeysState(parsed.filterKeys);
               setAuthorizedState(parsed.authorized);
-              setActiveCbrainIdsState(parsed.elements.reduce(function (acc, cur) {
-                var _extends2;
-
-                return DataTableContainer_extends({}, acc, (_extends2 = {}, _extends2[cur.id] = "", _extends2));
-              }, {}));
-              _context2.next = 22;
+              _context2.next = 21;
               break;
 
-            case 18:
-              _context2.prev = 18;
+            case 17:
+              _context2.prev = 17;
               _context2.t0 = _context2["catch"](1);
               alert("There was an error retrieving the search results.");
               console.error(_context2.t0);
 
-            case 22:
-              _context2.prev = 22;
+            case 21:
+              _context2.prev = 21;
               isLoading && setIsLoading(false);
               setTimeout(function () {
                 window.scrollTo(0, 0);
               }, 100);
-              return _context2.finish(22);
+              return _context2.finish(21);
 
-            case 26:
+            case 25:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[1, 18, 22, 26]]);
+      }, _callee2, null, [[1, 17, 21, 25]]);
     }));
 
     return function fetchElements() {
@@ -14137,15 +14121,6 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
     fetchElements();
   }, [query]);
-
-  var updateActiveCbrainId = function updateActiveCbrainId(elementId, activeValue) {
-    setActiveCbrainIdsState(function (prevState) {
-      var _extends3;
-
-      return DataTableContainer_extends({}, prevState, (_extends3 = {}, _extends3[elementId] = activeValue, _extends3));
-    });
-  };
-
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_DataTable_DataTable, DataTableContainer_extends({
     authorized: authorizedState,
     elements: fetchedElements,
@@ -14156,9 +14131,7 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
     query: query,
     setQuery: setQuery,
     isLoading: isLoading,
-    cbrainIds: cbrainIdsState,
-    activeCbrainIds: activeCbrainIdsState,
-    updateActiveCbrainId: updateActiveCbrainId
+    cbrainIds: cbrainIdsState
   }, dataTableProps));
 };
 
@@ -21733,22 +21706,20 @@ var react_dom = __webpack_require__(11);
 var react_dom_default = /*#__PURE__*/__webpack_require__.n(react_dom);
 
 // CONCATENATED MODULE: ./src/CbrainModalDataset/index.js
-function CbrainModalDataset_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
 
 
 
 
 var CbrainModalDataset_CbrainModalDataset = function CbrainModalDataset(props) {
-  var authorized = props.authorized,
-      imagePath = props.imagePath,
-      element = CbrainModalDataset_objectWithoutPropertiesLoose(props, ["authorized", "imagePath"]);
+  var cbrain_id = props.cbrain_id,
+      cbrainIds = props.cbrainIds,
+      title = props.title;
 
   var finish = function finish(event) {
     $("#cbrainModal").modal("hide");
   };
 
-  var datasetCbrainId = props.cbrain_id.split("?id=")[1];
+  var datasetCbrainId = cbrain_id.split("?id=")[1];
   var baseUrl = "https://portal.cbrain.mcgill.ca/userfiles?switch_group_id=" + datasetCbrainId;
 
   var getPipelineId = function getPipelineId(pipelineUrl) {
@@ -21759,7 +21730,7 @@ var CbrainModalDataset_CbrainModalDataset = function CbrainModalDataset(props) {
     $("#cbrainModal").modal("handleUpdate");
     return;
   });
-  return react_dom["createPortal"]( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "You're about to load the dataset ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, element.title), " on CBRAIN. Please select a pipeline to process this dataset (or \"None\" to load only the dataset)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Please ensure you're", " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+  return react_dom["createPortal"]( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "You're about to load the dataset ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, title), " on CBRAIN. Please select a pipeline to process this dataset (or \"None\" to load only the dataset)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Please ensure you're", " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     href: "https://portal.cbrain.mcgill.ca",
     target: "_blank",
     rel: "noreferrer"
@@ -21772,7 +21743,7 @@ var CbrainModalDataset_CbrainModalDataset = function CbrainModalDataset(props) {
     rel: "noreferrer",
     key: "nonechoice",
     onClick: finish
-  }, "None"), props.cbrainIds.map(function (pipeline) {
+  }, "None"), cbrainIds.map(function (pipeline) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
       href: baseUrl + "&" + getPipelineId(pipeline.url),
       className: "list-group-item list-group-item-action",
@@ -21785,30 +21756,9 @@ var CbrainModalDataset_CbrainModalDataset = function CbrainModalDataset(props) {
 };
 
 CbrainModalDataset_CbrainModalDataset.propTypes = {
-  authorized: prop_types_default.a.bool,
-  onRunWithCBRAIN: prop_types_default.a.func,
-  // element proptypes
-  id: prop_types_default.a.string,
   title: prop_types_default.a.string,
-  isPrivate: prop_types_default.a.bool,
-  thumbnailURL: prop_types_default.a.string,
-  imagePath: prop_types_default.a.string,
-  downloadPath: prop_types_default.a.string,
-  downloads: prop_types_default.a.number,
-  views: prop_types_default.a.number,
-  likes: prop_types_default.a.number,
-  dateAdded: prop_types_default.a.string,
-  dateUpdated: prop_types_default.a.string,
-  size: prop_types_default.a.string,
-  files: prop_types_default.a.number,
-  subjects: prop_types_default.a.number,
-  formats: prop_types_default.a.string,
-  modalities: prop_types_default.a.string,
-  sources: prop_types_default.a.number,
   cbrain_id: prop_types_default.a.string,
-  cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object),
-  activeCbrainId: prop_types_default.a.string,
-  updateActiveCbrainId: prop_types_default.a.func
+  cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object)
 };
 CbrainModalDataset_CbrainModalDataset.defaultProps = {
   imagePath: "",
@@ -21943,10 +21893,6 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     })["finally"](function () {
       setDatasetSpinnerState(false);
     });
-  };
-
-  var updateSelect = function updateSelect(event) {
-    props.updateActiveCbrainId(props.id, event.target.value);
   };
 
   var openModal = function openModal() {
@@ -22101,7 +22047,11 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       key: "authIcon_" + index,
       className: "text-center p-1"
     }, icon);
-  }))))))), modalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_CbrainModalDataset, props) : null);
+  }))))))), modalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_CbrainModalDataset, {
+    title: element.title,
+    cbrainIds: element.cbrainIds,
+    cbrain_id: element.cbrain_id
+  }) : null);
 };
 
 DatasetElement_DatasetElement.propTypes = {
@@ -22127,8 +22077,6 @@ DatasetElement_DatasetElement.propTypes = {
   sources: prop_types_default.a.number,
   cbrain_id: prop_types_default.a.string,
   cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object),
-  activeCbrainId: prop_types_default.a.string,
-  updateActiveCbrainId: prop_types_default.a.func,
   ark_id: prop_types_default.a.string
 };
 DatasetElement_DatasetElement.defaultProps = {
@@ -22137,22 +22085,20 @@ DatasetElement_DatasetElement.defaultProps = {
 };
 /* harmony default export */ var src_DatasetElement = (DatasetElement_DatasetElement);
 // CONCATENATED MODULE: ./src/CbrainModalPipeline/index.js
-function CbrainModalPipeline_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
 
 
 
 
 var CbrainModalPipeline_CbrainModalPipeline = function CbrainModalPipeline(props) {
-  var authorized = props.authorized,
-      imagePath = props.imagePath,
-      element = CbrainModalPipeline_objectWithoutPropertiesLoose(props, ["authorized", "imagePath"]);
+  var platforms = props.platforms,
+      title = props.title,
+      cbrainIds = props.cbrainIds;
 
   var finish = function finish(event) {
     $("#cbrainModal").modal("hide");
   };
 
-  var baseUrl = element.platforms[0].uri;
+  var baseUrl = platforms[0].uri;
 
   var getDatasetId = function getDatasetId(datasetUrl) {
     return "switch_group_id=" + datasetUrl.split("?id=")[1];
@@ -22162,7 +22108,7 @@ var CbrainModalPipeline_CbrainModalPipeline = function CbrainModalPipeline(props
     $("#cbrainModal").modal("handleUpdate");
     return;
   });
-  return react_dom["createPortal"]( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "You're about to load the pipeline ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, element.title), " on CBRAIN. Please select a dataset to process with this pipeline (or \"None\" to load only the pipeline)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Note that not all pipelines are compatible with all datasets."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Please ensure you're", " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+  return react_dom["createPortal"]( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "You're about to load the pipeline ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, title), " on CBRAIN. Please select a dataset to process with this pipeline (or \"None\" to load only the pipeline)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Note that not all pipelines are compatible with all datasets."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Please ensure you're", " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     href: "https://portal.cbrain.mcgill.ca",
     target: "_blank",
     rel: "noreferrer"
@@ -22175,7 +22121,7 @@ var CbrainModalPipeline_CbrainModalPipeline = function CbrainModalPipeline(props
     rel: "noreferrer",
     key: "nonechoice",
     onClick: finish
-  }, "None"), props.cbrainIds.map(function (dataset) {
+  }, "None"), cbrainIds.map(function (dataset) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
       href: baseUrl + "&" + getDatasetId(dataset.url),
       className: "list-group-item list-group-item-action",
@@ -22188,34 +22134,8 @@ var CbrainModalPipeline_CbrainModalPipeline = function CbrainModalPipeline(props
 };
 
 CbrainModalPipeline_CbrainModalPipeline.propTypes = {
-  authorized: prop_types_default.a.bool,
-  onRunWithCBRAIN: prop_types_default.a.func,
-  // element proptypes
-  id: prop_types_default.a.string,
   title: prop_types_default.a.string,
-  isPrivate: prop_types_default.a.bool,
-  thumbnailURL: prop_types_default.a.string,
-  imagePath: prop_types_default.a.string,
-  downloadPath: prop_types_default.a.string,
-  downloads: prop_types_default.a.number,
-  views: prop_types_default.a.number,
-  likes: prop_types_default.a.number,
-  dateAdded: prop_types_default.a.string,
-  dateUpdated: prop_types_default.a.string,
-  size: prop_types_default.a.string,
-  files: prop_types_default.a.number,
-  subjects: prop_types_default.a.number,
-  formats: prop_types_default.a.string,
-  modalities: prop_types_default.a.string,
-  sources: prop_types_default.a.number,
-  cbrain_id: prop_types_default.a.string,
-  cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object),
-  activeCbrainId: prop_types_default.a.string,
-  updateActiveCbrainId: prop_types_default.a.func
-};
-CbrainModalPipeline_CbrainModalPipeline.defaultProps = {
-  imagePath: "",
-  downloadPath: ""
+  cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object)
 };
 /* harmony default export */ var src_CbrainModalPipeline = (CbrainModalPipeline_CbrainModalPipeline);
 // CONCATENATED MODULE: ./src/PipelineElement/index.js
@@ -22231,10 +22151,6 @@ function PipelineElement_objectWithoutPropertiesLoose(source, excluded) { if (so
 var PipelineElement_PipelineElement = function PipelineElement(props) {
   var authorized = props.authorized,
       element = PipelineElement_objectWithoutPropertiesLoose(props, ["authorized"]);
-
-  var updateSelect = function updateSelect(event) {
-    props.updateActiveCbrainId(props.id, event.target.value);
-  };
 
   var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
       modalOpen = _useState[0],
@@ -22365,7 +22281,11 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     className: "col-sm-12 col-md-3 d-flex align-items-center justify-content-end"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex justify-content-end align-items-center"
-  }, platforms))), modalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_CbrainModalPipeline, props) : null);
+  }, platforms))), modalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_CbrainModalPipeline, {
+    platforms: element.platforms,
+    title: element.title,
+    cbrainIds: element.cbrainIds
+  }) : null);
 };
 
 PipelineElement_PipelineElement.propTypes = {
@@ -22387,9 +22307,7 @@ PipelineElement_PipelineElement.propTypes = {
   url: prop_types_default.a.string,
   img: prop_types_default.a.string,
   imagePath: prop_types_default.a.string,
-  cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object),
-  activeCbrainId: prop_types_default.a.string,
-  updateActiveCbrainId: prop_types_default.a.func
+  cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object)
 }; //PipelineElement.defaultProps = {
 //  imagePath: ""
 //};
@@ -22462,13 +22380,9 @@ var ElementContainer_ElementContainer = function ElementContainer(_ref) {
       elementProps = _ref.elementProps,
       complementUrl = _ref.complementUrl;
 
-  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(""),
-      activeCbrainIdState = _useState[0],
-      setActiveCbrainIdState = _useState[1];
-
-  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([]),
-      cbrainIdsState = _useState2[0],
-      setCbrainIdsState = _useState2[1];
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])([]),
+      cbrainIdsState = _useState[0],
+      setCbrainIdsState = _useState[1];
 
   var fetchCbrainIds = /*#__PURE__*/function () {
     var _ref2 = ElementContainer_asyncToGenerator( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
@@ -22539,15 +22453,8 @@ var ElementContainer_ElementContainer = function ElementContainer(_ref) {
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
     fetchCbrainIds();
   }, []);
-
-  var updateActiveCbrainId = function updateActiveCbrainId(elementId, activeValue) {
-    setActiveCbrainIdState(activeValue);
-  };
-
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(element, ElementContainer_extends({}, elementProps, {
-    cbrainIds: cbrainIdsState,
-    activeCbrainId: activeCbrainIdState,
-    updateActiveCbrainId: updateActiveCbrainId
+    cbrainIds: cbrainIdsState
   }));
 };
 
@@ -29154,7 +29061,7 @@ var FastField = /*#__PURE__*/connect(formik_esm_FastFieldInner);
 var toConsumableArray = __webpack_require__(29);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
-var esm_extends = __webpack_require__(2);
+var esm_extends = __webpack_require__(1);
 
 // EXTERNAL MODULE: ./node_modules/@material-ui/system/esm/merge.js
 var esm_merge = __webpack_require__(31);
@@ -59026,7 +58933,7 @@ var index_modern_DatsEditorForm = function DatsEditorForm(props) {
 "use strict";
 /* unused harmony export isPlainObject */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return deepmerge; });
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
 
 
@@ -59164,7 +59071,7 @@ function v4(options, buf, offset) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return mergeClasses; });
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 
 
 function mergeClasses() {
@@ -59234,7 +59141,7 @@ __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding *
 var objectWithoutProperties = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
-var esm_extends = __webpack_require__(2);
+var esm_extends = __webpack_require__(1);
 
 // EXTERNAL MODULE: external {"root":"React","commonjs2":"react","commonjs":"react","amd":"react"}
 var external_root_React_commonjs2_react_commonjs_react_amd_react_ = __webpack_require__(0);
@@ -61527,7 +61434,7 @@ var multiKeyStore = {
 var useTheme = __webpack_require__(168);
 
 // EXTERNAL MODULE: ./node_modules/prop-types/index.js
-var prop_types = __webpack_require__(1);
+var prop_types = __webpack_require__(2);
 
 // CONCATENATED MODULE: ./node_modules/@material-ui/styles/esm/ThemeProvider/nested.js
 var hasSymbol = typeof Symbol === 'function' && Symbol.for;

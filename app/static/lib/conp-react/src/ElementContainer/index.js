@@ -6,7 +6,6 @@ import DatasetElement from "../DatasetElement";
 import PipelineElement from "../PipelineElement";
 
 const ElementContainer = ({ element, elementProps, complementUrl }) => {
-  const [activeCbrainIdState, setActiveCbrainIdState] = useState("");
   const [cbrainIdsState, setCbrainIdsState] = useState([]);
 
   const fetchCbrainIds = async () => {
@@ -45,15 +44,10 @@ const ElementContainer = ({ element, elementProps, complementUrl }) => {
   useEffect(() => {
     fetchCbrainIds();
   }, []);
-  const updateActiveCbrainId = (elementId, activeValue) => {
-    setActiveCbrainIdState(activeValue)
-  };
 
   return React.createElement(element, {
     ...elementProps,
     cbrainIds: cbrainIdsState,
-    activeCbrainId: activeCbrainIdState,
-    updateActiveCbrainId: updateActiveCbrainId,
   });
 };
 
