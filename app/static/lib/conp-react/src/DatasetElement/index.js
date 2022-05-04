@@ -66,9 +66,9 @@ const DatasetElement = props => {
                 src={element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL}
             />
           </div>
-          <div className="flex-grow-2 d-flex flex-row align-items-end">
+          <div className="flex-grow-2 d-flex flex-row justify-content-center align-items-end">
             {element.conpStatus !== 'external' ? (<img height="36" width="36" src={statusCONP} alt="CONP status"/>) :
-                <div style={{width: 36}}/>}
+                null}
             <ViewsIcon type="dataset" id={element.id}/>
             <DownloadsIcon type="dataset" id={element.id + "_version-" + element.version + '.tar.gz'}/>
           </div>

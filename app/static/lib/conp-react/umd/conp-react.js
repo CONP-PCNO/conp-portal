@@ -21924,17 +21924,13 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     },
     src: element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "flex-grow-2 d-flex flex-row align-items-end"
+    className: "flex-grow-2 d-flex flex-row justify-content-center align-items-end"
   }, element.conpStatus !== 'external' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     height: "36",
     width: "36",
     src: statusCONP,
     alt: "CONP status"
-  }) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    style: {
-      width: 36
-    }
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(social_ViewsIcon, {
+  }) : null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(social_ViewsIcon, {
     type: "dataset",
     id: element.id
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(social_DownloadsIcon, {
