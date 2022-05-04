@@ -60,6 +60,18 @@
   {% endif %} {% if metadata.version is defined and metadata.version is not none
   %}
   <div class="py-1"><strong>Version: </strong> {{ metadata.version }}</div>
+  {% endif %} {% if metadata.remoteUrl is defined and metadata.remoteUrl is not none
+  %}
+  <div class="py-1">
+    <strong>Browse on GitHub: </strong
+    ><a
+      class="text-reset"
+      target="_blank"
+      rel="noopener noreferrer"
+      href="{{ metadata.remoteUrl }}"
+      >{{ metadata.remoteUrl }}</a
+    >
+  </div>
   {% endif %} {% if metadata.sources is defined and metadata.sources is not none
   %}
   <div class="py-1">

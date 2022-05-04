@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import ViewsIcon from "../social/ViewsIcon";
-import DownloadsIcon from "../social/DownloadsIcon";
+import ViewsIcon from "../social/ViewsIcon"
+import DownloadsIcon from "../social/DownloadsIcon"
+import ArkIdElement from "../ArkIdElement"
 import CbrainModalPipeline from "../CbrainModalPipeline";
 
 const PipelineElement = (props) => {
@@ -47,13 +48,6 @@ const PipelineElement = (props) => {
             <img className="img-fluid" alt="Online platform" src={item.img} />
           </a>
         </span>
-        <button
-          type="button"
-          className="btn btn-outline-secondary dropdown-toggle m-1"
-          disabled
-        >
-          Dataset:
-        </button>
       </div>
     )
   );
@@ -148,6 +142,9 @@ const PipelineElement = (props) => {
                 </a>
               </div>
             </div>
+          </div>
+          <div className="d-flex col-md-12">
+            <ArkIdElement id={element.ark_id}/>
           </div>
         </div>
         <div className="col-sm-12 col-md-3 d-flex align-items-center justify-content-end">

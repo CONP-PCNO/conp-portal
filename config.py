@@ -69,10 +69,16 @@ class Config(object):
     # GitHub webhooks
     WEBHOOKS_SECRET = os.environ.get("WEBHOOKS_SECRET")
 
+    # GitHub token
+    GITHUB_PAT = os.environ.get("GITHUB_PAT")
+
     # Matomo
     MATOMO_SERVER_URL = os.environ.get("MATOMO_SERVER_URL")
     MATOMO_SITE_ID = os.environ.get("MATOMO_SITE_ID", "2")
     MATOMO_TOKEN_AUTH = os.environ.get("MATOMO_TOKEN_AUTH")
+
+    # ARK identifier NAAN for CONP
+    ARK_CONP_NAAN = os.environ.get("ARK_CONP_NAAN") or "99999"
 
     # Nexus SPARQL endpoint
     # TODO remove hardcoded url
