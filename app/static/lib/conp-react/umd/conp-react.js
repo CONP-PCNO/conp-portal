@@ -21915,7 +21915,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col col-lg-2 d-flex flex-column p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "flex-grow-2 d-flex flex-column justify-content-center align-items-center"
+    className: "flex-grow-1 d-flex flex-column justify-content-center align-items-center"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     alt: "dataset format",
     className: "img-fluid w-100",
@@ -21924,7 +21924,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     },
     src: element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "flex-grow-1 d-flex flex-row align-items-end"
+    className: "flex-grow-2 d-flex flex-row align-items-end"
   }, element.conpStatus !== 'external' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     height: "36",
     width: "36",

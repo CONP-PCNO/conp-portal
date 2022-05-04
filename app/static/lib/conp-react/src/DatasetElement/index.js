@@ -58,7 +58,7 @@ const DatasetElement = props => {
     <div className="card container-fluid" data-type="dataset">
       <div className="row">
         <div className="col col-lg-2 d-flex flex-column p-2">
-          <div className="flex-grow-2 d-flex flex-column justify-content-center align-items-center">
+          <div className="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
             <img
                 alt="dataset format"
                 className="img-fluid w-100"
@@ -66,7 +66,7 @@ const DatasetElement = props => {
                 src={element.logoFilepath.startsWith('http') ? element.logoFilepath : element.thumbnailURL}
             />
           </div>
-          <div className="flex-grow-1 d-flex flex-row align-items-end">
+          <div className="flex-grow-2 d-flex flex-row align-items-end">
             {element.conpStatus !== 'external' ? (<img height="36" width="36" src={statusCONP} alt="CONP status"/>) :
                 <div style={{width: 36}}/>}
             <ViewsIcon type="dataset" id={element.id}/>
