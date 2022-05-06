@@ -22184,7 +22184,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       className: "btn btn-outline-success m-1"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: "d-flex row align-items-center justify-content-center"
-    }, "Process On ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    }, "Use This Tool On ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
       className: "cbrain-img justify-content-center align-items-center pl-4",
       src: "static/img/cbrain-long-logo-blue.png",
       style: {
@@ -22196,7 +22196,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       className: "btn btn-outline-secondary disabled m-1"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: "d-flex row align-items-center justify-content-center"
-    }, "Process On", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    }, "Use This Tool On", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
       className: "cbrain-img justify-content-center align-items-center pl-4",
       src: "static/img/cbrain-long-logo-grey.png",
       style: {
@@ -22236,7 +22236,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     href: element.url
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     alt: "dataset format",
-    className: "img-fluid",
+    className: "img-fluid p-2",
     style: {
       maxWidth: '140px'
     },

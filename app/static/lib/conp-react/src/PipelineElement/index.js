@@ -27,7 +27,7 @@ const PipelineElement = props => {
         {item.uri ?
           <a target="_blank" href={`${item.uri}`} role="button" className="btn btn-outline-success m-1">
             <div className="d-flex row align-items-center justify-content-center">
-              Process On <img
+              Use This Tool On <img
               className="cbrain-img justify-content-center align-items-center pl-4"
               src="static/img/cbrain-long-logo-blue.png" style={{maxHeight: '30px'}}
             />
@@ -35,7 +35,7 @@ const PipelineElement = props => {
           </a> :
           <a target="_blank" role="button" className="btn btn-outline-secondary disabled m-1">
             <div className="d-flex row align-items-center justify-content-center">
-              Process On
+              Use This Tool On
               <img
                   className="cbrain-img justify-content-center align-items-center pl-4"
                   src="static/img/cbrain-long-logo-grey.png" style={{maxHeight: '30px'}}/>
@@ -74,7 +74,7 @@ const PipelineElement = props => {
             <a href={element.url}>
               <img
                 alt="dataset format"
-                className="img-fluid"
+                className="img-fluid p-2"
                 style={{ maxWidth: '140px' }}
                 src={
                   element.url === undefined
