@@ -16,9 +16,9 @@ const CbrainModalPipeline = (props) => {
   return ReactDOM.createPortal(
     <div>
       <p>
-        You're about to load the pipeline <strong>{title}</strong> on
-        CBRAIN. Please select a dataset to process with this pipeline (or "None"
-        to load only the pipeline).
+        You're about to launch <strong>{title}</strong> on CBRAIN. Please select
+        a dataset to process with this pipeline (or "None" to load only the
+        pipeline).
       </p>
       <p>Note that not all pipelines are compatible with all datasets.</p>
       <p>

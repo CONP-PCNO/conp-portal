@@ -22,7 +22,7 @@ const DatasetElement = (props) => {
   const [metadataErrorText, setMetadataErrorText] = useState("");
   const [datasetErrorText, setDatasetErrorText] = useState("");
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const [cbrainModalOpen, setCbrainModalOpen] = useState(false);
 
   const statusCONP = `${imagePath}/canada.svg`;
 
@@ -125,11 +125,11 @@ const DatasetElement = (props) => {
       });
   };
 
-  const openModal = () => {
+  const openCbrainModal = () => {
     $("#cbrainModal").modal("show");
-    setModalOpen(true);
+    setCbrainModalOpen(true);
   };
-  $("#cbrainModal").on("hidden.bs.modal", (event) => setModalOpen(false))
+  $("#cbrainModal").on("hidden.bs.modal", (event) => setCbrainModalOpen(false))
 
   return (
     <>
@@ -232,7 +232,7 @@ const DatasetElement = (props) => {
                 <h7><strong>PROCESS</strong></h7>
                   {element.cbrain_id ? (
                     <>
-                      <button className="btn" onClick={openModal}>
+                      <button className="btn" onClick={openCbrainModal}>
                         <img
                           className="cbrain-img"
                           src="static/img/cbrain-icon-blue.png"
@@ -284,7 +284,7 @@ const DatasetElement = (props) => {
           </div>
         </div>
       </div>
-      {modalOpen ? (
+      {cbrainModalOpen ? (
         <CbrainModalDataset
           title={element.title}
           cbrainIds={element.cbrainIds}

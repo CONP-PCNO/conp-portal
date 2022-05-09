@@ -9,13 +9,13 @@ import CbrainModalPipeline from "../CbrainModalPipeline";
 const PipelineElement = (props) => {
   const { authorized, ...element } = props;
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const [cbrainModalOpen, setCbrainModalOpen] = useState(false);
 
-  const openModal = (datasetTitle, datasetUrl, pipelineTitle, pipelineUrl) => {
+  const openCbrainModal = (datasetTitle, datasetUrl, pipelineTitle, pipelineUrl) => {
     $("#cbrainModal").modal("show");
-    setModalOpen(true);
+    setCbrainModalOpen(true);
   };
-  $("#cbrainModal").on("hidden.bs.modal", (event) => setModalOpen(false));
+  $("#cbrainModal").on("hidden.bs.modal", (event) => setCbrainModalOpen(false));
 
   const platforms = element.platforms.map((item, key) =>
     item.uri ? (
@@ -27,7 +27,7 @@ const PipelineElement = (props) => {
           style={{ maxWidth: "140px" }}
         >
           {
-            <button className="btn" onClick={openModal}>
+            <button className="btn" onClick={openCbrainModal}>
               <img className="img-fluid" alt="Online platform" src={item.img} />
             </button>
           }
@@ -150,7 +150,7 @@ const PipelineElement = (props) => {
           </div>
         </div>
       </div>
-      {modalOpen ? (
+      {cbrainModalOpen ? (
         <CbrainModalPipeline
           platforms={element.platforms}
           title={element.title}

@@ -18,10 +18,10 @@ const CbrainModalDataset = (props) => {
   return ReactDOM.createPortal(
     <div>
       <p>
-        You're about to load the dataset <strong>{title}</strong> on
-        CBRAIN. Please select a pipeline to process this dataset (or "None" to
-        load only the dataset).
+        You're about to load <strong>{title}</strong> on CBRAIN. Please select a
+        pipeline to process this dataset (or "None" to load only the dataset).
       </p>
+      <p>Note that not all pipelines are compatible with all datasets.</p>
       <p>
         Please ensure you're{" "}
         <a

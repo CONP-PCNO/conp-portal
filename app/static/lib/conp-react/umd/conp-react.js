@@ -21730,7 +21730,7 @@ var CbrainModalDataset_CbrainModalDataset = function CbrainModalDataset(props) {
     $("#cbrainModal").modal("handleUpdate");
     return;
   });
-  return react_dom["createPortal"]( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "You're about to load the dataset ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, title), " on CBRAIN. Please select a pipeline to process this dataset (or \"None\" to load only the dataset)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Please ensure you're", " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+  return react_dom["createPortal"]( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "You're about to load ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, title), " on CBRAIN. Please select a pipeline to process this dataset (or \"None\" to load only the dataset)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Note that not all pipelines are compatible with all datasets."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Please ensure you're", " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     href: "https://portal.cbrain.mcgill.ca",
     target: "_blank",
     rel: "noreferrer"
@@ -21810,8 +21810,8 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       setDatasetErrorText = _useState6[1];
 
   var _useState7 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
-      modalOpen = _useState7[0],
-      setModalOpen = _useState7[1];
+      cbrainModalOpen = _useState7[0],
+      setCbrainModalOpen = _useState7[1];
 
   var statusCONP = imagePath + "/canada.svg";
   var authIcons = [];
@@ -21895,13 +21895,13 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     });
   };
 
-  var openModal = function openModal() {
+  var openCbrainModal = function openCbrainModal() {
     $("#cbrainModal").modal("show");
-    setModalOpen(true);
+    setCbrainModalOpen(true);
   };
 
   $("#cbrainModal").on("hidden.bs.modal", function (event) {
-    return setModalOpen(false);
+    return setCbrainModalOpen(false);
   });
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card container-fluid",
@@ -21991,7 +21991,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "col col-lg-6 d-flex flex-column justify-content-top align-items-center p-2 pr-4"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h7", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "PROCESS")), element.cbrain_id ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn",
-    onClick: openModal
+    onClick: openCbrainModal
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     className: "cbrain-img",
     src: "static/img/cbrain-icon-blue.png",
@@ -22047,7 +22047,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       key: "authIcon_" + index,
       className: "text-center p-1"
     }, icon);
-  }))))))), modalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_CbrainModalDataset, {
+  }))))))), cbrainModalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_CbrainModalDataset, {
     title: element.title,
     cbrainIds: element.cbrainIds,
     cbrain_id: element.cbrain_id
@@ -22108,7 +22108,7 @@ var CbrainModalPipeline_CbrainModalPipeline = function CbrainModalPipeline(props
     $("#cbrainModal").modal("handleUpdate");
     return;
   });
-  return react_dom["createPortal"]( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "You're about to load the pipeline ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, title), " on CBRAIN. Please select a dataset to process with this pipeline (or \"None\" to load only the pipeline)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Note that not all pipelines are compatible with all datasets."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Please ensure you're", " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+  return react_dom["createPortal"]( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "You're about to launch ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, title), " on CBRAIN. Please select a dataset to process with this pipeline (or \"None\" to load only the pipeline)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Note that not all pipelines are compatible with all datasets."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Please ensure you're", " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     href: "https://portal.cbrain.mcgill.ca",
     target: "_blank",
     rel: "noreferrer"
@@ -22153,16 +22153,16 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       element = PipelineElement_objectWithoutPropertiesLoose(props, ["authorized"]);
 
   var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
-      modalOpen = _useState[0],
-      setModalOpen = _useState[1];
+      cbrainModalOpen = _useState[0],
+      setCbrainModalOpen = _useState[1];
 
-  var openModal = function openModal(datasetTitle, datasetUrl, pipelineTitle, pipelineUrl) {
+  var openCbrainModal = function openCbrainModal(datasetTitle, datasetUrl, pipelineTitle, pipelineUrl) {
     $("#cbrainModal").modal("show");
-    setModalOpen(true);
+    setCbrainModalOpen(true);
   };
 
   $("#cbrainModal").on("hidden.bs.modal", function (event) {
-    return setModalOpen(false);
+    return setCbrainModalOpen(false);
   });
   var platforms = element.platforms.map(function (item, key) {
     return item.uri ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -22176,7 +22176,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       }
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
       className: "btn",
-      onClick: openModal
+      onClick: openCbrainModal
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
       className: "img-fluid",
       alt: "Online platform",
@@ -22281,7 +22281,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     className: "col-sm-12 col-md-3 d-flex align-items-center justify-content-end"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex justify-content-end align-items-center"
-  }, platforms))), modalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_CbrainModalPipeline, {
+  }, platforms))), cbrainModalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_CbrainModalPipeline, {
     platforms: element.platforms,
     title: element.title,
     cbrainIds: element.cbrainIds
