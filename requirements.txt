@@ -12,7 +12,7 @@ blinker==1.4
 boto==2.49.0
 boutiques==0.5.25
 certifi==2018.11.29
-cffi==1.15.0
+cffi==1.12.3
 chardet==3.0.4
 Click==7.0
 commonmark==0.8.1
@@ -26,10 +26,10 @@ dominate==2.4.0
 entrypoints==0.3
 fasteners==0.15
 flake8==3.8.4
-Flask==1.1.4
+Flask==1.0.2
 Flask-Admin==1.5.3
 Flask-Bootstrap4==4.0.2
-Flask-Dance==3.3.1
+Flask-Dance==3.0.0
 Flask-DotEnv==0.1.1
 Flask-Ext==0.1
 Flask-Login==0.4.1
@@ -52,7 +52,7 @@ iso8601==0.1.12
 itsdangerous==1.1.0
 jeepney==0.4.1
 Jinja2==2.11.3
-jsmin==3.0.0
+jsmin==2.2.2
 jsonschema==3.0.2
 keyring==19.2.0
 keyrings.alt==3.1.1
@@ -107,7 +107,7 @@ sphinxcontrib-websupport==1.1.0
 SQLAlchemy==1.3.2
 SQLAlchemy-Utils==0.34.2
 sseclient==0.0.24
-tabulate==0.8.9
+tabulate==0.8.3
 termcolor==1.1.0
 toml==0.10.1
 tqdm==4.38.0
