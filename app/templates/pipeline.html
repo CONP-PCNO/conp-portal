@@ -222,7 +222,8 @@
   <script type="text/javascript">
 
     const element = {{ pipeline| tojson}};
-    const reactElement = React.createElement(CONPReact.PipelineElement, element);
+    const complementUrl = "{{ url_for('search.dataset_search') }}";
+const reactElement = React.createElement(CONPReact.ElementContainer, {"element": CONPReact.PipelineElement, "elementProps": element, "complementUrl": complementUrl});
     ReactDOM.render(reactElement, document.querySelector("#mount-display"));
   </script>
 </div>

@@ -10,6 +10,7 @@ const DataTable = ({
   imagePath,
   total,
   renderElement,
+  cbrainIds,
   query,
   setQuery,
   isLoading
@@ -358,13 +359,14 @@ const DataTable = ({
                 </div>
               </div>
               : null}
-
           {
-            elements.map((element, i) => (
+            elements.map((element, i) => {
+              return (
                 <div key={"" + element.id}>
-                  {React.createElement(renderElement, {...element, authorized, imagePath})}
+                  {React.createElement(renderElement, {...element, authorized, imagePath, cbrainIds})}
                 </div>
-            ))
+              );
+            })
           }
           {
             query.max_per_page !== 'All' ?
@@ -417,6 +419,7 @@ DataTable.propTypes = {
   imagePath: PropTypes.string,
   total: PropTypes.number,
   renderElement: PropTypes.func,
+  cbrainIds: PropTypes.arrayOf(PropTypes.string),
   query: PropTypes.shape({
     search: PropTypes.string,
     searchPipelineName: PropTypes.string,
