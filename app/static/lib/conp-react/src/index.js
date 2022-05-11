@@ -2,10 +2,11 @@ import { DataTable, DataTableContainer } from "./DataTable";
 import { default as DatasetElement } from "./DatasetElement";
 import { default as PipelineElement } from "./PipelineElement";
 import { default as ExecutionRecordElement } from "./ExecutionRecordElement";
+import { default as ElementContainer } from "./ElementContainer";
 import ChartContainer from "./ChartContainer"
 import { DatsEditorForm } from "conp-dats-editor"
 
-export { DataTable, DataTableContainer, DatasetElement, PipelineElement, ChartContainer, DatsEditorForm, ExecutionRecordElement};
+export { DataTable, DataTableContainer, DatasetElement, PipelineElement, ChartContainer, DatsEditorForm, ExecutionRecordElement, ElementContainer };
 
 export default {
   DataTable,
@@ -14,5 +15,6 @@ export default {
   PipelineElement,
   ChartContainer,
   DatsEditorForm,
-  ExecutionRecordElement
+  ExecutionRecordElement,
+  ElementContainer
 };

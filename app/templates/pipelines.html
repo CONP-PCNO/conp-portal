@@ -31,6 +31,7 @@
       endpointURL: "{{ url_for('pipelines.pipeline_search') }}",
       imagePath: "/static/img",
       renderElement: CONPReact.PipelineElement,
+      complementEndpointUrl: "{{ url_for('search.dataset_search') }}",
       filters: {{ filters|tojson }}
     });
     ReactDOM.render(reactElement, document.querySelector("#pipelines-datatable-mount"));

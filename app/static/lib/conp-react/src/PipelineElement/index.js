@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import ViewsIcon from "../social/ViewsIcon"
@@ -7,11 +7,20 @@ import ArkIdElement from "../ArkIdElement"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
 import ReactToolTip from "react-tooltip";
+import CbrainModalPipeline from "../CbrainModalPipeline";
 
-const PipelineElement = props => {
+const PipelineElement = (props) => {
   const { authorized, ...element } = props;
 
   const [showCbrainTipText, setShowCbrainTipText] = useState(false);
+
+  const [cbrainModalOpen, setCbrainModalOpen] = useState(false);
+
+  const openCbrainModal = (datasetTitle, datasetUrl, pipelineTitle, pipelineUrl) => {
+    $("#cbrainModal").modal("show");
+    setCbrainModalOpen(true);
+  };
+  $("#cbrainModal").on("hidden.bs.modal", (event) => setCbrainModalOpen(false));
 
   const handleCrainMouseEnter = e => {
     setShowCbrainTipText(true);
@@ -25,22 +34,22 @@ const PipelineElement = props => {
     <div className="row w-100 align-items-center">
       <div className="col-10 p-0">
         {item.uri ?
-          <a target="_blank" href={`${item.uri}`} role="button" className="btn btn-outline-success m-1">
+          <button className="btn btn-outline-success m-1" onClick={openCbrainModal}>
             <div className="d-flex row align-items-center justify-content-center">
               Use This Tool On <img
               className="cbrain-img justify-content-center align-items-center pl-4"
               src="static/img/cbrain-long-logo-blue.png" style={{maxHeight: '30px'}}
             />
             </div>
-          </a> :
-          <a target="_blank" role="button" className="btn btn-outline-secondary disabled m-1">
+          </button> :
+          <button className="btn btn-outline-secondary disabled m-1">
             <div className="d-flex row align-items-center justify-content-center">
               Use This Tool On
               <img
                   className="cbrain-img justify-content-center align-items-center pl-4"
                   src="static/img/cbrain-long-logo-grey.png" style={{maxHeight: '30px'}}/>
             </div>
-          </a>
+          </button>
         }
       </div>
       <div className="col-2 p-2">
@@ -133,10 +142,18 @@ const PipelineElement = props => {
 
         <div className="col col-lg-3 d-flex flex-column justify-content-center align-items-end p-2">
           <div className="row align-items-center w-100">
+
             {platforms}
           </div>
         </div>
       </div>
+      {cbrainModalOpen ? (
+        <CbrainModalPipeline
+          platforms={element.platforms}
+          title={element.title}
+          cbrainIds={element.cbrainIds}
+        />
+      ) : null}
     </div>
   );
 };
@@ -159,11 +176,8 @@ PipelineElement.propTypes = {
   tags: PropTypes.object,
   url: PropTypes.string,
   img: PropTypes.string,
-  imagePath: PropTypes.string
+  imagePath: PropTypes.string,
+  cbrainIds: PropTypes.arrayOf(PropTypes.Object),
 };
-
-//PipelineElement.defaultProps = {
-//  imagePath: ""
-//};
 
 export default PipelineElement;

@@ -30,6 +30,7 @@
   <script type="text/javascript">
     const reactElement = React.createElement(CONPReact.DataTableContainer, {
       endpointURL: "{{ url_for('search.dataset_search') }}",
+      complementEndpointUrl: "{{ url_for('pipelines.pipeline_search') }}",
       imagePath: "/static/img",
       renderElement: CONPReact.DatasetElement,
       filters: {{ filters|tojson }}

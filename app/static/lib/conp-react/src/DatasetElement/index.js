@@ -2,32 +2,46 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ReactToolTip from "react-tooltip";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faQuestionCircle, faUserLock} from '@fortawesome/free-solid-svg-icons'
-import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUserLock } from "@fortawesome/free-solid-svg-icons";
 
-import ViewsIcon from '../social/ViewsIcon'
-import DownloadsIcon from '../social/DownloadsIcon'
-import ArkIdElement from '../ArkIdElement'
-import DownloadModalWindowElement from './DownloadModalWindowElement'
+import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 
-const DatasetElement = props => {
+import ViewsIcon from '../social/ViewsIcon';
+import DownloadsIcon from '../social/DownloadsIcon';
+import ArkIdElement from '../ArkIdElement';
+import DownloadModalWindowElement from './DownloadModalWindowElement';
+import CbrainModalDataset from "../CbrainModalDataset";
+
+const DatasetElement = (props) => {
   const { authorized, imagePath, ...element } = props;
 
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
   const [showCbrainTipText, setShowCbrainTipText] = useState(false);
   const [showDataLadTipText, setShowDataLadTipText] = useState(false);
   const [showDownloadTipText, setShowDownloadTipText] = useState(false);
+  const [cbrainModalOpen, setCbrainModalOpen] = useState(false);
 
   const statusCONP = `${imagePath}/canada.svg`;
 
   let authIcons = [];
   switch (element.authorizations) {
-    case 'restricted':
-      authIcons.push(<span><FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg" /> - CONP account required</span>);
+    case "restricted":
+      authIcons.push(
+        <span>
+          <FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg" /> - CONP
+          account required
+        </span>
+      );
       break;
-    case 'private':
-      authIcons.push(<span><FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg" /> - Third-party account required</span>);
+    case "private":
+      authIcons.push(
+        <span>
+          <FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg" /> -
+          Third-party account required
+        </span>
+      );
       break;
     default:
       break;
@@ -56,6 +70,12 @@ const DatasetElement = props => {
   const handleDownloadMouseLeave = e => {
     setShowDownloadTipText(false);
   }
+
+  const openCbrainModal = () => {
+    $("#cbrainModal").modal("show");
+    setCbrainModalOpen(true);
+  };
+  $("#cbrainModal").on("hidden.bs.modal", (event) => setCbrainModalOpen(false))
 
   const openDownloadModal = () => {
     $("#downloadModal").modal("show");
@@ -224,22 +244,22 @@ const DatasetElement = props => {
           <div className="row w-100 align-items-center">
             <div className="col-10 p-0">
               {element.cbrain_id ?
-                <a target="_blank" href={`${element.cbrain_id}`} role="button" className="btn btn-outline-success m-1">
+                <button onClick={openCbrainModal} className="btn btn-outline-success m-1">
                   <div class="d-flex row align-items-center justify-content-center">
                     Process On <img
                         className="cbrain-img justify-content-center align-items-center pl-4"
                         src="static/img/cbrain-long-logo-blue.png" style={{maxHeight: '30px'}}
                     />
                   </div>
-                </a> :
-                <a target="_blank" role="button" className="btn btn-outline-secondary disabled m-1">
+                </button> :
+                <button className="btn btn-outline-secondary disabled m-1">
                   <div className="d-flex row align-items-center justify-content-center">
                     Process On
                     <img
                         className="cbrain-img justify-content-center align-items-center pl-4"
                         src="static/img/cbrain-long-logo-grey.png" style={{maxHeight: '30px'}}/>
                   </div>
-                </a>
+                </button>
               }
             </div>
             <div className="col-2 p-2">
@@ -272,6 +292,13 @@ const DatasetElement = props => {
         </div>
       </div>
       {downloadModalOpen ? <DownloadModalWindowElement {...props} /> : null}
+      {cbrainModalOpen ? (
+        <CbrainModalDataset
+          title={element.title}
+          cbrainIds={element.cbrainIds}
+          cbrain_id={element.cbrain_id}
+        />
+      ): null}
     </div>
   );
 };
@@ -298,6 +325,7 @@ DatasetElement.propTypes = {
   modalities: PropTypes.string,
   sources: PropTypes.number,
   cbrain_id: PropTypes.string,
+  cbrainIds: PropTypes.arrayOf(PropTypes.Object),
   ark_id: PropTypes.string,
   zipLocation: PropTypes.string,
   showDownloadButton: PropTypes.bool
@@ -305,7 +333,7 @@ DatasetElement.propTypes = {
 
 DatasetElement.defaultProps = {
   imagePath: "",
-  downloadPath: ""
+  downloadPath: "",
 };
 
 export default DatasetElement;

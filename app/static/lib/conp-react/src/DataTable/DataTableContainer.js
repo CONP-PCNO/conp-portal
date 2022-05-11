@@ -6,6 +6,7 @@ import DataTable from "./DataTable";
 
 const DataTableContainer = ({
   endpointURL,
+  complementEndpointUrl,
   imagePath,
   limit,
   authorized,
@@ -37,6 +38,7 @@ const DataTableContainer = ({
   const [authorizedState, setAuthorizedState] = useState(authorized);
 
   const [isLoading, setIsLoading] = useState(true)
+  const [cbrainIdsState, setCbrainIdsState] = useState([]);
 
   useEffect(() => {
     setQuery({ ...query, limit });
@@ -55,6 +57,34 @@ const DataTableContainer = ({
     const pathname = window.location.pathname
     window.history.replaceState(null, null, `${pathname}?${queryString}`)
   }, [query])
+
+  const fetchCbrainIds = async () => {
+    const url = `${complementEndpointUrl}?${qs.stringify({max_per_page: 'All', cbrain: true}, { arrayFormat: 'comma' })}`;
+
+    try {
+      const res = await fetch(url);
+
+      if (!res.ok) {
+        throw new Error(
+          `Request failed with status: ${res.status} (${res.statusText})`
+        );
+      }
+
+      const parsed = await res.json();
+
+      setCbrainIdsState(parsed.elements.map((element) => {
+        return element.platforms ? {url: element.platforms[0].uri, id: element.id, title:element.title} : {url: element.cbrain_id, id: element.id, title: element.title};
+      }));
+    }
+    catch (err) {
+      alert("There was an error populating the CBRAIN pipelines.");
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchCbrainIds()
+  }, [])
 
   const fetchElements = async () => {
     const url = `${endpointURL}?${qs.stringify(query, { arrayFormat: 'comma' })}`;
@@ -92,6 +122,7 @@ const DataTableContainer = ({
     fetchElements()
   }, [query])
 
+
   return (
     <DataTable
       authorized={authorizedState}
@@ -103,6 +134,7 @@ const DataTableContainer = ({
       query={query}
       setQuery={setQuery}
       isLoading={isLoading}
+      cbrainIds={cbrainIdsState}
       {...dataTableProps}
     />
   );
@@ -111,6 +143,7 @@ const DataTableContainer = ({
 DataTableContainer.propTypes = {
   authorized: PropTypes.bool,
   endpointURL: PropTypes.string.isRequired,
+  complementEndpointUrl: PropTypes.string.isRequired,
   imagePath: PropTypes.string,
   limit: PropTypes.number,
   total: PropTypes.number,
