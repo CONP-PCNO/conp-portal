@@ -22453,16 +22453,14 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     className: "col col-lg-2 d-flex flex-column p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "flex-grow-1 d-flex flex-column justify-content-center align-items-center pb-3"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
-    href: element.url
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     alt: "dataset format",
     className: "img-fluid p-2",
     style: {
       maxWidth: '140px'
     },
-    src: element.url === undefined ? "static/img/cogs-solid-grey.png" : "static/img/cogs-solid-green.png"
-  }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    src: "static/img/cogs-solid-grey.png"
+  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-grow-2 flex-row justify-content-center align-items-end"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(social_ViewsIcon, {
     type: "pipeline",
