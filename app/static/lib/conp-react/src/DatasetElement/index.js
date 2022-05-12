@@ -206,8 +206,8 @@ const DatasetElement = (props) => {
                 {showDownloadTipText &&
                   <ReactToolTip id="downloadTip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
                     Direct download is available for datasets that do not require <br/>
-                    a third-party account to access the data. Datasets requiring a <br/>
-                    third-party account can be downloaded via DataLad.
+                    a third-party account. Datasets requiring a third-party account <br/>
+                    can be downloaded via DataLad following the obtention of credentials.
                   </ReactToolTip>
                 }
               </p>
@@ -234,7 +234,9 @@ const DatasetElement = (props) => {
                 />
                 {showDataLadTipText &&
                   <ReactToolTip id="dataladTip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
-                    DataLad ...
+                    DataLad is a feature-rich and flexible distributed data-management system <br/>
+                    that allows versioning and provenance tracking for any collection of data. <br/>
+                    Learn more here: https://handbook.datalad.org/en/latest/.
                   </ReactToolTip>
                 }
               </p>
@@ -275,9 +277,8 @@ const DatasetElement = (props) => {
                 />
                 {showCbrainTipText &&
                   <ReactToolTip id="cbrainTip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
-                    CBRAIN is web-based software that allows researchers to perform <br/>
-                    computationally intensive analyses on data by connecting them to <br/>
-                    High-Performance Computing (HPC) facilities across Canada and around the world.
+                    CBRAIN allows users to run analysis pipelines on a network of high-performance <br/>
+                    computing clusters through a friendly web-browser-based interface.
                   </ReactToolTip>
                 }
               </p>

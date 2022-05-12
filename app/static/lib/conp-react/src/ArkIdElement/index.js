@@ -49,7 +49,7 @@ const ArkIdElement = (props) => {
           {showText &&
             <ReactToolTip id="arktip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
               Archival Resource Keys (ARKs) serve as persistent <br/>
-              identifiers, or stable, trusted references for information <br/>
+              identifiers, which provide stable, trusted references for information <br/>
               objects. For more information, please visit https://arks.org.
             </ReactToolTip>}
         : </strong>

@@ -65,9 +65,8 @@ const PipelineElement = (props) => {
           />
           {showCbrainTipText &&
             <ReactToolTip id="cbrainTip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
-              CBRAIN is web-based software that allows researchers to perform <br/>
-              computationally intensive analyses on data by connecting them to <br/>
-              High-Performance Computing (HPC) facilities across Canada and around the world.
+              CBRAIN allows users to run analysis pipelines on a network of high-performance <br/>
+              computing clusters through a friendly web-browser-based interface.
             </ReactToolTip>
           }
         </p>

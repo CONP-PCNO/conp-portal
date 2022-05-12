@@ -21778,7 +21778,7 @@ var ArkIdElement_ArkIdElement = function ArkIdElement(props) {
       Width: "70px",
       WhiteSpace: "pre-wrap"
     }
-  }, "Archival Resource Keys (ARKs) serve as persistent ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "identifiers, or stable, trusted references for information ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "objects. For more information, please visit https://arks.org."), ": "), ark_id, " ", showCopyIcon && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(lib["CopyToClipboard"], {
+  }, "Archival Resource Keys (ARKs) serve as persistent ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "identifiers, which provide stable, trusted references for information ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "objects. For more information, please visit https://arks.org."), ": "), ark_id, " ", showCopyIcon && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(lib["CopyToClipboard"], {
     text: ark_id,
     onCopy: handleCopyToClipboard,
     "data-tip": true,
@@ -22184,7 +22184,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       Width: "70px",
       WhiteSpace: "pre-wrap"
     }
-  }, "Direct download is available for datasets that do not require ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "a third-party account to access the data. Datasets requiring a ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "third-party account can be downloaded via DataLad.")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "Direct download is available for datasets that do not require ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "a third-party account. Datasets requiring a third-party account ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "can be downloaded via DataLad following the obtention of credentials.")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "row align-items-center w-100"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-10 p-0"
@@ -22211,7 +22211,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       Width: "70px",
       WhiteSpace: "pre-wrap"
     }
-  }, "DataLad ...")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "DataLad is a feature-rich and flexible distributed data-management system ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "that allows versioning and provenance tracking for any collection of data. ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "Learn more here: https://handbook.datalad.org/en/latest/.")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "row w-100 align-items-center"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-10 p-0"
@@ -22255,7 +22255,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       Width: "70px",
       WhiteSpace: "pre-wrap"
     }
-  }, "CBRAIN is web-based software that allows researchers to perform ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "computationally intensive analyses on data by connecting them to ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "High-Performance Computing (HPC) facilities across Canada and around the world.")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "CBRAIN allows users to run analysis pipelines on a network of high-performance ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "computing clusters through a friendly web-browser-based interface.")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex justify-content-center align-items-center"
   }, authIcons.map(function (icon, index) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -22442,7 +22442,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
         Width: "70px",
         WhiteSpace: "pre-wrap"
       }
-    }, "CBRAIN is web-based software that allows researchers to perform ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "computationally intensive analyses on data by connecting them to ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "High-Performance Computing (HPC) facilities across Canada and around the world."))));
+    }, "CBRAIN allows users to run analysis pipelines on a network of high-performance ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "computing clusters through a friendly web-browser-based interface."))));
   });
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card container-fluid",
