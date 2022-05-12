@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import * as ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 
@@ -15,7 +15,7 @@ const DownloadModalWindowElement = (props) => {
         <table>
          <tr>
            <td style={{width:"150px"}}>
-             <img src="static/img/conp.png" className="text-center" style={{width:"100%"}}/>
+             <img src="static/img/conp.png" className="text-center" style={{width:"100%"}} alt="CONP logo"/>
            </td>
            <td style={{width:"25px"}}/>
            <td colSpan="41">

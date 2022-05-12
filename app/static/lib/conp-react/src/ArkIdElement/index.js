@@ -36,7 +36,7 @@ const ArkIdElement = (props) => {
 
   return (
     <div className="card-list-item">
-      <p className="card-text pr-1">
+      <div className="card-text pr-1">
         <strong>ARK ID <FontAwesomeIcon
               icon={faQuestionCircle}
               color="dimgray"
@@ -61,7 +61,7 @@ const ArkIdElement = (props) => {
         {showCheckIcon && <button disabled type="button" className="btn btn-outline-secondary" style={{width:"auto", padding:"0.2rem 0.4rem"}}>
           <FontAwesomeIcon icon={faCheck} color="dimgray" size="md"/>
         </button>}
-      </p>
+      </div>
     </div>
   );
 };

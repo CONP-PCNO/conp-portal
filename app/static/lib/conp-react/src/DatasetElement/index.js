@@ -187,13 +187,13 @@ const DatasetElement = (props) => {
                 >
                   Direct Download ({element.size})
                 </button> :
-                <div className="btn btn-outline-secondary m-1 disabled">
+                <button className="btn btn-outline-secondary m-1 disabled">
                   Direct Download (Not Available)
-                </div>
+                </button>
               }
             </div>
             <div className="col-2 p-2">
-              <p className="card-text pl-1">
+              <div className="card-text pl-1">
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
                   color="dimgray"
@@ -210,7 +210,7 @@ const DatasetElement = (props) => {
                     can be downloaded via DataLad following the obtention of credentials.
                   </ReactToolTip>
                 }
-              </p>
+              </div>
             </div>
           </div>
 
@@ -222,7 +222,7 @@ const DatasetElement = (props) => {
               </a>
             </div>
             <div className="col-2 p-2">
-              <p className="card-text pl-1">
+              <div className="card-text pl-1">
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
                   color="dimgray"
@@ -239,7 +239,7 @@ const DatasetElement = (props) => {
                     Learn more here: https://handbook.datalad.org/en/latest/.
                   </ReactToolTip>
                 }
-              </p>
+              </div>
             </div>
           </div>
 
@@ -247,10 +247,12 @@ const DatasetElement = (props) => {
             <div className="col-10 p-0">
               {element.cbrain_id ?
                 <button onClick={openCbrainModal} className="btn btn-outline-success m-1">
-                  <div class="d-flex row align-items-center justify-content-center">
+                  <div className="d-flex row align-items-center justify-content-center">
                     Process On <img
                         className="cbrain-img justify-content-center align-items-center pl-4"
-                        src="static/img/cbrain-long-logo-blue.png" style={{maxHeight: '30px'}}
+                        src="static/img/cbrain-long-logo-blue.png"
+                        style={{maxHeight: '30px'}}
+                        alt="CBRAIN logo"
                     />
                   </div>
                 </button> :
@@ -258,14 +260,17 @@ const DatasetElement = (props) => {
                   <div className="d-flex row align-items-center justify-content-center">
                     Process On
                     <img
-                        className="cbrain-img justify-content-center align-items-center pl-4"
-                        src="static/img/cbrain-long-logo-grey.png" style={{maxHeight: '30px'}}/>
+                      className="cbrain-img justify-content-center align-items-center pl-4"
+                      src="static/img/cbrain-long-logo-grey.png"
+                      style={{maxHeight: '30px'}}
+                      alt="Disabled CBRAIN logo"
+                    />
                   </div>
                 </button>
               }
             </div>
             <div className="col-2 p-2">
-              <p className="card-text pl-1">
+              <div className="card-text pl-1">
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
                   color="dimgray"
@@ -281,7 +286,7 @@ const DatasetElement = (props) => {
                     computing clusters through a friendly web-browser-based interface.
                   </ReactToolTip>
                 }
-              </p>
+              </div>
             </div>
           </div>
 

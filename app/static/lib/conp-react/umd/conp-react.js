@@ -21761,7 +21761,7 @@ var ArkIdElement_ArkIdElement = function ArkIdElement(props) {
 
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-list-item"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-text pr-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "ARK ID ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
     icon: faQuestionCircle,
@@ -21843,7 +21843,8 @@ var DownloadModalWindowElement_DownloadModalWindowElement = function DownloadMod
     className: "text-center",
     style: {
       width: "100%"
-    }
+    },
+    alt: "CONP logo"
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("td", {
     style: {
       width: "25px"
@@ -22163,11 +22164,11 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     onClick: function onClick() {
       return openDownloadModal();
     }
-  }, "Direct Download (", element.size, ")") : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "Direct Download (", element.size, ")") : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-outline-secondary m-1 disabled"
   }, "Direct Download (Not Available)")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-2 p-2"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-text pl-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
     icon: faQuestionCircle,
@@ -22194,7 +22195,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     className: "btn btn-success m-1"
   }, "Download With DataLad")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-2 p-2"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-text pl-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
     icon: faQuestionCircle,
@@ -22219,13 +22220,14 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     onClick: openCbrainModal,
     className: "btn btn-outline-success m-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    "class": "d-flex row align-items-center justify-content-center"
+    className: "d-flex row align-items-center justify-content-center"
   }, "Process On ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
     className: "cbrain-img justify-content-center align-items-center pl-4",
     src: "static/img/cbrain-long-logo-blue.png",
     style: {
       maxHeight: '30px'
-    }
+    },
+    alt: "CBRAIN logo"
   }))) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-outline-secondary disabled m-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -22235,10 +22237,11 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     src: "static/img/cbrain-long-logo-grey.png",
     style: {
       maxHeight: '30px'
-    }
+    },
+    alt: "Disabled CBRAIN logo"
   })))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-2 p-2"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-text pl-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
     icon: faQuestionCircle,
@@ -22412,7 +22415,8 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       src: "static/img/cbrain-long-logo-blue.png",
       style: {
         maxHeight: '30px'
-      }
+      },
+      alt: "CBRAIN logo"
     }))) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
       className: "btn btn-outline-secondary disabled m-1"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -22422,10 +22426,11 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       src: "static/img/cbrain-long-logo-grey.png",
       style: {
         maxHeight: '30px'
-      }
+      },
+      alt: "Disabled CBRAIN logo"
     })))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: "col-2 p-2"
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: "card-text pl-1"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
       icon: faQuestionCircle,

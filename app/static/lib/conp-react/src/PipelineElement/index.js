@@ -38,7 +38,9 @@ const PipelineElement = (props) => {
             <div className="d-flex row align-items-center justify-content-center">
               Use This Tool On <img
               className="cbrain-img justify-content-center align-items-center pl-4"
-              src="static/img/cbrain-long-logo-blue.png" style={{maxHeight: '30px'}}
+              src="static/img/cbrain-long-logo-blue.png"
+              style={{maxHeight: '30px'}}
+              alt="CBRAIN logo"
             />
             </div>
           </button> :
@@ -46,14 +48,17 @@ const PipelineElement = (props) => {
             <div className="d-flex row align-items-center justify-content-center">
               Use This Tool On
               <img
-                  className="cbrain-img justify-content-center align-items-center pl-4"
-                  src="static/img/cbrain-long-logo-grey.png" style={{maxHeight: '30px'}}/>
+                className="cbrain-img justify-content-center align-items-center pl-4"
+                src="static/img/cbrain-long-logo-grey.png"
+                style={{maxHeight: '30px'}}
+                alt="Disabled CBRAIN logo"
+              />
             </div>
           </button>
         }
       </div>
       <div className="col-2 p-2">
-        <p className="card-text pl-1">
+        <div className="card-text pl-1">
           <FontAwesomeIcon
             icon={faQuestionCircle}
             color="dimgray"
@@ -69,7 +74,7 @@ const PipelineElement = (props) => {
               computing clusters through a friendly web-browser-based interface.
             </ReactToolTip>
           }
-        </p>
+        </div>
       </div>
     </div>
   );
