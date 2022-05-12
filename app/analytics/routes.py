@@ -7,6 +7,7 @@
 import json
 import re
 
+from datetime import date
 from flask import render_template, request
 from flask_login import current_user
 from app.analytics import analytics_bp
@@ -48,7 +49,13 @@ def visitors():
     daily_visits = MatomoDailyVisitsSummary.query.order_by(
         MatomoDailyVisitsSummary.id).all()
 
+    current_date = date.today()
+
     for v in daily_visits:
+        visit_date = date.fromisoformat(v.date)
+        if (visit_date.year == current_date.year) \
+                and (visit_date.month == current_date.month):
+            continue
         element = {
             "id": v.id,
             "date": v.date,
