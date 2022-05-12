@@ -12,21 +12,26 @@ const DownloadModalWindowElement = (props) => {
   return ReactDOM.createPortal(
     <div className="modal-content">
       <div className="modal-body">
-        <table>
-         <tr>
-           <td style={{width:"150px"}}>
-             <img src="static/img/conp.png" className="text-center" style={{width:"100%"}} alt="CONP logo"/>
-           </td>
-           <td style={{width:"25px"}}/>
-           <td colSpan="41">
-             <h4 className="modal-title w-100 text-center" id="modalLongTitle">
-               You are about to download a {size} file.
-             </h4>
-             <h4 className="modal-title w-100 text-center" id="modalLongTitle">Are you sure?</h4>
-           </td>
-         </tr>
-       </table>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col col-lg-2 d-flex flex-column justify-content-center p-2" style={{width:"150px"}}>
+              <img
+                src="static/img/conp.png"
+                className="text-center"
+                style={{width:"100%"}}
+                alt="CONP logo"
+              />
+            </div>
+            <div className="col col-lg-10 d-flex flex-column p-2">
+              <h4 className="modal-title w-100 text-center" id="modalLongTitle">
+                You are about to download a {size} file.
+              </h4>
+              <h4 className="modal-title w-100 text-center" id="modalLongTitle">Are you sure?</h4>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div className="modal-footer">
        <div className="btn-group btn-group-lg" style={{width:"100%"}}>
          <button
