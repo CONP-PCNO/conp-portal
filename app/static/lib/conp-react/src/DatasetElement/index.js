@@ -81,7 +81,7 @@ const DatasetElement = (props) => {
     $("#downloadModal").modal("show");
     setDownloadModalOpen(true);
   };
-  $("#downloadModal").on("hidden.bd.modal", (event) => setDownloadModalOpen(false))
+  $("#downloadModal").on("hidden.bs.modal", (event) => setDownloadModalOpen(false))
 
   return (
     <div className="card container-fluid" data-type="dataset">
@@ -297,7 +297,12 @@ const DatasetElement = (props) => {
 
         </div>
       </div>
-      {downloadModalOpen ? <DownloadModalWindowElement {...props} /> : null}
+      {downloadModalOpen ? (
+        <DownloadModalWindowElement
+          size={element.size}
+          zipLocation={element.zipLocation}
+        />
+      ) : null}
       {cbrainModalOpen ? (
         <CbrainModalDataset
           title={element.title}

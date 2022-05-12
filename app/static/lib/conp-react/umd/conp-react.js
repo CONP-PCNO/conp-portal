@@ -21815,16 +21815,13 @@ var react_dom = __webpack_require__(10);
 var react_dom_default = /*#__PURE__*/__webpack_require__.n(react_dom);
 
 // CONCATENATED MODULE: ./src/DatasetElement/DownloadModalWindowElement/index.js
-function DownloadModalWindowElement_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
 
 
 
 
 var DownloadModalWindowElement_DownloadModalWindowElement = function DownloadModalWindowElement(props) {
-  var authorized = props.authorized,
-      imagePath = props.imagePath,
-      element = DownloadModalWindowElement_objectWithoutPropertiesLoose(props, ["authorized", "imagePath"]);
+  var size = props.size,
+      zipLocation = props.zipLocation;
 
   var close = function close(event) {
     $("#downloadModal").modal("hide");
@@ -21854,7 +21851,7 @@ var DownloadModalWindowElement_DownloadModalWindowElement = function DownloadMod
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h4", {
     className: "modal-title w-100 text-center",
     id: "modalLongTitle"
-  }, "You are about to download a ", element.size, " file."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h4", {
+  }, "You are about to download a ", size, " file."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h4", {
     className: "modal-title w-100 text-center",
     id: "modalLongTitle"
   }, "Are you sure?"))))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -21870,7 +21867,7 @@ var DownloadModalWindowElement_DownloadModalWindowElement = function DownloadMod
     "data-dismiss": "modal",
     id: "cancelDownload"
   }, "Cancel"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
-    href: element.zipLocation,
+    href: zipLocation,
     className: "btn btn-secondary",
     id: "confirmDownload",
     onClick: close
@@ -21878,34 +21875,12 @@ var DownloadModalWindowElement_DownloadModalWindowElement = function DownloadMod
 };
 
 DownloadModalWindowElement_DownloadModalWindowElement.propTypes = {
-  authorized: prop_types_default.a.bool,
-  onRunWithCBRAIN: prop_types_default.a.func,
-  // element proptypes
-  id: prop_types_default.a.string,
-  title: prop_types_default.a.string,
-  isPrivate: prop_types_default.a.bool,
-  thumbnailURL: prop_types_default.a.string,
-  imagePath: prop_types_default.a.string,
-  downloadPath: prop_types_default.a.string,
-  downloads: prop_types_default.a.number,
-  views: prop_types_default.a.number,
-  likes: prop_types_default.a.number,
-  dateAdded: prop_types_default.a.string,
-  dateUpdated: prop_types_default.a.string,
   size: prop_types_default.a.string,
-  files: prop_types_default.a.number,
-  subjects: prop_types_default.a.number,
-  formats: prop_types_default.a.string,
-  modalities: prop_types_default.a.string,
-  sources: prop_types_default.a.number,
-  cbrain_id: prop_types_default.a.string,
-  ark_id: prop_types_default.a.string,
-  zipLocation: prop_types_default.a.string,
-  showDownloadButton: prop_types_default.a.bool
+  zipLocation: prop_types_default.a.string
 };
 DownloadModalWindowElement_DownloadModalWindowElement.defaultProps = {
-  imagePath: "",
-  downloadPath: ""
+  size: "",
+  zipLocation: ""
 };
 /* harmony default export */ var DatasetElement_DownloadModalWindowElement = (DownloadModalWindowElement_DownloadModalWindowElement);
 // CONCATENATED MODULE: ./src/CbrainModalDataset/index.js
@@ -22073,7 +22048,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     setDownloadModalOpen(true);
   };
 
-  $("#downloadModal").on("hidden.bd.modal", function (event) {
+  $("#downloadModal").on("hidden.bs.modal", function (event) {
     return setDownloadModalOpen(false);
   });
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
@@ -22265,7 +22240,10 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       key: "authIcon_" + index,
       className: "text-center p-1"
     }, icon);
-  })))), downloadModalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(DatasetElement_DownloadModalWindowElement, props) : null, cbrainModalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_CbrainModalDataset, {
+  })))), downloadModalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(DatasetElement_DownloadModalWindowElement, {
+    size: element.size,
+    zipLocation: element.zipLocation
+  }) : null, cbrainModalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_CbrainModalDataset, {
     title: element.title,
     cbrainIds: element.cbrainIds,
     cbrain_id: element.cbrain_id
