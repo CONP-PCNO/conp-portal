@@ -36,7 +36,7 @@ const ArkIdElement = (props) => {
 
   return (
     <div className="card-list-item">
-      <p className="card-text pr-1">
+      <div className="card-text pr-1">
         <strong>ARK ID <FontAwesomeIcon
               icon={faQuestionCircle}
               color="dimgray"
@@ -49,7 +49,7 @@ const ArkIdElement = (props) => {
           {showText &&
             <ReactToolTip id="arktip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
               Archival Resource Keys (ARKs) serve as persistent <br/>
-              identifiers, or stable, trusted references for information <br/>
+              identifiers, which provide stable, trusted references for information <br/>
               objects. For more information, please visit https://arks.org.
             </ReactToolTip>}
         : </strong>
@@ -61,7 +61,7 @@ const ArkIdElement = (props) => {
         {showCheckIcon && <button disabled type="button" className="btn btn-outline-secondary" style={{width:"auto", padding:"0.2rem 0.4rem"}}>
           <FontAwesomeIcon icon={faCheck} color="dimgray" size="md"/>
         </button>}
-      </p>
+      </div>
     </div>
   );
 };

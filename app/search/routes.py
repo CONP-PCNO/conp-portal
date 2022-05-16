@@ -174,6 +174,15 @@ def dataset_search():
         ]
 
         ark_id_row = ArkId.query.filter_by(dataset_id=d.dataset_id).first()
+
+        try:
+            zipped = DatasetCache(current_app).getZipLocation(d)
+        except IOError:
+            zipped = None
+
+        show_download_button = zipped is not None
+        zip_location = '/data/{0}'.format(os.path.basename(zipped or ''))
+
         dataset = {
             "authorized": authorized,
             "ark_id": 'https://n2t.net/' + ark_id_row.ark_id,
@@ -205,6 +214,8 @@ def dataset_search():
             "logoFilepath": datsdataset.LogoFilepath,
             "status": datsdataset.status,
             "cbrain_id": dataset_cbrain_id,
+            "showDownloadButton": show_download_button,
+            "zipLocation": zip_location
         }
 
         elements.append(dataset)
@@ -489,6 +500,15 @@ def dataset_info():
         dataset_cbrain_id = ""
 
     ark_id_row = ArkId.query.filter_by(dataset_id=d.dataset_id).first()
+
+    try:
+        zipped = DatasetCache(current_app).getZipLocation(d)
+    except IOError:
+        zipped = None
+
+    show_download_button = zipped is not None
+    zip_location = '/data/{0}'.format(os.path.basename(zipped or ''))
+
     dataset = {
         "authorized": authorized,
         "ark_id": 'https://n2t.net/' + ark_id_row.ark_id,
@@ -523,6 +543,8 @@ def dataset_info():
         "logoFilepath": datsdataset.LogoFilepath,
         "status": datsdataset.status,
         "cbrain_id": dataset_cbrain_id,
+        "zipLocation": zip_location,
+        "showDownloadButton": show_download_button
     }
 
     metadata = get_dataset_metadata_information(d)
@@ -539,22 +561,12 @@ def dataset_info():
     ci_badge_url = "https://img.shields.io/badge/circleci-" + \
         dataset["status"] + "-" + color + "?style=flat-square&logo=circleci"
 
-    try:
-        zipped = DatasetCache(current_app).getZipLocation(d)
-    except IOError:
-        zipped = None
-
-    showDownloadButton = zipped is not None
-    zipLocation = '/data/{0}'.format(os.path.basename(zipped or ''))
-
     return render_template(
         'dataset.html',
         title='CONP | Dataset',
         data=dataset,
         metadata=metadata,
         readme=readme,
-        showDownloadButton=showDownloadButton,
-        zipLocation=zipLocation,
         ciBadgeUrl=ci_badge_url,
         user=current_user
     )
