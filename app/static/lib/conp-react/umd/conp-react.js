@@ -22914,7 +22914,7 @@ var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipeli
           break;
         }
 
-        if (Object.keys(axes.pipelines).includes(year.toString()) && !Object.keys(axes.pipelines[year]).includes("" + i) && i === 1) {
+        if (Object.keys(axes.pipelines).includes((year - 1).toString()) && !Object.keys(axes.pipelines[year]).includes("" + i) && i === 1) {
           axes.pipelines[year][i] = 0;
         }
 
