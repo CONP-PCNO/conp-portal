@@ -265,6 +265,17 @@ def _update_datasets(app):
         except Exception:
             print("[ERROR  ] Create Date couldnt be read.")
 
+        firstMergeDate = datetime.utcnow()
+        try:
+            firstMergeTimeStamp = os.popen(
+                "git -C {} log --pretty=format:%ct --reverse {} | head -1".format(
+                    app.config['DATA_PATH'] + "/conp-dataset",
+                    ds['path']
+                )).read()
+            firstMergeDate = datetime.fromtimestamp(int(firstMergeTimeStamp))
+        except Exception:
+            print("[ERROR  ] First merge date of the submodule dataset could not be read.")
+
         # last commit in the git log for the dataset update date
         updateDate = datetime.utcnow()
         try:
@@ -286,8 +297,9 @@ def _update_datasets(app):
             dataset = DBDataset()
             dataset.dataset_id = ds['gitmodule_name']
             dataset.date_created = createDate
+            dataset.date_added_to_portal = firstMergeDate
 
-        if(dataset.date_created != createDate):
+        if dataset.date_created != createDate:
             dataset.date_created = createDate
 
         # check for dataset ancestry
@@ -308,6 +320,9 @@ def _update_datasets(app):
                     except exc.IntegrityError:
                         # we already have a record of this ancestry
                         db.session.rollback()
+
+        if not dataset.date_added_to_portal:
+            dataset.date_added_to_portal = firstMergeDate
 
         dataset.date_updated = updateDate
         dataset.fspath = ds['path']

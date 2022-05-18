@@ -208,6 +208,7 @@ class Dataset(db.Model):
     version = db.Column(db.String(6), index=True)
     date_created = db.Column(db.DateTime, default=datetime.now())
     date_updated = db.Column(db.DateTime, default=datetime.now())
+    date_added_to_portal = db.Column(db.DateTime, default=datetime.now())
     is_private = db.Column(db.Boolean, index=True)
 
     def __repr__(self):
