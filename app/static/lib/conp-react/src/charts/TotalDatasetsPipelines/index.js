@@ -206,18 +206,17 @@ const TotalDatasetsPipelines = (props) => {
 
             if (!axes.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1]) {
                 axes.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] = 1;
-            }
-            else {
-                axes.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1
+            } else {
+                axes.pipelines[dateAdded.getFullYear()][dateAdded.getMonth() + 1] += 1;
             }
         });
 
         Object.keys(axes.pipelines).forEach(year => {
-            for (var i = 1; i <= 12; i++) {
-                if (year === today.getFullYear() && i === today.getMonth() + 2) {
+            for (let i = 1; i <= 12; i++) {
+                if (year === String(today.getFullYear()) && i === today.getMonth() + 2) {
                     break;
                 }
-                if (Object.keys(axes.pipelines).includes((year - 1).toString()) &&
+                if (Object.keys(axes.pipelines).includes((year).toString()) &&
                     !Object.keys(axes.pipelines[year]).includes(`${i}`) && i === 1) {
                     axes.pipelines[year][i] = 0;
                 }

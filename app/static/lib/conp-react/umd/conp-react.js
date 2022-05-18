@@ -22910,11 +22910,11 @@ var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipeli
     });
     Object.keys(axes.pipelines).forEach(function (year) {
       for (var i = 1; i <= 12; i++) {
-        if (year === today.getFullYear() && i === today.getMonth() + 2) {
+        if (year === String(today.getFullYear()) && i === today.getMonth() + 2) {
           break;
         }
 
-        if (Object.keys(axes.pipelines).includes((year - 1).toString()) && !Object.keys(axes.pipelines[year]).includes("" + i) && i === 1) {
+        if (Object.keys(axes.pipelines).includes(year.toString()) && !Object.keys(axes.pipelines[year]).includes("" + i) && i === 1) {
           axes.pipelines[year][i] = 0;
         }
 
