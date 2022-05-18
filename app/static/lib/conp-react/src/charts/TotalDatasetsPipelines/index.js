@@ -216,7 +216,7 @@ const TotalDatasetsPipelines = (props) => {
                 if (year === String(today.getFullYear()) && i === today.getMonth() + 2) {
                     break;
                 }
-                if (Object.keys(axes.pipelines).includes((year -1).toString()) &&
+                if (Object.keys(axes.pipelines).includes((year - 1).toString()) &&
                     !Object.keys(axes.pipelines[year]).includes(`${i}`) && i === 1) {
                     axes.pipelines[year][i] = 0;
                 }
