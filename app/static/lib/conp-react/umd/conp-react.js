@@ -22910,7 +22910,7 @@ var TotalDatasetsPipelines_TotalDatasetsPipelines = function TotalDatasetsPipeli
     });
     Object.keys(axes.pipelines).forEach(function (year) {
       for (var i = 1; i <= 12; i++) {
-        if (year === today.getFullYear() && i === today.getMonth() + 2) {
+        if (year === String(today.getFullYear()) && i === today.getMonth() + 2) {
           break;
         }
 
