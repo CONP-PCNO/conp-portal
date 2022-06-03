@@ -59,7 +59,7 @@ const DataTableContainer = ({
   }, [query])
 
   const fetchCbrainIds = async () => {
-    const url = `${complementEndpointUrl}?${qs.stringify({max_per_page: 'All', cbrain: true}, { arrayFormat: 'comma' })}`;
+    const url = `${complementEndpointUrl}?${qs.stringify({max_per_page: 'All', cbrain: true, sortKey: "title"}, { arrayFormat: 'comma' })}`;
 
     try {
       const res = await fetch(url);
