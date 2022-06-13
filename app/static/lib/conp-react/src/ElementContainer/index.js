@@ -10,7 +10,7 @@ const ElementContainer = ({ element, elementProps, complementUrl }) => {
 
   const fetchCbrainIds = async () => {
     const url = `${complementUrl}?${qs.stringify(
-      { max_per_page: "All", cbrain: true },
+      { max_per_page: "All", cbrain: true, sortKey: "title" },
       { arrayFormat: "comma" }
     )}`;
     try {
