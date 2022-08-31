@@ -941,13 +941,8 @@
 </script>
 
 <div id="page">
-  {% block navigation_bar %} {% include "fragments/navigation_bar.html" %} {%
-  endblock %}
-
-  <div
-    id="page-content"
-    class="container-fluid d-flex flex-row px-0 align-self-start"
-  >
+  {% block navigation_bar %} {% include "fragments/navigation_bar.html" %} {% endblock %}
+  <div id="page-content" class="container-fluid d-flex flex-row px-0 align-self-start">
     <div class="mx-0">
       {% block sidebar %} {% include "fragments/sidebar.html" %} {% endblock %}
     </div>

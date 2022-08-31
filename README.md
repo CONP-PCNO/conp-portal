@@ -48,6 +48,7 @@ In the top level directory:
 flask db upgrade
 flask seed_test_db
 flask update_pipeline_data
+flask seed_test_experiments
 ```
 
 ### Run Application

@@ -211,16 +211,14 @@ Colour names courtesy of chir.ag/projects/name-that-color
 #sidebar {
   height: 100%;
   max-width: 100%;
+  position: sticky;
+  top: 80px;
 }
 
 .sidebar-tab:hover {
   background-color: #8a8a8a;
   color: #343434;
   cursor: pointer;
-}
-
-.sticky-offset {
-  top: 80px;
 }
 
 /*

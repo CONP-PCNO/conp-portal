@@ -1,0 +1,95 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% macro renderExperimentCard(experiment) %}
+  <div class="card container-fluid">
+    <div class="row">
+      <div class="col col-sm-2 d-flex flex-column justify-content-center">
+        <div class="container-fluid p-2">
+          <img alt="experiment image" class="img-fluid" src="{{ url_for('static', filename='img/cogs-solid-grey.png') }}">
+        </div>
+      </div>
+      <div class="col col-lg-7 card-body d-flex p-2">
+        <div class="d-flex flex-column justify-content-center">
+          <h5 class="card-title text-card-title">
+            <a class="text-reset">{{ experiment.title }}</a>
+          </h5>
+          <div>
+            {% for props in [['creators', 'description'], ['version', 'date_added', 'date_updated'], ['modalities', 'primary_software', 'primary_function'], ['doi'], ['license']] %}
+            <ul class="d-flex align-items-start">
+              {% for prop in props %}
+                <li class="card-list-item">
+                  <strong class="text-capitalize">{{ prop.replace('_', ' ') }}: </strong>{{ experiment[prop] }}
+                </li>
+              {% endfor %}
+            </ul>
+            {% endfor %}
+          </div>
+          <div class="py-1">
+            <ul class="d-flex align-items-start">
+              <li class="card-list-item"><strong>Files: </strong>{{ experiment.number_files }}</li>
+              <li class="card-list-item"><strong>Size: </strong>{{ experiment.size_files }}</li>
+            </ul>
+            <ul class="d-flex align-items-start">
+              <li class="card-list-item"><strong>Source: </strong>
+                <a target="_blank" rel="noreferrer" href="{{ experiment.source }}">{{ experiment.source }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-3 p-2">
+        <div class="container-fluid d-flex flex-column justify-content-center h-100">
+          <div class="d-flex flex-column align-items-center my-2">
+            <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+            {{ experiment.views }}
+          </div>
+          <div class="d-flex flex-column align-items-center">
+            <i class="fa fa-download fa-2x" aria-hidden="true"></i>
+            {{ experiment.downloads }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro renderFieldHeader(field) %}
+    <div class="d-flex flex-column">
+        <span class="form-control-label" style="margin-bottom: 0.25rem; line-height: 1">{{ field.label }}</span>
+        <small class="text-muted" style="margin-bottom: 0.25rem">{{ field.description }}</small>
+    </div>
+{% endmacro %}
+
+{% macro renderFieldList(field) %}
+    {% set class_names = "form-group required" if field.flags.required else "form-group" %}
+    <div class="{{ class_names }}">
+        {{ renderFieldHeader(field) }}
+        <ul class="list-group">
+            {% for entry in field.entries %}
+                <li class="list-group-item">
+                    {{ entry(class='form-control') }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}
+
+{% macro renderSelectOtherField(field, options) %}
+    {% set class_names = "form-group required" if field.flags.required else "form-group" %}
+    <div class="{{ class_names }}">
+        {{ renderFieldHeader(field) }}
+        {% set datalist_id = field.id + "-datalist" %}
+        {{ field(list=datalist_id, class="form-control") }}
+        <datalist id="{{ datalist_id }}">
+            {% if options.__class__.__name__ == 'dict' %}
+                {% for key, value in options.items() %}
+                     <option label="{{ key }}" value="{{ value }}">
+                {% endfor %}
+            {% elif options.__class__.__name__ == 'list' %}
+                {% for value in options %}
+                     <option value="{{ value }}">
+                {% endfor %}
+            {% endif %}
+        </datalist>
+    </div>
+{% endmacro %}

@@ -1,4 +1,4 @@
-COUNTRIES = {
+_countries = {
     "AF": "Afghanistan",
     "AX": "Aland Islands",
     "AL": "Albania",
@@ -247,4 +247,32 @@ COUNTRIES = {
     "YE": "Yemen",
     "ZM": "Zambia",
     "ZW": "Zimbabwe"
+}
+
+_licenses = {
+    'MIT': 'MIT License',
+    'GPL': 'General Public License'
+}
+
+_keywords = ['Brain', 'MRI', 'CIVET', 'FreeSurfer']
+
+_modalities = [
+    'fMRI', 'EEG', 'PET'
+]
+
+_software = [
+    'MATLAB', 'E-Prime', 'PsychoPy', 'NBS Presentation', 'Python'
+]
+
+_functions = [
+    'Cognitive', 'Sensory', 'Motor',
+]
+
+data = {
+    'countries': _countries,
+    'licenses': _licenses,
+    'keywords': _keywords,
+    "modalities": _modalities,
+    "software": _software,
+    "functions": _functions
 }

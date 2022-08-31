@@ -41,6 +41,11 @@ def register(app):
         _seed_aff_types_db(app)
         _seed_admin_acct_db(app)
         _seed_test_datasets_db(app)
+    
+    @app.cli.command("seed_test_experiments")
+    def seed_test_experiments():
+        _generate_dummy_experiments(app)
+
 
     @app.cli.command('update_pipeline_data')
     def update_pipeline_data():
@@ -919,3 +924,18 @@ def _get_repo_analytics(app, repo):
                 }
 
     return daily_stat_dict
+
+def _generate_dummy_experiments(app):
+    from app import db
+    from app.models import Experiment
+    from sqlalchemy.exc import OperationalError
+
+    try:
+        Experiment.purge()
+    except OperationalError:
+        pass
+
+    db.create_all()
+    experiments = Experiment.get_dummies(25)
+    db.session.add_all(experiments)
+    db.session.commit()
