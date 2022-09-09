@@ -7,7 +7,13 @@ import json
 import os
 import re
 
-from flask import render_template, request, current_app, send_from_directory
+from flask import (
+    render_template,
+    request,
+    current_app,
+    send_from_directory,
+    url_for,
+)
 from flask_login import current_user
 
 from app.models import ArkId
@@ -213,7 +219,11 @@ def dataset_search():
             "primaryPublications": datsdataset.primaryPublications,
             "logoFilepath": datsdataset.LogoFilepath,
             "status": datsdataset.status,
-            "cbrain_id": dataset_cbrain_id,
+            "cbrain_id": url_for(
+                "main.redirect_to_cbrain", cbrainurl=dataset_cbrain_id
+            )
+            if dataset_cbrain_id
+            else dataset_cbrain_id,
             "showDownloadButton": show_download_button,
             "zipLocation": zip_location
         }

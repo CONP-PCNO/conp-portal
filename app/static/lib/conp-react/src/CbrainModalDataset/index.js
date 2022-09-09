@@ -6,8 +6,8 @@ const CbrainModalDataset = (props) => {
   const finish = (event) => {
     $("#cbrainModal").modal("hide");
   };
-  const datasetCbrainId = cbrain_id.split("?id=")[1];
-  const baseUrl = `https://portal.cbrain.mcgill.ca/userfiles?switch_group_id=${datasetCbrainId}`;
+  const datasetCbrainId = cbrain_id.split("%3Fid%3D")[1];
+  const baseUrl = `https%3A%2F%2Fportal.cbrain.mcgill.ca%2Fuserfiles%3Fswitch_group_id%3D${datasetCbrainId}`;
   const getPipelineId = (pipelineUrl) => pipelineUrl.split("/userfiles?")[1];
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const CbrainModalDataset = (props) => {
       </p>
       <div className="list-group">
         <a
-          href={baseUrl}
+          href={cbrain_id}
           className="list-group-item list-group-item-action"
           target="_blank"
           rel="noreferrer"
@@ -46,7 +46,7 @@ const CbrainModalDataset = (props) => {
         </a>
         {cbrainIds.map((pipeline) => (
           <a
-            href={`${baseUrl}&${getPipelineId(pipeline.url)}`}
+            href={`${pipeline.url}%26switch_group_id%3D${datasetCbrainId}`}
             className="list-group-item list-group-item-action"
             target="_blank"
             rel="noreferrer"
