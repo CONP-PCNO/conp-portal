@@ -8,7 +8,7 @@ const CbrainModalPipeline = (props) => {
   };
   const baseUrl = platforms[0].uri;
   const getDatasetId = (datasetUrl) =>
-    `switch_group_id=${datasetUrl.split("?id=")[1]}`;
+    `switch_group_id=${datasetUrl.split("%3Fid%3D")[1]}`;
   useEffect(() => {
     $("#cbrainModal").modal("handleUpdate");
     return;
@@ -45,7 +45,7 @@ const CbrainModalPipeline = (props) => {
         </a>
         {cbrainIds.map((dataset) => (
           <a
-            href={`${baseUrl}&${getDatasetId(dataset.url)}`}
+            href={`${baseUrl}%26${getDatasetId(dataset.url)}`}
             className="list-group-item list-group-item-action"
             target="_blank"
             rel="noreferrer"

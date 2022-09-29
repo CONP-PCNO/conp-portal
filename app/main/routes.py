@@ -6,9 +6,11 @@
 import os
 import json
 from urllib import request
+from urllib.parse import urlparse
 
 from flask import render_template, redirect, abort
 from flask import current_app
+from flask import request as flask_request
 from flask_login import current_user
 from app.main import main_bp
 from app.models import Dataset
@@ -215,3 +217,19 @@ def redirect_ark_ids(url_naan, url_ark_id):
         )
 
     return redirect(redirect_url)
+
+
+@main_bp.route("/cbrainredirect")
+def redirect_to_cbrain():
+    try:
+        cbrain_url = flask_request.args["cbrainurl"]
+    except KeyError:
+        return redirect("/")
+
+    parse_result = urlparse(cbrain_url)
+    if (
+        (parse_result.scheme != "https")
+        or (parse_result.netloc != "portal.cbrain.mcgill.ca")
+    ):
+        return redirect("/")
+    return redirect(cbrain_url)

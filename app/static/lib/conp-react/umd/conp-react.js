@@ -21790,8 +21790,8 @@ var CbrainModalDataset_CbrainModalDataset = function CbrainModalDataset(props) {
     $("#cbrainModal").modal("hide");
   };
 
-  var datasetCbrainId = cbrain_id.split("?id=")[1];
-  var baseUrl = "https://portal.cbrain.mcgill.ca/userfiles?switch_group_id=" + datasetCbrainId;
+  var datasetCbrainId = cbrain_id.split("%3Fid%3D")[1];
+  var baseUrl = "https%3A%2F%2Fportal.cbrain.mcgill.ca%2Fuserfiles%3Fswitch_group_id%3D" + datasetCbrainId;
 
   var getPipelineId = function getPipelineId(pipelineUrl) {
     return pipelineUrl.split("/userfiles?")[1];
@@ -21808,7 +21808,7 @@ var CbrainModalDataset_CbrainModalDataset = function CbrainModalDataset(props) {
   }, "logged into CBRAIN"), " ", "before loading the dataset."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "list-group"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
-    href: baseUrl,
+    href: cbrain_id,
     className: "list-group-item list-group-item-action",
     target: "_blank",
     rel: "noreferrer",
@@ -21816,7 +21816,7 @@ var CbrainModalDataset_CbrainModalDataset = function CbrainModalDataset(props) {
     onClick: finish
   }, "None"), cbrainIds.map(function (pipeline) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
-      href: baseUrl + "&" + getPipelineId(pipeline.url),
+      href: pipeline.url + "%26switch_group_id%3D" + datasetCbrainId,
       className: "list-group-item list-group-item-action",
       target: "_blank",
       rel: "noreferrer",
@@ -22192,7 +22192,7 @@ var CbrainModalPipeline_CbrainModalPipeline = function CbrainModalPipeline(props
   var baseUrl = platforms[0].uri;
 
   var getDatasetId = function getDatasetId(datasetUrl) {
-    return "switch_group_id=" + datasetUrl.split("?id=")[1];
+    return "switch_group_id=" + datasetUrl.split("%3Fid%3D")[1];
   };
 
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
@@ -22214,7 +22214,7 @@ var CbrainModalPipeline_CbrainModalPipeline = function CbrainModalPipeline(props
     onClick: finish
   }, "None"), cbrainIds.map(function (dataset) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
-      href: baseUrl + "&" + getDatasetId(dataset.url),
+      href: baseUrl + "%26" + getDatasetId(dataset.url),
       className: "list-group-item list-group-item-action",
       target: "_blank",
       rel: "noreferrer",

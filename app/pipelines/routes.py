@@ -161,7 +161,9 @@ def pipeline_search():
         if element["id"] in zenodo_urls.keys():
             element["platforms"][0]["img"] = url_for(
                 'static', filename="img/run_on_cbrain_green.png")
-            element["platforms"][0]["uri"] = zenodo_urls[element["id"]]
+            element["platforms"][0]["uri"] = url_for(
+                "main.redirect_to_cbrain", cbrainurl=zenodo_urls[element["id"]]
+            )
         else:
             element["platforms"][0]["img"] = url_for(
                 'static', filename="img/run_on_cbrain_gray.png")
