@@ -1,0 +1,17 @@
+<div class="search-dataset-footer d-flex align-items-center p-2">
+  <div class="btn-group">
+      <button class="btn btn-outline-dark" onclick="handlePageChange(1)">&lt;&lt;</button>
+      <button class="btn btn-outline-dark" onclick="handlePageChange('{{ pagination.prev_num or 1 }}')">&lt;</button>
+      {% for page in pagination.iter_pages(left_edge=0, left_current=2, right_current=5, right_edge=0) %}
+          {% if page %}
+              {% if page != pagination.page %}
+                <button class="btn btn-outline-dark" onclick="handlePageChange('{{ page }}')">{{ page }}</button>
+              {% else %}
+                <button class="btn btn-dark"  onclick="handlePageChange('{{ page }}')">{{ page }}</button>
+              {% endif %}
+          {% endif %}
+      {% endfor %}
+      <button class="btn btn-outline-dark" onclick="handlePageChange('{{ pagination.next_num or pagination.pages }}')">&gt;</button>
+      <button class="btn btn-outline-dark" onclick="handlePageChange('{{ pagination.pages }}')">&gt;&gt;</button>
+  </div>
+</div>

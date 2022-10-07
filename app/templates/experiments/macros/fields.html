@@ -1,0 +1,42 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% macro render_field_header(field) %}
+    <div class="d-flex flex-column">
+        <span class="form-control-label" style="margin-bottom: 0.25rem; line-height: 1">{{ field.label }}</span>
+        <small class="text-muted" style="margin-bottom: 0.25rem">{{ field.description }}</small>
+    </div>
+{% endmacro %}
+
+{% macro field_list(field) %}
+    {% set class_names = "form-group required" if field.flags.required else "form-group" %}
+    <div class="{{ class_names }}">
+        {{ render_field_header(field) }}
+        <ul class="list-group">
+            {% for entry in field.entries %}
+                <li class="list-group-item">
+                    {{ entry(class='form-control') }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}
+
+{% macro select_other_field(field, options) %}
+    {% set class_names = "form-group required" if field.flags.required else "form-group" %}
+    <div class="{{ class_names }}">
+        {{ render_field_header(field) }}
+        {% set datalist_id = field.id + "-datalist" %}
+        {{ field(list=datalist_id, class="form-control") }}
+        <datalist id="{{ datalist_id }}">
+            {% if options.__class__.__name__ == 'dict' %}
+                {% for key, value in options.items() %}
+                     <option label="{{ key }}" value="{{ value }}">
+                {% endfor %}
+            {% elif options.__class__.__name__ == 'list' %}
+                {% for value in options %}
+                     <option value="{{ value }}">
+                {% endfor %}
+            {% endif %}
+        </datalist>
+    </div>
+{% endmacro %}

@@ -1,9 +1,14 @@
-from datetime import date
-from json import JSONEncoder
+import re
 
+from wtforms.validators import ValidationError
 
-class ExperimentJSONEncoder(JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, date):
-            return obj.isoformat()
-        return super().default(obj)
+def flatten(xs):
+  for x in xs:
+    if isinstance(x, (list, tuple)):
+      yield from flatten(x)
+    else:
+      yield x
+
+def validate_doi(_, field):
+    if field.data and re.match(r'^10.\d{4,9}/[-._;()/:A-Z0-9]+$', field.data) is None:
+        raise ValidationError('Not a valid DOI')

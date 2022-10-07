@@ -1,0 +1,51 @@
+<div class="d-flex justify-content-between">
+  <div>
+    <div class="d-flex align-items-center">
+    {% set firstResultNumber = (pagination.page - 1) * pagination.per_page + 1 %}
+    <span>
+      Results {{ firstResultNumber }} - {{ [firstResultNumber + pagination.per_page, pagination.total] | min }} displayed of {{ pagination.total }}.
+    </span>
+    <div class="d-flex align-items-center ml-1">
+      <span>(Maximum results per page</span>
+      <span class="dropdown p-2">
+        <button class="btn btn-secondary dropdown-toggle p-2"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown">
+          {{ pagination.per_page }}
+        </button>
+        <div class="dropdown-menu" style="min-width: 5rem;">
+          {% for option in [5, 10, 15, 20] %}
+            <div class="dropdown-item p-0"
+                  onclick="updateSearchParam('per_page', '{{ option }}')">
+              <button class="btn btn-light p-1">{{ option }}</button>
+            </div>
+          {% endfor %}
+        </div>
+      </span>)
+    </div>
+    </div>
+  </div>
+  <div>
+    <div class="dropdown d-flex p-2">
+      <span class="text-nowrap m-2">Sort By:</span>
+      <button class="btn btn-outline-secondary dropdown-toggle p-2"
+              type="button"
+              id="dropdownSortButton"
+              data-toggle="dropdown">
+        {{ sort_key }}
+      </button>
+      <div class="dropdown-menu dropdown-menu-right" style="min-width: 10rem;">
+        {% for option in sort_key.options.keys() %}
+          <div class="dropdown-item p-0">
+            <button class="btn btn-light p-1"
+                    onclick="updateSearchParam('sort_key', '{{ option }}')">
+              {{ sort_key.options[option].label }}
+            </button>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+

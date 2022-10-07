@@ -1,22 +1,13 @@
 from __future__ import annotations
 
-import re
-
 from flask_uploads import UploadSet, IMAGES
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileRequired
 from wtforms import FileField, StringField, SubmitField, FloatField, SelectField, TextAreaField, FieldList
-from wtforms.validators import DataRequired, URL, Email, ValidationError
+from wtforms.validators import DataRequired, URL, Email
 
+from .utils import validate_doi
 from ..models import Experiment
-
-images = UploadSet('images', IMAGES)
-
-
-def validate_doi(form, field):
-    if field.data and re.match(r'^10.\d{4,9}/[-._;()/:A-Z0-9]+$', field.data) is None:
-        raise ValidationError('Not a valid DOI')
-
 
 class SelectOtherField(StringField):
     """ later, this could streamline the options """
@@ -51,6 +42,9 @@ class ExperimentForm(FlaskForm):
         label='Country of Origin',
         description='Country in which the experiment was primarily devised',
         validators=[],
+        render_kw={
+            'options-key': 'countries'
+        }
     )
 
     contact_person = StringField(
@@ -91,6 +85,9 @@ class ExperimentForm(FlaskForm):
     license = SelectOtherField(
         label='License',
         description='The licence under which this experiment is shared.',
+        render_kw={
+            'options-key': 'licenses'
+        }
     )
 
     keywords = FieldList(
@@ -106,13 +103,19 @@ class ExperimentForm(FlaskForm):
     modalities = SelectOtherField(
         label='Modality',
         description='The modalities for which the experiment is designed.',
-        validators=[DataRequired()]
+        validators=[DataRequired()],
+        render_kw={
+            'options-key': 'modalities'
+        }
     )
 
     primary_software = SelectOtherField(
         label='Primary Software',
         description='the software package primarily used to develop the experiment.',
-        validators=[DataRequired()]
+        validators=[DataRequired()],
+        render_kw={
+            'options-key': 'software'
+        }
     )
 
     other_software = FieldList(
@@ -125,7 +128,10 @@ class ExperimentForm(FlaskForm):
 
     primary_function = SelectOtherField(
         label='Primary Function',
-        validators=[DataRequired()]
+        validators=[DataRequired()],
+        render_kw={
+            'options-key': 'functions'
+        }
     )
 
     other_functions = FieldList(
@@ -137,7 +143,7 @@ class ExperimentForm(FlaskForm):
 
     doi = StringField(
         label="Link to Publication (DOI)",
-        validators=[URL(), validate_doi]
+        validators=[validate_doi]
     )
 
     acknowledgements = StringField(
@@ -146,9 +152,9 @@ class ExperimentForm(FlaskForm):
     )
 
     source = StringField(label='Source')
-    repository = FileField("Upload zipped repository", validators=[FileRequired()])
+    repository = FileField("Upload zipped repository", validators=[]) # FileRequired()
     image = FileField("Upload image", validators=[
-        FileAllowed(images, 'Images only!')
+        # FileAllowed(UploadSet('images', IMAGES), 'Images only!')
     ])
 
     submit = SubmitField('Submit', validators=[DataRequired()])

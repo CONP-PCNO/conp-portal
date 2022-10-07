@@ -1,6 +1,4 @@
-{% import "bootstrap/wtf.html" as wtf %}
-
-{% macro renderExperimentCard(experiment) %}
+{% for experiment in pagination.items %}
   <div class="card container-fluid">
     <div class="row">
       <div class="col col-sm-2 d-flex flex-column justify-content-center">
@@ -18,7 +16,8 @@
             <ul class="d-flex align-items-start">
               {% for prop in props %}
                 <li class="card-list-item">
-                  <strong class="text-capitalize">{{ prop.replace('_', ' ') }}: </strong>{{ experiment[prop] }}
+                  <strong class="text-capitalize">{{ prop.replace('_', ' ') }}: </strong>
+                  {{ ', '.join(experiment[prop]) if experiment[prop].__class__.__name__ == 'list' else experiment[prop] }}
                 </li>
               {% endfor %}
             </ul>
@@ -51,45 +50,4 @@
       </div>
     </div>
   </div>
-{% endmacro %}
-
-{% macro renderFieldHeader(field) %}
-    <div class="d-flex flex-column">
-        <span class="form-control-label" style="margin-bottom: 0.25rem; line-height: 1">{{ field.label }}</span>
-        <small class="text-muted" style="margin-bottom: 0.25rem">{{ field.description }}</small>
-    </div>
-{% endmacro %}
-
-{% macro renderFieldList(field) %}
-    {% set class_names = "form-group required" if field.flags.required else "form-group" %}
-    <div class="{{ class_names }}">
-        {{ renderFieldHeader(field) }}
-        <ul class="list-group">
-            {% for entry in field.entries %}
-                <li class="list-group-item">
-                    {{ entry(class='form-control') }}
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-{% endmacro %}
-
-{% macro renderSelectOtherField(field, options) %}
-    {% set class_names = "form-group required" if field.flags.required else "form-group" %}
-    <div class="{{ class_names }}">
-        {{ renderFieldHeader(field) }}
-        {% set datalist_id = field.id + "-datalist" %}
-        {{ field(list=datalist_id, class="form-control") }}
-        <datalist id="{{ datalist_id }}">
-            {% if options.__class__.__name__ == 'dict' %}
-                {% for key, value in options.items() %}
-                     <option label="{{ key }}" value="{{ value }}">
-                {% endfor %}
-            {% elif options.__class__.__name__ == 'list' %}
-                {% for value in options %}
-                     <option value="{{ value }}">
-                {% endfor %}
-            {% endif %}
-        </datalist>
-    </div>
-{% endmacro %}
+{% endfor %}

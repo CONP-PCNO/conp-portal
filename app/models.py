@@ -7,9 +7,12 @@ Module that contains the Data Models
 
 from __future__ import annotations
 
+import enum
+
 from app import db
 from flask_user import UserMixin
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
+from sqlalchemy import Enum
 from sqlalchemy.orm.collections import attribute_mapped_collection
 from datetime import datetime, timedelta
 from pytz import timezone
@@ -17,7 +20,6 @@ from app.oauth import OAuth_pretty
 from random import randrange
 
 eastern = timezone('US/Eastern')
-
 
 class RoleMixin(object):
     """
@@ -486,12 +488,14 @@ class GithubDailyViewsCount(db.Model):
     def __repr__(self):
         return '<GithubDailyViewsCount {}>'.format(self.id)
 
+## Experiments ##
+
 
 class Experiment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text)
     description = db.Column(db.Text)
-    creators = db.Column(db.Text)
+    creators = db.Column(db.PickleType)
     origin = db.Column(db.Text, default='NA')
     contact_person = db.Column(db.Text)
     contact_email = db.Column(db.Text)
@@ -500,12 +504,12 @@ class Experiment(db.Model):
     date_updated = db.Column(db.DateTime, default=datetime.now())
     privacy = db.Column(db.Text)
     license = db.Column(db.Text, default='NA')
-    keywords = db.Column(db.Text)
-    modalities = db.Column(db.Text)
+    keywords = db.Column(db.PickleType)
+    modalities = db.Column(db.PickleType)
     primary_software = db.Column(db.Text)
-    other_software = db.Column(db.Text, default='NA')
+    other_software = db.Column(db.PickleType, default=[])
     primary_function = db.Column(db.Text)
-    other_functions = db.Column(db.Text, default='NA')
+    other_functions = db.Column(db.PickleType, default=[])
     doi = db.Column(db.Text, default='NA')
     acknowledgements = db.Column(db.Text, default='NA')
     number_files = db.Column(db.Integer, default=0)
@@ -513,6 +517,74 @@ class Experiment(db.Model):
     source = db.Column(db.Text, default='NA')
     views = db.Column(db.Integer, default=0)
     downloads = db.Column(db.Integer, default=0)
+
+    # Required to be defined by the user
+    required_attributes = [
+        'title',
+        'description',
+        "creators",
+        "contact_person",
+        "contact_email",
+        "privacy",
+        "keywords",
+        "modalities",
+        "primary_software",
+        "primary_function",
+    ]
+
+    @classmethod
+    def get_unique_values(cls, colname: str) -> list | None:
+        """ return list of all unique values in column """
+        def flatten(xs):
+            for x in xs:
+                if isinstance(x, (list, tuple)):
+                    yield from flatten(x)
+                else:
+                    yield x
+        try:
+            column = getattr(cls, colname)
+        except AttributeError:
+            return None
+        return list(set(flatten(db.session.query(column).all())))
+    
+    @classmethod
+    def purge(cls) -> None:
+        """ wipe the table completely from the database and recreate it """
+        cls.__table__.drop(db.engine)
+        cls.__table__.create(db.engine)
+    
+    @classmethod
+    def get_dummies(cls, n: int) -> list[Experiment]:
+        """ return a list of dummy experiments for testing """
+        
+        def get_random_element(elements: list) -> list:
+            return elements[randrange(0, len(elements))]
+        
+        dummy_data = []
+        for i in range(1, n + 1):
+            dummy_data.append({
+                "title": "Dummy Experiment " + str(i),
+                'description': 'This is not a real experiment',
+                "creators": ['Joshua Unrau', 'Katie Lavigne', 'Martin Lepage'],
+                "version": 1.0,
+                "contact_person": "Josh",
+                "contact_email": 'user@gmail.com',
+                "privacy": 'open',
+                "modalities": get_random_element(["fMRI", "EEG", "PET"]),
+                'primary_software': get_random_element(["Linux", 'Windows']),
+                'primary_function': get_random_element(['Cognitive', 'Sensory', 'Motor']),
+                'doi': '10.1093/schbul/sbj053',
+                "license": "MIT License"
+            })
+        return [cls(**d) for d in dummy_data]
+
+
+
+'''
+
+
+class Experiment(db.Model):
+
 
     # Required to be defined by the user
     required_attributes = [
@@ -536,22 +608,7 @@ class Experiment(db.Model):
         for attribute in self.required_attributes:
             data[attribute] = getattr(self, attribute)
         return data
-
-    def incr_downloads(self):
-        self.downloads += 1
-
-    def incr_views(self):
-        self.views += 1
-
-    def set_date_updated(self, newdate):
-        date_updated = newdate
     
-    @classmethod
-    def purge(cls) -> None:
-        """ wipe the table completely from the database and recreate it """
-        cls.__table__.drop(db.engine)
-        cls.__table__.create(db.engine)
-
     @classmethod
     def get_dummies(cls, n: int) -> list[Experiment]:
         """ return a list of dummy experiments for testing """
@@ -582,3 +639,5 @@ class Experiment(db.Model):
                 "license": "MIT License"
             })
         return [cls(**d) for d in dummy_data]
+
+'''
