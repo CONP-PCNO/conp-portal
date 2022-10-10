@@ -471,3 +471,11 @@ Colour names courtesy of chir.ag/projects/name-that-color
     padding: 0;
     top: 50px;
 }
+
+.form-group.required label::after {
+  content: "*";
+}
+
+.form-btn {
+  white-space: nowrap;
+}

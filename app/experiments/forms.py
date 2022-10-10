@@ -43,7 +43,7 @@ class ExperimentForm(FlaskForm):
         description='Country in which the experiment was primarily devised',
         validators=[],
         render_kw={
-            'options-key': 'countries'
+            'data-key': 'countries'
         }
     )
 
@@ -86,7 +86,7 @@ class ExperimentForm(FlaskForm):
         label='License',
         description='The licence under which this experiment is shared.',
         render_kw={
-            'options-key': 'licenses'
+            'data-key': 'licenses'
         }
     )
 
@@ -105,7 +105,7 @@ class ExperimentForm(FlaskForm):
         description='The modalities for which the experiment is designed.',
         validators=[DataRequired()],
         render_kw={
-            'options-key': 'modalities'
+            'data-key': 'modalities'
         }
     )
 
@@ -114,7 +114,7 @@ class ExperimentForm(FlaskForm):
         description='the software package primarily used to develop the experiment.',
         validators=[DataRequired()],
         render_kw={
-            'options-key': 'software'
+            'data-key': 'software'
         }
     )
 
@@ -130,7 +130,7 @@ class ExperimentForm(FlaskForm):
         label='Primary Function',
         validators=[DataRequired()],
         render_kw={
-            'options-key': 'functions'
+            'data-key': 'functions'
         }
     )
 

@@ -48,7 +48,6 @@ def search():
 @experiments_bp.route('/submit', methods=['GET', 'POST'])
 def submit():
   form = ExperimentForm()
-  print(form.errors)
   if form.validate_on_submit():
     flash('Done!')
     print(form.data)

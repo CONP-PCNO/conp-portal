@@ -1,149 +1,75 @@
 {% extends 'common/base_main.html' %}
-{% import "bootstrap/wtf.html" as wtf %}
-{% import 'experiments/macros/fields.html' as fields %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/experimentSubmit.js') }}"></script>
+{% endblock %}
 
 {% block contenttitle %}
 <h2><span style="color: red">CONP Portal</span> | Experiments Form</h2>
 {% endblock %}
 
-
 {% block appcontent %}
-        {% for message in get_flashed_messages() %}
-            <div class="alert alert-warning">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                {{ message }}
+  <div>
+    {% for message in get_flashed_messages() %}
+      <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+      </div>
+    {% endfor %}
+    {% for field_name, list_errors in form.errors.items() %}
+      <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        Errors for field '{{ field_name }}': {{ list_errors }}
+      </div>
+    {% endfor %}
+  </div>
+  <form novalidate method="post">
+    {{ form.hidden_tag() }}
+    {% for field in form %}
+      {% if field.type == 'SubmitField' %}
+        {{ field(class='btn btn-primary') }}
+      {% elif field.type != 'CSRFTokenField' %}
+        <div class="{{ 'form-group required' if field.flags.required else 'form-group' }}">
+          {{ field.label(class='m-0') }}
+          <small class="form-text text-muted mt-0 mb-1">
+            {{ field.description }}
+          </small>
+          {% if field.type in ['StringField', 'TextAreaField', 'FloatField', 'SelectField', 'FileField'] %}
+            {{ field(class='form-control') }}
+          {% elif field.type == 'FieldList' %}
+            <ul class="p-0" id="{{ field.name }}" style="list-style: none;">
+              {% for entry in field.entries %}
+                <li>
+                  {{ entry(class='form-control') }}
+                </li>
+              {% endfor %}
+            </ul>
+            <div class="btn-group btn-group-sm" role="group">
+              <button class="btn btn-outline-dark form-btn" type="button" onclick="addFieldListEntry('{{ field.name }}')">
+                Add Another
+              </button>
+              <button class="btn btn-outline-dark form-btn" type="button" onclick="removeFieldListEntry('{{ field.name }}')">
+                Remove
+              </button>
             </div>
-        {% endfor %}
-        <form novalidate id="experiment-form" class="form mx-md-5" method="post" role="form">
-            {{ form.hidden_tag() }}
-            {% for field_name, list_errors in form.errors.items() %}
-            <div class="alert alert-warning">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                Errors for field '{{ field_name }}': {{ list_errors }}
-            </div>
-            {% endfor %}
-
-            {{ wtf.form_field(form.title) }}
-            {{ wtf.form_field(form.description) }}
-            {{ fields.field_list(form.creators) }}
-            {{ fields.select_other_field(form.origin, options=data['countries']) }}
-            {{ wtf.form_field(form.contact_person) }}
-            {{ wtf.form_field(form.contact_email) }}
-            {{ wtf.form_field(form.version) }}
-            {{ wtf.form_field(form.privacy) }}
-            {{ fields.select_other_field(form.license, options=data['licenses']) }}
-            {{ fields.field_list(form.keywords) }}
-            {{ fields.select_other_field(form.modalities, options=data['modalities']) }}
-            {{ fields.select_other_field(form.primary_software, options=data['software']) }}
-            {{ fields.field_list(form.other_software) }}
-            {{ fields.select_other_field(form.primary_function, options=data['functions']) }}
-            {{ fields.field_list(form.other_functions) }}
-            {{ wtf.form_field(form.doi) }}
-            {{ wtf.form_field(form.acknowledgements) }}
-            {{ wtf.form_field(form.source) }}
-            <div class="d-flex justify-content-between">
-                {{ wtf.form_field(form.repository) }}
-                {{ wtf.form_field(form.image) }}
-            </div>
-            {{ wtf.form_field(form.submit) }}
-        </form>
-    <script>
-        const experimentForm = document.getElementById('experiment-form');
-        // field_lists
-        const fieldLists = []
-        Array.from(experimentForm.children).forEach(element => {
-            if (element.classList && element.classList.contains("form-group")) {
-                Array.from(element.children).forEach(subElement => {
-                    if (subElement.classList && subElement.classList.contains("list-group")) {
-                        fieldLists.push(subElement)
-                    }
-                })
-            }
-        })
-
-        fieldLists.forEach(element => {
-
-            const buttonGroup = document.createElement('div');
-            buttonGroup.classList.add('btn-group', 'btn-group-sm', 'w-100');
-            buttonGroup.setAttribute('role', 'group');
-
-            const buttonGroupContainer = document.createElement('li');
-            buttonGroupContainer.classList.add('list-group-item', 'p-0', 'm-0');
-            buttonGroupContainer.appendChild(buttonGroup)
-            element.appendChild(buttonGroupContainer)
-
-            const addButton = document.createElement('button');
-            addButton.type = 'button';
-            addButton.innerText = '+';
-            addButton.classList.add('btn', 'btn-outline-light', 'text-dark')
-            buttonGroup.appendChild(addButton)
-
-            const minusButton = document.createElement('button');
-            minusButton.type = 'button';
-            minusButton.innerText = '-';
-            minusButton.classList.add('btn', 'btn-outline-light', 'text-dark')
-            buttonGroup.appendChild(minusButton)
-
-            addButton.addEventListener('click', () => {
-                const listItems = element.getElementsByTagName('li');
-                const finalInputListItem = listItems[listItems.length - 2]
-                const inputElements = finalInputListItem.getElementsByTagName('input');
-                const finalInputElement = inputElements[inputElements.length - 1];
-                let [prefix, index] = finalInputElement.getAttribute('id').split('-');
-                index = Number.parseInt(index);
-                if (Number.isNaN(index)) {
-                    throw new Error('Invalid index: ' + index)
-                }
-                const newIndex = index + 1;
-                const newName = prefix + '-' + newIndex;
-                const newInputListItem = finalInputListItem.cloneNode(true);
-
-                for (const child of newInputListItem.children) {
-                    child.value = '';
-                    for (const attribute of ['id', 'for', 'name']) {
-                        if (child instanceof HTMLElement && child.getAttribute(attribute)) {
-                            child.setAttribute(attribute, newName)
-                            child.innerText = newIndex.toString()
-                        }
-                    }
-                }
-
-                element.insertBefore(newInputListItem, element.lastChild)
-
-            })
-
-            minusButton.addEventListener('click', () => {
-                if (element.children.length > 2) { // btn group is part of list group
-                    element.removeChild(element.children.item(element.children.length - 2))
-                }
-            })
-        })
-
-        // Select other field
-
-        Array.from(experimentForm.children).forEach(child => {
-            if (child.classList.contains('select-other-field')) {
-                const selectElements = child.getElementsByTagName('select')
-                const inputElements = child.getElementsByTagName('input')
-                for (const elements of [selectElements, inputElements]) {
-                    if (elements.length !== 1) {
-                        throw new Error(`Expected one element, got ${inputElements.length}`)
-                    }
-                }
-                const selectElement = selectElements[0];
-                const inputElement = inputElements[0];
-                selectElement.addEventListener('change', (event) => {
-                    if (event.target.value === 'Other') {
-                        inputElement.style.display = 'block';
-                    } else {
-                        inputElement.style.display = 'none';
-                    }
-                })
-                inputElement.addEventListener('change', event => {
-                    selectElement.value = event.target.value;
-                })
-            }
-        })
-    </script>
+          {% elif field.type == 'SelectOtherField' %}
+            {% set datalist_id = field.id + "-datalist" %}
+            {{ field(list=datalist_id, class="form-control") }}
+            <datalist id="{{ datalist_id }}">
+              {% if data[field.render_kw['data-key']].__class__.__name__ == dict %}
+                {% for key, value in data[field.render_kw['data-key']].items() %}
+                  <option label="{{ key }}" value="{{ value }}">
+                {% endfor %}
+              {% elif data[field.render_kw['data-key']].__class__.__name__ == 'list' %}
+                {% for value in data[field.render_kw['data-key']] %}
+                  <option value="{{ value }}">
+                {% endfor %}
+              {% endif %}
+            </datalist>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </form>
 {% endblock %}
-
