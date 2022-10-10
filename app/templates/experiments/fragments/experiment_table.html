@@ -17,7 +17,13 @@
               {% for prop in props %}
                 <li class="card-list-item">
                   <strong class="text-capitalize">{{ prop.replace('_', ' ') }}: </strong>
-                  {{ ', '.join(experiment[prop]) if experiment[prop].__class__.__name__ == 'list' else experiment[prop] }}
+                  {% if experiment[prop].__class__.__name__ == 'list' %}
+                    {{ ', '.join(experiment[prop]) }}
+                  {% elif experiment[prop].__class__.__name__ == 'datetime' %}
+                    {{ experiment[prop].date().isoformat() }}
+                  {% else %}
+                    {{ experiment[prop] }}
+                  {% endif %}
                 </li>
               {% endfor %}
             </ul>
