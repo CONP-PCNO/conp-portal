@@ -6,7 +6,8 @@
           <span class="text-nowrap m-2">Filter By:</span>
           <div class="d-flex">
             {% for key, filter in filters.items() %}
-              <div class="dropdown mr-2">
+              {% set dropdown_id = key + "Dropdown" %}
+              <div id="{{ dropdown_id }}" class="dropdown mr-2">
                 {% set menu_button_id = key + "DropdownMenuButton" %}
                 <button class="btn btn-outline-secondary dropdown-toggle p-2 mx-1" type="button" id="{{ menu_button_id }}" data-toggle="dropdown">
                   {{ filter.label }}
@@ -16,7 +17,7 @@
                     <div class="dropdown-item">
                       <div class="form-check">
                         {% set checkbox_id = key + name + "checkbox" %}
-                        <input {{ "checked" if active else "" }} class="form-check-input" name="{{ key }}" value="{{ name }}" type="checkbox" id="{{ checkbox_id }}" onchange="experiments.handleCheckboxChange(event)">
+                        <input {{ "checked" if active else "" }} class="form-check-input" name="{{ key }}" value="{{ name }}" type="checkbox" id="{{ checkbox_id }}" onchange="experiments.handleCheckboxChange(event, '{{ dropdown_id }}')">
                         <label class="form-check-label w-100" for="{{ checkbox_id }}">{{ name }}</label>
                       </div>
                     </div>
