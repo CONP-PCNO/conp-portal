@@ -17,7 +17,6 @@ def home():
 
 @experiments_bp.route('/search')
 def search():
-
   filters = get_filters(request)
   page = request.args.get('page', 1, int)
   per_page = request.args.get('per_page', 10, int)

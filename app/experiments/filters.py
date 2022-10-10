@@ -13,7 +13,7 @@ def get_filters(request):
             "options": {k: is_active("modalities", k) for k in Experiment.get_unique_values("modalities")} 
         },
         "primary_function": {
-            "label": "Purpose",
+            "label": "Function",
             "options": {k: is_active("primary_function", k) for k in Experiment.get_unique_values("primary_function")},
         },
         "primary_software": {
