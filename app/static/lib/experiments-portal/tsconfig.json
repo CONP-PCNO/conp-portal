@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "module": "es6",
+        "moduleResolution": "node",
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "strict": true,
+        "target": "es6",
+    },
+    "include": [
+        "./src/**/*",
+        "./webpack.config.ts"
+    ],
+    "ts-node": {
+        "compilerOptions": {
+            "esModuleInterop": true,
+            "module": "commonjs"
+        }
+    }
+}

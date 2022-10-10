@@ -1,9 +1,4 @@
-{% extends 'common/base_main.html' %}
-
-{% block scripts %}
-{{ super() }}
-<script src="{{ url_for('static', filename='js/experimentSearch.js') }}"></script>
-{% endblock %}
+{% extends 'experiments/base.html' %}
 
 {% block contenttitle %}
 <h2><span style="color: red">CONP Portal</span> | Experiments Search</h2>

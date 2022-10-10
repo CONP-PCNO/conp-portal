@@ -1,9 +1,4 @@
-{% extends 'common/base_main.html' %}
-
-{% block scripts %}
-{{ super() }}
-<script src="{{ url_for('static', filename='js/experimentSubmit.js') }}"></script>
-{% endblock %}
+{% extends 'experiments/base.html' %}
 
 {% block contenttitle %}
 <h2><span style="color: red">CONP Portal</span> | Experiments Form</h2>
@@ -46,10 +41,10 @@
               {% endfor %}
             </ul>
             <div class="btn-group btn-group-sm" role="group">
-              <button class="btn btn-outline-dark form-btn" type="button" onclick="addFieldListEntry('{{ field.name }}')">
+              <button class="btn btn-outline-dark form-btn" type="button" onclick="experiments.addFieldListEntry('{{ field.name }}')">
                 Add Another
               </button>
-              <button class="btn btn-outline-dark form-btn" type="button" onclick="removeFieldListEntry('{{ field.name }}')">
+              <button class="btn btn-outline-dark form-btn" type="button" onclick="experiments.removeFieldListEntry('{{ field.name }}')">
                 Remove
               </button>
             </div>

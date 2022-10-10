@@ -8,10 +8,7 @@
             {% for key, filter in filters.items() %}
               <div class="dropdown mr-2">
                 {% set menu_button_id = key + "DropdownMenuButton" %}
-                <button class="btn btn-outline-secondary dropdown-toggle p-2 mx-1"
-                        type="button"
-                        id="{{ menu_button_id }}"
-                        data-toggle="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle p-2 mx-1" type="button" id="{{ menu_button_id }}" data-toggle="dropdown">
                   {{ filter.label }}
                 </button>
                 <div class="dropdown-menu">
@@ -19,7 +16,7 @@
                     <div class="dropdown-item">
                       <div class="form-check">
                         {% set checkbox_id = key + name + "checkbox" %}
-                        <input {{ "checked" if active else "" }} class="form-check-input" name="{{ key }}" value="{{ name }}" type="checkbox" id="{{ checkbox_id }}" onchange="handleCheckboxChange(event)">
+                        <input {{ "checked" if active else "" }} class="form-check-input" name="{{ key }}" value="{{ name }}" type="checkbox" id="{{ checkbox_id }}" onchange="experiments.handleCheckboxChange(event)">
                         <label class="form-check-label w-100" for="{{ checkbox_id }}">{{ name }}</label>
                       </div>
                     </div>
@@ -32,20 +29,11 @@
       </div>
       <div class="col p-0">
         <div class="d-flex flex-fill justify-content-center align-items-center h-100">
-          <form class="input-group m-2"
-                method="get"
-                role="form"
-                onsubmit="handleSubmitSearch(event)">
-            <input required
-                   name="search_term"
-                   type="text"
-                   class="form-control"
-                   placeholder="Search">
+          <form class="input-group m-2" method="get" role="form" onsubmit="experiments.handleSubmitSearch(event)">
+            <input required name="search_term" type="text" class="form-control" placeholder="Search">
             <div class="input-group-append">
               <button class="border-0 p-0" type="submit">
-                <i class="fa fa-search input-group-text"
-                   style="border-top-left-radius: 0px;
-                          border-bottom-left-radius: 0px;"></i>
+                <i class="fa fa-search input-group-text" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;"></i>
               </button>
             </div>
           </form>
