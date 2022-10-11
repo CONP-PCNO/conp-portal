@@ -11,4 +11,7 @@
   {% include "experiments/fragments/experiment_table.html" %}
   {% include "experiments/fragments/page_links.html" %}
 </div>
+<script>
+  window.addEventListener('load', () => experiments.animateGifs())
+</script>
 {% endblock %}

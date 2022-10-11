@@ -1,6 +1,3 @@
-export function sayHello() {
-  console.log('hello, world');
-}
-
+export * from './animate';
 export * from './search';
 export * from './submit';
