@@ -151,22 +151,9 @@ class ExperimentForm(FlaskForm):
         description='Individuals to whom you would like to publicly express your gratitude.'
     )
 
-    source = StringField(label='Source')
-    repository = FileField("Upload zipped repository", validators=[]) # FileRequired()
-    image = FileField("Upload image", validators=[
-        # FileAllowed(UploadSet('images', IMAGES), 'Images only!')
-    ])
-
+    repository = FileField("Upload zipped repository", validators=[
+                           FileRequired(), FileAllowed(['zip'], 'Please provide a zip file')])
+    
+    image_file = FileField("Upload image", validators=[FileAllowed(['gif'], 'Images only!')])
     submit = SubmitField('Submit', validators=[DataRequired()])
 
-    def get_experiment_data(self):
-        data = {}
-        for attribute in Experiment.required_attributes:
-            entry = self.data.get(attribute)
-            if entry is None:
-                raise RuntimeError(f"Form entry for '{attribute}' is None")
-            if isinstance(entry, list):
-                data[attribute] = ", ".join(entry)
-            else:
-                data[attribute] = entry
-        return data

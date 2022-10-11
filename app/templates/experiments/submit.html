@@ -19,7 +19,7 @@
       </div>
     {% endfor %}
   </div>
-  <form novalidate method="post">
+  <form novalidate method="post" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     {% for field in form %}
       {% if field.type == 'SubmitField' %}

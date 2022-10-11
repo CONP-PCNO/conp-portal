@@ -7,12 +7,9 @@ Module that contains the Data Models
 
 from __future__ import annotations
 
-import enum
-
 from app import db
 from flask_user import UserMixin
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
-from sqlalchemy import Enum
 from sqlalchemy.orm.collections import attribute_mapped_collection
 from datetime import datetime, timedelta
 from pytz import timezone
@@ -517,20 +514,8 @@ class Experiment(db.Model):
     source = db.Column(db.Text, default='NA')
     views = db.Column(db.Integer, default=0)
     downloads = db.Column(db.Integer, default=0)
-
-    # Required to be defined by the user
-    required_attributes = [
-        'title',
-        'description',
-        "creators",
-        "contact_person",
-        "contact_email",
-        "privacy",
-        "keywords",
-        "modalities",
-        "primary_software",
-        "primary_function",
-    ]
+    repository_file=db.Column(db.Text, default='')
+    image_file=db.Column(db.Text, default='')
 
     @classmethod
     def get_unique_values(cls, colname: str) -> list | None:
@@ -577,67 +562,3 @@ class Experiment(db.Model):
                 "license": "MIT License"
             })
         return [cls(**d) for d in dummy_data]
-
-
-
-'''
-
-
-class Experiment(db.Model):
-
-
-    # Required to be defined by the user
-    required_attributes = [
-        'title',
-        'description',
-        "creators",
-        "contact_person",
-        "contact_email",
-        "privacy",
-        "keywords",
-        "modalities",
-        "primary_software",
-        "primary_function",
-    ]
-
-    def __repr__(self) -> str:
-        return str(self.title)
-
-    def to_dict(self):
-        data = {}
-        for attribute in self.required_attributes:
-            data[attribute] = getattr(self, attribute)
-        return data
-    
-    @classmethod
-    def get_dummies(cls, n: int) -> list[Experiment]:
-        """ return a list of dummy experiments for testing """
-
-        def get_random_element(elements: list):
-            return elements[randrange(0, len(elements))]
-
-        def get_random_name():
-            first_names = ["Liam", "Noah", "Oliver", "Elijah", "James", "Olivia", "Emma", "Charlotte", "Amelia", "Ava"]
-            last_names = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Garcia", "Rodriguez",
-                          "Wilson"]
-            return get_random_element(first_names) + " " + get_random_element(last_names)
-
-        dummy_data = []
-        for i in range(1, n + 1):
-            dummy_data.append({
-                "title": "Dummy Experiment " + str(i),
-                'description': 'This is not a real experiment',
-                "creators": get_random_name(),
-                "version": 1.0,
-                "contact_person": get_random_name(),
-                "contact_email": 'user@gmail.com',
-                "privacy": 'open',
-                "modalities": get_random_element(["fMRI, EEG", "PET"]),
-                'primary_software': get_random_element(['Linux, Windows']),
-                'primary_function': get_random_element(['Cognitive', 'Sensory', 'Motor']),
-                'doi': '10.1093/schbul/sbj053',
-                "license": "MIT License"
-            })
-        return [cls(**d) for d in dummy_data]
-
-'''

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from flask import flash, render_template, request, redirect, url_for
+from flask import current_app, flash, render_template, request, redirect, url_for, send_from_directory
 from sqlalchemy import or_
 
 from . import experiments_bp
@@ -9,7 +9,8 @@ from .filters import get_filters
 from .forms import ExperimentForm
 from .search import SearchEngine
 from .sort import SortKey
-from .. import db
+from .utils import upload_file
+from .. import config, db
 from ..models import Experiment
 
 @experiments_bp.route('/')
@@ -36,7 +37,7 @@ def search():
     search_engine = SearchEngine()
     matching_ids = search_engine.search(search_term, query.all())
     query = query.filter(Experiment.id.in_(matching_ids))
-
+  
   pagination = query.paginate(page=page, per_page=per_page)
   
   return render_template(
@@ -48,12 +49,30 @@ def search():
 
 @experiments_bp.route('/submit', methods=['GET', 'POST'])
 def submit():
-  form = ExperimentForm()
+  form = ExperimentForm() # ExperimentForm()
   if form.validate_on_submit():
     flash('Done!')
-    print(form.data)
-    experiment = Experiment(**form.get_experiment_data())
+    repository_file = upload_file(form.repository)
+    image_file = upload_file(form.image_file)
+    experiment = Experiment(
+      title = form.title.data,
+      description = form.description.data,
+      creators = form.creators.data,
+      contact_person = form.contact_person.data,
+      contact_email = form.contact_email.data,
+      privacy = form.privacy.data,
+      keywords = form.keywords.data,
+      modalities = form.modalities.data,
+      primary_software = form.primary_software.data,
+      primary_function = form.primary_function.data,
+      repository_file = repository_file,
+      image_file = image_file
+    )
     db.session.add(experiment)
     db.session.commit()
     return redirect(url_for('.submit'))
   return render_template('experiments/submit.html', data=data, form=form)
+
+@experiments_bp.route('/uploads/<name>')
+def download_file(name):
+    return send_from_directory(current_app.config["EXPERIMENTS_UPLOAD_DIRECTORY"], name)
