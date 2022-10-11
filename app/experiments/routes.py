@@ -60,7 +60,6 @@ def submit():
       creators = form.creators.data,
       contact_person = form.contact_person.data,
       contact_email = form.contact_email.data,
-      privacy = form.privacy.data,
       keywords = form.keywords.data,
       modalities = form.modalities.data,
       primary_software = form.primary_software.data,

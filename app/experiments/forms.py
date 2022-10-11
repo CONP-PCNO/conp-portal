@@ -70,18 +70,6 @@ class ExperimentForm(FlaskForm):
             additional tasks included, more modalities and so on.',
     )
 
-    privacy = SelectField(
-        label='Privacy',
-        description="A qualifier to describe the data protection applied to the dataset. This is relevant for clinical \
-        data. Freely and publicly available experiments should be set to 'open'; experiments available to bona fide \
-        researchers/clinical care professionals only should be set to 'registered'; experiments available to qualified \
-        researchers approved by a committee after review of their research proposal should be set to 'controlled', \
-        also known as managed or restricted access; and closed experiments, available only to researchers of the \
-        project, should be set to 'closed'.",
-        choices=[('Open', 'Open'), ('Registered', 'Registered'), ('Controlled', 'Controlled'), ('Private', 'Private')],
-        validators=[DataRequired()]
-    )
-
     license = SelectOtherField(
         label='License',
         description='The licence under which this experiment is shared.',
