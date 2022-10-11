@@ -3,9 +3,11 @@
 {% block scripts %}
 {{ super() }}
 {% if config.DEBUG %}
-  <script src="http://localhost:8080/main.bundle.js"></script>
+  <script src="{{ url_for('static', filename='js/experiments.bundle.js') }}">
+    // src="http://localhost:8080/main.bundle.js"
+  </script>
 {% else %}
-  <script src="http://localhost:8080/main.bundle.js"></script>
+  <script src="{{ url_for('static', filename='js/experiments.bundle.js') }}"></script>
 {% endif %}
 {% endblock %}
 

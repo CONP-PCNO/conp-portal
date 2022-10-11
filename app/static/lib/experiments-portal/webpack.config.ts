@@ -8,9 +8,9 @@ const config: webpack.Configuration = {
   ],
   devtool: process.env.NODE_ENV === 'development' ? 'inline-source-map' : 'source-map',
   output: {
-    clean: true,
-    filename: '[name].bundle.js',
-    path: path.join(__dirname, 'dist'),
+    clean: false,
+    filename: 'experiments.bundle.js',
+    path: path.join(__dirname, '..', '..', 'js'),
     library: {
       name: 'experiments',
       type: 'umd',
