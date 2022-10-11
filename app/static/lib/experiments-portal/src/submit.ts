@@ -26,3 +26,31 @@ export const removeFieldListEntry = (fieldListId: string) => {
     console.error(`Element does not exist: ${fieldListId}`);
   }
 };
+
+export const suggestFromOtherField = (event: MouseEvent, sourceFieldId: string) => {
+  const target = event.target as HTMLInputElement;
+  const sourceField = document.getElementById(sourceFieldId) as HTMLUListElement;
+  if (!sourceField) {
+    throw new Error(`Source element does not exist: ${sourceFieldId}`);
+  } else if (!target) {
+    throw new Error('Target element does not exist');
+  }
+  const inputElements = Array.from(sourceField.children).map(child => {
+    if (child.children.length !== 1 || child.children.item(0)?.nodeName !== 'INPUT') {
+      throw new Error('All children of source ul element must contain a single input element');
+    }
+    return child.children.item(0) as HTMLInputElement;
+  });
+  const dataList = document.createElement('datalist');
+  const dataListId = `${target.id}-data-list`;
+  dataList.id = dataListId;
+  inputElements.forEach(element => {
+    if (element.value) {
+      const option = document.createElement('option');
+      option.value = element.value;
+      dataList.appendChild(option);
+    }
+  });
+  target.setAttribute('list', dataListId);
+  target.insertAdjacentElement('afterend', dataList);
+};

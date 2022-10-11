@@ -67,4 +67,10 @@
       {% endif %}
     {% endfor %}
   </form>
+  <script>
+    const contactPersonInput = document.getElementById('contact_person');
+    contactPersonInput.addEventListener('click', (event) => {
+      experiments.suggestFromOtherField(event, 'creators');
+    })
+  </script>
 {% endblock %}
