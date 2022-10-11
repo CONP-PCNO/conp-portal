@@ -9,7 +9,7 @@ from .filters import get_filters
 from .forms import ExperimentForm
 from .search import SearchEngine
 from .sort import SortKey
-from .utils import upload_file
+from .utils import upload_file, get_column_type
 from .. import config, db
 from ..models import Experiment
 
@@ -29,10 +29,10 @@ def search():
   for filter in filters:
     for option, active in filters[filter]['options'].items():
       if active:
-        active_filters.append(getattr(Experiment, filter) == option)
+        active_filters.append(getattr(Experiment, filter).contains(option))
   query = Experiment.query.filter(or_(*active_filters))
   query = query.order_by(sort_key.column())
-
+  
   if search_term:
     search_engine = SearchEngine()
     matching_ids = search_engine.search(search_term, query.all())

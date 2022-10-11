@@ -554,7 +554,7 @@ class Experiment(db.Model):
                 "version": 1.0,
                 "contact_person": "Josh",
                 "contact_email": 'user@gmail.com',
-                "modalities": get_random_element(["fMRI", "EEG", "PET"]),
+                "modalities": [get_random_element(["fMRI", "EEG", "PET"]), "Brain"],
                 'primary_software': get_random_element(["Linux", 'Windows']),
                 'primary_function': get_random_element(['Cognitive', 'Sensory', 'Motor']),
                 'doi': '10.1093/schbul/sbj053',

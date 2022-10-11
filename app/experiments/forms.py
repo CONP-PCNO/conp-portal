@@ -88,13 +88,16 @@ class ExperimentForm(FlaskForm):
         max_entries=5
     )
 
-    modalities = SelectOtherField(
-        label='Modality',
+    modalities = FieldList(
+        unbound_field=StringField(validators=[DataRequired('Please delete unfilled spaces')]),
+        label='Modalities',
         description='The modalities for which the experiment is designed.',
         validators=[DataRequired()],
         render_kw={
             'data-key': 'modalities'
-        }
+        },
+        min_entries=1,
+        max_entries=5
     )
 
     primary_software = SelectOtherField(

@@ -9,6 +9,7 @@ from wtforms import FileField
 from wtforms.validators import ValidationError
 
 from .. import config
+from ..models import Experiment
 
 def flatten(xs):
   for x in xs:
@@ -32,4 +33,7 @@ def upload_file(field: FileField) -> str | None:
     field.data.save(os.path.join(upload_dir, filename))
     return filename
   return None
+
+def get_column_type(column):
+  return type(Experiment.query.with_entities(column).first()[0])
 
