@@ -23,7 +23,7 @@
     {{ form.hidden_tag() }}
     {% for field in form %}
       {% if field.type == 'SubmitField' %}
-        {{ field(class='btn btn-primary') }}
+        {{ field(class='btn btn-primary text-uppercase font-weight-bold') }}
       {% elif field.type != 'CSRFTokenField' %}
         <div class="{{ 'form-group required' if field.flags.required else 'form-group' }}">
           {{ field.label(class='m-0') }}
