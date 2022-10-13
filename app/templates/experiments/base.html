@@ -2,12 +2,13 @@
 
 {% block scripts %}
 {{ super() }}
-{% if config.DEBUG %}
-  <script src="{{ url_for('static', filename='js/experiments.bundle.js') }}">
-    // src="http://localhost:8080/main.bundle.js"
-  </script>
-{% else %}
-  <script src="{{ url_for('static', filename='js/experiments.bundle.js') }}"></script>
-{% endif %}
+<script type="module">
+  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+    const devBundle = document.createElement('script');
+    devBundle.src = 'http://localhost:8080/experiments.bundle.js';
+    document.head.appendChild(devBundle);
+  } else {
+    import('{{ url_for("static", filename="js/experiments.bundle.js") }}');
+  }
+</script>
 {% endblock %}
-
