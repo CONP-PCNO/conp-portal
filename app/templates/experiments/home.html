@@ -1,5 +1,14 @@
 {% extends 'experiments/base.html' %}
 
+{% block scripts %}
+{{ super() }}
+<script>
+  window.addEventListener('load', () => {
+    document.getElementById('content-title-separator').remove()
+  });
+</script>
+{% endblock %}
+
 {% block appcontent %}
 <div class="d-flex h-100 w-100 align-items-center justify-content-center">
   <div class="jumbotron bg-white text-center">
@@ -29,7 +38,4 @@
     </div>
   </div>
 </div>
-<script>
-  document.getElementById('content-title-separator').remove()
-</script>
 {% endblock %}

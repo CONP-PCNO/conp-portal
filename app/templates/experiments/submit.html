@@ -4,6 +4,19 @@
 <h2><span style="color: red">CONP Portal</span> | Experiments Form</h2>
 {% endblock %}
 
+{% block scripts %}
+{{ super() }}
+<script>
+  window.addEventListener('load', () => {
+    const contactPersonInput = document.getElementById('contact_person');
+    contactPersonInput.addEventListener('click', (event) => {
+      experiments.suggestFromOtherField(event, 'creators');
+    })
+    experiments.autocomplete()
+  });
+</script>
+{% endblock %}
+
 {% block appcontent %}
   <div>
     {% for message in get_flashed_messages() %}
@@ -19,7 +32,7 @@
       </div>
     {% endfor %}
   </div>
-  <form novalidate method="post" enctype="multipart/form-data">
+  <form novalidate autocomplete="off" class="dropzone" id="experiment-form" method="post" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     {% for field in form %}
       {% if field.type == 'SubmitField' %}
@@ -30,8 +43,10 @@
           <small class="form-text text-muted mt-0 mb-1">
             {{ field.description }}
           </small>
-          {% if field.type in ['StringField', 'TextAreaField', 'FloatField', 'SelectField', 'FileField'] %}
+          {% if field.type in ['StringField', 'TextAreaField', 'FloatField', 'SelectField'] %}
             {{ field(class='form-control') }}
+          {% elif field.type == 'FileField' %}
+            {{ field() }}
           {% elif field.type == 'FieldList' %}
             <ul class="p-0" id="{{ field.name }}" style="list-style: none;">
               {% for entry in field.entries %}
@@ -49,28 +64,12 @@
               </button>
             </div>
           {% elif field.type == 'SelectOtherField' %}
-            {% set datalist_id = field.id + "-datalist" %}
-            {{ field(list=datalist_id, class="form-control") }}
-            <datalist id="{{ datalist_id }}">
-              {% if data[field.render_kw['data-key']].__class__.__name__ == dict %}
-                {% for key, value in data[field.render_kw['data-key']].items() %}
-                  <option label="{{ key }}" value="{{ value }}">
-                {% endfor %}
-              {% elif data[field.render_kw['data-key']].__class__.__name__ == 'list' %}
-                {% for value in data[field.render_kw['data-key']] %}
-                  <option value="{{ value }}">
-                {% endfor %}
-              {% endif %}
-            </datalist>
+            <div class="autocomplete">
+              {{ field(list=datalist_id, class="form-control") }}
+            </div>
           {% endif %}
         </div>
       {% endif %}
     {% endfor %}
   </form>
-  <script>
-    const contactPersonInput = document.getElementById('contact_person');
-    contactPersonInput.addEventListener('click', (event) => {
-      experiments.suggestFromOtherField(event, 'creators');
-    })
-  </script>
 {% endblock %}

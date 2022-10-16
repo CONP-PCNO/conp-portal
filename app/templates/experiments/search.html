@@ -1,5 +1,14 @@
 {% extends 'experiments/base.html' %}
 
+{% block scripts %}
+{{ super() }}
+<script>
+  window.addEventListener('load', () => {
+    experiments.animateGifs()
+  })
+</script>
+{% endblock %}
+
 {% block contenttitle %}
 <h2><span style="color: red">CONP Portal</span> | Experiments Search</h2>
 {% endblock %}
@@ -11,7 +20,4 @@
   {% include "experiments/fragments/experiment_table.html" %}
   {% include "experiments/fragments/page_links.html" %}
 </div>
-<script>
-  window.addEventListener('load', () => experiments.animateGifs())
-</script>
 {% endblock %}
