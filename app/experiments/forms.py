@@ -1,13 +1,14 @@
 from __future__ import annotations
 
-from flask_uploads import UploadSet, IMAGES
+import json
+
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileRequired
-from wtforms import FileField, StringField, SubmitField, FloatField, SelectField, TextAreaField, FieldList
-from wtforms.validators import DataRequired, URL, Email
+from wtforms import FileField, StringField, SubmitField, FloatField, TextAreaField, FieldList
+from wtforms.validators import DataRequired, Email
 
-from .utils import validate_doi
-from ..models import Experiment
+from .data import data
+from .validators import ValidDOI
 
 class SelectOtherField(StringField):
     """ later, this could streamline the options """
@@ -43,7 +44,7 @@ class ExperimentForm(FlaskForm):
         description='Country in which the experiment was primarily devised',
         validators=[],
         render_kw={
-            'data-key': 'countries'
+            'data-autocomplete': json.dumps(data['countries'])
         }
     )
 
@@ -74,7 +75,7 @@ class ExperimentForm(FlaskForm):
         label='License',
         description='The licence under which this experiment is shared.',
         render_kw={
-            'data-key': 'licenses'
+            'data-autocomplete': json.dumps(data['licenses'])
         }
     )
 
@@ -94,7 +95,7 @@ class ExperimentForm(FlaskForm):
         description='The modalities for which the experiment is designed.',
         validators=[DataRequired()],
         render_kw={
-            'data-key': 'modalities'
+            'data-autocomplete': json.dumps(data['modalities'])
         },
         min_entries=1,
         max_entries=5
@@ -105,7 +106,7 @@ class ExperimentForm(FlaskForm):
         description='the software package primarily used to develop the experiment.',
         validators=[DataRequired()],
         render_kw={
-            'data-key': 'software'
+            'data-autocomplete': json.dumps(data['software'])
         }
     )
 
@@ -121,7 +122,7 @@ class ExperimentForm(FlaskForm):
         label='Primary Function',
         validators=[DataRequired()],
         render_kw={
-            'data-key': 'functions'
+            'data-autocomplete': json.dumps(data['functions'])
         }
     )
 
@@ -134,7 +135,7 @@ class ExperimentForm(FlaskForm):
 
     doi = StringField(
         label="Link to Publication (DOI)",
-        validators=[validate_doi]
+        validators=[ValidDOI()]
     )
 
     acknowledgements = StringField(
