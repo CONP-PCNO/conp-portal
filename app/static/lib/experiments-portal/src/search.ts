@@ -1,6 +1,6 @@
 const url = new URL(document.location.href);
 
-export const handleSubmitSearch = (event: SubmitEvent) => {
+export function handleSubmitSearch(event: SubmitEvent) {
   event.preventDefault();
   if (event.target) {
     const data = new FormData(event.target as HTMLFormElement);
@@ -15,7 +15,7 @@ export const handleSubmitSearch = (event: SubmitEvent) => {
   }
 };
 
-export const handleCheckboxChange = (event: Event, dropdownId: string) => {
+export function handleCheckboxChange(event: Event, dropdownId: string) {
   if (event.target) {
     const target = event.target as HTMLInputElement;
     const filters = url.searchParams.get(target.name)?.split(',');
@@ -45,12 +45,12 @@ export const handleCheckboxChange = (event: Event, dropdownId: string) => {
   }
 };
 
-export const handlePageChange = (pageNumber: number | string) => {
+export function handlePageChange(pageNumber: number | string) {
   url.searchParams.set('page', pageNumber.toString());
   window.location.href = url.toString();
 };
 
-export const updateSearchParam = (key: string, value: string) => {
+export function updateSearchParam(key: string, value: string) {
   url.searchParams.set(key, value);
   url.searchParams.set('page', '1');
   window.location.href = url.toString();

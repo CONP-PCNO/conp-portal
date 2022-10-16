@@ -1,4 +1,4 @@
-export const addFieldListEntry = (fieldListId: string) => {
+export function addFieldListEntry(fieldListId: string) {
   const fieldList = document.getElementById(fieldListId);
   if (fieldList) {
     const listItems = fieldList.getElementsByTagName('li');
@@ -15,7 +15,7 @@ export const addFieldListEntry = (fieldListId: string) => {
   }
 };
 
-export const removeFieldListEntry = (fieldListId: string) => {
+export function removeFieldListEntry(fieldListId: string) {
   const fieldList = document.getElementById(fieldListId);
   if (fieldList) {
     const listItems = fieldList.getElementsByTagName('li');
@@ -27,7 +27,7 @@ export const removeFieldListEntry = (fieldListId: string) => {
   }
 };
 
-export const suggestFromOtherField = (event: MouseEvent, sourceFieldId: string) => {
+export function suggestFromOtherField(event: MouseEvent, sourceFieldId: string) {
   const target = event.target as HTMLInputElement;
   const sourceField = document.getElementById(sourceFieldId) as HTMLUListElement;
   if (!sourceField) {
