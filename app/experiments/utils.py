@@ -1,12 +1,10 @@
 from __future__ import annotations
 
 import os
-import re
 import uuid
 
 from werkzeug.utils import secure_filename
 from wtforms import FileField
-from wtforms.validators import ValidationError
 
 from .. import config
 from ..models import Experiment
@@ -17,11 +15,6 @@ def flatten(xs):
       yield from flatten(x)
     else:
       yield x
-
-def validate_doi(_, field):
-    if field.data and re.match(r'^10.\d{4,9}/[-._;()/:A-Z0-9]+$', field.data) is None:
-        raise ValidationError('Not a valid DOI')
-
 
 def upload_file(field: FileField) -> str | None:
   if field.data.filename:
