@@ -116,6 +116,9 @@ class ExperimentForm(FlaskForm):
         description='Please provide any other software that you used to develop the experiment.',
         min_entries=1,
         max_entries=5,
+        render_kw={
+            'data-autocomplete': json.dumps(data['software'])
+        }
     )
 
     primary_function = SelectOtherField(
@@ -131,6 +134,9 @@ class ExperimentForm(FlaskForm):
         label="Other Functions",
         min_entries=1,
         max_entries=5,
+        render_kw={
+            'data-autocomplete': json.dumps(data['functions'])
+        }
     )
 
     doi = StringField(
@@ -143,9 +149,18 @@ class ExperimentForm(FlaskForm):
         description='Individuals to whom you would like to publicly express your gratitude.'
     )
 
-    repository = FileField("Upload zipped repository", validators=[
-                           FileRequired(), FileAllowed(['zip'], 'Please provide a zip file')])
+    repository = FileField(
+        "Upload zipped repository", 
+        validators=[
+            FileRequired(),
+            FileAllowed(['zip'], 'Please provide a zip file')
+        ]
+    )
     
-    image_file = FileField("Upload image", validators=[FileAllowed(['gif'], 'Images only!')])
+    image_file = FileField(
+        "Upload image", 
+        validators=[FileAllowed(['gif'], 'Images only!')]
+    )
+    
     submit = SubmitField('Submit', validators=[DataRequired()])
 
