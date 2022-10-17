@@ -50,6 +50,7 @@ def search():
 @experiments_bp.route('/submit', methods=['GET', 'POST'])
 def submit():
   form = ExperimentForm() # ExperimentForm()
+  print(form.other_software.render_kw)
   if form.validate_on_submit():
     flash('Done!')
     repository_file = upload_file(form.repository)

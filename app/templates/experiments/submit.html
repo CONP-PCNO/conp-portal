@@ -8,10 +8,7 @@
 {{ super() }}
 <script>
   window.addEventListener('load', () => {
-    const contactPersonInput = document.getElementById('contact_person');
-    contactPersonInput.addEventListener('click', (event) => {
-      experiments.suggestFromOtherField(event, 'creators');
-    })
+    experiments.suggestFromOtherField('contact_person', 'creators');
     experiments.autocomplete()
   });
 </script>
@@ -32,7 +29,7 @@
       </div>
     {% endfor %}
   </div>
-  <form novalidate autocomplete="off" class="dropzone" id="experiment-form" method="post" enctype="multipart/form-data">
+  <form novalidate autocomplete="off" id="experiment-form" method="post" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     {% for field in form %}
       {% if field.type == 'SubmitField' %}
@@ -48,7 +45,7 @@
           {% elif field.type == 'FileField' %}
             {{ field() }}
           {% elif field.type == 'FieldList' %}
-            <ul class="p-0" id="{{ field.name }}" style="list-style: none;">
+            <ul class="autocomplete p-0" id="{{ field.name }}" style="list-style: none;" data-autocomplete="{{ field.render_kw['data-autocomplete'] }}">
               {% for entry in field.entries %}
                 <li>
                   {{ entry(class='form-control') }}
@@ -64,9 +61,7 @@
               </button>
             </div>
           {% elif field.type == 'SelectOtherField' %}
-            <div class="autocomplete">
-              {{ field(list=datalist_id, class="form-control") }}
-            </div>
+            {{ field(class="autocomplete form-control") }}
           {% endif %}
         </div>
       {% endif %}

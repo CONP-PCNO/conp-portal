@@ -44,7 +44,7 @@ class ExperimentForm(FlaskForm):
         description='Country in which the experiment was primarily devised',
         validators=[],
         render_kw={
-            'data-autocomplete': json.dumps(data['countries'])
+            'data-autocomplete': json.dumps(list(data['countries'].values()))
         }
     )
 
@@ -75,7 +75,7 @@ class ExperimentForm(FlaskForm):
         label='License',
         description='The licence under which this experiment is shared.',
         render_kw={
-            'data-autocomplete': json.dumps(data['licenses'])
+            'data-autocomplete': json.dumps(list(data['licenses'].values()))
         }
     )
 
