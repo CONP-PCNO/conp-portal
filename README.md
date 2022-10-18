@@ -60,7 +60,17 @@ flask run
 ```
 
 The application should now be live on `http://localhost:5000/` 
-    
+
+### Experiments Portal
+
+If you would like to run the run the experiments portal with hot module replacement, in a separate terminal run:
+
+    npm start --prefix app/static/lib/experiments-portal
+
+To build the experiments portal, run:
+
+    npm run build --prefix app/static/lib/experiments-portal
+
 ### Testing
 
 We use the pytest framework for testing all aspects of the application. This will be automatically run by TravisCI when a pull request is made.  
