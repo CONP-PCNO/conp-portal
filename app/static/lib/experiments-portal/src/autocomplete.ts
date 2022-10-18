@@ -1,12 +1,13 @@
 type SelectionEventHandler = (option: string) => void
 
-function appendDropdownOption(dropdownElement: HTMLUListElement, option: string, onSelection: SelectionEventHandler) {
+function appendDropdownOption(dropdownElement: HTMLUListElement, option: string, onSelection: SelectionEventHandler, btnId?: string) {
   const listItem = document.createElement('li');
   listItem.classList.add('show');
   const button = document.createElement('button');
   button.addEventListener('click', () => onSelection(option));
   button.innerText = option;
   button.type = 'button';
+  if (btnId) button.id = btnId;
   listItem.appendChild(button);
   dropdownElement.appendChild(listItem);
 }
@@ -77,49 +78,35 @@ export function suggestFromOtherField(targetId: string, sourceId: string) {
 
   const dropdownElement = target.parentElement?.querySelector('.autocomplete-dropdown') as HTMLUListElement;
 
+  const handleSelection: SelectionEventHandler = (option) => { // Should refactor
+    target.value = option;
+    dropdownElement.classList.remove('show');
+  };
+
+  const getButtonId = (inputName: string) => `${inputName}-dropdown-btn`;
+
   const observer = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
-      if (mutation.target.nodeName === 'INPUT') {
-        sources[mutation.target.name] = (mutation.target as HTMLInputElement).value;
-        /*
-          check if target name is in dropdown options
-            if yes, then modify
-            else append new entry
-          
-        target.childNodes.forEach(node => console.log(node));
-        appendDropdownOption(dropdownElement, sources[mutation.target.name], (option) => {
-          target.value = option;
-          dropdownElement.classList.remove('show');
-        });
-        */
+      if (mutation.type === 'attributes' && mutation.target.nodeName === 'INPUT') {
+        const inputText = (mutation.target as HTMLInputElement).value;
+        const buttonId = getButtonId(mutation.target.name);
+        const button = document.getElementById(buttonId);
+        if (button) {
+          button.innerText = inputText;
+        } else {
+          appendDropdownOption(dropdownElement, inputText, handleSelection, buttonId);
+        }
+      } else if (mutation.type === 'childList' && mutation.removedNodes.length === 1) {
+        const inputElementName = mutation.removedNodes.item(0)?.firstChild?.name;
+        inputElementName && document.getElementById(getButtonId(inputElementName))?.remove();
       }
     }
   });
 
   observer.observe(source, {
     attributes: true,
+    childList: true,
     subtree: true
   });
-
-  target.onfocus = () => {
-    console.log(sources);
-  };
-
-  
-  
-  // observer.disconnect();
-
-  /*
-  const target = document.getElementById(targetId) as HTMLInputElement;
-  const sourceField = document.getElementById(sourceFieldId) as HTMLUListElement;
-  sourceField.lastElementChild?.addEventListener('blur', () => {
-    if (target.nextElementSibling?.className === 'autocomplete-dropdown') {
-      target.nextElementSibling.remove();
-    }
-    const inputSources = Array.from(sourceField.querySelectorAll('input')).map(e => e.value).filter(e => e);
-    setAutocompleteForInputElement(target, inputSources);
-  }); */
-  // console.log(target);
-  //const dropdownElement = target.parentElement?.querySelector('.autocomplete-dropdown') as HTMLElement;
 
 }
