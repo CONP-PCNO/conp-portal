@@ -83,18 +83,27 @@ def submit():
 
         flash("Done!")
 
+        form.license.data = form.license.data.replace(' (Recommended)', '')
+
         params = {
-            "title": form.title.data,
-            "description": form.description.data,
-            "creators": form.creators.data,
-            "contact_person": form.contact_person.data,
-            "contact_email": form.contact_email.data,
-            "keywords": form.keywords.data,
-            "modalities": form.modalities.data,
-            "primary_software": form.primary_software.data,
-            "primary_function": form.primary_function.data,
-            "repository_file": repository_file,
-            "image_file": image_file,
+            "title": form.title.data or None,
+            "description": form.description.data or None,
+            "creators": form.creators.data or None,
+            "origin": form.origin.data or None,
+            "contact_person": form.contact_person.data or None,
+            "contact_email": form.contact_email.data or None,
+            "version": form.version.data or None,
+            "license": form.license.data or None,
+            "keywords": form.keywords.data or None,
+            "modalities": form.modalities.data or None,
+            "primary_software": form.primary_software.data or None,
+            "other_software": form.other_software.data or None,
+            "primary_function": form.primary_function.data or None,
+            "other_functions": form.other_functions.data or None,
+            "doi": form.doi.data or None,
+            "acknowledgements": form.acknowledgements.data or None,
+            "repository_file": repository_file or None,
+            "image_file": image_file or None,
         }
 
         experiment = Experiment(**params)

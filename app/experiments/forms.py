@@ -85,7 +85,9 @@ class ExperimentForm(FlaskForm):
         label="License",
         description="The licence under which this experiment is shared.",
         render_kw={
-            "data-autocomplete": json.dumps(list(data["licenses"].values()))},
+            "data-autocomplete": json.dumps(list(data["licenses"].values())),
+            "value": "MIT License (Recommended)"
+        },
     )
 
     keywords = FieldList(
