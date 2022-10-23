@@ -22,10 +22,18 @@ def upload_file(file: FileStorage) -> str:
   if not os.path.isdir(upload_dir):
       os.makedirs(upload_dir)
   file_ext = file.filename.split('.')[-1]
-  filename = secure_filename(f"{uuid.uuid4()}.{file_ext}")
-  file.save(os.path.join(upload_dir, filename))
-  return filename
+  filepath = os.path.join(upload_dir, secure_filename(f"{uuid.uuid4()}.{file_ext}"))
+  file.save(filepath)
+  return filepath
 
 def get_column_type(column):
   return type(Experiment.query.with_entities(column).first()[0])
+
+def format_filesize(size_bytes):
+    for unit in ["B", "KB", "MB", "GB", "TB"]:
+        if abs(size_bytes) < 1024.0:
+            return f"{size_bytes:3.1f}{unit}"
+        size_bytes /= 1024.0
+    return f"{size_bytes:.1f}Yi"
+
 

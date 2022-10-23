@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+
 from flask import (
     current_app,
     flash,
@@ -18,7 +20,7 @@ from .filters import get_filters
 from .forms import ExperimentForm
 from .search import SearchEngine
 from .sort import SortKey
-from .utils import upload_file, get_column_type
+from .utils import upload_file, format_filesize
 from .. import config, db
 from ..models import Experiment
 
@@ -59,14 +61,14 @@ def search():
         sort_key=sort_key,
     )
 
+import time
 
 @experiments_bp.route("/submit", methods=["GET", "POST"])
 def submit():
     form = ExperimentForm()
 
     if request.files and request.files.get("repository"):
-        session["repository_file"] = upload_file(
-            request.files.get("repository"))
+        session["repository_file"] = upload_file(request.files.get("repository"))
     elif request.files and request.files.get("image_file"):
         session["image_file"] = upload_file(request.files.get("image_file"))
 
@@ -104,6 +106,7 @@ def submit():
             "acknowledgements": form.acknowledgements.data or None,
             "repository_file": repository_file or None,
             "image_file": image_file or None,
+            "size_repository_files": format_filesize(os.path.getsize(session["repository_file"])) or None
         }
 
         experiment = Experiment(**params)

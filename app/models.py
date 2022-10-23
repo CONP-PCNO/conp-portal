@@ -510,7 +510,7 @@ class Experiment(db.Model):
     doi = db.Column(db.Text, default='NA')
     acknowledgements = db.Column(db.Text, default='NA')
     number_files = db.Column(db.Integer, default=0)
-    size_files = db.Column(db.Integer, default=0)
+    size_repository_files = db.Column(db.Integer, default=0)
     source = db.Column(db.Text, default='NA')
     views = db.Column(db.Integer, default=0)
     downloads = db.Column(db.Integer, default=0)
