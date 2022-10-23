@@ -9,7 +9,8 @@
 <script>
   window.addEventListener('load', () => {
     experiments.suggestFromOtherField('contact_person', 'creators');
-    experiments.autocomplete()
+    experiments.addDragDrop()
+    experiments.addAutocomplete()
   });
 </script>
 {% endblock %}
@@ -32,9 +33,7 @@
   <form novalidate autocomplete="off" id="experiment-form" method="post" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     {% for field in form %}
-      {% if field.type == 'SubmitField' %}
-        {{ field(class='btn btn-primary text-uppercase font-weight-bold') }}
-      {% elif field.type != 'CSRFTokenField' %}
+      {% if field.type != 'CSRFTokenField' and field.type != 'SubmitField' %}
         <div class="{{ 'form-group required' if field.flags.required else 'form-group' }}">
           {{ field.label(class='m-0') }}
           <small class="form-text text-muted mt-0 mb-1">
@@ -42,8 +41,6 @@
           </small>
           {% if field.type in ['StringField', 'TextAreaField', 'FloatField', 'SelectField'] %}
             {{ field(class='form-control') }}
-          {% elif field.type == 'FileField' %}
-            {{ field() }}
           {% elif field.type == 'FieldList' %}
             <ul class="autocomplete p-0" id="{{ field.name }}" style="list-style: none;" data-autocomplete="{{ field.render_kw['data-autocomplete'] }}">
               {% for entry in field.entries %}
@@ -66,5 +63,14 @@
         </div>
       {% endif %}
     {% endfor %}
+    <div class="form-group required">
+      <span class="m0">Repository</span>
+      <div id="repository" class="dropzone" data-input-name="repository"></div>
+    </div>
+    <div class="form-group">
+      <span class="m0">Image File</span>
+      <div id="image_file" class="dropzone" data-input-name="image_file"></div>
+    </div>
+    {{ form.submit(class='btn btn-primary text-uppercase font-weight-bold') }}
   </form>
 {% endblock %}

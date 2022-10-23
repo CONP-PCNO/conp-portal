@@ -8,6 +8,7 @@
   "author": "Joshua Unrau",
   "license": "MIT",
   "devDependencies": {
+    "@types/dropzone": "^5.7.4",
     "@types/node": "^18.8.4",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
@@ -21,6 +22,7 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
+    "dropzone": "^6.0.0-beta.2",
     "freezeframe": "^5.0.2"
   }
 }

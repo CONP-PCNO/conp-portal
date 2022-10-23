@@ -55,7 +55,7 @@ function setAutocompleteForListElement(element: HTMLUListElement, options: strin
   element.querySelectorAll('input').forEach(e => setAutocompleteForInputElement(e, options));
 }
 
-export function autocomplete() {
+export function addAutocomplete() {
   const elements = document.querySelectorAll('.autocomplete[data-autocomplete]');
   for (let i = 0; i < elements.length; i++) {
     const element = elements.item(i) as HTMLElement;
