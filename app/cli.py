@@ -7,6 +7,7 @@ Module that contains the special command line tools
 import os
 import uuid
 from datetime import datetime, timedelta
+from app.models import Experiment
 from app.threads import UpdatePipelineData
 
 
@@ -941,3 +942,17 @@ def _generate_dummy_experiments(app):
 
 def _add_test_experiments(app):
     print('Katie')
+    return None
+
+    import json
+
+    with open('file.json', 'r') as file:
+        data = json.load(file)
+    
+    experiments = []
+    for e in data:
+        experiments.append(Experiment(**e))
+    
+    db.session.add_all(experiments)
+    db.session.commit()
+    b.create_all()
