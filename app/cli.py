@@ -44,9 +44,8 @@ def register(app):
     
     @app.cli.command("seed_test_experiments")
     def seed_test_experiments():
-        _generate_dummy_experiments(app)
-
-
+        _add_test_experiments(app)
+    
     @app.cli.command('update_pipeline_data')
     def update_pipeline_data():
         """
@@ -939,3 +938,6 @@ def _generate_dummy_experiments(app):
     experiments = Experiment.get_dummies(25)
     db.session.add_all(experiments)
     db.session.commit()
+
+def _add_test_experiments(app):
+    print('Katie')
