@@ -12,7 +12,7 @@ from wtforms import (
     TextAreaField,
     FieldList,
 )
-from wtforms.validators import DataRequired, Email, Optional
+from wtforms.validators import DataRequired, Email, Optional, URL
 
 from .data import data
 from .validators import ValidDOI
@@ -145,7 +145,7 @@ class ExperimentForm(FlaskForm):
     )
 
     doi = StringField(
-        label="Link to Publication (DOI)", validators=[Optional(), ValidDOI()]
+        label="Link to Publication (DOI)", validators=[Optional(), URL(), ValidDOI()]
     )
 
     acknowledgements = StringField(

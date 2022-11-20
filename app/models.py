@@ -557,7 +557,7 @@ class Experiment(db.Model):
                 "modalities": [get_random_element(["fMRI", "EEG", "PET"]), "Brain"],
                 'primary_software': get_random_element(["Linux", 'Windows']),
                 'primary_function': get_random_element(['Cognitive', 'Sensory', 'Motor']),
-                'doi': '10.1093/schbul/sbj053',
+                'doi': 'https://doi.org/10.1093/schbul/sbj053',
                 "license": "MIT License"
             })
         return [cls(**d) for d in dummy_data]

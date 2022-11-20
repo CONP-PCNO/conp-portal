@@ -21,7 +21,9 @@
               {% for prop in props %}
                 <li class="card-list-item">
                   <strong class="text-capitalize">{{ prop.replace('_', ' ') }}: </strong>
-                  {% if experiment[prop].__class__.__name__ == 'list' %}
+                  {% if prop == 'doi' %}
+                    <a target="_blank" referrerpolicy="no-referrer" href="{{ experiment[prop] }}">{{ experiment[prop] }}</a>
+                  {% elif experiment[prop].__class__.__name__ == 'list' %}
                     {{ ', '.join(experiment[prop]) }}
                   {% elif experiment[prop].__class__.__name__ == 'datetime' %}
                     {{ experiment[prop].date().isoformat() }}
