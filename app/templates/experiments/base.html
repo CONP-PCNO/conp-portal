@@ -4,5 +4,12 @@
 {{ super() }}
 <script type="module">
   import('{{ url_for("static", filename="js/experiments.bundle.js") }}');
+  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+    const devBundle = document.createElement('script');
+    devBundle.src = 'http://localhost:8080/experiments.bundle.js';
+    document.head.appendChild(devBundle);
+  } else {
+    import('{{ url_for("static", filename="js/experiments.bundle.js") }}');
+  }
 </script>
 {% endblock %}
