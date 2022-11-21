@@ -16,7 +16,7 @@
           {% if title_link %}
           <a
             class="text-reset"
-            href="{{ url_for('experiments.view', experiment_id=1) }}"
+            href="{{ url_for('experiments.view', experiment_id=experiment.id) }}"
             >{{ experiment.title }}</a
           >
           {% else %}
