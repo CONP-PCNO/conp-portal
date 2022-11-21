@@ -3,9 +3,7 @@ from __future__ import annotations
 import json
 
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileAllowed, FileRequired
 from wtforms import (
-    FileField,
     StringField,
     SubmitField,
     FloatField,
@@ -83,7 +81,7 @@ class ExperimentForm(FlaskForm):
 
     license = SelectOtherField(
         label="License",
-        description="The licence under which this experiment is shared.",
+        description="The license under which this experiment is shared.",
         render_kw={
             "data-autocomplete": json.dumps(list(data["licenses"].values())),
             "value": "Creative Commons Non-Commercial License (Recommended)"

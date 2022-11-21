@@ -23,7 +23,7 @@ export function addDragDrop() {
     headers: {
       'X-CSRFTOKEN': token
     },
-    acceptedFiles: 'image/apng,image/avif,image/gif,image/jpeg,image/png',
+    acceptedFiles: 'image/*',
     paramName: 'image_file'
   });
 }
