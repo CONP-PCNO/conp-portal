@@ -11,6 +11,7 @@ from flask import (
     url_for,
     send_from_directory,
     session,
+    abort
 )
 from sqlalchemy import or_
 
@@ -31,7 +32,12 @@ def home():
 
 @experiments_bp.route("/<int:experiment_id>")
 def view_experiment(experiment_id):
-    return 'Experiment %d' % experiment_id
+    results = Experiment.query.filter(Experiment.id == experiment_id).all()
+    if len(results) == 0:
+        abort(404)
+    elif len(results) != 1:
+        abort(500)
+    return render_template("experiments/experiment.html", experiment=results[0].__dict__)
 
 @experiments_bp.route("/search")
 def search():
