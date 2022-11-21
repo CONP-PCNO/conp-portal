@@ -1,4 +1,4 @@
-{% macro render_experiment_card(experiment) %}
+{% macro render_experiment_card(experiment, title_link=False) %}
 <div class="card container-fluid">
   <div class="row">
     <div class="col col-sm-2 d-flex flex-column justify-content-center">
@@ -13,7 +13,15 @@
     <div class="col col-lg-7 card-body d-flex p-2">
       <div class="d-flex flex-column justify-content-center">
         <h5 class="card-title text-card-title">
-          <a class="text-reset">{{ experiment.title }}</a>
+          {% if title_link %}
+          <a
+            class="text-reset"
+            href="{{ url_for('experiments.view', experiment_id=1) }}"
+            >{{ experiment.title }}</a
+          >
+          {% else %}
+          <span class="text-reset">{{ experiment.title }}</span>
+          {% endif %}
         </h5>
         <div>
           {% for props in [['creators', 'description'], ['version',

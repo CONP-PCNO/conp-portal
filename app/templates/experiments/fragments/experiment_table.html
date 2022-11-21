@@ -1,5 +1,5 @@
 {% from "experiments/macros.html" import render_experiment_card %}
 
 {% for experiment in pagination.items %}
-  {{ render_experiment_card(experiment) }}
+  {{ render_experiment_card(experiment, title_link=True) }}
 {% endfor %}

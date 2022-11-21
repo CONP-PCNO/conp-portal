@@ -30,8 +30,8 @@ from ..models import Experiment
 def home():
     return render_template("experiments/home.html")
 
-@experiments_bp.route("/<int:experiment_id>")
-def view_experiment(experiment_id):
+@experiments_bp.route("/view/<int:experiment_id>")
+def view(experiment_id):
     results = Experiment.query.filter(Experiment.id == experiment_id).all()
     if len(results) == 0:
         abort(404)
