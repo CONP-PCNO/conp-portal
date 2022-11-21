@@ -33,7 +33,7 @@
               <strong class="text-capitalize"
                 >{{ prop.replace('_', ' ') }}:
               </strong>
-              {% if prop == 'doi' %}
+              {% if prop == 'doi' and experiment[prop] != 'NA' %}
               <a
                 target="_blank"
                 referrerpolicy="no-referrer"
