@@ -33,6 +33,7 @@ def home():
 @experiments_bp.route("/download/<int:experiment_id>")
 def download(experiment_id):
     experiment = Experiment.query.filter(Experiment.id == experiment_id).first_or_404()
+    experiment.increment_downloads()
     return send_file(experiment.repository_file, mimetype='application/zip', as_attachment=True, attachment_filename='experiment')
 
 @experiments_bp.route("/view/<int:experiment_id>")

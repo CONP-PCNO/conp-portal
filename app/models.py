@@ -517,6 +517,10 @@ class Experiment(db.Model):
     repository_file=db.Column(db.Text, default='')
     image_file=db.Column(db.Text, default='')
 
+    def increment_downloads(self):
+        Experiment.query.filter_by(id=self.id).update({ 'downloads': self.downloads + 1 })
+        db.session.commit()
+
     def increment_views(self):
         Experiment.query.filter_by(id=self.id).update({ 'views': self.views + 1 })
         db.session.commit()
