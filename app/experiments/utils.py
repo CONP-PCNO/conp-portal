@@ -38,8 +38,3 @@ def format_filesize(size_bytes):
             return f"{size_bytes:3.1f}{unit}"
         size_bytes /= 1024.0
     return f"{size_bytes:.1f}Yi"
-
-def get_number_files(zip_filepath):
-  with closing(ZipFile(zip_filepath)) as archive:
-    return len(archive.infolist())
-

@@ -15,6 +15,8 @@ from datetime import datetime, timedelta
 from pytz import timezone
 from app.oauth import OAuth_pretty
 from random import randrange
+from zipfile import ZipFile
+from contextlib import closing
 
 eastern = timezone('US/Eastern')
 
@@ -487,6 +489,8 @@ class GithubDailyViewsCount(db.Model):
 
 ## Experiments ##
 
+# origin, contact_person, contact_email, privacy, keywords, other_software, other_functions, acknowledgements, number_repository_files
+
 
 class Experiment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -509,7 +513,7 @@ class Experiment(db.Model):
     other_functions = db.Column(db.PickleType, default=[])
     doi = db.Column(db.Text, default='NA')
     acknowledgements = db.Column(db.Text, default='NA')
-    number_repository_files = db.Column(db.Integer, default=0)
+    # number_repository_files = db.Column(db.Integer, default=0)
     size_repository_files = db.Column(db.Text, default='NA')
     source = db.Column(db.Text, default='NA')
     views = db.Column(db.Integer, default=0)
@@ -525,6 +529,11 @@ class Experiment(db.Model):
         Experiment.query.filter_by(id=self.id).update({ 'views': self.views + 1 })
         db.session.commit()
     
+    @property
+    def number_repository_files(self):
+        with closing(ZipFile(self.repository_file)) as archive:
+            return len(archive.infolist())
+
     @classmethod
     def get_unique_values(cls, colname: str) -> list | None:
         """ return list of all unique values in column """

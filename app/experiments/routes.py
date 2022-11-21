@@ -21,7 +21,7 @@ from .filters import get_filters
 from .forms import ExperimentForm
 from .search import SearchEngine
 from .sort import SortKey
-from .utils import upload_file, format_filesize, get_number_files
+from .utils import upload_file, format_filesize
 from .. import config, db
 from ..models import Experiment
 
@@ -126,7 +126,6 @@ def submit():
             "repository_file": repository_file or None,
             "image_file": image_file or None,
             "size_repository_files": format_filesize(os.path.getsize(session["repository_file"])) or None,
-            "number_repository_files": get_number_files(session["repository_file"]) or None
         }
 
         experiment = Experiment(**params)
