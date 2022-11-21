@@ -6,10 +6,12 @@ Module that contains the special command line tools
 """
 import os
 import uuid
+import shutil
 from datetime import datetime, timedelta
 from app.models import Experiment
 from app.threads import UpdatePipelineData
 
+from . import config
 
 def register(app):
 
@@ -925,16 +927,29 @@ def _get_repo_analytics(app, repo):
 
     return daily_stat_dict
 
+def _create_dummy_experiment_repo():
+    upload_dir = getattr(config, 'EXPERIMENTS_UPLOAD_DIRECTORY')
+    repo_dir = os.path.join(upload_dir, 'test_repo')
+    if os.path.isdir(repo_dir):
+        shutil.rmtree(repo_dir)
+    for dir_path in upload_dir, repo_dir:
+        if not os.path.isdir(dir_path):
+            os.makedirs(dir_path)
+    with open(os.path.join(repo_dir, 'text.txt'), 'w') as file:
+        file.write('text\n')
+    shutil.make_archive(repo_dir, 'zip', repo_dir)
+
 def _generate_dummy_experiments(app):
     from app import db
     from app.models import Experiment
     from sqlalchemy.exc import OperationalError
-
+        
     try:
         Experiment.purge()
     except OperationalError:
         pass
 
+    _create_dummy_experiment_repo()
     db.create_all()
     experiments = Experiment.get_dummies(25)
     db.session.add_all(experiments)
