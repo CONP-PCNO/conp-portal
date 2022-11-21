@@ -575,7 +575,7 @@ class Experiment(db.Model):
                 'primary_software': get_random_element(["Linux", 'Windows']),
                 'primary_function': get_random_element(['Cognitive', 'Sensory', 'Motor']),
                 'doi': 'https://doi.org/10.1093/schbul/sbj053',
-                "license": "MIT License",
+                "license": "Public Domain",
                 "repository_file": dummy_repo_path
             })
         return [cls(**d) for d in dummy_data]

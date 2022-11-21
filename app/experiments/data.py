@@ -250,8 +250,8 @@ _countries = {
 }
 
 _licenses = {
-    'MIT': 'MIT License',
-    'GPL': 'General Public License'
+    'CC-BY-NC': 'Creative Commons Non-Commercial License',
+    'PublicDomain': 'Public Domain',
 }
 
 _keywords = ['Brain', 'MRI', 'CIVET', 'FreeSurfer']
