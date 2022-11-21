@@ -11,7 +11,8 @@ from flask import (
     url_for,
     send_from_directory,
     session,
-    abort
+    abort,
+    send_file
 )
 
 from . import experiments_bp
@@ -29,15 +30,14 @@ from ..models import Experiment
 def home():
     return render_template("experiments/home.html")
 
+@experiments_bp.route("/download/<int:experiment_id>")
+def download(experiment_id):
+    experiment = Experiment.query.filter(Experiment.id == experiment_id).first_or_404()
+    return send_file(experiment.repository_file, mimetype='application/zip', as_attachment=True, attachment_filename='experiment')
+
 @experiments_bp.route("/view/<int:experiment_id>")
 def view(experiment_id):
-    results = Experiment.query.filter(Experiment.id == experiment_id).all()
-    if len(results) == 0:
-        abort(404)
-    elif len(results) != 1:
-        abort(500)
-
-    experiment = results[0]
+    experiment = Experiment.query.filter(Experiment.id == experiment_id).first_or_404()
     experiment.increment_views()
     return render_template("experiments/experiment.html", experiment=experiment)
 

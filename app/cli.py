@@ -937,7 +937,7 @@ def _create_dummy_experiment_repo():
             os.makedirs(dir_path)
     with open(os.path.join(repo_dir, 'text.txt'), 'w') as file:
         file.write('text\n')
-    shutil.make_archive(repo_dir, 'zip', repo_dir)
+    return shutil.make_archive(repo_dir, 'zip', repo_dir)
 
 def _generate_dummy_experiments(app):
     from app import db
@@ -949,9 +949,9 @@ def _generate_dummy_experiments(app):
     except OperationalError:
         pass
 
-    _create_dummy_experiment_repo()
+    dummy_repo_path = _create_dummy_experiment_repo()
     db.create_all()
-    experiments = Experiment.get_dummies(25)
+    experiments = Experiment.get_dummies(25, dummy_repo_path=dummy_repo_path)
     db.session.add_all(experiments)
     db.session.commit()
 

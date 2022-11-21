@@ -543,7 +543,7 @@ class Experiment(db.Model):
         cls.__table__.create(db.engine)
     
     @classmethod
-    def get_dummies(cls, n: int) -> list[Experiment]:
+    def get_dummies(cls, n: int, dummy_repo_path: str | None = None) -> list[Experiment]:
         """ return a list of dummy experiments for testing """
         
         def get_random_element(elements: list) -> list:
@@ -562,6 +562,7 @@ class Experiment(db.Model):
                 'primary_software': get_random_element(["Linux", 'Windows']),
                 'primary_function': get_random_element(['Cognitive', 'Sensory', 'Motor']),
                 'doi': 'https://doi.org/10.1093/schbul/sbj053',
-                "license": "MIT License"
+                "license": "MIT License",
+                "repository_file": dummy_repo_path
             })
         return [cls(**d) for d in dummy_data]
