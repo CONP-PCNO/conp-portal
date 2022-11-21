@@ -490,9 +490,6 @@ class GithubDailyViewsCount(db.Model):
 
 ## Experiments ##
 
-# origin, contact_person, contact_email, privacy, keywords, other_software, other_functions, acknowledgements, number_repository_files
-
-
 class Experiment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text)
