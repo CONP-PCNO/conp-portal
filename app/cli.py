@@ -45,7 +45,7 @@ def register(app):
     
     @app.cli.command("seed_test_experiments")
     def seed_test_experiments():
-        _add_test_experiments(app)
+        _generate_dummy_experiments(app)
     
     @app.cli.command('update_pipeline_data')
     def update_pipeline_data():

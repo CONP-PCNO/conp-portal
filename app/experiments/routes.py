@@ -13,7 +13,6 @@ from flask import (
     session,
     abort
 )
-from sqlalchemy import or_
 
 from . import experiments_bp
 from .data import data
@@ -37,7 +36,10 @@ def view(experiment_id):
         abort(404)
     elif len(results) != 1:
         abort(500)
-    return render_template("experiments/experiment.html", experiment=results[0].__dict__)
+
+    experiment = results[0]
+    experiment.increment_views()
+    return render_template("experiments/experiment.html", experiment=experiment)
 
 @experiments_bp.route("/search")
 def search():

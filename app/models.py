@@ -517,6 +517,10 @@ class Experiment(db.Model):
     repository_file=db.Column(db.Text, default='')
     image_file=db.Column(db.Text, default='')
 
+    def increment_views(self):
+        Experiment.query.filter_by(id=self.id).update({ 'views': self.views + 1 })
+        db.session.commit()
+    
     @classmethod
     def get_unique_values(cls, colname: str) -> list | None:
         """ return list of all unique values in column """
