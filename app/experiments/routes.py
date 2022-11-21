@@ -38,15 +38,24 @@ def search():
     search_term = request.args.get("search_term", None, str)
     sort_key = SortKey(request.args.get("sort_key", "title_asc", str))
 
-    active_filters = []
+    all_experiments = [e.__dict__ for e in Experiment.query.all()]
+    
+    any_active_filter = False
+    ids_to_include = []
     for filter in filters:
         for option, active in filters[filter]["options"].items():
             if active:
-                active_filters.append(
-                    getattr(Experiment, filter).contains(option))
-    query = Experiment.query.filter(or_(*active_filters))
+                any_active_filter = True
+                for experiment in all_experiments:
+                    if option in experiment[filter]:
+                        ids_to_include.append(experiment['id'])
+                    print(experiment[filter])
+    
+    query = Experiment.query
+    if any_active_filter:
+        query = query.filter(Experiment.id.in_(ids_to_include))
     query = query.order_by(sort_key.column())
-
+    
     if search_term:
         search_engine = SearchEngine()
         matching_ids = search_engine.search(search_term, query.all())
