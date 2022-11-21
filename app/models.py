@@ -17,6 +17,7 @@ from app.oauth import OAuth_pretty
 from random import randrange
 from zipfile import ZipFile
 from contextlib import closing
+import os
 
 eastern = timezone('US/Eastern')
 
@@ -513,8 +514,6 @@ class Experiment(db.Model):
     other_functions = db.Column(db.PickleType, default=[])
     doi = db.Column(db.Text, default='NA')
     acknowledgements = db.Column(db.Text, default='NA')
-    # number_repository_files = db.Column(db.Integer, default=0)
-    size_repository_files = db.Column(db.Text, default='NA')
     source = db.Column(db.Text, default='NA')
     views = db.Column(db.Integer, default=0)
     downloads = db.Column(db.Integer, default=0)
@@ -533,6 +532,10 @@ class Experiment(db.Model):
     def number_repository_files(self):
         with closing(ZipFile(self.repository_file)) as archive:
             return len(archive.infolist())
+    
+    @property
+    def size_repository_files(self):
+        return self.format_filesize(os.path.getsize(self.repository_file))
 
     @classmethod
     def get_unique_values(cls, colname: str) -> list | None:
@@ -579,3 +582,11 @@ class Experiment(db.Model):
                 "repository_file": dummy_repo_path
             })
         return [cls(**d) for d in dummy_data]
+    
+    @staticmethod
+    def format_filesize(size_bytes):
+        for unit in ["B", "KB", "MB", "GB", "TB"]:
+            if abs(size_bytes) < 1024.0:
+                return f"{size_bytes:3.1f}{unit}"
+            size_bytes /= 1024.0
+        return f"{size_bytes:.1f}Yi"

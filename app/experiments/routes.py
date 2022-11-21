@@ -21,7 +21,7 @@ from .filters import get_filters
 from .forms import ExperimentForm
 from .search import SearchEngine
 from .sort import SortKey
-from .utils import upload_file, format_filesize
+from .utils import upload_file
 from .. import config, db
 from ..models import Experiment
 
@@ -124,8 +124,7 @@ def submit():
             "doi": form.doi.data or None,
             "acknowledgements": form.acknowledgements.data or None,
             "repository_file": repository_file or None,
-            "image_file": image_file or None,
-            "size_repository_files": format_filesize(os.path.getsize(session["repository_file"])) or None,
+            "image_file": image_file or None
         }
 
         experiment = Experiment(**params)
