@@ -1,0 +1,81 @@
+{% macro render_experiment_card(experiment) %}
+<div class="card container-fluid">
+  <div class="row">
+    <div class="col col-sm-2 d-flex flex-column justify-content-center">
+      <div class="container-fluid p-2">
+        <img
+          class="animated-gif img-fluid"
+          alt="experiment image"
+          src="{{ (experiment.image_file and url_for('experiments.download_file', name=experiment.image_file)) or url_for('static', filename='img/brain.gif') }}"
+        />
+      </div>
+    </div>
+    <div class="col col-lg-7 card-body d-flex p-2">
+      <div class="d-flex flex-column justify-content-center">
+        <h5 class="card-title text-card-title">
+          <a class="text-reset">{{ experiment.title }}</a>
+        </h5>
+        <div>
+          {% for props in [['creators', 'description'], ['version',
+          'date_added', 'date_updated'], ['modalities', 'primary_software',
+          'primary_function'], ['doi'], ['license']] %}
+          <ul class="d-flex align-items-start">
+            {% for prop in props %}
+            <li class="card-list-item">
+              <strong class="text-capitalize"
+                >{{ prop.replace('_', ' ') }}:
+              </strong>
+              {% if prop == 'doi' %}
+              <a
+                target="_blank"
+                referrerpolicy="no-referrer"
+                href="{{ experiment[prop] }}"
+                >{{ experiment[prop] }}</a
+              >
+              {% elif experiment[prop].__class__.__name__ == 'list' %} {{ ',
+              '.join(experiment[prop]) }} {% elif
+              experiment[prop].__class__.__name__ == 'datetime' %} {{
+              experiment[prop].date().isoformat() }} {% else %} {{
+              experiment[prop] }} {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+          {% endfor %}
+        </div>
+        <div class="py-1">
+          <ul class="d-flex align-items-start">
+            <li class="card-list-item">
+              <strong>Files: </strong>{{ experiment.number_repository_files }}
+            </li>
+            <li class="card-list-item">
+              <strong>Size: </strong>{{ experiment.size_repository_files }}
+            </li>
+          </ul>
+          <ul class="d-flex align-items-start">
+            <li class="card-list-item">
+              <strong>Source: </strong>
+              <a target="_blank" rel="noreferrer" href="{{ experiment.source }}"
+                >{{ experiment.source }}</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col col-lg-3 p-2">
+      <div
+        class="container-fluid d-flex flex-column justify-content-center h-100"
+      >
+        <div class="d-flex flex-column align-items-center my-2">
+          <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+          {{ experiment.views }}
+        </div>
+        <div class="d-flex flex-column align-items-center">
+          <i class="fa fa-download fa-2x" aria-hidden="true"></i>
+          {{ experiment.downloads }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}

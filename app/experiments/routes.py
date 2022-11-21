@@ -29,6 +29,9 @@ from ..models import Experiment
 def home():
     return render_template("experiments/home.html")
 
+@experiments_bp.route("/<int:experiment_id>")
+def view_experiment(experiment_id):
+    return 'Experiment %d' % experiment_id
 
 @experiments_bp.route("/search")
 def search():
