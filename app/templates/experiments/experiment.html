@@ -12,9 +12,13 @@
   window.addEventListener('load', () => {
     experiments.animateGifs()
   })
+
 </script>
 {% endblock %}
 
 {% block appcontent %}
 {{ render_experiment_card(experiment) }}
+<a class="btn btn-primary text-white mt-3" href="{{ url_for('experiments.download', experiment_id=experiment.id) }}">
+  Download This Experiment
+</a>
 {% endblock %}
