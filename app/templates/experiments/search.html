@@ -9,18 +9,8 @@
 <script>
   const { ExperimentsSearchPage, React, ReactDOM } = CONP;
   const element = React.createElement(ExperimentsSearchPage, {
-    filters: {{ filters|tojson }}
+    experiments: {{ experiments|tojson }}
   })
   ReactDOM.render(element, document.getElementById('experiments-search'));
 </script>
 {% endblock %}
-
-<script>
-  /*
-  <div class="search-dataset-table">
-  {% include "experiments/fragments/dropdowns.html" %}
-  {% include "experiments/fragments/experiment_table.html" %}
-  {% include "experiments/fragments/page_links.html" %}
-</div>
-  */
-</script>
