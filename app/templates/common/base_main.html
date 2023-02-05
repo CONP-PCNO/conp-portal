@@ -18,8 +18,9 @@
   name="twitter:image"
   content="https://portal.conp.ca/static/img/conp_for_twitter_card.png"
 />
+{% endblock %}
 
-{% endblock %} {% block styles %}
+{% block styles %}
 <link
   href="{{ url_for('static', filename='css/font-awesome.css') }}"
   rel="stylesheet"
@@ -46,7 +47,10 @@
   rel="stylesheet"
   type="text/css"
 />
-{% endblock %} {% block scripts %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='v2/dist/conp-portal.bundle.js') }}"></script>
 <script
   src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
   integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
