@@ -1,5 +1,7 @@
-{% extends 'experiments/base.html' %} {% from "experiments/macros.html" import
-render_experiment_card %} {% block contenttitle %}
+{% extends 'experiments/base.html' %}
+{% from "experiments/macros.html" import render_experiment_card %}
+
+{% block contenttitle %}
 <h2><span style="color: red">CONP Portal</span> | {{ experiment.title }}</h2>
 {% endblock %} {% block scripts %} {{ super() }}
 <script>

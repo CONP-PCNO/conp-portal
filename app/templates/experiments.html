@@ -10,13 +10,10 @@
 {% endblock %}
 
 {% block appcontent %}
-<div id="experiments-home"></div>
+<div id="experiments-root"></div>
 <script>
   const { ExperimentsHomePage } = CONP;
-  const element = React.createElement(ExperimentsHomePage, {
-    searchPageUrl: "{{ url_for('experiments.search') }}",
-    submitPageUrl: "{{ url_for('experiments.submit') }}"
-  })
-  ReactDOM.render(element, document.getElementById('experiments-home'));
+  const element = React.createElement(ExperimentsHomePage, null, null)
+  ReactDOM.render(element, document.getElementById('experiments-root'));
 </script>
 {% endblock %}
