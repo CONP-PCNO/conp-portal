@@ -51,7 +51,7 @@ def search():
     def object_as_dict(obj: object):
         return {to_camel_case(c.key): getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
     
-    experiments = [object_as_dict(e) for e in Experiment.query.all()]
+    experiments = [{**object_as_dict(e),**{ "repositoryFileCount": e.number_repository_files, "repositorySize": e.size_repository_files}} for e in Experiment.query.all()]
     return render_template("experiments/search.html", experiments=experiments)
 
     filters = get_filters(request)

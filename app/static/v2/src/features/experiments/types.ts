@@ -23,5 +23,7 @@ export interface Experiment {
   views: number;
   downloads: number;
   repositoryFile: string;
-  imageFile: string;
+  repositoryFileCount: number;
+  repositorySize: string;
+  imageFile?: string;
 }

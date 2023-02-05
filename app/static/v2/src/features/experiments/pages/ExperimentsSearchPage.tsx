@@ -1,17 +1,17 @@
 import React from 'react';
+import { ExperimentCard } from '../components/ExperimentCard';
 
-import { SearchBar, type SearchFilters } from '@/components/SearchBar';
+import { type Experiment } from '../types';
 
 interface ExperimentsSearchPageProps {
-  filters: SearchFilters;
-  experiments: unknown
+  experiments: Experiment[]
 }
 
-export const ExperimentsSearchPage = ({ filters, experiments }: ExperimentsSearchPageProps) => {
+export const ExperimentsSearchPage = ({ experiments }: ExperimentsSearchPageProps) => {
   console.log(experiments)
   return (
     <div className="search-dataset-table">
-      <SearchBar filters={filters} onSubmit={() => console.log("experiments.handleSubmitSearch(event)")} />
+      {experiments.map((experiment) => <ExperimentCard key={experiment.id} experiment={experiment} /> )}
     </div>
   )
 }
