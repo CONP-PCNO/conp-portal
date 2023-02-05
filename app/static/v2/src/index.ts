@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './styles.css';
+import './styles/main.scss';
 
-export * from './Hello';
 export { React };
