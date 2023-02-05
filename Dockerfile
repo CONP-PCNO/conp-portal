@@ -2,6 +2,8 @@ FROM python:3.7
 WORKDIR /app
 RUN apt-get update -y
 RUN apt-get install -y sqlite3 git-annex
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && apt-get install -y nodejs
+RUN corepack enable
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
