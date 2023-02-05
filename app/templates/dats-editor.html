@@ -2,10 +2,9 @@
 
 <!-- Head Block -->
 
-{% block scripts %}
-{{ super() }}
-<script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
-<script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
+{% block scripts %} {{ super() }}
+<script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>
+<script src=" {{ url_for('static',filename='v1/js/react-dom.development-16.11.0.js') }}"></script>
 <script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
 {% endblock %}
 
@@ -22,8 +21,8 @@
   <div id="dats-editor-container"></div>
 
   <script type="text/javascript">
-          const datsEditor = React.createElement(CONPReact.DatsEditorForm);
-          ReactDOM.render(datsEditor, document.querySelector("#dats-editor-container"));
+    const datsEditor = React.createElement(CONPReact.DatsEditorForm);
+    ReactDOM.render(datsEditor, document.querySelector('#dats-editor-container'));
   </script>
 </div>
 {% endblock %}

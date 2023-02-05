@@ -8,64 +8,25 @@
 <!-- metadata for the Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@NeuroLibre" />
-
 <meta name="twitter:title" content="CONP/PCNO" />
 <meta
   name="twitter:description"
   content="This portal is a web interface for the Canadian Open Neuroscience Platform (CONP) to facilitate open science in the neuroscience community. CONP simplifies global researcher access and sharing of datasets and tools. The portal internalizes the cycle of a typical research project: starting with data acquisition, followed by processing using already existing/published tools, and ultimately publication of the obtained results including a link to the original dataset."
 />
-<meta
-  name="twitter:image"
-  content="https://portal.conp.ca/static/img/conp_for_twitter_card.png"
-/>
+<meta name="twitter:image" content="https://portal.conp.ca/static/img/conp_for_twitter_card.png" />
 {% endblock %}
 
 {% block styles %}
-<link
-  href="{{ url_for('static', filename='css/font-awesome.css') }}"
-  rel="stylesheet"
-  type="text/css"
-/>
-<link
-  href="{{ url_for('static', filename='css/font-awesome.min.css') }} "
-  rel="stylesheet"
-  type="text/css"
-/>
-<link
-  rel="stylesheet"
-  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-  crossorigin="anonymous"
-/>
-<link
-  href="{{ url_for('static',filename='img/conp.ico')}}"
-  rel="shortcut icon"
-  type="image/png"
-/>
-<link
-  href="{{ url_for('static', filename='css/core.css') }}"
-  rel="stylesheet"
-  type="text/css"
-/>
+<link href="{{ url_for('static',filename='img/conp.ico')}}" rel="shortcut icon" type="image/png" />
+<link href="{{ url_for('static', filename='v1/css/bootstrap-multiselect.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='v2/dist/conp-portal.bundle.js') }}"></script>
-<script
-  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-  integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-  integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-  integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-  crossorigin="anonymous"
-></script>
+<script>
+  const { $ } = CONP;
+</script>
+<script src="{{ url_for('static', filename='v1/js/bootstrap-multiselect.js') }}"></script>
 <!-- Matomo -->
 <script type="text/javascript">
   var matomoUrl = {{ config['MATOMO_SERVER_URL']|tojson }}
@@ -85,8 +46,9 @@
   })();
 </script>
 <!-- End Matomo Code -->
-{% endblock %} {% block body %}
+{% endblock %}
 
+{% block body %}
 <!-- Modal -->
 <div
   class="modal fade"
@@ -101,79 +63,60 @@
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title w-100 text-center" id="modalLongTitle">
-          Terms of Use
-        </h4>
+        <h4 class="modal-title w-100 text-center" id="modalLongTitle">Terms of Use</h4>
       </div>
       <div class="modal-body">
         <div class="terms-body">
           <p class="text-center">(Last Updated on July 5th, 2021)</p>
           <h6>The user agrees:</h6>
           <ul>
+            <li>to obtain required ethics or other approvals before using shared resources.</li>
             <li>
-              to obtain required ethics or other approvals before using shared
-              resources.
+              to respect any use restrictions and conditions based on consents or ethics approvals associated with
+              shared resources.
             </li>
             <li>
-              to respect any use restrictions and conditions based on consents
-              or ethics approvals associated with shared resources.
+              to ensure the confidentiality of restricted access resources, and to establish appropriate security
+              safeguards.
             </li>
             <li>
-              to ensure the confidentiality of restricted access resources, and
-              to establish appropriate security safeguards.
-            </li>
-            <li>
-              to cite any shared resource used to produce a scholarly
-              publication or other publicly disclosed research output according
-              to generally accepted practice, including respecting any preferred
-              means of citation for the resource articulated on its landing
-              page, and using any persistent digital identifier associated with
+              to cite any shared resource used to produce a scholarly publication or other publicly disclosed research
+              output according to generally accepted practice, including respecting any preferred means of citation for
+              the resource articulated on its landing page, and using any persistent digital identifier associated with
               the resource.
             </li>
+            <li>to respect any licensing terms associated with shared resources.</li>
             <li>
-              to respect any licensing terms associated with shared resources.
+              that the CONP has the right to change or update these Terms of Use at any time without prior notice to the
+              user. It is the user’s responsibility to check the CONP platform’s website to ascertain whether the Terms
+              of Use have been changed or updated.
             </li>
             <li>
-              that the CONP has the right to change or update these Terms of Use
-              at any time without prior notice to the user. It is the user’s
-              responsibility to check the CONP platform’s website to ascertain
-              whether the Terms of Use have been changed or updated.
+              that all resources available on the CONP are provided on an “as is” basis, and the Platform disclaims all
+              warranties, express or implied, including but not limited to any warranty that the use of resources will
+              not cause injury or infringe any third party rights.
             </li>
             <li>
-              that all resources available on the CONP are provided on an “as
-              is” basis, and the Platform disclaims all warranties, express or
-              implied, including but not limited to any warranty that the use of
-              resources will not cause injury or infringe any third party
-              rights.
+              that the CONP excludes all liability, to the greatest extent permitted by applicable law, with respect to
+              the use or distribution of resources.
             </li>
             <li>
-              that the CONP excludes all liability, to the greatest extent
-              permitted by applicable law, with respect to the use or
-              distribution of resources.
-            </li>
-            <li>
-              to contact the dataset creator immediately if it becomes apparent that data have
-              not been sufficiently de-identified.
+              to contact the dataset creator immediately if it becomes apparent that data have not been sufficiently
+              de-identified.
             </li>
           </ul>
           <h6>The user agrees not to:</h6>
           <ul>
+            <li>use shared resources to re-identify or re-contact individual participants.</li>
             <li>
-              use shared resources to re-identify or re-contact individual
-              participants.
-            </li>
-            <li>
-              claim intellectual property rights, or any other proprietary
-              right, over shared resources in such a way that could interfere
-              with the freedom of others to access and use shared resources.
+              claim intellectual property rights, or any other proprietary right, over shared resources in such a way
+              that could interfere with the freedom of others to access and use shared resources.
             </li>
           </ul>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="btnAcceptTerms">
-          Accept
-        </button>
+        <button type="button" class="btn btn-primary" id="btnAcceptTerms">Accept</button>
       </div>
     </div>
   </div>
@@ -191,112 +134,71 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title w-100 text-center" id="modalLongTitle">
-          Canadian Open Neuroscience Platform Policy on Protecting the Privacy
-          of Portal Users (“Privacy Policy”)
+          Canadian Open Neuroscience Platform Policy on Protecting the Privacy of Portal Users (“Privacy Policy”)
         </h4>
       </div>
       <div class="modal-body">
         <div class="terms-body">
           <p class="text-center">(Last Updated on January 20, 2021)</p>
           <p>
-            This Privacy Policy governs the collection, use, and disclosure of
-            information generated during your visit to the Canadian Open
-            Neuroscience Platform (CONP) Portal. The Portal is hosted by the
-            McGill Centre for Integrative Neuroscience (MCIN), a unit within
-            McGill University.
+            This Privacy Policy governs the collection, use, and disclosure of information generated during your visit
+            to the Canadian Open Neuroscience Platform (CONP) Portal. The Portal is hosted by the McGill Centre for
+            Integrative Neuroscience (MCIN), a unit within McGill University.
           </p>
           <p>
-            This Policy is separate from the Portal’s Terms of Use, Data
-            Contributor Agreement, or other CONP-related materials.
+            This Policy is separate from the Portal’s Terms of Use, Data Contributor Agreement, or other CONP-related
+            materials.
           </p>
           <h6>Definitions</h6>
           <p>For the purposes of this Policy:</p>
           <p>
-            “aggregate-level data” refers to data that has been grouped together
-            to provide information at a broader level than the initial
-            record-level data. This data does not allow for the identification
-            of individual records. (Adopted from definitions by
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.statcan.gc.ca/eng/about/pia/generic/gloss"
-            >
+            “aggregate-level data” refers to data that has been grouped together to provide information at a broader
+            level than the initial record-level data. This data does not allow for the identification of individual
+            records. (Adopted from definitions by
+            <a target="_blank" rel="noopener noreferrer" href="https://www.statcan.gc.ca/eng/about/pia/generic/gloss">
               Statistics Canada
             </a>
             , the
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.cihi.ca/en/faq/what-is-aggregate-level-data"
-            >
+            <a target="_blank" rel="noopener noreferrer" href="https://www.cihi.ca/en/faq/what-is-aggregate-level-data">
               Canadian Institute for Health Information
             </a>
             , and the
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://stats.oecd.org/glossary/detail.asp?ID=68"
-            >
+            <a target="_blank" rel="noopener noreferrer" href="https://stats.oecd.org/glossary/detail.asp?ID=68">
               Organisation for Economic Co-operation and Development
             </a>
             .)
           </p>
-          <p>
-            “asset” refers to either a dataset, tool, or pipeline available
-            through the CONP Portal.
-          </p>
+          <p>“asset” refers to either a dataset, tool, or pipeline available through the CONP Portal.</p>
           <p>“CONP” refers to the Canadian Open Neuroscience Platform.</p>
           <p>
-            “cookie” is a small electronic file temporarily stored on your
-            computer that contains information about your visit to a website.
+            “cookie” is a small electronic file temporarily stored on your computer that contains information about your
+            visit to a website.
           </p>
           <p>
-            “external website” refers to any website other than that accessible
-            at
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://portal.conp.ca/"
-              >https://portal.conp.ca/</a
-            >.
+            “external website” refers to any website other than that accessible at
+            <a target="_blank" rel="noopener noreferrer" href="https://portal.conp.ca/">https://portal.conp.ca/</a>.
+          </p>
+          <p>“MCIN” refers to the McGill Centre for Integrative Neuroscience, which runs the CONP Portal.</p>
+          <p>
+            “personal information” refers to individually identifying information for which there is a reasonable
+            likelihood of identification.
           </p>
           <p>
-            “MCIN” refers to the McGill Centre for Integrative Neuroscience,
-            which runs the CONP Portal.
-          </p>
-          <p>
-            “personal information” refers to individually identifying
-            information for which there is a reasonable likelihood of
-            identification.
-          </p>
-          <p>
-            “Portal” refers to the web interface for the CONP Portal, which is
-            accessible at
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://portal.conp.ca/"
-              >https://portal.conp.ca/</a
-            >
+            “Portal” refers to the web interface for the CONP Portal, which is accessible at
+            <a target="_blank" rel="noopener noreferrer" href="https://portal.conp.ca/">https://portal.conp.ca/</a>
             .
           </p>
+          <p>“public IP address” means a unique address that publicly identifies your connection on the Internet.</p>
           <p>
-            “public IP address” means a unique address that publicly identifies
-            your connection on the Internet.
-          </p>
-          <p>
-            “Terms of Use” refers to the user agreement that governs your use of
-            the resources available on the CONP portal. It is distinct from this
-            Policy.
+            “Terms of Use” refers to the user agreement that governs your use of the resources available on the CONP
+            portal. It is distinct from this Policy.
           </p>
           <h6>Consent Statement</h6>
           <p>
-            By visiting the Portal, you agree to the terms of this Policy. By
-            your use of the Portal, you consent to the collection, use, and
-            disclosure of your personal information in accordance with the terms
-            contained in this Policy, which may be amended from time to time.
-            You understand that it is your responsibility to verify any updates
-            to this Policy.
+            By visiting the Portal, you agree to the terms of this Policy. By your use of the Portal, you consent to the
+            collection, use, and disclosure of your personal information in accordance with the terms contained in this
+            Policy, which may be amended from time to time. You understand that it is your responsibility to verify any
+            updates to this Policy.
           </p>
           <h6>Collection of Personal Information</h6>
           <p>
@@ -304,69 +206,48 @@
           </p>
           <p>
             CONP uses the software
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://matomo.org/"
-              >Matomo</a
-            >
-            to gather information about your visits. Thanks to Matomo, this
-            information does not leave CONP servers, allowing CONP to maintain
-            control of this data. When you visit and use the Portal, our server
-            automatically collects certain technical information pertaining to
-            your visit and use of the Portal. These include:
+            <a target="_blank" rel="noopener noreferrer" href="https://matomo.org/">Matomo</a>
+            to gather information about your visits. Thanks to Matomo, this information does not leave CONP servers,
+            allowing CONP to maintain control of this data. When you visit and use the Portal, our server automatically
+            collects certain technical information pertaining to your visit and use of the Portal. These include:
           </p>
           <ul>
-            <li class="mx-4">
-              your public IP address and its approximate geolocation
-            </li>
-            <li class="mx-4">
-              the domain name from which you visited the Portal
-            </li>
-            <li class="mx-4">
-              user-specific information on which pages are visited
-            </li>
+            <li class="mx-4">your public IP address and its approximate geolocation</li>
+            <li class="mx-4">the domain name from which you visited the Portal</li>
+            <li class="mx-4">user-specific information on which pages are visited</li>
             <li class="mx-4">aggregate information on pages visited</li>
             <li class="mx-4">the date and time of visit</li>
             <li class="mx-4">asset accessed on the Portal</li>
           </ul>
           <p>
-            We use this information to improve the Portal and for reporting
-            purposes. We do not combine this information with that from other
-            sources to identify individual users. This technical information is
-            retained for up to 12 months before being aggregated.
+            We use this information to improve the Portal and for reporting purposes. We do not combine this information
+            with that from other sources to identify individual users. This technical information is retained for up to
+            12 months before being aggregated.
           </p>
           <p>
             <strong>User-Submitted Survey Information</strong>
           </p>
           <p>
-            CONP uses Google Forms to survey Portal users about their experiences 
-            using the Portal. This information is not automatically collected and 
-            any user information submitted via the Google Form is entirely of the 
-            user’s choosing.
+            CONP uses Google Forms to survey Portal users about their experiences using the Portal. This information is
+            not automatically collected and any user information submitted via the Google Form is entirely of the user’s
+            choosing.
           </p>
           <p>
-            Where a Portal user chooses to submit feedback via Google Forms, the 
-            information is subject to Google’s own Privacy Policy. See also the 
-            section “Links to External Websites” below.
+            Where a Portal user chooses to submit feedback via Google Forms, the information is subject to Google’s own
+            Privacy Policy. See also the section “Links to External Websites” below.
           </p>
           <h6>Information Sharing</h6>
           <p>
-            CONP publishes aggregate-level data about the use of the Portal both
-            on the Portal website and in reports related to CONP’s activities.
+            CONP publishes aggregate-level data about the use of the Portal both on the Portal website and in reports
+            related to CONP’s activities.
           </p>
           <p>
-            CONP does not share any personal information with other entities or
-            organizations, except when legally required to do so, at the request
-            of governmental authorities conducting an investigation, to verify
-            or enforce compliance with the policies governing the Portal and
-            applicable laws, or to protect against misuse or unauthorized use of
-            the Portal.
+            CONP does not share any personal information with other entities or organizations, except when legally
+            required to do so, at the request of governmental authorities conducting an investigation, to verify or
+            enforce compliance with the policies governing the Portal and applicable laws, or to protect against misuse
+            or unauthorized use of the Portal.
           </p>
-          <p>
-            Except as described above, we will not share any information with
-            any party for any reason.
-          </p>
+          <p>Except as described above, we will not share any information with any party for any reason.</p>
           <h6>Cookies</h6>
           <p>We use cookies to:</p>
           <ul>
@@ -374,96 +255,72 @@
             <li class="mx-4">Record your acceptance of the Terms of Use</li>
           </ul>
           <p>
-            As acceptance of the Terms of Use is a prerequisite to accessing the
-            site, it is not possible to block this cookie and maintain site
-            access.
+            As acceptance of the Terms of Use is a prerequisite to accessing the site, it is not possible to block this
+            cookie and maintain site access.
           </p>
           <h6>Disclosure of Personal Information</h6>
           <p>
-            In so far as the information collected is considered personal
-            information, and within the custody of MCIN, it will not be 
-            shared with individuals and units
-            outside of MCIN. We will not disclose personally identifiable
-            information about your use of the site except under the following
-            circumstances:
+            In so far as the information collected is considered personal information, and within the custody of MCIN,
+            it will not be shared with individuals and units outside of MCIN. We will not disclose personally
+            identifiable information about your use of the site except under the following circumstances:
           </p>
           <ul>
             <li class="mx-4">With your prior explicit consent</li>
             <li class="mx-4">
-              When we have given you clear notice that we will disclose
-              information that you voluntarily provide
+              When we have given you clear notice that we will disclose information that you voluntarily provide
             </li>
             <li class="mx-4">
-              With appropriate external parties, such as law enforcement
-              agencies, in order to investigate and respond to suspected
-              violations of law or university policy. Any such disclosures shall
-              comply with all applicable laws and institutional policies. Only
-              that information which is necessary for compliance purposes will
-              be disclosed.
+              With appropriate external parties, such as law enforcement agencies, in order to investigate and respond
+              to suspected violations of law or university policy. Any such disclosures shall comply with all applicable
+              laws and institutional policies. Only that information which is necessary for compliance purposes will be
+              disclosed.
             </li>
           </ul>
           <h6>Security</h6>
           <p>
-            Due to the rapidly evolving nature of information technologies, no
-            transmission of information over the Internet can be guaranteed to
-            be completely secure. While CONP is committed to protecting user
-            privacy, CONP cannot guarantee the security of any information users
-            transmit to university sites, and users do so at their own risk.
+            Due to the rapidly evolving nature of information technologies, no transmission of information over the
+            Internet can be guaranteed to be completely secure. While CONP is committed to protecting user privacy, CONP
+            cannot guarantee the security of any information users transmit to university sites, and users do so at
+            their own risk.
           </p>
           <p>
-            MCIN staff, who run the CONP Portal, are subject to McGill
-            University’s
+            MCIN staff, who run the CONP Portal, are subject to McGill University’s
             <a
               target="_blank"
               rel="noopener noreferrer"
               href="https://www.mcgill.ca/secretariat/files/secretariat/Responsible-Use-of-McGill-IT-Policy-on-the.pdf"
             >
-              Policy on the Responsible Use of McGill Information Technology
-              Resources
+              Policy on the Responsible Use of McGill Information Technology Resources
             </a>
-            . Pursuant to this policy, we have appropriate organizational and
-            technical security measures in place in our physical facilities to
-            protect against the loss, misuse, or alteration of information that
-            we have collected from you at our site. We furthermore use
-            reasonable safeguards consistent with prevailing industry standards
-            and proportionate to the sensitivity of the data being stored to
-            maintain the security of that information on our systems.
+            . Pursuant to this policy, we have appropriate organizational and technical security measures in place in
+            our physical facilities to protect against the loss, misuse, or alteration of information that we have
+            collected from you at our site. We furthermore use reasonable safeguards consistent with prevailing industry
+            standards and proportionate to the sensitivity of the data being stored to maintain the security of that
+            information on our systems.
           </p>
           <h6>Links to External Websites</h6>
           <p>
-            The Portal contains links to external websites. CONP is not
-            responsible for the availability, content, or privacy practices of
-            external websites. These external websites have their own policies
-            as it relates to the collection, use, and disclosure of personal
-            information. We invite you to consult the privacy policies of these
-            websites to know more.
+            The Portal contains links to external websites. CONP is not responsible for the availability, content, or
+            privacy practices of external websites. These external websites have their own policies as it relates to the
+            collection, use, and disclosure of personal information. We invite you to consult the privacy policies of
+            these websites to know more.
           </p>
           <h6>Privacy Notice Changes</h6>
           <p>
-            From time to time, we may use visitor information for new,
-            unanticipated uses not previously disclosed in this Privacy Policy.
-            In such cases, this Privacy Policy will be updated accordingly. If
-            this is a concern, we encourage you to periodically check for
-            changes.
+            From time to time, we may use visitor information for new, unanticipated uses not previously disclosed in
+            this Privacy Policy. In such cases, this Privacy Policy will be updated accordingly. If this is a concern,
+            we encourage you to periodically check for changes.
           </p>
           <h6>Questions about this Policy</h6>
           <p>
-            Should you have any questions or concerns about this Privacy Policy,
-            kindly send us an email at
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="mailto:privacy@conp.ca"
-              >privacy@conp.ca</a
-            >
+            Should you have any questions or concerns about this Privacy Policy, kindly send us an email at
+            <a target="_blank" rel="noopener noreferrer" href="mailto:privacy@conp.ca">privacy@conp.ca</a>
             .
           </p>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">
-          OK
-        </button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
       </div>
     </div>
   </div>
@@ -488,32 +345,24 @@
         <ul>
           <h4>Dashboard</h4>
           <p>
-            The dashboard provides summary of the content available on the CONP
-            portal. This includes the number of datasets and pipelines that can
-            be found on the portal, links to more detailed analytics and
-            documentation, as well as links to tutorial videos or documentation.
+            The dashboard provides summary of the content available on the CONP portal. This includes the number of
+            datasets and pipelines that can be found on the portal, links to more detailed analytics and documentation,
+            as well as links to tutorial videos or documentation.
           </p>
           <p>
-            No login is required to access the portal but you will be asked to
-            agree to the "Terms of Use" of the portal on your first visit. These
-            can always be re-consulted anytime by clicking on the "Terms of Use"
-            link at the top right of the portal web page.
+            No login is required to access the portal but you will be asked to agree to the "Terms of Use" of the portal
+            on your first visit. These can always be re-consulted anytime by clicking on the "Terms of Use" link at the
+            top right of the portal web page.
           </p>
-          <img
-            src="/static/img/Terms_of_use.png"
-            alt="Terms_of_use"
-            width="700px"
-          />
+          <img src="/static/img/Terms_of_use.png" alt="Terms_of_use" width="700px" />
           <p>
-            Upon agreement to the "Terms of Use", you will be able to filter
-            through the various datasets or pipelines available on the portal.
+            Upon agreement to the "Terms of Use", you will be able to filter through the various datasets or pipelines
+            available on the portal.
           </p>
         </ul>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="btnAcceptTut1">
-          OK
-        </button>
+        <button type="button" class="btn btn-primary" id="btnAcceptTut1">OK</button>
       </div>
     </div>
   </div>
@@ -538,48 +387,29 @@
         <ul>
           <h4>Data Search Page</h4>
           <p>
-            Datasets are listed in the Data search page of the portal. This
-            search page lists all datasets available through the CONP with some
-            basic information about the dataset. Results can be filtered or
-            sorted easily.
+            Datasets are listed in the Data search page of the portal. This search page lists all datasets available
+            through the CONP with some basic information about the dataset. Results can be filtered or sorted easily.
           </p>
-          <img
-            src="/static/img/Data_search_page.png"
-            alt="Data_search_page"
-            width="700px"
-          />
+          <img src="/static/img/Data_search_page.png" alt="Data_search_page" width="700px" />
           <p>
-            Clicking on a dataset row in the Data search page will bring the
-            user to a more detailed dataset page that includes more description
-            information pertinent to the dataset as well as download
-            instructions to follow using DataLad.
+            Clicking on a dataset row in the Data search page will bring the user to a more detailed dataset page that
+            includes more description information pertinent to the dataset as well as download instructions to follow
+            using DataLad.
           </p>
-          <img
-            src="/static/img/Dataset_detailed_page.png"
-            alt="Dataset_detailed_page"
-            width="700px"
-          />
+          <img src="/static/img/Dataset_detailed_page.png" alt="Dataset_detailed_page" width="700px" />
           <p>
-            Note that some datasets may require a third-party account.
-            Instructions on how to obtain an account for those datasets will be
-            displayed on the dataset page if that is a requirement.
+            Note that some datasets may require a third-party account. Instructions on how to obtain an account for
+            those datasets will be displayed on the dataset page if that is a requirement.
           </p>
           <p>
-            Below are two dataset examples, one that requires a third-party
-            account (PREVENT-AD open data) and one that does not require any
-            account to download it (BigBrain dataset).
+            Below are two dataset examples, one that requires a third-party account (PREVENT-AD open data) and one that
+            does not require any account to download it (BigBrain dataset).
           </p>
-          <img
-            src="/static/img/Dataset_accounts.png"
-            alt="Dataset_accounts"
-            width="700px"
-          />
+          <img src="/static/img/Dataset_accounts.png" alt="Dataset_accounts" width="700px" />
         </ul>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="btnAcceptTut2">
-          OK
-        </button>
+        <button type="button" class="btn btn-primary" id="btnAcceptTut2">OK</button>
       </div>
     </div>
   </div>
@@ -604,30 +434,19 @@
         <ul>
           <h4>Dataset Page</h4>
           <p>
-            This page provides more detailed information regarding a dataset.
-            This includes contact information, dataset version, descriptions,
-            licenses, related publication and so on.
+            This page provides more detailed information regarding a dataset. This includes contact information, dataset
+            version, descriptions, licenses, related publication and so on.
           </p>
           <p>
-            Dataset download is available through DataLad. Each dataset page
-            contains a detailed ‘Dataset Download Instructions’ section that lay
-            out the different steps to perform in order to download the dataset.
+            Dataset download is available through DataLad. Each dataset page contains a detailed ‘Dataset Download
+            Instructions’ section that lay out the different steps to perform in order to download the dataset.
           </p>
-          <img
-            src="/static/img/Dataset_download_instructions.png"
-            alt="Dataset_download_instructions"
-            width="700px"
-          />
-          <p>
-            Finally, the dataset README file can be viewed at the end of the
-            page.
-          </p>
+          <img src="/static/img/Dataset_download_instructions.png" alt="Dataset_download_instructions" width="700px" />
+          <p>Finally, the dataset README file can be viewed at the end of the page.</p>
         </ul>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="btnAcceptTut2-1">
-          OK
-        </button>
+        <button type="button" class="btn btn-primary" id="btnAcceptTut2-1">OK</button>
       </div>
     </div>
   </div>
@@ -652,31 +471,19 @@
         <ul>
           <h4>Tools & Pipelines Search Page</h4>
           <p>
-            The Tools & Pipelines Search page lists all softwares registered in
-            the portal. Each tool or pipeline present in that list page contains
-            basic information about the tool/pipeline and its pipeline ID.
+            The Tools & Pipelines Search page lists all softwares registered in the portal. Each tool or pipeline
+            present in that list page contains basic information about the tool/pipeline and its pipeline ID.
           </p>
-          <img
-            src="/static/img/Pipeline_search_page.png"
-            alt="Pipeline_search_page"
-            width="700px"
-          />
+          <img src="/static/img/Pipeline_search_page.png" alt="Pipeline_search_page" width="700px" />
           <p>
-            Clicking on a specific choice will bring the user to a more detailed
-            page with links to instructions on how to run the tool locally, to
-            HCPs or to external platforms.
+            Clicking on a specific choice will bring the user to a more detailed page with links to instructions on how
+            to run the tool locally, to HCPs or to external platforms.
           </p>
-          <img
-            src="/static/img/Pipeline_detailed_page.png"
-            alt="Pipeline_detailed_page"
-            width="700px"
-          />
+          <img src="/static/img/Pipeline_detailed_page.png" alt="Pipeline_detailed_page" width="700px" />
         </ul>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="btnAcceptTut3">
-          OK
-        </button>
+        <button type="button" class="btn btn-primary" id="btnAcceptTut3">OK</button>
       </div>
     </div>
   </div>
@@ -701,59 +508,41 @@
         <ul>
           <h4>Tool/Pipeline Page</h4>
           <p>
-            The tool/pipeline detailed page displays all the information
-            pertinent to the tool/pipeline. This includes authorship
-            information, the descriptor URL, the container image information,
-            the tool description and so on. In addition, the page provides
-            information on how to run the tool locally or on HPCs via the CBRAIN
-            platform or Clowdr.
+            The tool/pipeline detailed page displays all the information pertinent to the tool/pipeline. This includes
+            authorship information, the descriptor URL, the container image information, the tool description and so on.
+            In addition, the page provides information on how to run the tool locally or on HPCs via the CBRAIN platform
+            or Clowdr.
           </p>
           <h6>Run the tool locally</h6>
           <p>
-            Tools and pipelines can be run locally on any system using Boutiques
-            and a container engine (Docker or Singularity) based on the Zenodo
-            ID of the tool. The container image for the tool is listed in the
-            detailed page of the tool/pipeline.
+            Tools and pipelines can be run locally on any system using Boutiques and a container engine (Docker or
+            Singularity) based on the Zenodo ID of the tool. The container image for the tool is listed in the detailed
+            page of the tool/pipeline.
           </p>
           <p>
-            At the bottom of the pipeline page, detailed instructions on how to
-            run the tool locally are available to the user.
+            At the bottom of the pipeline page, detailed instructions on how to run the tool locally are available to
+            the user.
           </p>
-          <img
-            src="/static/img/Boutiques_instructions.png"
-            alt="Boutiques_instructions"
-            width="700px"
-          />
-          <p>
-            If you have never used Boutiques in the past, we recommend the
-            following tutorial.
-          </p>
+          <img src="/static/img/Boutiques_instructions.png" alt="Boutiques_instructions" width="700px" />
+          <p>If you have never used Boutiques in the past, we recommend the following tutorial.</p>
           <h6>Run the tool on HPCs</h6>
           <p>
-            Some tools and pipelines can also be run on HPCs via the CBRAIN
-            infrastructure or in your Compute Canada account with Clowdr.
+            Some tools and pipelines can also be run on HPCs via the CBRAIN infrastructure or in your Compute Canada
+            account with Clowdr.
           </p>
-          <img
-            src="/static/img/CBRAIN_link_highlighted.png"
-            alt="CBRAIN_link_highlighted"
-            width="700px"
-          />
+          <img src="/static/img/CBRAIN_link_highlighted.png" alt="CBRAIN_link_highlighted" width="700px" />
           <p>
-            The 'Click here to begin' link under the 'Run on the CBRAIN
-            Platform' container will open a tab to the login page of CBRAIN or
-            to your CBRAIN account if you are already logged in.
+            The 'Click here to begin' link under the 'Run on the CBRAIN Platform' container will open a tab to the login
+            page of CBRAIN or to your CBRAIN account if you are already logged in.
           </p>
           <p>
-            The 'Click here for instructions' link under the 'Run on HPCs with
-            Clowdr' will open a new tab with the instructions to follow to
-            deploy a tool/pipeline on your Compute Canada account.
+            The 'Click here for instructions' link under the 'Run on HPCs with Clowdr' will open a new tab with the
+            instructions to follow to deploy a tool/pipeline on your Compute Canada account.
           </p>
         </ul>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="btnAcceptTut3-1">
-          OK
-        </button>
+        <button type="button" class="btn btn-primary" id="btnAcceptTut3-1">OK</button>
       </div>
     </div>
   </div>
@@ -777,48 +566,31 @@
       <div class="modal-body">
         <h4>Share Page</h4>
         <h5>How to Share Datasets and Pipelines Tab</h5>
-        <p>
-          This tab contains detailed technical instructions on how to upload
-          your dataset or pipeline to CONP.
-        </p>
+        <p>This tab contains detailed technical instructions on how to upload your dataset or pipeline to CONP.</p>
         <h6>Tool/Pipeline Upload</h6>
+        <p>You can publish your tools/pipelines using Boutiques’ command bosh publish.</p>
         <p>
-          You can publish your tools/pipelines using Boutiques’ command bosh
-          publish.
-        </p>
-        <p>
-          For more information on how to do that, please visit the ‘Publishing
-          your own tool’ section of the Boutiques tutorial Python notebook.
+          For more information on how to do that, please visit the ‘Publishing your own tool’ section of the Boutiques
+          tutorial Python notebook.
         </p>
         <h6>Dataset Upload</h6>
         <p>A dataset can be uploaded to CONP via the following mechanisms:</p>
+        <li>Through Zenodo by tagging your dataset with the keyword canadian-open-neuroscience-platform</li>
         <li>
-          Through Zenodo by tagging your dataset with the keyword
-          canadian-open-neuroscience-platform
-        </li>
-        <li>
-          Through the Open Science Framework (OSF) by tagging your dataset with
-          the keyword canadian-open-neuroscience-platform and setting the
-          dataset to Public
+          Through the Open Science Framework (OSF) by tagging your dataset with the keyword
+          canadian-open-neuroscience-platform and setting the dataset to Public
         </li>
         <li>Through DataLad within the context of CONP</li>
         <h5>Create or Edit a DATS.json File Tab</h5>
         <p>
-          Each dataset to be uploaded should contain a valid DATS.json
-          descriptors derived from schema.org. We provide a DATS GUI editor that
-          will create a DATS.json file to ease the creation process of the
-          DATS.json that will describe the dataset to be uploaded
+          Each dataset to be uploaded should contain a valid DATS.json descriptors derived from schema.org. We provide a
+          DATS GUI editor that will create a DATS.json file to ease the creation process of the DATS.json that will
+          describe the dataset to be uploaded
         </p>
-        <img
-          src="/static/img/DATS_GUI_editor.png"
-          alt="DATS_GUI_editor"
-          width="700px"
-        />
+        <img src="/static/img/DATS_GUI_editor.png" alt="DATS_GUI_editor" width="700px" />
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="btnAcceptTut4">
-          OK
-        </button>
+        <button type="button" class="btn btn-primary" id="btnAcceptTut4">OK</button>
       </div>
     </div>
   </div>
@@ -836,9 +608,8 @@
     class="modal-dialog modal-dialog-centered modal-lg"
     role="document"
     id="downloadModalDocument"
-    style="overflow-y:inherit !important;"
-  >
-  </div>
+    style="overflow-y: inherit !important"
+  ></div>
 </div>
 
 <div
@@ -854,8 +625,7 @@
       <div class="modal-header">
         <h4 class="modal-title w-100 text-center" id="modalLongTitle">CBRAIN Launch</h4>
       </div>
-      <div class="modal-body" id="cbrainModalBody">
-      </div>
+      <div class="modal-body" id="cbrainModalBody"></div>
     </div>
   </div>
 </div>
@@ -865,101 +635,95 @@
   cookies = document.cookie;
   termsAccepted = false;
   if (cookies) {
-    termsAccepted = cookies.includes("termsAccepted=true");
+    termsAccepted = cookies.includes('termsAccepted=true');
   }
 
   if (!termsAccepted) {
-    $("#termsModal").modal("show");
+    $('#termsModal').modal('show');
   }
 </script>
 
 <script>
   $(function () {
-    $("#btnAcceptTerms").on("click", function (event) {
-      document.cookie = "termsAccepted=true;max-age=31536000";
+    $('#btnAcceptTerms').on('click', function (event) {
+      document.cookie = 'termsAccepted=true;max-age=31536000';
 
-      $("#termsModal").modal("hide");
+      $('#termsModal').modal('hide');
     });
   });
 </script>
 
 <script>
   $(function () {
-    $("#btnAcceptTut1").on("click", function (event) {
-      $("#tutModal1").modal("hide");
+    $('#btnAcceptTut1').on('click', function (event) {
+      $('#tutModal1').modal('hide');
     });
   });
 </script>
 
 <script>
   $(function () {
-    $("#btnAcceptTut2").on("click", function (event) {
-      $("#tutModal2").modal("hide");
+    $('#btnAcceptTut2').on('click', function (event) {
+      $('#tutModal2').modal('hide');
     });
   });
 </script>
 
 <script>
   $(function () {
-    $("#btnAcceptTut2-1").on("click", function (event) {
-      $("#tutModal2-1").modal("hide");
+    $('#btnAcceptTut2-1').on('click', function (event) {
+      $('#tutModal2-1').modal('hide');
     });
   });
 </script>
 
 <script>
   $(function () {
-    $("#btnAcceptTut3").on("click", function (event) {
-      $("#tutModal3").modal("hide");
+    $('#btnAcceptTut3').on('click', function (event) {
+      $('#tutModal3').modal('hide');
     });
   });
 </script>
 
 <script>
   $(function () {
-    $("#btnAcceptTut3-1").on("click", function (event) {
-      $("#tutModal3-1").modal("hide");
+    $('#btnAcceptTut3-1').on('click', function (event) {
+      $('#tutModal3-1').modal('hide');
     });
   });
 </script>
 
 <script>
   $(function () {
-    $("#btnAcceptTut4").on("click", function (event) {
-      $("#tutModal4").modal("hide");
+    $('#btnAcceptTut4').on('click', function (event) {
+      $('#tutModal4').modal('hide');
     });
   });
 </script>
 
 <script>
-    $(document).ready(function () {
-        if (window.location.href.indexOf('#terms') != -1) {
-            $("#termsModal").modal("show");
-        }
-    });
-    $(document).ready(function () {
-        if (window.location.href.indexOf('#privacy') != -1) {
-            $("#privacyPolicyModal").modal("show");
-        }
-    });
+  $(document).ready(function () {
+    if (window.location.href.indexOf('#terms') != -1) {
+      $('#termsModal').modal('show');
+    }
+  });
+  $(document).ready(function () {
+    if (window.location.href.indexOf('#privacy') != -1) {
+      $('#privacyPolicyModal').modal('show');
+    }
+  });
 </script>
 
 <div id="page">
   {% block navigation_bar %} {% include "fragments/navigation_bar.html" %} {% endblock %}
   <div id="page-content" class="container-fluid d-flex flex-row px-0 align-self-start">
-    <div class="mx-0">
-      {% block sidebar %} {% include "fragments/sidebar.html" %} {% endblock %}
-    </div>
+    <div class="mx-0">{% block sidebar %} {% include "fragments/sidebar.html" %} {% endblock %}</div>
 
     <div class="d-flex flex-column w-100">
       <div class="content-body container-fluid pb-4 min-vh-100">
-        <div class="content-title text-center">
-          {% block contenttitle %}{% endblock %}
-        </div>
+        <div class="content-title text-center">{% block contenttitle %}{% endblock %}</div>
         <hr id="content-title-separator" />
-        <div class="content-main px-2">
-          {% block appcontent %}{% endblock %}
-        </div>
+        <div class="content-main px-2">{% block appcontent %}{% endblock %}</div>
       </div>
       {% block footer %} {% include "/fragments/footer.html" %} {% endblock %}
     </div>

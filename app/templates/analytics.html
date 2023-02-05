@@ -2,12 +2,9 @@
 
 <!-- Head Block -->
 {% block scripts %} {{ super() }}
-<script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
-<script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
-<script
-  type="text/javascript"
-  src="static/lib/conp-react/umd/conp-react.js"
-></script>
+<script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>
+<script src=" {{ url_for('static',filename='v1/js/react-dom.development-16.11.0.js') }}"></script>
+<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
 {% endblock %} {% block styles %} {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/highcharts.css') }}" />
 {% endblock %} {% block contenttitle %}
@@ -22,12 +19,9 @@
     <div id="analytics-chart-1">
       <script type="text/javascript">
         const analyticsChart1 = React.createElement(CONPReact.ChartContainer, {
-          toggleState: "TotalDatasetsPipelines",
+          toggleState: 'TotalDatasetsPipelines'
         });
-        ReactDOM.render(
-          analyticsChart1,
-          document.querySelector("#analytics-chart-1")
-        );
+        ReactDOM.render(analyticsChart1, document.querySelector('#analytics-chart-1'));
       </script>
     </div>
   </div>
@@ -36,32 +30,20 @@
     <div class="card p-1 m-1 w-100">
       <div id="analytics-chart-2">
         <script type="text/javascript">
-          const analyticsChart2 = React.createElement(
-            CONPReact.ChartContainer,
-            {
-              toggleState: "DatasetModalities",
-            }
-          );
-          ReactDOM.render(
-            analyticsChart2,
-            document.querySelector("#analytics-chart-2")
-          );
+          const analyticsChart2 = React.createElement(CONPReact.ChartContainer, {
+            toggleState: 'DatasetModalities'
+          });
+          ReactDOM.render(analyticsChart2, document.querySelector('#analytics-chart-2'));
         </script>
       </div>
     </div>
     <div class="card p-1 m-1 w-100">
       <div id="analytics-chart-3">
         <script type="text/javascript">
-          const analyticsChart3 = React.createElement(
-            CONPReact.ChartContainer,
-            {
-              toggleState: "PipelineTags",
-            }
-          );
-          ReactDOM.render(
-            analyticsChart3,
-            document.querySelector("#analytics-chart-3")
-          );
+          const analyticsChart3 = React.createElement(CONPReact.ChartContainer, {
+            toggleState: 'PipelineTags'
+          });
+          ReactDOM.render(analyticsChart3, document.querySelector('#analytics-chart-3'));
         </script>
       </div>
     </div>
@@ -71,32 +53,20 @@
     <div class="card p-1 m-1 w-100">
       <div id="analytics-chart-4">
         <script type="text/javascript">
-          const analyticsChart4 = React.createElement(
-            CONPReact.ChartContainer,
-            {
-              toggleState: "DailyVisitors",
-            }
-          );
-          ReactDOM.render(
-            analyticsChart4,
-            document.querySelector("#analytics-chart-4")
-          );
+          const analyticsChart4 = React.createElement(CONPReact.ChartContainer, {
+            toggleState: 'DailyVisitors'
+          });
+          ReactDOM.render(analyticsChart4, document.querySelector('#analytics-chart-4'));
         </script>
       </div>
     </div>
     <div class="card p-1 m-1 w-100">
       <div id="analytics-chart-5">
         <script type="text/javascript">
-          const analyticsChart5 = React.createElement(
-            CONPReact.ChartContainer,
-            {
-              toggleState: "Keywords",
-            }
-          );
-          ReactDOM.render(
-            analyticsChart5,
-            document.querySelector("#analytics-chart-5")
-          );
+          const analyticsChart5 = React.createElement(CONPReact.ChartContainer, {
+            toggleState: 'Keywords'
+          });
+          ReactDOM.render(analyticsChart5, document.querySelector('#analytics-chart-5'));
         </script>
       </div>
     </div>
@@ -105,12 +75,9 @@
     <div id="analytics-chart-6">
       <script type="text/javascript">
         const analyticsChart6 = React.createElement(CONPReact.ChartContainer, {
-          toggleState: "DatasetPageViews",
+          toggleState: 'DatasetPageViews'
         });
-        ReactDOM.render(
-          analyticsChart6,
-          document.querySelector("#analytics-chart-6")
-        );
+        ReactDOM.render(analyticsChart6, document.querySelector('#analytics-chart-6'));
       </script>
     </div>
   </div>
@@ -118,12 +85,9 @@
     <div id="analytics-chart-7">
       <script type="text/javascript">
         const analyticsChart7 = React.createElement(CONPReact.ChartContainer, {
-          toggleState: "PipelinePageViews",
+          toggleState: 'PipelinePageViews'
         });
-        ReactDOM.render(
-          analyticsChart7,
-          document.querySelector("#analytics-chart-7")
-        );
+        ReactDOM.render(analyticsChart7, document.querySelector('#analytics-chart-7'));
       </script>
     </div>
   </div>

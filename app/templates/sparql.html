@@ -2,65 +2,64 @@
 
 <!-- Head Block -->
 
-{% block scripts %}
-{{ super() }}
-<script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
-<script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
+{% block scripts %} {{ super() }}
+<script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>
+<script src=" {{ url_for('static',filename='v1/js/react-dom.development-16.11.0.js') }}"></script>
 <script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
-<link href="https://unpkg.com/@triply/yasgui/build/yasgui.min.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link href="https://unpkg.com/@triply/yasgui/build/yasgui.min.css" rel="stylesheet" type="text/css" />
 <script src="https://unpkg.com/@triply/yasgui/build/yasgui.min.js"></script>
 {% endblock %}
 
 <!-- Title Block -->
 
 {% block contenttitle %}
-<h2><span style="color:red;">CONP Portal</span> | SPARQL</h2>
+<h2><span style="color: red">CONP Portal</span> | SPARQL</h2>
 <h5>Please note the SPARQL search is currently in experimental mode</h5>
 {% endblock %}
 
 <!-- Content Block -->
 
 {% block appcontent %}
-<div id="yasgui" style="padding:10px 0px;"></div>
+<div id="yasgui" style="padding: 10px 0px"></div>
 <script>
-// main yasgui block
+  // main yasgui block
 
-  const yasgui = new Yasgui(document.getElementById("yasgui"),
-  {
-    requestConfig:
-        {
-            endpoint: "{{ sparql_endpoint }}",
-            method: "GET"
-        },
-    copyEndpointOnNewTab: true
-  }
-  );
-
-// keep the default query tab active
-
-for (tab in yasgui.tabElements._tabs) {
-    yasgui.getTab(tab).close()
-}
-yasgui.addTab(true, { name: 'Query' });
-
-// read predefined queries
-
-const queries = {{queries | tojson | safe}};
-
-for (query in queries) {
-    value = queries[query];
-    yasgui.addTab(
-      false, { name: query, yasqe:{value:value} }
+    const yasgui = new Yasgui(document.getElementById("yasgui"),
+    {
+      requestConfig:
+          {
+              endpoint: "{{ sparql_endpoint }}",
+              method: "GET"
+          },
+      copyEndpointOnNewTab: true
+    }
     );
-}
+
+  // keep the default query tab active
+
+  for (tab in yasgui.tabElements._tabs) {
+      yasgui.getTab(tab).close()
+  }
+  yasgui.addTab(true, { name: 'Query' });
+
+  // read predefined queries
+
+  const queries = {{queries | tojson | safe}};
+
+  for (query in queries) {
+      value = queries[query];
+      yasgui.addTab(
+        false, { name: query, yasqe:{value:value} }
+      );
+  }
 </script>
 <style>
   .yasgui .autocompleteWrapper {
     display: none !important;
   }
   .controlbar {
-    display:none !important;
+    display: none !important;
   }
   .yasr .yasr_results .CodeMirror {
     height: fit-content;

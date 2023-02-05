@@ -1,14 +1,8 @@
 {% extends 'common/base_main.html' %} {% block scripts %} {{ super() }}
-<script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
-<script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
-<script
-  type="text/javascript"
-  src="static/lib/conp-react/umd/conp-react.js"
-></script>
-<link
-  rel="stylesheet"
-  href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"
-/>
+<script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>
+<script src=" {{ url_for('static',filename='v1/js/react-dom.development-16.11.0.js') }}"></script>
+<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 {% endblock %} {% block contenttitle %}
 <div class="search-header page-title">
   <h2><span style="color: red">CONP Portal</span> | {{ pipeline.title }}</h2>
@@ -19,16 +13,10 @@
 <div class="d-flex p-4">
   <div class="col-4">
     <div class="card h-100">
-      <div
-        class="card-body d-flex flex-column justify-content-between align-items-center"
-      >
+      <div class="card-body d-flex flex-column justify-content-between align-items-center">
         <h6 class="card-title text-center">Run Locally Using Boutiques</h6>
         <div class="row py-4 w-100 justify-content-center">
-          <img
-            class="img-fluid"
-            alt="Boutiques"
-            src="/static/img/boutiques.png"
-          />
+          <img class="img-fluid" alt="Boutiques" src="/static/img/boutiques.png" />
         </div>
         <a href="#boutiques" class="btn-link">Click here for instructions</a>
       </div>
@@ -36,35 +24,19 @@
   </div>
   <div class="col-4">
     <div class="card h-100">
-      <div
-        class="card-body d-flex flex-column justify-content-between align-items-center"
-      >
+      <div class="card-body d-flex flex-column justify-content-between align-items-center">
         <h6 class="card-title text-center">Run on the CBRAIN Platform</h6>
         <div class="row py-4 w-100 justify-content-center">
           {% if pipeline.platforms[0].uri == "" %}
-          <img
-            class="img-fluid"
-            alt="Online platform"
-            src="/static/img/cbrain-icon-grey.png"
-          />
+          <img class="img-fluid" alt="Online platform" src="/static/img/cbrain-icon-grey.png" />
           {% else %}
-          <img
-            class="img-fluid"
-            alt="CBRAIN"
-            src="/static/img/cbrain-icon-blue.png"
-          />
+          <img class="img-fluid" alt="CBRAIN" src="/static/img/cbrain-icon-blue.png" />
           {% endif %}
         </div>
         {% if pipeline.platforms[0].uri == "" %}
-        <a href="{{ pipeline.platforms[0].uri }}" class="btn-link disabled"
-          >Not Available</a
-        >
+        <a href="{{ pipeline.platforms[0].uri }}" class="btn-link disabled">Not Available</a>
         {% else %}
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="{{ pipeline.platforms[0].uri }}"
-          class="btn-link"
+        <a target="_blank" rel="noopener noreferrer" href="{{ pipeline.platforms[0].uri }}" class="btn-link"
           >Click here to begin</a
         >
         {% endif %}
@@ -73,23 +45,12 @@
   </div>
   <div class="col-4">
     <div class="card h-100">
-      <div
-        class="card-body d-flex flex-column justify-content-between align-items-center"
-      >
+      <div class="card-body d-flex flex-column justify-content-between align-items-center">
         <h6 class="card-title text-center">Run on HPCs with Clowdr</h6>
         <div class="row py-4 w-100 justify-content-center">
-          <img
-            class="img-fluid"
-            alt="Compute Canada"
-            src="/static/img/compute_canada_logo.png"
-          />
+          <img class="img-fluid" alt="Compute Canada" src="/static/img/compute_canada_logo.png" />
         </div>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://clowdr.readthedocs.io/en/latest/"
-          class="btn-link"
-        >
+        <a target="_blank" rel="noopener noreferrer" href="https://clowdr.readthedocs.io/en/latest/" class="btn-link">
           Click here for instructions
         </a>
       </div>
@@ -113,13 +74,10 @@
       <p><strong>URL: </strong></p>
     </div>
     <div class="col-10">
-      <a target="_blank" rel="noopener noreferrer" href="{{ pipeline.url }}"
-        >{{ pipeline.url }}</a
-      >
+      <a target="_blank" rel="noopener noreferrer" href="{{ pipeline.url }}">{{ pipeline.url }}</a>
     </div>
   </div>
-  {% endif %} {% if pipeline.description is defined and
-  pipeline.description|length %}
+  {% endif %} {% if pipeline.description is defined and pipeline.description|length %}
   <div class="row p-2">
     <div class="col-2 text-right">
       <p><strong>Description: </strong></p>
@@ -128,37 +86,29 @@
       <p>{{ pipeline.description }}</p>
     </div>
   </div>
-  {% endif %} {% if pipeline["descriptor-url"] is defined and
-  pipeline["descriptor-url"]|length %}
+  {% endif %} {% if pipeline["descriptor-url"] is defined and pipeline["descriptor-url"]|length %}
   <div class="row p-2">
     <div class="col-2 text-right">
       <p><strong>Descriptor URL: </strong></p>
     </div>
     <div class="col-10">
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="{{ pipeline['descriptor-url'] }}"
+      <a target="_blank" rel="noopener noreferrer" href="{{ pipeline['descriptor-url'] }}"
         >{{ pipeline["descriptor-url"] }}</a
       >
     </div>
   </div>
-  {% endif %} {% if pipeline["container-image"] is defined and
-  pipeline["container-image"]|length %}
+  {% endif %} {% if pipeline["container-image"] is defined and pipeline["container-image"]|length %}
   <div class="row p-2">
     <div class="col-2 text-right">
       <p><strong>Container Image: </strong></p>
     </div>
     <div class="col-10">
       {% for key in pipeline["container-image"].keys() %}
-      <p>
-        <strong>{{ key + ": "}}</strong>{{ pipeline["container-image"][key] }}
-      </p>
+      <p><strong>{{ key + ": "}}</strong>{{ pipeline["container-image"][key] }}</p>
       {% endfor %}
     </div>
   </div>
-  {% endif %} {% if pipeline["tool-doi"] is defined and
-  pipeline["tool-doi"]|length %}
+  {% endif %} {% if pipeline["tool-doi"] is defined and pipeline["tool-doi"]|length %}
   <div class="row p-2">
     <div class="col-2 text-right">
       <p><strong>Tool DOI: </strong></p>
@@ -178,10 +128,9 @@
     <div class="col-9 py-1">
       <h6>How to run the tool locally</h6>
       <p>
-        CONP pipelines can be easily installed and run on any computer wth a
-        container engine. The preferred container for the tool is available in
-        the Container Image field above. For detailed information on how to use
-        Boutiques, please visit this
+        CONP pipelines can be easily installed and run on any computer wth a container engine. The preferred container
+        for the tool is available in the Container Image field above. For detailed information on how to use Boutiques,
+        please visit this
         <a
           target="_blank"
           rel="noopener noreferrer"
@@ -189,31 +138,24 @@
           >tutorial</a
         >.
       </p>
-      <p class="font-italic ml-4">
-        1. List the inputs/outputs needed for the pipeline to run
-      </p>
-      <div class="alert alert-dark" role="alert">
-        bosh example {{ pipeline.id }}
-      </div>
+      <p class="font-italic ml-4">1. List the inputs/outputs needed for the pipeline to run</p>
+      <div class="alert alert-dark" role="alert">bosh example {{ pipeline.id }}</div>
       <p>
-        Note: this command will list only the required options to run the
-        pipeline. To view the complete list of options, use
+        Note: this command will list only the required options to run the pipeline. To view the complete list of
+        options, use
       </p>
       <p><code>bosh example --complete {{ pipeline.id }}</code></p>
       <p class="font-italic ml-4">
         2. Create an invocation JSON file based on the output of the
         <code>bosh example</code>
       </p>
-      <p class="font-italic ml-4">
-        3. Run the pipeline with the invocation JSON file created in 2.
-      </p>
+      <p class="font-italic ml-4">3. Run the pipeline with the invocation JSON file created in 2.</p>
       <div class="alert alert-dark" role="alert">
         bosh exec launch -s {{ pipeline.id }} ./invocation.json -v /data:/data
       </div>
       <p>
-        Note: the option <code>-s</code> will show <code>STDERR</code>,
-        <code>STDOUT</code> in the terminal. The option <code>-v</code> allows
-        mounting a directory from your system onto the container engine.
+        Note: the option <code>-s</code> will show <code>STDERR</code>, <code>STDOUT</code> in the terminal. The option
+        <code>-v</code> allows mounting a directory from your system onto the container engine.
       </p>
     </div>
   </div>
@@ -221,10 +163,10 @@
 
   <script type="text/javascript">
 
-    const element = {{ pipeline| tojson}};
-    const complementUrl = "{{ url_for('search.dataset_search') }}";
-const reactElement = React.createElement(CONPReact.ElementContainer, {"element": CONPReact.PipelineElement, "elementProps": element, "complementUrl": complementUrl});
-    ReactDOM.render(reactElement, document.querySelector("#mount-display"));
+        const element = {{ pipeline| tojson}};
+        const complementUrl = "{{ url_for('search.dataset_search') }}";
+    const reactElement = React.createElement(CONPReact.ElementContainer, {"element": CONPReact.PipelineElement, "elementProps": element, "complementUrl": complementUrl});
+        ReactDOM.render(reactElement, document.querySelector("#mount-display"));
   </script>
 </div>
 <!--/span-->

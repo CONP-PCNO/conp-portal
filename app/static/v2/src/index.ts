@@ -1,5 +1,9 @@
+import $ from 'jquery';
 import React from 'react';
 
 import './styles/main.scss';
 
-export { React };
+import 'bootstrap';
+import 'popper.js';
+
+export { $, React };
