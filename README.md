@@ -103,5 +103,5 @@ This flask application is deployed on Heroku. More information will be available
 
 ```bash
 docker build -t conp-portal .
-docker run -d -p 4000:4000 --rm conp-portal
+docker run -d -p 4000:4000 -v ${PWD}/app:/app/app --rm conp-portal
 ```
