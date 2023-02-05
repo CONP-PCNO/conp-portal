@@ -17,6 +17,10 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4"
   },
+  "peerDependencies": {
+    "jquery": "3x",
+    "popper.js": "1x"
+  },
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@storybook/addon-actions": "^6.5.16",

@@ -1,23 +1,26 @@
-{% extends 'experiments/base.html' %}
-
-{% block scripts %}
-{{ super() }}
-<script>
-  window.addEventListener('load', () => {
-    experiments.animateGifs()
-  })
-</script>
-{% endblock %}
+{% extends 'common/base_main.html' %}
 
 {% block contenttitle %}
 <h2><span style="color: red">CONP Portal</span> | Experiments Search</h2>
 {% endblock %}
 
 {% block appcontent %}
-<div class="search-dataset-table">
-  {% include "experiments/fragments/search_bar.html" %}
+<div id="experiments-search"></div>
+<script>
+  const { ExperimentsSearchPage, React, ReactDOM } = CONP;
+  const element = React.createElement(ExperimentsSearchPage, {
+    filters: {{ filters|tojson }}
+  })
+  ReactDOM.render(element, document.getElementById('experiments-search'));
+</script>
+{% endblock %}
+
+<script>
+  /*
+  <div class="search-dataset-table">
   {% include "experiments/fragments/dropdowns.html" %}
   {% include "experiments/fragments/experiment_table.html" %}
   {% include "experiments/fragments/page_links.html" %}
 </div>
-{% endblock %}
+  */
+</script>

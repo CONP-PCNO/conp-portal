@@ -1,61 +1,65 @@
 {% block title %}
-{% if title %}
-  {{ title }}
-{% else %} 
-  CONP Data Portal: Login-Page
-{% endif %}
+  {% if title %}
+    {{ title }}
+  {% else %}
+    CONP Data Portal: Login-Page
+  {% endif %}
 {% endblock %}
 
 {% block styles %}
-<link href="{{ url_for('static',filename='img/conp.ico')}}" rel="shortcut icon" type="image/png" />
+<link rel="icon" href="{{ url_for('static', filename='img/conp.ico') }}" type="image/x-icon" />
 <link href="{{ url_for('static', filename='v1/css/bootstrap-multiselect.css') }}" rel="stylesheet" />
+<link href="{{ url_for('static', filename='v1/css/login.css') }}" rel="stylesheet" />
+
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='v2/dist/conp-portal.bundle.js') }}"></script>
-<script>
-  const { $ } = CONP;
-</script>
-<script src="{{ url_for('static', filename='v1/js/bootstrap-multiselect.js') }}"></script>
-<script>
-  $(function () {
-    $('.invalid-feedback').show();
-    $('.mdb-select').multiselect();
-  });
-</script>
-{% endblock %} {% block body %}
-<div id="page-content" class="container">
-  <div style="text-align: center">
-    <img src="/static/img/conp-pcno-logo.png" style="height: 150px" />
-    <p>{% block cardtitle %}{% endblock %}</p>
-  </div>
-  <div class="card card-container">
-    <section class="row">
-      <div class="col">
-        {# One-time system messages called Flash messages #} {% block flash_messages %} {%- with messages =
-        get_flashed_messages(with_categories=true) -%} {% if messages %} {% for category, message in messages %} {% if
-        category=='error' or category=='danger' or True %} {% set category='danger' %}
-        <div class="alert alert-{{category}} " role="alert">{{ message|safe }}</div>
-        {% endif %} {% endfor %} {% endif %} {%- endwith %} {% endblock %}
+    <script src="{{ url_for('static', filename='v2/dist/conp-portal.bundle.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/bootstrap-multiselect.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script>
+        $(function() {
+          $(".invalid-feedback").show();
+          $(".mdb-select").multiselect();
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+  <div id="page-content" class="container">
+      <div style="text-align: center;">
+          <img src="/static/img/conp-pcno-logo.png" style="height: 150px;">
+          <p>{% block cardtitle %}{% endblock %}</p>
       </div>
-    </section>
-    {% block appcontent %}{% endblock %}
-  </div>
-  <div class="bottom-link">
-    <br />
-    {% block reguser %}{% endblock %}
-    <span><a href="/public">Back to CONP Public Portal</a></span>
-    <br />
-    <div style="margin-top: 10px">
-      <p>
-        Copyright &copy; 2019
-        <a style="white-space: nowrap" href="https://conp.ca">Canadian Open Neuroscience Platform</a> &#124;
-        <a style="white-space: nowrap" href="#">Terms of Use</a> &#124;
-        <a style="white-space: nowrap" href="#">Privacy Policy</a>
-      </p>
-    </div>
-  </div>
-  <!-- card-container -->
-</div>
-<!-- containter -->
+      <div class="card card-container">
+        <section class="row">
+          <div class="col">
+          {# One-time system messages called Flash messages #}
+          {% block flash_messages %}
+              {%- with messages = get_flashed_messages(with_categories=true) -%}
+                  {% if messages %}
+                      {% for category, message in messages %}
+                          {% if category=='error' or category=='danger' or True %}
+                              {% set category='danger' %}
+                                <div class="alert alert-{{category}} " role="alert">
+                                {{ message|safe }}</div>
+                              {% endif %}
+                      {% endfor %}
+                  {% endif %}
+              {%- endwith %}
+          {% endblock %}
+        </div>
+        </section>
+        {% block appcontent %}{% endblock %}
+      </div>
+      <div class="bottom-link">
+        <br/>
+        {% block reguser %}{% endblock %}
+        <span><a href="/public">Back to CONP Public Portal</a></span>
+        <br/>
+       <div style="margin-top: 10px;">
+         <p>Copyright &copy; 2019 <a style="white-space: nowrap" href="https://conp.ca">Canadian Open Neuroscience Platform</a> &#124; <a style="white-space: nowrap" href="#">Terms of Use</a> &#124; <a style="white-space: nowrap" href="#">Privacy Policy</a></p>
+      </div>
+    </div> <!-- card-container -->
+</div> <!-- containter -->
 {% endblock %}

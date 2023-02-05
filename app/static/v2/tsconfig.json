@@ -2,11 +2,15 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
+    "baseUrl": "src",
     "jsx": "react",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "Node",
     "outDir": "dist",
+    "paths": {
+      "@/*": ["*"]
+    },
     "sourceMap": true,
     "strict": true,
     "target": "es6"

@@ -12,7 +12,7 @@
 {% block appcontent %}
 <div id="experiments-home"></div>
 <script>
-  const { ExperimentsHomePage } = CONP;
+  const { ExperimentsHomePage, React, ReactDOM } = CONP;
   const element = React.createElement(ExperimentsHomePage, {
     searchPageUrl: "{{ url_for('experiments.search') }}",
     submitPageUrl: "{{ url_for('experiments.submit') }}"
