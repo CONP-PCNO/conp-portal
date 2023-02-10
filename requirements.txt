@@ -40,7 +40,7 @@ Flask-SSO==0.4.0
 Flask-User==1.0.1.5
 Flask-WTF==0.14.2
 flaskhmac==1.2.1
-future==0.17.1
+future==0.18.3
 gitdb2==2.0.6
 GitPython==3.1.30
 gunicorn==19.9.0
