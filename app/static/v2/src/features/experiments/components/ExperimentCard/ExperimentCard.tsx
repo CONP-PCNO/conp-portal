@@ -1,7 +1,7 @@
 import React from 'react';
 
 import brain from '@/assets/brain.gif';
-import { type Experiment } from '../types';
+import { type Experiment } from '@/features/experiments/types';
 import { ExperimentCardItem } from './ExperimentCardItem';
 
 interface ExperimentCardProps {

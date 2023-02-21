@@ -1,3 +1,5 @@
+const path = require('path');
+
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   root: true,
@@ -16,7 +18,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.tsx'],
+      files: ['*.ts', '*.tsx'],
       extends: [
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/recommended-requiring-type-checking'
@@ -26,8 +28,7 @@ module.exports = {
         ecmaFeatures: {
           tsx: true
         },
-        project: ['./tsconfig.json'],
-        tsconfigRootDir: __dirname
+        project: [path.resolve(__dirname, 'tsconfig.json')]
       }
     }
   ],

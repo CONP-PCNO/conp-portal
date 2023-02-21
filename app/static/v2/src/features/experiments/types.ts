@@ -1,3 +1,5 @@
+export type ItemsPerPageType = 5 | 10 | 15 | 20;
+
 export interface Experiment {
   id: number;
   title: string;

@@ -1,41 +1,19 @@
 import React from 'react';
 
-export interface SortKeyOptions {
-  [key: string]: {
-    label: string;
-  };
-}
+import { useExperimentTableStore } from '@/features/experiments/store/experiment-table-store';
 
-export interface Pagination {
-  currentPage: number;
-  itemsPerPage: number;
-  totalItems: number;
-}
+const perPageOptions = [5, 10, 15, 20];
 
-export interface DropdownsProps {
-  activeSortKey: keyof SortKeyOptions;
-  sortKeyOptions: SortKeyOptions;
-  pagination: Pagination;
-  perPageOptions?: number[];
-  onPerPageSelection: (perPage: number) => void;
-  onSortKeySelection: (sortKey: string) => void;
-}
+export const Dropdowns = () => {
+  const store = useExperimentTableStore();
 
-export const Dropdowns = ({
-  activeSortKey,
-  sortKeyOptions,
-  pagination,
-  perPageOptions = [5, 10, 15, 20],
-  onSortKeySelection,
-  onPerPageSelection
-}: DropdownsProps) => {
-  const firstResultNumber = (pagination.currentPage - 1) * pagination.itemsPerPage + 1;
-  const lastResultNumber = Math.min(firstResultNumber + pagination.itemsPerPage, pagination.totalItems);
+  const firstResultNumber = (store.pagination.currentPage - 1) * store.pagination.itemsPerPage + 1;
+  const lastResultNumber = Math.min(firstResultNumber + store.pagination.itemsPerPage, store.items.length);
   return (
     <div className="d-flex justify-content-between">
       <div className="d-flex align-items-center justify-content-center">
         <span>
-          Results {firstResultNumber} - {lastResultNumber} displayed of {pagination.totalItems}
+          Results {firstResultNumber} - {lastResultNumber} displayed of {store.items.length}
         </span>
         <div className="d-flex align-items-center ml-1">
           <span>{'(Maximum results per page'}</span>
@@ -46,11 +24,11 @@ export const Dropdowns = ({
               id="dropdownMenuButton"
               data-toggle="dropdown"
             >
-              {pagination.itemsPerPage}
+              {store.pagination.itemsPerPage}
             </button>
             <div className="dropdown-menu" style={{ minWidth: '5rem' }}>
               {perPageOptions.map((option) => (
-                <div key={option} className="dropdown-item p-0" onClick={() => onPerPageSelection(option)}>
+                <div key={option} className="dropdown-item p-0" onClick={() => store.setItemsPerPage(option)}>
                   <button className="btn btn-light p-1">{option}</button>
                 </div>
               ))}
@@ -68,12 +46,12 @@ export const Dropdowns = ({
             id="dropdownSortButton"
             data-toggle="dropdown"
           >
-            {sortKeyOptions[activeSortKey].label}
+            {store.sortKey.options[store.sortKey.active].label}
           </button>
           <div className="dropdown-menu dropdown-menu-right" style={{ minWidth: '10rem' }}>
-            {Object.entries(sortKeyOptions).map(([key, value]) => (
+            {Object.entries(store.sortKey.options).map(([key, value]) => (
               <div className="dropdown-item p-0" key={key}>
-                <button className="btn btn-light p-1" onClick={() => onSortKeySelection(key)}>
+                <button className="btn btn-light p-1" onClick={() => store.setActiveSortKey(key)}>
                   {value.label}
                 </button>
               </div>
