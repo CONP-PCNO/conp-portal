@@ -7,6 +7,8 @@ export interface SortKeyState {
   options: {
     [key: string]: {
       label: string;
+      key: keyof Experiment;
+      method: 'ascending' | 'descending';
     };
   };
 }

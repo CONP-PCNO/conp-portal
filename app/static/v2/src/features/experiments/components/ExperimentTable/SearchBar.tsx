@@ -29,7 +29,8 @@ export const SearchBar = ({ filters, onSubmit }: SearchBarProps) => {
   );
 
   const handleFilterChange = (filter: string, option: string, isActive: boolean) => {
-    console.log({ ...activeFilters, ...activeFilters[filter] });
+    return;
+    // console.log({ ...activeFilters, ...activeFilters[filter] });
     //setActiveFilters((prevState) => ({ ...prevState, [filter]: prevState[filter] }));
   };
 

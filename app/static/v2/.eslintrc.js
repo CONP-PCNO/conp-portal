@@ -16,6 +16,9 @@ module.exports = {
       jsx: true
     }
   },
+  rules: {
+    'no-console': 'warn'
+  },
   overrides: [
     {
       files: ['*.ts', '*.tsx'],

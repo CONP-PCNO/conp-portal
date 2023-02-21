@@ -10,7 +10,7 @@ export const Dropdowns = () => {
     <div className="d-flex justify-content-between">
       <div className="d-flex align-items-center justify-content-center">
         <span>
-          Results {pagination.firstItemIndex + 1} - {pagination.lastItemIndex + 1} displayed of {pagination.totalItems}
+          Results {pagination.firstItemIndex + 1} - {pagination.lastItemIndex} displayed of {pagination.totalItems}
         </span>
         <div className="d-flex align-items-center ml-1">
           <span>{'(Maximum results per page'}</span>

@@ -10,10 +10,14 @@ import { PaginationNav } from './PaginationNav';
 
 const sortKeyOptions = {
   titleAsc: {
-    label: 'Title (Ascending)'
+    label: 'Title (Ascending)',
+    key: 'title',
+    method: 'ascending'
   },
   titleDesc: {
-    label: 'Title (Descending)'
+    label: 'Title (Descending)',
+    key: 'title',
+    method: 'descending'
   }
 } as const;
 
@@ -49,6 +53,12 @@ export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
     [experiments]
   );
 
+  // Sort
+  experiments = experiments.sort((a, b) => {
+    const { key, method } = sortKeyOptions[activeSortKey];
+    return method === 'ascending' ? (a[key] > b[key] ? 1 : -1) : a[key] < b[key] ? 1 : -1;
+  });
+
   // Pagination
   const firstItemIndex = currentPage * itemsPerPage;
   const lastItemIndex = Math.min(firstItemIndex + itemsPerPage, experiments.length);
@@ -63,7 +73,7 @@ export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
           itemsPerPage,
           firstItemIndex,
           lastItemIndex,
-          totalItems,
+          totalItems
         },
         sortKey: {
           active: activeSortKey,
