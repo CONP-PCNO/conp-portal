@@ -6,6 +6,7 @@ import { SearchBar, SearchFilters } from './SearchBar';
 import { type Experiment } from '@/features/experiments/types';
 import { ExperimentCard } from '@/features/experiments/components/ExperimentCard';
 import { ExperimentTableContext } from '../../context/ExperimentTableContext';
+import { PaginationNav } from './PaginationNav';
 
 const sortKeyOptions = {
   titleAsc: {
@@ -27,6 +28,9 @@ export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
+  const totalItems = experiments.length;
+
+  // Filter
   const filters: SearchFilters = useMemo(
     () => ({
       modalities: {
@@ -42,24 +46,31 @@ export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
         options: Array.from(new Set(experiments.flatMap((item) => item.primarySoftware)))
       }
     }),
-    []
+    [experiments]
   );
+
+  // Pagination
+  const firstItemIndex = currentPage * itemsPerPage;
+  const lastItemIndex = Math.min(firstItemIndex + itemsPerPage, experiments.length);
+  experiments = experiments.slice(firstItemIndex, lastItemIndex);
 
   return (
     <ExperimentTableContext.Provider
       value={{
         items: experiments,
         pagination: {
-          currentPage: currentPage,
-          itemsPerPage: itemsPerPage
+          currentPage,
+          itemsPerPage,
+          firstItemIndex,
+          lastItemIndex,
+          totalItems,
         },
         sortKey: {
           active: activeSortKey,
           options: sortKeyOptions
         },
-        incrementCurrentPage: () => null,
-        decrementCurrentPage: () => null,
         setActiveSortKey: (active) => setActiveSortKey(active as SortKeyOptions),
+        setCurrentPage: setCurrentPage,
         setItemsPerPage: setItemsPerPage
       }}
     >
@@ -70,6 +81,7 @@ export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
           <ExperimentCard key={experiment.id} experiment={experiment} />
         ))}
       </div>
+      <PaginationNav />
     </ExperimentTableContext.Provider>
   );
 };

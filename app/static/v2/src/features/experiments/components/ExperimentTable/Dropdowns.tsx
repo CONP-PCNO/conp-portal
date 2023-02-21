@@ -5,15 +5,12 @@ import { ExperimentTableContext } from '../../context/ExperimentTableContext';
 const perPageOptions = [5, 10, 15, 20];
 
 export const Dropdowns = () => {
-  const store = useContext(ExperimentTableContext)!;
-
-  const firstResultNumber = (store.pagination.currentPage - 1) * store.pagination.itemsPerPage + 1;
-  const lastResultNumber = Math.min(firstResultNumber + store.pagination.itemsPerPage, store.items.length);
+  const { setItemsPerPage, setActiveSortKey, sortKey, pagination } = useContext(ExperimentTableContext)!;
   return (
     <div className="d-flex justify-content-between">
       <div className="d-flex align-items-center justify-content-center">
         <span>
-          Results {firstResultNumber} - {lastResultNumber} displayed of {store.items.length}
+          Results {pagination.firstItemIndex + 1} - {pagination.lastItemIndex + 1} displayed of {pagination.totalItems}
         </span>
         <div className="d-flex align-items-center ml-1">
           <span>{'(Maximum results per page'}</span>
@@ -24,11 +21,11 @@ export const Dropdowns = () => {
               id="dropdownMenuButton"
               data-toggle="dropdown"
             >
-              {store.pagination.itemsPerPage}
+              {pagination.itemsPerPage}
             </button>
             <div className="dropdown-menu" style={{ minWidth: '5rem' }}>
               {perPageOptions.map((option) => (
-                <div key={option} className="dropdown-item p-0" onClick={() => store.setItemsPerPage(option)}>
+                <div key={option} className="dropdown-item p-0" onClick={() => setItemsPerPage(option)}>
                   <button className="btn btn-light p-1">{option}</button>
                 </div>
               ))}
@@ -46,12 +43,12 @@ export const Dropdowns = () => {
             id="dropdownSortButton"
             data-toggle="dropdown"
           >
-            {store.sortKey.options[store.sortKey.active].label}
+            {sortKey.options[sortKey.active].label}
           </button>
           <div className="dropdown-menu dropdown-menu-right" style={{ minWidth: '10rem' }}>
-            {Object.entries(store.sortKey.options).map(([key, value]) => (
+            {Object.entries(sortKey.options).map(([key, value]) => (
               <div className="dropdown-item p-0" key={key}>
-                <button className="btn btn-light p-1" onClick={() => store.setActiveSortKey(key)}>
+                <button className="btn btn-light p-1" onClick={() => setActiveSortKey(key)}>
                   {value.label}
                 </button>
               </div>

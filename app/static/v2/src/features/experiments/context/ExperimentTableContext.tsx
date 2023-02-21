@@ -14,15 +14,17 @@ export interface SortKeyState {
 export interface PaginationState {
   currentPage: number;
   itemsPerPage: number;
+  firstItemIndex: number;
+  lastItemIndex: number;
+  totalItems: number;
 }
 
 export interface ExperimentTableContextInterface {
   items: Experiment[];
   pagination: PaginationState;
   sortKey: SortKeyState;
-  incrementCurrentPage: () => void;
-  decrementCurrentPage: () => void;
   setActiveSortKey: (active: string) => void;
+  setCurrentPage: (currentPage: number) => void;
   setItemsPerPage: (itemsPerPage: number) => void;
 }
 
