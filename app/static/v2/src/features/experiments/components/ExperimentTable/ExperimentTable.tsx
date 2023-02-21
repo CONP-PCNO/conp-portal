@@ -5,14 +5,27 @@ import { SearchBar, SearchFilters } from './SearchBar';
 
 import { type Experiment } from '@/features/experiments/types';
 import { ExperimentCard } from '@/features/experiments/components/ExperimentCard';
-import { useExperimentTableStore } from '@/features/experiments/store/experiment-table-store';
+import { ExperimentTableContext } from '../../context/ExperimentTableContext';
+
+const sortKeyOptions = {
+  titleAsc: {
+    label: 'Title (Ascending)'
+  },
+  titleDesc: {
+    label: 'Title (Descending)'
+  }
+} as const;
+
+type SortKeyOptions = keyof typeof sortKeyOptions;
 
 interface ExperimentTableProps {
   experiments: Experiment[];
 }
 
 export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
-  const store = useExperimentTableStore();
+  const [activeSortKey, setActiveSortKey] = useState<SortKeyOptions>('titleAsc');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const filters: SearchFilters = useMemo(
     () => ({
@@ -33,7 +46,23 @@ export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
   );
 
   return (
-    <div>
+    <ExperimentTableContext.Provider
+      value={{
+        items: experiments,
+        pagination: {
+          currentPage: currentPage,
+          itemsPerPage: itemsPerPage
+        },
+        sortKey: {
+          active: activeSortKey,
+          options: sortKeyOptions
+        },
+        incrementCurrentPage: () => null,
+        decrementCurrentPage: () => null,
+        setActiveSortKey: (active) => setActiveSortKey(active as SortKeyOptions),
+        setItemsPerPage: setItemsPerPage
+      }}
+    >
       <SearchBar filters={filters} />
       <Dropdowns />
       <div className="search-dataset-table">
@@ -41,6 +70,6 @@ export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
           <ExperimentCard key={experiment.id} experiment={experiment} />
         ))}
       </div>
-    </div>
+    </ExperimentTableContext.Provider>
   );
 };

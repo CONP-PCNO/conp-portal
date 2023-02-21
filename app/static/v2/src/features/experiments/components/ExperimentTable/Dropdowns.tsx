@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-import { useExperimentTableStore } from '@/features/experiments/store/experiment-table-store';
+import { ExperimentTableContext } from '../../context/ExperimentTableContext';
 
 const perPageOptions = [5, 10, 15, 20];
 
 export const Dropdowns = () => {
-  const store = useExperimentTableStore();
+  const store = useContext(ExperimentTableContext)!;
 
   const firstResultNumber = (store.pagination.currentPage - 1) * store.pagination.itemsPerPage + 1;
   const lastResultNumber = Math.min(firstResultNumber + store.pagination.itemsPerPage, store.items.length);

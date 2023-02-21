@@ -29,6 +29,9 @@ module.exports = {
           tsx: true
         },
         project: [path.resolve(__dirname, 'tsconfig.json')]
+      },
+      rules: {
+        '@typescript-eslint/no-non-null-assertion': 'off'
       }
     }
   ],
