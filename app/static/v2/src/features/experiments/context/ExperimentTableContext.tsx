@@ -21,10 +21,19 @@ export interface PaginationState {
   totalItems: number;
 }
 
+export interface SearchFilters {
+  [key: string]: {
+    label: string;
+    options: Record<string, boolean>;
+  };
+}
+
 export interface ExperimentTableContextInterface {
   items: Experiment[];
   pagination: PaginationState;
   sortKey: SortKeyState;
+  searchFilters: SearchFilters;
+  toggleSearchFilter: (filter: string, option: string, isActive: boolean) => void;
   setActiveSortKey: (active: string) => void;
   setCurrentPage: (currentPage: number) => void;
   setItemsPerPage: (itemsPerPage: number) => void;

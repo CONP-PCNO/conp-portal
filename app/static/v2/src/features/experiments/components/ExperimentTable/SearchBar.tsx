@@ -1,38 +1,12 @@
-import React, { useState } from 'react';
-
-export interface SearchFilters {
-  [key: string]: {
-    label: string;
-    options: string[];
-  };
-}
-
-export interface ActiveSearchFilters {
-  [key: string]: {
-    label: string;
-    options: Record<string, boolean>;
-  };
-}
+import React, { useContext, useState } from 'react';
+import { ExperimentTableContext } from '../../context/ExperimentTableContext';
 
 export interface SearchBarProps {
-  filters: SearchFilters;
   onSubmit?: () => void;
 }
 
-export const SearchBar = ({ filters, onSubmit }: SearchBarProps) => {
-  const [activeFilters, setActiveFilters] = useState<ActiveSearchFilters>(() =>
-    Object.fromEntries(
-      Object.entries(filters).map(([key, { label, options }]) => {
-        return [key, { label, options: Object.fromEntries(options.map((option) => [option, false])) }];
-      })
-    )
-  );
-
-  const handleFilterChange = (filter: string, option: string, isActive: boolean) => {
-    return;
-    // console.log({ ...activeFilters, ...activeFilters[filter] });
-    //setActiveFilters((prevState) => ({ ...prevState, [filter]: prevState[filter] }));
-  };
+export const SearchBar = ({ onSubmit }: SearchBarProps) => {
+  const { searchFilters, toggleSearchFilter } = useContext(ExperimentTableContext)!;
 
   return (
     <div className="searchbar d-flex">
@@ -42,7 +16,7 @@ export const SearchBar = ({ filters, onSubmit }: SearchBarProps) => {
             <div className="dropdown d-flex p-2 w-100 justify-content-center justify-content-lg-start justify-content-xl-start flex-wrap">
               <span className="text-nowrap m-2">Filter By:</span>
               <div className="d-flex">
-                {Object.entries(activeFilters).map(([key, filter]) => {
+                {Object.entries(searchFilters).map(([key, filter]) => {
                   return (
                     <div className="dropdown mr-2" key={key} id={key + 'DropdownMenuButton'}>
                       <button
@@ -64,7 +38,7 @@ export const SearchBar = ({ filters, onSubmit }: SearchBarProps) => {
                                 value={name}
                                 type="checkbox"
                                 id={key + name + 'checkbox'}
-                                onChange={() => handleFilterChange(key, name, !active)}
+                                onChange={() => toggleSearchFilter(key, name, !active)}
                               />
                               <label className="form-check-label w-100" htmlFor={key}>
                                 {name}
