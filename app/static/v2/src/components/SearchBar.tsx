@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export interface SearchFilters {
+  [key: string]: {
+    label: string;
+    options: string[];
+  };
+}
+
+export interface ActiveSearchFilters {
   [key: string]: {
     label: string;
     options: Record<string, boolean>;
@@ -13,6 +20,19 @@ export interface SearchBarProps {
 }
 
 export const SearchBar = ({ filters, onSubmit }: SearchBarProps) => {
+  const [activeFilters, setActiveFilters] = useState<ActiveSearchFilters>(() =>
+    Object.fromEntries(
+      Object.entries(filters).map(([key, { label, options }]) => {
+        return [key, { label, options: Object.fromEntries(options.map((option) => [option, false])) }];
+      })
+    )
+  );
+
+  const handleFilterChange = (filter: string, option: string, isActive: boolean) => {
+    console.log({ ...activeFilters, ...activeFilters[filter] });
+    //setActiveFilters((prevState) => ({ ...prevState, [filter]: prevState[filter] }));
+  };
+
   return (
     <div className="searchbar d-flex">
       <div className="container-fluid">
@@ -21,8 +41,7 @@ export const SearchBar = ({ filters, onSubmit }: SearchBarProps) => {
             <div className="dropdown d-flex p-2 w-100 justify-content-center justify-content-lg-start justify-content-xl-start flex-wrap">
               <span className="text-nowrap m-2">Filter By:</span>
               <div className="d-flex">
-                {Object.entries(filters).map(([key, filter]) => {
-                  console.log(filter);
+                {Object.entries(activeFilters).map(([key, filter]) => {
                   return (
                     <div className="dropdown mr-2" key={key} id={key + 'DropdownMenuButton'}>
                       <button
@@ -44,9 +63,7 @@ export const SearchBar = ({ filters, onSubmit }: SearchBarProps) => {
                                 value={name}
                                 type="checkbox"
                                 id={key + name + 'checkbox'}
-                                onChange={() =>
-                                  console.log("experiments.handleCheckboxChange(event, '{{ dropdown_id }}')")
-                                }
+                                onChange={() => handleFilterChange(key, name, !active)}
                               />
                               <label className="form-check-label w-100" htmlFor={key}>
                                 {name}
