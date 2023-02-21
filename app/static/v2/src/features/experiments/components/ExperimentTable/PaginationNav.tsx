@@ -24,7 +24,11 @@ export const PaginationNav = () => {
           &lt;
         </button>
         {pageIndices.map((i) => (
-          <button className="btn btn-outline-dark" key={i} onClick={() => handlePageChange(i)}>
+          <button
+            className={`btn ${i === pagination.currentPage ? 'btn-dark' : 'btn-outline-dark'}`}
+            key={i}
+            onClick={() => handlePageChange(i)}
+          >
             {i + 1}
           </button>
         ))}
