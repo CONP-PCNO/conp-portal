@@ -1,27 +1,13 @@
-{% extends 'experiments/base.html' %}
-{% from "experiments/macros.html" import render_experiment_card %}
-
-{% block contenttitle %}
+{% extends 'common/base_main.html' %} {% block contenttitle %}
 <h2><span style="color: red">CONP Portal</span> | {{ experiment.title }}</h2>
-{% endblock %} {% block scripts %} {{ super() }}
+{% endblock %} {% block appcontent %}
+<div id="experiment-page"></div>
 <script>
-  window.addEventListener("load", () => {
-    experiments.animateGifs();
+  const { ExperimentPage, React, ReactDOM } = CONP;
+  const element = React.createElement(ExperimentPage, {
+    experiment: {{ experiment|tojson }},
+    downloadLink: "{{ url_for('experiments.download', experiment_id=experiment.id) }}"
   });
+  ReactDOM.render(element, document.getElementById('experiment-page'));
 </script>
-{% endblock %} {% block appcontent %} {{ render_experiment_card(experiment) }}
-<a
-  class="btn btn-primary text-white mt-3"
-  href="{{ url_for('experiments.download', experiment_id=experiment.id) }}"
->
-  Download This Experiment
-</a>
-<h1>Additional Information</h1>
-<ul>
-  {% for prop in ['origin', 'contact_person', 'contact_email', 'privacy',
-  'keywords', 'other_software', 'other_functions', 'acknowledgements', 'source']
-  %}
-  <li>{{ prop }}: {{ experiment[prop] }}</li>
-  {% endfor %}
-</ul>
 {% endblock %}

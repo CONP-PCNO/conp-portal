@@ -25,6 +25,12 @@ from .utils import upload_file
 from .. import config, db
 from ..models import Experiment
 
+def to_camel_case(snake_str: str):
+    components = snake_str.split('_')
+    return components[0] + ''.join(x.title() for x in components[1:])
+
+def object_as_dict(obj: object):
+    return {to_camel_case(c.key): getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
 
 @experiments_bp.route("/")
 def home():
@@ -40,16 +46,11 @@ def download(experiment_id):
 def view(experiment_id):
     experiment = Experiment.query.filter(Experiment.id == experiment_id).first_or_404()
     experiment.increment_views()
-    return render_template("experiments/experiment.html", experiment=experiment)
+    experiment_content = {**object_as_dict(experiment), **{ "repositoryFileCount": experiment.number_repository_files, "repositorySize": experiment.size_repository_files}}
+    return render_template("experiments/experiment.html", experiment=experiment_content)
 
 @experiments_bp.route("/search")
 def search():
-    def to_camel_case(snake_str: str):
-        components = snake_str.split('_')
-        return components[0] + ''.join(x.title() for x in components[1:])
-
-    def object_as_dict(obj: object):
-        return {to_camel_case(c.key): getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
     
     experiments = [{**object_as_dict(e),**{ "repositoryFileCount": e.number_repository_files, "repositorySize": e.size_repository_files}} for e in Experiment.query.all()]
     return render_template("experiments/search.html", experiments=experiments)

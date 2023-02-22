@@ -128,7 +128,7 @@ export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
       <Dropdowns />
       <div className="search-dataset-table">
         {experiments.map((experiment) => (
-          <ExperimentCard key={experiment.id} experiment={experiment} />
+          <ExperimentCard key={experiment.id} experiment={experiment} titleLink={`view/${experiment.id}`} />
         ))}
       </div>
       <PaginationNav />

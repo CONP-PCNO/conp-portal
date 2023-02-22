@@ -7,7 +7,7 @@ import { ExperimentCardItem } from './ExperimentCardItem';
 import ReactFreezeframe from 'react-freezeframe';
 
 interface ExperimentCardProps {
-  titleLink?: boolean;
+  titleLink?: string;
   experiment: Experiment;
 }
 
@@ -44,7 +44,7 @@ export const ExperimentCard = ({
           <div className="d-flex flex-column justify-content-center">
             <h5 className="card-title text-card-title">
               {titleLink ? (
-                <a className="text-reset" href="#">
+                <a className="text-reset" href={titleLink}>
                   {title}
                 </a>
               ) : (
