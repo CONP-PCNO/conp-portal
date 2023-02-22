@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Dropdowns } from './Dropdowns';
 import { SearchBar } from './SearchBar';
 
 import { type Experiment } from '@/features/experiments/types';
 import { ExperimentCard } from '@/features/experiments/components/ExperimentCard';
-import { ExperimentTableContext } from '../../context/ExperimentTableContext';
+import { ExperimentTableContext, SearchFilters } from '../../context/ExperimentTableContext';
 import { PaginationNav } from './PaginationNav';
 
 const sortKeyOptions = {
@@ -32,9 +32,8 @@ export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  // Filter
-
-  const [searchFilters, setSearchFilters] = useState(() => {
+  // by default, all filters are set to false
+  const [searchFilters, setSearchFilters] = useState<SearchFilters>(() => {
     const filters = {
       modalities: {
         label: 'Modalities',
@@ -56,18 +55,36 @@ export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
     );
   });
 
-  /*
-  Object.entries(searchFilters).forEach(([filter, { options }]) => {
-    Object.entries(options).forEach(([key, value]) => {
-      if (value) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        experiments = experiments.filter((e) => e[filter][key])
+  const anyFilterActive = () =>
+    Object.values(searchFilters)
+      .map(({ options }) => Object.values(options))
+      .flat()
+      .includes(true);
+
+  // when search filters change, experiments will be mutated
+  useEffect(() => {
+    return;
+  }, [searchFilters]);
+
+  if (anyFilterActive()) {
+    experiments = experiments.filter((experiment) => {
+      for (const category in searchFilters) {
+        for (const [option, isActive] of Object.entries(searchFilters[category].options)) {
+          if (isActive) {
+            const value = experiment[category as keyof Experiment];
+            if (typeof value === 'string' && option === value) {
+              return true;
+            } else if (value instanceof Array && value.includes(option)) {
+              return true;
+            }
+          }
+        }
       }
-      console.log(filter, key, value)
-    })
-  }); */
+    });
+  }
 
   const totalItems = experiments.length;
+
   // Sort
   experiments = experiments.sort((a, b) => {
     const { key, method } = sortKeyOptions[activeSortKey];
@@ -95,8 +112,12 @@ export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
           options: sortKeyOptions
         },
         searchFilters,
-        toggleSearchFilter: (filter, option, isActive) => {
-          setSearchFilters((prevState) => ({ ...prevState, [filter]: { ...prevState[filter], [option]: isActive } }));
+        toggleSearchFilter: (category, option, isActive) => {
+          setSearchFilters((prevFilters) => {
+            const newFilters = { ...prevFilters };
+            newFilters[category]['options'][option] = isActive;
+            return newFilters;
+          });
         },
         setActiveSortKey: (active) => setActiveSortKey(active as SortKeyOptions),
         setCurrentPage: setCurrentPage,
