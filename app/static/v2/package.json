@@ -12,10 +12,12 @@
   "dependencies": {
     "bootstrap": "^4.4.1",
     "font-awesome": "^4.7.0",
+    "freezeframe": "^5.0.2",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.0",
     "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react-dom": "^16.8.4",
+    "react-freezeframe": "^5.0.2"
   },
   "peerDependencies": {
     "jquery": "3x",
