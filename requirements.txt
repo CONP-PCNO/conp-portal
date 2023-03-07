@@ -72,7 +72,7 @@ pathlib2==2.3.5
 patool==1.12
 pep8==1.7.1
 pluggy==0.12.0
-psycopg2==2.8.6
+psycopg2-binary==2.8.6
 puremagic==1.6
 py==1.10.0
 pycodestyle==2.6.0

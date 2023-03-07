@@ -8,5 +8,5 @@ env
 logs
 .flaskenv
 *.db
-
+.python_version
 data/

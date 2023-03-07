@@ -5,6 +5,11 @@ const process = require('process');
 module.exports = {
   entry: [path.join(__dirname, 'src', 'index.ts')],
   devtool: process.env.NODE_ENV === 'development' ? 'inline-source-map' : 'source-map',
+  devServer: {
+    headers: {
+      "Access-Control-Allow-Origin": "*"
+    }
+  },
   output: {
     clean: true,
     filename: 'conp-portal.bundle.js',
