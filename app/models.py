@@ -434,6 +434,7 @@ class ArkId(db.Model):
     ark_id = db.Column(db.String(128), unique=True)
     dataset_id = db.Column(db.String(256))
     pipeline_id = db.Column(db.String(64))
+    experiment_id = db.Column(db.String(256))
 
     def __repr__(self):
         return '<ArkId {}>'.format(self.id)
@@ -488,102 +489,20 @@ class GithubDailyViewsCount(db.Model):
     def __repr__(self):
         return '<GithubDailyViewsCount {}>'.format(self.id)
 
-## Experiments ##
-
 class Experiment(db.Model):
+    __tablename__ = 'experiments'
+
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.Text)
+    experiment_id = db.Column(db.String(256), index=True, unique=True)
     description = db.Column(db.Text)
-    creators = db.Column(db.PickleType)
-    origin = db.Column(db.Text, default='')
-    contact_person = db.Column(db.Text)
-    contact_email = db.Column(db.Text)
-    version = db.Column(db.Float, default=-1.0)
-    date_added = db.Column(db.DateTime, default=datetime.now())
+    name = db.Column(db.String(256), index=True)
+    fspath = db.Column(db.Text)
+    remoteUrl = db.Column(db.Text)
+    version = db.Column(db.String(6), index=True)
+    date_created = db.Column(db.DateTime, default=datetime.now())
     date_updated = db.Column(db.DateTime, default=datetime.now())
-    privacy = db.Column(db.Text)
-    license = db.Column(db.Text, default='')
-    keywords = db.Column(db.PickleType)
-    modalities = db.Column(db.PickleType)
-    primary_software = db.Column(db.Text)
-    other_software = db.Column(db.PickleType, default=[])
-    primary_function = db.Column(db.Text)
-    other_functions = db.Column(db.PickleType, default=[])
-    doi = db.Column(db.Text, default='')
-    acknowledgements = db.Column(db.Text, default='')
-    source = db.Column(db.Text, default='')
-    views = db.Column(db.Integer, default=0)
-    downloads = db.Column(db.Integer, default=0)
-    repository_file=db.Column(db.Text, default='')
-    image_file=db.Column(db.Text, default='')
+    date_added_to_portal = db.Column(db.DateTime, default=datetime.now())
+    is_private = db.Column(db.Boolean, index=True)
 
-    def increment_downloads(self):
-        Experiment.query.filter_by(id=self.id).update({ 'downloads': self.downloads + 1 })
-        db.session.commit()
-
-    def increment_views(self):
-        Experiment.query.filter_by(id=self.id).update({ 'views': self.views + 1 })
-        db.session.commit()
-    
-    @property
-    def number_repository_files(self):
-        with closing(ZipFile(self.repository_file)) as archive:
-            return len(archive.infolist())
-    
-    @property
-    def size_repository_files(self):
-        return self.format_filesize(os.path.getsize(self.repository_file))
-
-    @classmethod
-    def get_unique_values(cls, colname: str) -> list | None:
-        """ return list of all unique values in column """
-        def flatten(xs):
-            for x in xs:
-                if isinstance(x, (list, tuple)):
-                    yield from flatten(x)
-                else:
-                    yield x
-        try:
-            column = getattr(cls, colname)
-        except AttributeError:
-            return None
-        return list(set(flatten(db.session.query(column).all())))
-    
-    @classmethod
-    def purge(cls) -> None:
-        """ wipe the table completely from the database and recreate it """
-        cls.__table__.drop(db.engine)
-        cls.__table__.create(db.engine)
-    
-    @classmethod
-    def get_dummies(cls, n: int, dummy_repo_path: str | None = None) -> list[Experiment]:
-        """ return a list of dummy experiments for testing """
-        
-        def get_random_element(elements: list) -> list:
-            return elements[randrange(0, len(elements))]
-        
-        dummy_data = []
-        for i in range(1, n + 1):
-            dummy_data.append({
-                "title": "Dummy Experiment " + str(i),
-                'description': 'This is not a real experiment',
-                "creators": ['Joshua Unrau', 'Katie Lavigne', 'Martin Lepage'],
-                "version": 1.0,
-                "contact_person": "Josh",
-                "contact_email": 'user@gmail.com',
-                "modalities": [get_random_element(["fMRI", "EEG", "PET"]), "Brain"],
-                'primary_software': get_random_element(["Linux", 'Windows']),
-                'primary_function': get_random_element(['Cognitive', 'Sensory', 'Motor']),
-                'doi': 'https://doi.org/10.1093/schbul/sbj053',
-                "license": "Public Domain",
-                "repository_file": dummy_repo_path
-            })
-        return [cls(**d) for d in dummy_data]
-    
-    @staticmethod
-    def format_filesize(size_bytes):
-        for unit in ["B", "KB", "MB", "GB", "TB"]:
-            if abs(size_bytes) < 1024.0:
-                return f"{size_bytes:3.1f}{unit}"
-            size_bytes /= 1024.0
-        return f"{size_bytes:.1f}Yi"
+    def __repr__(self):
+        return '<Dataset {}>'.format(self.name)

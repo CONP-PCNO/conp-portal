@@ -354,6 +354,202 @@ def _update_datasets(app):
         print('[INFO   ] ' + ds['gitmodule_name'] + ' updated.')
 
 
+def _update_experiments(app):
+    """
+    Updates from conp-datasets
+    """
+    from app import db
+    from app.models import ArkId
+    from app.models import Experiment as DBExperiment
+    from sqlalchemy import exc
+    from datalad import api
+    from datalad.api import Dataset as DataladDataset
+    import fnmatch
+    import json
+    from pathlib import Path
+    import git
+
+    experiments_dir = Path(app.config['DATA_PATH']) / 'conp-experiments'
+    experiments_dir.mkdir(parents=True, exist_ok=True)
+    experiments_url = 'https://github.com/CONP-PCNO/conp-experiments'
+
+    # Initialize the git repository object
+    try:
+        repo = git.Repo(experiments_dir)
+    except git.exc.InvalidGitRepositoryError:
+        repo = git.Repo.clone_from(
+            experiments_url,
+            experiments_dir,
+            branch='master'
+        )
+
+    # Update to latest commit
+    origin = repo.remotes.origin
+    origin.pull('master')
+    repo.submodule_update(recursive=False, keep_going=True)
+
+    d = DataladDataset(path=experiments_dir)
+    if not d.is_installed():
+        api.clone(
+            source=experiments_url,
+            path=experiments_dir,
+        )
+        d = DataladDataset(path=experiments_dir)
+
+    try:
+        d.install(path='', recursive=True)
+    except Exception as e:
+        print("\033[91m")
+        print("[ERROR  ] An exception occurred in datalad update.")
+        print(e.args)
+        print("\033[0m")
+        return
+
+    print('[INFO   ] conp-experiments update complete')
+    print('[INFO   ] Updating subdatasets')
+
+    for ds in d.subdatasets():
+        print('[INFO   ] Updating ' + ds['gitmodule_url'])
+        subdataset = DataladDataset(path=ds['path'])
+        if not subdataset.is_installed():
+            try:
+                api.clone(
+                    source=ds['gitmodule_url'],
+                    path=ds['path']
+                )
+                subdataset = DataladDataset(path=ds['path'])
+                subdataset.install(path='')
+            except Exception as e:
+                print("\033[91m")
+                print(
+                    "[ERROR  ] An exception occurred in datalad install for " + str(ds) + ".")
+                print(e.args)
+                print("\033[0m")
+                continue
+
+        # The following relates to the DATS.json files
+        # of the projects directory in the conp-dataset repo.
+        # Skip directories that aren't projects.
+        patterns = [str(experiments_dir / 'projects/*')]
+        if not any(fnmatch.fnmatch(ds['path'], pattern) for pattern in patterns):
+            continue
+
+        dirs = os.listdir(ds['path'])
+        descriptor = ''
+        for file_ in dirs:
+            if fnmatch.fnmatch(file_.lower(), 'dats.json'):
+                descriptor = file_
+
+        if descriptor == '':
+            print("\033[91m")
+            print('[ERROR  ] DATS.json file can`t be found in ' + ds['path'] + ".")
+            print("\033[0m")
+            continue
+
+        try:
+            with open(os.path.join(ds['path'], descriptor), 'r') as f:
+                dats = json.load(f)
+        except Exception as e:
+            print("\033[91m")
+            print("[ERROR  ] Descriptor file can't be read.")
+            print(e.args)
+            print("\033[0m")
+            continue
+
+        # use dats.json data to fill the datasets table
+        # avoid duplication / REPLACE instead of insert
+        experiment = DBExperiment.query.filter_by(
+            dataset_id=ds['gitmodule_name']).first()
+
+        # pull the timestamp of the first commit in the git log for the dataset create date
+        createDate = datetime.utcnow()
+        try:
+            createTimeStamp = os.popen(
+                "git -C {} log --pretty=format:%ct --reverse | head -1".format(ds['path'])).read()
+            createDate = datetime.fromtimestamp(int(createTimeStamp))
+        except Exception:
+            print("[ERROR  ] Create Date couldnt be read.")
+
+        firstMergeDate = datetime.utcnow()
+        try:
+            firstMergeTimeStamp = os.popen(
+                "git -C {} log --pretty=format:%ct --reverse {} | head -1".format(
+                    app.config['DATA_PATH'] + "/conp-dataset",
+                    ds['path']
+                )).read()
+            firstMergeDate = datetime.fromtimestamp(int(firstMergeTimeStamp))
+        except Exception:
+            print("[ERROR  ] First merge date of the submodule dataset could not be read.")
+
+        # last commit in the git log for the dataset update date
+        updateDate = datetime.utcnow()
+        try:
+            createTimeStamp = os.popen(
+                "git -C {} log --pretty=format:%ct | head -1".format(ds['path'])).read()
+            updateDate = datetime.fromtimestamp(int(createTimeStamp))
+        except Exception:
+            print("[ERROR  ] Update Date couldnt be read.")
+
+        # get the remote URL
+        remoteUrl = None
+        try:
+            remoteUrl = os.popen(
+                "git -C {} config --get remote.origin.url".format(ds['path'])).read()
+        except Exception:
+            print("[ERROR  ] Remote URL couldnt be read.")
+
+        if experiment is None:
+            experiment = DBExperiment()
+            experiment.experiment_id = ds['gitmodule_name']
+            experiment.date_created = createDate
+            experiment.date_added_to_portal = firstMergeDate
+
+        if experiment.date_created != createDate:
+            experiment.date_created = createDate
+
+        # check for dataset ancestry
+        extraprops = dats.get('extraProperties', [])
+        for prop in extraprops:
+            if prop.get('category') == 'parent_dataset_id':
+                for x in prop.get('values', []):
+                    if x.get('value', None) is None:
+                        continue
+                    datasetAncestry = DBDatasetAncestry()
+                    datasetAncestry.id = str(uuid.uuid4())
+                    datasetAncestry.parent_dataset_id = 'projects/' + \
+                        x.get('value', None)
+                    datasetAncestry.child_dataset_id = dataset.dataset_id
+                    try:
+                        db.session.merge(datasetAncestry)
+                        db.session.commit()
+                    except exc.IntegrityError:
+                        # we already have a record of this ancestry
+                        db.session.rollback()
+
+        if not experiment.date_added_to_portal:
+            experiment.date_added_to_portal = firstMergeDate
+
+        experiment.date_updated = updateDate
+        experiment.fspath = ds['path']
+        experiment.remoteUrl = remoteUrl
+        experiment.description = dats.get(
+            'description', 'No description in DATS.json')
+        experiment.name = dats.get(
+            'title',
+            os.path.basename(experiment.dataset_id)
+        )
+
+        db.session.merge(experiment)
+        db.session.commit()
+
+        # if the dataset does not have an ARK identifier yet, generate it
+        dataset_with_ark_id_list = [row[0] for row in db.session.query(ArkId.experiment_id).all()]
+        if experiment.dataset_id not in dataset_with_ark_id_list:
+            new_ark_id = ark_id_minter(app, 'experiment')
+            save_ark_id_in_database(app, 'experiment', new_ark_id, experiment.experiment_id)
+        print('[INFO   ] ' + ds['gitmodule_name'] + ' updated.')
+
+
 def _update_analytics(app):
     """
     Updates analytics table using Matomo API endpoints
@@ -926,48 +1122,3 @@ def _get_repo_analytics(app, repo):
                 }
 
     return daily_stat_dict
-
-def _create_dummy_experiment_repo():
-    upload_dir = getattr(config, 'EXPERIMENTS_UPLOAD_DIRECTORY')
-    repo_dir = os.path.join(upload_dir, 'test_repo')
-    if os.path.isdir(repo_dir):
-        shutil.rmtree(repo_dir)
-    for dir_path in upload_dir, repo_dir:
-        if not os.path.isdir(dir_path):
-            os.makedirs(dir_path)
-    with open(os.path.join(repo_dir, 'text.txt'), 'w') as file:
-        file.write('text\n')
-    return shutil.make_archive(repo_dir, 'zip', repo_dir)
-
-def _generate_dummy_experiments(app):
-    from app import db
-    from app.models import Experiment
-    from sqlalchemy.exc import OperationalError
-        
-    try:
-        Experiment.purge()
-    except OperationalError:
-        pass
-
-    dummy_repo_path = _create_dummy_experiment_repo()
-    db.create_all()
-    experiments = Experiment.get_dummies(25, dummy_repo_path=dummy_repo_path)
-    db.session.add_all(experiments)
-    db.session.commit()
-
-def _add_test_experiments(app):
-    print('Katie')
-    return None
-
-    import json
-
-    with open('file.json', 'r') as file:
-        data = json.load(file)
-    
-    experiments = []
-    for e in data:
-        experiments.append(Experiment(**e))
-    
-    db.session.add_all(experiments)
-    db.session.commit()
-    b.create_all()
