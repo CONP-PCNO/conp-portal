@@ -29,7 +29,8 @@ export const ExperimentCard = ({
     downloads,
     imageFile,
     repositoryFileCount,
-    repositorySize
+    repositorySize,
+    id
   }
 }: ExperimentCardProps) => {
   return (
@@ -37,7 +38,7 @@ export const ExperimentCard = ({
       <div className="row">
         <div className="col col-sm-2 d-flex flex-column justify-content-center">
           <div className="container-fluid p-2">
-            <ReactFreezeframe className="animated-gif img-fluid" alt="experiment image" src={imageFile || brain} />
+            <ReactFreezeframe className="animated-gif img-fluid" alt="experiment image" src={`/experiments/experiment_logo/${id}`} />
           </div>
         </div>
         <div className="col col-lg-7 card-body d-flex p-2">

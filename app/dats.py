@@ -158,6 +158,10 @@ class DATSObject:
         return primaryPublications if len(primaryPublications) > 0 else None
 
     @property
+    def privacy(self):
+        return self.descriptor.get("privacy", None)
+
+    @property
     def authorizations(self):
         dists = self.descriptor.get('distributions', None)
         if dists is None:

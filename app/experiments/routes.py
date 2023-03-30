@@ -19,6 +19,7 @@ from . import experiments_bp
 from .data import data
 from .filters import get_filters
 from .forms import ExperimentForm
+from .dats import DATSExperiment
 from .search import SearchEngine
 from .sort import SortKey
 from .utils import upload_file
@@ -31,6 +32,37 @@ def to_camel_case(snake_str: str):
 
 def object_as_dict(obj: object):
     return {to_camel_case(c.key): getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
+
+def experiment_as_dict(exp: Experiment):
+    dats = DATSExperiment(exp.fspath)
+    return {
+        "title": exp.name,
+        "description": dats.description,
+        "creators": dats.creators,
+        "version": dats.version,
+        "dateAdded": exp.date_added_to_portal,
+        "dateUpdated": exp.date_updated,
+        "license": dats.licenses,
+        "modalities": dats.modalities,
+        "primarySoftware": dats.software_requirements,
+        "primaryFunction": dats.function_assessed,
+        "doi": "",
+        "views": "",
+        "downloads": "",
+        "imageFile": dats.LogoFilepath,
+        "repositoryFileCount": dats.fileCount,
+        "repositorySize": dats.size,
+        "id": exp.id,
+        "origin": dats.origin,
+        "contactPerson": dats.contacts[0] if dats.contacts else None,
+        "contactEmail": dats.contacts[1] if dats.contacts else None,
+        "privacy": dats.privacy,
+        "keywords": dats.keywords,
+        "otherSoftware": dats.software_requirements,
+        "otherFunctions": dats.function_assessed,
+        "acknowledgements": dats.acknowledges,
+        "source": dats.sources
+    }
 
 @experiments_bp.route("/")
 def home():
@@ -45,54 +77,30 @@ def download(experiment_id):
 @experiments_bp.route("/view/<int:experiment_id>")
 def view(experiment_id):
     experiment = Experiment.query.filter(Experiment.id == experiment_id).first_or_404()
-    experiment.increment_views()
-    experiment_content = {**object_as_dict(experiment), **{ "repositoryFileCount": experiment.number_repository_files, "repositorySize": experiment.size_repository_files}}
-    return render_template("experiments/experiment.html", experiment=experiment_content)
+    return render_template(
+        "experiments/experiment.html",
+        experiment=experiment_as_dict(experiment)
+    )
+
+
+@experiments_bp.route("experiment_logo/<int:experiment_id>")
+def get_experiment_logo(experiment_id):
+    experiment = Experiment.query.get_or_404(experiment_id)
+
+    dats = DATSExperiment(experiment.fspath)
+    with open(dats.LogoFilepath, 'rb') as logo_file:
+        return logo_file.read()
+
 
 @experiments_bp.route("/search")
 def search():
-    
-    experiments = [{**object_as_dict(e),**{ "repositoryFileCount": e.number_repository_files, "repositorySize": e.size_repository_files}} for e in Experiment.query.all()]
-    return render_template("experiments/search.html", experiments=experiments)
+    experiments = Experiment.query.all()
+    experiment_dict = [
+        experiment_as_dict(exp) for exp in experiments
+    ]
 
-    filters = get_filters(request)
-    page = request.args.get("page", 1, int)
-    per_page = request.args.get("per_page", 10, int)
-    search_term = request.args.get("search_term", None, str)
-    sort_key = SortKey(request.args.get("sort_key", "title_asc", str))
+    return render_template("experiments/search.html", experiments=experiment_dict)
 
-    all_experiments = [e.__dict__ for e in Experiment.query.all()]
-    print(all_experiments)
-    any_active_filter = False
-    ids_to_include = []
-    for filter in filters:
-        for option, active in filters[filter]["options"].items():
-            if active:
-                any_active_filter = True
-                for experiment in all_experiments:
-                    if option in experiment[filter]:
-                        ids_to_include.append(experiment['id'])
-                    print(experiment[filter])
-    
-    query = Experiment.query
-    if any_active_filter:
-        query = query.filter(Experiment.id.in_(ids_to_include))
-    query = query.order_by(sort_key.column())
-    
-    if search_term:
-        search_engine = SearchEngine()
-        matching_ids = search_engine.search(search_term, query.all())
-        query = query.filter(Experiment.id.in_(matching_ids))
-
-    pagination = query.paginate(page=page, per_page=per_page)
-
-    return render_template(
-        "experiments/search.html",
-        filters=filters,
-        pagination=pagination,
-        sort_key=sort_key,
-        experiments=experiments
-    )
 
 @experiments_bp.route("/submit", methods=["GET", "POST"])
 def submit():
