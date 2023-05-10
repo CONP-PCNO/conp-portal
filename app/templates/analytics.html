@@ -9,7 +9,7 @@
   src="static/lib/conp-react/umd/conp-react.js"
 ></script>
 {% endblock %} {% block styles %} {{ super() }}
-<link rel="stylesheet" href="https://code.highcharts.com/css/highcharts.css" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/highcharts.css') }}" />
 {% endblock %} {% block contenttitle %}
 <h2><span style="color: red">CONP</span> Portal | Analytics</h2>
 {% endblock %}
