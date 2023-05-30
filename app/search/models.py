@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import datetime as dt
 from functools import lru_cache
 import os
@@ -7,20 +5,10 @@ import json
 import re
 
 import fnmatch
-from collections.abc import Iterable
-from pathlib import Path
 from typing import Optional
 
 import dateutil
 import requests
-
-
-def _match_maybe_iterable(prop: str | Iterable, term: str):
-    if isinstance(prop, str):
-        if term.lower() in prop.lower():
-            return True
-    else:
-        return any(_match_maybe_iterable(subprop, term) for subprop in prop)
 
 
 @lru_cache(maxsize=1)
@@ -103,57 +91,6 @@ class DATSDataset(object):
                 self.descriptor = json.load(f)
             except Exception:
                 raise RuntimeError('Can`t parse {}'.format(self.DatsFilepath))
-
-
-    def search(self, term: str) -> bool:
-        if not term:
-            # Empty string, pointless to search for it
-            return True
-        props = [
-            prop
-            for prop in [
-                self.name,
-                self.creators,
-                [
-                    [pub['title'], pub['author'], pub['journal'], pub['doi']]
-                    for pub in (self.primaryPublications or [])
-                ],
-                self.origin,
-                self.contacts,
-                self.description,
-                self.licenses,
-                self.keywords,
-                self.sources,
-                self.dimensions,
-                self.isAbout,
-                self.spatialCoverage,
-                self.producedBy,
-                self.derivedFrom,
-                self.dates,
-            ]
-            if prop
-        ]
-        for prop in props:
-            if _match_maybe_iterable(prop, term):
-                return True
-
-        # Term wasn't in the metadata, but check the readme
-        try:
-            readme_path = self.ReadmeFilepath
-        except RuntimeError as err:
-            if str(err) == "No Readme found":
-                readme_path = None
-            else:
-                raise
-        if readme_path:
-            with Path(readme_path).open("r") as readme_file:
-                readme = readme_file.readlines()
-        else:
-            readme = ""
-        if term in readme:
-            return True
-        return False
-
 
     @property
     def name(self):
@@ -643,7 +580,7 @@ class DATSDataset(object):
         except Exception:
             return None
 
-    @property
+    @ property
     def status(self):
 
         test_results = get_latest_test_results()
