@@ -158,8 +158,14 @@ def dataset_search():
         # If search term exists filter results here
         if request.args.get('search'):
             search_term = request.args.get('search')
-            if not datsdataset.search(search_term):
-                continue
+            with open(datsdataset.DatsFilepath, 'r') as dats:
+                match = False
+                for line in dats.readlines():
+                    if search_term.lower() in line.lower():
+                        match = True
+                        break
+                if not match:
+                    continue
 
         datasetTitle = d.name.replace("'", "")
         if datasetTitle in cbrain_dataset_ids.keys():
