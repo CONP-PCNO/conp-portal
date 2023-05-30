@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import datetime as dt
 from functools import lru_cache
 import os
@@ -5,6 +7,7 @@ import json
 import re
 
 import fnmatch
+from collections.abc import Iterable
 from pathlib import Path
 from typing import Optional
 
@@ -12,7 +15,7 @@ import dateutil
 import requests
 
 
-def _match_maybe_iterable(prop, term):
+def _match_maybe_iterable(prop: str | Iterable, term: str):
     if isinstance(prop, str):
         if term.lower() in prop.lower():
             return True
@@ -102,7 +105,7 @@ class DATSDataset(object):
                 raise RuntimeError('Can`t parse {}'.format(self.DatsFilepath))
 
 
-    def search(self, term):
+    def search(self, term: str) -> bool:
         if not term:
             # Empty string, pointless to search for it
             return True
