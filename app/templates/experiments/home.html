@@ -15,7 +15,7 @@
   const { ExperimentsHomePage, React, ReactDOM } = CONP;
   const element = React.createElement(ExperimentsHomePage, {
     searchPageUrl: "{{ url_for('experiments.search') }}",
-    submitPageUrl: "{{ url_for('experiments.submit') }}"
+    submitPageUrl: "{{ url_for('main.dats_editor') }}"
   })
   ReactDOM.render(element, document.getElementById('experiments-home'));
 </script>

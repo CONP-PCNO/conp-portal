@@ -1,6 +1,4 @@
-from __future__ import annotations
-
-from typing import Optional
+from typing import List, Optional
 
 from app.dats import DATSObject
 
@@ -20,30 +18,30 @@ class DATSExperiment(DATSObject):
             return None
 
     @property
-    def languages(self) -> Optional[list[str]]:
+    def languages(self) -> Optional[List[str]]:
         return self.find_extra_property("experimentLanguages")
 
     @property
-    def validation(self) -> Optional[list[str]]:
+    def validation(self) -> Optional[List[str]]:
         """Assuming one type of validation for now."""
         return self.find_extra_property("experimentValidation")
 
     @property
-    def accessibility(self) -> Optional[list[str]]:
+    def accessibility(self) -> Optional[List[str]]:
         return self.find_extra_property("experimentAccessibility")
 
     @property
-    def platform_requirements(self) -> Optional[list[str]]:
+    def platform_requirements(self) -> Optional[List[str]]:
         return self.find_extra_property("experimentRequiredPlatforms")
 
     @property
-    def device_requirements(self) -> Optional[list[str]]:
+    def device_requirements(self) -> Optional[List[str]]:
         return self.find_extra_property("experimentRequiredDevices")
 
     @property
-    def software_requirements(self) -> Optional[list[str]]:
+    def software_requirements(self) -> Optional[List[str]]:
         return self.find_extra_property("experimentRequiredSoftware")
 
     @property
-    def other_requirements(self) -> Optional[list[str]]:
+    def other_requirements(self) -> Optional[List[str]]:
         return self.find_extra_property("experimentRequiredOther")

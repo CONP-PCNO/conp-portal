@@ -24,7 +24,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "bootstrap": "^4.3.1",
-    "conp-dats-editor": "git://github.com/CONP-PCNO/conp-dats-editor.git#058c019f1a56814fb0dcb70b99300de759eadb55",
+    "conp-dats-editor": "git://github.com/CONP-PCNO/conp-dats-editor.git#4e899f7a525e97139258891feb89ab9d38e27cfb",
     "highcharts": "^9.0.0",
     "highcharts-custom-events": "^3.0.10",
     "highcharts-react-official": "^3.0.0",
@@ -52,7 +52,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "nwb": "^0.25.2",
     "prettier": "2.2.1",
-    "react": "16.8.4",
+    "react": "^16.14.0",
     "react-dom": "16.8.4"
   },
   "author": "",

@@ -4,9 +4,6 @@
 Module that contains the Data Models
 
 """
-
-from __future__ import annotations
-
 from app import db
 from flask_user import UserMixin
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
