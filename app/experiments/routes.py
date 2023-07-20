@@ -55,7 +55,7 @@ def experiment_as_dict(exp: Experiment):
         "contactPerson": dats.contacts if dats.contacts else None,
         "contactEmail": dats.contacts if dats.contacts else None,
         "privacy": dats.privacy,
-        "keywords": dats.keywords,
+        "keywords": ", ".join(dats.keywords),
         "otherSoftware": dats.software_requirements,
         "otherFunctions": dats.function_assessed,
         "acknowledgements": dats.acknowledges,
