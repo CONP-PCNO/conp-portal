@@ -76,10 +76,15 @@ class DATSObject:
         c = self.descriptor.get('creators', '')
         if type(c) == list:
             for x in c:
-                if 'name' in x:
+                print(x)
+                if x.get('name', ''):
                     creators.append(x['name'])
-                if 'fullName' in x:
+                elif x.get('fullName', ''):
                     creators.append(x['fullName'])
+                elif x.get('firstName', ''):
+                    first_name = x['firstName']
+                    last_name = x.get('lastName', '')
+                    creators.append(f'{first_name} {last_name}')
         elif 'name' in c:
             creators.append(c['name'])
         else:
