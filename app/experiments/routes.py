@@ -41,7 +41,7 @@ def experiment_as_dict(exp: Experiment):
         "dateAdded": exp.date_added_to_portal,
         "dateUpdated": exp.date_updated,
         "license": dats.licenses,
-        "modalities": dats.modalities,
+        "modalities": dats.experiment_modalities,
         "primarySoftware": dats.software_requirements,
         "primaryFunction": dats.function_assessed,
         "doi": "",

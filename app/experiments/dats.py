@@ -31,8 +31,8 @@ class DATSExperiment(DATSObject):
         return self.find_extra_property("experimentAccessibility")
 
     @property
-    def platform_requirements(self) -> Optional[List[str]]:
-        return self.find_extra_property("experimentRequiredPlatforms")
+    def experiment_modalities(self):
+        return self.find_extra_property("experimentModalities")
 
     @property
     def device_requirements(self) -> Optional[List[str]]:
