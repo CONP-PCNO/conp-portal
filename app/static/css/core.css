@@ -335,10 +335,6 @@ Colour names courtesy of chir.ag/projects/name-that-color
   margin: 0;
 }
 
-.card .card-body li:first-child {
-  list-style: none;
-}
-
 .card .card-body li {
   padding-right: 1rem;
 }
