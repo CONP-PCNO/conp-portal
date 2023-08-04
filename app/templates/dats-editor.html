@@ -2,6 +2,10 @@
 
 <!-- Head Block -->
 
+{% block styles %} {{ super() }}
+<link href="{{ url_for('static', filename='lib/conp-react/umd/main.4cc50107.css') }}" rel="stylesheet" />
+{% endblock %}
+
 {% block scripts %} {{ super() }}
 <script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>
 <script src=" {{ url_for('static',filename='v1/js/react-dom.development-16.11.0.js') }}"></script>
