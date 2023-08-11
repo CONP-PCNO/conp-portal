@@ -130,11 +130,9 @@ def dataset_search():
         # Query datasets
         datasets = Dataset.query.filter_by(
             dataset_id=request.args.get('id')).all()
-    elif request.args.get('search'):
-        datasets = Dataset.query.filter(Dataset.name.contains(request.args.get('search', ''))).all()
     else:
         # Query datasets
-        datasets = Dataset.query.all()
+        datasets = Dataset.query.order_by(Dataset.id).all()
 
     # Element input for payload
     elements = []
@@ -155,6 +153,18 @@ def dataset_search():
             # If the DATS file can't be laoded, skip this dataset.
             # There should be an error message in the logs/update_datsets.log
             continue
+
+        # If search term exists filter results here
+        if request.args.get('search'):
+            search_term = request.args.get('search')
+            with open(datsdataset.DatsFilepath, 'r') as dats:
+                match = False
+                for line in dats.readlines():
+                    if search_term.lower() in line.lower():
+                        match = True
+                        break
+                if not match:
+                    continue
 
         datasetTitle = d.name.replace("'", "")
         if datasetTitle in cbrain_dataset_ids.keys():
