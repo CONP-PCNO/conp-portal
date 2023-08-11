@@ -34,6 +34,8 @@ const DataTable = ({
     }
   ]);
 
+  const [tempSearch, setTempSearch] = useState(query.search)
+
   const handleFiltersChange = (event) => {
     event.preventDefault();
     const e = event.target.value;
@@ -178,23 +180,24 @@ const DataTable = ({
                   : null}
 
               {renderElement.name === "PipelineElement" || renderElement.name === "DatasetElement" ?
-                  <div className="input-group m-2">
+	          <form className="input-group m-2" onSubmit={e => {setQuery({...query, search: tempSearch, page: 1}); e.preventDefault();}}>
                     <input
                         className="form-control p-2"
                         type="text"
                         placeholder="Search"
                         aria-label="Search"
-                        value={query.search}
+		        id="searchInput"
+                        value={tempSearch}
                         onChange={e =>
-                            setQuery({...query, search: e.currentTarget.value, page: 1})
+                            setTempSearch(e.currentTarget.value)
                         }
                     />
                     <span className="input-group-append">
-                      <span className="input-group-text" id="basic-addon2">
+                      <button className="input-group-text" id="basic-addon2">
                         <i className="fa fa-search"/>
-                      </span>
+                      </button>
                     </span>
-                  </div>
+	          </form>
                   : null}
               {renderElement.name === "ExecutionRecordElement" ?
                   <div className="input-group m-2">
