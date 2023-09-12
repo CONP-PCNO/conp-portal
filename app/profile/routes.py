@@ -4,7 +4,7 @@
     Currently this module contains all of the routes for profile blueprint
 """
 from flask import render_template, redirect, url_for, flash, request, session
-from flask_user import current_user, login_required, roles_accepted
+from flask_login import current_user, login_required
 from app import db
 from app.profile import profile_bp
 from app.profile.forms import UserProfileForm
@@ -41,7 +41,6 @@ def current_user_profile_page():
 
 
 @profile_bp.route('/profile/admin_edit_user_profile', methods=["GET", "POST"])
-@roles_accepted('admin')
 def admin_user_profile_page():
     """
     Route that provides an path to another users profile page for admin editting

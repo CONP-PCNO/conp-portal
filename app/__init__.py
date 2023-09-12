@@ -4,6 +4,7 @@ from logging.handlers import RotatingFileHandler
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
 from flask_mail import Mail
@@ -17,6 +18,7 @@ migrate = Migrate(compare_type=True)
 csrf_protect = CSRFProtect()
 mail = Mail()
 bootstrap = Bootstrap()
+login_manager = LoginManager()
 
 
 def create_app(config_settings=None):
@@ -34,6 +36,7 @@ def create_app(config_settings=None):
     csrf_protect.init_app(app)
     mail.init_app(app)
     bootstrap.init_app(app)
+    login_manager.init_app(app)
 
     from app.main import main_bp  # noqa: E402
     app.register_blueprint(main_bp)
@@ -71,17 +74,9 @@ def create_app(config_settings=None):
     from app.styleguide import styleguide_bp
     app.register_blueprint(styleguide_bp)
 
-    from app.models import User
-    from app.auth.forms import CustomUserManager
-    user_manager = CustomUserManager(app, db, User)
-
     from app.webhooks import webhooks_bp
     csrf_protect.exempt(webhooks_bp)
     app.register_blueprint(webhooks_bp)
-
-    @app.context_processor
-    def context_processor():
-        return dict(user_manager=user_manager)
 
     # Initialize Email and Logging
     init_email_and_logs_error_handler(app)

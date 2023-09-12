@@ -2,15 +2,12 @@
 """
 Defines forms needed for Flask-User login
 """
-from flask_user.forms import RegisterForm
-from flask_user import UserManager
 from wtforms import StringField, BooleanField
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired
 from app.utils.form_utils import possible_affiliation_types
 
 
-class CustomRegisterForm(RegisterForm):
+class CustomRegisterForm():
     """
     Custom Form Class to define custom members of the User Model
     """
@@ -20,10 +17,6 @@ class CustomRegisterForm(RegisterForm):
     affiliation = StringField('Affiliation',
                               validators=[DataRequired('Please enter the insitution'
                                                        ' with which you are affiated')])
-    affiliation_type = QuerySelectField('Current Status',
-                                        query_factory=possible_affiliation_types,
-                                        get_label='label', allow_blank=False)
-
     agreeToTerms = BooleanField('I Agree to the CONP Terms and Conditions',
                                 validators=[DataRequired('Need to agree to the terms to register account')])
 
@@ -35,7 +28,7 @@ class CustomRegisterForm(RegisterForm):
         pass
 
 
-class CustomUserManager(UserManager):
+class CustomUserManager():
     """
     Custom User Manager for overriding Flask-User Forms
     """
