@@ -11756,13 +11756,13 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 "use strict";
 
 var token = '%[a-f0-9]{2}';
-var singleMatcher = new RegExp(token, 'gi');
+var singleMatcher = new RegExp('(' + token + ')|([^%]+?)', 'gi');
 var multiMatcher = new RegExp('(' + token + ')+', 'gi');
 
 function decodeComponents(components, split) {
 	try {
 		// Try to decode the entire string first
-		return decodeURIComponent(components.join(''));
+		return [decodeURIComponent(components.join(''))];
 	} catch (err) {
 		// Do nothing
 	}
@@ -11784,12 +11784,12 @@ function decode(input) {
 	try {
 		return decodeURIComponent(input);
 	} catch (err) {
-		var tokens = input.match(singleMatcher);
+		var tokens = input.match(singleMatcher) || [];
 
 		for (var i = 1; i < tokens.length; i++) {
 			input = decodeComponents(tokens, i).join('');
 
-			tokens = input.match(singleMatcher);
+			tokens = input.match(singleMatcher) || [];
 		}
 
 		return input;
@@ -13428,6 +13428,10 @@ var DataTable_DataTable = function DataTable(_ref) {
       filters = _useState[0],
       setFilters = _useState[1];
 
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(query.search),
+      tempSearch = _useState2[0],
+      setTempSearch = _useState2[1];
+
   var handleFiltersChange = function handleFiltersChange(event) {
     event.preventDefault();
     var e = event.target.value;
@@ -13614,23 +13618,28 @@ var DataTable_DataTable = function DataTable(_ref) {
       className: "form-check-label",
       htmlFor: "filter" + authorizations
     }, authorizations)) : null;
-  }) : null))) : null, renderElement.name === "PipelineElement" || renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "input-group m-2"
+  }) : null))) : null, renderElement.name === "PipelineElement" || renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("form", {
+    className: "input-group m-2",
+    onSubmit: function onSubmit(e) {
+      setQuery(_extends({}, query, {
+        search: tempSearch,
+        page: 1
+      }));
+      e.preventDefault();
+    }
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
     className: "form-control p-2",
     type: "text",
     placeholder: "Search",
     "aria-label": "Search",
-    value: query.search,
+    id: "searchInput",
+    value: tempSearch,
     onChange: function onChange(e) {
-      return setQuery(_extends({}, query, {
-        search: e.currentTarget.value,
-        page: 1
-      }));
+      return setTempSearch(e.currentTarget.value);
     }
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
     className: "input-group-append"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "input-group-text",
     id: "basic-addon2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", {
