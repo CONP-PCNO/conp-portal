@@ -5,7 +5,6 @@ Contains the forms for User Profiles
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.widgets import ListWidget
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, ValidationError
 from app.utils.form_utils import possible_affiliation_types, RoleMultiField
 
@@ -19,10 +18,6 @@ class UserProfileForm(FlaskForm):
     affiliation = StringField('Affiliation',
                               validators=[DataRequired('Please enter the insitution'
                                                        ' with which you are affiated')])
-    affiliation_type = QuerySelectField('Current Status',
-                                        query_factory=possible_affiliation_types,
-                                        get_label='label', allow_blank=False)
-
     roles = RoleMultiField('Roles',
                            widget=ListWidget(prefix_label=True))
 

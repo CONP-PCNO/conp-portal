@@ -11,7 +11,6 @@ import os
 import os.path
 from functools import partial
 
-from flask.globals import LocalProxy, _lookup_app_object
 from flask_dance.consumer import OAuth2ConsumerBlueprint
 from flask_dance.consumer.requests import OAuth2Session
 
@@ -98,6 +97,3 @@ def make_orcid_blueprint(
         ctx = stack.top
         ctx.orchid_oauth = orcid_bp.session
     return orcid_bp
-
-
-orcid = LocalProxy(partial(_lookup_app_object, "orcid_oauth"))

@@ -4,8 +4,8 @@
 Module that contains the Data Models
 
 """
-from app import db
-from flask_user import UserMixin
+from app import db, login_manager
+from flask_login import UserMixin
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 from sqlalchemy.orm.collections import attribute_mapped_collection
 from datetime import datetime, timedelta
@@ -134,6 +134,11 @@ class User(db.Model, UserMixin, RoleMixin):
 
     def __repr__(self):
         return '<User {}: {}>'.format(self.email, self.full_name)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
 
 
 class AffiliationType(db.Model):
