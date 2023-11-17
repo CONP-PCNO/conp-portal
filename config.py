@@ -101,6 +101,9 @@ class Config(object):
 class DevelopmentConfig(Config):
     """This is the config for Development"""
     DEBUG = True
+    ## ADD ALEX
+    SEND_FILE_MAX_AGE_DEFAULT = 0
+    TEMPLATES_AUTO_RELOAD = True
     SQLALCHEMY_DATABASE_URI = (os.environ.get('DATABASE_URL')
                                or "sqlite:///{}".format(os.path.join(basedir, "app.db")))
 

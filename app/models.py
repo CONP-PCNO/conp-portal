@@ -498,6 +498,10 @@ class Experiment(db.Model):
     version = db.Column(db.String(6), index=True)
     date_created = db.Column(db.DateTime, default=datetime.now())
     date_updated = db.Column(db.DateTime, default=datetime.now())
+    #ALEX count downloads
+    downloads = db.Column(db.Integer, default=0)
+    #ALEX count views
+    views = db.Column(db.Integer, default=0)
     date_added_to_portal = db.Column(db.DateTime, default=datetime.now())
     is_private = db.Column(db.Boolean, index=True)
 

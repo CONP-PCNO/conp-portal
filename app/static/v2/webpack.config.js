@@ -8,7 +8,8 @@ module.exports = {
   devServer: {
     headers: {
       "Access-Control-Allow-Origin": "*"
-    }
+    },
+    hot: true, // Enable HMR
   },
   output: {
     clean: true,

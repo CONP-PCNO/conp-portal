@@ -2,11 +2,16 @@
 <h2><span style="color: red">CONP Portal</span> | {{ experiment.title }}</h2>
 {% endblock %} {% block appcontent %}
 <div id="experiment-page"></div>
+<script id="experiment-data" type="application/json">
+  {{ experiment|tojson|safe }}
+</script>
 <script>
   const { ExperimentPage, React, ReactDOM } = CONP;
+  const experimentData = JSON.parse(document.getElementById('experiment-data').textContent);
   const element = React.createElement(ExperimentPage, {
-    experiment: {{ experiment|tojson }},
-    downloadLink: "{{ url_for('experiments.download', experiment_id=experiment.id) }}"
+    experiment: experimentData,
+    downloadLink: "{{ url_for('experiments.download', experiment_id=experiment.id) }}",
+    readme: `{{ readme|safe }}`
   });
   ReactDOM.render(element, document.getElementById('experiment-page'));
 </script>

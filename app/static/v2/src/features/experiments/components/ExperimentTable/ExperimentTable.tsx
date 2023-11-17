@@ -27,25 +27,26 @@ interface ExperimentTableProps {
   experiments: Experiment[];
 }
 
-export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
+export const ExperimentTable = ({ experiments: initialExperiments }: ExperimentTableProps) => {
   const [activeSortKey, setActiveSortKey] = useState<SortKeyOptions>('titleAsc');
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [filteredExperiments, setFilteredExperiments] = useState<Experiment[]>(initialExperiments);
 
   // by default, all filters are set to false
   const [searchFilters, setSearchFilters] = useState<SearchFilters>(() => {
     const filters = {
       modalities: {
         label: 'Modalities',
-        options: Array.from(new Set(experiments.flatMap((item) => item.modalities)))
+        options: Array.from(new Set(initialExperiments.flatMap((item) => item.modalities)))
       },
       primaryFunction: {
         label: 'Primary Function',
-        options: Array.from(new Set(experiments.flatMap((item) => item.primaryFunction)))
+        options: Array.from(new Set(initialExperiments.flatMap((item) => item.primaryFunction)))
       },
       primarySoftware: {
         label: 'Primary Software',
-        options: Array.from(new Set(experiments.flatMap((item) => item.primarySoftware)))
+        options: Array.from(new Set(initialExperiments.flatMap((item) => item.primarySoftware)))
       }
     };
     return Object.fromEntries(
@@ -63,11 +64,13 @@ export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
 
   // when search filters change, experiments will be mutated
   useEffect(() => {
+    setFilteredExperiments(initialExperiments);
     return;
   }, [searchFilters]);
 
+  const filterExperiments = (experimentsList: Experiment[]) => {
   if (anyFilterActive()) {
-    experiments = experiments.filter((experiment) => {
+    return experimentsList.filter((experiment) => {
       for (const category in searchFilters) {
         for (const [option, isActive] of Object.entries(searchFilters[category].options)) {
           if (isActive) {
@@ -80,26 +83,37 @@ export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
           }
         }
       }
+      return false;
     });
+    }
+    return experimentsList;
   }
 
-  const totalItems = experiments.length;
-
-  // Sort
-  experiments = experiments.sort((a, b) => {
+  const sortExperiments = (experimentsList: Experiment[]) => {
     const { key, method } = sortKeyOptions[activeSortKey];
-    return method === 'ascending' ? (a[key] > b[key] ? 1 : -1) : a[key] < b[key] ? 1 : -1;
-  });
+    return experimentsList.sort((a, b) => {
+      return method === 'ascending' ? (a[key] > b[key] ? 1 : -1) : a[key] < b[key] ? 1 : -1;
+    });
+  };
+
+  let processedExperiments = filterExperiments(filteredExperiments);
+  processedExperiments = sortExperiments(processedExperiments);
+
+  const totalItems = processedExperiments.length;
+
+  const getDownloadLink = (experimentId) => {
+    return `/experiments/download/${experimentId}`;
+  };
 
   // Pagination
   const firstItemIndex = currentPage * itemsPerPage;
-  const lastItemIndex = Math.min(firstItemIndex + itemsPerPage, experiments.length);
-  experiments = experiments.slice(firstItemIndex, lastItemIndex);
+  const lastItemIndex = Math.min(firstItemIndex + itemsPerPage, processedExperiments.length);
+  const displayedExperiments  = processedExperiments.slice(firstItemIndex, lastItemIndex);
 
   return (
     <ExperimentTableContext.Provider
       value={{
-        items: experiments,
+        items: displayedExperiments,
         pagination: {
           currentPage,
           itemsPerPage,
@@ -124,11 +138,24 @@ export const ExperimentTable = ({ experiments }: ExperimentTableProps) => {
         setItemsPerPage: setItemsPerPage
       }}
     >
-      <SearchBar />
+      <SearchBar onSubmit={(term) => {
+        const searchTerm = term.toLowerCase();
+        const results = initialExperiments.filter(exp => 
+          exp.title.toLowerCase().includes(searchTerm) ||
+          (exp.creators && exp.creators.some(creator => typeof creator === 'string' && creator.toLowerCase().includes(searchTerm))) ||
+          (exp.dateAdded && exp.dateAdded.toString().toLowerCase().includes(searchTerm)) ||
+          (exp.dateUpdated && exp.dateUpdated.toString().toLowerCase().includes(searchTerm)) ||
+          (exp.modalities && exp.modalities.some(modality => typeof modality === 'string' && modality.toLowerCase().includes(searchTerm))) ||
+          (exp.license && typeof exp.license === 'string' && exp.license.toLowerCase().includes(searchTerm)) ||
+          (exp.primaryFunction && typeof exp.primaryFunction === 'string' && exp.primaryFunction.toLowerCase().includes(searchTerm))
+        );
+        setFilteredExperiments(results);
+      }} />
+
       <Dropdowns />
       <div className="search-dataset-table">
-        {experiments.map((experiment) => (
-          <ExperimentCard key={experiment.id} experiment={experiment} titleLink={`view/${experiment.id}`} />
+        {displayedExperiments.map((experiment) => (
+          <ExperimentCard key={experiment.id} experiment={experiment} downloadLink={getDownloadLink(experiment.id)} titleLink={`/experiments/view/${experiment.id}`} />
         ))}
       </div>
       <PaginationNav />
