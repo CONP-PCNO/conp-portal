@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
+// import ReactMarkdown from 'react-markdown';
 import { ExperimentCard } from '../components/ExperimentCard';
 import { Experiment } from '../types';
 
@@ -107,7 +107,7 @@ export const ExperimentPage = ({ experiment, downloadLink, readme }: ExperimentP
             <div className="card">
               <div className="card-header">README.md</div>
               <div className="card-body">
-                <ReactMarkdown>{readme}</ReactMarkdown>
+                {/* <ReactMarkdown>{readme}</ReactMarkdown> */}
               </div>
             </div>
           </>

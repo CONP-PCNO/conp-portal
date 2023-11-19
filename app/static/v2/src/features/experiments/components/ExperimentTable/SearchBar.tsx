@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { ExperimentTableContext } from '../../context/ExperimentTableContext';
-import { useParams } from 'react-router-dom';
 
 export interface SearchBarProps {
   onSubmit?: (term: string) => void;
