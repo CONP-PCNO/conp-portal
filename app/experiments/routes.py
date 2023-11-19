@@ -52,8 +52,8 @@ def experiment_as_dict(exp: Experiment):
         "primarySoftware": dats.software_requirements,
         "primaryFunction": dats.function_assessed,
         "doi": "",
-        "views": exp.views,
-        "downloads": exp.downloads,
+        "views": "",
+        "downloads": "",
         "imageFile": dats.LogoFilepath,
         "repositoryFileCount": dats.fileCount,
         "repositorySize": dats.size,
@@ -146,22 +146,20 @@ def get_experiment_logo(experiment_id):
         return logo_file.read()
 
 
-# @experiments_bp.route("/search")
-@experiments_bp.route("/search/", defaults={"keyword": None})
+@experiments_bp.route("/search")
+# @experiments_bp.route("/search/", defaults={"keyword": None})
 # @experiments_bp.route("/search/<string:keyword>")
-def search(keyword):
+def search():
     experiments = Experiment.query.all()
     experiment_dict = [
         experiment_as_dict(exp) for exp in experiments
     ]
 
     # Si le paramètre keyword est vide (chaîne vide), vous pouvez le traiter comme non spécifié.
-    if not keyword:
-        # Faites quelque chose ici pour gérer le cas où le paramètre keyword est vide.
-        # Par exemple, vous pouvez définir un comportement par défaut ou renvoyer toutes les expériences.
-        return render_template("experiments/search.html", experiments=experiment_dict, keyword="")
+    # if not keyword:
+    #     return render_template("experiments/search.html", experiments=experiment_dict, keyword="")
 
-    return render_template("experiments/search.html", experiments=experiment_dict, keyword=keyword)
+    return render_template("experiments/search.html", experiments=experiment_dict)
 
 
 
