@@ -72,8 +72,8 @@ def downgrade():
     sa.Column('doi', sa.TEXT(), nullable=True),
     sa.Column('acknowledgements', sa.TEXT(), nullable=True),
     sa.Column('source', sa.TEXT(), nullable=True),
-    sa.Column('views', sa.INTEGER(), nullable=True),
-    sa.Column('downloads', sa.INTEGER(), nullable=True),
+    # sa.Column('views', sa.INTEGER(), nullable=True),
+    # sa.Column('downloads', sa.INTEGER(), nullable=True),
     sa.Column('repository_file', sa.TEXT(), nullable=True),
     sa.Column('image_file', sa.TEXT(), nullable=True),
     sa.PrimaryKeyConstraint('id')
