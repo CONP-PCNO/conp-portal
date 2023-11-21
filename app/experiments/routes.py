@@ -127,12 +127,12 @@ def view(experiment_id):
 
     # Vérifiez si le cookie est déjà défini pour cet utilisateur et cette expérience spécifique
     cookie_name = f'viewed_exp_{experiment_id}'
-    if not request.cookies.get(cookie_name):
-        # Si le cookie n'existe pas, incrémentez le compteur de vues et créez le cookie
-        experiment.views = (experiment.views or 0) + 1
-        db.session.commit()
-        # Définir le cookie pour une période, par exemple 24 heures (86400 secondes)
-        resp.set_cookie(cookie_name, 'true', max_age=86400)
+    # if not request.cookies.get(cookie_name):
+    #     # Si le cookie n'existe pas, incrémentez le compteur de vues et créez le cookie
+    #     experiment.views = (experiment.views or 0) + 1
+    #     db.session.commit()
+    #     # Définir le cookie pour une période, par exemple 24 heures (86400 secondes)
+    #     resp.set_cookie(cookie_name, 'true', max_age=86400)
 
     return resp
 
