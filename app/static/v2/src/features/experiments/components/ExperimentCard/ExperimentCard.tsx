@@ -45,11 +45,11 @@ export const ExperimentCard = ({
           <div className='flex-grow-2 d-flex fex-row justify-content-center align-items-end'>
             <div className="d-flex flex-column align-items-center mx-2">
               <i className="fa fa-eye fa-lg" aria-hidden="true"></i>
-              {views}
+                {views.toString() === "" ? "N/A" : views}
             </div>
             <div className="d-flex flex-column align-items-center mx-2">
               <i className="fa fa-download fa-lg" aria-hidden="true"></i>
-              {downloads}
+                {downloads.toString() === "" ? "N/A" : downloads}
             </div>
           </div>
         </div>

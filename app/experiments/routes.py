@@ -78,7 +78,7 @@ def download(experiment_id):
     experiment = Experiment.query.filter(Experiment.id == experiment_id).first_or_404()
     
     # Mettre à jour le compteur de téléchargements
-    experiment.downloads = (experiment.downloads or 0) + 1
+    # experiment.downloads = (experiment.downloads or 0) + 1
 
     # Chemin d'accès aux fichiers de l'expérimentation
     experiment_files_path = experiment.fspath
@@ -101,7 +101,7 @@ def download(experiment_id):
     # Repositionner le curseur du fichier au début
     memory_file.seek(0)
 
-    db.session.commit()
+    # db.session.commit()
 
     return send_file(memory_file, mimetype='application/zip', as_attachment=True, attachment_filename='experiment.zip')
 
