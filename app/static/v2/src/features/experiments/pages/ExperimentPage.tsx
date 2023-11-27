@@ -32,7 +32,7 @@ export interface ExperimentPageProps {
 
 function  handleKeywordClick (keyword) {
   const encodedKeyword = encodeURIComponent(keyword.trim());
-  const searchUrl = `/experiments/search`;
+  const searchUrl = `/experiments/search?keyword=${encodedKeyword}`;
   window.location.href = searchUrl;
 }
 

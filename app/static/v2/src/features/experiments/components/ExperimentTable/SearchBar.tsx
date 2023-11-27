@@ -1,11 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { ExperimentTableContext } from '../../context/ExperimentTableContext';
 
 export interface SearchBarProps {
   onSubmit?: (term: string) => void;
+  word: string; 
 }
 
-export const SearchBar = ({ onSubmit }: SearchBarProps) => {
+export const SearchBar = ({ onSubmit, word }: SearchBarProps) => {
   const { searchFilters, toggleSearchFilter } = useContext(ExperimentTableContext)!;
   const [searchTerm, setSearchTerm] = useState<string>('');
 
@@ -17,6 +18,12 @@ export const SearchBar = ({ onSubmit }: SearchBarProps) => {
     event.preventDefault(); // Empêche le comportement par défaut
     onSubmit && onSubmit(searchTerm); // Utilise la fonction onSubmit fournie comme prop
   };
+
+  useEffect(() => {
+    if (word !== '') {
+      setSearchTerm(word);
+    }
+  }, [word]);
 
   return (
     <div className="searchbar d-flex">

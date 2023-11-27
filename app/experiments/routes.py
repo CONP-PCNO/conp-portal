@@ -162,19 +162,19 @@ def get_experiment_logo(experiment_id):
 
 
 @experiments_bp.route("/search")
-# @experiments_bp.route("/search/", defaults={"keyword": None})
-# @experiments_bp.route("/search/<string:keyword>")
 def search():
+    # Récupérer le paramètre 'keyword' de l'URL, sinon None par défaut
+    keyword = request.args.get('keyword')
     experiments = Experiment.query.all()
     experiment_dict = [
         experiment_as_dict(exp) for exp in experiments
     ]
 
     # Si le paramètre keyword est vide (chaîne vide), vous pouvez le traiter comme non spécifié.
-    # if not keyword:
-    #     return render_template("experiments/search.html", experiments=experiment_dict, keyword="")
+    if not keyword:
+        return render_template("experiments/search.html", experiments=experiment_dict, keyword="")
 
-    return render_template("experiments/search.html", experiments=experiment_dict)
+    return render_template("experiments/search.html", experiments=experiment_dict, keyword=keyword)
 
 
 

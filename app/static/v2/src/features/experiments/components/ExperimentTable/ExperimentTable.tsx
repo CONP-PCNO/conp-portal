@@ -25,13 +25,15 @@ type SortKeyOptions = keyof typeof sortKeyOptions;
 
 interface ExperimentTableProps {
   experiments: Experiment[];
+  keyword: string;
 }
 
-export const ExperimentTable = ({ experiments: initialExperiments }: ExperimentTableProps) => {
+export const ExperimentTable = ({ experiments: initialExperiments , keyword: keywordSearch}: ExperimentTableProps) => {
   const [activeSortKey, setActiveSortKey] = useState<SortKeyOptions>('titleAsc');
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [filteredExperiments, setFilteredExperiments] = useState<Experiment[]>(initialExperiments);
+  const [searchT, setSearchT] = useState<string>(keywordSearch || '');
 
   // by default, all filters are set to false
   const [searchFilters, setSearchFilters] = useState<SearchFilters>(() => {
@@ -56,6 +58,22 @@ export const ExperimentTable = ({ experiments: initialExperiments }: ExperimentT
     );
   });
 
+  // Fonction pour effectuer la recherche
+  const performSearch = (term) => {
+    const lowerCaseTerm = term.toLowerCase();
+    const results = initialExperiments.filter(exp => 
+      exp.title.toLowerCase().includes(lowerCaseTerm) ||
+      (exp.creators && exp.creators.some(creator => typeof creator === 'string' && creator.toLowerCase().includes(lowerCaseTerm))) ||
+      (exp.dateAdded && exp.dateAdded.toString().toLowerCase().includes(lowerCaseTerm)) ||
+      (exp.dateUpdated && exp.dateUpdated.toString().toLowerCase().includes(lowerCaseTerm)) ||
+      (exp.modalities && exp.modalities.some(modality => typeof modality === 'string' && modality.toLowerCase().includes(lowerCaseTerm))) ||
+      (exp.license && typeof exp.license === 'string' && exp.license.toLowerCase().includes(lowerCaseTerm)) ||
+      (exp.primaryFunction && typeof exp.primaryFunction === 'string' && exp.primaryFunction.toLowerCase().includes(lowerCaseTerm))||
+      (exp.keywords && exp.keywords.includes(lowerCaseTerm))
+    );
+    setFilteredExperiments(results);
+  };
+
   const anyFilterActive = () =>
     Object.values(searchFilters)
       .map(({ options }) => Object.values(options))
@@ -67,6 +85,13 @@ export const ExperimentTable = ({ experiments: initialExperiments }: ExperimentT
     setFilteredExperiments(initialExperiments);
     return;
   }, [searchFilters]);
+
+  // Effectuer une recherche initiale avec keywordSearch si disponible
+  useEffect(() => {
+    if (keywordSearch && keywordSearch.trim() !== '') {
+      performSearch(keywordSearch);
+    }
+  }, [keywordSearch]); // Dépendance : keywordSearch
 
   const filterExperiments = (experimentsList: Experiment[]) => {
   if (anyFilterActive()) {
@@ -138,24 +163,14 @@ export const ExperimentTable = ({ experiments: initialExperiments }: ExperimentT
         setItemsPerPage: setItemsPerPage
       }}
     >
-      <SearchBar onSubmit={(term) => {
-        const searchTerm = term.toLowerCase();
-        const results = initialExperiments.filter(exp => 
-          exp.title.toLowerCase().includes(searchTerm) ||
-          (exp.creators && exp.creators.some(creator => typeof creator === 'string' && creator.toLowerCase().includes(searchTerm))) ||
-          (exp.dateAdded && exp.dateAdded.toString().toLowerCase().includes(searchTerm)) ||
-          (exp.dateUpdated && exp.dateUpdated.toString().toLowerCase().includes(searchTerm)) ||
-          (exp.modalities && exp.modalities.some(modality => typeof modality === 'string' && modality.toLowerCase().includes(searchTerm))) ||
-          (exp.license && typeof exp.license === 'string' && exp.license.toLowerCase().includes(searchTerm)) ||
-          (exp.primaryFunction && typeof exp.primaryFunction === 'string' && exp.primaryFunction.toLowerCase().includes(searchTerm))
-        );
-        setFilteredExperiments(results);
-      }} />
+        <SearchBar 
+        word={searchT}
+        onSubmit={(term) => performSearch(term || searchT)} />
 
       <Dropdowns />
       <div className="search-dataset-table">
         {displayedExperiments.map((experiment) => (
-          <ExperimentCard key={experiment.id} experiment={experiment} downloadLink={getDownloadLink(experiment.id)} titleLink={`view/${experiment.id}`} />
+          <ExperimentCard key={experiment.id} experiment={experiment} downloadLink={getDownloadLink(experiment.id)} titleLink={`/experiments/view/${experiment.id}`} />
         ))}
       </div>
       <PaginationNav />

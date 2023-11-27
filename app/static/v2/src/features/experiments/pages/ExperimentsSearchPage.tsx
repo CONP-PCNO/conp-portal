@@ -5,8 +5,9 @@ import { type Experiment } from '../types';
 
 interface ExperimentsSearchPageProps {
   experiments: Experiment[];
+  keyword: string;
 }
 
-export const ExperimentsSearchPage = ({ experiments }: ExperimentsSearchPageProps) => {
-  return <ExperimentTable experiments={experiments} />;
+export const ExperimentsSearchPage = ({ experiments, keyword }: ExperimentsSearchPageProps) => {
+  return <ExperimentTable experiments={experiments} keyword={keyword} />;
 };
