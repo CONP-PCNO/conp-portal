@@ -30,6 +30,10 @@ def upgrade():
     sa.Column('date_updated', sa.DateTime(), nullable=True),
     sa.Column('date_added_to_portal', sa.DateTime(), nullable=True),
     sa.Column('is_private', sa.Boolean(), nullable=True),
+    #ALEX count downloads
+    sa.Column('downloads', sa.Integer(), nullable=True),
+    #ALEX count views
+    sa.Column('views', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     with op.batch_alter_table('experiments', schema=None) as batch_op:
@@ -72,8 +76,8 @@ def downgrade():
     sa.Column('doi', sa.TEXT(), nullable=True),
     sa.Column('acknowledgements', sa.TEXT(), nullable=True),
     sa.Column('source', sa.TEXT(), nullable=True),
-    # sa.Column('views', sa.INTEGER(), nullable=True),
-    # sa.Column('downloads', sa.INTEGER(), nullable=True),
+    sa.Column('views', sa.INTEGER(), nullable=True),
+    sa.Column('downloads', sa.INTEGER(), nullable=True),
     sa.Column('repository_file', sa.TEXT(), nullable=True),
     sa.Column('image_file', sa.TEXT(), nullable=True),
     sa.PrimaryKeyConstraint('id')

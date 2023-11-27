@@ -7,11 +7,9 @@ from flask import (
     url_for,
     send_from_directory,
     session,
-    abort,
-    send_file,
-    after_this_request,
-    jsonify,
-    make_response
+    make_response, 
+    Response,
+    abort
 )
 
 from sqlalchemy import inspect
@@ -52,8 +50,8 @@ def experiment_as_dict(exp: Experiment):
         "primarySoftware": dats.software_requirements,
         "primaryFunction": dats.function_assessed,
         "doi": "",
-        "views": "",
-        "downloads": "",
+        "views": exp.views,
+        "downloads": exp.downloads,
         "imageFile": dats.LogoFilepath,
         "repositoryFileCount": dats.fileCount,
         "repositorySize": dats.size,
@@ -83,27 +81,44 @@ def download(experiment_id):
     # Chemin d'accès aux fichiers de l'expérimentation
     experiment_files_path = experiment.fspath
 
+    print(experiment_files_path)
     # Créer un objet BytesIO pour stocker le fichier zip en mémoire
-    memory_file = io.BytesIO()
+    # memory_file = io.BytesIO()
 
-    with zipfile.ZipFile(memory_file, 'w') as zf:
-        # Vérifiez si le chemin est un dossier et non un fichier individuel
-        if os.path.isdir(experiment_files_path):
-            for root, dirs, files in os.walk(experiment_files_path):
-                for file in files:
-                    file_path = os.path.join(root, file)
-                    zf.write(file_path, os.path.relpath(file_path, start=experiment_files_path))
-        elif os.path.isfile(experiment_files_path):
-            zf.write(experiment_files_path, os.path.basename(experiment_files_path))
-        else:
-            abort(404, description="Experiment files not found.")
+    # with zipfile.ZipFile(memory_file, 'w') as zf:
+    #     # Vérifiez si le chemin est un dossier et non un fichier individuel
+    #     if os.path.isdir(experiment_files_path):
+    #         for root, dirs, files in os.walk(experiment_files_path):
+    #             for file in files:
+    #                 file_path = os.path.join(root, file)
+    #                 zf.write(file_path, os.path.relpath(file_path, start=experiment_files_path))
+    #     elif os.path.isfile(experiment_files_path):
+    #         zf.write(experiment_files_path, os.path.basename(experiment_files_path))
+    #     else:
+    #         abort(404, description="Experiment files not found.")
 
-    # Repositionner le curseur du fichier au début
-    memory_file.seek(0)
+    # # Repositionner le curseur du fichier au début
+    # memory_file.seek(0)
 
     # db.session.commit()
 
-    return send_file(memory_file, mimetype='application/zip', as_attachment=True, attachment_filename='experiment.zip')
+    # return send_file(memory_file, mimetype='application/zip', as_attachment=True, attachment_filename='experiment.zip')
+
+    # Vérifier si le fichier existe
+    if not os.path.isdir(experiment_files_path):
+        abort(404, description="File not found.")
+
+    def generate():
+        with open(experiment_files_path, "rb") as f:
+            chunk = f.read(4096)
+            while chunk:
+                yield chunk
+                chunk = f.read(4096)
+
+        # Récupérer le nom du fichier pour le header
+    filename = os.path.basename(experiment_files_path)
+
+    return Response(generate(), mimetype="application/octet-stream", headers={"Content-Disposition": f"attachment;filename={filename}"})
 
 @experiments_bp.route("/view/<int:experiment_id>")
 def view(experiment_id):
