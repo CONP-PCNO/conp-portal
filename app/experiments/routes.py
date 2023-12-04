@@ -77,33 +77,15 @@ def download(experiment_id):
     experiment = Experiment.query.filter(Experiment.id == experiment_id).first_or_404()
     
     # Mettre à jour le compteur de téléchargements
-    # experiment.downloads = (experiment.downloads or 0) + 1
-
-    # Chemin d'accès aux fichiers de l'expérimentation
-    # experiment_files_path = experiment.fspath
+    experiment.downloads = (experiment.downloads or 0) + 1
 
     experiment_zip_path = experiment.fspath + ".zip"
-
-    # memory_file = io.BytesIO()
-
-    # with zipfile.ZipFile(memory_file, 'w') as zf:
-    #     # Vérifiez si le chemin est un dossier et non un fichier individuel
-    #     if os.path.isdir(experiment_files_path):
-    #         for root, dirs, files in os.walk(experiment_files_path):
-    #             for file in files:
-    #                 file_path = os.path.join(root, file)
-    #                 zf.write(file_path, os.path.relpath(file_path, start=experiment_files_path))
-    #     elif os.path.isfile(experiment_files_path):
-    #         zf.write(experiment_files_path, os.path.basename(experiment_files_path))
-    #     else:
-    #         abort(404, description="Experiment files not found.")
-
-    # # Repositionner le curseur du fichier au début
-    # memory_file.seek(0)
 
     # Vérifier si le fichier ZIP existe
     if not os.path.exists(experiment_zip_path):
         abort(404, description="Experiment ZIP file not found.")
+
+    db.session.commit()
 
     # Télécharger le fichier ZIP
     return send_file(experiment_zip_path, as_attachment=True, attachment_filename=os.path.basename(experiment_zip_path))
