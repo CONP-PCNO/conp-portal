@@ -76,7 +76,7 @@ export const ExperimentPage = ({ experiment, downloadLink, readme }: ExperimentP
           <div className="py-1">
               <strong>Modalities: </strong>
               {experiment["modalities"].map((modalities) => (
-                  <span className="mr-1" key={modalities}><a className='badge badge-info'>{modalities}</a></span>
+                  <span className="mr-1" key={modalities}><a className='badge badge-info' onClick={() => handleKeywordClick(modalities)}>{modalities}</a></span>
               ))}
           </div>
           <div className="py-1">

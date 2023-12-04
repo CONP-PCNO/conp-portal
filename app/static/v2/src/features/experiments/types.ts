@@ -28,4 +28,5 @@ export interface Experiment {
   repositoryFileCount: number;
   repositorySize: string;
   imageFile?: string;
+  remoteUrl: string;
 }

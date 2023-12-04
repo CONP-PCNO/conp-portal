@@ -65,7 +65,8 @@ def experiment_as_dict(exp: Experiment):
         "otherSoftware": dats.software_requirements,
         "otherFunctions": dats.function_assessed,
         "acknowledgements": dats.acknowledges,
-        "source": dats.sources
+        "source": dats.sources,
+        "remoteUrl": exp.remoteUrl
     }
 
 @experiments_bp.route("/")
@@ -75,7 +76,7 @@ def home():
 @experiments_bp.route("/download/<int:experiment_id>")
 def download(experiment_id):
     experiment = Experiment.query.filter(Experiment.id == experiment_id).first_or_404()
-    
+
     # Mettre à jour le compteur de téléchargements
     experiment.downloads = (experiment.downloads or 0) + 1
 

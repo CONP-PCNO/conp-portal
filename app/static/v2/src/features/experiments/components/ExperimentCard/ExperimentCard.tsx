@@ -32,7 +32,8 @@ export const ExperimentCard = ({
     imageFile,
     repositoryFileCount,
     repositorySize,
-    id
+    id,
+    remoteUrl
   }
 }: ExperimentCardProps) => {
   return (
@@ -96,13 +97,23 @@ export const ExperimentCard = ({
           </div>
         </div>
         <div className="col col-lg-3 d-flex felx-column justify-content-center align-items-center p-2">
-          <div className='row align-items-center w-100'>
+          {/* <div className='row align-items-center w-100'>
               <div className='col-10 p-0'>
                 <a className="btn btn-success m-1" role='button' href={downloadLink}>
                   Download This Experiment
                 </a>
               </div>
-          </div>
+          </div> */}
+            <div className="row align-items-center w-100">
+              <div className='col-10 p-0'>
+              <a className="btn btn-success mb-2" role='button' href={downloadLink}>
+                Download This Experiment
+              </a>
+              <a className="btn btn-success" role='button' href={remoteUrl}>
+                View From GitHub
+              </a>
+              </div>
+            </div>
         </div>
       </div>
     </div>
