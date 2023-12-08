@@ -265,8 +265,13 @@ def dataset_search():
             filter_modalities = request.args.get('modalities').split(",")
             elements = list(
                 filter(lambda e: e['modalities'] is not None, elements))
-            elements = list(filter(lambda e: all(item in (m.lower(
-            ) for m in e['modalities']) for item in filter_modalities), elements))
+            elements = list(filter(lambda e: any(
+                item in (
+                    m.lower() for m in e['modalities']
+                ) for item in filter_modalities
+            ), elements)
+            )
+
         if request.args.get('formats'):
             filter_formats = request.args.get('formats').split(",")
             elements = list(
