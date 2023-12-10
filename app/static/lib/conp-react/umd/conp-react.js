@@ -13292,6 +13292,7 @@ __webpack_require__.d(__webpack_exports__, "ChartContainer", function() { return
 __webpack_require__.d(__webpack_exports__, "DatsEditorForm", function() { return /* reexport */ index_modern_DatsEditorForm; });
 __webpack_require__.d(__webpack_exports__, "ExecutionRecordElement", function() { return /* reexport */ src_ExecutionRecordElement; });
 __webpack_require__.d(__webpack_exports__, "ElementContainer", function() { return /* reexport */ src_ElementContainer; });
+__webpack_require__.d(__webpack_exports__, "StudySpotlight", function() { return /* reexport */ src_StudySpotlight; });
 
 // CONCATENATED MODULE: ./node_modules/ramda/es/internal/_isPlaceholder.js
 function _isPlaceholder(a) {
@@ -21889,7 +21890,6 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       setCbrainModalOpen = _useState5[1];
 
   var statusCONP = imagePath + "/canada.svg";
-  console.log(element);
   var authIcons = [];
 
   switch (element.authorizations) {
@@ -23991,6 +23991,112 @@ var ChartContainer_ChartContainer = function ChartContainer(props) {
 };
 
 /* harmony default export */ var src_ChartContainer = (ChartContainer_ChartContainer);
+// CONCATENATED MODULE: ./src/StudySpotlight/index.js
+
+
+var StudySpotlight_StudySpotlight = function StudySpotlight(props) {
+  var studies = [{
+    title: "PREVENT-AD Datasets",
+    logo: "/dataset_logo?id=projects/preventad-registered",
+    description: /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "The PREVENT-AD (Pre-symptomatic Evaluation of Experimental or Novel Treatments for Alzheimer's Disease) cohort is composed of cognitively healthy participants over 55 years old, at risk of developing Alzheimer's Disease (AD) as their parents and/or siblings were/are affected by the disease. These \u2018at-risk\u2019 participants have been followed for a naturalistic study of the presymptomatic phase of AD since 2011 using multimodal measurements of various disease indicators. One clinical trial intended to test a pharmaco-preventive agent has also been conducted.")),
+    buttons: [{
+      label: 'Open Dataset',
+      link: '/dataset?id=projects/preventad-open'
+    }, {
+      label: 'Open Dataset (BIDS)',
+      link: '/dataset?id=projects/preventad-open-bids'
+    }, {
+      label: 'Registered Dataset',
+      link: '/dataset?id=projects/preventad-registered'
+    }],
+    authors: "StoP-AD Center - Douglas Mental Health University Institute"
+  }, {
+    title: "Adolescent Brain Development",
+    logo: "/dataset_logo?id=projects/AdolescentBrainDevelopment",
+    description: /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Children were recruited between 6 and 13 years of age. All data was acquired at the Alberta Children's Hospital on a GE 3T Discovery MR750w system. Participants were asked to return after 2 years to provide a longitudinal time point with the same scan protocol and cognitive examination battery. Some participants returned for a third visit, as they reached 4 years from their initial time point while the study was still actively acquiring data. A battery of cognitive examinations was also collected during study visits.")),
+    buttons: [{
+      label: 'Open Dataset',
+      link: '/dataset?id=projects/AdolescentBrainDevelopment'
+    }],
+    authors: "Catherine Lebel - Developmental Neuroimaging Lab, University of Calgary"
+  }, {
+    title: "Calgary Campinas Brain MRI Dataset",
+    logo: "/dataset_logo?id=projects/calgary-campinas",
+    description: /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "The dataset is currently composed of 3D, T1-weighted reconstructed brain MR images and segmentation masks for certain structures. It also has brain MR raw data (i.e., k-space).")),
+    buttons: [{
+      label: 'Open Dataset',
+      link: '/dataset?id=projects/calgary-campinas'
+    }],
+    authors: "Roberto Souza, Richard Frayne, Leticia Rittner"
+  }];
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    "class": "card-description"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h3", {
+    "class": "card-description-title"
+  }, "STUDY SPOTLIGHT"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("hr", null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    id: "study-spotlight-carousel",
+    "class": "carousel slide",
+    "data-ride": "carousel",
+    "data-interval": "10000"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ol", {
+    "class": "carousel-indicators"
+  }, studies.map(function (study, i) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+      "data-target": "#study-spotlight-carousel",
+      "data-slide-to": i,
+      "class": i === 0 ? "active" : ""
+    });
+  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    "class": "carousel-inner"
+  }, studies.map(function (study, i) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      "class": i === 0 ? "carousel-item active" : "carousel-item"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      "class": "card-description-text"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      "class": "card-img d-flex justify-content-center"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+      alt: "Project image",
+      "class": "img-fluid",
+      src: study.logo
+    })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", {
+      "class": "card-description-subtitle"
+    }, study.title), study.description), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      "class": "d-flex mt-4 justify-content-around"
+    }, study.buttons.map(function (button) {
+      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+        href: button.link
+      }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+        "class": "btn btn-outline-secondary",
+        type: "button"
+      }, button.label)));
+    })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      "class": "card-description-subtitle"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Authors: ", study.authors)));
+  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    "class": "carousel-control-prev",
+    type: "button",
+    "data-target": "#study-spotlight-carousel",
+    "data-slide": "prev"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    "class": "carousel-control-prev-icon",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    "class": "sr-only"
+  }, "Previous")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    "class": "carousel-control-next",
+    type: "button",
+    "data-target": "#study-spotlight-carousel",
+    "data-slide": "next"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    "class": "carousel-control-next-icon",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    "class": "sr-only"
+  }, "Next"))));
+};
+
+/* harmony default export */ var src_StudySpotlight = (StudySpotlight_StudySpotlight);
 // EXTERNAL MODULE: ./node_modules/react-fast-compare/index.js
 var react_fast_compare = __webpack_require__(33);
 var react_fast_compare_default = /*#__PURE__*/__webpack_require__.n(react_fast_compare);
@@ -59035,6 +59141,7 @@ var index_modern_DatsEditorForm = function DatsEditorForm(props) {
 
 
 
+
 /* harmony default export */ var src = __webpack_exports__["default"] = ({
   DataTable: src_DataTable_DataTable,
   DataTableContainer: DataTable_DataTableContainer,
@@ -59043,7 +59150,8 @@ var index_modern_DatsEditorForm = function DatsEditorForm(props) {
   ChartContainer: src_ChartContainer,
   DatsEditorForm: index_modern_DatsEditorForm,
   ExecutionRecordElement: src_ExecutionRecordElement,
-  ElementContainer: src_ElementContainer
+  ElementContainer: src_ElementContainer,
+  StudySpotlight: src_StudySpotlight
 });
 
 /***/ }),
