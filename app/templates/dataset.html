@@ -302,10 +302,17 @@
       </button>
     </div>
   </div>
-  {% if data.authorizations == "private" %}
+  {% if data.authorizations in ["private","registered","controlled"] %}
   <div class="alert alert-info" role="alert">
-    <strong>Note: </strong>an account is required to access this dataset. Please
-    follow the Source URL and request an account on the source page.
+    <div style="font-size: 16px"><strong>Note:</strong> An account is required to access this dataset.
+    Please contact the 
+    {% if metadata.registrationPage is defined and metadata.registrationPage is not none %}
+    <a target="_blank" href="{{metadata.registrationPage}}">dataset maintainers</a> 
+    {% else %}
+    dataset maintainers
+    {% endif %}
+    to request an account before proceeding with a DataLad download.
+    </div>
   </div>
   {% endif %}
   <p>
@@ -405,7 +412,6 @@ datalad get &ltfilepath&gt</pre
 </div>
 
 <script type="text/javascript">
-
   const element = {{ data | tojson }};
   const complementUrl = "{{ url_for('pipelines.pipeline_search') }}";
   element.showDownload = true;

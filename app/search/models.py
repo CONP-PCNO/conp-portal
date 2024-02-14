@@ -274,6 +274,16 @@ class DATSDataset(object):
         return contacts
 
     @property
+    def registrationPage(self):
+        registrationPage = None
+        extraprops = self.descriptor.get('extraProperties', {})
+        for prop in extraprops:
+            if prop.get('category') == 'registrationPage':
+                registrationPage = ", ".join([x['value'] for x in prop.get('values')])
+
+        return registrationPage
+
+    @property
     def conpStatus(self):
         conpStatus = 'external'
         extraprops = self.descriptor.get('extraProperties', {})

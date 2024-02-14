@@ -280,9 +280,9 @@ def dataset_search():
             elements = list(filter(lambda e: e['authorizations'] is not None, elements))
             for item in filter_auth:
                 if item == "Yes":
-                    elements = list(filter(lambda e: e['authorizations'] in ['private', 'registered'], elements))
+                    elements = list(filter(lambda e: e['authorizations'] in ['private', 'registered', 'controlled'], elements))
                 if item == "No":
-                    elements = list(filter(lambda e: e['authorizations'] not in ['private', 'registered'], elements))
+                    elements = list(filter(lambda e: e['authorizations'] not in ['private', 'registered', 'controlled'], elements))
 
         if request.args.get('cbrain'):
             elements = list(
@@ -549,6 +549,7 @@ def dataset_info():
         "authorizations": datsdataset.authorizations,
         "principalInvestigators": datsdataset.principalInvestigators,
         "primaryPublications": datsdataset.primaryPublications,
+        "registrationPage": datsdataset.registrationPage,
         "logoFilepath": datsdataset.LogoFilepath,
         "status": datsdataset.status,
         "cbrain_id": dataset_cbrain_id,
@@ -683,6 +684,7 @@ def get_dataset_metadata_information(dataset):
         "spatialCoverage": datsdataset.spatialCoverage,
         "dates": datsdataset.dates,
         "remoteUrl": dataset.remoteUrl,
+        "registrationPage": datsdataset.registrationPage
     }
 
 
