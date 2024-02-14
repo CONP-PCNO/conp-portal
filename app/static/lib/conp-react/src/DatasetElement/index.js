@@ -36,10 +36,16 @@ const DatasetElement = (props) => {
       );
       break;
     case "private":
+    case "registered":
+    case "controlled":
       authIcons.push(
         <span>
           <FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg" /> -
-          Third-party account required
+          {element.registrationPage ?
+            <a target="_blank" href={element.registrationPage}>Third-party account required</a> 
+          :
+            <>Third-party account required</>
+          }
         </span>
       );
       break;
