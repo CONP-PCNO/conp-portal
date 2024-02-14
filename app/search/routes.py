@@ -280,9 +280,9 @@ def dataset_search():
             elements = list(filter(lambda e: e['authorizations'] is not None, elements))
             for item in filter_auth:
                 if item == "Yes":
-                    elements = list(filter(lambda e: e['authorizations'] in ['private', 'registered', 'controlled', 'registered'], elements))
+                    elements = list(filter(lambda e: e['authorizations'] in ['private', 'registered', 'controlled'], elements))
                 if item == "No":
-                    elements = list(filter(lambda e: e['authorizations'] not in ['private', 'registered', 'controlled', 'registered'], elements))
+                    elements = list(filter(lambda e: e['authorizations'] not in ['private', 'registered', 'controlled'], elements))
 
         if request.args.get('cbrain'):
             elements = list(
