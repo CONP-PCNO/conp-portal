@@ -689,7 +689,8 @@ def get_dataset_metadata_information(dataset):
         "spatialCoverage": datsdataset.spatialCoverage,
         "dates": datsdataset.dates,
         "remoteUrl": dataset.remoteUrl,
-        "registrationPage": datsdataset.registrationPage
+        "registrationPage": datsdataset.registrationPage,
+        "registrationEmail": True if datsdataset.registrationPage and re.match(r"[^@]+@[^@]+\.[^@]+", datsdataset.registrationPage) else False
     }
 
 

@@ -307,7 +307,11 @@
     <div style="font-size: 16px"><strong>Note:</strong> An account is required to access this dataset.
     Please contact the 
     {% if metadata.registrationPage is defined and metadata.registrationPage is not none %}
-    <a target="_blank" href="{{metadata.registrationPage}}">dataset maintainers</a> 
+      {% if metadata.registrationEmail %}
+      <a target="_blank" href="mailto:{{metadata.registrationPage}}">dataset maintainers</a>
+      {% else %}
+      <a target="_blank" href="{{metadata.registrationPage}}">dataset maintainers</a>
+      {% endif %}
     {% else %}
     dataset maintainers
     {% endif %}

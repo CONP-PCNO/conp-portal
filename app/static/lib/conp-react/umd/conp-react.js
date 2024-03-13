@@ -23995,21 +23995,58 @@ var ChartContainer_ChartContainer = function ChartContainer(props) {
 
 
 var StudySpotlight_StudySpotlight = function StudySpotlight(props) {
-  var studies = [{
+  var studies = [
+  /*{
     title: "PREVENT-AD Datasets",
     logo: "/dataset_logo?id=projects/preventad-registered",
-    description: /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "The PREVENT-AD (Pre-symptomatic Evaluation of Experimental or Novel Treatments for Alzheimer's Disease) cohort is composed of cognitively healthy participants over 55 years old, at risk of developing Alzheimer's Disease (AD) as their parents and/or siblings were/are affected by the disease. These \u2018at-risk\u2019 participants have been followed for a naturalistic study of the presymptomatic phase of AD since 2011 using multimodal measurements of various disease indicators. One clinical trial intended to test a pharmaco-preventive agent has also been conducted.")),
+    description: <>
+      <p>
+        The PREVENT-AD (Pre-symptomatic Evaluation of Experimental or
+        Novel Treatments for Alzheimer's Disease) cohort is composed of
+        cognitively healthy participants over 55 years old, at risk of
+        developing Alzheimer's Disease (AD) as their parents and/or
+        siblings were/are affected by the disease. These ‘at-risk’
+        participants have been followed for a naturalistic study of the
+        presymptomatic phase of AD since 2011 using multimodal
+        measurements of various disease indicators. One clinical trial
+        intended to test a pharmaco-preventive agent has also been
+        conducted.
+      </p>
+    </>,
+    buttons: [
+      {
+        label: 'Open Dataset',
+        link: '/dataset?id=projects/preventad-open',
+      },
+      {
+        label: 'Open Dataset (BIDS)',
+        link: '/dataset?id=projects/preventad-open-bids',
+      },
+      {
+        label: 'Registered Dataset',
+        link: '/dataset?id=projects/preventad-registered',
+      },
+    ],
+    authors: "StoP-AD Center - Douglas Mental Health University Institute"
+  },*/
+  {
+    title: "RECOVER: REaching patients with a COncussion Visiting the Emergency Room to enhance care",
+    logo: "https://www.braincode.ca/sites/default/files/dr014_CON_logo.png",
+    description: /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "The Concussion Ontario Network: Neuroinformatics to Enhance Clinical care and Translation (CONNECT) is a collaborative network of 10 clinical sites across Ontario that aim to ensure new knowledge of concussion is translated into better diagnosis and care for the benefit of all Ontarians. Given that the pathophysiology of concussion is largely unknown, a systems approach could provide a holistic framework for the study of concussion. Therefore, the overall purpose of the RECOVER pilot study is to demonstrate the ability to characterize ultra-early acute concussion in adults using a harmonized multi-scale system approach by collecting data that are potential predictors of persistent post-concussion symptoms (PPCS) over a 12- week period.")),
+    buttons: [{
+      label: 'Registered Dataset',
+      link: '/dataset?id=projects/braincode_CONNECT_RECOVER'
+    }],
+    authors: "Ontario Brain Institute"
+  }, {
+    title: "MICA-MICs: a dataset for Microstructure-Informed Connectomics",
+    logo: "/dataset_logo?id=projects/mica-mics",
+    description: /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "The MICA-MICs dataset leverages the rich descriptions of brain structure and function offered by MRI to further our understanding of human brain organization across modalities and spatial scales. MICA-MICs is a dataset for microstructure-informed connectomics providing raw and fully processed multimodal neuroimaging data acquired in 50 healthy control participants at an MRI field strength of 3T. Modalities include high-resolution anatomical (T1-weighted), microstructurally-sensitive (quantitative T1), diffusion-weighted, and resting-state functional imaging. We additionally provide users with ready-to-use connectomes built across multiple parcellation schemes based on histology (e.g. Von Economo), sulco-gyral landmarks (e.g. Desikan-Killiany), and function (e.g. Schaefer atlases), for a total of 18 different parcellations of varying spatial scale.")),
     buttons: [{
       label: 'Open Dataset',
-      link: '/dataset?id=projects/preventad-open'
-    }, {
-      label: 'Open Dataset (BIDS)',
-      link: '/dataset?id=projects/preventad-open-bids'
-    }, {
-      label: 'Registered Dataset',
-      link: '/dataset?id=projects/preventad-registered'
+      link: '/dataset?id=projects/mica-mics'
     }],
-    authors: "StoP-AD Center - Douglas Mental Health University Institute"
+    authors: "Jessica Royer, Raul Rodriguez-Cruces, Shahin Tavakol et al."
   }, {
     title: "Adolescent Brain Development",
     logo: "/dataset_logo?id=projects/AdolescentBrainDevelopment",
@@ -24055,7 +24092,11 @@ var StudySpotlight_StudySpotlight = function StudySpotlight(props) {
       "class": "card-description-text"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       "class": "card-img d-flex justify-content-center"
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+    }, study.logo && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
+      style: {
+        maxHeight: '220px',
+        maxWidth: '250px'
+      },
       alt: "Project image",
       "class": "img-fluid",
       src: study.logo
