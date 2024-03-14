@@ -52,6 +52,24 @@ def share():
     return render_template('share.html', title='CONP | Share a Dataset', user=current_user, content=content)
 
 
+@main_bp.route('/download')
+def download():
+    """ Download Route
+
+        Route to lead to the download page
+
+        Args:
+            None
+
+        Returns:
+            rendered template for download.html
+    """
+
+    content = github.get_download_content()
+
+    return render_template('download.html', title='CONP | Download a Dataset', user=current_user, content=content)
+
+
 @main_bp.route('/faq')
 def faq():
     """ FAQ Route
