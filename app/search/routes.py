@@ -264,22 +264,23 @@ def dataset_search():
         if request.args.get('modalities'):
             filter_modalities = request.args.get('modalities').split(",")
             elements = list(
-                filter(lambda e: e['modalities'] is not None, elements))
+                filter(lambda e: e['modalities'] is not None, elements)
+            )
             elements = list(filter(lambda e: any(
                 item in (
                     m.lower() for m in e['modalities']
                 ) for item in filter_modalities
-            ), elements)
-            )
-
+            ), elements))
         if request.args.get('formats'):
             filter_formats = request.args.get('formats').split(",")
             elements = list(
                 filter(lambda e: e['formats'] is not None, elements)
             )
-            elements = list(filter(lambda e: all(item.lower() in (
-                f.lower() for f in e['formats']) for item in filter_formats), elements)
-            )
+            elements = list(filter(lambda e: any(
+                item.lower() in (
+                    f.lower() for f in e['formats']
+                ) for item in filter_formats
+            ), elements))
         if request.args.get('authorizations'):
             filter_auth = request.args.get('authorizations').split(',')
             elements = list(filter(lambda e: e['authorizations'] is not None, elements))
