@@ -91,69 +91,18 @@
   <div class="p-2 d-flex flex-wrap">
     <div class="card w-100 mx-1" data-type="dashboard">
       <div id="spotlight-container">
-        <div class="card-description">
-          <h3 class="card-description-title">STUDY SPOTLIGHT</h3>
-          <hr />
-
-          <div class="card-description-text">
-            <div class="card-img d-flex justify-content-center">
-              <img
-                alt="Project image"
-                class="img-fluid"
-                src="/dataset_logo?id=projects/preventad-registered"
-              />
-            </div>
-            <p class="card-description-subtitle">PREVENT-AD Datasets</p>
-            <p>
-              The PREVENT-AD (Pre-symptomatic Evaluation of Experimental or
-              Novel Treatments for Alzheimer's Disease) cohort is composed of
-              cognitively healthy participants over 55 years old, at risk of
-              developing Alzheimer's Disease (AD) as their parents and/or
-              siblings were/are affected by the disease. These ‘at-risk’
-              participants have been followed for a naturalistic study of the
-              presymptomatic phase of AD since 2011 using multimodal
-              measurements of various disease indicators. One clinical trial
-              intended to test a pharmaco-preventive agent has also been
-              conducted.
-            </p>
-            <p>
-              The PREVENT-AD dataset is available to researchers around the
-              world with the intention to contribute to the community’s growing
-              understanding of AD pathogenesis.
-            </p>
-          </div>
-          <div class="d-flex mt-4 justify-content-around">
-            <div>
-              <a href="/dataset?id=projects/preventad-open">
-                <button class="btn btn-outline-secondary" type="button">
-                  Open Dataset
-                </button>
-              </a>
-            </div>
-            <div>
-              <a href="/dataset?id=projects/preventad-open-bids">
-                <button class="btn btn-outline-secondary" type="button">
-                  Open Dataset (BIDS)
-                </button>
-              </a>
-            </div>
-            <div>
-              <a href="/dataset?id=projects/preventad-registered">
-                <button class="btn btn-outline-secondary" type="button">
-                  Registered Dataset
-                </button>
-              </a>
-            </div>
-          </div>
-          <div class="card-description-subtitle">
-            <p>
-              Authors: StoP-AD Center - Douglas Mental Health University
-              Institute
-            </p>
-          </div>
-        </div>
+        <script type="text/javascript">
+          const reactElement = React.createElement(
+            CONPReact.StudySpotlight
+          );
+          ReactDOM.render(
+            reactElement,
+            document.querySelector("#spotlight-container")
+          );
+        </script>
       </div>
     </div>
+
     <div class="card w-100 mx-1" data-type="dashboard">
       <div class="card-description flex-grow-0">
         <h3 class="card-description-title">TUTORIALS</h3>
