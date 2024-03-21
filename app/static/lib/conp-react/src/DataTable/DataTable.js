@@ -35,31 +35,61 @@ const DataTable = ({
   ]);
 
   const [tempSearch, setTempSearch] = useState(query.search)
+  // const handleFiltersChange = (event) => {
+  //   event.preventDefault();
+  //   const e = event.target.value;
+  //   const filter = e.split(".");
+  //   const newFilters = filters;
+  //   newFilters.forEach(f => {
+  //     if (f.key === filter[0]) {
+  //       if (f.values.includes(filter[1])) {
+  //         f.values.splice(f.values.indexOf(filter[1]), 1);
+  //       } else {
+  //         f.values.push(filter[1])
+  //       }
+  //     }
+  //   })
+  //   setFilters(newFilters);
+  //   setQuery({
+  //     ...query,
+  //     modalities: filters.filter(f => f["key"] === "modalities")[0].values,
+  //     formats: filters.filter(f => f["key"] === "formats")[0].values,
+  //     cbrain: filters.filter(f => f["key"] === "cbrain")[0].values,
+  //     authorizations: filters.filter(f => f["key"] === "authorizations")[0].values,
+  //     page: 1
+  //   })
+  // }
 
   const handleFiltersChange = (event) => {
     event.preventDefault();
     const e = event.target.value;
-    const filter = e.split(".");
-    const newFilters = filters;
-    newFilters.forEach(f => {
-      if (f.key === filter[0]) {
-        if (f.values.includes(filter[1])) {
-          f.values.splice(f.values.indexOf(filter[1]), 1);
-        } else {
-          f.values.push(filter[1])
-        }
-      }
-    })
+    const [filterKey, filterValue] = e.split(".");
+
+    // Créer une copie profonde des filtres pour éviter les mutations directes
+    const newFilters = filters.map(f => ({
+      ...f,
+      values: f.key === filterKey ? 
+        f.values.includes(filterValue) ? 
+          f.values.filter(value => value !== filterValue) // Retirer la valeur si elle existe déjà
+          : [...f.values, filterValue] // Ajouter la valeur si elle n'existe pas
+        : [...f.values]
+    }));
+
     setFilters(newFilters);
-    setQuery({
+
+    // Mise à jour de `query` basée sur les nouveaux filtres
+    const updatedQuery = {
       ...query,
-      modalities: filters.filter(f => f["key"] === "modalities")[0].values,
-      formats: filters.filter(f => f["key"] === "formats")[0].values,
-      cbrain: filters.filter(f => f["key"] === "cbrain")[0].values,
-      authorizations: filters.filter(f => f["key"] === "authorizations")[0].values,
-      page: 1
-    })
-  }
+      modalities: newFilters.find(f => f.key === "modalities")?.values || [],
+      formats: newFilters.find(f => f.key === "formats")?.values || [],
+      cbrain: newFilters.find(f => f.key === "cbrain")?.values || [],
+      authorizations: newFilters.find(f => f.key === "authorizations")?.values || [],
+      page: 1 // Réinitialiser à la première page à chaque modification de filtre
+    };
+
+    setQuery(updatedQuery);
+  };
+
 
   const handleMaxPerPageChange = (event) => {
     event.preventDefault()
@@ -94,6 +124,25 @@ const DataTable = ({
     }
     setQuery({ ...query, page: page })
   }
+
+   // Fonction pour filtrer les éléments basée sur les filtres actifs
+   const filterElements = (elements, filters) => {
+    return elements.filter(element => {
+      return filters.every(filter => {
+        if (filter.values.length === 0) {
+          return true; // Si aucun filtre n'est actif pour cette clé, l'élément passe
+        }
+        const elementValue = element[filter.key];
+        if (Array.isArray(elementValue)) {
+          return filter.values.some(value => elementValue.includes(value));
+        } else {
+          return filter.values.includes(elementValue);
+        }
+      });
+    });
+  };
+
+  const filteredElements = filterElements(elements, filters);
 
   return (
     isLoading ? <div />
@@ -363,7 +412,7 @@ const DataTable = ({
               </div>
               : null}
           {
-            elements.map((element, i) => {
+            filteredElements.map((element, i) => {
               return (
                 <div key={"" + element.id}>
                   {React.createElement(renderElement, {...element, authorized, imagePath, cbrainIds})}

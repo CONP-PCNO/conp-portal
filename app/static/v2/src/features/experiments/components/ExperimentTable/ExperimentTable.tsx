@@ -93,26 +93,6 @@ export const ExperimentTable = ({ experiments: initialExperiments , keyword: key
     }
   }, [keywordSearch]); // Dépendance : keywordSearch
 
-  // const filterExperiments = (experimentsList: Experiment[]) => {
-  // if (anyFilterActive()) {
-  //   return experimentsList.filter((experiment) => {
-  //     for (const category in searchFilters) {
-  //       for (const [option, isActive] of Object.entries(searchFilters[category].options)) {
-  //         if (isActive) {
-  //           const value = experiment[category as keyof Experiment];
-  //           if (typeof value === 'string' && option === value) {
-  //             return true;
-  //           } else if (value instanceof Array && value.includes(option)) {
-  //             return true;
-  //           }
-  //         }
-  //       }
-  //     }
-  //     return false;
-  //   });
-  //   }
-  //   return experimentsList;
-  // }
   const filterExperiments = (experimentsList: Experiment[]) => {
     if (anyFilterActive()) {
       return experimentsList.filter((experiment) => {
