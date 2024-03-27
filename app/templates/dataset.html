@@ -47,7 +47,7 @@
   {% endif %} {% if data.principalInvestigators is defined and
   data.principalInvestigators is not none %}
   <div class="py-1">
-    <strong>Principal Investigator: </strong>{{ data.principalInvestigators }}
+    <strong>Principal Investigator: </strong>{{ data.principalInvestigators|join(', ') }}
   </div>
   {% endif %} {% if metadata.contact is defined and metadata.contact is not none
   %}
