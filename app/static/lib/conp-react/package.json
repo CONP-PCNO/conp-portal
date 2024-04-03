@@ -24,7 +24,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "bootstrap": "^4.3.1",
-    "conp-dats-editor": "git://github.com/CONP-PCNO/conp-dats-editor.git#c0bfe8ea8fa61b6712ef8fb8592c26280f36fe86",
+    "conp-dats-editor": "git://github.com/CONP-PCNO/conp-dats-editor.git#4ed356c27dfcc42216074276d3acb6f9c7d29ff6",
     "highcharts": "^9.0.0",
     "highcharts-custom-events": "^3.0.10",
     "highcharts-react-official": "^3.0.0",
