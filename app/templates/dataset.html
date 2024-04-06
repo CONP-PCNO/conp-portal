@@ -449,8 +449,9 @@ datalad get &ltfilepath&gt</pre
       })
       .catch(function (error) {
         const message = "Something went wrong when trying to download the metadata: " + error
-        document.getElementById("dats-download-alert").innerHTML = message;
-        document.getElementById("dats-download-alert").hidden = false;
+        // document.getElementById("dats-download-alert").innerHTML = message;
+        // document.getElementById("dats-download-alert").hidden = false;
+        console.error(message);
       });
   }
 </script>
