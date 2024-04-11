@@ -47,7 +47,7 @@
   {% endif %} {% if data.principalInvestigators is defined and
   data.principalInvestigators is not none %}
   <div class="py-1">
-    <strong>Principal Investigator: </strong>{{ data.principalInvestigators }}
+    <strong>Principal Investigator: </strong>{{ data.principalInvestigators|join(', ') }}
   </div>
   {% endif %} {% if metadata.contact is defined and metadata.contact is not none
   %}
@@ -449,8 +449,9 @@ datalad get &ltfilepath&gt</pre
       })
       .catch(function (error) {
         const message = "Something went wrong when trying to download the metadata: " + error
-        document.getElementById("dats-download-alert").innerHTML = message;
-        document.getElementById("dats-download-alert").hidden = false;
+        // document.getElementById("dats-download-alert").innerHTML = message;
+        // document.getElementById("dats-download-alert").hidden = false;
+        console.error(message);
       });
   }
 </script>

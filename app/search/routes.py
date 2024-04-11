@@ -603,6 +603,8 @@ def download_metadata():
         Raises:
             HTML error if this fails
     """
+    from unidecode import unidecode
+
     dataset_id = request.args.get('dataset', '')
     dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
     if dataset is None:
@@ -621,7 +623,7 @@ def download_metadata():
         os.path.basename(datspath),
         as_attachment=True,
         attachment_filename=os.path.join(
-            dataset.name.replace(' ', '_'), '.dats.json'),
+            unidecode(dataset.name.replace(' ', '_')), '.dats.json'),
         mimetype='application/json'
     )
 

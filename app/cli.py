@@ -164,6 +164,7 @@ def _update_datasets(app):
     import json
     from pathlib import Path
     import git
+    import traceback
 
     datasetsdir = Path(app.config['DATA_PATH']) / 'conp-dataset'
     datasetsdir.mkdir(parents=True, exist_ok=True)
@@ -181,7 +182,7 @@ def _update_datasets(app):
     # Update to latest commit
     origin = repo.remotes.origin
     origin.pull('master')
-    repo.submodule_update(recursive=False, keep_going=True)
+    repo.submodule_update(recursive=True, force_reset=True, force_remove=True, keep_going=True)
 
     d = DataladDataset(path=datasetsdir)
     if not d.is_installed():
@@ -197,6 +198,7 @@ def _update_datasets(app):
         print("\033[91m")
         print("[ERROR  ] An exception occurred in datalad update.")
         print(e.args)
+        print(traceback.format_exc())
         print("\033[0m")
         return
 
