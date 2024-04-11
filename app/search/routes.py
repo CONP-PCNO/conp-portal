@@ -622,8 +622,7 @@ def download_metadata():
         os.path.dirname(datspath),
         os.path.basename(datspath),
         as_attachment=True,
-        attachment_filename=os.path.join(
-            unidecode(dataset.name.replace(' ', '_')), '.dats.json'),
+        attachment_filename=unidecode(dataset.name.replace(' ', '_') + '.dats.json'),
         mimetype='application/json'
     )
 
