@@ -47,7 +47,7 @@ export const ExperimentPage = ({ experiment, downloadLink, readme }: ExperimentP
           <strong>Keywords:</strong>
 
           {experiment["keywords"].toString().split(',').map((keyword) => (
-              <span className="mr-1" key={keyword.trim()}><a className='badge badge-info' onClick={() => handleKeywordClick(keyword)}>{keyword.trim()}</a></span>
+              <span className="mr-1" key={keyword.trim()}><a className='badge badge-info' onClick={() => handleKeywordClick(keyword)} style={{ cursor: 'pointer' }}>{keyword.trim()}</a></span>
               // <KeywordLink key={keyword.trim()} keyword={keyword} />
           ))}
           </div>
@@ -76,7 +76,7 @@ export const ExperimentPage = ({ experiment, downloadLink, readme }: ExperimentP
           <div className="py-1">
               <strong>Modalities: </strong>
               {experiment["modalities"].map((modalities) => (
-                  <span className="mr-1" key={modalities}><a className='badge badge-info' onClick={() => handleKeywordClick(modalities)}>{modalities}</a></span>
+                  <span className="mr-1" key={modalities}><a className='badge badge-info' onClick={() => handleKeywordClick(modalities)} style={{ cursor: 'pointer' }}>{modalities}</a></span>
               ))}
           </div>
           <div className="py-1">

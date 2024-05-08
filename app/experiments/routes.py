@@ -71,7 +71,21 @@ def experiment_as_dict(exp: Experiment):
 
 @experiments_bp.route("/")
 def home():
-    return render_template("experiments/home.html")
+    # return render_template("experiments/home.html")
+    
+    # Récupérer le paramètre 'keyword' de l'URL, sinon None par défaut
+    keyword = request.args.get('keyword')
+    experiments = Experiment.query.all()
+    experiment_dict = [
+        experiment_as_dict(exp) for exp in experiments
+    ]
+
+    # Si le paramètre keyword est vide (chaîne vide), vous pouvez le traiter comme non spécifié.
+    if not keyword:
+        return render_template("experiments/search.html", experiments=experiment_dict, keyword="")
+
+    return render_template("experiments/search.html", experiments=experiment_dict, keyword=keyword)
+    
 
 @experiments_bp.route("/download/<int:experiment_id>")
 def download(experiment_id):
