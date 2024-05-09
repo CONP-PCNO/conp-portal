@@ -441,7 +441,7 @@ datalad get &ltfilepath&gt</pre
         var file = window.URL.createObjectURL(blob, { type: 'application/json' });
         let link = document.createElement('a');
         link.href = file;
-        link.download = `${element.title.toLowerCase().replace(" ", "_")}.dats.json`;
+        link.download = `${element.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9]/g, "_")}.dats.json`;
         link.click();
 
         // For Firefox it is necessary to delay revoking the ObjectURL.
