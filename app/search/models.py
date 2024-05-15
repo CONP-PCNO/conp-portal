@@ -192,10 +192,10 @@ class DATSDataset(object):
         if type(publications) == list:
             for publi in publications:
                 title = publi.get('title', '')
-                if not title.endswith('.'):
+                if title and not title.endswith('.'):
                     title += '.'
                 journal = publi.get('publicationVenue', '')
-                if not journal.endswith('.'):
+                if journal and not journal.endswith('.'):
                     journal += '.'
                 author = publi.get('authors', [])[0].get(
                     'fullName', '') if 'authors' in publi else ''
