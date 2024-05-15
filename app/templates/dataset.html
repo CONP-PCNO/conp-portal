@@ -42,7 +42,7 @@
   <h5><strong> {{ data.title }} </strong></h5>
   {% endif %} {% if data.creators is defined and data.creators is not none %}
   <div class="py-2">
-    <strong>Creators: </strong> {{ data.creators|join(',') }}
+    <strong>Creators: </strong> {{ data.creators|join(', ') }}
   </div>
   {% endif %} {% if data.principalInvestigators is defined and
   data.principalInvestigators is not none %}
@@ -55,7 +55,7 @@
   {% endif %} {% if metadata.licenses is defined and metadata.licenses is not
   none %}
   <div class="py-1">
-    <strong>Licenses: </strong> {{ metadata.licenses|join(',') }}
+    <strong>Licenses: </strong> {{ metadata.licenses|join(', ') }}
   </div>
   {% endif %} {% if metadata.version is defined and metadata.version is not none
   %}
