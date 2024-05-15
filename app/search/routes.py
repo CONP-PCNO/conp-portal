@@ -224,7 +224,9 @@ def dataset_search():
             if dataset_cbrain_id
             else dataset_cbrain_id,
             "showDownloadButton": show_download_button,
-            "zipLocation": zip_location
+            "zipLocation": zip_location,
+            "downloadOptions": datsdataset.downloadOptions,
+            "registrationPage": datsdataset.registrationPage,
         }
 
         elements.append(dataset)
@@ -556,6 +558,7 @@ def dataset_info():
         "principalInvestigators": datsdataset.principalInvestigators,
         "primaryPublications": datsdataset.primaryPublications,
         "registrationPage": datsdataset.registrationPage,
+        "downloadOptions": datsdataset.downloadOptions,
         "logoFilepath": datsdataset.LogoFilepath,
         "status": datsdataset.status,
         "cbrain_id": dataset_cbrain_id,
@@ -692,6 +695,7 @@ def get_dataset_metadata_information(dataset):
         "dates": datsdataset.dates,
         "remoteUrl": dataset.remoteUrl,
         "registrationPage": datsdataset.registrationPage,
+        "downloadOptions": datsdataset.downloadOptions,
         "registrationEmail": True if datsdataset.registrationPage and re.match(r"[^@]+@[^@]+\.[^@]+", datsdataset.registrationPage) else False
     }
 

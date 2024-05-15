@@ -284,6 +284,16 @@ class DATSDataset(object):
         return registrationPage
 
     @property
+    def downloadOptions(self):
+        downloadOptions = None
+        extraprops = self.descriptor.get('extraProperties', {})
+        for prop in extraprops:
+            if prop.get('category') == 'downloadOptions':
+                downloadOptions = ", ".join([x['value'] for x in prop.get('values')])
+
+        return downloadOptions
+
+    @property
     def conpStatus(self):
         conpStatus = 'external'
         extraprops = self.descriptor.get('extraProperties', {})

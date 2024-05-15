@@ -21894,21 +21894,38 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
 
   switch (element.authorizations) {
     case "restricted":
-      authIcons.push( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
+      authIcons.push( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+        style: {
+          color: "#013220",
+          fontSize: "13px",
+          lineHeight: "1.2em"
+        }
+      }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
         icon: faUserAlt,
-        color: "dimgray",
-        size: "lg"
-      }), " - CONP account required"));
+        style: {
+          marginRight: "10px"
+        }
+      }), "CONP account required"));
       break;
 
     case "private":
     case "registered":
     case "controlled":
-      authIcons.push( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
+      authIcons.push( /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+        style: {
+          color: "#013220",
+          fontSize: "13px",
+          lineHeight: "1.2em"
+        }
+      }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
         icon: faUserLock,
-        color: "dimgray",
-        size: "lg"
-      }), " -", element.registrationPage ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+        style: {
+          marginRight: "10px"
+        }
+      }), element.registrationPage ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+        style: {
+          color: "#013220"
+        },
         target: "_blank",
         href: element.registrationPage
       }, "Third-party account required") : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, "Third-party account required")));
@@ -22037,7 +22054,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     id: element.ark_id
   })))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col col-lg-3 d-flex flex-column justify-content-center align-items-center p-2"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, (element === null || element === void 0 ? void 0 : element.downloadOptions) !== 'offsite' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "row align-items-center justify-content-center w-100"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-10 p-0"
@@ -22076,7 +22093,9 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     href: "dataset?id=" + element.id + "#dataladInstructions",
     role: "button",
     className: "btn btn-success m-1"
-  }, "Download With DataLad")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "Download With DataLad", authIcons.map(function (icon, index) {
+    return icon;
+  }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-2 p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-text pl-1"
@@ -22141,14 +22160,16 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
       Width: "70px",
       WhiteSpace: "pre-wrap"
     }
-  }, "CBRAIN allows users to run analysis pipelines on a network of high-performance ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "computing clusters through a friendly web-browser-based interface.")))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex justify-content-center align-items-center"
-  }, authIcons.map(function (icon, index) {
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      key: "authIcon_" + index,
-      className: "text-center p-1"
-    }, icon);
-  })))), downloadModalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(DatasetElement_DownloadModalWindowElement, {
+  }, "CBRAIN allows users to run analysis pipelines on a network of high-performance ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null), "computing clusters through a friendly web-browser-based interface."))))) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "row align-items-center w-100"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "col-10 p-0"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    target: "_blank",
+    href: element.registrationPage,
+    role: "button",
+    className: "btn btn-success m-1"
+  }, "Offsite Download")))))), downloadModalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(DatasetElement_DownloadModalWindowElement, {
     size: element.size,
     zipLocation: element.zipLocation
   }) : null, cbrainModalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_CbrainModalDataset, {
