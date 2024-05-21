@@ -95,7 +95,7 @@ pytz==2018.9
 PyYAML==5.4
 rauth==0.7.3
 recommonmark==0.5.0
-requests==2.31.0
+requests==2.32.0
 requests-oauthlib==1.2.0
 SecretStorage==3.1.1
 simplejson==3.16.0
