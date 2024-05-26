@@ -13,13 +13,6 @@
     </a>
     <a
       class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3 sidebar-tab"
-      href="{{ url_for('experiments.home') }}"
-    >
-      <h1><i class="fa fa-desktop"></i></h1>
-      <p class="text-center text-capitalize p-1">Experiments</p>
-    </a>
-    <a
-      class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3 sidebar-tab"
       href="{{ url_for('search.search') }}"
     >
       <h1><i class="fa fa-search"></i></h1>
@@ -31,6 +24,15 @@
     >
       <h1><i class="fa fa-wrench"></i></h1>
       <p class="text-center text-capitalize p-1">Tools & Pipelines</p>
+    </a>
+    <a
+      class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3 sidebar-tab"
+      href="{{ url_for('experiments.home') }}"
+    >
+      <h1>
+        <img src="{{ url_for('static', filename='img/experiments_beta_white.png') }}" alt="Experiments" style="width: 48px; height: 32px;">
+      </h1>
+      <p class="text-center text-capitalize p-1">Experiments</p>
     </a>
     <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
       href="{{ url_for('main.share') }}">
