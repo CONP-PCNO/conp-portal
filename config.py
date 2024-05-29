@@ -34,6 +34,7 @@ class Config(object):
     MAIL_DEFAULT_SENDER = '"CONP-PCNO Portal" <shawntbrown@gmail.com>'
     ADMINS = [os.environ.get('ADMIN_EMAIL')] or ['conp-test@mailinator.com']
     LOG_TO_STDOUT = True
+    TEMPLATES_AUTO_RELOAD = True
 
     # Flask-User Settings
     USER_APP_NAME = "CONP-PCNO Data Portal"

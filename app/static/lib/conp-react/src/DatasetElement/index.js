@@ -29,24 +29,38 @@ const DatasetElement = (props) => {
   switch (element.authorizations) {
     case "restricted":
       authIcons.push(
-        <span>
-          <FontAwesomeIcon icon={faUserAlt} color="dimgray" size="lg" /> - CONP
-          account required
-        </span>
+        <div style={{
+          color: "#013220",
+          fontSize: "13px",
+          lineHeight: "1.2em"
+        }}>
+          <FontAwesomeIcon icon={faUserAlt} style={{marginRight: "10px"}} />
+          CONP account required
+        </div>
       );
       break;
     case "private":
     case "registered":
     case "controlled":
       authIcons.push(
-        <span>
-          <FontAwesomeIcon icon={faUserLock} color="dimgray" size="lg" /> -
+        <div style={{
+          color: "#013220",
+          fontSize: "13px",
+          lineHeight: "1.2em"
+        }}>
+          <FontAwesomeIcon icon={faUserLock} style={{marginRight: "10px"}} />
           {element.registrationPage ?
-            <a target="_blank" href={element.registrationPage}>Third-party account required</a> 
+            <a
+              style={{
+                color: "#013220",
+              }}
+              target="_blank"
+              href={element.registrationPage}
+            >Third-party account required</a>
           :
             <>Third-party account required</>
           }
-        </span>
+        </div>
       );
       break;
     default:
@@ -183,124 +197,135 @@ const DatasetElement = (props) => {
           </div>
         </div>
         <div className="col col-lg-3 d-flex flex-column justify-content-center align-items-center p-2">
-          <div className="row align-items-center justify-content-center w-100">
-            <div className="col-10 p-0">
-              {element.showDownloadButton ?
-                <button
-                  type="button"
-                  className="btn btn-success m-1"
-                  onClick={() => openDownloadModal()}
-                >
-                  Direct Download ({element.size})
-                </button> :
-                <button className="btn btn-outline-secondary m-1 disabled">
-                  Direct Download (Not Available)
-                </button>
-              }
-            </div>
-            <div className="col-2 p-2">
-              <div className="card-text pl-1">
-                <FontAwesomeIcon
-                  icon={faQuestionCircle}
-                  color="dimgray"
-                  size="lg"
-                  onMouseEnter={handleDownloadMouseEnter}
-                  onMouseLeave={handleDownloadMouseLeave}
-                  data-tip
-                  data-for="downloadTip"
-                />
-                {showDownloadTipText &&
-                  <ReactToolTip id="downloadTip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
-                    Direct download is available for datasets that do not require <br/>
-                    a third-party account. Datasets requiring a third-party account <br/>
-                    can be downloaded via DataLad following the obtention of credentials.
-                  </ReactToolTip>
-                }
-              </div>
-            </div>
-          </div>
-
-          <div className="row align-items-center w-100">
-            <div className="col-10 p-0">
-              <a href={`dataset?id=${element.id}#dataladInstructions`} role="button"
-                   className="btn btn-success m-1">
-                Download With DataLad
-              </a>
-            </div>
-            <div className="col-2 p-2">
-              <div className="card-text pl-1">
-                <FontAwesomeIcon
-                  icon={faQuestionCircle}
-                  color="dimgray"
-                  size="lg"
-                  onMouseEnter={handleDataLadMouseEnter}
-                  onMouseLeave={handleDataLadMouseLeave}
-                  data-tip
-                  data-for="dataladTip"
-                />
-                {showDataLadTipText &&
-                  <ReactToolTip id="dataladTip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
-                    DataLad is a feature-rich and flexible distributed data-management system <br/>
-                    that allows versioning and provenance tracking for any collection of data. <br/>
-                    Learn more here: https://handbook.datalad.org/en/latest/.
-                  </ReactToolTip>
-                }
-              </div>
-            </div>
-          </div>
-
-          <div className="row w-100 align-items-center">
-            <div className="col-10 p-0">
-              {element.cbrain_id ?
-                <button onClick={openCbrainModal} className="btn btn-outline-success m-1">
-                  <div className="d-flex row align-items-center justify-content-center">
-                    Process On <img
-                        className="cbrain-img justify-content-center align-items-center pl-4"
-                        src="static/img/cbrain-long-logo-blue.png"
-                        style={{maxHeight: '30px'}}
-                        alt="CBRAIN logo"
+          {element?.downloadOptions !== 'offsite' ?
+            <>
+              <div className="row align-items-center justify-content-center w-100">
+                <div className="col-10 p-0">
+                  {element.showDownloadButton ?
+                    <button
+                      type="button"
+                      className="btn btn-success m-1"
+                      onClick={() => openDownloadModal()}
+                    >
+                      Direct Download ({element.size})
+                    </button> :
+                    <button className="btn btn-outline-secondary m-1 disabled">
+                      Direct Download (Not Available)
+                    </button>
+                  }
+                </div>
+                <div className="col-2 p-2">
+                  <div className="card-text pl-1">
+                    <FontAwesomeIcon
+                      icon={faQuestionCircle}
+                      color="dimgray"
+                      size="lg"
+                      onMouseEnter={handleDownloadMouseEnter}
+                      onMouseLeave={handleDownloadMouseLeave}
+                      data-tip
+                      data-for="downloadTip"
                     />
+                    {showDownloadTipText &&
+                      <ReactToolTip id="downloadTip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
+                        Direct download is available for datasets that do not require <br/>
+                        a third-party account. Datasets requiring a third-party account <br/>
+                        can be downloaded via DataLad following the obtention of credentials.
+                      </ReactToolTip>
+                    }
                   </div>
-                </button> :
-                <button className="btn btn-outline-secondary disabled m-1">
-                  <div className="d-flex row align-items-center justify-content-center">
-                    Process On
-                    <img
-                      className="cbrain-img justify-content-center align-items-center pl-4"
-                      src="static/img/cbrain-long-logo-grey.png"
-                      style={{maxHeight: '30px'}}
-                      alt="Disabled CBRAIN logo"
-                    />
-                  </div>
-                </button>
-              }
-            </div>
-            <div className="col-2 p-2">
-              <div className="card-text pl-1">
-                <FontAwesomeIcon
-                  icon={faQuestionCircle}
-                  color="dimgray"
-                  size="lg"
-                  onMouseEnter={handleCrainMouseEnter}
-                  onMouseLeave={handleCrainMouseLeave}
-                  data-tip
-                  data-for="cbrainTip"
-                />
-                {showCbrainTipText &&
-                  <ReactToolTip id="cbrainTip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
-                    CBRAIN allows users to run analysis pipelines on a network of high-performance <br/>
-                    computing clusters through a friendly web-browser-based interface.
-                  </ReactToolTip>
-                }
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div className="d-flex justify-content-center align-items-center">
-              {authIcons.map((icon, index) => <div key={"authIcon_" + index}
-                                                   className="text-center p-1">{icon}</div>)}
-            </div>
+              <div className="row align-items-center w-100">
+                <div className="col-10 p-0">
+                  <a href={`dataset?id=${element.id}#dataladInstructions`} role="button"
+                      className="btn btn-success m-1">
+                    Download With DataLad
+                    {authIcons.map((icon, index) => icon
+                    )}
+                  </a>
+                </div>
+                <div className="col-2 p-2">
+                  <div className="card-text pl-1">
+                    <FontAwesomeIcon
+                      icon={faQuestionCircle}
+                      color="dimgray"
+                      size="lg"
+                      onMouseEnter={handleDataLadMouseEnter}
+                      onMouseLeave={handleDataLadMouseLeave}
+                      data-tip
+                      data-for="dataladTip"
+                    />
+                    {showDataLadTipText &&
+                      <ReactToolTip id="dataladTip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
+                        DataLad is a feature-rich and flexible distributed data-management system <br/>
+                        that allows versioning and provenance tracking for any collection of data. <br/>
+                        Learn more here: https://handbook.datalad.org/en/latest/.
+                      </ReactToolTip>
+                    }
+                  </div>
+                </div>
+              </div>
 
+              <div className="row w-100 align-items-center">
+                <div className="col-10 p-0">
+                  {element.cbrain_id ?
+                    <button onClick={openCbrainModal} className="btn btn-outline-success m-1">
+                      <div className="d-flex row align-items-center justify-content-center">
+                        Process On <img
+                            className="cbrain-img justify-content-center align-items-center pl-4"
+                            src="static/img/cbrain-long-logo-blue.png"
+                            style={{maxHeight: '30px'}}
+                            alt="CBRAIN logo"
+                        />
+                      </div>
+                    </button> :
+                    <button className="btn btn-outline-secondary disabled m-1">
+                      <div className="d-flex row align-items-center justify-content-center">
+                        Process On
+                        <img
+                          className="cbrain-img justify-content-center align-items-center pl-4"
+                          src="static/img/cbrain-long-logo-grey.png"
+                          style={{maxHeight: '30px'}}
+                          alt="Disabled CBRAIN logo"
+                        />
+                      </div>
+                    </button>
+                  }
+                </div>
+                <div className="col-2 p-2">
+                  <div className="card-text pl-1">
+                    <FontAwesomeIcon
+                      icon={faQuestionCircle}
+                      color="dimgray"
+                      size="lg"
+                      onMouseEnter={handleCrainMouseEnter}
+                      onMouseLeave={handleCrainMouseLeave}
+                      data-tip
+                      data-for="cbrainTip"
+                    />
+                    {showCbrainTipText &&
+                      <ReactToolTip id="cbrainTip" multiline={true} style={{ Width: "70px", WhiteSpace: "pre-wrap" }}>
+                        CBRAIN allows users to run analysis pipelines on a network of high-performance <br/>
+                        computing clusters through a friendly web-browser-based interface.
+                      </ReactToolTip>
+                    }
+                  </div>
+                </div>
+              </div>
+            </>:
+
+            <>
+              <div className="row align-items-center w-100">
+                <div className="col-10 p-0">
+                  <a target="_blank" href={element.registrationPage} role="button"
+                      className="btn btn-success m-1">
+                    Offsite Download
+                  </a>
+                </div>
+              </div>
+            </>
+          }
         </div>
       </div>
       {downloadModalOpen ? (
