@@ -3,16 +3,10 @@
 <!-- Head Block -->
 
 {% block scripts %} {{ super() }}
-<script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
-<script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
-<script
-  type="text/javascript"
-  src="static/lib/conp-react/umd/conp-react.js"
-></script>
-<link
-  rel="stylesheet"
-  href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"
-/>
+<script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>
+<script src=" {{ url_for('static',filename='v1/js/react-dom.development-16.11.0.js') }}"></script>
+<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 {% endblock %}
 
 <!-- Title Block -->
@@ -24,12 +18,10 @@
 <!-- Content Block -->
 
 {% block appcontent %}
-  <p>Below is the execution pipeline record for pipeline {{pipeline_name}} run on dataset {{dataset_name}}:</p>
-  <div class="container-fluid card">
-    <br/>
-    <code>
-        {{jsonfile|safe}}
-    </code>
-    <br/>
-  </div>
+<p>Below is the execution pipeline record for pipeline {{pipeline_name}} run on dataset {{dataset_name}}:</p>
+<div class="container-fluid card">
+  <br />
+  <code> {{jsonfile|safe}} </code>
+  <br />
+</div>
 {% endblock %}

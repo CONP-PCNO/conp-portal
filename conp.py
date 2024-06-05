@@ -13,6 +13,7 @@ from app.models import (
     MatomoDailyGetPageUrlsSummary,
     MatomoDailyGetDatasetPageViewsSummary,
     MatomoDailyGetSiteSearchKeywords,
+    Experiment
 )
 
 app = create_app()
@@ -34,5 +35,6 @@ def make_shell_context():
         'MatomoDailyVisitsSummary': MatomoDailyVisitsSummary,
         'MatomoDailyGetPageUrlsSummary': MatomoDailyGetPageUrlsSummary,
         'MatomoDailyGetDatasetPageViewsSummary': MatomoDailyGetDatasetPageViewsSummary,
-        'MatomoGetSiteSearchKeywords': MatomoDailyGetSiteSearchKeywords
+        'MatomoGetSiteSearchKeywords': MatomoDailyGetSiteSearchKeywords,
+        'Experiment': Experiment
     }

@@ -1,21 +1,18 @@
 {% extends 'common/base_main.html' %}
 
 <!-- Head Block -->
-{% block scripts %}
-{{ super() }}
-<script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
-<script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
+{% block scripts %} {{ super() }}
+<script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>
+<script src=" {{ url_for('static',filename='v1/js/react-dom.development-16.11.0.js') }}"></script>
 <script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
 {% endblock %}
 
 <!-- Title Block -->
 
 {% block contenttitle %}
-    <h2><span style="color:red;">CONP Portal </span> | Share</h2>
+<h2><span style="color: red">CONP Portal </span> | Share</h2>
 {% endblock %}
 
 <!-- Content Block -->
 
-{% block appcontent %}
-    {{ content|safe }}
-{% endblock %}
+{% block appcontent %} {{ content|safe }} {% endblock %}

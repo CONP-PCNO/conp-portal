@@ -1,18 +1,39 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white navigation-bar">
+  <a class="navbar-brand" href="https://conp.ca/">
+    <img style="max-width:100px;" src="/static/img/conp.png" alt="conp logo" />
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-  <a class="navbar-brand" href="https://conp.ca/"><img style="max-width:100px;" src="/static/img/conp.png" alt="conp logo" /></a>
-    <ul class="navbar-nav">
-      {% if not current_user.is_anonymous %}
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="d-lg-none d-xl-none nav-item px-3 mt-2">
+        <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
+      </li>
+      <li class="d-lg-none d-xl-none nav-item px-3">
+        <a class="nav-link" href="{{ url_for('search.search') }}">Data</a>
+      </li>
+      <li class="d-lg-none d-xl-none nav-item px-3">
+        <a class="nav-link" href="{{ url_for('pipelines.pipelines') }}">Tools & Pipelines</a>
+      </li>
+      <li class="d-lg-none d-xl-none nav-item px-3">
+        <a class="nav-link" href="{{ url_for('experiments.home') }}">Experiments</a>
+      </li>
+      <li class="d-lg-none d-xl-none nav-item px-3">
+        <a class="nav-link" href="{{ url_for('main.share') }}">Share</a>
+      </li>
+      <li class="d-lg-none d-xl-none nav-item px-3">
+        <a class="nav-link" href="{{ url_for('main.faq') }}">FAQ</a>
+      </li>
+      <hr class="d-lg-none d-xl-none w-100" /> 
+      {% if not current_user.is_anonymous %} 
       <li class="nav-item px-3">
         <a class="nav-link" href="{{ url_for('profile.current_user_profile_page') }}">Profile</a>
       </li>
       <li class="nav-item px-3">
         <a class="nav-link" href="/#/">Settings</a>
-      </li>
-      {% endif %}
+      </li> 
+      {% endif %} 
       <li class="nav-item px-3">
         <a class="nav-link" href="{{url_for('main.about')}}">About</a>
       </li>
@@ -34,6 +55,7 @@
     </ul>
   </div>
 </nav>
+
 
 <script>
   $(function () {

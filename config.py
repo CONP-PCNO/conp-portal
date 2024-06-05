@@ -25,7 +25,6 @@ class Config(object):
         basedir, "app/static/data/.cache/conp-dataset")
     SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get(
         'SQLALCHEMY_TRACK_MODIFICATIONS') or False
-
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
@@ -91,10 +90,20 @@ class Config(object):
     # Dataset cache
     DATASET_CACHE_PATH = os.environ.get("DATASET_CACHE_PATH")
 
+    # Experiments
+    EXPERIMENTS_UPLOAD_DIRECTORY = os.path.join(
+        os.path.abspath(os.path.dirname(__file__)),
+        "data",
+        "experiments"
+    )
+
 
 class DevelopmentConfig(Config):
     """This is the config for Development"""
     DEBUG = True
+    ## ADD ALEX
+    SEND_FILE_MAX_AGE_DEFAULT = 0
+    TEMPLATES_AUTO_RELOAD = True
     SQLALCHEMY_DATABASE_URI = (os.environ.get('DATABASE_URL')
                                or "sqlite:///{}".format(os.path.join(basedir, "app.db")))
 

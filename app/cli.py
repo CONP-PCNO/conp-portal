@@ -6,9 +6,15 @@ Module that contains the special command line tools
 """
 import os
 import uuid
+import shutil
 from datetime import datetime, timedelta
+from typing import Type
+
+from app import db
+from app.models import Experiment as DBExperiment, Dataset as DBDataset
 from app.threads import UpdatePipelineData
 
+from . import config
 
 def register(app):
 
@@ -41,7 +47,11 @@ def register(app):
         _seed_aff_types_db(app)
         _seed_admin_acct_db(app)
         _seed_test_datasets_db(app)
-
+    
+    @app.cli.command("seed_test_experiments")
+    def seed_test_experiments():
+        _update_experiments(app)
+    
     @app.cli.command('update_pipeline_data')
     def update_pipeline_data():
         """
@@ -149,13 +159,13 @@ def _update_pipeline_data(app):
     _generate_missing_ark_ids(app)
 
 
-def _update_datasets(app):
-    """
-    Updates from conp-datasets
-    """
-    from app import db
+def _update_datalad_objects(
+        app,
+        object_type: str,  # 'dataset' or 'experiment'
+        repo_name: str,
+        object_class: Type[db.Model]
+    ):
     from app.models import ArkId
-    from app.models import Dataset as DBDataset
     from app.models import DatasetAncestry as DBDatasetAncestry
     from sqlalchemy import exc
     from datalad import api
@@ -166,7 +176,7 @@ def _update_datasets(app):
     import git
     import traceback
 
-    datasetsdir = Path(app.config['DATA_PATH']) / 'conp-dataset'
+    datasetsdir = Path(app.config['DATA_PATH']) / repo_name
     datasetsdir.mkdir(parents=True, exist_ok=True)
 
     # Initialize the git repository object
@@ -174,7 +184,7 @@ def _update_datasets(app):
         repo = git.Repo(datasetsdir)
     except git.exc.InvalidGitRepositoryError:
         repo = git.Repo.clone_from(
-            'https://github.com/CONP-PCNO/conp-dataset',
+            f'https://github.com/CONP-PCNO/{repo_name}',
             datasetsdir,
             branch='master'
         )
@@ -187,7 +197,7 @@ def _update_datasets(app):
     d = DataladDataset(path=datasetsdir)
     if not d.is_installed():
         api.clone(
-            source='https://github.com/CONP-PCNO/conp-dataset',
+            source=f'https://github.com/CONP-PCNO/{repo_name}',
             path=datasetsdir
         )
         d = DataladDataset(path=datasetsdir)
@@ -227,8 +237,9 @@ def _update_datasets(app):
         # The following relates to the DATS.json files
         # of the projects directory in the conp-dataset repo.
         # Skip directories that aren't projects.
-        patterns = [app.config['DATA_PATH'] + '/conp-dataset/projects/*']
+        patterns = [app.config['DATA_PATH'] + f'/{repo_name}/projects/*']
         if not any(fnmatch.fnmatch(ds['path'], pattern) for pattern in patterns):
+            print(f"[ERROR  ] No matching dataset found for {ds['path']}, {patterns}")
             continue
 
         dirs = os.listdir(ds['path'])
@@ -255,8 +266,9 @@ def _update_datasets(app):
 
         # use dats.json data to fill the datasets table
         # avoid duplication / REPLACE instead of insert
-        dataset = DBDataset.query.filter_by(
-            dataset_id=ds['gitmodule_name']).first()
+        dataset = object_class.query.filter_by(
+            **{f"{object_type}_id": ds['gitmodule_name']}
+        ).first()
 
         # pull the timestamp of the first commit in the git log for the dataset create date
         createDate = datetime.utcnow()
@@ -271,7 +283,7 @@ def _update_datasets(app):
         try:
             firstMergeTimeStamp = os.popen(
                 "git -C {} log --pretty=format:%ct --reverse {} | head -1".format(
-                    app.config['DATA_PATH'] + "/conp-dataset",
+                    app.config['DATA_PATH'] + f"/{repo_name}",
                     ds['path']
                 )).read()
             firstMergeDate = datetime.fromtimestamp(int(firstMergeTimeStamp))
@@ -296,8 +308,8 @@ def _update_datasets(app):
             print("[ERROR  ] Remote URL couldnt be read.")
 
         if dataset is None:
-            dataset = DBDataset()
-            dataset.dataset_id = ds['gitmodule_name']
+            dataset = object_class()
+            setattr(dataset, f'{object_type}_id', ds['gitmodule_name'])
             dataset.date_created = createDate
             dataset.date_added_to_portal = firstMergeDate
 
@@ -333,18 +345,32 @@ def _update_datasets(app):
             'description', 'No description in DATS.json')
         dataset.name = dats.get(
             'title',
-            os.path.basename(dataset.dataset_id)
+            os.path.basename(getattr(dataset, f'{object_type}_id'))
         )
 
         db.session.merge(dataset)
         db.session.commit()
 
         # if the dataset does not have an ARK identifier yet, generate it
-        dataset_with_ark_id_list = [row[0] for row in db.session.query(ArkId.dataset_id).all()]
-        if dataset.dataset_id not in dataset_with_ark_id_list:
-            new_ark_id = ark_id_minter(app, 'dataset')
-            save_ark_id_in_database(app, 'dataset', new_ark_id, dataset.dataset_id)
+        dataset_with_ark_id_list = [row[0] for row in db.session.query(getattr(ArkId, f'{object_type}_id')).all()]
+        if getattr(dataset, f"{object_type}_id") not in dataset_with_ark_id_list:
+            new_ark_id = ark_id_minter(app, object_type)
+            save_ark_id_in_database(app, object_type, new_ark_id, getattr(dataset, f'{object_type}_id'))
         print('[INFO   ] ' + ds['gitmodule_name'] + ' updated.')
+
+
+def _update_datasets(app):
+    """
+    Updates from conp-datasets
+    """
+    _update_datalad_objects(app, "dataset", "conp-dataset", DBDataset)
+
+
+def _update_experiments(app):
+    """
+    Updates from conp-datasets
+    """
+    _update_datalad_objects(app, "experiment", "conp-experiments", DBExperiment)
 
 
 def _update_analytics(app):
@@ -718,11 +744,14 @@ def _generate_missing_ark_ids(app):
             save_ark_id_in_database(app, 'pipeline', new_ark_id, pipeline_id)
 
 
-def ark_id_minter(app, ark_id_type):
+def ark_id_minter(
+        app,
+        ark_id_type: str  # 'dataset', 'pipeline', or 'experiment'
+    ):
     """
     Generates ARK identifiers for datasets and pipelines that do not have yet an ARK ID.
 
-    :param ark_id_type: "dataset" or "pipeline"
+    :param ark_id_type: "dataset", "pipeline", or "experiment"
      :type ark_id_type: str
 
     :return: a new minted ARK identifier
@@ -733,7 +762,7 @@ def ark_id_minter(app, ark_id_type):
     from app.services.pynoid import mint
 
     # arkid shoulder will be d7 for datasets and p7 for pipelines
-    template = 'd7.reeeeeeedeeedeeek' if ark_id_type == 'dataset' else 'p7.reeeeeeedeeedeeek'
+    template = 'd7.reeeeeeedeeedeeek' if ark_id_type == 'dataset' else ('p7.reeeeeeedeeedeeek' if ark_id_type == 'pipeline' else 'e7.reeeeeeedeeedeeek')
     new_ark_id = mint(
         template=template,
         scheme='ark:/',
@@ -744,7 +773,7 @@ def ark_id_minter(app, ark_id_type):
     # get the list of existing ARK IDs
     already_used_ark_id_list = [row[0] for row in db.session.query(ArkId.ark_id).all()]
     while new_ark_id in already_used_ark_id_list:
-        new_ark_id = ark_id_minter(app, 'dataset')
+        new_ark_id = ark_id_minter(app, ark_id_type)
 
     return new_ark_id
 
@@ -763,6 +792,7 @@ def save_ark_id_in_database(app, ark_id_type, new_ark_id, source_id):
         ark_id_summary.ark_id = new_ark_id
         ark_id_summary.dataset_id = source_id if ark_id_type == "dataset" else None
         ark_id_summary.pipeline_id = source_id if ark_id_type == "pipeline" else None
+        ark_id_summary.experiment_id = source_id if ark_id_type == "experiment" else None
 
         db.session.merge(ark_id_summary)
         db.session.commit()

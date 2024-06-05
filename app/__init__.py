@@ -65,6 +65,9 @@ def create_app(config_settings=None):
     from app.utils import utils_bp  # noqa: E402
     app.register_blueprint(utils_bp)
 
+    from app.experiments import experiments_bp
+    app.register_blueprint(experiments_bp)
+
     from app.oauth.orcid_blueprint import orcid_blueprint
     app.register_blueprint(orcid_blueprint, url_prefix="/login")
 

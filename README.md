@@ -48,6 +48,7 @@ In the top level directory:
 flask db upgrade
 flask seed_test_db
 flask update_pipeline_data
+flask seed_test_experiments
 ```
 
 ### Run Application
@@ -59,7 +60,17 @@ flask run
 ```
 
 The application should now be live on `http://localhost:5000/` 
-    
+
+### Experiments Portal
+
+If you would like to run the run the experiments portal with hot module replacement, in a separate terminal run:
+
+    npm start --prefix app/static/lib/experiments-portal
+
+To build the experiments portal, run:
+
+    npm run build --prefix app/static/lib/experiments-portal
+
 ### Testing
 
 We use the pytest framework for testing all aspects of the application. This will be automatically run by TravisCI when a pull request is made.  
@@ -87,3 +98,11 @@ To run the application on a Cloud9 instance:
 ### Deployment
     
 This flask application is deployed on Heroku. More information will be available soon
+
+### Docker
+
+```bash
+docker build -t conp-portal .
+docker run -d -p 4000:4000 -p 8080:8080 -v ${PWD}/app:/app/app --rm conp-portal
+docker exec -it 1e3ad5006c5a567b42575dd941e2f52837b11229090b34b1486498a3221ba69f bash -c "cd /app/app/static/v2 && yarn dev"
+```

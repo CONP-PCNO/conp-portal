@@ -11,9 +11,12 @@ from sqlalchemy.orm.collections import attribute_mapped_collection
 from datetime import datetime, timedelta
 from pytz import timezone
 from app.oauth import OAuth_pretty
+from random import randrange
+from zipfile import ZipFile
+from contextlib import closing
+import os
 
 eastern = timezone('US/Eastern')
-
 
 class RoleMixin(object):
     """
@@ -428,6 +431,7 @@ class ArkId(db.Model):
     ark_id = db.Column(db.String(128), unique=True)
     dataset_id = db.Column(db.String(256))
     pipeline_id = db.Column(db.String(64))
+    experiment_id = db.Column(db.String(256))
 
     def __repr__(self):
         return '<ArkId {}>'.format(self.id)
@@ -481,3 +485,25 @@ class GithubDailyViewsCount(db.Model):
 
     def __repr__(self):
         return '<GithubDailyViewsCount {}>'.format(self.id)
+
+class Experiment(db.Model):
+    __tablename__ = 'experiments'
+
+    id = db.Column(db.Integer, primary_key=True)
+    experiment_id = db.Column(db.String(256), index=True, unique=True)
+    description = db.Column(db.Text)
+    name = db.Column(db.String(256), index=True)
+    fspath = db.Column(db.Text)
+    remoteUrl = db.Column(db.Text)
+    version = db.Column(db.String(6), index=True)
+    date_created = db.Column(db.DateTime, default=datetime.now())
+    date_updated = db.Column(db.DateTime, default=datetime.now())
+    date_added_to_portal = db.Column(db.DateTime, default=datetime.now())
+    is_private = db.Column(db.Boolean, index=True)
+    #ALEX count downloads
+    downloads = db.Column(db.Integer, default=0)
+    #ALEX count views
+    views = db.Column(db.Integer, default=0)
+
+    def __repr__(self):
+        return '<Dataset {}>'.format(self.name)

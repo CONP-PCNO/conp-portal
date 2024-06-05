@@ -2,12 +2,9 @@
 
 <!-- Head Block -->
 {% block scripts %} {{ super() }}
-<script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>
-<script src=" {{ url_for('static',filename='js/react-dom.development-16.11.0.js') }}"></script>
-<script
-  type="text/javascript"
-  src="static/lib/conp-react/umd/conp-react.js"
-></script>
+<script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>
+<script src=" {{ url_for('static',filename='v1/js/react-dom.development-16.11.0.js') }}"></script>
+<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
 {% endblock %} {% block styles %} {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/highcharts.css') }}" />
 {% endblock %} {% block contenttitle %}
@@ -30,35 +27,20 @@
           <a target="_blank" rel="noopener noreferrer" href="https://conp.ca">
             Canadian Open Neuroscience Platform (CONP)
           </a>
-          Portal is a web interface that facilitates open science for the neuroscience community
-          by simplifying global access to and sharing of datasets and tools. The Portal internalizes
-          the typical data cycle of a research project, beginning with data acquisition, followed
-          by data processing with published tools, and ultimately the publication of results with
-          a link to the original dataset.
+          Portal is a web interface that facilitates open science for the neuroscience community by simplifying global
+          access to and sharing of datasets and tools. The Portal internalizes the typical data cycle of a research
+          project, beginning with data acquisition, followed by data processing with published tools, and ultimately the
+          publication of results with a link to the original dataset.
           <a href="{{url_for('main.about')}}"> Read more </a>
         </p>
         <p>
           The CONP would like to thank its
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://conp.ca/discover/#Sponsors"
-          >
-            sponsors</a
-          >,
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://conp.ca/discover/#PartnersNational"
-          >
+          <a target="_blank" rel="noopener noreferrer" href="https://conp.ca/discover/#Sponsors"> sponsors</a>,
+          <a target="_blank" rel="noopener noreferrer" href="https://conp.ca/discover/#PartnersNational">
             national partners
           </a>
           and
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://conp.ca/discover/#PartnersInternational"
-          >
+          <a target="_blank" rel="noopener noreferrer" href="https://conp.ca/discover/#PartnersInternational">
             international partners.
           </a>
         </p>
@@ -70,20 +52,13 @@
     <div class="card w-100 p-1 mx-1" data-type="dashboard">
       <div id="dashboard-chart-container">
         <script type="text/javascript">
-          const dashboardChartElement = React.createElement(
-            CONPReact.ChartContainer
-          );
-          ReactDOM.render(
-            dashboardChartElement,
-            document.querySelector("#dashboard-chart-container")
-          );
+          const dashboardChartElement = React.createElement(CONPReact.ChartContainer);
+          ReactDOM.render(dashboardChartElement, document.querySelector('#dashboard-chart-container'));
         </script>
       </div>
       <div class="d-flex mb-2 mr-2 justify-content-end" style="z-index: 1">
         <a href="{{ url_for('analytics.analytics') }}">
-          <button class="btn btn-outline-secondary" type="button">
-            View Analytics
-          </button>
+          <button class="btn btn-outline-secondary" type="button">View Analytics</button>
         </a>
       </div>
     </div>
@@ -111,14 +86,7 @@
       <div class="p-2">
         <p>
           Learn how the CONP portal works. Read the
-          <a
-            target="_blank"
-            ,
-            rel="noopener noreferrer"
-            href="{{url_for('main.tutorial')}}"
-          >
-            Portal tutorial
-          </a>
+          <a target="_blank" , rel="noopener noreferrer" href="{{url_for('main.tutorial')}}"> Portal tutorial </a>
           or watch the tutorial video below.
         </p>
       </div>

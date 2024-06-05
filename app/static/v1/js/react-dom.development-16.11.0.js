@@ -4353,7 +4353,7 @@ function queueDiscreteEvent(blockedOn, topLevelType, eventSystemFlags, nativeEve
           replayUnblockedEvents(); // If we're reblocked, on an inner boundary, we might need
           // to attempt hydrating that one.
 
-          continue;
+
         } else {
           // We're still blocked from hydation, we have to give up
           // and replay later.
@@ -11899,7 +11899,7 @@ function getUnmaskedContext(workInProgress, Component, didPushOwnContextIfProvid
 
 function cacheContext(workInProgress, unmaskedContext, maskedContext) {
   if (disableLegacyContext) {
-    return;
+
   } else {
     var instance = workInProgress.stateNode;
     instance.__reactInternalMemoizedUnmaskedChildContext = unmaskedContext;
@@ -11967,7 +11967,7 @@ function isContextProvider(type) {
 
 function popContext(fiber) {
   if (disableLegacyContext) {
-    return;
+
   } else {
     pop(didPerformWorkStackCursor, fiber);
     pop(contextStackCursor, fiber);
@@ -11976,7 +11976,7 @@ function popContext(fiber) {
 
 function popTopLevelContextObject(fiber) {
   if (disableLegacyContext) {
-    return;
+
   } else {
     pop(didPerformWorkStackCursor, fiber);
     pop(contextStackCursor, fiber);
@@ -11985,7 +11985,7 @@ function popTopLevelContextObject(fiber) {
 
 function pushTopLevelContextObject(fiber, context, didChange) {
   if (disableLegacyContext) {
-    return;
+
   } else {
     if (!(contextStackCursor.current === emptyContextObject)) {
       {
@@ -12075,7 +12075,7 @@ function pushContextProvider(workInProgress) {
 
 function invalidateContextProvider(workInProgress, type, didChange) {
   if (disableLegacyContext) {
-    return;
+
   } else {
     var instance = workInProgress.stateNode;
 
@@ -20726,7 +20726,7 @@ if (supportsMutation) {
 
     while (node !== null) {
       // eslint-disable-next-line no-labels
-      branches: if (node.tag === HostComponent) {
+      if (node.tag === HostComponent) {
         var instance = node.stateNode;
 
         if (needsVisibilityToggle && isHidden) {
@@ -20826,7 +20826,7 @@ if (supportsMutation) {
 
     while (node !== null) {
       // eslint-disable-next-line no-labels
-      branches: if (node.tag === HostComponent) {
+      if (node.tag === HostComponent) {
         var instance = node.stateNode;
 
         if (needsVisibilityToggle && isHidden) {

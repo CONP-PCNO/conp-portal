@@ -8,7 +8,7 @@ html,
 body {
   width: 100%;
   height: 100%;
-  font-family: "Arial", sans-serif;
+  font-family: 'Arial', sans-serif;
   font-size: 14px;
   color: #343434;
   scroll-behavior: smooth;
@@ -140,20 +140,20 @@ Colour names courtesy of chir.ag/projects/name-that-color
 */
 
 .text-card-title {
-  font-family: "arial", sans-serif;
+  font-family: 'arial', sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
   color: #343434;
 }
 
 .text-body {
-  font-family: "arial", sans-serif;
+  font-family: 'arial', sans-serif;
   font-size: 1rem;
   color: #343434;
 }
 
 .text-logo {
-  font-family: "quicksand";
+  font-family: 'quicksand';
   font-size: 1rem;
   color: #404040;
 }
@@ -211,16 +211,14 @@ Colour names courtesy of chir.ag/projects/name-that-color
 #sidebar {
   height: 100%;
   max-width: 100%;
+  position: sticky;
+  top: 80px;
 }
 
 .sidebar-tab:hover {
   background-color: #8a8a8a;
   color: #343434;
   cursor: pointer;
-}
-
-.sticky-offset {
-  top: 80px;
 }
 
 /*
@@ -375,58 +373,58 @@ Colour names courtesy of chir.ag/projects/name-that-color
 
 /* Dataset Cards */
 
-.card[data-type="dataset"] .card-buttons {
+.card[data-type='dataset'] .card-buttons {
   flex-direction: column-reverse;
   align-items: center;
 }
 
 @media (min-width: 576px) {
-  .card[data-type="dataset"] .card-buttons {
+  .card[data-type='dataset'] .card-buttons {
     flex-direction: column-reverse;
     align-items: center;
   }
 }
 
 @media (min-width: 786px) {
-  .card[data-type="dataset"] .card-buttons {
+  .card[data-type='dataset'] .card-buttons {
     flex-direction: row;
     align-items: center;
   }
 }
 
 /* Pipeline Cards */
-.card[data-type="pipeline"] .card-social .card-social-icons {
+.card[data-type='pipeline'] .card-social .card-social-icons {
   justify-content: center;
 }
 
 /* Dashboard Cards */
 
-.card[data-type="dashboard"] {
+.card[data-type='dashboard'] {
   padding: 2rem;
   margin-bottom: 1rem;
 }
 
-.card[data-type="dashboard"] .highcharts-container svg {
+.card[data-type='dashboard'] .highcharts-container svg {
   width: 100%;
 }
 
-.card[data-type="dashboard"] .card-description {
+.card[data-type='dashboard'] .card-description {
   padding: 0.5rem;
 }
 
-.card[data-type="dashboard"] .card-description .card-description-subtitle {
+.card[data-type='dashboard'] .card-description .card-description-subtitle {
   font-weight: 700;
   padding: 1rem 0;
 }
 
 @media (min-width: 576px) {
-  .card[data-type="dashboard"] .card-description {
+  .card[data-type='dashboard'] .card-description {
     flex: 1;
   }
 }
 
 @media (min-width: 992px) {
-  .card[data-type="dashboard"] {
+  .card[data-type='dashboard'] {
     flex: 1;
     margin-bottom: 0rem;
   }
@@ -472,4 +470,12 @@ Colour names courtesy of chir.ag/projects/name-that-color
     width: auto;
     padding: 0;
     top: 50px;
+}
+
+.form-group.required label::after {
+  content: '*';
+}
+
+.form-btn {
+  white-space: nowrap;
 }

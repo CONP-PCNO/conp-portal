@@ -7,20 +7,15 @@
 {% endblock %}
 
 {% block styles %}
-    <link rel="icon" href="{{ url_for('static', filename='img/conp.ico') }}" type="image/x-icon" />
-    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet" />
-    <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet" />
-    <link href="{{ url_for('static', filename='css/bootstrap-multiselect.css') }}" rel="stylesheet" />
-    <link href="{{ url_for('static', filename='css/core.css') }}" rel="stylesheet" />
-    <link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet" />
+<link rel="icon" href="{{ url_for('static', filename='img/conp.ico') }}" type="image/x-icon" />
+<link href="{{ url_for('static', filename='v1/css/bootstrap-multiselect.css') }}" rel="stylesheet" />
+<link href="{{ url_for('static', filename='v1/css/login.css') }}" rel="stylesheet" />
 
 {% endblock %}
 
 {% block scripts %}
-<!--[if lt IE 9]>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
-    <![endif]-->
-    <script src="{{ url_for('static', filename='js/bootstrap-multiselect.js') }}"></script>
+    <script src="{{ url_for('static', filename='v2/dist/conp-portal.bundle.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/bootstrap-multiselect.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
     <script>
         $(function() {

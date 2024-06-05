@@ -10,6 +10,7 @@ from typing import Optional
 import dateutil
 import requests
 
+from app.dats import DATSObject
 
 @lru_cache(maxsize=1)
 def _get_latest_test_results(date):
@@ -76,22 +77,7 @@ class DatasetCache(object):
         return cached.path if cached is not None else None
 
 
-class DATSDataset(object):
-    def __init__(self, datasetpath):
-        """
-          store the datsetopath and tries to find a DATS.json file
-        """
-        if not os.path.isdir(datasetpath):
-            raise RuntimeError('No dataset found at {}'.format(datasetpath))
-
-        self.datasetpath = datasetpath
-
-        with open(self.DatsFilepath, 'r') as f:
-            try:
-                self.descriptor = json.load(f)
-            except Exception:
-                raise RuntimeError('Can`t parse {}'.format(self.DatsFilepath))
-
+class DATSDataset(DATSObject):
     @property
     def name(self):
         return self.datasetpath.split('conp-dataset/projects/')[-1]
@@ -600,7 +586,7 @@ class DATSDataset(object):
         except Exception:
             return None
 
-    @ property
+    @property
     def status(self):
 
         test_results = get_latest_test_results()

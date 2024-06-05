@@ -12,7 +12,7 @@ const CbrainModalDataset = (props) => {
 
   useEffect(() => {
     $("#cbrainModal").modal("handleUpdate");
-    return;
+
   });
 
   return ReactDOM.createPortal(

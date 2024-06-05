@@ -1,0 +1,18 @@
+{% extends 'common/base_main.html' %}
+
+{% block contenttitle %}
+<h2><span style="color: red">CONP Portal</span> | Experiments Search</h2>
+{% endblock %}
+
+{% block appcontent %}
+<div id="experiments-search"></div>
+<script>
+  const { ExperimentsSearchPage, React, ReactDOM } = CONP;
+  const keywordData = "{{ keyword }}";
+  const element = React.createElement(ExperimentsSearchPage, {
+    experiments: {{ experiments|tojson }},
+    keyword: keywordData
+  })
+  ReactDOM.render(element, document.getElementById('experiments-search'));
+</script>
+{% endblock %}
