@@ -17,7 +17,7 @@ chardet==3.0.4
 Click==7.0
 commonmark==0.8.1
 coverage==4.5.4
-cryptography==41.0.4
+cryptography==42.0.2
 datalad==0.13.6
 Deprecated==1.2.7
 docopt==0.6.2
@@ -26,7 +26,7 @@ dominate==2.4.0
 entrypoints==0.3
 fasteners==0.15
 flake8==3.8.4
-Flask==1.1.4
+Flask==2.3.2
 Flask-Admin==1.5.3
 Flask-Bootstrap4==4.0.2
 Flask-Dance==3.0.0
@@ -42,8 +42,8 @@ Flask-WTF==0.14.2
 flaskhmac==1.2.1
 future==0.18.3
 gitdb2==2.0.6
-GitPython==3.1.35
-gunicorn==19.9.0
+GitPython==3.1.41
+gunicorn==22.0.0
 humanize==0.5.1
 idna==2.8
 imagesize==1.1.0
@@ -51,7 +51,7 @@ importlib-metadata==3.7.0
 iso8601==0.1.12
 itsdangerous==1.1.0
 jeepney==0.4.1
-Jinja2==2.11.3
+Jinja2==3.1.4
 jsmin==2.2.2
 jsonschema==3.0.2
 keyring==19.2.0
@@ -80,7 +80,7 @@ pyflakes==2.2.0
 PyGithub==1.44.1
 Pygments==2.7.4
 PyJWT==2.4.0
-PyMySQL==0.9.3
+PyMySQL==1.1.1
 pyparsing==2.3.1
 pyrsistent==0.15.4
 pytest==5.1.2
@@ -95,7 +95,7 @@ pytz==2018.9
 PyYAML==5.4
 rauth==0.7.3
 recommonmark==0.5.0
-requests==2.31.0
+requests==2.32.0
 requests-oauthlib==1.2.0
 SecretStorage==3.1.1
 simplejson==3.16.0
@@ -111,12 +111,13 @@ tabulate==0.8.3
 termcolor==1.1.0
 toml==0.10.1
 tqdm==4.38.0
-urllib3==1.26.5
+urllib3==1.26.18
 URLObject==2.4.3
 visitor==0.1.3
 wcwidth==0.1.7
-Werkzeug==0.16.1
+Werkzeug==3.0.3
 Whoosh==2.7.4
 wrapt==1.11.2
 WTForms==2.2.1
-zipp==3.15.0
+zipp==0.6.0
+unidecode==1.3.8
