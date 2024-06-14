@@ -125,24 +125,24 @@ const DataTable = ({
     setQuery({ ...query, page: page })
   }
 
-   // Fonction pour filtrer les éléments basée sur les filtres actifs
-   const filterElements = (elements, filters) => {
-    return elements.filter(element => {
-      return filters.every(filter => {
-        if (filter.values.length === 0) {
-          return true; // Si aucun filtre n'est actif pour cette clé, l'élément passe
-        }
-        const elementValue = element[filter.key];
-        if (Array.isArray(elementValue)) {
-          return filter.values.some(value => elementValue.includes(value));
-        } else {
-          return filter.values.includes(elementValue);
-        }
-      });
-    });
-  };
+  //  // Fonction pour filtrer les éléments basée sur les filtres actifs
+  //  const filterElements = (elements, filters) => {
+  //   return elements.filter(element => {
+  //     return filters.every(filter => {
+  //       if (filter.values.length === 0) {
+  //         return true; // Si aucun filtre n'est actif pour cette clé, l'élément passe
+  //       }
+  //       const elementValue = element[filter.key];
+  //       if (Array.isArray(elementValue)) {
+  //         return filter.values.some(value => elementValue.includes(value));
+  //       } else {
+  //         return filter.values.includes(elementValue);
+  //       }
+  //     });
+  //   });
+  // };
 
-  const filteredElements = filterElements(elements, filters);
+  // const filteredElements = filterElements(elements, filters);
 
   return (
     isLoading ? <div />
@@ -412,7 +412,14 @@ const DataTable = ({
               </div>
               : null}
           {
-            filteredElements.map((element, i) => {
+            // filteredElements.map((element, i) => {
+            //   return (
+            //     <div key={"" + element.id}>
+            //       {React.createElement(renderElement, {...element, authorized, imagePath, cbrainIds})}
+            //     </div>
+            //   );
+            // })
+            elements.map((element, i) => {
               return (
                 <div key={"" + element.id}>
                   {React.createElement(renderElement, {...element, authorized, imagePath, cbrainIds})}
