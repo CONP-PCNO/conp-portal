@@ -183,10 +183,12 @@ class DATSDataset(DATSObject):
                 journal = publi.get('publicationVenue', '')
                 if journal and not journal.endswith('.'):
                     journal += '.'
-                author = publi.get('authors', [])[0].get(
-                    'fullName', '') if 'authors' in publi else ''
-                if len(publi.get('authors', [])) > 1:
-                    author += ' et al.'
+                authors = publi.get('authors', [])
+                author = ''
+                if authors:
+                    author = publi.get('authors', [])[0].get('fullName', '')
+                    if len(authors) > 1:
+                        author += ' et al.'
                 doi = publi.get('identifier', {}).get('identifier', '')
                 primaryPublications.append(
                     {
