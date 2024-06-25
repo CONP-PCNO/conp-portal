@@ -23,6 +23,7 @@ const DataTableContainer = ({
     search: filters.search ? filters.search : "",
     modalities: filters.modalities ? filters.modalities : [],
     formats: filters.formats ? filters.formats : [],
+    tags: filters.tags ? filters.tags : [],
     sortKey: filters.sortKey ? filters.sortKey : "conpStatus",
     sortComparitor: filters.sortComparitor ? filters.sortComparitor : "asc",
     page: filters.page ? filters.page : 1,

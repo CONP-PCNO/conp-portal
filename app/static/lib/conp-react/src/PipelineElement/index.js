@@ -109,8 +109,8 @@ const PipelineElement = (props) => {
                 <li className="card-list-item">
                   <strong>Tags: </strong>{element.tags && element.tags.domain ?
                     Array.isArray(element.tags.domain) ?
-                    element.tags.domain.map(tag => <span key={"tag" + tag} className="mr-1"><a href={"/pipelines?tags=" + tag} className="badge badge-primary">{tag}</a></span>)
-                    : <span><a href={"/pipelines?tags=" + element.tags.domain} className="badge badge-primary">{element.tags.domain}</a></span>
+                    element.tags.domain.map(tag => <span key={"tag" + tag} className="mr-1"><span className="badge badge-primary">{tag.toLowerCase()}</span></span>)
+                    : <span><span className="badge badge-primary">{element.tags.domain.toLowerCase()}</span></span>
                   : null}
                 </li>
               </ul>
