@@ -25,6 +25,10 @@ const DataTable = ({
       values: query.formats || []
     },
     {
+      key: "tags",
+      values: query.tags || []
+    },
+    {
       key: "cbrain",
       values: query.cbrain || []
     },
@@ -82,6 +86,7 @@ const DataTable = ({
     setQuery({
       ...query,
       modalities: filters.filter(f => f["key"] === "modalities")[0].values,
+      tags: filters.filter(f => f["key"] === "tags")[0].values,
       formats: filters.filter(f => f["key"] === "formats")[0].values,
       cbrain: filters.filter(f => f["key"] === "cbrain")[0].values,
       authorizations: filters.filter(f => f["key"] === "authorizations")[0].values,
@@ -148,7 +153,8 @@ const DataTable = ({
         < div className="search-dataset-table" cellSpacing={0}>
           <div className="searchbar d-flex flex-column">
             <div className="d-flex align-items-center">
-              {renderElement.name === "DatasetElement" ?
+              {
+                renderElement.name === "DatasetElement" ?
                   <div className="d-flex align-items-center p-2">
                     <label className="dropdown-label text-nowrap m-2">Filter By: </label>
                     <div className="dropdown">
@@ -224,28 +230,59 @@ const DataTable = ({
                       </div>
                     </div>
                   </div>
-                  : null}
+                : renderElement.name === "PipelineElement" ?
+                  <div className="d-flex align-items-center p-2">
+                    <label className="dropdown-label text-nowrap m-2">Filter By: </label>
+                    <div className="dropdown">
+                      <button className="btn btn-outline-secondary dropdown-toggle p-2" type="button"
+                              id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                              data-display="static">
+                        Tag:
+                      </button>
+                      <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {filterKeys.filter(f => f["key"] === "tags").length > 0 ?
+                            filterKeys.filter(f => f["key"] === "tags")[0]["values"].map(tag => (
+                                tag !== '' ?
+                                    <div key={tag.id} className="dropdown-item ml-2">
+                                      <input
+                                          className="form-check-input"
+                                          type="checkbox"
+                                          checked={filters.filter(f => f["key"] === "tags")[0]["values"].includes(tag)}
+                                          value={"tags." + tag} id={"filter" + tag}
+                                          onChange={handleFiltersChange}
+                                      />
+                                      <label className="form-check-label" htmlFor={"filter" + tag}>
+                                        {tag}
+                                      </label>
+                                    </div>
+                                    : null
+                            ))
+                            : null}
+                      </div>
+                    </div>
+                  </div>
+                : null
+              }
 
               {renderElement.name === "PipelineElement" || renderElement.name === "DatasetElement" ?
-	          <form className="input-group m-2" onSubmit={e => {setQuery({...query, search: tempSearch, page: 1}); e.preventDefault();}}>
-                    <input
-                        className="form-control p-2"
-                        type="text"
-                        placeholder="Search"
-                        aria-label="Search"
-		        id="searchInput"
-                        value={tempSearch}
-                        onChange={e =>
-                            setTempSearch(e.currentTarget.value)
-                        }
-                    />
-                    <span className="input-group-append">
-                      <button className="input-group-text" id="basic-addon2">
-                        <i className="fa fa-search"/>
-                      </button>
-                    </span>
-	          </form>
-                  : null}
+                <form className="input-group m-2" onSubmit={e => {setQuery({...query, search: tempSearch, page: 1}); e.preventDefault();}}>
+                  <input
+                      className="form-control p-2"
+                      type="text"
+                      placeholder="Search"
+                      aria-label="Search"
+                      id="searchInput"
+                      value={tempSearch}
+                      onChange={e => setTempSearch(e.currentTarget.value)}
+                  />
+                  <span className="input-group-append">
+                    <button className="input-group-text" id="basic-addon2">
+                      <i className="fa fa-search"/>
+                    </button>
+                  </span>
+                </form>
+              : null}
+
               {renderElement.name === "ExecutionRecordElement" ?
                   <div className="input-group m-2">
                     <input

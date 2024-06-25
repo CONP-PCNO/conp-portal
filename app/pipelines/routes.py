@@ -86,7 +86,6 @@ def pipeline_search():
     if request.args.get('cbrain'):
         with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json"), "r") as f:
             zenodo_urls = json.load(f)
-        print(zenodo_urls.keys())
         elements = list(
             filter(lambda e: e["ID"] in zenodo_urls.keys(), elements)
         )
@@ -108,7 +107,7 @@ def pipeline_search():
         elements = list(
             filter(lambda e: ("tags" in e and "domain" in e["tags"]), elements))
         elements = list(filter(lambda e: all(
-            t in e["tags"]["domain"] for t in tags), elements))
+            t.lower() in map(str.lower, e["tags"]["domain"]) for t in tags), elements))
 
     # sort, make all keys lowercase and without hyphens or spaces
     elements = [{k.lower().replace("-", "").replace(" ", ""): v for k, v in element.items()}
@@ -169,6 +168,21 @@ def pipeline_search():
                 'static', filename="img/run_on_cbrain_gray.png")
             element["platforms"][0]["uri"] = ""
 
+    tags = []
+    for e in elements:
+        if isinstance(e['tags'], str) and e['tags']:
+            tags.append(e['tags'].lower())
+        if isinstance(e['tags'], dict) and e['tags'].get('domain'):
+            if isinstance(e['tags']['domain'], str):
+                tags.append(e['tags']['domain'])
+            else:
+                for t in e['tags']['domain']:
+                    tags.append(t.lower())
+        else:
+            continue
+
+    tags = sorted(list(set(tags)))
+
     # construct payload
     payload = {
         "authorized": authorized,
@@ -198,6 +212,12 @@ def pipeline_search():
                 "key": "id-desc",
                 "label": "Pipeline ID (Descending)"
             }
+        ],
+        "filterKeys": [
+            {
+                "key": "tags",
+                "values": tags
+            },
         ],
         "elements": elements_on_page
     }

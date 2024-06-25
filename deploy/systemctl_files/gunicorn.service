@@ -11,6 +11,7 @@ Environment="PATH=/home/conp-admin/conp-portal/venv/bin"
 ExecStart=/home/conp-admin/conp-portal/venv/bin/gunicorn \
           --access-logfile - \
           --error-logfile /home/conp-admin/conp-portal/logs/gunicorn-error.log \
+          --capture-output \
           --workers 3 \
           --bind unix:/run/gunicorn.socket \
           wsgi:app
