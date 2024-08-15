@@ -116,6 +116,11 @@ const PipelineElement = (props) => {
               </ul>
               <ul className="d-flex align-items-start">
                 <li className="card-list-item">
+                  <strong>Publication Date: </strong> {element.publicationdate}
+                </li>
+              </ul>
+              <ul className="d-flex align-items-start">
+                <li className="card-list-item">
                   <strong>Description: </strong> {element.description}
                 </li>
               </ul>
@@ -161,6 +166,7 @@ PipelineElement.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   downloads: PropTypes.number,
+  publicationdate: PropTypes.string,
   descriptorurl: PropTypes.string,
   platforms: PropTypes.arrayOf(PropTypes.object),
   name: PropTypes.string,

@@ -114,7 +114,7 @@ def pipeline_search():
                 for element in elements]
 
     if sort_key == 'conpStatus':
-        sort_key = 'downloads-desc'
+        sort_key = 'publicationdate-desc'
 
     real_key = sort_key
     if sort_key.endswith("-desc"):
@@ -188,6 +188,14 @@ def pipeline_search():
         "authorized": authorized,
         "total": len(elements),
         "sortKeys": [
+            {
+                "key": "publicationdate-desc",
+                "label": "Publication date (Newest First)"
+            },
+            {
+                "key": "publicationdate-asc",
+                "label": "Publication date (Oldest First)"
+            },
             {
                 "key": "downloads-desc",
                 "label": "Downloads (High to Low)"

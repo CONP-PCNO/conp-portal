@@ -406,7 +406,7 @@ def dataset_search():
             },
             {
                 "key": "dateAddedAsc",
-                "label": "Date Added (Newest FIrst)"
+                "label": "Date Added (Newest First)"
             },
             {
                 "key": "dateAddedDesc",
