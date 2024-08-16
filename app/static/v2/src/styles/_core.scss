@@ -174,7 +174,7 @@ Colour names courtesy of chir.ag/projects/name-that-color
 */
 
 .btn {
-  padding: 1rem;
+  padding: 0.7rem;
   width: 100%;
 }
 
@@ -209,16 +209,55 @@ Colour names courtesy of chir.ag/projects/name-that-color
 */
 
 #sidebar {
-  height: 100%;
-  max-width: 100%;
-  position: sticky;
+  height: 100vh;
+  width: 150px;
+  position: fixed;
   top: 80px;
+  left: 0;
+  overflow: scroll;
+}
+
+#sidebar i, #sidebar img {
+  display: block;
+  margin: 0 auto 8px auto;
+}
+
+#sidebar p {
+  font-size: 12px;
+}
+
+#sidebar a:hover {
+  text-decoration: none;
+}
+
+.sidebar-inner {
+  min-height: 500px;
+}
+
+#sidebar .fa {
+  font-size: 20px;
 }
 
 .sidebar-tab:hover {
   background-color: #8a8a8a;
   color: #343434;
   cursor: pointer;
+}
+
+/*
+=============================================================
+| Page Content
+=============================================================
+*/
+
+body {
+  background: #343434;
+}
+
+#page-content {
+  padding-left: 150px;
+  padding-right: 0;
+  background: white;
 }
 
 /*
@@ -285,6 +324,11 @@ Colour names courtesy of chir.ag/projects/name-that-color
   .searchbar .dropdown .dropdown-select {
     width: auto;
   }
+}
+
+.dropdown-menu {
+  max-height: 300px;
+  overflow: scroll;
 }
 
 /*

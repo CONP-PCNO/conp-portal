@@ -1,57 +1,64 @@
 <div
   id="sidebar"
-  class="d-none d-lg-block d-xl-block container-fluid bg-mineshaft"
+  class="d-none d-lg-block d-xl-block container-fluid bg-mineshaft p-0"
   role="navigation"
 >
-  <div class="sticky-top sticky-offset">
+  <div class="sidebar-inner">
     <a
-      class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3 sidebar-tab"
+      class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3 px-4 sidebar-tab"
       href="{{ url_for('main.index') }}"
     >
-      <h1><i class="fa fa-home"></i></h1>
-      <p class="text-center text-capitalize p-1">Home</p>
+      <p class="text-center text-capitalize p-0 m-0">
+        <i class="fa fa-home"></i>
+        Home
+      </p>
     </a>
     <a
-      class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3 sidebar-tab"
+      class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3 px-4 sidebar-tab"
       href="{{ url_for('search.search') }}"
     >
-      <h1><i class="fa fa-search"></i></h1>
-      <p class="text-center text-capitalize p-1">Data</p>
+      <p class="text-center text-capitalize p-0 m-0">
+        <i class="fa fa-search"></i>
+        Data
+      </p>
     </a>
     <a
-      class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3 sidebar-tab"
+      class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3 px-4 sidebar-tab"
       href="{{ url_for('pipelines.pipelines') }}"
     >
-      <h1><i class="fa fa-wrench"></i></h1>
-      <p class="text-center text-capitalize p-1">Tools & Pipelines</p>
+      <p class="text-center text-capitalize p-0 m-0">
+        <i class="fa fa-wrench"></i>
+        Tools & Pipelines</p>
     </a>
     <a
-      class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3 sidebar-tab"
+      class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3 px-4 sidebar-tab"
       href="{{ url_for('experiments.home') }}"
     >
-      <h1>
-        <img src="{{ url_for('static', filename='img/experiments_beta_white.png') }}" alt="Experiments" style="width: 48px; height: 32px;">
-      </h1>
-      <p class="text-center text-capitalize p-1">Experiments - Beta</p>
+      <p class="text-center text-capitalize p-0 m-0">
+        <img src="{{ url_for('static', filename='img/experiments_beta_white.png') }}" alt="Experiments" style="height: 20px;" />
+        Experiments - Beta
+      </p>
     </a>
-    <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
+    <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3 px-4 sidebar-tab"
       href="{{ url_for('main.share') }}">
-      <h1><i class="fa fa-arrow-circle-o-up"></i></h1>
-      <p class="text-center text-capitalize p-1">
+      <p class="text-center text-capitalize p-0 m-0">
+        <i class="fa fa-arrow-circle-o-up"></i>
         Share
       </p>
     </a>
-    <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
+    <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3 px-4 sidebar-tab"
       href="{{ url_for('main.download') }}">
-      <h1><i class="fa fa-arrow-circle-o-down"></i></h1>
-      <p class="text-center text-capitalize p-1">
+      <p class="text-center text-capitalize p-0 m-0">
+        <i class="fa fa-arrow-circle-o-down"></i>
         Download
       </p>
     </a>
-    <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3  sidebar-tab"
+    <a class="col-12 d-flex flex-column justify-content-center align-items-center text-white p-3 px-4 sidebar-tab"
       href="{{ url_for('main.faq') }}">
-      <h1><i class="fa fa-info-circle"></i></h1>
-      <p class="text-center text-capitalize p-1">FAQ</p>
+      <p class="text-center text-capitalize p-0 m-0">
+        <i class="fa fa-info-circle"></i>
+        FAQ
+      </p>
     </a>
   </div>
 </div>
