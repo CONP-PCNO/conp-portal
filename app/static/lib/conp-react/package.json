@@ -11,7 +11,7 @@
     "umd"
   ],
   "scripts": {
-    "build": "nwb build-react-component",
+    "build": "nwb build-react-component --no-demo",
     "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run build",
     "test": "nwb test-react",
@@ -31,6 +31,7 @@
     "prop-types": "15.7.2",
     "query-string": "^6.4.2",
     "ramda": "^0.26.1",
+    "react-bootstrap-typeahead": "^6.3.2",
     "react-copy-to-clipboard": "^5.1.0",
     "react-tooltip": "^4.2.21"
   },

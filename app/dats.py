@@ -43,7 +43,7 @@ class DATSObject:
         logopath = "app/static/img/default_dataset.jpeg"
         extraprops = self.descriptor.get('extraProperties', {})
         for prop in extraprops:
-            if prop.get('category') == 'logo':
+            if prop.get('category') == 'logo' and len(prop.get('values')) > 0:
                 logofilename = prop.get('values').pop().get('value', '')
                 if not logofilename.lower().startswith("http"):
                     logofilepath = os.path.join(
@@ -182,7 +182,7 @@ class DATSObject:
 
         authorizations = dist.get('access', {}).get('authorizations', '')
 
-        if type(authorizations) == list:
+        if type(authorizations) == list and len(authorizations) > 0:
             auth = authorizations.pop().get('value', None)
         else:
             auth = None

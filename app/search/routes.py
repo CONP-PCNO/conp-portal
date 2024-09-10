@@ -27,7 +27,6 @@ from app.analytics.routes import datasets_views, datasets_downloads
 from app.services import github
 from config import Config
 
-
 @search_bp.route('/search')
 def search():
     """ Dataset Search Route
@@ -107,6 +106,43 @@ def get_dataset_logo():
         return logofile.read()
 
 
+@search_bp.route('/dataset-search-suggestions', methods=['GET'])
+def dataset_search_suggestions():
+    """ Dataset Search Keyword Route
+
+        This route collects the dataset search autocomplete keywords
+
+        Args:
+            search is the search term in the GET Request
+
+        Retuns:
+            JSON containing the matching keywords
+    """
+    from whoosh.index import open_dir
+    from whoosh.qparser import MultifieldParser
+    from operator import itemgetter
+
+    search_term = request.args.get('search')
+    if not search_term:
+        return json.dumps([])
+    else:        
+        ix = open_dir("index")
+        with ix.reader() as r:
+            fields = [field for field in ix.schema.scorable_names() if field not in ['name']]
+            print(fields)
+            suggestions = set()
+            for field in fields:
+                #for s in r.iter_prefix(field, search_term):
+                for f in r.iter_field(field):
+                    s = f[0].decode("utf-8")
+                    print(s)
+                    if search_term in s:
+                        suggestions.add(s)
+            suggestions = list(suggestions)
+            suggestions.sort()
+            return json.dumps(suggestions)
+
+
 @search_bp.route('/dataset-search', methods=['GET'])
 def dataset_search():
     """ Dataset Search Route
@@ -119,7 +155,8 @@ def dataset_search():
         Retuns:
             JSON containing the matching datasets
     """
-    datasets = []
+    from whoosh.index import open_dir
+    from whoosh.qparser import MultifieldParser
 
     if current_user.is_authenticated:
         authorized = True
@@ -129,107 +166,91 @@ def dataset_search():
     if request.args.get('id'):
         # Query datasets
         datasets = Dataset.query.filter_by(
-            dataset_id=request.args.get('id')).all()
+            dataset_id=request.args.get('id')
+        ).all()
     else:
         # Query datasets
-        datasets = Dataset.query.order_by(Dataset.id).all()
+        datasets = []
+        ix = open_dir("index")
+        # Element input for payload
+        elements = []
+        with ix.searcher() as searcher:
+            # If search term exists filter results here
+            if request.args.get('search'):
+                search_term = request.args.get('search')
+                if ' ' in search_term:
+                    search_term = '"' + search_term + '"'
+                else :
+                    # Search prefix
+                    search_term = search_term + '*'
+                datasets = searcher.search(MultifieldParser(ix.schema.scorable_names(), ix.schema).parse(search_term))
+            else:
+                datasets = searcher.documents()
 
-    # Element input for payload
-    elements = []
+            # Get the number of views of datasets
+            views = json.loads(datasets_views())
+            downloads = json.loads(datasets_downloads())
 
-    with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-cbrain-ids.json"), "r") as f:
-        cbrain_dataset_ids = json.load(f)
-        f.close()
+            for d in datasets:
+                dataset_metadata = Dataset.query.filter_by(dataset_id=d['id']).first()
 
-    # Get the number of views of datasets
-    views = json.loads(datasets_views())
-    downloads = json.loads(datasets_downloads())
+                views_nb = [v["nb_hits"] for v in views if v["dataset_id"] == d['id']]
+                download_id = os.path.basename(d['datasetPath']) + "_version"
+                downloads_nb = [
+                    e["nb_hits"] for e in downloads if e["dataset_id"].startswith(download_id)
+                ]
 
-    # Build dataset response
-    for d in datasets:
-        try:
-            datsdataset = DATSDataset(d.fspath)
-        except Exception:
-            # If the DATS file can't be laoded, skip this dataset.
-            # There should be an error message in the logs/update_datsets.log
-            continue
+                ark_id_row = ArkId.query.filter_by(dataset_id=d['id']).first()
 
-        # If search term exists filter results here
-        if request.args.get('search'):
-            search_term = request.args.get('search')
-            with open(datsdataset.DatsFilepath, 'r') as dats:
-                match = False
-                for line in dats.readlines():
-                    if search_term.lower() in line.lower():
-                        match = True
-                        break
-                if not match:
-                    continue
+                try:
+                    zipped = DatasetCache(current_app).getZipLocation(d['datasetPath'])
+                except IOError:
+                    zipped = None
 
-        datasetTitle = d.name.replace("'", "")
-        if datasetTitle in cbrain_dataset_ids.keys():
-            dataset_cbrain_id = cbrain_dataset_ids[datasetTitle]
-        else:
-            dataset_cbrain_id = ""
+                show_download_button = zipped is not None
+                zip_location = '/data/{0}'.format(os.path.basename(zipped or ''))
 
-        views_nb = [v["nb_hits"] for v in views if v["dataset_id"] == d.dataset_id]
-        download_id = os.path.basename(d.fspath) + "_version"
-        downloads_nb = [
-            e["nb_hits"] for e in downloads if e["dataset_id"].startswith(download_id)
-        ]
-
-        ark_id_row = ArkId.query.filter_by(dataset_id=d.dataset_id).first()
-
-        try:
-            zipped = DatasetCache(current_app).getZipLocation(d)
-        except IOError:
-            zipped = None
-
-        show_download_button = zipped is not None
-        zip_location = '/data/{0}'.format(os.path.basename(zipped or ''))
-
-        dataset = {
-            "authorized": authorized,
-            "ark_id": 'https://n2t.net/' + ark_id_row.ark_id,
-            "id": d.dataset_id,
-            "title": d.name.replace("'", "\'"),
-            "remoteUrl": d.remoteUrl,
-            "isPrivate": d.is_private,
-            "thumbnailURL": "/dataset_logo?id={}".format(d.dataset_id),
-            "downloadPath": d.dataset_id,
-            "URL": '?',
-            "downloads": downloads_nb,
-            "views": views_nb,
-            "dateAdded": str(d.date_added_to_portal.date()) if d.date_added_to_portal else None,
-            "dateUpdated": str(d.date_updated.date()),
-            "creators": datsdataset.creators,
-            "origin": datsdataset.origin,
-            "size": datsdataset.size,
-            "files": datsdataset.fileCount,
-            "subjects": datsdataset.subjectCount,
-            "formats": datsdataset.formats,
-            "modalities": datsdataset.modalities,
-            "licenses": datsdataset.licenses,
-            "version": datsdataset.version,
-            "sources": datsdataset.sources,
-            "conpStatus": datsdataset.conpStatus,
-            "authorizations": datsdataset.authorizations,
-            "principalInvestigators": datsdataset.principalInvestigators,
-            "primaryPublications": datsdataset.primaryPublications,
-            "logoFilepath": datsdataset.LogoFilepath,
-            "status": datsdataset.status,
-            "cbrain_id": url_for(
-                "main.redirect_to_cbrain", cbrainurl=dataset_cbrain_id
-            )
-            if dataset_cbrain_id
-            else dataset_cbrain_id,
-            "showDownloadButton": show_download_button,
-            "zipLocation": zip_location,
-            "downloadOptions": datsdataset.downloadOptions,
-            "registrationPage": datsdataset.registrationPage,
-        }
-
-        elements.append(dataset)
+                dataset = {
+                    "authorized": authorized,
+                    "ark_id": 'https://n2t.net/' + ark_id_row.ark_id,
+                    "id": d['id'],
+                    "title": d['title'].replace("'", "\'"),
+                    "remoteUrl": dataset_metadata.remoteUrl,
+                    "isPrivate": dataset_metadata.is_private,
+                    "thumbnailURL": "/dataset_logo?id={}".format(d['id']),
+                    "downloadPath": d['id'],
+                    "URL": '?',
+                    "downloads": downloads_nb,
+                    "views": views_nb,
+                    "dateAdded": str(dataset_metadata.date_added_to_portal.date()) if dataset_metadata.date_added_to_portal else None,
+                    "dateUpdated": str(dataset_metadata.date_updated.date()),
+                    "creators": parse_field(d.get('creators')),
+                    "origin": d.get('origin'),
+                    "size": d.get('size'),
+                    "files": d.get('fileCount'),
+                    "subjects": d.get('subjectCount'),
+                    "formats": parse_field(d.get('formats')),
+                    "modalities": parse_field(d.get('modalities')),
+                    "licenses": parse_field(d.get('licenses')),
+                    "version": d.get('version'),
+                    "sources": parse_field(d.get('sources')),
+                    "conpStatus": d.get('conpStatus'),
+                    "authorizations": d.get('authorizations'),
+                    "principalInvestigators": parse_field(d.get('principalInvestigators')),
+                    "primaryPublications": parse_field(d.get('primaryPublications')),
+                    "logoFilepath": d.get('logoFilePath'),
+                    "status": d.get('status'),
+                    "cbrain_id": url_for(
+                        "main.redirect_to_cbrain", cbrainurl=d.get('cBrainId')
+                    )
+                    if d.get('cBrainId')
+                    else None,
+                    "showDownloadButton": show_download_button,
+                    "zipLocation": zip_location,
+                    "downloadOptions": d.get('downloadOptions'),
+                    "registrationPage": d.get('registrationPage'),
+                }
+                elements.append(dataset)
 
     modalities = []
     for e in elements:
@@ -519,7 +540,7 @@ def dataset_info():
     ark_id_row = ArkId.query.filter_by(dataset_id=d.dataset_id).first()
 
     try:
-        zipped = DatasetCache(current_app).getZipLocation(d)
+        zipped = DatasetCache(current_app).getZipLocation(d.fspath)
     except IOError:
         zipped = None
 
@@ -698,6 +719,13 @@ def get_dataset_metadata_information(dataset):
         "downloadOptions": datsdataset.downloadOptions,
         "registrationEmail": True if datsdataset.registrationPage and re.match(r"[^@]+@[^@]+\.[^@]+", datsdataset.registrationPage) else False
     }
+
+
+def parse_field(field):
+    try:
+        return json.loads(field)
+    except:
+        return field
 
 
 def get_dataset_readme(dataset_id):

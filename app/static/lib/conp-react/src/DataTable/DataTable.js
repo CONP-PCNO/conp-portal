@@ -1,6 +1,9 @@
 import * as R from "ramda";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
+import { Typeahead } from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+import 'react-bootstrap-typeahead/css/Typeahead.bs5.css';
 
 const DataTable = ({
   authorized,
@@ -15,6 +18,9 @@ const DataTable = ({
   setQuery,
   isLoading
 }) => {
+  const ref = useRef(null);
+  const [suggestions, setSuggestions] = useState([]);
+  const [tempSearch, setTempSearch] = useState(query.search || '');
   const [filters, setFilters] = useState([
     {
       key: "modalities",
@@ -67,7 +73,11 @@ const DataTable = ({
 
   //   setQuery(updatedQuery);
   // };
-  const [tempSearch, setTempSearch] = useState(query.search)
+
+  useEffect(() => {
+    tempSearch && fetchSuggestions(tempSearch);
+  }, [tempSearch]);
+
   const handleFiltersChange = (event) => {
     event.preventDefault();
     const e = event.target.value;
@@ -93,6 +103,7 @@ const DataTable = ({
       page: 1
     })
   }
+
 
   const handleMaxPerPageChange = (event) => {
     event.preventDefault()
@@ -146,6 +157,16 @@ const DataTable = ({
   // };
 
   // const filteredElements = filterElements(elements, filters);
+
+  const fetchSuggestions = (prefix) => {
+    try {
+        fetch(`/dataset-search-suggestions?search=${prefix}`)
+            .then(res => res.json())
+            .then(json => setSuggestions(json));
+    } catch (err) {
+        console.error(err);
+    }
+  };
 
   return (
     isLoading ? <div />
@@ -266,14 +287,31 @@ const DataTable = ({
 
               {renderElement.name === "PipelineElement" || renderElement.name === "DatasetElement" ?
                 <form className="input-group m-2" onSubmit={e => {setQuery({...query, search: tempSearch, page: 1}); e.preventDefault();}}>
-                  <input
-                      className="form-control p-2"
-                      type="text"
-                      placeholder="Search"
-                      aria-label="Search"
-                      id="searchInput"
-                      value={tempSearch}
-                      onChange={e => setTempSearch(e.currentTarget.value)}
+                  <Typeahead
+                    ref={ref}
+                    minLength={2}
+                    options={suggestions}
+                    className="form-control p-0"
+                    style={{
+                      border: 'none',
+                    }}
+                    type="text"
+                    placeholder="Search"
+                    aria-label="Search"
+                    id="searchInput"
+                    defaultInputValue={tempSearch}
+                    onChange={selected =>
+                      selected[0] && setQuery({...query, search: selected[0], page: 1})
+                    }
+                    onInputChange={text => {
+                      setTempSearch(text);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.keyCode === 13) {
+                        setQuery({...query, search: tempSearch, page: 1});
+                        ref.current?.blur();
+                      }
+                    }}
                   />
                   <span className="input-group-append">
                     <button className="input-group-text" id="basic-addon2">

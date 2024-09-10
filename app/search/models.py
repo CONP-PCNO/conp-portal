@@ -62,13 +62,13 @@ class DatasetCache(object):
             for f in os.scandir(self.current_app.config['DATASET_CACHE_PATH'])
         )
 
-    def getZipLocation(self, dataset):
+    def getZipLocation(self, fspath):
         """
           1. Server checks if a zip file already exists for this version.
           2. Return zip filepath or None
         """
 
-        datasetmeta = DATSDataset(dataset.fspath)
+        datasetmeta = DATSDataset(fspath)
         zipFilename = datasetmeta.name.replace('/', '__') + '_version-' + \
             datasetmeta.version + '.tar.gz'
 
@@ -101,7 +101,7 @@ class DATSDataset(DATSObject):
         logopath = "app/static/img/default_dataset.jpeg"
         extraprops = self.descriptor.get('extraProperties', {})
         for prop in extraprops:
-            if prop.get('category') == 'logo':
+            if prop.get('category') == 'logo' and len(prop.get('values')) > 0:
                 logofilename = prop.get('values').pop().get('value', '')
                 if not logofilename.lower().startswith("http"):
                     logofilepath = os.path.join(
@@ -233,7 +233,7 @@ class DATSDataset(DATSObject):
 
         authorizations = dist.get('access', {}).get('authorizations', '')
 
-        if type(authorizations) == list:
+        if type(authorizations) == list and len(authorizations) > 0:
             auth = authorizations.pop().get('value', None)
         else:
             auth = None
