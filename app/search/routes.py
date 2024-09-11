@@ -122,22 +122,29 @@ def dataset_search_suggestions():
     from whoosh.qparser import MultifieldParser
     from operator import itemgetter
 
-    search_term = request.args.get('search')
+    search_term = request.args.get('search').lower()
     if not search_term:
         return json.dumps([])
-    else:        
+    else:
+        with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-terms-mapping.json"), "r") as f:
+            dataset_terms_mapping = json.load(f)
+            f.close()
+
         ix = open_dir("index")
         with ix.reader() as r:
             fields = [field for field in ix.schema.scorable_names() if field not in ['name']]
-            print(fields)
             suggestions = set()
             for field in fields:
-                #for s in r.iter_prefix(field, search_term):
                 for f in r.iter_field(field):
                     s = f[0].decode("utf-8")
-                    print(s)
                     if search_term in s:
                         suggestions.add(s)
+
+            # Adding mapping terms
+            for t in dataset_terms_mapping.keys():
+                if search_term in t:
+                    suggestions.add(t)
+
             suggestions = list(suggestions)
             suggestions.sort()
             return json.dumps(suggestions)
@@ -169,6 +176,10 @@ def dataset_search():
             dataset_id=request.args.get('id')
         ).all()
     else:
+        with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-terms-mapping.json"), "r") as f:
+            dataset_terms_mapping = json.load(f)
+            f.close()
+
         # Query datasets
         datasets = []
         ix = open_dir("index")
@@ -177,13 +188,19 @@ def dataset_search():
         with ix.searcher() as searcher:
             # If search term exists filter results here
             if request.args.get('search'):
-                search_term = request.args.get('search')
+                search_term = request.args.get('search').lower()
+
                 if ' ' in search_term:
-                    search_term = '"' + search_term + '"'
+                    s = '"' + search_term + '"'
                 else :
                     # Search prefix
-                    search_term = search_term + '*'
-                datasets = searcher.search(MultifieldParser(ix.schema.scorable_names(), ix.schema).parse(search_term))
+                    s = search_term + '*'
+
+                for t in dataset_terms_mapping.keys():
+                    if search_term in t:
+                        s = s + ' OR "' + dataset_terms_mapping[t] + '"'
+
+                datasets = searcher.search(MultifieldParser(ix.schema.scorable_names(), ix.schema).parse(s))
             else:
                 datasets = searcher.documents()
 
