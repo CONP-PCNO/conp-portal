@@ -10,7 +10,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^5.0.0",
     "font-awesome": "^4.7.0",
     "freezeframe": "^5.0.2",
     "jquery": "^3.4.1",
