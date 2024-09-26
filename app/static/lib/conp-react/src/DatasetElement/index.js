@@ -271,25 +271,21 @@ const DatasetElement = (props) => {
                 <div className="col-10 p-0">
                   {element.cbrain_id ?
                     <button onClick={openCbrainModal} className="btn btn-outline-success m-1">
-                      <div className="d-flex row align-items-center justify-content-center">
-                        Process On <img
-                            className="cbrain-img justify-content-center align-items-center pl-4"
-                            src="static/img/cbrain-long-logo-blue.png"
-                            style={{maxHeight: '30px'}}
-                            alt="CBRAIN logo"
-                        />
-                      </div>
+                      Process On <img
+                        className="cbrain-img justify-content-center align-items-center pl-2"
+                        src="static/img/cbrain-long-logo-blue.png"
+                        style={{maxHeight: '30px'}}
+                        alt="CBRAIN logo"
+                      />
                     </button> :
                     <button className="btn btn-outline-secondary disabled m-1">
-                      <div className="d-flex row align-items-center justify-content-center">
-                        Process On
-                        <img
-                          className="cbrain-img justify-content-center align-items-center pl-4"
-                          src="static/img/cbrain-long-logo-grey.png"
-                          style={{maxHeight: '30px'}}
-                          alt="Disabled CBRAIN logo"
-                        />
-                      </div>
+                      Process On
+                      <img
+                        className="cbrain-img justify-content-center align-items-center pl-2"
+                        src="static/img/cbrain-long-logo-grey.png"
+                        style={{maxHeight: '30px'}}
+                        alt="Disabled CBRAIN logo"
+                      />
                     </button>
                   }
                 </div>

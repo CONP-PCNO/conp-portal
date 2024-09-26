@@ -9,6 +9,8 @@ import uuid
 import shutil
 from datetime import datetime, timedelta
 from typing import Type
+import click
+import json
 
 from app import db
 from app.models import Experiment as DBExperiment, Dataset as DBDataset
@@ -65,6 +67,21 @@ def register(app):
         Wrapper to call the updating to the datasets metadata
         """
         _update_datasets(app)
+
+    @app.cli.command('update_index')
+    @click.option(
+        '--schema',
+        '-s',
+        is_flag=True,
+        show_default=True,
+        default=False,
+        help='Specify if the schema should be regenerated',
+    )
+    def update_index(schema):
+        """
+        Wrapper to call the updating of the search index
+        """
+        _update_index(app, DBDataset, schema)
 
     @app.cli.command('update_analytics')
     def update_analytics():
@@ -357,6 +374,141 @@ def _update_datalad_objects(
             new_ark_id = ark_id_minter(app, object_type)
             save_ark_id_in_database(app, object_type, new_ark_id, getattr(dataset, f'{object_type}_id'))
         print('[INFO   ] ' + ds['gitmodule_name'] + ' updated.')
+
+
+def _update_schema(app):
+    from whoosh.fields import Schema, STORED, ID, KEYWORD, TEXT, DATETIME, NUMERIC
+    from whoosh import index
+    from whoosh.analysis import LowercaseFilter, StopFilter
+    from .JsonTokenizer import JsonTokenizer
+
+    json_analyzer = JsonTokenizer() | LowercaseFilter() | StopFilter()
+    keyword_json_analyzer = JsonTokenizer(',', True) | LowercaseFilter() | StopFilter()
+    publication_json_analyzer = JsonTokenizer('.', True) | LowercaseFilter() | StopFilter()
+
+    print(f'[INFO   ] Generating search schema')
+    schema = Schema(
+        id=STORED,
+        title=TEXT(stored=True),
+        name=STORED,
+        description=TEXT(stored=True),
+        creators=KEYWORD(stored=True, commas=True, scorable=True, analyzer=keyword_json_analyzer),
+        principalInvestigators=STORED,
+        primaryPublications=TEXT(stored=True, analyzer=publication_json_analyzer),
+        licenses=STORED,
+        version=STORED,
+        authorizations=STORED,
+        formats=KEYWORD(stored=True, commas=True, scorable=True, analyzer=keyword_json_analyzer),
+        size=STORED,
+        sources=ID(stored=True),
+        privacy=STORED,
+        modalities=KEYWORD(stored=True, commas=True, scorable=True, analyzer=keyword_json_analyzer),
+        isAbout=KEYWORD(stored=True, commas=True, scorable=True, analyzer=keyword_json_analyzer),
+        acknowledges=TEXT(stored=True, analyzer=json_analyzer),
+        keywords=KEYWORD(stored=True, commas=True, scorable=True, analyzer=keyword_json_analyzer),
+        origin=TEXT(stored=True, analyzer=json_analyzer),
+        contacts=KEYWORD(stored=True, commas=True, scorable=True, analyzer=keyword_json_analyzer),
+        downloadOptions=ID(stored=True),
+        conpStatus=ID(stored=True),
+        fileCount=NUMERIC(stored=True),
+        subjectCount=NUMERIC(stored=True),
+        derivedFrom=TEXT(stored=True, analyzer=json_analyzer),
+        parentDatasetId=ID(stored=True),
+        registrationPage=ID(stored=True),
+        producedBy=TEXT(stored=True, analyzer=json_analyzer),
+        dimensions=TEXT(stored=True, analyzer=json_analyzer),
+        spatialCoverage=KEYWORD(stored=True, commas=True, scorable=True, analyzer=keyword_json_analyzer),
+        dates=STORED,
+        datasetPath=STORED,
+        datsFilePath=STORED,
+        logoFilePath=STORED,
+        cBrainId=STORED,
+    )
+
+    if not os.path.exists("index"):
+        os.mkdir("index")
+
+    return index.create_in("index", schema)
+
+
+def _format_index_value(value, debug=False):
+    return json.dumps(value, ensure_ascii=False) if isinstance(value, (list, dict)) else value
+
+
+def _update_index(
+        app,
+        object_class: Type[db.Model],
+        schema,
+    ):
+    from whoosh.index import open_dir
+    from app.search.models import DATSDataset
+    from app.services import github
+
+    if schema:
+        ix = _update_schema(app)
+    else:
+        ix = open_dir("index")
+
+    writer = ix.writer()
+    datasets = DBDataset.query.order_by(DBDataset.id).all()
+
+    with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-cbrain-ids.json"), "r") as f:
+        cbrain_dataset_ids = json.load(f)
+        f.close()
+
+    for d in datasets:
+        try:
+            datsdataset = DATSDataset(d.fspath)
+        except Exception:
+            # If the DATS file can't be loaded, skip this dataset.
+            # There should be an error message in the logs/update_datsets.log
+            continue
+
+        datasetTitle = d.name.replace("'", "")
+        if datasetTitle in cbrain_dataset_ids.keys():
+            dataset_cbrain_id = cbrain_dataset_ids[datasetTitle]
+        else:
+            dataset_cbrain_id = ""
+
+        writer.add_document(
+            id=_format_index_value(d.dataset_id),
+            title=_format_index_value(d.name),
+            name=_format_index_value(datsdataset.name),
+            description=_format_index_value(datsdataset.description),
+            creators=_format_index_value(datsdataset.creators),
+            principalInvestigators=_format_index_value(datsdataset.principalInvestigators),
+            primaryPublications=_format_index_value(datsdataset.primaryPublications),
+            licenses=_format_index_value(datsdataset.licenses),
+            version=_format_index_value(datsdataset.version),
+            authorizations=_format_index_value(datsdataset.authorizations),
+            formats= _format_index_value(datsdataset.formats),
+            size=_format_index_value(datsdataset.size),
+            sources=_format_index_value(datsdataset.sources),
+            privacy=_format_index_value(datsdataset.privacy),
+            modalities=_format_index_value(datsdataset.modalities),
+            isAbout=_format_index_value(datsdataset.isAbout),
+            acknowledges=_format_index_value(datsdataset.acknowledges),
+            keywords=_format_index_value(datsdataset.keywords),
+            origin=_format_index_value(datsdataset.origin),
+            contacts=_format_index_value(datsdataset.contacts),
+            downloadOptions=_format_index_value(datsdataset.downloadOptions),
+            conpStatus=_format_index_value(datsdataset.conpStatus),
+            fileCount=_format_index_value(datsdataset.fileCount),
+            subjectCount=_format_index_value(datsdataset.subjectCount),
+            derivedFrom=_format_index_value(datsdataset.derivedFrom),
+            parentDatasetId=_format_index_value(datsdataset.parentDatasetId),
+            registrationPage=_format_index_value(datsdataset.registrationPage),
+            producedBy=_format_index_value(datsdataset.producedBy),
+            dimensions=_format_index_value(datsdataset.dimensions),
+            spatialCoverage=_format_index_value(datsdataset.spatialCoverage),
+            dates=_format_index_value(datsdataset.dates),
+            datasetPath=_format_index_value(d.fspath),
+            datsFilePath=_format_index_value(datsdataset.DatsFilepath),
+            logoFilePath=_format_index_value(datsdataset.LogoFilepath),
+            cBrainId=dataset_cbrain_id,
+        )
+
+    writer.commit()
 
 
 def _update_datasets(app):

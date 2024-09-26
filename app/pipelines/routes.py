@@ -19,13 +19,13 @@ def pipelines():
 
         Args:
             page: the page that you want to display (default: 1)
-            max_per_page: the number of items per page (default: 10)
+            max_per_page: the number of items per page (default: 20)
 
         Returns:
             Rendered template for pipelines.html
     """
     page = int(request.args.get('page') or 1)
-    max_per_page = request.args.get('max_per_page') or 10
+    max_per_page = request.args.get('max_per_page') or 20
     if max_per_page != 'All':
         max_per_page = int(max_per_page)
     cbrain = request.args.get('cbrain')

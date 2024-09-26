@@ -20,13 +20,13 @@ def execution_records():
 
         Args:
             page: the page that you want to display (default: 1)
-            max_per_page: the number of items per page (default: 10)
+            max_per_page: the number of items per page (default: 20)
 
         Returns:
             Rendered template for execution-records.html
     """
     page = 1
-    max_per_page = request.args.get('max_per_page') or 10
+    max_per_page = request.args.get('max_per_page') or 20
     if max_per_page != 'All':
         max_per_page = int(max_per_page)
     searchPipelineName = ""
@@ -122,7 +122,7 @@ def execution_record_info():
 
         Args:
             executionRecordUrl: the page that you want to display (default: 1)
-            max_per_page: the number of items per page (default: 10)
+            max_per_page: the number of items per page (default: 20)
 
         Returns:
             Rendered template for execution-records.html
