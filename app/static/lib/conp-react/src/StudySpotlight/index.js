@@ -2,7 +2,7 @@ import React from "react";
 
 const StudySpotlight = (props) => {
   const studies = [
-    /*{
+    {
       title: "PREVENT-AD Datasets",
       logo: "/dataset_logo?id=projects/preventad-registered",
       description: <>
@@ -34,7 +34,7 @@ const StudySpotlight = (props) => {
         },
       ],
       authors: "StoP-AD Center - Douglas Mental Health University Institute"
-    },*/
+    },
     {
       title: "RECOVER: REaching patients with a COncussion Visiting the Emergency Room to enhance care",
       logo: "https://www.braincode.ca/sites/default/files/dr014_CON_logo.png",

@@ -375,13 +375,13 @@ const DataTable = ({
               </div>
 
 
-              {renderElement.name === "PipelineElement" ?
+              {/*renderElement.name === "PipelineElement" ?
                 <div className="d-flex justify-content-end align-items-center pb-1 pr-3">
                   <a className="text-reset px-1" href="/execution-records">
                     Browse pipeline execution records
                   </a>
                 </div>
-                : null}
+            : null*/}
 
               {renderElement.name === "DatasetElement" ?
                 <div className="d-flex justify-content-end align-items-center pb-1 pr-3">

@@ -36,7 +36,7 @@ const ElementContainer = ({ element, elementProps, complementUrl }) => {
         })
       );
     } catch (err) {
-      alert("There was an error populating the CBRAIN options.");
+      //alert("There was an error populating the CBRAIN options.");
       console.error(err);
     }
   };

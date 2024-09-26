@@ -27,7 +27,7 @@ const DataTableContainer = ({
     sortKey: filters.sortKey ? filters.sortKey : "conpStatus",
     sortComparitor: filters.sortComparitor ? filters.sortComparitor : "asc",
     page: filters.page ? filters.page : 1,
-    max_per_page: filters.max_per_page ? filters.max_per_page : 10,
+    max_per_page: filters.max_per_page ? filters.max_per_page : 20,
     cursor: filters.cursor ? filters.cursor : 0,
     limit: filters.limit ? filters.limit : 10
   });
@@ -78,7 +78,7 @@ const DataTableContainer = ({
       }));
     }
     catch (err) {
-      alert("There was an error populating the CBRAIN pipelines.");
+      //alert("There was an error populating the CBRAIN pipelines.");
       console.error(err);
     }
   };
@@ -108,7 +108,7 @@ const DataTableContainer = ({
       setAuthorizedState(parsed.authorized);
     }
     catch (err) {
-      alert("There was an error retrieving the search results.");
+      //alert("There was an error retrieving the search results.");
       console.error(err);
     }
     finally {
@@ -163,7 +163,7 @@ DataTableContainer.defaultProps = {
   limit: 10,
   total: 0,
   page: 1,
-  max_per_page: 10,
+  max_per_page: 20,
   elements: [],
   modalities: [],
   formats: []
