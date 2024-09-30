@@ -5,6 +5,7 @@ import { default as ExecutionRecordElement } from "./ExecutionRecordElement";
 import { default as ElementContainer } from "./ElementContainer";
 import ChartContainer from "./ChartContainer";
 import StudySpotlight from "./StudySpotlight";
+import CodeSnippet from "./CodeSnippet";
 import { DatsEditorForm } from "conp-dats-editor";
 
 export {
@@ -17,6 +18,7 @@ export {
   ExecutionRecordElement,
   ElementContainer,
   StudySpotlight,
+  CodeSnippet,
 };
 
 export default {
@@ -29,4 +31,5 @@ export default {
   ExecutionRecordElement,
   ElementContainer,
   StudySpotlight,
+  CodeSnippet,
 };
