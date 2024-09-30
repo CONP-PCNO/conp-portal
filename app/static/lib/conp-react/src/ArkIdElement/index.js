@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ReactToolTip from "react-tooltip";
 
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
-import { faCopy} from '@fortawesome/free-regular-svg-icons'
-import { faCheck} from '@fortawesome/free-solid-svg-icons'
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCopy } from '@fortawesome/free-regular-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const ArkIdElement = (props) => {
 
-  const ark_id = props.id
-
-  const [showText, setShowText] = useState(false)
-
-  const [showCopyIcon, setShowCopyIcon] = useState(true)
-  const [showCheckIcon, setShowCheckIcon] = useState(false)
+  const ark_id = props.id;
+  const [showText, setShowText] = useState(false);
+  const [showCopyIcon, setShowCopyIcon] = useState(true);
+  const [showCheckIcon, setShowCheckIcon] = useState(false);
 
   const handleMouseEnter = e => {
     setShowText(true)
@@ -31,7 +29,6 @@ const ArkIdElement = (props) => {
       setShowCopyIcon(true)
       setShowCheckIcon(false)
     }, 1000)
-
   }
 
   return (
