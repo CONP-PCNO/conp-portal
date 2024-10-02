@@ -49,11 +49,11 @@ def register(app):
         _seed_aff_types_db(app)
         _seed_admin_acct_db(app)
         _seed_test_datasets_db(app)
-    
+
     @app.cli.command("seed_test_experiments")
     def seed_test_experiments():
         _update_experiments(app)
-    
+
     @app.cli.command('update_pipeline_data')
     def update_pipeline_data():
         """
@@ -389,7 +389,7 @@ def _update_schema(app):
     print(f'[INFO   ] Generating search schema')
     schema = Schema(
         id=STORED,
-        title=TEXT(stored=True),
+        title=KEYWORD(stored=True, commas=True, scorable=True, analyzer=keyword_json_analyzer),
         name=STORED,
         description=TEXT(stored=True),
         creators=KEYWORD(stored=True, commas=True, scorable=True, analyzer=keyword_json_analyzer),
@@ -481,7 +481,7 @@ def _update_index(
             licenses=_format_index_value(datsdataset.licenses),
             version=_format_index_value(datsdataset.version),
             authorizations=_format_index_value(datsdataset.authorizations),
-            formats= _format_index_value(datsdataset.formats),
+            formats=_format_index_value(datsdataset.formats),
             size=_format_index_value(datsdataset.size),
             sources=_format_index_value(datsdataset.sources),
             privacy=_format_index_value(datsdataset.privacy),
