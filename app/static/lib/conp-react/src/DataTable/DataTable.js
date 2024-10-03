@@ -20,6 +20,7 @@ const DataTable = ({
 }) => {
   const ref = useRef(null);
   const [suggestions, setSuggestions] = useState([]);
+  const [datasets, setDatasets] = useState([]);
   const [tempSearch, setTempSearch] = useState(query.search || '');
   const [filters, setFilters] = useState([
     {
@@ -162,7 +163,10 @@ const DataTable = ({
     try {
         fetch(`/dataset-search-suggestions?search=${prefix}`)
             .then(res => res.json())
-            .then(json => setSuggestions(json));
+            .then(json => {
+              setSuggestions(json['suggestions']);
+              setDatasets(json['datasets']);
+            });
     } catch (err) {
         console.error(err);
     }
@@ -290,7 +294,6 @@ const DataTable = ({
                   <Typeahead
                     ref={ref}
                     minLength={2}
-                    options={suggestions}
                     className="form-control p-0"
                     style={{
                       border: 'none',
@@ -312,6 +315,14 @@ const DataTable = ({
                         ref.current?.blur();
                       }
                     }}
+                    options={[
+                      ...datasets,
+                      ...suggestions,
+                    ]}
+                    renderMenuItemChildren={(option) =>
+                      datasets.includes(option) ? <strong><em>{option}</em></strong> :
+                      option
+                    }
                   />
                   <span className="input-group-append">
                     <button className="input-group-text" id="basic-addon2">
