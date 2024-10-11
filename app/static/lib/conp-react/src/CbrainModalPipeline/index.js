@@ -8,7 +8,7 @@ const CbrainModalPipeline = (props) => {
   };
   const baseUrl = platforms[0].uri;
   const getDatasetId = (datasetUrl) =>
-    `switch_group_id=${datasetUrl.split("%3Fid%3D")[1]}`;
+    `switch_group_id=${datasetUrl?.split("%3Fid%3D")[1]}`;
   useEffect(() => {
     $("#cbrainModal").modal("handleUpdate");
 
