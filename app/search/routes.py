@@ -332,7 +332,7 @@ def dataset_search():
 
         if request.args.get('cbrain'):
             elements = list(
-                filter(lambda e: e['cbrain_id'] != '', elements)
+                filter(lambda e: e['cbrain_id'], elements)
             )
 
         cursor = None
