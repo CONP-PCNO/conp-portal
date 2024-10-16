@@ -132,13 +132,19 @@ def dataset_search_suggestions():
 
         ix = open_dir("index")
         with ix.reader() as r:
-            fields = [field for field in ix.schema.scorable_names() if field not in ['name']]
+            fields = [field for field in ix.schema.scorable_names() if field not in ['name', 'title']]
             suggestions = set()
+            datasets = set()
             for field in fields:
                 for f in r.iter_field(field):
                     s = f[0].decode("utf-8")
                     if search_term in s:
                         suggestions.add(s)
+
+            for f in r.iter_field('title'):
+                s = f[0].decode("utf-8")
+                if search_term in s:
+                    datasets.add(s)
 
             # Adding mapping terms
             for t in dataset_terms_mapping.keys():
@@ -147,7 +153,16 @@ def dataset_search_suggestions():
 
             suggestions = list(suggestions)
             suggestions.sort()
-            return json.dumps(suggestions)
+
+            datasets = list(datasets)
+            datasets.sort()
+
+            return json.dumps(
+                {
+                    'suggestions': suggestions,
+                    'datasets': datasets,
+                }
+            )
 
 
 @search_bp.route('/dataset-search', methods=['GET'])
