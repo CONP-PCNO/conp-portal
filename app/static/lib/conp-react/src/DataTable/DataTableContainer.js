@@ -29,7 +29,7 @@ const DataTableContainer = ({
     page: filters.page ? filters.page : 1,
     max_per_page: filters.max_per_page ? filters.max_per_page : 20,
     cursor: filters.cursor ? filters.cursor : 0,
-    limit: filters.limit ? filters.limit : 10
+    limit: filters.limit ? filters.limit : 20
   });
 
   const [totalState, setTotalState] = useState(total);
@@ -160,7 +160,7 @@ DataTableContainer.defaultProps = {
   authorized: false,
   endpointURL: "",
   imagePath: 'static/img/',
-  limit: 10,
+  limit: 20,
   total: 0,
   page: 1,
   max_per_page: 20,

@@ -200,7 +200,7 @@ def dataset_search():
                     if search_term in t:
                         s = s + ' OR "' + dataset_terms_mapping[t] + '"'
 
-                datasets = searcher.search(MultifieldParser(ix.schema.scorable_names(), ix.schema).parse(s))
+                datasets = searcher.search(MultifieldParser(ix.schema.scorable_names(), ix.schema).parse(s), limit=None)
             else:
                 datasets = searcher.documents()
 
@@ -342,7 +342,7 @@ def dataset_search():
                 (int(request.args.get('page', 1)) - 1)
             cursor = max(
                 min(int(request.args.get('cursor') or 0), 0), 0) + delta
-            limit = int(request.args.get('limit') or 10)
+            limit = int(request.args.get('limit') or 20)
 
         sort_key = request.args.get('sortKey') or "conpStatus"
         paginated = elements
