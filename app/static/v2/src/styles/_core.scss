@@ -28,22 +28,22 @@ h6 {
   font-weight: 400;
 }
 
-h1 {
+h1:not(.readme *) {
   font-size: 2.4em;
 }
-h2 {
+h2:not(.readme *) {
   font-size: 2.2em;
 }
-h3 {
+h3:not(.readme *) {
   font-size: 2em;
 }
-h4 {
+h4:not(.readme *) {
   font-size: 1.8em;
 }
-h5 {
+h5:not(.readme *) {
   font-size: 1.6em;
 }
-h6 {
+h6:not(.readme *) {
   font-size: 1.4em;
 }
 
@@ -368,7 +368,7 @@ body {
   padding: 0.5rem;
 }
 
-.card .card-body ul {
+.card .card-body ul:not(.readme *) {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -377,7 +377,7 @@ body {
   margin: 0;
 }
 
-.card .card-body li {
+.card .card-body li:not(.dataset *) {
   padding-right: 1rem;
 }
 
