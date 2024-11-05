@@ -178,7 +178,7 @@ def dataset_search():
             JSON containing the matching datasets
     """
     from whoosh.index import open_dir
-    from whoosh.qparser import MultifieldParser
+    from whoosh.qparser import MultifieldParser, QueryParser
 
     if current_user.is_authenticated:
         authorized = True
@@ -215,7 +215,19 @@ def dataset_search():
                     if search_term in t:
                         s = s + ' OR "' + dataset_terms_mapping[t] + '"'
 
-                datasets = searcher.search(MultifieldParser(ix.schema.scorable_names(), ix.schema).parse(s), limit=None)
+                _datasets = []
+                for field in ix.schema.scorable_names():
+                    try:
+                        parser = QueryParser(field, ix.schema)
+                        myquery = parser.parse(s)
+                        _datasets.extend(searcher.search(myquery))
+                    except Exception as e:
+                        print(e)
+                        print('Cannot perform term search ' + s + ' in field ' + field)
+
+                ds = set()
+                ds_add = ds.add
+                datasets = [d for d in _datasets if not (d['title'] in ds or ds_add(d['title']))]
             else:
                 datasets = searcher.documents()
 
