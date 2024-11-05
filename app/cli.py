@@ -385,11 +385,12 @@ def _update_schema(app):
     json_analyzer = JsonTokenizer() | LowercaseFilter() | StopFilter()
     keyword_json_analyzer = JsonTokenizer(',', True) | LowercaseFilter() | StopFilter()
     publication_json_analyzer = JsonTokenizer('.', True) | LowercaseFilter() | StopFilter()
+    title_json_analyzer = JsonTokenizer('^', True) | LowercaseFilter() | StopFilter()
 
     print(f'[INFO   ] Generating search schema')
     schema = Schema(
         id=STORED,
-        title=KEYWORD(stored=True, commas=True, scorable=True, analyzer=keyword_json_analyzer),
+        title=KEYWORD(stored=True, commas=True, scorable=True, analyzer=title_json_analyzer),
         name=STORED,
         description=TEXT(stored=True),
         creators=KEYWORD(stored=True, commas=True, scorable=True, analyzer=keyword_json_analyzer),
