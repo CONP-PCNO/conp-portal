@@ -377,7 +377,7 @@ class DATSDataset(DATSObject):
             dist = dists[0]
 
         size = float(dist.get('size', 0))
-        unit = dist.get('unit', {}).get('value', '')
+        unit = dist.get('unit', {}).get('value', '').upper()
 
         # Some data values from the DATS are not user friendly so
         # If size > 1000, divide n times until it is < 1000 and increment the units from the array

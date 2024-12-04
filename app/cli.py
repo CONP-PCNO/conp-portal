@@ -209,7 +209,7 @@ def _update_datalad_objects(
     # Update to latest commit
     origin = repo.remotes.origin
     origin.pull('master')
-    repo.submodule_update(recursive=True, force_reset=True, force_remove=True, keep_going=True)
+    repo.submodule_update(recursive=True, force_reset=True, force_remove=True, to_latest_revision=True, keep_going=True)
 
     d = DataladDataset(path=datasetsdir)
     if not d.is_installed():
