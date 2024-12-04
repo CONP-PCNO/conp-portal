@@ -65,8 +65,10 @@ def register(app):
     def update_datasets():
         """
         Wrapper to call the updating to the datasets metadata
+        and search index
         """
         _update_datasets(app)
+        _update_index(app, DBDataset, False)
 
     @app.cli.command('update_index')
     @click.option(
