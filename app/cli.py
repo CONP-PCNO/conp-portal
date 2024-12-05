@@ -68,7 +68,7 @@ def register(app):
         and search index
         """
         _update_datasets(app)
-        _update_index(app, DBDataset, False)
+        _update_index(app, DBDataset, True)
 
     @app.cli.command('update_index')
     @click.option(
