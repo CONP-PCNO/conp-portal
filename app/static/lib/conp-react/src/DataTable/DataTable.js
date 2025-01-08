@@ -76,7 +76,7 @@ const DataTable = ({
   // };
 
   useEffect(() => {
-    tempSearch && fetchSuggestions(tempSearch);
+    tempSearch && renderElement.name === "DatasetElement" && fetchSuggestions(tempSearch);
   }, [tempSearch]);
 
   const handleFiltersChange = (event) => {
@@ -291,39 +291,50 @@ const DataTable = ({
 
               {renderElement.name === "PipelineElement" || renderElement.name === "DatasetElement" ?
                 <form className="input-group m-2" onSubmit={e => {setQuery({...query, search: tempSearch, page: 1}); e.preventDefault();}}>
-                  <Typeahead
-                    ref={ref}
-                    minLength={2}
-                    className="form-control p-0"
-                    style={{
-                      border: 'none',
-                    }}
-                    type="text"
-                    placeholder="Search"
-                    aria-label="Search"
-                    id="searchInput"
-                    defaultInputValue={tempSearch}
-                    onChange={selected =>
-                      selected[0] && setQuery({...query, search: selected[0], page: 1})
-                    }
-                    onInputChange={text => {
-                      setTempSearch(text);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.keyCode === 13) {
-                        setQuery({...query, search: tempSearch, page: 1});
-                        ref.current?.blur();
+                  {renderElement.name === "DatasetElement" ?
+                    <Typeahead
+                      ref={ref}
+                      minLength={2}
+                      className="form-control p-0"
+                      style={{
+                        border: 'none',
+                      }}
+                      type="text"
+                      placeholder="Search"
+                      aria-label="Search"
+                      id="searchInput"
+                      defaultInputValue={tempSearch}
+                      onChange={selected =>
+                        selected[0] && setQuery({...query, search: selected[0], page: 1})
                       }
-                    }}
-                    options={[
-                      ...datasets,
-                      ...suggestions,
-                    ]}
-                    renderMenuItemChildren={(option) =>
-                      datasets.includes(option) ? <strong><em>{option}</em></strong> :
-                      option
-                    }
-                  />
+                      onInputChange={text => {
+                        setTempSearch(text);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                          setQuery({...query, search: tempSearch, page: 1});
+                          ref.current?.blur();
+                        }
+                      }}
+                      options={[
+                        ...datasets,
+                        ...suggestions,
+                      ]}
+                      renderMenuItemChildren={(option) =>
+                        datasets.includes(option) ? <strong><em>{option}</em></strong> :
+                        option
+                      }
+                    /> :
+                    <input
+                      className="form-control p-2"
+                      type="text"
+                      placeholder="Search"
+                      aria-label="Search"
+                      id="searchInput"
+                      value={tempSearch}
+                      onChange={e => setTempSearch(e.currentTarget.value)}
+                    />
+                  }
                   <span className="input-group-append">
                     <button className="input-group-text" id="basic-addon2">
                       <i className="fa fa-search"/>
