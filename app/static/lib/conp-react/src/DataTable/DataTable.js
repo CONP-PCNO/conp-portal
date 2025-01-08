@@ -305,9 +305,10 @@ const DataTable = ({
                       aria-label="Search"
                       id="searchInput"
                       defaultInputValue={tempSearch}
-                      onChange={selected =>
+                      onChange={selected => {
+                        setTempSearch(selected[0]);
                         selected[0] && setQuery({...query, search: selected[0], page: 1})
-                      }
+                      }}
                       onInputChange={text => {
                         setTempSearch(text);
                       }}
