@@ -293,6 +293,7 @@ const DataTable = ({
                 <form className="input-group m-2" onSubmit={e => {setQuery({...query, search: tempSearch, page: 1}); e.preventDefault();}}>
                   {renderElement.name === "DatasetElement" ?
                     <Typeahead
+                      autoFocus
                       ref={ref}
                       minLength={2}
                       className="form-control p-0"
@@ -326,6 +327,7 @@ const DataTable = ({
                       }
                     /> :
                     <input
+                      autoFocus
                       className="form-control p-2"
                       type="text"
                       placeholder="Search"
