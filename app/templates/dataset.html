@@ -211,7 +211,7 @@
 
 <div class="d-flex flex-column p-2">
   <h2>Dataset README information</h2>
-  <div class="card readme">
+  <div class="card">
     <div class="card-header">README.md</div>
     <div class="card-body">{{readme|safe}}</div>
   </div>
@@ -268,106 +268,101 @@
     </div>
   </div>
   {% endif %}
-  <p>
-    The following instructions require a basic understanding of UNIX/LINUX command lines. A subset of 
-    open datasets on the Portal are also available through a browser-based download button. The
-    instructions below regard dataset download with the use of <a target="_blank" rel="noopener noreferrer" href="https://www.datalad.org/">DataLad</a>.
-  </p>
-  <p>
-    <strong>
-      Note: The <code>conp-dataset</code> requires version >=0.12.5 of DataLad and version >=8.20200309 of git-annex.
-    </strong>
-  </p>
-  <p>
-    To install DataLad on your system, please refer to the
-    <a
-      target="_blank"
-      rel="noopener noreferrer"
-      href="http://handbook.datalad.org/en/latest/intro/installation.html#install"
-    >
-      install section of the DataLad Handbook
-    </a>
-    (installation via miniconda is recommended in order to obtain the latest version of DataLad).
-  </p>
-  <h6>1) Initiate the CONP dataset</h6>
-  <p>
-    To initiate the CONP dataset (<code>conp-dataset</code>), run the following command in the directory where you want CONP datasets to be installed:
-  </p>
-  <div class="code-snippet" data-code='["datalad install https://github.com/CONP-PCNO/conp-dataset.git"]'></div>
+<p>
+  The following instructions require a basic understanding of UNIX/LINUX command lines. A subset of open datasets on the Portal are also available through a browser-based download button. The instructions below regard dataset download with the use of <a target="_blank" rel="noopener noreferrer" href="https://www.datalad.org/">DataLad</a>. To install DataLad on your system, please refer to the
+  <a
+    target="_blank"
+    rel="noopener noreferrer"
+    href="http://handbook.datalad.org/en/latest/intro/installation.html#install"
+  >
+    install section of the DataLad Handbook
+  </a>.
+</p>
+<p>
+  <strong>
+    Note: For maximum compatibility with <code>conp-dataset</code>, the CONP recommends versions 3.12+ of Python, 10.20241202+ of git-annex, and 1.1.4+ of datalad.
+  </strong>
+</p>
+<h6>1) Initiate the CONP dataset</h6>
+<p>
+  Run the following command in the directory where you want the CONP dataset (<code>conp-dataset</code>) to be installed:
+</p>
+<div class="code-snippet" data-code='["datalad install https://github.com/CONP-PCNO/conp-dataset.git"]'></div>
 
-  <h6>2) Install the {{data.name}} dataset</h6>
-  <p>
-    To install the dataset, move into the "projects" subdirectory under the "conp-dataset" directory that was created in the previous step and run <code>datalad install</code> on the <code>{{data.name}}</code> dataset:
-  </p>
-  <div class="code-snippet" data-code='["cd conp-dataset/projects", "datalad install {{data.name}}"]'></div>
+<h6>2) Install the <b>{{data.name}}</b> dataset</h6>
+<p>
+  To install the <code>{{data.name}}</code> dataset, run the following commands to move into the "projects" subdirectory under the "conp-dataset" directory (created in the previous step) and run <code>datalad install</code>:
+</p>
+<div class="code-snippet" data-code='["cd conp-dataset/projects", "datalad install {{data.name}}"]'></div>
 
-  <h6>3) Download the {{data.name}} dataset</h6>
-  <p>
-    Now that the DataLad dataset has been installed, go into the <code>{{data.name}}</code> dataset directory.
-  </p>
-  <div class="code-snippet" data-code='["cd projects/{{data.name}}"]'></div>
-  <p>
-    Note: The files visible in the dataset directory after installing the dataset but before downloading (in the next step) are symlinks and need to be downloaded manually using the <code>datalad get</code> command:
-  </p>
-  </p>
-  <div class="code-snippet" data-code='["datalad get <filepath>"]'></div>
-  <p>
-    If you run <code>datalad get *</code> command, all the files present in the dataset directory will be downloaded.
-  </p>
-  <h6>
-    For more information on how DataLad works, please visit the <a target="_blank" rel="noopener noreferrer" href="http://handbook.datalad.org/en/latest/"> DataLad Handbook documentation </a>.
-  </h6>
+<h6>3) Download data from the <b>{{data.name}}</b> dataset</h6>
+<p>
+  Now that the dataset has been installed, go into the <code>{{data.name}}</code> dataset directory.
+</p>
+<div class="code-snippet" data-code='["cd {{data.name}}"]'></div>
+<p>
+  The files visible after installing the dataset but before downloading (in the next step) are symbolic links and need to be downloaded manually using the <code>datalad get</code> command:
+</p>
+</p>
+<div class="code-snippet" data-code='["datalad get <filepath>"]'></div>
+<p>
+  If you run <code>datalad get *</code> command, all the files available in the dataset directory will be downloaded.
+</p>
+<br>
+<h6>
+  For more information on how DataLad works, please visit the <a target="_blank" rel="noopener noreferrer" href="http://handbook.datalad.org/en/latest/">DataLad Handbook documentation</a>.
+</h6>
 </div>
 {% endif %}
 
 <script type="text/javascript">
-  const element = {{ data | tojson }};
-  const complementUrl = "{{ url_for('pipelines.pipeline_search') }}";
-  element.showDownload = true;
-  const reactElement = React.createElement(CONPReact.ElementContainer, {"element": CONPReact.DatasetElement, "elementProps": element, "complementUrl": complementUrl} );
-  ReactDOM.render(reactElement, document.querySelector("#mount-display"));
+const element = {{ data | tojson }};
+const complementUrl = "{{ url_for('pipelines.pipeline_search') }}";
+element.showDownload = true;
+const reactElement = React.createElement(CONPReact.ElementContainer, {"element": CONPReact.DatasetElement, "elementProps": element, "complementUrl": complementUrl} );
+ReactDOM.render(reactElement, document.querySelector("#mount-display"));
 
-  const elements = document.querySelectorAll(".code-snippet");
-  [...elements].forEach(el =>
-    ReactDOM.render(
-      React.createElement(
-        CONPReact.CodeSnippet,
-        {code: $(el).data('code')},
-      ),
-      el
-    )
-  );
+const elements = document.querySelectorAll(".code-snippet");
+[...elements].forEach(el =>
+  ReactDOM.render(
+    React.createElement(
+      CONPReact.CodeSnippet,
+      {code: $(el).data('code')},
+    ),
+    el
+  )
+);
 
-  const downloadMetadata = (event) => {
-    fetch(`${window.origin}/download_metadata?dataset=${element.id}`)
-      .then((response) => {
-        if (response.ok) {
-          return response.blob();
-        } else {
-          return response.text().then((text) => {
-            throw new Error(text);
-          });
-        }
-      })
-      .then(function (blob) {
-        var file = window.URL.createObjectURL(blob, { type: 'application/json' });
-        let link = document.createElement('a');
-        link.href = file;
-        link.download = `${element.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9]/g, "_")}.dats.json`;
-        link.click();
+const downloadMetadata = (event) => {
+  fetch(`${window.origin}/download_metadata?dataset=${element.id}`)
+    .then((response) => {
+      if (response.ok) {
+        return response.blob();
+      } else {
+        return response.text().then((text) => {
+          throw new Error(text);
+        });
+      }
+    })
+    .then(function (blob) {
+      var file = window.URL.createObjectURL(blob, { type: 'application/json' });
+      let link = document.createElement('a');
+      link.href = file;
+      link.download = `${element.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9]/g, "_")}.dats.json`;
+      link.click();
 
-        // For Firefox it is necessary to delay revoking the ObjectURL.
-        setTimeout(() => {
-          window.URL.revokeObjectURL(file);
-        }, 250);
-      })
-      .catch(function (error) {
-        const message = "Something went wrong when trying to download the metadata: " + error
-        // document.getElementById("dats-download-alert").innerHTML = message;
-        // document.getElementById("dats-download-alert").hidden = false;
-        console.error(message);
-      });
-  };
+      // For Firefox it is necessary to delay revoking the ObjectURL.
+      setTimeout(() => {
+        window.URL.revokeObjectURL(file);
+      }, 250);
+    })
+    .catch(function (error) {
+      const message = "Something went wrong when trying to download the metadata: " + error
+      // document.getElementById("dats-download-alert").innerHTML = message;
+      // document.getElementById("dats-download-alert").hidden = false;
+      console.error(message);
+    });
+};
 </script>
 
 <!--/span-->
