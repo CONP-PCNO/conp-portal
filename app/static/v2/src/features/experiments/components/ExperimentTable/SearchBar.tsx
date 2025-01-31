@@ -73,7 +73,7 @@ export const SearchBar = ({ onSubmit, word }: SearchBarProps) => {
           <div className="col p-0">
             <div className="d-flex flex-fill justify-content-center align-items-center h-100">
               <form className="input-group m-2" method="get" role="form" onSubmit={handleSubmit}>
-                <input required name="search_term" type="text" className="form-control" placeholder="Search" value={searchTerm} onChange={handleInputChange}/>
+                <input required name="search_term" type="text" autoFocus className="form-control" placeholder="Search" value={searchTerm} onChange={handleInputChange}/>
                 <div className="input-group-append">
                   <button className="border-0 p-0" type="submit">
                     <i
