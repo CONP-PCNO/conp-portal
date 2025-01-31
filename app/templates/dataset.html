@@ -118,13 +118,24 @@
       >{{ metadata.remoteUrl }}</a
     >
   </div>
-  {% endif %} {% if metadata.sources is defined and metadata.sources is not none %}
+  {% endif %}
+  {% if metadata.sources is defined and metadata.sources is not none %}
   <div class="py-1">
-    <strong>Source: </strong
+    <strong>Project Landing Page: </strong
     ><a class="text-reset" target="_blank" rel="noopener noreferrer" href="{{ metadata.sources }}"
       >{{ metadata.sources }}</a
     >
   </div>
+ 
+  {% if metadata.registrationPage is defined and metadata.registrationPage is not none %}
+  <div class="py-1">
+    <strong>Registration Page: </strong
+    ><a class="text-reset" target="_blank" rel="noopener noreferrer" href="{{ metadata.registrationPage }}"
+      >{{ metadata.registrationPage }}</a
+    >
+  </div>
+  {% endif %}
+
   <div class="py-1">
     <strong>Metadata file: </strong>
     <a class="text-reset" href="#" onclick="downloadMetadata()"> DATS.json </a>
