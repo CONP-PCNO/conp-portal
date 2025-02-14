@@ -191,14 +191,15 @@ class DATSObject:
 
     @property
     def origin(self):
-        origin = None
+        origin = []
         extraprops = self.descriptor.get('extraProperties', {})
         for prop in extraprops:
-            if prop.get('category') == 'origin':
-                origin = ", ".join([x['value']
-                                    for x in prop.get('values')])
-
-        return origin
+            if prop.get('category').startswith('origin_'):
+                key = prop.get('category').replace('origin_', '').capitalize()
+                origin.append(
+                    f"{key}: " + ", ".join([x['value'] for x in prop.get('values')])
+                )
+        return ", ".join(origin)
 
     @property
     def contacts(self):
