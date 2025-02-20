@@ -220,7 +220,7 @@ def dataset_search():
                     try:
                         parser = QueryParser(field, ix.schema)
                         myquery = parser.parse(s)
-                        _datasets.extend(searcher.search(myquery))
+                        _datasets.extend(searcher.search(myquery, limit=None))
                     except Exception as e:
                         print(e)
                         print('Cannot perform term search ' + s + ' in field ' + field)
