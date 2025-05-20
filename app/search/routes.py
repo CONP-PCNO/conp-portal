@@ -17,7 +17,7 @@ from flask import (
 from flask_login import current_user
 
 from app.models import ArkId
-from app.models import Dataset, DatasetAncestry
+from app.models import Dataset, DatasetAncestry, Experiment
 from app.search import search_bp
 from app.search.models import DATSDataset, DatasetCache
 from app.search.queries import (
@@ -694,6 +694,51 @@ def download_metadata():
         mimetype='application/json'
     )
 
+@search_bp.route('/download_metadata_experiment', methods=['GET'])
+def download_metadata_experiment():
+    """ Download Metadata Route for Experiments
+
+        This route allows downloading the metadata for an experiment.
+
+        Args:
+            experiment (REQ ARG): the experiment
+
+        Returns:
+            Response to the JSON metadata file for the browser to download.
+
+        Raises:
+            400 if experiment not found.
+    """
+    from unidecode import unidecode  
+
+    experiment_id = request.args.get('experiment', '')  
+    experiment = Experiment.query.filter_by(id=experiment_id).first()
+
+    if experiment is None:
+        return 'Experiment Not Found', 400  
+    
+    # Construire le chemin du dossier contenant les fichiers DATS.json
+    experiment_root_dir = os.path.join(
+        current_app.config['DATA_PATH'], 
+        'conp-experiments', 
+        experiment.fspath 
+    )
+
+    dats_path = os.path.join(experiment_root_dir, 'DATS.json')
+
+    if not os.path.exists(dats_path):
+        return 'File Not Found', 400 
+
+    # Nettoyer le nom du fichier avec `unidecode`
+    safe_filename = unidecode(experiment.name.replace(" ", "_")) + '.dats.json'
+
+    return send_from_directory(
+        os.path.dirname(dats_path),
+        os.path.basename(dats_path),
+        as_attachment=True,
+        attachment_filename=safe_filename,
+        mimetype='application/json'
+    )
 
 @search_bp.route('/sparql')
 def sparql():

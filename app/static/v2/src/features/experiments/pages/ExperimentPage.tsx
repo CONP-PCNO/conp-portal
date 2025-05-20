@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect }  from 'react';
 import ReactMarkdown from 'react-markdown';
 import { ExperimentCard } from '../components/ExperimentCard';
 import { Experiment } from '../types';
+import "./ExperimentPage.css";
 
 const additionalProps: Array<keyof Experiment> = [
   'keywords',
@@ -14,14 +15,16 @@ const additionalProps: Array<keyof Experiment> = [
   'privacy',
   'otherSoftware',
   'otherFunctions',
+  'primaryPublications',
   'acknowledgements',
   'source',
   'version',
   'modalities',
   'repositorySize',
   'repositoryFileCount',
+  'repositoryFile',
   'source',
-  'acknowledgements',
+  'acknowledgements'
 ];
 
 export interface ExperimentPageProps {
@@ -36,7 +39,24 @@ function  handleKeywordClick (keyword) {
   window.location.href = searchUrl;
 }
 
+const downloadExperimentMetadata = (event, experiment) => {
+  event.preventDefault();
+
+  const fileUrl = `${window.origin}/download_metadata_experiment?experiment=${experiment.id}`;
+
+  const link = document.createElement("a");
+  link.href = fileUrl;
+  link.download = experiment['title'].replace(/\s+/g, "_") + ".dats.json"; // Nom propre du fichier
+  link.click();
+};
+
 export const ExperimentPage = ({ experiment, downloadLink, readme }: ExperimentPageProps) => {
+  
+  useEffect(() => {
+    console.log("Additional Props:", additionalProps);
+    console.log("Experiment Data:", experiment);
+  }, [experiment]);
+
   return (
     <div>
       <ExperimentCard
@@ -87,10 +107,50 @@ export const ExperimentPage = ({ experiment, downloadLink, readme }: ExperimentP
               <strong>No of Files: </strong>
               {experiment["repositoryFileCount"]}
           </div>
+          {experiment["primaryPublications"].length > 0 && (
+            <div className="py-1" style={{ marginBottom: 0 }}>
+              <strong>
+                {experiment["primaryPublications"].length > 1 ? "Primary Publications: " : "Primary Publication: "}
+              </strong>
+              {experiment["primaryPublications"][0].title} {experiment["primaryPublications"][0].author} {" "}
+              <em>{experiment["primaryPublications"][0].journal}</em>
+              {experiment["primaryPublications"][0].doi && (
+                <a target="_blank" rel="noopener noreferrer" href={experiment["primaryPublications"][0].doi}>
+                  {experiment["primaryPublications"][0].doi}
+                </a>
+              )}
+              {experiment["primaryPublications"].length > 1 && (
+                <ul style={{ listStyleType: "none", paddingLeft: 0, marginBottom: 0 }}>
+                  {experiment["primaryPublications"].slice(1).map((pub, index) => (
+                    <li key={index} style={{ marginBottom: 0 }}>
+                      {pub.title} {pub.author} <em>{pub.journal}</em>
+                      {pub.doi && (
+                        <a target="_blank" rel="noopener noreferrer" href={pub.doi}>
+                          {pub.doi}
+                        </a>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
+          <div className="py-1">
+              <strong>Browse on GitHub: </strong>
+              <a href={experiment["remoteUrl"]} target="_blank" rel="noopener noreferrer">
+                  {experiment["remoteUrl"]}
+              </a>
+          </div>
           <div className="py-1">
               <strong>Source: </strong>
               <a href={experiment["source"]} target="_blank" rel="noopener noreferrer">
                   {experiment["source"]}
+              </a>
+          </div>
+          <div className="py-1">
+              <strong>Metadata file: </strong>
+              <a href="#" onClick={(event) => downloadExperimentMetadata(event, experiment)}>
+                DATS.json
               </a>
           </div>
         </div>

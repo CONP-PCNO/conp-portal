@@ -8,7 +8,8 @@
 <script>
   const { ExperimentPage, React, ReactDOM } = CONP;
   const experimentData = JSON.parse(document.getElementById('experiment-data').textContent);
-  const element = React.createElement(ExperimentPage, {
+  console.log('experimentData', experimentData)
+    const element = React.createElement(ExperimentPage, {
     experiment: experimentData,
     downloadLink: "{{ url_for('experiments.download', experiment_id=experiment.id) }}",
     readme: `{{ readme|safe }}`

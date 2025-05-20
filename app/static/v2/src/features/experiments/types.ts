@@ -19,6 +19,12 @@ export interface Experiment {
   otherSoftware: string[];
   primaryFunction: string;
   otherFunctions: string[];
+  primaryPublications: { 
+    title: string; 
+    author: string; 
+    journal: string; 
+    doi: string;
+  }[];
   doi: string;
   acknowledgements: string;
   source: string;
