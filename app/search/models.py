@@ -478,10 +478,12 @@ class DATSDataset(DATSObject):
             if prop.get('category') == 'subjects':
                 for x in prop.get('values', []):
                     if isinstance(x['value'], str):
-                        count += int(x['value'].replace(",", ""))
-                    else:
+                        try:
+                            count += int(x['value'].replace(",", ""))
+                        except ValueError:
+                            pass
+                    elif isinstance(x['value'], int):
                         count += x['value']
-
         return count if count > 0 else None
 
     @ property
