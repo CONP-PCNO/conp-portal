@@ -124,58 +124,55 @@ const StudySpotlight = (props) => {
 
 
   return (
-    <div class="card-description">
-      <h3 class="card-description-title">STUDY SPOTLIGHT</h3>
+    <div className="card-description">
+      <h3 className="card-description-title">STUDY SPOTLIGHT</h3>
       <hr />
-      <div id="study-spotlight-carousel" class="carousel slide" data-ride="carousel" data-interval="10000">
-        <ol class="carousel-indicators">
+      <div id="study-spotlight-carousel" className="carousel slide" data-ride="carousel" data-interval="10000">
+        <ol className="carousel-indicators">
           {studies.map((study, i) =>
             <li
               data-target="#study-spotlight-carousel"
               data-slide-to={i}
-              class={i === 0 ? "active" : ""}
+              className={i === 0 ? "active" : ""}
             ></li>
           )}
         </ol>
-        <div class="carousel-inner">
+        <div className="carousel-inner">
           {studies.map((study, i) =>
-            <div class={i === 0 ? "carousel-item active" : "carousel-item"}>
-              <div class="card-description-text">
-                <div class="card-img d-flex justify-content-center">
-                  {study.logo && <img style={{ maxHeight: '220px', maxWidth: '250px' }} alt="Project image" class="img-fluid" src={study.logo} />}
+            <div className={i === 0 ? "carousel-item active" : "carousel-item"}>
+              <div className="card-description-text">
+                <div className="card-img d-flex justify-content-center">
+                  {study.logo && <img style={{ maxHeight: '220px', maxWidth: '250px' }} alt="Project image" className="img-fluid" src={study.logo} />}
                 </div>
-                <p class="card-description-subtitle">{study.title}</p>
+                <p className="card-description-subtitle">{study.title}</p>
                 {study.description}
               </div>
-              <div class="d-flex mt-4 justify-content-around">
-                {study.buttons.map((button) => 
+              <div className="d-flex mt-4 justify-content-around">
+                {study.buttons.map((button) =>
                   <div>
                     <a href={button.link}>
-                      <button class="btn btn-outline-secondary" type="button">
+                      <button className="btn btn-outline-secondary" type="button">
                         {button.label}
                       </button>
                     </a>
                   </div>
                 )}
               </div>
-              <div class="card-description-subtitle">
+              <div className="card-description-subtitle">
                 <p>Authors: {study.authors}</p>
               </div>
-            </div> 
+            </div>
           )}
         </div>
-        <button class="carousel-control-prev" type="button" data-target="#study-spotlight-carousel" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
+        <button className="carousel-control-prev" type="button" data-target="#study-spotlight-carousel" data-slide="prev">
+          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span className="sr-only">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-target="#study-spotlight-carousel" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
+        <button className="carousel-control-next" type="button" data-target="#study-spotlight-carousel" data-slide="next">
+          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span className="sr-only">Next</span>
         </button>
       </div>
-
-
-      
     </div>
   );
 };
