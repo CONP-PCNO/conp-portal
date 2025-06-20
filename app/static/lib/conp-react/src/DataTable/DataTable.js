@@ -184,7 +184,7 @@ const DataTable = ({
                     <label className="dropdown-label text-nowrap m-2">Filter By: </label>
                     <div className="dropdown">
                       <button className="btn btn-outline-secondary dropdown-toggle p-2" type="button"
-                              id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                              id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                               data-display="static">
                         Modality:
                       </button>
@@ -208,7 +208,7 @@ const DataTable = ({
                     </div>
                     <div className="dropdown">
                       <button className="btn btn-outline-secondary dropdown-toggle p-2" type="button"
-                              id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                              id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                               data-display="static">
                         File Format:
                       </button>
@@ -232,7 +232,7 @@ const DataTable = ({
                     </div>
                     <div className="dropdown">
                       <button className="btn btn-outline-secondary dropdown-toggle p-2" type="button"
-                              id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                              id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                               data-display="static">
                         Third-party account required:
                       </button>
@@ -260,7 +260,7 @@ const DataTable = ({
                     <label className="dropdown-label text-nowrap m-2">Filter By: </label>
                     <div className="dropdown">
                       <button className="btn btn-outline-secondary dropdown-toggle p-2" type="button"
-                              id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                              id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                               data-display="static">
                         Tag:
                       </button>
@@ -426,7 +426,7 @@ const DataTable = ({
               results per page
               <span className="dropdown p-2">
               <button className="btn btn-secondary dropdown-toggle p-2" type="button" id="dropdownMenuButton"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {query.max_per_page}
               </button>
               <div className="dropdown-menu" style={{minWidth: '5rem'}}>
