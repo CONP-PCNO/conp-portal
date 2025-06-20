@@ -127,12 +127,12 @@ const StudySpotlight = (props) => {
     <div className="card-description">
       <h3 className="card-description-title">STUDY SPOTLIGHT</h3>
       <hr />
-      <div id="study-spotlight-carousel" className="carousel slide" data-ride="carousel" data-interval="10000">
+      <div id="study-spotlight-carousel" className="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
         <ol className="carousel-indicators">
           {studies.map((study, i) =>
             <li
-              data-target="#study-spotlight-carousel"
-              data-slide-to={i}
+              data-bs-target="#study-spotlight-carousel"
+              data-bs-slide-to={i}
               className={i === 0 ? "active" : ""}
             ></li>
           )}
@@ -164,11 +164,11 @@ const StudySpotlight = (props) => {
             </div>
           )}
         </div>
-        <button className="carousel-control-prev" type="button" data-target="#study-spotlight-carousel" data-slide="prev">
+        <button className="carousel-control-prev" type="button" data-bs-target="#study-spotlight-carousel" data-bs-slide="prev">
           <span className="carousel-control-prev-icon" aria-hidden="true"></span>
           <span className="sr-only">Previous</span>
         </button>
-        <button className="carousel-control-next" type="button" data-target="#study-spotlight-carousel" data-slide="next">
+        <button className="carousel-control-next" type="button" data-bs-target="#study-spotlight-carousel" data-bs-slide="next">
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="sr-only">Next</span>
         </button>
