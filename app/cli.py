@@ -467,7 +467,7 @@ def _update_index(
             # There should be an error message in the logs/update_datsets.log
             continue
 
-        datasetTitle = d.name.replace("'", "")
+        datasetTitle = d.name.replace("'", "").replace('"', "")
         if datasetTitle in cbrain_dataset_ids.keys():
             dataset_cbrain_id = cbrain_dataset_ids[datasetTitle]
         else:
@@ -475,7 +475,7 @@ def _update_index(
 
         writer.add_document(
             id=_format_index_value(d.dataset_id),
-            title=_format_index_value(d.name),
+            title=_format_index_value(datasetTitle),
             name=_format_index_value(datsdataset.name),
             description=_format_index_value(datsdataset.description),
             creators=_format_index_value(datsdataset.creators),
