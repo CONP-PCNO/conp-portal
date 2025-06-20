@@ -19,7 +19,7 @@ click==8.1.6
 commonmark==0.8.1
 coverage==4.5.4
 cryptography==44.0.1
-datalad==0.13.6
+datalad==1.2.0
 Deprecated==1.2.7
 distro==1.9.0
 docopt==0.6.2
@@ -42,7 +42,7 @@ Flask-SSO==0.4.0
 Flask-User==1.0.1.5
 flask-wtf==1.2.1
 flaskhmac==1.2.1
-future==0.18.3
+future==1.0.0
 gitdb==4.0.12
 gitdb2==2.0.6
 GitPython==3.1.41
@@ -55,10 +55,10 @@ importlib-metadata==3.7.0
 importlib-resources==6.4.5
 iso8601==0.1.12
 itsdangerous==2.2.0
-jeepney==0.4.1
+jeepney==0.9.0
 jinja2==3.1.5
 jsonschema==3.0.2
-keyring==19.2.0
+keyring==25.6.0
 keyrings.alt==3.1.1
 Mako==1.2.2
 MarkupSafe==2.1.5
@@ -74,7 +74,7 @@ passlib==1.7.1
 pathlib2==2.3.5
 patool==1.12
 pep8==1.7.1
-psycopg2==2.9.7
+psycopg2-binary==2.9.10
 puremagic==1.6
 py==1.10.0
 pycodestyle==2.6.0
@@ -92,7 +92,7 @@ pytest-flask==0.15.0
 pytest-flask-sqlalchemy==1.0.2
 pytest-mock==1.10.4
 python-dateutil==2.8.0
-python-dotenv==0.9.1
+python-dotenv==1.1.0
 python-editor==1.0.4
 pytz==2018.9
 PyYAML==5.3.1
@@ -100,7 +100,7 @@ rauth==0.7.3
 recommonmark==0.5.0
 requests==2.32.0
 requests-oauthlib==1.2.0
-SecretStorage==3.1.1
+SecretStorage==3.3.3
 simplejson==3.16.0
 six==1.16.0
 smmap==5.0.2
