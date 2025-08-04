@@ -4,7 +4,8 @@
 Module that contains the full blueprint for ORCID OAuth
 
 """
-from flask import flash, redirect, session, url_for, current_app, Markup
+from flask import flash, redirect, session, url_for, current_app
+from markupsafe import Markup
 from flask_user import current_user
 from flask_login import login_user
 from app.oauth.orcid_flask_dance import make_orcid_blueprint

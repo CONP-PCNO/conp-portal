@@ -11,14 +11,10 @@ import os
 import os.path
 from functools import partial
 
-from flask.globals import LocalProxy, _lookup_app_object
+from flask import g
+from flask.globals import LocalProxy
 from flask_dance.consumer import OAuth2ConsumerBlueprint
 from flask_dance.consumer.requests import OAuth2Session
-
-try:
-    from flask import _app_ctx_stack as stack
-except ImportError:
-    from flask import _request_ctx_stack as stack
 
 
 class JsonOath2Session(OAuth2Session):
@@ -95,9 +91,8 @@ def make_orcid_blueprint(
         """
           sets the orchid session in the current context
         """
-        ctx = stack.top
-        ctx.orchid_oauth = orcid_bp.session
+        g.orchid_oauth = orcid_bp.session
     return orcid_bp
 
 
-orcid = LocalProxy(partial(_lookup_app_object, "orcid_oauth"))
+orcid = LocalProxy(lambda: g.orcid_oauth)
