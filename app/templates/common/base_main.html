@@ -648,21 +648,20 @@
   </div>
 </div>
 
-<!-- Trigger modal -->
-<script type="text/javascript">
-  cookies = document.cookie;
-  termsAccepted = false;
-  if (cookies) {
-    termsAccepted = cookies.includes('termsAccepted=true');
-  }
-
-  if (!termsAccepted) {
-    $('#termsModal').modal('show');
-  }
-</script>
-
 <script>
-  $(function () {
+    <!-- Trigger modal -->
+    $(function () {
+      cookies = document.cookie;
+    termsAccepted = false;
+    if (cookies) {
+      termsAccepted = cookies.includes('termsAccepted=true');
+    }
+
+    if (!termsAccepted) {
+      $('#termsModal').modal('show');
+    }
+    <!-- -->
+
     $('#btnAcceptTerms').on('click', function (event) {
       document.cookie = 'termsAccepted=true;max-age=31536000';
 
