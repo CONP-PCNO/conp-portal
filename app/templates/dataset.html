@@ -74,9 +74,14 @@
   {% endif %} {% if metadata.parentDatasets is defined and metadata.parentDatasets is not none %}
   <div class="py-1">
     <strong>Input Datasets: </strong>
-    {% for d in metadata.parentDatasets %} {% if d is defined %} {% set href = "/dataset?id=projects/" ~ d %}
-    <span class="mr-1"><a class="badge badge-info" href="{{ href }}">{{ d }}</a></span>
-    {% endif %} {% endfor %}
+    {% for d in metadata.parentDatasets %}
+      {% if d is defined %} {% set href = "/dataset?id=projects/" ~ d %}
+        {% if d.startswith('http') %}
+          {% set href = d %}
+        {% endif %}
+        <span class="mr-1"><a class="badge badge-info" href="{{ href }}">{{ d }}</a></span>
+      {% endif %}
+    {% endfor %}
   </div>
   {% endif %} {% if metadata.childDatasets is defined and metadata.childDatasets|length > 0 %}
   <div class="py-1">
