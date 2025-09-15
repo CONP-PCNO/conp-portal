@@ -1,6 +1,10 @@
 {% extends 'common/base_main.html' %}
 
 <!-- Head Block -->
+{% block head %} {{ super() }}
+<title>CONP Portal | Download</title>
+{% endblock %}
+
 {% block scripts %}
 {{ super() }}
 <script src=" {{ url_for('static',filename='js/react.development-16.11.0.js') }}"></script>

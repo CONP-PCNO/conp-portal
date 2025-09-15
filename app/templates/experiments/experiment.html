@@ -1,4 +1,10 @@
-{% extends 'common/base_main.html' %} {% block contenttitle %}
+{% extends 'common/base_main.html' %}
+
+{% block head %} {{ super() }}
+<title>CONP Portal | {{ experiment.title }}</title>
+{% endblock %}
+
+{% block contenttitle %}
 <h2><span style="color: red">CONP Portal</span> | {{ experiment.title }}</h2>
 {% endblock %} {% block appcontent %}
 <div id="experiment-page"></div>

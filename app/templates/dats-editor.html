@@ -1,6 +1,9 @@
 {% extends 'common/base_main.html' %}
 
 <!-- Head Block -->
+{% block head %} {{ super() }}
+<title>CONP Portal | DATS Editor</title>
+{% endblock %}
 
 {% block styles %} {{ super() }}
 <link href="{{ url_for('static', filename='lib/conp-react/umd/main.4cc50107.css') }}" rel="stylesheet" />

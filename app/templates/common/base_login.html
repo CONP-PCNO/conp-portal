@@ -1,3 +1,11 @@
+{% block head %} {{ super() }}
+{% if title %}
+  <title>CONP Portal | {{ title }}</title>
+{% else %}
+  <title>CONP Portal | Login-Page</title>
+{% endif %}
+{% endblock %}
+
 {% block title %}
   {% if title %}
     {{ title }}
