@@ -1,4 +1,10 @@
-{% extends 'experiments/base.html' %} {% block contenttitle %}
+{% extends 'experiments/base.html' %}
+
+{% block head %} {{ super() }}
+<title>CONP Portal | Experiments Form</title>
+{% endblock %}
+
+{% block contenttitle %}
 <h2><span style="color: red">CONP Portal</span> | Experiments Form</h2>
 {% endblock %} {% block scripts %} {{ super() }}
 <script>
