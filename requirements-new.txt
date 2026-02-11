@@ -47,7 +47,7 @@ gitdb==4.0.12
 gitdb2==2.0.6
 GitPython==3.1.41
 greenlet==3.1.1
-gunicorn==22.0.0
+gunicorn==23.0.0
 humanize==0.5.1
 idna==3.7
 imagesize==1.1.0
