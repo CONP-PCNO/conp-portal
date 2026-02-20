@@ -28,7 +28,7 @@ dominate==2.4.0
 entrypoints==0.3
 fasteners==0.15
 flake8==3.8.4
-flask==3.0.3
+flask==3.1.3
 Flask-Admin==1.5.3
 Flask-Bootstrap4==4.0.2
 Flask-Dance==3.0.0
