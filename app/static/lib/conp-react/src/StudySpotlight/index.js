@@ -103,13 +103,36 @@ const StudySpotlight = (props) => {
       authors: "Catherine Lebel - Developmental Neuroimaging Lab, University of Calgary"
     },
     {
+      title: "Calgary Preschool MRI Dataset",
+      logo: "/dataset_logo?id=projects/Calgary-Preschool-MRI-Dataset",
+      description: <>
+        <p>
+          The Calgary Preschool MRI Dataset, produced by the Developmental Neuroimaging Lab 
+          at the University of Calgary, captures brain structure and function in 143 young 
+          children aged 2–13 through a number of MRI modalities: T1w, T2w, DWI, resting-state 
+          fMRI, ihMT, and ASL. The data are designed to chart typical neurodevelopment and 
+          provide a normative baseline for identifying atypical development in pediatric 
+          clinical populations. The dataset is openly available through the CONP Portal 
+          via DataLad and cognitive assessment data are available on request.
+        </p>
+      </>,
+      buttons: [
+        {
+          label: 'Open Dataset',
+          link: '/dataset?id=projects/Calgary-Preschool-MRI-Dataset',
+        },
+      ],
+      authors: "Developmental Neuroimaging Lab, University of Calgary"
+    },    
+    {
       title: "Calgary Campinas Brain MRI Dataset",
       logo: "/dataset_logo?id=projects/calgary-campinas",
       description: <>
         <p>
-          The dataset is currently composed of 3D,
-          T1-weighted reconstructed brain MR images and segmentation masks for certain structures.
-          It also has brain MR raw data (i.e., k-space).
+          The Calgary-Campinas-359 dataset is a large, open brain MRI collection acquired 
+          across multiple vendors and field strengths, providing raw k-space and reconstructed 
+          image data from 359 healthy adult participants. Designed to support MRI reconstruction 
+          research and evaluation of skull-stripping methods, it is available through the CONP Portal.
         </p>
       </>,
       buttons: [
