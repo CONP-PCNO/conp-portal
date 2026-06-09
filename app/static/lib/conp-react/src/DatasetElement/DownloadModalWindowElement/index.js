@@ -37,8 +37,9 @@ const DownloadModalWindowElement = (props) => {
          <button
            type="button"
            className="btn btn-outline-secondary"
-           data-dismiss="modal"
+           data-bs-dismiss="modal"
            id="cancelDownload"
+           onClick={close}
          >
            Cancel
          </button>
