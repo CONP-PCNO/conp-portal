@@ -241,9 +241,14 @@ const DatasetElement = (props) => {
                   <a href={`dataset?id=${element.id}#dataladInstructions`} role="button"
                       className="btn btn-success m-1">
                     Download With DataLad
-                    {authIcons.map((icon, index) => icon
-                    )}
                   </a>
+                  <div>
+                    {authIcons.map((icon, index) => (
+                      <div key={index}>
+                        {icon}
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 <div className="col-2 p-2">
                   <div className="card-text pl-1">
