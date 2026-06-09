@@ -426,15 +426,15 @@ def dataset_search():
 
         elif sort_key == "dateAddedDesc" or sort_key == "dateAddedAsc":
 
-            reverse = (sort_key == 'dateAddedAsc')
+            reverse = (sort_key == 'dateAddedDesc')
             paginated.sort(key=lambda o: (
-                o["dateAdded"] is None, o["dateAdded"]), reverse=reverse)
+                o["dateAdded"] is None, o["dateAdded"] or ""), reverse=reverse)
 
         elif sort_key == "dateUpdatedDesc" or sort_key == "dateUpdatedAsc":
 
-            reverse = (sort_key == 'dateUpdatedAsc')
+            reverse = (sort_key == 'dateUpdatedDesc')
             paginated.sort(key=lambda o: (
-                o["dateUpdated"] is None, o["dateUpdated"]), reverse=reverse)
+                o["dateUpdated"] is None, o["dateUpdated"] or ""), reverse=reverse)
 
         elif sort_key == "viewsDes" or sort_key == "viewsAsc":
 
