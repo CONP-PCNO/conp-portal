@@ -131,18 +131,31 @@ const DatasetElement = (props) => {
             </h5>
             <div className="py-2">
               <ul className="d-flex align-items-start">
-                {element.creators ?
+                {element.creators && Array.isArray(element.creators) ?
                     <li className="card-list-item">
                       <strong>Creators: </strong>{element.creators.length > 3 ? element.creators.slice(0, 3).join(', ') + ' et al.' : element.creators.join(', ')}
-                    </li> : null}
-                {element.origin?.institution ?
+                    </li> : element.creators && typeof element.creators === 'string' ?
                     <li className="card-list-item">
-                      <strong>Institution: </strong>{element.origin.institution}
+                      <strong>Creators: </strong>{element.creators}
                     </li> : null}
-                {element.origin?.consortium ?
+                {element.origin ? (
+                  typeof element.origin === 'string' ? (
                     <li className="card-list-item">
-                      <strong>Consortium: </strong>{element.origin.consortium}
-                    </li> : null}
+                      <strong>Origin: </strong>{element.origin}
+                    </li>
+                  ) : (
+                    <>
+                      {element.origin?.institution ?
+                          <li className="card-list-item">
+                            <strong>Institution: </strong>{element.origin.institution}
+                          </li> : null}
+                      {element.origin?.consortium ?
+                          <li className="card-list-item">
+                            <strong>Consortium: </strong>{element.origin.consortium}
+                          </li> : null}
+                    </>
+                  )
+                ) : null}
               </ul>
               <ul className="d-flex align-items-start">
                 {element.version ?
@@ -163,11 +176,17 @@ const DatasetElement = (props) => {
                     <li className="card-list-item">
                       <strong>Data Types: </strong>{element.types}
                     </li> : null}
-                {element.modalities ?
+                {element.modalities && Array.isArray(element.modalities) ?
                     <li className="card-list-item">
                       <strong>Modalities: </strong>{element.modalities.join(', ')}
+                    </li> : element.modalities && typeof element.modalities === 'string' ?
+                    <li className="card-list-item">
+                      <strong>Modalities: </strong>{element.modalities}
                     </li> : null}
-                {element.licenses ?
+                {element.licenses && Array.isArray(element.licenses) ?
+                    <li className="card-list-item">
+                      <strong>License: </strong>{element.licenses.join(', ')}
+                    </li> : element.licenses && typeof element.licenses === 'string' ?
                     <li className="card-list-item">
                       <strong>License: </strong>{element.licenses}
                     </li> : null}
@@ -185,9 +204,12 @@ const DatasetElement = (props) => {
                     <li className="card-list-item">
                       <strong>Subjects: </strong>{element.subjects}
                     </li> : null}
-                {element.formats ?
+                {element.formats && Array.isArray(element.formats) ?
                     <li className="card-list-item">
                       <strong>Formats: </strong>{element.formats.join(', ')}
+                    </li> : element.formats && typeof element.formats === 'string' ?
+                    <li className="card-list-item">
+                      <strong>Formats: </strong>{element.formats}
                     </li> : null}
               </ul>
             </div>
