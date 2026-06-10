@@ -424,21 +424,17 @@ def dataset_search():
             paginated.sort(key=lambda o: get_number_of_subjects(o),
                            reverse=reverse)
 
-        elif sort_key == "dateAddedDesc":
-            # Sort newest first (descending)
-            paginated.sort(key=lambda o: o["dateAdded"] or "", reverse=True)
+        elif sort_key == "dateAddedDesc" or sort_key == "dateAddedAsc":
 
-        elif sort_key == "dateAddedAsc":
-            # Sort oldest first (ascending)
-            paginated.sort(key=lambda o: o["dateAdded"] or "", reverse=False)
+            reverse = (sort_key == 'dateAddedAsc')
+            paginated.sort(key=lambda o: (
+                o["dateAdded"] is None, o["dateAdded"]), reverse=reverse)
 
-        elif sort_key == "dateUpdatedDesc":
-            # Sort newest first (descending)
-            paginated.sort(key=lambda o: o["dateUpdated"] or "", reverse=True)
+        elif sort_key == "dateUpdatedDesc" or sort_key == "dateUpdatedAsc":
 
-        elif sort_key == "dateUpdatedAsc":
-            # Sort oldest first (ascending)
-            paginated.sort(key=lambda o: o["dateUpdated"] or "", reverse=False)
+            reverse = (sort_key == 'dateUpdatedAsc')
+            paginated.sort(key=lambda o: (
+                o["dateUpdated"] is None, o["dateUpdated"]), reverse=reverse)
 
         elif sort_key == "viewsDes" or sort_key == "viewsAsc":
 
