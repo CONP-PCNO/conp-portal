@@ -88,6 +88,24 @@ def faq():
     return render_template('faq.html', title='CONP | FAQ', user=current_user, content=content)
 
 
+@main_bp.route('/data-governance')
+def data_governance():
+    """ Data Governance Route
+
+        Route to lead to the data governance page
+
+        Args:
+            None
+
+        Returns:
+            rendered template for data_governance.html
+    """
+
+    content = github.get_data_governance_content()
+
+    return render_template('data_governance.html', title='CONP | Data Governance', user=current_user, content=content)
+
+
 @main_bp.route('/contact_us')
 def contact_us():
     """ Contact Us Route
