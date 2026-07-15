@@ -87,3 +87,20 @@ def get_tutorial_content():
         print("ERROR: Something went wrong retrieving the Github markdown", err)
 
     return content
+
+
+
+def get_data_governance_content():
+    content = None
+    try:
+        url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/Documentation_displayed_on_the_portal/CONP_data_governance.md'
+        headers = {'Content-type': 'text/html; charset=UTF-8'}
+        response = requests.get(url, headers=headers)
+
+        raw = response.text
+
+        content = render_content(raw)
+    except requests.exceptions.HTTPError as err:
+        print("ERROR: Something went wrong retrieving the Github markdown", err)
+
+    return content

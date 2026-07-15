@@ -1,0 +1,18 @@
+{% extends 'common/base_main.html' %}
+
+<!-- Head Block -->
+{% block head %} {{ super() }}
+<title>CONP Portal | Data Governance</title>
+{% endblock %}
+
+<!-- Title Block -->
+
+{% block contenttitle %}
+<h2><span style="color:red;">CONP Portal </span> | Data Governance</h2>
+{% endblock %}
+
+<!-- Content Block -->
+
+{% block appcontent %}
+{{ content|safe }}
+{% endblock %}
