@@ -193,9 +193,7 @@ def dats_editor():
             rendered template for dats-editor.html
     """
 
-    content = github.get_tutorial_content()
-
-    return render_template('dats-editor.html', title='CONP | DATS Editor', user=current_user, content=content)
+    return render_template('dats-editor.html', title='CONP | DATS Editor', user=current_user)
 
 
 @main_bp.route('/ark:/<url_naan>/<url_ark_id>')

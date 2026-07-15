@@ -44,7 +44,7 @@ def get_share_content():
 def get_download_content():
     content = None
     try:
-        url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/Documentation_displayed_on_the_portal/CONP_portal_tutorial.md'
+        url = 'https://raw.githubusercontent.com/CONP-PCNO/conp-documentation/master/Documentation_displayed_on_the_portal/CONP_download.md'
         headers = {'Content-type': 'text/html; charset=UTF-8'}
         response = requests.get(url, headers=headers)
 
