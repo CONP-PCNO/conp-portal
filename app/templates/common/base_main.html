@@ -18,6 +18,13 @@
 {% block styles %}
 <link href="{{ url_for('static',filename='img/conp.ico')}}" rel="shortcut icon" type="image/png" />
 <link href="{{ url_for('static', filename='v1/css/bootstrap-multiselect.css') }}" rel="stylesheet" />
+<style>
+  /* Style tables rendered from markdown documentation pages (e.g. Data Governance, Download) */
+  .content-main table { border-collapse: collapse; width: 100%; margin: 1rem 0 1.5rem; }
+  .content-main th, .content-main td { border: 1px solid #ccd2d9; padding: .5rem .75rem; vertical-align: top; text-align: left; }
+  .content-main thead th { background: #f1f3f5; border-bottom: 2px solid #adb5bd; }
+  .content-main tbody tr:nth-child(even) { background: #f8f9fa; }
+</style>
 <link
   rel="stylesheet"
   href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
