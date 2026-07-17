@@ -4,6 +4,9 @@
 <title>CONP Portal | {{ pipeline.title }}</title>
 {% endblock %}
 
+{% block og_title %}{{ pipeline.title }} | CONP Portal{% endblock %}
+{% block og_description %}{% if pipeline.description is defined and pipeline.description|length %}{{ pipeline.description | striptags | truncate(200) }}{% else %}An analysis tool or pipeline on the Canadian Open Neuroscience Platform (CONP) Portal.{% endif %}{% endblock %}
+
 {% block scripts %} {{ super() }}
 <script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>
 <script src=" {{ url_for('static',filename='v1/js/react-dom.development-16.11.0.js') }}"></script>

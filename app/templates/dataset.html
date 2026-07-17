@@ -1,8 +1,12 @@
 {% extends 'common/base_main.html' %}
 
 {% block head %} {{ super() }}
-<title>CONP Portal | Dataset</title>
+<title>CONP Portal | {{ data.title if data.title else 'Dataset' }}</title>
 {% endblock %}
+
+{% block og_title %}{{ data.title if data.title else 'Dataset' }} | CONP Portal{% endblock %}
+{% block og_description %}{% if metadata.description %}{{ metadata.description | striptags | truncate(200) }}{% else %}A dataset on the Canadian Open Neuroscience Platform (CONP) Portal.{% endif %}{% endblock %}
+{% block og_url %}https://portal.conp.ca/dataset?id={{ data.id }}{% endblock %}
 
 {% block scripts %} {{ super() }}
 <script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>

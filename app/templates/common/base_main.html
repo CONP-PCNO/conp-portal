@@ -2,17 +2,25 @@
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="CONP" />
+<meta name="description" content="{% block meta_description %}The Canadian Open Neuroscience Platform (CONP) Portal is a web interface for finding, sharing, and downloading open neuroscience datasets and analysis tools.{% endblock %}" />
 <meta name="author" content="CONP" />
-<!-- metadata for the Twitter Card -->
+<!--
+  Social link-preview metadata. Defaults describe the site as a whole; individual
+  pages override the og_title / og_description / og_image / og_url blocks below to
+  give each dataset, tool, or experiment its own preview. The Twitter Card tags
+  mirror the Open Graph values so both stay in sync.
+-->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="CONP Portal" />
+<meta property="og:title" content="{% block og_title %}CONP Portal{% endblock %}" />
+<meta property="og:description" content="{% block og_description %}The Canadian Open Neuroscience Platform (CONP) Portal is a web interface for finding, sharing, and downloading open neuroscience datasets and analysis tools.{% endblock %}" />
+<meta property="og:image" content="{% block og_image %}https://portal.conp.ca/static/img/conp_for_twitter_card.png{% endblock %}" />
+<meta property="og:url" content="{% block og_url %}https://portal.conp.ca{{ request.path }}{% endblock %}" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:site" content="@NeuroLibre" />
-<meta name="twitter:title" content="CONP/PCNO" />
-<meta
-  name="twitter:description"
-  content="This portal is a web interface for the Canadian Open Neuroscience Platform (CONP) to facilitate open science in the neuroscience community. CONP simplifies global researcher access and sharing of datasets and tools. The portal internalizes the cycle of a typical research project: starting with data acquisition, followed by processing using already existing/published tools, and ultimately publication of the obtained results including a link to the original dataset."
-/>
-<meta name="twitter:image" content="https://portal.conp.ca/static/img/conp_for_twitter_card.png" />
+<meta name="twitter:site" content="@CONP_PCNO" />
+<meta name="twitter:title" content="{{ self.og_title() }}" />
+<meta name="twitter:description" content="{{ self.og_description() }}" />
+<meta name="twitter:image" content="{{ self.og_image() }}" />
 {% endblock %}
 
 {% block styles %}

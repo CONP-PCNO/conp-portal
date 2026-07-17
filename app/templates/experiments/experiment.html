@@ -4,6 +4,9 @@
 <title>CONP Portal | {{ experiment.title }}</title>
 {% endblock %}
 
+{% block og_title %}{{ experiment.title }} | CONP Portal{% endblock %}
+{% block og_description %}{% if experiment.description is defined and experiment.description %}{{ experiment.description | striptags | truncate(200) }}{% else %}An experiment on the Canadian Open Neuroscience Platform (CONP) Portal.{% endif %}{% endblock %}
+
 {% block contenttitle %}
 <h2><span style="color: red">CONP Portal</span> | {{ experiment.title }}</h2>
 {% endblock %} {% block appcontent %}
