@@ -75,48 +75,37 @@
   });
 </script>
 <script>
-  var pathName = window.location.pathname
-  var href = window.location.href
-  if (pathName=="/index" || pathName=="/index#" || pathName=="/" || pathName=="/#"){
-     $(function () {
-    $('#btnShowTut').on('click', function (event) {
-      $('#tutModal1').modal('show')
-    });
-  });
-  }
-  else if (href.includes("dataset?id=projects") == true){
-     $(function () {
-    $('#btnShowTut').on('click', function (event) {
-      $('#tutModal2-1').modal('show')
-    });
-  });
-  }
-  else if (pathName=="/search" || pathName=="/search#"){
-     $(function () {
-    $('#btnShowTut').on('click', function (event) {
-      $('#tutModal2').modal('show')
-    });
-  });
-  }
-  else if (href.includes("pipeline?id") == true){
-     $(function () {
-    $('#btnShowTut').on('click', function (event) {
-      $('#tutModal3-1').modal('show')
-    });
-  });
-  }
-  else if (pathName=="/pipelines" || pathName=="/pipelines#"){
-     $(function () {
-    $('#btnShowTut').on('click', function (event) {
-      $('#tutModal3').modal('show')
-    });
-  });
-  }
-  else if (pathName=="/share" || pathName=="/share#"){
-     $(function () {
-    $('#btnShowTut').on('click', function (event) {
-      $('#tutModal4').modal('show')
-    });
-  });
-  }
+  // Context-aware "?" help: turn the header "?" into a deep link to the most
+  // relevant Tutorial section, opened in a new tab. Any page not explicitly
+  // mapped falls back to the top of the Tutorial, so "?" now does something on
+  // every page (previously it was wired for only six page types).
+  (function () {
+    var path = window.location.pathname.replace(/\/$/, '').replace(/#$/, '');
+    var href = window.location.href;
+    var anchor = '';
+    if (path === '' || path === '/index') {
+      anchor = 'how-to-access-the-portal';
+    } else if (href.indexOf('dataset?id=') !== -1) {
+      anchor = 'downloading-data';
+    } else if (path === '/search') {
+      anchor = 'finding-datasets';
+    } else if (href.indexOf('pipeline?id=') !== -1) {
+      anchor = 'running-a-toolpipeline';
+    } else if (path === '/pipelines') {
+      anchor = 'finding-toolspipelines';
+    } else if (path.indexOf('/experiments') === 0) {
+      anchor = 'finding-experiments';
+    } else if (path === '/download') {
+      anchor = 'downloading-data';
+    } else if (path === '/share') {
+      anchor = 'how-can-i-upload-my-dataset';
+    }
+    var url = '/tutorial' + (anchor ? '#' + anchor : '');
+    var btn = document.getElementById('btnShowTut');
+    if (btn) {
+      btn.setAttribute('href', url);
+      btn.setAttribute('target', '_blank');
+      btn.setAttribute('rel', 'noopener');
+    }
+  })();
 </script>
