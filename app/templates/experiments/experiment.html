@@ -8,7 +8,7 @@
 {% block og_description %}{% if experiment.description is defined and experiment.description %}{{ experiment.description | striptags | truncate(200) }}{% else %}An experiment on the Canadian Open Neuroscience Platform (CONP) Portal.{% endif %}{% endblock %}
 
 {% block contenttitle %}
-<h2><span style="color: red">CONP Portal</span> | {{ experiment.title }}</h2>
+<h2><span class="brand-accent">CONP Portal</span> | {{ experiment.title }}</h2>
 {% endblock %} {% block appcontent %}
 <div id="experiment-page"></div>
 <script id="experiment-data" type="application/json">
