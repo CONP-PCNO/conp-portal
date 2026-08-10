@@ -1,0 +1,9 @@
+## Development Dependancies
+
+## Link to and load production requirements
+-r requirements.txt
+
+## Flake8 
+flake8>=7.0.0
+
+

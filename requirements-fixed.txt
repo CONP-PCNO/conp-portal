@@ -1,0 +1,170 @@
+## Dev Tools:
+## - https://github.com/saadmk11/python-third-party-imports
+## - third-party-imports /Projects/MCIN/conp/conp-portal
+##
+## also.. python -m pip install -r requirements-fixed.txt --dry-run --no-deps --python-version 3.14
+## python -m pip install -r requirements-fixed.txt --dry-run --no-deps --python-version 3.13
+## @todo: include `deptry .` in tests
+
+## Descriptive framework to publish, integrate, and execute command-line applications across computational platforms.
+boutiques==0.5.28 ## Prod
+#boutiques==0.5.33
+
+## Composable command-line interface toolkit for creating beautiful CLI applications.
+click==8.1.6 ## Prod
+# click==8.4.2
+
+## Distributed data management and version control system built on top of Git and git-annex.
+## Requires: annexremote, boto3, chardet, distro, fasteners, giturlparse, humanize, iso8601, keyring, keyrings.alt, looseversion, msgpack, packaging, patool, platformdirs, python-gitlab, requests, tqdm
+datalad==1.2.0 # prod
+#datalad==1.6.1
+
+## GitPython # aka git, gitpython
+## Python library used to interact with Git repositories, enabling
+## programmatic access to commits, branches, and files.
+## https://github.com/gitpython-developers/GitPython
+## Development Status: maintenance mode
+GitPython==3.1.41 ## Prod
+# GitPython==3.1.58
+
+## Python library to access the GitHub REST API v3 and manage
+## repositories, users, and organizations.
+## aka github, pygithub
+PyGithub==1.44.1
+
+## Core string-handling library that escapes characters so they are safe to use in HTML and XML.
+## aka markupsafe
+MarkupSafe==2.1.5 ## Prod
+# MarkupSafe==3.0.3
+
+## Library that reads key-value pairs from a .env file and sets them as environment variables.
+## aka dotenv
+python-dotenv==1.1.1 ## Prod
+# python-dotenv==1.2.2
+
+## Powerful extensions to the standard datetime module, including relative deltas and flexible parsing.
+## aka dateutil, python_dateutil
+python-dateutil==2.8.0 ## Prod
+# python_dateutil==2.9.0.post0
+
+## Olson timezone database tracking library for accurate cross-platform timezone calculations in Python.
+## aka timezone
+pytz==2018.9 ## Prod
+# pytz==2026.3.post1
+
+## Elegant and simple HTTP library for sending requests without manual query string encoding or POST-data formatting.
+## aka: requests
+# requests==2.32.0 ## Prod | requests==2.32.0` is yanked (reason: "Yanked due to conflicts with CVE-2024-35195 mitigation").
+requests==2.34.2
+
+# @todo: remove. included with flask_sqlalchemy
+## Comprehensive Database Toolkit and Object Relational Mapper (ORM) featuring enterprise-level persistence patterns.
+SQLAlchemy==2.0.38 ## Prod
+# SQLAlchemy==2.0.51
+
+## Collection of various utility functions, data types, and helpers to complement SQLAlchemy.
+## aka: SQLAlchemy-Utils, sqlalchemy_utils
+sqlalchemy_utils==0.41.2 # Prod
+# sqlalchemy_utils==0.42.1
+
+## ASCII transliterations of Unicode text to safely convert accents, symbols, and non-Roman characters into plain text.
+Unidecode==1.3.8 ## Prod
+# Unidecode==1.4.0
+
+## Comprehensive WSGI web application library providing request/response objects, routing, and debugging utilities.
+Werkzeug==3.0.6 ## Prod
+# Werkzeug==3.1.8
+
+## Fast, pure-Python search engine library for indexing and searching text fields.
+whoosh==2.7.4
+
+## Flexible form validation and rendering library for Python web development, independent of any web framework.
+## aka wtforms
+WTForms==2.2.1 ## Prod
+# WTForms==3.2.2
+
+## Flask ##############################################################
+
+## Flask
+## Lightweight WSGI web application framework designed to make getting started quick and easy.
+Flask==3.0.3 ## Prod
+# Flask==3.1.3
+
+## Flask-Bootstrap4
+## Flask extension that integrates the Bootstrap front-end framework into Jinja2 templates.
+Flask-Bootstrap4==4.0.2
+
+## Flask-Dance
+## Flask extension providing turnkey OAuth consumer support for logging in via services like Google and GitHub.
+## aka flask_dance
+Flask-Dance==3.0.0 ## Prod
+# Flask-Dance==7.1.0
+
+## Flask-Login
+## User session management library for Flask that handles logging in, logging out, and remembering sessions.
+## NOTE: included in Flask-User, but Flask-User is yanked from PyPI and abandoned. Use Flask-Login instead.
+Flask-Login==0.6.3
+
+## Flask-Mail
+## Flask extension that provides a simple interface to send email messages from your application.
+Flask-Mail==0.9.1 ## Prod
+# flask_mail==0.10.0
+
+## Flask-Migrate
+## SQLAlchemy database migrations extension for Flask applications using Alembic.
+## aka: flask_migrate
+Flask-Migrate==2.4.0 # Prod
+# Flask-Migrate==4.1.0
+
+## Flask-SQLAlchemy [aka flask-sqlalchemy]
+## Extension for Flask that adds support for SQLAlchemy to simplify database interactions.
+Flask-SQLAlchemy==3.1.1
+
+## Flask-WTF
+## Simple integration of Flask and WTForms, including CSRF protection and file upload validation.
+## aka: flask_wtf
+Flask-WTF==1.2.1 ## Prod
+# Flask-WTF==1.3.0
+
+## Flask-User
+## https://github.com/lingthio/Flask-User
+# Customizable user management extension for Flask providing registration, email verification, and role-based access control.
+## Development Status: the index lists this package but every file is yanked
+## aka flask_user
+## Devnotes:
+## While Flask-User offers more out-of-the-box convenience, its codebase has been heavily abandoned
+## and yanked from PyPI due to obsolescence. For a modern Flask app, use Flask-Login for your sessions
+## alongside Flask-WTF for registration forms, and handle password security using standard utilities
+## like werkzeug.security.If you are looking for a more feature-rich, modern alternative that handles
+## everything out-of-the-box, look into the actively maintained Flask-Security-Too fork.
+Flask-User==1.0.2.2
+# Flask-User==1.0.1.5
+## Requires Downgraded bcrypt
+bcrypt<4
+# bcrypt==3.1.7 ## Prod
+
+## Development ########################################################
+
+## alembic
+## Lightweight database migration tool for usage with SQLAlchemy.
+## Requires: Mako, SQLAlchemy, typing-extensions
+## Required-by: Flask-Migrate
+alembic==1.14.1 ## Prod
+# alembic==1.19.1
+
+## Robust testing framework that makes it easy to write small, readable scripts and scale to complex functional testing.
+pytest==8.3.5 ## Prod
+# pytest==9.1.1
+
+# Gunicorn
+# gunicorn==22.0.0 # Prod
+# gunicorn==23.0.0 # Next
+gunicorn>=26.2.0
+## Historic Record ####################################################
+
+# Flask-DotEnv==0.1.1 ## obsolete. Flask natively supports environment variables using the package python-dotenv, rather than the older Flask-DotEnv extension.
+
+# The package Flask-Dance required a modification to ensure that
+# redirect urls used the https protocol.  So this was forked into
+# the CONP-PCNO team and the requirements.txt was updated to install
+# from that repo. This is not the case anymore.
