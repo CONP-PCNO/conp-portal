@@ -231,6 +231,19 @@ def dataset_search():
             else:
                 datasets = searcher.documents()
 
+            # Provisional NeuroLibre/Evidence publication types keyed by
+            # publication DOI (lowercased). Superseded by explicit type
+            # metadata from the Evidence side when it becomes available.
+            try:
+                with open(os.path.join(
+                        os.getcwd(),
+                        "app/static/datasets/evidence-publication-types.json")) as epf:
+                    evidence_publication_types = {
+                        k.lower(): v for k, v in json.load(epf).items()
+                    }
+            except (IOError, ValueError):
+                evidence_publication_types = {}
+
             # Get the number of views of datasets
             views = json.loads(datasets_views())
             downloads = json.loads(datasets_downloads())
@@ -293,6 +306,10 @@ def dataset_search():
                     "zipLocation": zip_location,
                     "downloadOptions": d.get('downloadOptions'),
                     "registrationPage": d.get('registrationPage'),
+                    "evidencePublication": d.get('evidencePublication'),
+                    "evidencePublicationType": evidence_publication_types.get(
+                        (d.get('evidencePublication') or '').lower()
+                    ),
                 }
                 elements.append(dataset)
 
@@ -448,6 +465,12 @@ def dataset_search():
             paginated.sort(key=lambda o: (
                 o["downloads"] is None, o["downloads"]), reverse=reverse)
 
+        elif sort_key == "evidencePublication":
+            # Datasets with a linked NeuroLibre/Evidence publication first,
+            # then by title.
+            paginated.sort(key=lambda o: (
+                o.get("evidencePublication") is None, o["title"].lower()))
+
         else:
             paginated.sort(key=lambda o: (o[sort_key] is None, o[sort_key]))
 
@@ -524,6 +547,10 @@ def dataset_search():
             {
                 "key": "downloadsAsc",
                 "label": "Number of Direct Downloads (Smallest First)"
+            },
+            {
+                "key": "evidencePublication",
+                "label": "NeuroLibre/Evidence Publication First"
             }
         ],
         "filterKeys": [

@@ -115,6 +115,20 @@ class DATSDataset(DATSObject):
         return logopath
 
     @property
+    def evidencePublication(self):
+        """DOI of the NeuroLibre/Evidence publication this dataset is part of,
+        as recorded by the Zenodo crawler in the "evidence_publication"
+        extra property. Returns None when the dataset has no linked
+        publication."""
+        extraprops = self.descriptor.get('extraProperties', {})
+        for prop in extraprops:
+            if prop.get('category') == 'evidence_publication' and len(prop.get('values', [])) > 0:
+                doi = prop.get('values')[0].get('value', '')
+                if doi:
+                    return doi
+        return None
+
+    @property
     def ReadmeFilepath(self):
         dirs = os.listdir(self.datasetpath)
         readme: Optional[str] = None
