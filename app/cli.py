@@ -426,6 +426,7 @@ def _update_schema(app):
         datsFilePath=STORED,
         logoFilePath=STORED,
         cBrainId=STORED,
+        evidencePublication=STORED,
     )
 
     if not os.path.exists("index"):
@@ -509,6 +510,7 @@ def _update_index(
             datsFilePath=_format_index_value(datsdataset.DatsFilepath),
             logoFilePath=_format_index_value(datsdataset.LogoFilepath),
             cBrainId=dataset_cbrain_id,
+            evidencePublication=_format_index_value(datsdataset.evidencePublication),
         )
 
     writer.commit()

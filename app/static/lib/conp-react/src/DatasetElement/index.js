@@ -351,6 +351,56 @@ const DatasetElement = (props) => {
           }
         </div>
       </div>
+      {element.evidencePublication ? (
+        <a
+          href={`https://doi.org/${element.evidencePublication}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="d-flex align-items-center text-decoration-none"
+          style={{
+            gap: "10px",
+            margin: "6px 8px 2px",
+            background: "linear-gradient(90deg, #f4f7f3, #ffffff)",
+            border: "1px solid #90c37f",
+            borderLeft: "4px solid #90c37f",
+            borderRadius: "4px",
+            padding: "7px 12px",
+            fontSize: "13px",
+            color: "#394459",
+          }}
+        >
+          <img
+            src="static/img/evidence_logo.svg"
+            alt="Evidence logo"
+            style={{ width: "26px", height: "26px", marginRight: "10px" }}
+          />
+          {element.evidencePublicationType ? (
+            <span
+              style={{
+                background: "#394459",
+                color: "#ffffff",
+                fontSize: "10.5px",
+                fontWeight: 700,
+                letterSpacing: "0.05em",
+                borderRadius: "3px",
+                padding: "3px 9px",
+                marginRight: "10px",
+                whiteSpace: "nowrap",
+                textTransform: "uppercase",
+              }}
+            >
+              {element.evidencePublicationType}
+            </span>
+          ) : null}
+          <span>
+            <strong>NeuroLibre/Evidence publication</strong> — this dataset is part
+            of an archived, re-executable publication
+          </span>
+          <span style={{ marginLeft: "auto", fontSize: "11.5px", color: "#7a8494", whiteSpace: "nowrap" }}>
+            doi {element.evidencePublication} ↗
+          </span>
+        </a>
+      ) : null}
       {downloadModalOpen ? (
         <DownloadModalWindowElement
           size={element.size}
@@ -392,6 +442,8 @@ DatasetElement.propTypes = {
   cbrain_id: PropTypes.string,
   cbrainIds: PropTypes.arrayOf(PropTypes.Object),
   ark_id: PropTypes.string,
+  evidencePublication: PropTypes.string,
+  evidencePublicationType: PropTypes.string,
   zipLocation: PropTypes.string,
   showDownloadButton: PropTypes.bool
 };
