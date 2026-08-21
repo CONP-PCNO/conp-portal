@@ -165,6 +165,23 @@ def dataset_search_suggestions():
             )
 
 
+def _evidence_publication_types():
+    """Provisional NeuroLibre/Evidence publication types keyed by publication
+    DOI (lowercased).
+
+    Superseded by explicit type metadata from the Evidence side when it
+    becomes available. Returns an empty mapping if the file is missing or
+    malformed, so a bad file degrades to "no badge" rather than an error.
+    """
+    try:
+        with open(os.path.join(
+                os.getcwd(),
+                "app/static/datasets/evidence-publication-types.json")) as epf:
+            return {k.lower(): v for k, v in json.load(epf).items()}
+    except (IOError, ValueError):
+        return {}
+
+
 @search_bp.route('/dataset-search', methods=['GET'])
 def dataset_search():
     """ Dataset Search Route
@@ -231,18 +248,7 @@ def dataset_search():
             else:
                 datasets = searcher.documents()
 
-            # Provisional NeuroLibre/Evidence publication types keyed by
-            # publication DOI (lowercased). Superseded by explicit type
-            # metadata from the Evidence side when it becomes available.
-            try:
-                with open(os.path.join(
-                        os.getcwd(),
-                        "app/static/datasets/evidence-publication-types.json")) as epf:
-                    evidence_publication_types = {
-                        k.lower(): v for k, v in json.load(epf).items()
-                    }
-            except (IOError, ValueError):
-                evidence_publication_types = {}
+            evidence_publication_types = _evidence_publication_types()
 
             # Get the number of views of datasets
             views = json.loads(datasets_views())
@@ -655,7 +661,11 @@ def dataset_info():
         "status": datsdataset.status,
         "cbrain_id": dataset_cbrain_id,
         "zipLocation": zip_location,
-        "showDownloadButton": show_download_button
+        "showDownloadButton": show_download_button,
+        "evidencePublication": datsdataset.evidencePublication,
+        "evidencePublicationType": _evidence_publication_types().get(
+            (datsdataset.evidencePublication or '').lower()
+        ),
     }
 
     metadata = get_dataset_metadata_information(d)

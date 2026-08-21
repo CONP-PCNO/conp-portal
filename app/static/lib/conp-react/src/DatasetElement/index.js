@@ -14,6 +14,38 @@ import ArkIdElement from '../ArkIdElement';
 import DownloadModalWindowElement from './DownloadModalWindowElement';
 import CbrainModalDataset from "../CbrainModalDataset";
 
+// Presentation for each provisional NeuroLibre/Evidence publication tier.
+// The tiers are nested: each implies the capabilities of the ones below it, so
+// the wording states the strongest claim that is true of that tier. Unknown or
+// absent types fall back to a neutral description that over-claims nothing.
+const EVIDENCE_TIERS = {
+  "wired": {
+    accent: "#90c37f",
+    wash: "#f4f7f3",
+    blurb: "a live publication — figures connected to their data, and analyses you can re-run",
+  },
+  "re-executable": {
+    accent: "#4d6e8e",
+    wash: "#f2f5f8",
+    blurb: "an archived publication whose analyses you can re-run",
+  },
+  "interactive": {
+    accent: "#488099",
+    wash: "#f2f6f8",
+    blurb: "an archived publication with interactive figures",
+  },
+  "archived": {
+    accent: "#7a8494",
+    wash: "#f5f6f7",
+    blurb: "an archived, citable publication bundle",
+  },
+};
+const EVIDENCE_FALLBACK = {
+  accent: "#4d6e8e",
+  wash: "#f2f5f8",
+  blurb: "an archived publication bundle",
+};
+
 const DatasetElement = (props) => {
   const { authorized, imagePath, ...element } = props;
 
@@ -24,6 +56,10 @@ const DatasetElement = (props) => {
   const [cbrainModalOpen, setCbrainModalOpen] = useState(false);
 
   const statusCONP = `${imagePath}/canada.svg`;
+
+  const evidenceTier =
+    EVIDENCE_TIERS[(element.evidencePublicationType || "").toLowerCase()] ||
+    EVIDENCE_FALLBACK;
 
   let authIcons = [];
   switch (element.authorizations) {
@@ -360,9 +396,9 @@ const DatasetElement = (props) => {
           style={{
             gap: "10px",
             margin: "6px 8px 2px",
-            background: "linear-gradient(90deg, #f4f7f3, #ffffff)",
-            border: "1px solid #90c37f",
-            borderLeft: "4px solid #90c37f",
+            background: `linear-gradient(90deg, ${evidenceTier.wash}, #ffffff)`,
+            border: `1px solid ${evidenceTier.accent}`,
+            borderLeft: `4px solid ${evidenceTier.accent}`,
             borderRadius: "4px",
             padding: "7px 12px",
             fontSize: "13px",
@@ -393,8 +429,8 @@ const DatasetElement = (props) => {
             </span>
           ) : null}
           <span>
-            <strong>NeuroLibre/Evidence publication</strong> — this dataset is part
-            of an archived, re-executable publication
+            <strong>NeuroLibre/Evidence publication</strong> — this dataset is part of{" "}
+            {evidenceTier.blurb}
           </span>
           <span style={{ marginLeft: "auto", fontSize: "11.5px", color: "#7a8494", whiteSpace: "nowrap" }}>
             doi {element.evidencePublication} ↗
