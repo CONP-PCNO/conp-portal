@@ -1,0 +1,86 @@
+name: "Python CI"
+
+# Continuous integration workflow for the CONP Portal project.
+# Tests the codebase against Python 3.12–3.14 to ensure compatibility
+# across the supported version range. See README.md for version support details.
+on:
+  push:
+    branches: ["master", "develop"]
+  pull_request:
+    branches: ["master", "develop"]
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    # runs-on: ubuntu-latest
+    strategy:
+      # fail-fast: false
+      # Python 3.12–3.14 compatibility matrix:
+      # - 3.12: Production runs on this version; ensures stability for current deployments
+      # - 3.13: Mid-range versions for continuity testing
+      # - 3.14: Newest version; validates latest Python features and deprecations
+      # This range ensures the app works across the full lifecycle of supported
+      # versions and helps catch version-specific issues (e.g., Flask 3.x behavior,
+      # datetime.utcnow() deprecation in 3.14, SQLAlchemy 2.x session handling).
+      matrix:
+        python-version:
+          - 3.12
+          - 3.13
+          - 3.14
+    steps:
+      - name: Checkout GH actions repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Update, Install and Configure
+        run: |
+          sudo apt-get update
+          # Install git-annex for managing large datasets in the CONP Portal.
+          sudo apt-get install -y git-annex
+          # Configure Git to avoid rebase during pull operations,
+          # ensuring a linear history and preventing merge conflicts in the CI workflow.
+          git config --global pull.rebase false
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # requirements.txt is the canonical dependency file and must be kept
+          # in sync with all supported Python versions (3.10–3.14) to ensure consistent
+          # behavior across the CI matrix.
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            echo "No requirements file found"
+          fi
+          # Coveralls is currently disabled due to intermittent failures in the CI pipeline.
+          #python -m pip install coveralls
+          # install flake8 for linting to enforce code style and catch potential issues early.
+          python -m pip install -U flake8>=7.0.0
+
+      - name: Lint with flake8
+        run: |
+          ./lint.sh
+
+      - name: Run tests
+        run: |
+          # Run full test suite in quiet mode. If any tests fail, the workflow fails.
+          # Tests validate:
+          # - Flask 3.x URL generation (requires SERVER_NAME/PREFERRED_URL_SCHEME)
+          # - SQLAlchemy 2.x session handling (no create_scoped_session)
+          # - Alembic 1.13+ migration compatibility (render_as_batch handling)
+          # - Whoosh search index bootstrap on fresh deployments
+          # - Python 3.14 datetime and type-checking behavior
+          pytest -q
+          # pytest --cov=.
+
+      # - name: Upload coverage to Coveralls
+      #   if: matrix.python-version == '3.12'
+      #   env:
+      #     COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      #   run: |
+      #     coveralls
