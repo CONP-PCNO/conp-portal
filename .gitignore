@@ -1,12 +1,40 @@
-__pycache__
+# Operating System files
 .DS_Store
-.idea
+Thumbs.db
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python bytecode and caches
+__pycache__/
 *.pyc
-.vscode
-venv
-env
-logs
+*.pyo
+*.pyd
+
+# Virtual Environments
+venv/
+.venv/
+.venv3*/
+env/
+ENV/
+
+# Environment variables and secrets
+.env
 .flaskenv
+!.env.example
+
+# Databases, Logs, and Search Indexes
+.ruff_cache/
 *.db
-.python_version
+*.sqlite3
+logs/
+*.log
+# Whoosh full-text search index
+index/
+
+# Data directories
 data/
+app/static/data/
