@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """ORCHID MODILE
 
-Module that constains the code necessary
+Module that contains the code necessary
 to create a orchid blueprint for Flask-Dance
 
 """

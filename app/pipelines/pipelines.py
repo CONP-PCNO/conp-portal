@@ -5,6 +5,7 @@ import os
 
 def get_pipelines_from_cache(search_query=None):
     cache_dir = os.path.join(os.path.expanduser(
+        # @todo: remove hard-coded path and the need to read from the cache. Instead query the database for the number of pipelines.
         '~'), ".cache", "boutiques", "production")
     all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
     all_detailed_desc_path = os.path.join(

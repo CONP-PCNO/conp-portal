@@ -324,6 +324,7 @@ def dataset_search():
                     zipped = None
 
                 show_download_button = zipped is not None
+                # @todo: /data/ Should not be hard-coded. This is a temporary solution to get the zip location. The zip location should be stored in the database and retrieved from there.
                 zip_location = '/data/{0}'.format(os.path.basename(zipped or ''))
 
                 dataset = {
@@ -675,6 +676,7 @@ def dataset_info():
         zipped = None
 
     show_download_button = zipped is not None
+    # @todo: This is a temporary solution to get the zip location. The zip location should be stored in the database and retrieved from there.
     zip_location = '/data/{0}'.format(os.path.basename(zipped or ''))
 
     dataset = {
