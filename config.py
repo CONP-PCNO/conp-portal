@@ -31,7 +31,9 @@ class Config(object):
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    # @todo: Remove shawntbrown@gmail.com - This should be set to a real email address for production.
     MAIL_DEFAULT_SENDER = '"CONP-PCNO Portal" <shawntbrown@gmail.com>'
+    # @todo: Verify and document this email address: conp-test@mailinator.com
     ADMINS = [os.environ.get('ADMIN_EMAIL')] or ['conp-test@mailinator.com']
     LOG_TO_STDOUT = True
     TEMPLATES_AUTO_RELOAD = True
@@ -82,7 +84,7 @@ class Config(object):
     ARK_CONP_NAAN = os.environ.get("ARK_CONP_NAAN") or "99999"
 
     # Nexus SPARQL endpoint
-    # TODO remove hardcoded url
+    # @todo: remove hardcoded url
     NEXUS_SPARQL_ENDPOINT = os.environ.get(
         "NEXUS_SPARQL_ENDPOINT",
         "https://reservoir.global/v1/views/Public/CONP/graph/sparql"

@@ -44,7 +44,7 @@ def register(app):
     @app.cli.command("seed_test_db")
     def seed_test_db():
         """
-        Wrapper to call the seeding of the test database
+        Wrapper to call the seeding of the test database. This will seed the affiliation types, admin account, and test datasets.
         """
         _seed_aff_types_db(app)
         _seed_admin_acct_db(app)
@@ -52,6 +52,9 @@ def register(app):
 
     @app.cli.command("seed_test_experiments")
     def seed_test_experiments():
+        """
+        Wrapper to update experiments from the conp-experiments repository
+        """
         _update_experiments(app)
 
     @app.cli.command('update_pipeline_data')
@@ -135,7 +138,7 @@ def _seed_admin_acct_db(app):
     from app import db
     from app.models import User, Role, AffiliationType
 
-    # Do not perform is the user already exists
+    # Do not perform if the user already exists
     if len(User.query.filter(User.full_name == "CONP Admin").all()) == 0:
         print("Creating Admin User")
         # create an admin user (Not useful now, but at least we will have a user)
@@ -212,6 +215,7 @@ def _update_datalad_objects(
     origin = repo.remotes.origin
     origin.pull('master')
     repo.submodule_update(recursive=True, force_reset=True, force_remove=True, to_latest_revision=True, keep_going=True)
+    # @todo: This runs in parallell and then there is a race condition.
 
     d = DataladDataset(path=datasetsdir)
     if not d.is_installed():
@@ -1076,6 +1080,9 @@ def _get_repo_analytics(app, repo):
     """
 
     from github import Github
+    # https://github.com/pygithub/pygithub
+    # https://pygithub.readthedocs.io/en/stable/
+    # @todo: remove PyGithub dependency. the only place this is used is g.get_repo
 
     token = app.config['GITHUB_PAT']
     g = Github(token)

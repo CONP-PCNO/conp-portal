@@ -140,6 +140,7 @@ def about():
     countDatasets = len(datasets)
 
     # count number of pipelines
+    # @todo: remove hard-coded path and the need to read from the cache. Instead query the database for the number of pipelines.
     cache_dir = os.path.join(os.path.expanduser(
         '~'), ".cache", "boutiques", "production")
     all_desc_path = os.path.join(cache_dir, "all_descriptors.json")
