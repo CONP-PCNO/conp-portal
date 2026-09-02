@@ -6,7 +6,10 @@ const DownloadModalWindowElement = (props) => {
   const { size, zipLocation } = props;
 
   const close = (event) => {
-    $("#downloadModal").modal("hide");
+    var el = typeof document !== 'undefined' ? document.getElementById('downloadModal') : null;
+    if (el && window.bootstrap) {
+      bootstrap.Modal.getOrCreateInstance(el).hide();
+    }
   };
 
   return ReactDOM.createPortal(

@@ -4,7 +4,10 @@ import PropTypes from "prop-types";
 const CbrainModalDataset = (props) => {
   const { cbrain_id, cbrainIds, title } = props;
   const finish = (event) => {
-    $("#cbrainModal").modal("hide");
+    var el = typeof document !== 'undefined' ? document.getElementById('cbrainModal') : null;
+    if (el && window.bootstrap) {
+      bootstrap.Modal.getOrCreateInstance(el).hide();
+    }
   };
   let cbrain_param = cbrain_id;
   if (cbrain_param.includes("?id=")) {
@@ -17,7 +20,11 @@ const CbrainModalDataset = (props) => {
   const getPipelineId = (pipelineUrl) => pipelineUrl.split("/userfiles?")[1];
 
   useEffect(() => {
-    $("#cbrainModal").modal("handleUpdate");
+    var el = typeof document !== 'undefined' ? document.getElementById('cbrainModal') : null;
+    if (el && window.bootstrap) {
+      var inst = bootstrap.Modal.getOrCreateInstance(el);
+      if (inst && typeof inst.handleUpdate === 'function') { inst.handleUpdate(); }
+    }
 
   });
 

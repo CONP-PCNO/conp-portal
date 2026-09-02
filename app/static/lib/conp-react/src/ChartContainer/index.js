@@ -36,12 +36,12 @@ const ChartContainer = (props) => {
     return (
         <div style={{ minHeight: "360px" }}>
             {showToggle ? <div className="d-flex flex-row-reverse">
-                <div className="dropdown show mt-2 mr-2" style={{ zIndex: 1 }}>
-                    <button className="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div className="dropdown show mt-2 me-2" style={{ zIndex: 1 }}>
+                    <button className="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Select Chart
                         </button>
 
-                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                    <div className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
                         <button className="dropdown-item" type="button" onClick={setToggleState("TotalDatasetsPipelines")}>Total Datasets and Pipelines</button>
                         <button className="dropdown-item" type="button" onClick={setToggleState("DatasetModalities")}>Dataset Modalities</button>
                         <button className="dropdown-item" type="button" onClick={setToggleState("PipelineTags")}>Pipeline Tags</button>

@@ -68,10 +68,16 @@ const PipelineElement = (props) => {
   const [cbrainModalOpen, setCbrainModalOpen] = useState(false);
 
   const openCbrainModal = (datasetTitle, datasetUrl, pipelineTitle, pipelineUrl) => {
-    $("#cbrainModal").modal("show");
+    var modalEl = document.getElementById('cbrainModal');
+    if (modalEl && window.bootstrap) {
+      bootstrap.Modal.getOrCreateInstance(modalEl).show();
+    }
     setCbrainModalOpen(true);
   };
-  $("#cbrainModal").on("hidden.bs.modal", (event) => setCbrainModalOpen(false));
+  var _cbrainModalEl = typeof document !== 'undefined' ? document.getElementById('cbrainModal') : null;
+  if (_cbrainModalEl) {
+    _cbrainModalEl.addEventListener('hidden.bs.modal', function () { setCbrainModalOpen(false); });
+  }
 
   const handleCrainMouseEnter = e => {
     setShowCbrainTipText(true);
@@ -87,7 +93,7 @@ const PipelineElement = (props) => {
         {item.uri ?
           <button className="btn btn-outline-success m-1" onClick={openCbrainModal}>
             Use On <img
-              className="cbrain-img justify-content-center align-items-center pl-2"
+              className="cbrain-img justify-content-center align-items-center ps-2"
               src="static/img/cbrain-long-logo-blue.png"
               style={{maxHeight: '30px'}}
               alt="CBRAIN logo"
@@ -96,7 +102,7 @@ const PipelineElement = (props) => {
           <button className="btn btn-outline-secondary disabled m-1">
             Use On
             <img
-              className="cbrain-img justify-content-center align-items-center pl-2"
+              className="cbrain-img justify-content-center align-items-center ps-2"
               src="static/img/cbrain-long-logo-grey.png"
               style={{maxHeight: '30px'}}
               alt="Disabled CBRAIN logo"
@@ -105,7 +111,7 @@ const PipelineElement = (props) => {
         }
       </div>
       <div className="col-2 p-2">
-        <div className="card-text pl-1">
+        <div className="card-text ps-1">
           <FontAwesomeIcon
             icon={faQuestionCircle}
             color="dimgray"
@@ -158,8 +164,8 @@ const PipelineElement = (props) => {
                 <li className="card-list-item">
                   <strong>Tags: </strong>{element.tags && element.tags.domain ?
                     Array.isArray(element.tags.domain) ?
-                    element.tags.domain.map(tag => <span key={"tag" + tag} className="mr-1"><span className="badge badge-primary">{tag.toLowerCase()}</span></span>)
-                    : <span><span className="badge badge-primary">{element.tags.domain.toLowerCase()}</span></span>
+                    element.tags.domain.map(tag => <span key={"tag" + tag} className="me-1"><span className="badge bg-primary">{tag.toLowerCase()}</span></span>)
+                    : <span><span className="badge bg-primary">{element.tags.domain.toLowerCase()}</span></span>
                   : null}
                 </li>
               </ul>

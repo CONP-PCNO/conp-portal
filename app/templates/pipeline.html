@@ -160,18 +160,18 @@
           >tutorial</a
         >.
       </p>
-      <p class="font-italic ml-4">1. List the inputs/outputs needed for the pipeline to run</p>
+      <p class="font-italic ms-4">1. List the inputs/outputs needed for the pipeline to run</p>
       <div class="alert alert-dark" role="alert">bosh example {{ pipeline.id }}</div>
       <p>
         Note: this command will list only the required options to run the pipeline. To view the complete list of
         options, use
       </p>
       <p><code>bosh example --complete {{ pipeline.id }}</code></p>
-      <p class="font-italic ml-4">
+      <p class="font-italic ms-4">
         2. Create an invocation JSON file based on the output of the
         <code>bosh example</code>
       </p>
-      <p class="font-italic ml-4">3. Run the pipeline with the invocation JSON file created in 2.</p>
+      <p class="font-italic ms-4">3. Run the pipeline with the invocation JSON file created in 2.</p>
       <div class="alert alert-dark" role="alert">
         bosh exec launch -s {{ pipeline.id }} ./invocation.json -v /data:/data
       </div>
