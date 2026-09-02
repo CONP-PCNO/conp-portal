@@ -12,14 +12,14 @@ export const Dropdowns = () => {
         <span>
           Results {pagination.firstItemIndex + 1} - {pagination.lastItemIndex} displayed of {pagination.totalItems}
         </span>
-        <div className="d-flex align-items-center ml-1">
+        <div className="d-flex align-items-center ms-1">
           <span>{'(Maximum results per page'}</span>
           <span className="dropdown p-2">
             <button
               className="btn btn-secondary dropdown-toggle p-2"
               type="button"
               id="dropdownMenuButton"
-              data-toggle="dropdown"
+              data-bs-toggle="dropdown"
             >
               {pagination.itemsPerPage}
             </button>
@@ -41,11 +41,11 @@ export const Dropdowns = () => {
             className="btn btn-outline-secondary dropdown-toggle p-2"
             type="button"
             id="dropdownSortButton"
-            data-toggle="dropdown"
+            data-bs-toggle="dropdown"
           >
             {sortKey.options[sortKey.active].label}
           </button>
-          <div className="dropdown-menu dropdown-menu-right" style={{ minWidth: '10rem' }}>
+          <div className="dropdown-menu dropdown-menu-end" style={{ minWidth: '10rem' }}>
             {Object.entries(sortKey.options).map(([key, value]) => (
               <div className="dropdown-item p-0" key={key}>
                 <button className="btn btn-light p-1" onClick={() => setActiveSortKey(key)}>

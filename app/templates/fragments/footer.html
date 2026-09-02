@@ -64,10 +64,13 @@
 </footer>
 
 <script>
-  $(function () {
-    $(".btnShowPrivacyPolicy").on("click", function (event) {
-      event.preventDefault();
-      $("#privacyPolicyModal").modal("show");
+  document.addEventListener('DOMContentLoaded', function () {
+    var buttons = document.querySelectorAll('.btnShowPrivacyPolicy');
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function (){
+        var el = document.getElementById('privacyPolicyModal');
+        if (el) { bootstrap.Modal.getOrCreateInstance(el).show(); }
+      });
     });
     $(".btnShowTermsOfUse").on("click", function (event) {
       event.preventDefault();

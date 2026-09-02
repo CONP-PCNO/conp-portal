@@ -3,7 +3,7 @@ import { ExperimentTableContext } from '../../context/ExperimentTableContext';
 
 export interface SearchBarProps {
   onSubmit?: (term: string) => void;
-  word: string; 
+  word: string;
 }
 
 export const SearchBar = ({ onSubmit, word }: SearchBarProps) => {
@@ -35,12 +35,12 @@ export const SearchBar = ({ onSubmit, word }: SearchBarProps) => {
               <div className="d-flex">
                 {Object.entries(searchFilters).map(([key, filter]) => {
                   return (
-                    <div className="dropdown mr-2" key={key} id={key + 'DropdownMenuButton'}>
+                    <div className="dropdown me-2" key={key} id={key + 'DropdownMenuButton'}>
                       <button
                         className="btn btn-outline-secondary dropdown-toggle p-2 mx-1"
                         type="button"
                         id={key + 'DropdownMenuButton'}
-                        data-toggle="dropdown"
+                        data-bs-toggle="dropdown"
                       >
                         {filter.label}
                       </button>
@@ -74,14 +74,13 @@ export const SearchBar = ({ onSubmit, word }: SearchBarProps) => {
             <div className="d-flex flex-fill justify-content-center align-items-center h-100">
               <form className="input-group m-2" method="get" role="form" onSubmit={handleSubmit}>
                 <input required name="search_term" type="text" autoFocus className="form-control" placeholder="Search" value={searchTerm} onChange={handleInputChange}/>
-                <div className="input-group-append">
+
                   <button className="border-0 p-0" type="submit">
                     <i
                       className="fa fa-search input-group-text"
                       style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
                     ></i>
                   </button>
-                </div>
               </form>
             </div>
           </div>

@@ -20,8 +20,9 @@
 </script>
 
 <script type="text/javascript">
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+  document.addEventListener('DOMContentLoaded', function () {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (el) { return new bootstrap.Tooltip(el); });
   });
 </script>
 {% endblock %} {% block contenttitle %}
@@ -36,7 +37,7 @@
   <div class="py-2">
     <strong>Keywords: </strong>
     {% for d in metadata.keywords %} {% if d is defined %} {% set href = "search?search=" ~ d %}
-    <span class="mr-1"><a class="badge badge-info" href="{{ href }}">{{ d }}</a></span>
+    <span class="me-1"><a class="badge bg-info text-dark" href="{{ href }}">{{ d }}</a></span>
     {% endif %} {% endfor %}
   </div>
   {% endif %} {% if data.title is defined and data.title is not none %}
@@ -65,14 +66,14 @@
   <div class="py-1">
     <strong>Modalities: </strong>
     {% for d in data.modalities %} {% if d is defined %} {% set href = "search?modalities=" ~ d %}
-    <span class="mr-1"><a class="badge badge-info" href="{{ href }}">{{ d }}</a></span>
+    <span class="me-1"><a class="badge bg-info text-dark" href="{{ href }}">{{ d }}</a></span>
     {% endif %} {% endfor %}
   </div>
   {% endif %}{% if data.formats is defined and data.formats is not none %}
   <div class="py-1">
     <strong>Formats: </strong>
     {% for d in data.formats %} {% if d is defined %} {% set href = "search?formats=" ~ d %}
-    <span class="mr-1"><a class="badge badge-info" href="{{ href }}">{{ d }}</a></span>
+    <span class="me-1"><a class="badge bg-info text-dark" href="{{ href }}">{{ d }}</a></span>
     {% endif %} {% endfor %}
   </div>
   {% endif %} {% if data.size is defined and data.size is not none %}
@@ -89,7 +90,7 @@
         {% if d.startswith('http') %}
           {% set href = d %}
         {% endif %}
-        <span class="mr-1"><a class="badge badge-info" href="{{ href }}">{{ d }}</a></span>
+        <span class="me-1"><a class="badge bg-info text-dark" href="{{ href }}">{{ d }}</a></span>
       {% endif %}
     {% endfor %}
   </div>
@@ -97,7 +98,7 @@
   <div class="py-1">
     <strong>Derived Datasets: </strong>
     {% for d in metadata.childDatasets %} {% set href = "/dataset?id=" ~ d.child_dataset_id %}
-    <span class="mr-1"><a class="badge badge-info" href="{{ href }}">{{ d.name }}</a></span>
+    <span class="me-1"><a class="badge bg-info text-dark" href="{{ href }}">{{ d.name }}</a></span>
     {% endfor %}
   </div>
   {% endif %} {% if metadata.primaryPublications is defined and metadata.primaryPublications is not none %} {% if
@@ -156,7 +157,7 @@
     <a class="text-reset" href="#" onclick="downloadMetadata()"> DATS.json </a>
     <i
       class="fa fa-question-circle"
-      data-toggle="tooltip"
+      data-bs-toggle="tooltip"
       title="The DAta Tag Suite (DATS) model is a data description convention that
       ensures uniform and extensible descriptions of data and their provenance,
       chosen for its flexibility and capability for rich dataset descriptions
@@ -176,8 +177,8 @@
       <button
         class="btn btn-link text-reset p-0"
         type="button"
-        data-toggle="collapse"
-        data-target="#collapseExample"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapseExample"
         aria-expanded="false"
         aria-controls="collapseExample"
       >
@@ -262,8 +263,8 @@
       <button
         type="button"
         class="btn btn-default p-0"
-        data-toggle="tooltip"
-        data-placement="right"
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
         title="The CONP integrates datasets stored in multiple platforms, to accommodate the various governance models adopted by
           diverse research groups. While this decentralized architecture nicely fits with open-science goals, it also has
           challenges, as the availability of dataset storage locations may fluctuate. For this reason, CONP datasets are

@@ -192,7 +192,7 @@ const DataTable = ({
                         {filterKeys.filter(f => f["key"] === "modalities").length > 0 ?
                             filterKeys.filter(f => f["key"] === "modalities")[0]["values"].map(modality => (
                                 modality !== '' ?
-                                    <div key={modality.id} className="dropdown-item ml-2">
+                                    <div key={modality.id} className="dropdown-item ms-2">
                                       <input className="form-check-input" type="checkbox"
                                              checked={filters.filter(f => f["key"] === "modalities")[0]["values"].includes(modality)}
                                              value={"modalities." + modality} id={"filter" + modality}
@@ -216,7 +216,7 @@ const DataTable = ({
                         {filterKeys.filter(f => f["key"] === "formats").length > 0 ?
                             filterKeys.filter(f => f["key"] === "formats")[0]["values"].map(format => (
                                 format !== '' ?
-                                    <div key={format.id} className="dropdown-item ml-2">
+                                    <div key={format.id} className="dropdown-item ms-2">
                                       <input className="form-check-input" type="checkbox"
                                              checked={filters.filter(f => f["key"] === "formats")[0]["values"].includes(format)}
                                              value={"formats." + format} id={"filter" + format}
@@ -240,7 +240,7 @@ const DataTable = ({
                         {filterKeys.filter(f => f["key"] === "authorizations").length > 0 ?
                             filterKeys.filter(f => f["key"] === "authorizations")[0]["values"].map(authorizations => (
                                 authorizations !== '' ?
-                                    <div key={authorizations.id} className="dropdown-item ml-2">
+                                    <div key={authorizations.id} className="dropdown-item ms-2">
                                       <input className="form-check-input" type="checkbox"
                                              checked={filters.filter(f => f["key"] === "authorizations")[0]["values"].includes(authorizations)}
                                              value={"authorizations." + authorizations} id={"filter" + authorizations}
@@ -268,7 +268,7 @@ const DataTable = ({
                         {filterKeys.filter(f => f["key"] === "tags").length > 0 ?
                             filterKeys.filter(f => f["key"] === "tags")[0]["values"].map(tag => (
                                 tag !== '' ?
-                                    <div key={tag.id} className="dropdown-item ml-2">
+                                    <div key={tag.id} className="dropdown-item ms-2">
                                       <input
                                           className="form-check-input"
                                           type="checkbox"
@@ -357,7 +357,7 @@ const DataTable = ({
                             setQuery({...query, searchPipelineName: e.currentTarget.value, page: 1})
                         }
                     />
-                    <span className="input-group-append pr-2">
+                    <span className="input-group-append pe-2">
                   <span className="input-group-text" id="basic-addon2">
                     <i className="fa fa-search"/>
                   </span>
@@ -385,7 +385,7 @@ const DataTable = ({
 
             </div>
             <div className="d-flex justify-content-between">
-              <div className="d-flex justify-content-start align-items-center pb-1 pl-3 ml-4">
+              <div className="d-flex justify-content-start align-items-center pb-1 ps-3 ms-4">
                       <div key={"cbrain".id}>
                         <input className="form-check-input" type="checkbox" id="filterCBRAIN"
                                checked={filters.filter(f => f["key"] === "cbrain")[0].values.includes("cbrain_id")}
@@ -399,7 +399,7 @@ const DataTable = ({
 
 
               {/*renderElement.name === "PipelineElement" ?
-                <div className="d-flex justify-content-end align-items-center pb-1 pr-3">
+                <div className="d-flex justify-content-end align-items-center pb-1 pe-3">
                   <a className="text-reset px-1" href="/execution-records">
                     Browse pipeline execution records
                   </a>
@@ -407,7 +407,7 @@ const DataTable = ({
             : null*/}
 
               {renderElement.name === "DatasetElement" ?
-                <div className="d-flex justify-content-end align-items-center pb-1 pr-3">
+                <div className="d-flex justify-content-end align-items-center pb-1 pe-3">
                   <a className="text-reset px-1" href="/sparql">
                     Advanced Search Page (NEXUS)
                   </a>

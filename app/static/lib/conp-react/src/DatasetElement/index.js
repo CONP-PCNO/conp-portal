@@ -128,16 +128,28 @@ const DatasetElement = (props) => {
   }
 
   const openCbrainModal = () => {
-    $("#cbrainModal").modal("show");
+    var modalEl = document.getElementById('cbrainModal');
+    if (modalEl && window.bootstrap) {
+      bootstrap.Modal.getOrCreateInstance(modalEl).show();
+    }
     setCbrainModalOpen(true);
   };
-  $("#cbrainModal").on("hidden.bs.modal", (event) => setCbrainModalOpen(false))
+  var _cbrainModalEl = typeof document !== 'undefined' ? document.getElementById('cbrainModal') : null;
+  if (_cbrainModalEl) {
+    _cbrainModalEl.addEventListener('hidden.bs.modal', function () { setCbrainModalOpen(false); });
+  }
 
   const openDownloadModal = () => {
-    $("#downloadModal").modal("show");
+    var downloadEl = document.getElementById('downloadModal');
+    if (downloadEl && window.bootstrap) {
+      bootstrap.Modal.getOrCreateInstance(downloadEl).show();
+    }
     setDownloadModalOpen(true);
   };
-  $("#downloadModal").on("hidden.bs.modal", (event) => setDownloadModalOpen(false))
+  var _downloadModalEl = typeof document !== 'undefined' ? document.getElementById('downloadModal') : null;
+  if (_downloadModalEl) {
+    _downloadModalEl.addEventListener('hidden.bs.modal', function () { setDownloadModalOpen(false); });
+  }
 
   return (
     <div className="card container-fluid" data-type="dataset">
@@ -273,7 +285,7 @@ const DatasetElement = (props) => {
                   }
                 </div>
                 <div className="col-2 p-2">
-                  <div className="card-text pl-1">
+                  <div className="card-text ps-1">
                     <FontAwesomeIcon
                       icon={faQuestionCircle}
                       color="dimgray"
@@ -309,7 +321,7 @@ const DatasetElement = (props) => {
                   </div>
                 </div>
                 <div className="col-2 p-2">
-                  <div className="card-text pl-1">
+                  <div className="card-text ps-1">
                     <FontAwesomeIcon
                       icon={faQuestionCircle}
                       color="dimgray"
@@ -335,7 +347,7 @@ const DatasetElement = (props) => {
                   {element.cbrain_id ?
                     <button onClick={openCbrainModal} className="btn btn-outline-success m-1">
                       Process On <img
-                        className="cbrain-img justify-content-center align-items-center pl-2"
+                        className="cbrain-img justify-content-center align-items-center ps-2"
                         src="static/img/cbrain-long-logo-blue.png"
                         style={{maxHeight: '30px'}}
                         alt="CBRAIN logo"
@@ -344,7 +356,7 @@ const DatasetElement = (props) => {
                     <button className="btn btn-outline-secondary disabled m-1">
                       Process On
                       <img
-                        className="cbrain-img justify-content-center align-items-center pl-2"
+                        className="cbrain-img justify-content-center align-items-center ps-2"
                         src="static/img/cbrain-long-logo-grey.png"
                         style={{maxHeight: '30px'}}
                         alt="Disabled CBRAIN logo"
@@ -353,7 +365,7 @@ const DatasetElement = (props) => {
                   }
                 </div>
                 <div className="col-2 p-2">
-                  <div className="card-text pl-1">
+                  <div className="card-text ps-1">
                     <FontAwesomeIcon
                       icon={faQuestionCircle}
                       color="dimgray"

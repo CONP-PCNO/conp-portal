@@ -4,13 +4,20 @@ import PropTypes from "prop-types";
 const CbrainModalPipeline = (props) => {
   const { platforms, title, cbrainIds } = props;
   const finish = (event) => {
-    $("#cbrainModal").modal("hide");
+    var el = typeof document !== 'undefined' ? document.getElementById('cbrainModal') : null;
+    if (el && window.bootstrap) {
+      bootstrap.Modal.getOrCreateInstance(el).hide();
+    }
   };
   const baseUrl = platforms[0].uri;
   const getDatasetId = (datasetUrl) =>
     `switch_group_id=${datasetUrl?.split("%3Fid%3D")[1]}`;
   useEffect(() => {
-    $("#cbrainModal").modal("handleUpdate");
+    var el = typeof document !== 'undefined' ? document.getElementById('cbrainModal') : null;
+    if (el && window.bootstrap) {
+      var inst = bootstrap.Modal.getOrCreateInstance(el);
+      if (inst && typeof inst.handleUpdate === 'function') { inst.handleUpdate(); }
+    }
 
   });
   return ReactDOM.createPortal(

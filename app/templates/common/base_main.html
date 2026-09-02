@@ -26,12 +26,7 @@
 {% block styles %}
 <link href="{{ url_for('static',filename='img/conp.ico')}}" rel="shortcut icon" type="image/png" />
 <link href="{{ url_for('static', filename='v1/css/bootstrap-multiselect.css') }}" rel="stylesheet" />
-<link
-  rel="stylesheet"
-  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-  crossorigin="anonymous"
-/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" />
 <!-- CONP theme layer: design tokens + Bootstrap overrides. Must load after
      Bootstrap so its rules win at equal specificity. Absorbs the former
      inline style block (markdown tables, .brand-accent, title spacing). -->
@@ -44,12 +39,7 @@
   integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
   crossorigin="anonymous"
 ></script>
-<!-- <script
-  src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-  integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-  crossorigin="anonymous"
-></script>
--->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ url_for('static', filename='v2/dist/conp-portal.bundle.js') }}"></script>
 
 <!-- <script src="http://localhost:8080/conp-portal.bundle.js"></script> -->
@@ -85,8 +75,8 @@
   id="termsModal"
   tabindex="-1"
   role="dialog"
-  data-backdrop="static"
-  data-keyboard="false"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
   aria-labelledby="modalCenterTitle"
   aria-hidden="true"
 >
@@ -350,7 +340,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
       </div>
     </div>
   </div>
@@ -391,36 +381,36 @@
 </div>
 
 <script>
-    <!-- Trigger modal -->
-    $(function () {
-      cookies = document.cookie;
-    termsAccepted = false;
-    if (cookies) {
-      termsAccepted = cookies.includes('termsAccepted=true');
-    }
+  document.addEventListener('DOMContentLoaded', function () {
+    var cookies = document.cookie || '';
+    var termsAccepted = cookies.includes('termsAccepted=true');
 
     if (!termsAccepted) {
-      $('#termsModal').modal('show');
+      var termsEl = document.getElementById('termsModal');
+      if (termsEl) {
+        bootstrap.Modal.getOrCreateInstance(termsEl).show();
+      }
     }
-    <!-- -->
 
-    $('#btnAcceptTerms').on('click', function (event) {
-      document.cookie = 'termsAccepted=true;max-age=31536000';
+    var btn = document.getElementById('btnAcceptTerms');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        document.cookie = 'termsAccepted=true;max-age=31536000';
+        var termsEl2 = document.getElementById('termsModal');
+        if (termsEl2) {
+          bootstrap.Modal.getOrCreateInstance(termsEl2).hide();
+        }
+      });
+    }
 
-      $('#termsModal').modal('hide');
-    });
-  });
-</script>
-
-<script>
-  $(document).ready(function () {
     if (window.location.href.indexOf('#terms') != -1) {
-      $('#termsModal').modal('show');
+      var termsEl3 = document.getElementById('termsModal');
+      if (termsEl3) { bootstrap.Modal.getOrCreateInstance(termsEl3).show(); }
     }
-  });
-  $(document).ready(function () {
+
     if (window.location.href.indexOf('#privacy') != -1) {
-      $('#privacyPolicyModal').modal('show');
+      var privacyEl = document.getElementById('privacyPolicyModal');
+      if (privacyEl) { bootstrap.Modal.getOrCreateInstance(privacyEl).show(); }
     }
   });
 </script>

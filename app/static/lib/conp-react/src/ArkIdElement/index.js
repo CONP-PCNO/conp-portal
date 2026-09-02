@@ -33,7 +33,7 @@ const ArkIdElement = (props) => {
 
   return (
     <div className="card-list-item">
-      <div className="card-text pr-1">
+      <div className="card-text pe-1">
         <strong>ARK ID <FontAwesomeIcon
               icon={faQuestionCircle}
               color="dimgray"
