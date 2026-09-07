@@ -42,7 +42,7 @@ def upgrade():
         batch_op.create_index(batch_op.f('ix_experiments_name'), ['name'], unique=False)
         batch_op.create_index(batch_op.f('ix_experiments_version'), ['version'], unique=False)
 
-    op.drop_table('experiment')
+    op.drop_table('experiment', if_exists=True)
     with op.batch_alter_table('ark_id', schema=None) as batch_op:
         batch_op.add_column(sa.Column('experiment_id', sa.String(length=256), nullable=True))
 
