@@ -312,6 +312,11 @@ def dataset_search():
                 ]
 
                 ark_id_row = ArkId.query.filter_by(dataset_id=d['id']).first()
+                # Python 3.14 compatibility: ArkId rows may not exist for all
+                # datasets if they were added before the ARK ID generation CLI
+                # command ran. Guard against AttributeError by checking if the
+                # row exists before accessing its ark_id field.
+                ark_id = 'https://n2t.net/' + ark_id_row.ark_id if ark_id_row else None
 
                 try:
                     zipped = DatasetCache(current_app).getZipLocation(d['datasetPath'])
@@ -323,7 +328,7 @@ def dataset_search():
 
                 dataset = {
                     "authorized": authorized,
-                    "ark_id": 'https://n2t.net/' + ark_id_row.ark_id,
+                    "ark_id": ark_id,
                     "id": d['id'],
                     "title": d['title'].replace("'", "\'"),
                     "remoteUrl": dataset_metadata.remoteUrl,
