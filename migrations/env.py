@@ -78,12 +78,21 @@ def run_migrations_online():
     )
 
     with connectable.connect() as connection:
+        # Python 3.14 / Alembic 1.13+ compatibility: Avoid duplicate keyword
+        # arguments to context.configure(). The Flask-Migrate extension may
+        # include 'render_as_batch' in configure_args, which conflicts with
+        # the explicit render_as_batch=True parameter below. Extract the args,
+        # remove any pre-existing render_as_batch key, then merge them in.
+        # This ensures render_as_batch is set to True (required for SQLite)
+        # without triggering "got multiple values for keyword argument" errors.
+        migrate_args = dict(current_app.extensions['migrate'].configure_args)
+        migrate_args.pop('render_as_batch', None)
         context.configure(
             connection=connection,
             target_metadata=target_metadata,
             process_revision_directives=process_revision_directives,
             render_as_batch=True,
-            **current_app.extensions['migrate'].configure_args
+            **migrate_args
         )
 
         with context.begin_transaction():
