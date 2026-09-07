@@ -106,11 +106,22 @@ class DevelopmentConfig(Config):
 
 
 class TestingConfig(Config):
-    """This is the config used for pytest"""
+    """This is the config used for pytest
+
+    Python 3.14 compatibility: Flask 3.x requires SERVER_NAME and
+    PREFERRED_URL_SCHEME to be explicitly set for url_for() to work outside
+    request context during tests. These settings ensure test fixtures can
+    generate URLs reliably without triggering "RuntimeError: Working outside
+    of application context" or "RuntimeError: The server name '<name>' does
+    not match the server name of the current request."
+    """
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///{}".format(
         os.path.join(basedir, "test.db"))
     TESTING = True
+    SERVER_NAME = "localhost"
+    APPLICATION_ROOT = "/"
+    PREFERRED_URL_SCHEME = "http"
 
 
 class ProductionConfig(Config):
