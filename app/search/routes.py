@@ -106,6 +106,56 @@ def get_dataset_logo():
         return logofile.read()
 
 
+def _ensure_search_index():
+    """Open the Whoosh index, creating and populating it when needed.
+
+    Python 3.14 / Flask 3.x compatibility: This function ensures that the
+    Whoosh search index exists and is populated before search routes attempt
+    to use it. The old code assumed the index was always pre-populated via
+    `flask update_index` during setup, which caused EmptyIndexError in test
+    environments and fresh deployments.
+
+    Behavior:
+    1. Create the index directory if it doesn't exist
+    2. Try to open an existing index; if it doesn't exist (EmptyIndexError),
+       create a new empty one with the correct schema
+    3. If the index is empty (0 documents), check if there are datasets in
+       the database and populate the index from them
+    4. Return the ready-to-use index
+
+    This lazy-loading approach makes the app resilient to missing indexes
+    while avoiding expensive re-indexing on every request by checking the
+    document count only on the first call per request lifecycle.
+    """
+    from whoosh import index
+    from whoosh.index import EmptyIndexError
+
+    index_path = os.path.join(os.getcwd(), "index")
+    os.makedirs(index_path, exist_ok=True)
+
+    try:
+        ix = index.open_dir(index_path)
+    except EmptyIndexError:
+        # Index directory exists but is empty or not yet initialized.
+        # Create schema and initialize index.
+        from app.cli import _update_schema
+        ix = _update_schema(current_app)
+
+    if ix.doc_count_all() == 0:
+        # Index exists but has no documents. Check if we have datasets in
+        # the database and populate the index from them. This handles the
+        # case where the app was started before CLI setup commands ran.
+        from app import db
+        from app.models import Dataset as DBDataset
+        from app.cli import _update_index
+
+        if DBDataset.query.count() > 0:
+            _update_index(current_app, DBDataset, False)
+            ix = index.open_dir(index_path)
+
+    return ix
+
+
 @search_bp.route('/dataset-search-suggestions', methods=['GET'])
 def dataset_search_suggestions():
     """ Dataset Search Keyword Route
@@ -118,7 +168,6 @@ def dataset_search_suggestions():
         Retuns:
             JSON containing the matching keywords
     """
-    from whoosh.index import open_dir
     from whoosh.qparser import MultifieldParser
     from operator import itemgetter
 
@@ -130,7 +179,7 @@ def dataset_search_suggestions():
             dataset_terms_mapping = json.load(f)
             f.close()
 
-        ix = open_dir("index")
+        ix = _ensure_search_index()
         with ix.reader() as r:
             fields = [field for field in ix.schema.scorable_names() if field not in ['name', 'title']]
             suggestions = set()
@@ -194,7 +243,6 @@ def dataset_search():
         Retuns:
             JSON containing the matching datasets
     """
-    from whoosh.index import open_dir
     from whoosh.qparser import MultifieldParser, QueryParser
 
     if current_user.is_authenticated:
@@ -214,7 +262,7 @@ def dataset_search():
 
         # Query datasets
         datasets = []
-        ix = open_dir("index")
+        ix = _ensure_search_index()
         # Element input for payload
         elements = []
         with ix.searcher() as searcher:
