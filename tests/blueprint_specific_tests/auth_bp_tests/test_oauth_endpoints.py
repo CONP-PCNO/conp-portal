@@ -15,7 +15,9 @@ def test_orcid_unauthorized(app, test_client, monkeypatch):
 
     print(app.blueprints['orcid'].storage)
 
-    res = test_client.get(url_for("orcid.login"))
+    with app.test_request_context():
+        login_url = url_for("orcid.login")
+    res = test_client.get(login_url)
     assert res.status_code == 302
     urlp = urlparse(res.headers['Location'])
     assert "{}://{}{}".format(urlp.scheme,urlp.netloc,urlp.path) == app.blueprints['orcid'].authorization_url
