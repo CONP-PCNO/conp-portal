@@ -1,0 +1,4 @@
+# Override file for development environment
+# This file contains configuration overrides for the development environment.
+# run: docker compose up
+# it automatically uses compose.yaml and compose.override.yaml

@@ -1,0 +1,3 @@
+# Production Docker Compose file
+# This file is used to define and run multi-container Docker applications in a production environment. It specifies the services, networks, and volumes required for the application to run.
+# run: docker compose -f compose.yaml -f compose.prod.yaml up -d
