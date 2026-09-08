@@ -1,8 +1,43 @@
+# Source Control
 .git
 .github
 .gitignore
+
+# Dependencies (Let Docker install these inside the container)
+node_modules
+
+# IDEs & System Files
 .vscode
+.DS_Store
+Thumbs.db
+.idea/
+
+# Documentation
 deploy
 docs
+
+# Debug Logs & Temp Files
 logs
+*.log
+temp*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Build Outputs & Artifacts
+**/node_modules
 venv
+venv
+.venv/
+.venv3*/
+.ruff_cache/
+
+# Docker Files (Prevent copying the configs into the image)
+Dockerfile*
+docker-compose*
+.dockerignore
