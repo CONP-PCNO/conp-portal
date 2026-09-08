@@ -1,5 +1,5 @@
 /*!
- * conp-react v1.0.0
+ * conp-react v1.0.1
  * MIT Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -37879,7 +37879,7 @@ var CbrainModalDataset_CbrainModalDataset = function CbrainModalDataset(props) {
   var finish = function finish(event) {
     $("#cbrainModal").modal("hide");
   };
-  var datasetCbrainId = cbrain_id.split("%3Fid%3D")[1];
+  var datasetCbrainId = cbrain_id.split("?id=")[1];
   var baseUrl = "https%3A%2F%2Fportal.cbrain.mcgill.ca%2Fuserfiles%3Fswitch_group_id%3D" + datasetCbrainId;
   var getPipelineId = function getPipelineId(pipelineUrl) {
     return pipelineUrl.split("/userfiles?")[1];
