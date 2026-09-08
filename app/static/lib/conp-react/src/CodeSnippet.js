@@ -17,13 +17,18 @@ const CodeSnippet = ({code}) => {
     }, 1000)
   }
 
-  const formatCode = (code) => code.map((line) => <>{line}<br/></>);
+  const formatCode = (code) =>
+  code.map((line, index) => (
+    <React.Fragment key={index}>
+      {line}<br />
+    </React.Fragment>
+  ));
   const formatCmd = (code) => code.join("\n");
 
   return (
-    <div class="card" style={{marginBottom: "30px"}}>
-      <div class="card-body" style={{paddingRight: "45px"}}>
-        <pre class="card-text" style={{whiteSpace: "pre-wrap"}}>
+    <div className="card" style={{marginBottom: "30px"}}>
+      <div className="card-body" style={{paddingRight: "45px"}}>
+        <pre className="card-text" style={{whiteSpace: "pre-wrap"}}>
           {formatCode(code)}
         </pre>
       </div>
