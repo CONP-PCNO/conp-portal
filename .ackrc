@@ -1,0 +1,39 @@
+# Ack configuration File .ackrc file
+# https://beyondgrep.com/
+
+# Obsidian
+# https://obsidian.md/
+--ignore-directory=is:.obsidian
+
+# VS Code
+--ignore-directory=is:.vscode
+
+# Python
+--ignore-directory=is:venv
+--ignore-directory=is:.venv
+--ignore-directory=is:.venv3-7
+--ignore-directory=is:.venv3-8
+--ignore-directory=is:.venv3-9
+--ignore-directory=is:.venv3-10
+--ignore-directory=is:.venv3-11
+--ignore-directory=is:.venv3-12
+--ignore-directory=is:.venv3-13
+--ignore-directory=is:.venv3-14
+--ignore-directory=is:__pycache__
+--ignore-directory=is:.ruff_cache
+
+# Sphinx Docs
+# https://www.sphinx-doc.org/en/master/
+--ignore-directory=is:docs
+
+# Front-end Build
+--ignore-directory=is:app/static/lib/conp-react/umd
+--ignore-directory=is:umd
+--ignore-directory=is:app/static/v2/dist
+
+# Data
+--ignore-directory=is:app/static/data
+--ignore-directory=is:data/
+
+# Whoosh full-text search index
+--ignore-directory=is:index/
