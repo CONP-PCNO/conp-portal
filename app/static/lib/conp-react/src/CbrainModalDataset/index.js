@@ -6,7 +6,7 @@ const CbrainModalDataset = (props) => {
   const finish = (event) => {
     $("#cbrainModal").modal("hide");
   };
-  const datasetCbrainId = cbrain_id.split("%3Fid%3D")[1];
+  const datasetCbrainId = cbrain_id.split("?id=")[1];
   const baseUrl = `https%3A%2F%2Fportal.cbrain.mcgill.ca%2Fuserfiles%3Fswitch_group_id%3D${datasetCbrainId}`;
   const getPipelineId = (pipelineUrl) => pipelineUrl.split("/userfiles?")[1];
 
