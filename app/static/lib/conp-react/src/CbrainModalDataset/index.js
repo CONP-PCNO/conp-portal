@@ -6,7 +6,13 @@ const CbrainModalDataset = (props) => {
   const finish = (event) => {
     $("#cbrainModal").modal("hide");
   };
-  const datasetCbrainId = cbrain_id.split("?id%3D")[1];
+  let cbrain_param = cbrain_id;
+  if (cbrain_param.includes("?id=")) {
+    cbrain_param = cbrain_param.split("?id=")[1];
+  } else {
+    cbrain_param = cbrain_param.split("?id%3D")[1];
+  }
+  const datasetCbrainId = cbrain_param;
   const baseUrl = `https%3A%2F%2Fportal.cbrain.mcgill.ca%2Fuserfiles%3Fswitch_group_id%3D${datasetCbrainId}`;
   const getPipelineId = (pipelineUrl) => pipelineUrl.split("/userfiles?")[1];
 
