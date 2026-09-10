@@ -37879,7 +37879,13 @@ var CbrainModalDataset_CbrainModalDataset = function CbrainModalDataset(props) {
   var finish = function finish(event) {
     $("#cbrainModal").modal("hide");
   };
-  var datasetCbrainId = cbrain_id.split("?id%3D")[1];
+  var cbrain_param = cbrain_id;
+  if (cbrain_param.includes("?id=")) {
+    cbrain_param = cbrain_param.split("?id=")[1];
+  } else {
+    cbrain_param = cbrain_param.split("?id%3D")[1];
+  }
+  var datasetCbrainId = cbrain_param;
   var baseUrl = "https%3A%2F%2Fportal.cbrain.mcgill.ca%2Fuserfiles%3Fswitch_group_id%3D" + datasetCbrainId;
   var getPipelineId = function getPipelineId(pipelineUrl) {
     return pipelineUrl.split("/userfiles?")[1];
@@ -40106,25 +40112,27 @@ var CodeSnippet_CodeSnippet = function CodeSnippet(_ref) {
     }, 1000);
   };
   var formatCode = function formatCode(code) {
-    return code.map(function (line) {
-      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, line, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null));
+    return code.map(function (line, index) {
+      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, {
+        key: index
+      }, line, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("br", null));
     });
   };
   var formatCmd = function formatCmd(code) {
     return code.join("\n");
   };
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    "class": "card",
+    className: "card",
     style: {
       marginBottom: "30px"
     }
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    "class": "card-body",
+    className: "card-body",
     style: {
       paddingRight: "45px"
     }
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("pre", {
-    "class": "card-text",
+    className: "card-text",
     style: {
       whiteSpace: "pre-wrap"
     }
