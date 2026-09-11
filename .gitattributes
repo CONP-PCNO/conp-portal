@@ -1,0 +1,20 @@
+
+# Linguist Overrides ##################################################
+# See: https://github.com/github-linguist/linguist/blob/main/docs/overrides.md
+#
+# Documentation
+docs/* linguist-documentation
+# Execution Records Backup
+app/static/execution-records-details/* linguist-generated
+# conp-react bundled and vendored assets
+app/static/lib/conp-react/umd/* linguist-generated
+# v1 bundled and vendored assets
+app/static/v1/css/bootstrap-multiselect.css linguist-vendored
+app/static/v1/js/bootstrap-multiselect.js linguist-vendored
+app/static/v1/js/experiments.bundle.js linguist-vendored
+app/static/v1/js/experiments.bundle.js.map linguist-vendored
+app/static/v1/js/react-dom.development-16.11.0.js linguist-vendored
+app/static/v1/js/react.development-16.11.0.js linguist-vendored
+# v2 bundled and vendored assets
+app/static/v2/dist/* linguist-generated
+app/static/v2/src/styles/highcharts.css linguist-vendored
