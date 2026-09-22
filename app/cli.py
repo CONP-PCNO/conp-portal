@@ -168,6 +168,7 @@ def _seed_test_datasets_db(app):
     Seeds a set of test datasets populated from a static csv file
     """
     _update_datasets(app)
+    _update_index(app, DBDataset, True)
 
 
 def _update_pipeline_data(app):
