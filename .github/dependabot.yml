@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "P: Dependencies"
+      - "P: Python"
+  - package-ecosystem: "npm"
+    directory: "/app/static/v2"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "P: Dependencies"
+      - "P: JavaScript"
