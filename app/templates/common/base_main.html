@@ -26,25 +26,16 @@
 {% block styles %}
 <link href="{{ url_for('static',filename='img/conp.ico')}}" rel="shortcut icon" type="image/png" />
 <link href="{{ url_for('static', filename='v1/css/bootstrap-multiselect.css') }}" rel="stylesheet" />
-<style>
-  /* Style tables rendered from markdown documentation pages (e.g. Data Governance, Download) */
-  .content-main table { border-collapse: collapse; width: 100%; margin: 1rem 0 1.5rem; }
-  .content-main th, .content-main td { border: 1px solid #ccd2d9; padding: .5rem .75rem; vertical-align: top; text-align: left; }
-  .content-main thead th { background: #f1f3f5; border-bottom: 2px solid #adb5bd; }
-  .content-main tbody tr:nth-child(even) { background: #f8f9fa; }
-  /* Brand accent for the "CONP Portal" part of page titles. Single tunable
-     token: set the colour below to the official CONP red if desired.
-     Centralizes what were previously ~22 inline red-coloured title spans. */
-  .brand-accent { color: #C8102E; font-weight: 600; }
-  /* Consistent spacing under the page-title row across pages. */
-  .page-title h2, .search-header h2 { margin-bottom: .75rem; }
-</style>
 <link
   rel="stylesheet"
   href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
   crossorigin="anonymous"
 />
+<!-- CONP theme layer: design tokens + Bootstrap overrides. Must load after
+     Bootstrap so its rules win at equal specificity. Absorbs the former
+     inline style block (markdown tables, .brand-accent, title spacing). -->
+<link href="{{ url_for('static', filename='css/conp-theme.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block scripts %}
