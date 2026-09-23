@@ -1,0 +1,285 @@
+/*
+=============================================================
+CONP Portal theme layer — design tokens + Bootstrap overrides
+=============================================================
+Loaded from base_main.html AFTER the Bootstrap CDN stylesheet, so its
+rules win over Bootstrap defaults at equal specificity. The v2 webpack
+bundle also injects its compiled Sass into <head> at runtime, AFTER
+this file — and that Sass bundles its own copy of Bootstrap (v5, from
+npm), so plain class selectors here would lose to it on document order.
+Every override therefore carries higher specificity (a leading `body`)
+or a justified `!important` (each one is commented).
+
+This file is the single place for CONP brand decisions. The intent is
+that the legacy accents (`#ff0000`, Bootstrap green/teal/blue) migrate
+here over time; new CSS should use the custom properties below.
+
+Source-of-truth note: the equivalent fixes for _core.scss (base font,
+heading weights, the two `min-width: 786px` breakpoint typos) should be
+applied to app/static/v2/src/styles/_core.scss the next time the v2
+bundle is rebuilt, at which point several overrides here can be
+simplified. Tracked in the facelift analysis (2026-08-25), §5 Tier 2.
+*/
+
+:root {
+  /* Brand */
+  --conp-red: #c8102e;        /* matches .brand-accent (PR #8) */
+  --conp-red-dark: #a50d26;   /* hover/active shade */
+  --conp-charcoal: #343434;   /* chrome + body text (existing) */
+  --conp-slate: #4d6e8e;      /* secondary accent (from the Evidence tier palette) */
+  --conp-slate-dark: #394459;
+  --conp-green: #177245;      /* action/download green, tuned from stock Bootstrap */
+  --conp-green-dark: #115a37; /* hover/active shade */
+
+  /* Neutrals (existing de facto greys, named) */
+  --conp-grey-1: #f6f7f8;     /* washes / table stripes */
+  --conp-grey-2: #d8d8d8;     /* borders (was "alto") */
+  --conp-grey-3: #979797;     /* muted text on white (was "dusty-grey") */
+  --conp-grey-4: #5e5e5e;     /* secondary text */
+
+  /* Type */
+  --conp-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+}
+
+/*
+-------------------------------------------------------------
+Base typography
+-------------------------------------------------------------
+_core.scss (bundle-injected, loads after this file) sets
+`html, body { font-family: 'Arial'; font-size: 14px; }`.
+!important is required to beat it until the bundle is rebuilt.
+*/
+html,
+body {
+  font-family: var(--conp-font) !important;
+  font-size: 16px !important;
+  color: var(--conp-charcoal);
+}
+
+/*
+Headings: _core.scss sets all six levels to weight 400 on an oversized
+em scale (h1 2.4em … h6 1.4em) via `hN:not(.readme *)`. The leading
+`body` out-specifies the injected rules without !important. The .readme
+exclusion is preserved so GitHub-rendered READMEs keep their own scale.
+*/
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6 {
+  font-weight: 600;
+  color: var(--conp-charcoal);
+}
+body h1:not(.readme *) { font-size: 1.75rem; }
+body h2:not(.readme *) { font-size: 1.5rem; }
+body h3:not(.readme *) { font-size: 1.3rem; }
+body h4:not(.readme *) { font-size: 1.15rem; }
+body h5:not(.readme *) { font-size: 1.05rem; }
+body h6:not(.readme *) { font-size: 1rem; }
+
+/*
+-------------------------------------------------------------
+Brand accent (moved here from the base_main.html inline block)
+-------------------------------------------------------------
+*/
+body .brand-accent {
+  color: var(--conp-red);
+  font-weight: 600;
+}
+
+/* Consistent spacing under the page-title row across pages. */
+body .page-title h2,
+body .search-header h2 {
+  margin-bottom: 0.75rem;
+}
+
+/*
+-------------------------------------------------------------
+Markdown documentation tables (moved from the inline block)
+-------------------------------------------------------------
+*/
+body .content-main table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0 1.5rem;
+}
+body .content-main th,
+body .content-main td {
+  border: 1px solid #ccd2d9;
+  padding: 0.5rem 0.75rem;
+  vertical-align: top;
+  text-align: left;
+}
+body .content-main thead th {
+  background: #f1f3f5;
+  border-bottom: 2px solid #adb5bd;
+}
+body .content-main tbody tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+/*
+-------------------------------------------------------------
+Actions: keep the green download semantic, tune the green
+-------------------------------------------------------------
+The main card actions (Direct Download, Download With DataLad,
+Process On CBRAIN) keep green — the established "go/download"
+signal — but tuned from stock Bootstrap (#28a745, whose white-text
+contrast is only 3.1:1, below WCAG AA) to a deeper pine green that
+sits with the charcoal + red identity. (White on #177245 ≈ 6.0:1.)
+*/
+body .btn-success,
+body .btn-success:visited {
+  background-color: var(--conp-green);
+  border-color: var(--conp-green);
+  color: #fff;
+}
+body .btn-success:hover,
+body .btn-success:focus,
+body .btn-success:active,
+body .btn-success:not(:disabled):not(.disabled):active {
+  background-color: var(--conp-green-dark) !important; /* beats BS4 .btn-success:not(:disabled):active */
+  border-color: var(--conp-green-dark) !important;
+  color: #fff;
+}
+body .btn-success.focus,
+body .btn-success:focus {
+  box-shadow: 0 0 0 0.2rem rgba(23, 114, 69, 0.3);
+}
+
+body .btn-outline-success {
+  color: var(--conp-green);
+  border-color: var(--conp-green);
+}
+body .btn-outline-success:hover,
+body .btn-outline-success:not(:disabled):not(.disabled):active {
+  background-color: var(--conp-green);
+  border-color: var(--conp-green);
+  color: #fff;
+}
+body .btn-outline-success.focus,
+body .btn-outline-success:focus {
+  box-shadow: 0 0 0 0.2rem rgba(23, 114, 69, 0.3);
+}
+
+/*
+-------------------------------------------------------------
+Pills: one colour for one concept
+-------------------------------------------------------------
+Dataset keywords/modalities are badge-info (teal) while tool tags are
+badge-primary (blue) — the same concept in two colours, neither of them
+CONP's. Unify on the slate secondary accent. (White on #4d6e8e ≈ 5.5:1.)
+*/
+body .badge-info,
+body .badge-primary {
+  background-color: var(--conp-slate);
+  color: #fff;
+}
+
+/*
+-------------------------------------------------------------
+Focus visibility
+-------------------------------------------------------------
+_core.scss removes button focus outlines globally (`button:focus
+{ outline: 0 }`) with no replacement. Restore a visible ring for
+keyboard users. !important is required to beat the injected reset.
+*/
+button:focus-visible,
+a:focus-visible,
+.btn:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--conp-red) !important;
+  outline-offset: 2px;
+}
+
+/*
+-------------------------------------------------------------
+Media never overflows its container
+-------------------------------------------------------------
+*/
+body .content-main img,
+body .content-main iframe,
+body .content-main video {
+  max-width: 100%;
+}
+body .content-main img {
+  height: auto;
+}
+
+/*
+-------------------------------------------------------------
+Small-screen fixes
+-------------------------------------------------------------
+At a 390px viewport the search, dataset, and tools pages currently
+render 473–687px wide (horizontal scroll): the result cards' outer
+flex rows (logo column + text column) and the metadata <ul>s never
+wrap, and the searchbar filter row has fit-content minimums.
+Verified against live captures, 2026-08-25.
+*/
+@media (max-width: 767.98px) {
+  body .card .d-flex,
+  body .card ul.d-flex,
+  body .searchbar .d-flex,
+  body .searchbar .btn-group {
+    flex-wrap: wrap;
+  }
+  body .card .card-text {
+    min-width: 0;
+  }
+  body .card .card-list-item {
+    flex-wrap: wrap;
+    overflow-wrap: anywhere; /* long ARK/DOI URLs */
+  }
+  body .searchbar .dropdown .dropdown-label {
+    min-width: 0;
+  }
+  /* Pagination strip (search-dataset-footer) is a wide nowrap btn-group. */
+  body .search-dataset-footer .d-flex,
+  body .search-dataset-footer .btn-group {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  /* The search input is a flex item whose default min-width:auto keeps
+     it from shrinking below its intrinsic width. */
+  body .searchbar form.input-group {
+    min-width: 0;
+  }
+  body .searchbar .input-group > input {
+    min-width: 0;
+    flex: 1 1 100px;
+  }
+  /* Pills and filter buttons: let long labels wrap instead of widening
+     the page (Bootstrap badges are white-space: nowrap by default). */
+  body .badge,
+  body .searchbar .btn,
+  body .searchbar .dropdown-toggle {
+    white-space: normal;
+  }
+  /* Results-count / sort row above the tables. */
+  body .search-dataset-table .d-flex {
+    flex-wrap: wrap;
+  }
+  /* Long unbreakable tokens (ARKs, DOIs, file names) may not overflow. */
+  body .card,
+  body .content-main {
+    overflow-wrap: anywhere;
+  }
+}
+
+/*
+_core.scss has `@media (min-width: 786px)` twice where 768px (the
+Bootstrap md breakpoint) is meant, leaving dataset-card button rows in
+their stacked layout between 768–785px. Provide the intended rule at
+the correct breakpoint. (Fix the typo in _core.scss at the next bundle
+rebuild.)
+*/
+@media (min-width: 768px) {
+  body .card[data-type='dataset'] .card-buttons {
+    flex-direction: row;
+    align-items: center;
+  }
+}
