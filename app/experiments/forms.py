@@ -2,13 +2,13 @@ import json
 
 from flask_wtf import FlaskForm
 from wtforms import (
+    FieldList,
+    FloatField,
     StringField,
     SubmitField,
-    FloatField,
     TextAreaField,
-    FieldList,
 )
-from wtforms.validators import DataRequired, Email, Optional, URL
+from wtforms.validators import URL, DataRequired, Email, Optional
 
 from .data import data
 from .validators import ValidDOI
@@ -16,7 +16,6 @@ from .validators import ValidDOI
 
 class SelectOtherField(StringField):
     """later, this could streamline the options"""
-    pass
 
 
 class ExperimentForm(FlaskForm):
@@ -150,5 +149,3 @@ class ExperimentForm(FlaskForm):
     )
 
     submit = SubmitField("Submit", validators=[DataRequired()])
-
-

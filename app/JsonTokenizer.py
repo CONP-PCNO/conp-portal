@@ -1,6 +1,5 @@
 import json
-from whoosh.analysis import Tokenizer, Token
-from whoosh.compat import text_type
+
 from whoosh.analysis import RegexTokenizer
 
 
@@ -18,18 +17,22 @@ class JsonTokenizer(RegexTokenizer):
         elif isinstance(v, str):
             return v
 
-    def __call__(self, value, positions = False, chars = False,
-                keeporiginal = False, removestops = True,
-                start_pos = 0, start_char = 0,
-                tokenize = True, mode = '', **kwargs):
+    def __call__(
+        self, value, positions=False, chars=False,
+        keeporiginal=False, removestops=True,
+        start_pos=0, start_char=0,
+        tokenize=True, mode='', **kwargs
+    ):
         try:
             v = json.loads(value)
-        except:
+        except (json.JSONDecodeError, TypeError):
             v = value
 
         v = self.__toString__(v)
 
-        return super().__call__(v, positions, chars,
-                keeporiginal, removestops,
-                start_pos, start_char,
-                tokenize, mode, **kwargs)
+        return super().__call__(
+            v, positions, chars,
+            keeporiginal, removestops,
+            start_pos, start_char,
+            tokenize, mode, **kwargs
+        )

@@ -1,14 +1,14 @@
-import sys
-import os
-#sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+# sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 
 import csv
 from datetime import datetime, timedelta
-from app.models import User, Dataset, Pipeline
-from app import db
 
-class InsertTestDataset(object):
+from app import db
+from app.models import Dataset, Pipeline, User
+
+
+class InsertTestDataset:
 
     def __init__(self):
         self.users_file = 'users.csv'
@@ -19,7 +19,7 @@ class InsertTestDataset(object):
 
     def insert_sample_users(self):
 
-        with open(self.users_file, 'r') as users_file:
+        with open(self.users_file) as users_file:
 
             reader = csv.reader(users_file)
             next(reader)
@@ -46,7 +46,7 @@ class InsertTestDataset(object):
 
     def insert_sample_datasets(self):
 
-        with open(self.datasets_file, 'r') as dataset_file:
+        with open(self.datasets_file) as dataset_file:
             reader = csv.reader(dataset_file)
             next(reader)
 
@@ -78,7 +78,7 @@ class InsertTestDataset(object):
 
     def insert_sample_pipelines(self):
 
-        with open(self.pipelines_file, 'r') as pipelines_file:
+        with open(self.pipelines_file) as pipelines_file:
 
             reader = csv.reader(pipelines_file)
             next(reader)
@@ -100,8 +100,7 @@ class InsertTestDataset(object):
 
 
 test_dataset = InsertTestDataset()
-#test_dataset.insert_sample_users()
+# test_dataset.insert_sample_users()
 test_dataset.insert_sample_datasets()
-#test_dataset.insert_sample_pipelines()
-#print('\x1b[6;30;42m' + 'Success!' + '\x1b[0m')
-
+# test_dataset.insert_sample_pipelines()
+# print('\x1b[6;30;42m' + 'Success!' + '\x1b[0m')

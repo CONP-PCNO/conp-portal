@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 """ Routes Module
 
     Currently this module contains all of the routes for the auth blueprint
 """
 from flask import render_template
+
 from app.auth import auth_bp
 
 

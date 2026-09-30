@@ -1,12 +1,7 @@
-# -*- coding: utf-8 -*-
 """
 Unit tests for endpoints in the pipelines blueprint
 """
-import pytest
-import app.cli as cli
-from urllib.parse import urlparse
-from flask import url_for
-
+from app import cli
 
 
 def test_pipelines_route(test_client):
@@ -39,9 +34,9 @@ def test_pipeline_search_route(session, new_pipeline, test_client, app, runner):
 
     body = res.get_json(force=True)
 
-    assert type(body) != type(None)
+    assert body is not None
     assert body["authorized"] == False
-    assert type(body["elements"]) != type(None)
+    assert body["elements"] is not None
     assert body["total"] > 0
 
 def test_pipeline_search_route_with_filter(session, new_pipeline, test_client):
@@ -62,9 +57,9 @@ def test_pipeline_search_route_with_filter(session, new_pipeline, test_client):
 
     body = res.get_json(force=True)
 
-    assert type(body) != type(None)
+    assert body is not None
     assert body["authorized"] == False
-    assert type(body["elements"]) != type(None)
+    assert body["elements"] is not None
     assert body["total"] == 0
 
 

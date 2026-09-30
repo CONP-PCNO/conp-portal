@@ -1,22 +1,20 @@
-# -*- coding: utf-8 -*-
 """Command Line Interface Module
 
 Module that contains the special command line tools
 
 """
+import json
 import os
 import uuid
-import shutil
 from datetime import datetime, timedelta
-from typing import Type
+
 import click
-import json
 
 from app import db
-from app.models import Experiment as DBExperiment, Dataset as DBDataset
+from app.models import Dataset as DBDataset
+from app.models import Experiment as DBExperiment
 from app.threads import UpdatePipelineData
 
-from . import config
 
 def register(app):
 
@@ -136,7 +134,7 @@ def _seed_admin_acct_db(app):
     Uses Config Paramters for determining Admin account
     """
     from app import db
-    from app.models import User, Role, AffiliationType
+    from app.models import AffiliationType, Role, User
 
     # Do not perform if the user already exists
     if len(User.query.filter(User.full_name == "CONP Admin").all()) == 0:
@@ -162,7 +160,6 @@ def _seed_admin_acct_db(app):
         db.session.add(user)
         db.session.commit()
 
-
 def _seed_test_datasets_db(app):
     """
     Seeds a set of test datasets populated from a static csv file
@@ -183,21 +180,23 @@ def _update_pipeline_data(app):
 
 
 def _update_datalad_objects(
-        app,
-        object_type: str,  # 'dataset' or 'experiment'
-        repo_name: str,
-        object_class: Type[db.Model]
-    ):
-    from app.models import ArkId
-    from app.models import DatasetAncestry as DBDatasetAncestry
-    from sqlalchemy import exc
-    from datalad import api
-    from datalad.api import Dataset as DataladDataset
+    app,
+    object_type: str,  # 'dataset' or 'experiment'
+    repo_name: str,
+    object_class: type[db.Model]
+):
     import fnmatch
     import json
-    from pathlib import Path
-    import git
     import traceback
+    from pathlib import Path
+
+    import git
+    from datalad import api
+    from datalad.api import Dataset as DataladDataset
+    from sqlalchemy import exc
+
+    from app.models import ArkId
+    from app.models import DatasetAncestry as DBDatasetAncestry
 
     datasetsdir = Path(app.config['DATA_PATH']) / repo_name
     datasetsdir.mkdir(parents=True, exist_ok=True)
@@ -279,7 +278,7 @@ def _update_datalad_objects(
             continue
 
         try:
-            with open(os.path.join(ds['path'], descriptor), 'r') as f:
+            with open(os.path.join(ds['path'], descriptor)) as f:
                 dats = json.load(f)
         except Exception as e:
             print("\033[91m")
@@ -384,9 +383,10 @@ def _update_datalad_objects(
 
 
 def _update_schema(app):
-    from whoosh.fields import Schema, STORED, ID, KEYWORD, TEXT, DATETIME, NUMERIC
     from whoosh import index
     from whoosh.analysis import LowercaseFilter, StopFilter
+    from whoosh.fields import ID, KEYWORD, NUMERIC, STORED, TEXT, Schema
+
     from .JsonTokenizer import JsonTokenizer
 
     json_analyzer = JsonTokenizer() | LowercaseFilter() | StopFilter()
@@ -394,7 +394,7 @@ def _update_schema(app):
     publication_json_analyzer = JsonTokenizer('.', True) | LowercaseFilter() | StopFilter()
     title_json_analyzer = JsonTokenizer('^', True) | LowercaseFilter() | StopFilter()
 
-    print(f'[INFO   ] Generating search schema')
+    print('[INFO   ] Generating search schema')
     schema = Schema(
         id=STORED,
         title=KEYWORD(stored=True, commas=True, scorable=True, analyzer=title_json_analyzer),
@@ -445,13 +445,13 @@ def _format_index_value(value, debug=False):
 
 
 def _update_index(
-        app,
-        object_class: Type[db.Model],
-        schema,
-    ):
+    app,
+    object_class: type[db.Model],
+    schema,
+):
     from whoosh.index import open_dir
+
     from app.search.models import DATSDataset
-    from app.services import github
 
     if schema:
         ix = _update_schema(app)
@@ -461,7 +461,7 @@ def _update_index(
     writer = ix.writer()
     datasets = DBDataset.query.order_by(DBDataset.id).all()
 
-    with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-cbrain-ids.json"), "r") as f:
+    with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-cbrain-ids.json")) as f:
         cbrain_dataset_ids = json.load(f)
         f.close()
 
@@ -573,9 +573,10 @@ def _update_analytics_matomo_visits_summary(app, matomo_api_baseurl):
     current day.
     """
 
+    import requests
+
     from app import db
     from app.models import MatomoDailyVisitsSummary
-    import requests
 
     # grep the dates already inserted into the database
     db_results = db.session.query(MatomoDailyVisitsSummary.date).all()
@@ -626,9 +627,10 @@ def _update_analytics_matomo_get_page_urls_summary(app, matomo_api_baseurl):
     current day.
     """
 
+    import requests
+
     from app import db
     from app.models import MatomoDailyGetPageUrlsSummary
-    import requests
 
     # grep the dates already inserted into the database
     date_field = MatomoDailyGetPageUrlsSummary.date
@@ -684,10 +686,11 @@ def _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_bas
     day since stats are still being gathered by Matomo for the
     current day.
     """
-    from app import db
-    from app.models import MatomoDailyGetDatasetPageViewsSummary
-    from app.models import Dataset as DBDataset
     import requests
+
+    from app import db
+    from app.models import Dataset as DBDataset
+    from app.models import MatomoDailyGetDatasetPageViewsSummary
 
     # grep the dates already inserted into the database
     date_field = MatomoDailyGetDatasetPageViewsSummary.date
@@ -750,9 +753,10 @@ def _update_analytics_matomo_get_daily_portal_download_summary(app, matomo_api_b
     day since stats are still being gathered by Matomo for the
     current day.
     """
+    import requests
+
     from app import db
     from app.models import MatomoDailyGetPortalDownloadSummary
-    import requests
 
     # grep the dates already inserted into the database
     date_field = MatomoDailyGetPortalDownloadSummary.date
@@ -806,9 +810,10 @@ def _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_
     day since stats are still being gathered by Matomo for the
     current day.
     """
+    import requests
+
     from app import db
     from app.models import MatomoDailyGetSiteSearchKeywords
-    import requests
 
     # grep the dates already inserted into the database
     date_field = MatomoDailyGetSiteSearchKeywords.date
@@ -907,9 +912,9 @@ def _generate_missing_ark_ids(app):
 
 
 def ark_id_minter(
-        app,
-        ark_id_type: str  # 'dataset', 'pipeline', or 'experiment'
-    ):
+    app,
+    ark_id_type: str  # 'dataset', 'pipeline', or 'experiment'
+):
     """
     Generates ARK identifiers for datasets and pipelines that do not have yet an ARK ID.
 
@@ -981,10 +986,12 @@ def _update_github_traffic_counts(app):
       updating or downloading datasets
     """
 
+    from pathlib import Path
+
+    import git
+
     from app import db
     from app.models import GithubDailyClonesCount, GithubDailyViewsCount
-    from pathlib import Path
-    import git
 
     datasetsdir = Path(app.config['DATA_PATH']) / 'conp-dataset'
     try:

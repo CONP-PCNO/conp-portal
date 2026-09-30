@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*-
 """
 Defines forms needed for Flask-User login
 """
-from flask_user.forms import RegisterForm
 from flask_user import UserManager
-from wtforms import StringField, BooleanField
+from flask_user.forms import RegisterForm
+from wtforms import BooleanField, StringField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired
+
 from app.utils.form_utils import possible_affiliation_types
 
 
@@ -32,7 +32,6 @@ class CustomRegisterForm(RegisterForm):
         Needed or the validation bombs
         Not a big deal as it is set by a dropdown menu.
         """
-        pass
 
 
 class CustomUserManager(UserManager):

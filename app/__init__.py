@@ -1,15 +1,14 @@
-# -*- coding: utf-8 -*-
 import os
 from logging.handlers import RotatingFileHandler
 
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_wtf.csrf import CSRFProtect
-from flask_mail import Mail
 from flask_bootstrap import Bootstrap
-from config import DevelopmentConfig
+from flask_mail import Mail
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
 
+from config import DevelopmentConfig
 
 db = SQLAlchemy()
 config = DevelopmentConfig()
@@ -35,34 +34,34 @@ def create_app(config_settings=None):
     mail.init_app(app)
     bootstrap.init_app(app)
 
-    from app.main import main_bp  # noqa: E402
+    from app.main import main_bp
     app.register_blueprint(main_bp)
 
-    from app.admin import admin_bp  # noqa: E402
+    from app.admin import admin_bp
     app.register_blueprint(admin_bp)
 
-    from app.analytics import analytics_bp  # noqa: E402
+    from app.analytics import analytics_bp
     app.register_blueprint(analytics_bp)
 
-    from app.auth import auth_bp  # noqa: E402
+    from app.auth import auth_bp
     app.register_blueprint(auth_bp)
 
-    from app.search import search_bp  # noqa: E402
+    from app.search import search_bp
     app.register_blueprint(search_bp)
 
-    from app.forums import forums_bp  # noqa: E402
+    from app.forums import forums_bp
     app.register_blueprint(forums_bp)
 
-    from app.profile import profile_bp  # noqa: E402
+    from app.profile import profile_bp
     app.register_blueprint(profile_bp)
 
-    from app.pipelines import pipelines_bp  # noqa: E402
+    from app.pipelines import pipelines_bp
     app.register_blueprint(pipelines_bp)
 
-    from app.execution_records import execution_records_bp  # noqa: E402
+    from app.execution_records import execution_records_bp
     app.register_blueprint(execution_records_bp)
 
-    from app.utils import utils_bp  # noqa: E402
+    from app.utils import utils_bp
     app.register_blueprint(utils_bp)
 
     from app.experiments import experiments_bp
@@ -74,8 +73,8 @@ def create_app(config_settings=None):
     from app.styleguide import styleguide_bp
     app.register_blueprint(styleguide_bp)
 
-    from app.models import User
     from app.auth.forms import CustomUserManager
+    from app.models import User
     user_manager = CustomUserManager(app, db, User)
 
     from app.webhooks import webhooks_bp

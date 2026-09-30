@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 This is the initial module that contains the pytest configuration fixtures
 
@@ -11,18 +10,15 @@ Python 3.10–3.14 Compatibility Notes:
 - datetime.now() is used instead of datetime.utcnow() because utcnow() is
   deprecated in Python 3.12+ and will be removed in Python 3.14
 """
-import pytest
 import os
-from app import create_app
-from app import db as _db
-from app.models import Dataset, Pipeline, User, AffiliationType, \
-    OAuth, Role
-from sqlalchemy import event
-from sqlalchemy.orm import sessionmaker
-from config import TestingConfig
 from datetime import datetime, timedelta
 
-from flask_login import current_user, login_user, logout_user
+import pytest
+
+from app import create_app
+from app import db as _db
+from app.models import AffiliationType, Dataset, Pipeline, User
+from config import TestingConfig
 
 
 @pytest.fixture(scope='session')

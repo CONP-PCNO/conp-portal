@@ -1,13 +1,13 @@
-# -*- coding: utf-8 -*-
 """
 Tests for Database setups
 """
-import pytest
 import os
+
 from alembic.command import upgrade
 from alembic.config import Config as alem_Config
-from app.models import Dataset, User, AffiliationType, Role, UsersRoles
-import app.cli as cli
+
+from app import cli
+from app.models import AffiliationType, Dataset, Role, User, UsersRoles
 
 
 def test_db_migration(app, db, session):
@@ -32,7 +32,7 @@ def test_db_migration(app, db, session):
         # I am sure that I am doing this wrong.
         db.drop_all()
         db.create_all()
-        print("Alembic Migraiton failed: {}".format(e))
+        print(f"Alembic Migraiton failed: {e}")
 
     assert is_success
 
@@ -54,7 +54,7 @@ def test_seed_db_test(app, session, runner):
     assert ats[-1].name == "OT"
     assert ats[-1].label == "Other"
     u = User.query.filter(User.full_name=="CONP Admin").first()
-    print ("------- {}".format(u))
+    print (f"------- {u}")
     assert u.full_name == "CONP Admin"
     assert u.email == app.config['ADMINS'][0]
     assert u.affiliation == 'CONP'
@@ -100,7 +100,7 @@ def test_seed_admin_acct(app, session, runner):
     result1 = runner.invoke(args=['seed_aff_types_db'])
     result2 = runner.invoke(args=['seed_admin_acct_db'])
     u = User.query.filter(User.full_name=="CONP Admin").first()
-    print ("------- {}".format(u))
+    print (f"------- {u}")
     assert u.full_name == "CONP Admin"
     assert u.email == app.config['ADMINS'][0]
     assert u.affiliation == 'CONP'

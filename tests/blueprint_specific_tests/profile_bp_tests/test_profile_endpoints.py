@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 """
 Unit tests for endpoints in the profile blueprint
 """
-import pytest
 from urllib.parse import urlparse
+
 from flask import url_for
 
 

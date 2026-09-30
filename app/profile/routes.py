@@ -1,14 +1,14 @@
-# -*- coding: utf-8 -*-
 """ Routes Module
 
     Currently this module contains all of the routes for profile blueprint
 """
-from flask import render_template, redirect, url_for, flash, request, session
+from flask import flash, redirect, render_template, request, session, url_for
 from flask_user import current_user, login_required, roles_accepted
+
 from app import db
+from app.models import AffiliationType, Role, User
 from app.profile import profile_bp
 from app.profile.forms import UserProfileForm
-from app.models import User, Role, AffiliationType
 
 
 @profile_bp.route('/profile/edit_current_user_profile', methods=["GET", "POST"])

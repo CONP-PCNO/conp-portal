@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
 """ Routes Module
 
     Currently this module contains all of the routes in the forum blueprint
 """
 from flask import render_template
 from flask_login import current_user
+
 from app.forums import forums_bp
 
 

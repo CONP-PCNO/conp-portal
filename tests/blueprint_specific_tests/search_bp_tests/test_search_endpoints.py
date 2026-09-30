@@ -1,11 +1,6 @@
-# -*- coding: utf-8 -*-
 """
 Unit tests for endpoints in the search blueprint
 """
-import pytest
-from urllib.parse import urlparse
-from flask import url_for
-from flask_login import current_user, login_user, logout_user
 
 
 def test_pipelines_route(test_client):
@@ -45,7 +40,7 @@ def test_dataset_search_route(session, new_dataset, test_client):
 
     body = res.get_json(force=True)
 
-    assert type(body) != type(None)
+    assert body is not None
     assert body["authorized"] == False
     assert body["total"] == 1
 
@@ -95,7 +90,7 @@ def test_dataset_search_route_with_filter(session, new_dataset, test_client):
 
     body = res.get_json(force=True)
 
-    assert type(body) != type(None)
+    assert body is not None
     assert body["total"] == 0
 
 

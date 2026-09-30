@@ -1,41 +1,37 @@
+import os
+
 from flask import (
+    abort,
     current_app,
     flash,
+    make_response,
+    redirect,
     render_template,
     request,
-    redirect,
-    url_for,
+    send_file,
     send_from_directory,
     session,
-    make_response,
-    Response,
-    abort,
-    send_file,
+    url_for,
 )
-
 from sqlalchemy import inspect
 
+from .. import db
+from ..models import Experiment
 from . import experiments_bp
 from .data import data
-from .filters import get_filters
-from .forms import ExperimentForm
 from .dats import DATSExperiment
-from .search import SearchEngine
-from .sort import SortKey
+from .forms import ExperimentForm
 from .utils import upload_file
-from .. import config, db
-from ..models import Experiment
 
-import os
-import io
-import zipfile
 
 def to_camel_case(snake_str: str):
     components = snake_str.split('_')
     return components[0] + ''.join(x.title() for x in components[1:])
 
+
 def object_as_dict(obj: object):
     return {to_camel_case(c.key): getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
+
 
 def experiment_as_dict(exp: Experiment):
     dats = DATSExperiment(exp.fspath)
@@ -57,7 +53,7 @@ def experiment_as_dict(exp: Experiment):
         "imageFile": dats.LogoFilepath,
         "repositoryFileCount": dats.fileCount,
         "repositorySize": dats.size,
-        "repositoryFile" : dats.DatsFilepath,
+        "repositoryFile": dats.DatsFilepath,
         "id": exp.id,
         "origin": dats.origin,
         "contactPerson": dats.contacts if dats.contacts else None,
@@ -70,6 +66,7 @@ def experiment_as_dict(exp: Experiment):
         "source": dats.sources,
         "remoteUrl": exp.remoteUrl
     }
+
 
 @experiments_bp.route("/")
 def home():
@@ -116,7 +113,7 @@ def view(experiment_id):
 
     if os.path.exists(readme_path):
         try:
-            with open(readme_path, 'r') as file:
+            with open(readme_path) as file:
                 readme_content = file.read()
         except Exception as e:
             print(e)  # Il est préférable de loguer l'exception plutôt que de passer silencieusement
@@ -163,8 +160,6 @@ def search():
         return render_template("experiments/search.html", experiments=experiment_dict, keyword="")
 
     return render_template("experiments/search.html", experiments=experiment_dict, keyword=keyword)
-
-
 
 
 @experiments_bp.route("/submit", methods=["GET", "POST"])

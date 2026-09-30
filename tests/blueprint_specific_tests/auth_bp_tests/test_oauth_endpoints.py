@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
-import pytest
-from flask import url_for
 from urllib.parse import urlparse
+
+from flask import url_for
 from flask_dance.consumer.storage import MemoryStorage
+
 
 def test_orcid_unauthorized(app, test_client, monkeypatch):
     """
@@ -20,4 +20,4 @@ def test_orcid_unauthorized(app, test_client, monkeypatch):
     res = test_client.get(login_url)
     assert res.status_code == 302
     urlp = urlparse(res.headers['Location'])
-    assert "{}://{}{}".format(urlp.scheme,urlp.netloc,urlp.path) == app.blueprints['orcid'].authorization_url
+    assert f"{urlp.scheme}://{urlp.netloc}{urlp.path}" == app.blueprints['orcid'].authorization_url

@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
 """
 Unit tests for endpoints in the auth blueprint
 """
-import pytest
-from urllib.parse import urlparse
-from flask import url_for
 
 
 def test_admin_route(test_client):

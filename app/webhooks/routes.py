@@ -1,14 +1,15 @@
-# -*- coding: utf-8 -*-
 """ Routes Module
 
     Currently this module contains all of the routes in webhooks blueprint
 """
-from app.webhooks import webhooks_bp
-from flask import request, abort, current_app
-import git
+import hashlib
 import hmac
 import os
-import hashlib
+
+import git
+from flask import abort, current_app, request
+
+from app.webhooks import webhooks_bp
 
 
 @webhooks_bp.route('/webhooks', methods=['GET', 'POST'])

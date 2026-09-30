@@ -1,19 +1,18 @@
-# -*- coding: utf-8 -*-
 """
 Main module that will call and create the flask app
 """
-from app import create_app, db, cli
+from app import cli, create_app, db
 from app.models import (
-    User,
-    Dataset,
-    Pipeline,
-    OAuth,
     AffiliationType,
-    MatomoDailyVisitsSummary,
-    MatomoDailyGetPageUrlsSummary,
+    Dataset,
+    Experiment,
     MatomoDailyGetDatasetPageViewsSummary,
+    MatomoDailyGetPageUrlsSummary,
     MatomoDailyGetSiteSearchKeywords,
-    Experiment
+    MatomoDailyVisitsSummary,
+    OAuth,
+    Pipeline,
+    User,
 )
 
 app = create_app()

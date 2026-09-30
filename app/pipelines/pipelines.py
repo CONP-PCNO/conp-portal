@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import json
 import os
 
@@ -12,10 +11,10 @@ def get_pipelines_from_cache(search_query=None):
         cache_dir, "detailed_all_descriptors.json")
 
     # fetch data from cache
-    with open(all_desc_path, "r") as f:
+    with open(all_desc_path) as f:
         all_descriptors = json.load(f)
 
-    with open(all_detailed_desc_path, "r") as f:
+    with open(all_detailed_desc_path) as f:
         detailed_all_descriptors = json.load(f)
 
     if search_query not in ("", '', None):

@@ -1,15 +1,16 @@
-# -*- coding: utf-8 -*-
 """Configuration Module
 
 Module that contains the Flask Configuration Class
 """
 import os
+
 from dotenv import load_dotenv
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.flaskenv'))
 
 
-class Config(object):
+class Config:
     """Configuration class
 
     This class contains all of the global configuration variables needed for
@@ -34,7 +35,7 @@ class Config(object):
     # @todo: Remove shawntbrown@gmail.com - This should be set to a real email address for production.
     MAIL_DEFAULT_SENDER = '"CONP-PCNO Portal" <shawntbrown@gmail.com>'
     # @todo: Verify and document this email address: conp-test@mailinator.com
-    ADMINS = [os.environ.get('ADMIN_EMAIL')] or ['conp-test@mailinator.com']
+    ADMINS = (os.environ.get('ADMIN_EMAIL') or 'conp-test@mailinator.com',)
     LOG_TO_STDOUT = True
     TEMPLATES_AUTO_RELOAD = True
 
