@@ -18,6 +18,15 @@ from app.threads import UpdatePipelineData
 
 def register(app):
 
+    @app.cli.command('print_config')
+    def print_config():
+        """
+        Prints the flask config environment for debugging purposes.
+        """
+        # print(dict(app.config))
+        for key, value in app.config.items():
+            print(f"{key}: {value}")
+
     @app.cli.command('seed_aff_types_db')
     def seed_aff_types_db():
         """
