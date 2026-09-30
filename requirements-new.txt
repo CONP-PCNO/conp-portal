@@ -68,7 +68,7 @@ monotonic==1.5
 more-itertools==7.2.0
 msgpack==1.2.1
 nexus-sdk==0.3.2
-oauthlib==3.1.0
+oauthlib==4.0.0
 packaging==19.0
 passlib==1.7.1
 pathlib2==2.3.5
