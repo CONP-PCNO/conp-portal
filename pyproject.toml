@@ -46,3 +46,30 @@ dev = [
     "pytest==8.3.5",
     "ruff>=0.16.8",
 ]
+
+[tool.ruff]
+# excluded directories
+extend-exclude = [
+    "test/",
+    "tests/",
+    "docs/"
+]
+[tool.ruff.lint]
+# Enable Pyflakes (F), pycodestyle (E, W), mccabe complexity (C90),
+# and popular Flake8 plugins natively supported by Ruff:
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # Pyflakes
+    "C90", # mccabe (complexity)
+    "I",   # isort (if you used flake8-isort)
+    "N",   # pep8-naming (if you used flake8-naming)
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade (modernizing code)
+    "RUF", # Ruff-specific rules
+]
+
+# Ignore specific rules if they conflict with your formatter (like Ruff format or Black)
+ignore = [
+    "E501", # Line length violations (let the formatter handle this)
+]
