@@ -1,4 +1,3 @@
-from typing import List, Optional
 
 from app.dats import DATSObject
 
@@ -11,23 +10,23 @@ class DATSExperiment(DATSObject):
         return []
 
     @property
-    def function_assessed(self) -> Optional[str]:
+    def function_assessed(self) -> str | None:
         try:
             return self.find_extra_property("experimentFunctionAssessed").pop()
         except KeyError:
             return None
 
     @property
-    def languages(self) -> Optional[List[str]]:
+    def languages(self) -> list[str] | None:
         return self.find_extra_property("experimentLanguages")
 
     @property
-    def validation(self) -> Optional[List[str]]:
+    def validation(self) -> list[str] | None:
         """Assuming one type of validation for now."""
         return self.find_extra_property("experimentValidation")
 
     @property
-    def accessibility(self) -> Optional[List[str]]:
+    def accessibility(self) -> list[str] | None:
         return self.find_extra_property("experimentAccessibility")
 
     @property
@@ -35,13 +34,13 @@ class DATSExperiment(DATSObject):
         return self.find_extra_property("experimentModalities")
 
     @property
-    def device_requirements(self) -> Optional[List[str]]:
+    def device_requirements(self) -> list[str] | None:
         return self.find_extra_property("experimentRequiredDevices")
 
     @property
-    def software_requirements(self) -> Optional[List[str]]:
+    def software_requirements(self) -> list[str] | None:
         return self.find_extra_property("experimentRequiredSoftware")
 
     @property
-    def other_requirements(self) -> Optional[List[str]]:
+    def other_requirements(self) -> list[str] | None:
         return self.find_extra_property("experimentRequiredOther")

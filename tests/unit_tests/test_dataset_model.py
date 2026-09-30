@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
-import pytest
+from datetime import datetime
+
 from app.models import Dataset
-from datetime import datetime, timedelta
 
 
 def test_new_dataset(new_dataset):

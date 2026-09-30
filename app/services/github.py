@@ -1,4 +1,5 @@
 import os
+
 import requests
 
 
@@ -87,7 +88,6 @@ def get_tutorial_content():
         print("ERROR: Something went wrong retrieving the Github markdown", err)
 
     return content
-
 
 
 def get_data_governance_content():

@@ -8,6 +8,7 @@ GENTYPES = ['r', 's', 'z']
 DIGTYPES = ['d', 'e']
 SHORT = ''
 VERSION = 'pynoid 0.1'
+NOLIMIT = float('inf')
 
 
 def mint(template='zek', n=None, scheme=None, naa=None):
@@ -47,12 +48,9 @@ nn
         mask = template
         prefix = ''
 
-    try:
-        __validateMask(mask)
-    except:
-        raise
+    __validateMask(mask)
 
-    if n == None:
+    if n is None:
         if mask[0] in (GENTYPES):
             mask = mask[1:]
         # If we hit this point, this is a random (and therefore, short-term) identifier.
@@ -133,13 +131,11 @@ def __validateMask(mask):
     masks = ['e', 'd']
     checkchar = ['k']
 
-    if not (mask[0] in GENTYPES or mask[0] in masks):
-        raise InvalidTemplateError("Template is invalid.")
-    elif not (mask[-1] in checkchar or mask[-1] in masks):
+    if not (mask[0] in GENTYPES or mask[0] in masks) or not (mask[-1] in checkchar or mask[-1] in masks):
         raise InvalidTemplateError("Template is invalid.")
     else:
         for maskchar in mask[1:-1]:
-            if not (maskchar in masks):
+            if maskchar not in masks:
                 raise InvalidTemplateError("Template is invalid.")
 
     return True
@@ -169,7 +165,7 @@ def __checkdigit(s):
     def ordinal(x):
         try:
             return XDIGIT.index(x)
-        except:
+        except ValueError:
             return 0
 
     return XDIGIT[sum([x * (i + 1) for i, x in enumerate(map(ordinal, s))]) % len(XDIGIT)]

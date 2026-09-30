@@ -1,7 +1,6 @@
 import fnmatch
 import json
 import os
-from typing import Optional
 
 
 class DATSObject:
@@ -10,15 +9,15 @@ class DATSObject:
           store the datsetopath and tries to find a DATS.json file
         """
         if not os.path.isdir(datasetpath):
-            raise RuntimeError('No dataset found at {}'.format(datasetpath))
+            raise RuntimeError(f'No dataset found at {datasetpath}')
 
         self.datasetpath = datasetpath
 
-        with open(self.DatsFilepath, 'r') as f:
+        with open(self.DatsFilepath) as f:
             try:
                 self.descriptor = json.load(f)
             except Exception:
-                raise RuntimeError('Can`t parse {}'.format(self.DatsFilepath))
+                raise RuntimeError(f'Can`t parse {self.DatsFilepath}')
 
     @property
     def name(self):
@@ -27,7 +26,7 @@ class DATSObject:
     @property
     def DatsFilepath(self):
         dirs = os.listdir(self.datasetpath)
-        descriptor: Optional[str] = None
+        descriptor: str | None = None
         for file in dirs:
             if fnmatch.fnmatch(file.lower(), 'dats.json'):
                 descriptor = os.path.join(self.datasetpath, file)
@@ -59,7 +58,7 @@ class DATSObject:
     @property
     def ReadmeFilepath(self):
         dirs = os.listdir(self.datasetpath)
-        readme: Optional[str] = None
+        readme: str | None = None
         for file in dirs:
             if fnmatch.fnmatch(file.lower(), 'readme.md'):
                 readme = os.path.join(self.datasetpath, file)
@@ -74,7 +73,7 @@ class DATSObject:
     def creators(self):
         creators = []
         c = self.descriptor.get('creators', '')
-        if type(c) == list:
+        if isinstance(c, list):
             for x in c:
                 print(x)
                 if x.get('name', ''):
@@ -99,7 +98,7 @@ class DATSObject:
     def principalInvestigators(self):
         principalInvestigators = []
         creators = self.descriptor.get('creators', '')
-        if type(creators) == list:
+        if isinstance(creators, list):
             for x in creators:
                 if 'roles' in x:
                     for role in x['roles']:
@@ -122,7 +121,7 @@ class DATSObject:
     def primaryPublications(self):
         primaryPublications = []
         publications = self.descriptor.get('primaryPublications', {})
-        if type(publications) == list:
+        if isinstance(publications, list):
             for publi in publications:
                 title = publi.get('title', '')
                 if not title.endswith('.'):
@@ -172,7 +171,7 @@ class DATSObject:
         if dists is None:
             return None
 
-        if not type(dists) == list:
+        if not isinstance(dists, list):
             if dists.get('@type', '') == 'DatasetDistribution':
                 dist = dists
             else:
@@ -182,12 +181,12 @@ class DATSObject:
 
         authorizations = dist.get('access', {}).get('authorizations', '')
 
-        if type(authorizations) == list and len(authorizations) > 0:
+        if isinstance(authorizations, list) and len(authorizations) > 0:
             auth = authorizations.pop().get('value', None)
         else:
             auth = None
 
-        return "{}".format(auth)
+        return f"{auth}"
 
     @property
     def origin(self):
@@ -251,11 +250,11 @@ class DATSObject:
 
         return formats
 
-    @ property
+    @property
     def licenses(self):
         licenses = []
         lics = self.descriptor.get('licenses', None)
-        if type(lics) == list:
+        if isinstance(lics, list):
             for x in lics:
                 licenses.append(x.get('name'))
         else:
@@ -270,7 +269,7 @@ class DATSObject:
 
         return licenses
 
-    @ property
+    @property
     def modalities(self):
         modalities = []
         for t in self.descriptor.get('types', []):
@@ -281,7 +280,7 @@ class DATSObject:
 
         return modalities if len(modalities) > 0 else None
 
-    @ property
+    @property
     def keywords(self):
         keywords = []
         for t in self.descriptor.get('keywords', []):
@@ -291,13 +290,13 @@ class DATSObject:
 
         return keywords if len(keywords) > 0 else None
 
-    @ property
+    @property
     def size(self):
         dists = self.descriptor.get('distributions', None)
         if dists is None:
             return None
 
-        if not type(dists) == list:
+        if not isinstance(dists, list):
             if dists.get('@type', '') == 'DatasetDistribution':
                 dist = dists
             else:
@@ -321,15 +320,15 @@ class DATSObject:
         size = round(size, 1)
         unit = units[units.index(unit) + count]
 
-        return "{} {}".format(size, unit)
+        return f"{size} {unit}"
 
-    @ property
+    @property
     def sources(self):
         dists = self.descriptor.get('distributions', None)
         if dists is None:
             return None
 
-        if not type(dists) == list:
+        if not isinstance(dists, list):
             if dists.get('@type', '') == 'DatasetDistribution':
                 dist = dists
             else:
@@ -339,9 +338,9 @@ class DATSObject:
 
         sources = dist.get('access', {}).get('landingPage', '')
 
-        return "{}".format(sources)
+        return f"{sources}"
 
-    @ property
+    @property
     def dimensions(self):
         dimensions = []
         for t in self.descriptor.get('dimensions', []):
@@ -352,7 +351,7 @@ class DATSObject:
 
         return dimensions if len(dimensions) > 0 else None
 
-    @ property
+    @property
     def isAbout(self):
         isAbout = []
         for t in self.descriptor.get('isAbout', []):
@@ -362,7 +361,7 @@ class DATSObject:
 
         return isAbout if len(isAbout) > 0 else None
 
-    @ property
+    @property
     def spatialCoverage(self):
         spatialCoverage = []
         for t in self.descriptor.get('spatialCoverage', []):
@@ -372,19 +371,19 @@ class DATSObject:
 
         return spatialCoverage if len(spatialCoverage) > 0 else None
 
-    @ property
+    @property
     def acknowledges(self):
         acknowledges = []
         for t in self.descriptor.get('acknowledges', []):
             funders = t.get('funders', None)
-            if funders is not None and type(funders) == list:
+            if funders is not None and isinstance(funders, list):
                 for f in funders:
                     if f.get('name', None) is not None:
                         acknowledges.append(f.get('name', None))
 
         return acknowledges if len(acknowledges) > 0 else None
 
-    @ property
+    @property
     def producedBy(self):
         producedBy = []
         field_data = self.descriptor.get('producedBy', None)
@@ -399,7 +398,7 @@ class DATSObject:
 
         return producedBy if len(producedBy) > 0 else None
 
-    @ property
+    @property
     def subjectCount(self):
         count = 0
         extraprops = self.descriptor.get('extraProperties', {})
@@ -413,7 +412,7 @@ class DATSObject:
 
         return count if count > 0 else None
 
-    @ property
+    @property
     def derivedFrom(self):
         derivedFrom = []
         extraprops = self.descriptor.get('extraProperties', {})
@@ -424,7 +423,7 @@ class DATSObject:
 
         return derivedFrom if len(derivedFrom) > 0 else None
 
-    @ property
+    @property
     def parentDatasetId(self):
         parentDatasetId = []
         extraprops = self.descriptor.get('extraProperties', {})
@@ -436,7 +435,7 @@ class DATSObject:
 
         return parentDatasetId if len(parentDatasetId) > 0 else None
 
-    @ property
+    @property
     def version(self):
         return self.descriptor.get('version', None)
 

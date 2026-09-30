@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """ Routes Module
 
     Currently this module contains all of the routes in the analytics blueprint
@@ -6,14 +5,21 @@
 
 import json
 import re
-
 from datetime import datetime
+
 from flask import render_template, request
 from flask_login import current_user
-from app.analytics import analytics_bp
-from app.pipelines import pipelines
 
-from app.models import MatomoDailyVisitsSummary, MatomoDailyGetDatasetPageViewsSummary, MatomoDailyGetSiteSearchKeywords, MatomoDailyGetPageUrlsSummary, Dataset, MatomoDailyGetPortalDownloadSummary
+from app.analytics import analytics_bp
+from app.models import (
+    Dataset,
+    MatomoDailyGetDatasetPageViewsSummary,
+    MatomoDailyGetPageUrlsSummary,
+    MatomoDailyGetPortalDownloadSummary,
+    MatomoDailyGetSiteSearchKeywords,
+    MatomoDailyVisitsSummary,
+)
+from app.pipelines import pipelines
 
 
 @analytics_bp.route('/analytics')

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """ Routes Module
 
     Currently this module contains all of the routes in search blueprint
@@ -8,24 +7,28 @@ import os
 import re
 
 from flask import (
+    current_app,
     render_template,
     request,
-    current_app,
     send_from_directory,
     url_for,
 )
 from flask_login import current_user
 
-from app.models import ArkId
-from app.models import Dataset, DatasetAncestry, Experiment
+from app.analytics.routes import datasets_downloads, datasets_views
+from app.models import ArkId, Dataset, DatasetAncestry, Experiment
 from app.search import search_bp
-from app.search.models import DATSDataset, DatasetCache
+from app.search.models import DatasetCache, DATSDataset
 from app.search.queries import (
-    example_query_1, example_query_2, example_query_3, example_query_4, example_query_5
+    example_query_1,
+    example_query_2,
+    example_query_3,
+    example_query_4,
+    example_query_5,
 )
-from app.analytics.routes import datasets_views, datasets_downloads
 from app.services import github
 from config import Config
+
 
 @search_bp.route('/search')
 def search():
@@ -145,9 +148,8 @@ def _ensure_search_index():
         # Index exists but has no documents. Check if we have datasets in
         # the database and populate the index from them. This handles the
         # case where the app was started before CLI setup commands ran.
-        from app import db
-        from app.models import Dataset as DBDataset
         from app.cli import _update_index
+        from app.models import Dataset as DBDataset
 
         if DBDataset.query.count() > 0:
             _update_index(current_app, DBDataset, False)
@@ -168,14 +170,12 @@ def dataset_search_suggestions():
         Retuns:
             JSON containing the matching keywords
     """
-    from whoosh.qparser import MultifieldParser
-    from operator import itemgetter
 
     search_term = request.args.get('search').lower()
     if not search_term:
         return json.dumps([])
     else:
-        with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-terms-mapping.json"), "r") as f:
+        with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-terms-mapping.json")) as f:
             dataset_terms_mapping = json.load(f)
             f.close()
 
@@ -196,7 +196,7 @@ def dataset_search_suggestions():
                     datasets.add(s)
 
             # Adding mapping terms
-            for t in dataset_terms_mapping.keys():
+            for t in dataset_terms_mapping:
                 if search_term in t:
                     suggestions.add(t)
 
@@ -227,7 +227,7 @@ def _evidence_publication_types():
                 os.getcwd(),
                 "app/static/datasets/evidence-publication-types.json")) as epf:
             return {k.lower(): v for k, v in json.load(epf).items()}
-    except (IOError, ValueError):
+    except (OSError, ValueError):
         return {}
 
 
@@ -243,7 +243,11 @@ def dataset_search():
         Retuns:
             JSON containing the matching datasets
     """
-    from whoosh.qparser import MultifieldParser, QueryParser
+    import logging
+
+    from whoosh.qparser import QueryParser, QueryParserError
+
+    logger = logging.getLogger(__name__)
 
     if current_user.is_authenticated:
         authorized = True
@@ -256,7 +260,7 @@ def dataset_search():
             dataset_id=request.args.get('id')
         ).all()
     else:
-        with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-terms-mapping.json"), "r") as f:
+        with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-terms-mapping.json")) as f:
             dataset_terms_mapping = json.load(f)
             f.close()
 
@@ -272,11 +276,11 @@ def dataset_search():
 
                 if ' ' in search_term:
                     s = '"' + search_term + '"'
-                else :
+                else:
                     # Search prefix
                     s = search_term + '*'
 
-                for t in dataset_terms_mapping.keys():
+                for t in dataset_terms_mapping:
                     if search_term in t:
                         s = s + ' OR "' + dataset_terms_mapping[t] + '"'
 
@@ -286,9 +290,8 @@ def dataset_search():
                         parser = QueryParser(field, ix.schema)
                         myquery = parser.parse(s)
                         _datasets.extend(searcher.search(myquery, limit=None))
-                    except Exception as e:
-                        print(e)
-                        print('Cannot perform term search ' + s + ' in field ' + field)
+                    except QueryParserError as e:
+                        logger.warning("Cannot perform term search %s in field %s: %s", s, field, e)
 
                 ds = set()
                 ds_add = ds.add
@@ -320,12 +323,12 @@ def dataset_search():
 
                 try:
                     zipped = DatasetCache(current_app).getZipLocation(d['datasetPath'])
-                except IOError:
+                except OSError:
                     zipped = None
 
                 show_download_button = zipped is not None
                 # @todo: /data/ Should not be hard-coded. This is a temporary solution to get the zip location. The zip location should be stored in the database and retrieved from there.
-                zip_location = '/data/{0}'.format(os.path.basename(zipped or ''))
+                zip_location = '/data/{}'.format(os.path.basename(zipped or ''))
 
                 dataset = {
                     "authorized": authorized,
@@ -379,7 +382,7 @@ def dataset_search():
             continue
         for m in e['modalities']:
             modalities.append(m.lower())
-    modalities = sorted(list(set(modalities)))
+    modalities = sorted(set(modalities))
 
     formats = []
     # by default, formats should be represented in upper case
@@ -398,7 +401,7 @@ def dataset_search():
                 formats.append('RNA-Seq')
             else:
                 formats.append(m.upper())
-    formats = sorted(list(set(formats)), key=str.casefold)
+    formats = sorted(set(formats), key=str.casefold)
 
     authorizations = ['Yes', 'No']
 
@@ -658,12 +661,13 @@ def dataset_info():
     else:
         authorized = False
 
-    with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-cbrain-ids.json"), "r") as f:
+    # @todo:ant: add to config
+    with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-cbrain-ids.json")) as f:
         cbrain_dataset_ids = json.load(f)
         f.close()
 
     datasetTitle = d.name.replace("'", "")
-    if datasetTitle in cbrain_dataset_ids.keys():
+    if datasetTitle in cbrain_dataset_ids:
         dataset_cbrain_id = cbrain_dataset_ids[datasetTitle]
     else:
         dataset_cbrain_id = ""
@@ -672,12 +676,12 @@ def dataset_info():
 
     try:
         zipped = DatasetCache(current_app).getZipLocation(d.fspath)
-    except IOError:
+    except OSError:
         zipped = None
 
     show_download_button = zipped is not None
     # @todo: This is a temporary solution to get the zip location. The zip location should be stored in the database and retrieved from there.
-    zip_location = '/data/{0}'.format(os.path.basename(zipped or ''))
+    zip_location = '/data/{}'.format(os.path.basename(zipped or ''))
 
     dataset = {
         "authorized": authorized,
@@ -687,7 +691,7 @@ def dataset_info():
         "title": d.name.replace("'", "\'"),
         "remoteUrl": d.remoteUrl,
         "isPrivate": d.is_private,
-        "thumbnailURL": "/dataset_logo?id={}".format(d.dataset_id),
+        "thumbnailURL": f"/dataset_logo?id={d.dataset_id}",
         "imagePath": "static/img/",
         "downloadPath": d.dataset_id,
         "URL": 'raw_data_url',
@@ -786,6 +790,7 @@ def download_metadata():
         mimetype='application/json'
     )
 
+
 @search_bp.route('/download_metadata_experiment', methods=['GET'])
 def download_metadata_experiment():
     """ Download Metadata Route for Experiments
@@ -831,6 +836,7 @@ def download_metadata_experiment():
         attachment_filename=safe_filename,
         mimetype='application/json'
     )
+
 
 @search_bp.route('/sparql')
 def sparql():
@@ -898,14 +904,14 @@ def get_dataset_metadata_information(dataset):
         "remoteUrl": dataset.remoteUrl,
         "registrationPage": datsdataset.registrationPage,
         "downloadOptions": datsdataset.downloadOptions,
-        "registrationEmail": True if datsdataset.registrationPage and re.match(r"[^@]+@[^@]+\.[^@]+", datsdataset.registrationPage) else False
+        "registrationEmail": bool(datsdataset.registrationPage and re.match(r"[^@]+@[^@]+\.[^@]+", datsdataset.registrationPage))
     }
 
 
 def parse_field(field):
     try:
         return json.loads(field)
-    except:
+    except (json.JSONDecodeError, TypeError):
         return field
 
 
@@ -919,12 +925,10 @@ def get_dataset_readme(dataset_id):
 
     readme_filepath = datsdataset.ReadmeFilepath
 
-    f = open(readme_filepath, 'r')
-    if f.mode != 'r':
+    try:
+        with open(readme_filepath) as f:
+            readme = f.read()
+            content = github.render_content(readme)
+            return content
+    except FileNotFoundError:
         return 'Readme Not Found', 404
-
-    readme = f.read()
-
-    content = github.render_content(readme)
-
-    return content

@@ -1,17 +1,15 @@
-# -*- coding: utf-8 -*-
 """ Routes Module
 
     Currently this module contains all of the routes for the main blueprint
 """
-import os
 import json
-from urllib import request
+import os
 from urllib.parse import urlparse
 
-from flask import render_template, redirect, abort
-from flask import current_app
+from flask import abort, current_app, redirect, render_template
 from flask import request as flask_request
 from flask_login import current_user
+
 from app.main import main_bp
 from app.models import Dataset
 from app.services import github
@@ -147,10 +145,10 @@ def about():
     all_detailed_desc_path = os.path.join(
         cache_dir, "detailed_all_descriptors.json")
 
-    with open(all_desc_path, "r") as f:
+    with open(all_desc_path) as f:
         all_descriptors = json.load(f)
 
-    with open(all_detailed_desc_path, "r") as f:
+    with open(all_detailed_desc_path) as f:
         detailed_all_descriptors = json.load(f)
 
     elements = [
@@ -218,7 +216,6 @@ def dats_editor():
 @main_bp.route('/ark:/<url_naan>/<url_ark_id>')
 def redirect_ark_ids(url_naan, url_ark_id):
 
-    from flask import current_app
     from app import db
     from app.models import ArkId
 

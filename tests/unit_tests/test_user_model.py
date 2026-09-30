@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-import pytest
-from app.models import User, Role,UsersRoles, AffiliationType
-from datetime import datetime, timedelta
+from app.models import AffiliationType, User
+
 
 def test_new_user(session, new_user, new_affiliation_type, app):
     """

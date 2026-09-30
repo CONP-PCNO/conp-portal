@@ -1,6 +1,6 @@
-from collections import UserDict
 
 from ..models import Experiment
+
 
 class SortKey:
     options = {

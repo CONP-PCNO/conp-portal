@@ -1,14 +1,15 @@
-# -*- coding: utf-8 -*-
 """ Routes Module
 
     Currently this module contains all of the routes for the execution_records blueprint
 """
 import json
 import os
+import zipfile
+
 from flask import render_template, request
 from flask_login import current_user
+
 from app.execution_records import execution_records_bp
-import zipfile
 
 
 @execution_records_bp.route('/execution-records')
@@ -99,8 +100,7 @@ def execution_records_search():
         if len(elements_on_page) > max_per_page:
             start_index = (page - 1) * max_per_page
             end_index = start_index + max_per_page
-            if end_index > len(elements_on_page):
-                end_index = len(elements_on_page)
+            end_index = min(end_index, len(elements_on_page))
             elements_on_page = elements_on_page[start_index:end_index]
 
     # construct payload

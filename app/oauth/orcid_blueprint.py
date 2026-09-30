@@ -1,21 +1,21 @@
-# -*- coding: utf-8 -*-
 """ORCID Blueprint Module
 
 Module that contains the full blueprint for ORCID OAuth
 
 """
-from flask import flash, redirect, session, url_for, current_app
-from markupsafe import Markup
-from flask_user import current_user
-from flask_login import login_user
-from app.oauth.orcid_flask_dance import make_orcid_blueprint
-from flask_dance.consumer import oauth_authorized, oauth_error
-from flask_dance.consumer.storage.sqla import SQLAlchemyStorage
-from sqlalchemy.orm.exc import NoResultFound
-from app.models import db, User, OAuth
 from datetime import datetime
 from pprint import pprint
 
+from flask import current_app, flash, redirect, session, url_for
+from flask_dance.consumer import oauth_authorized, oauth_error
+from flask_dance.consumer.storage.sqla import SQLAlchemyStorage
+from flask_login import login_user
+from flask_user import current_user
+from markupsafe import Markup
+from sqlalchemy.orm.exc import NoResultFound
+
+from app.models import OAuth, User, db
+from app.oauth.orcid_flask_dance import make_orcid_blueprint
 
 orcid_blueprint = make_orcid_blueprint(
     storage=SQLAlchemyStorage(OAuth, db.session, user=current_user)
@@ -50,7 +50,7 @@ def orcid_logged_in(orcid_blueprint, token):
     # to be extracted from the token prior to making any requests
     orcid_user_id = token['orcid']
 
-    response = orcid_blueprint.session.get("{}/record".format(orcid_user_id))
+    response = orcid_blueprint.session.get(f"{orcid_user_id}/record")
 
     if not response.ok:
         flash("Failed to get ORCID User Data", category="error")
@@ -128,7 +128,7 @@ def orcid_logged_in(orcid_blueprint, token):
                     flash("Please update your Profile affiliation and affiliation type")
                     return current_app.user_manager._do_login_user(user, url_for('profile.current_user_profile_page'))
                 except Exception as e:
-                    flash("There was an error creating a user from the ORCID credentials: {}".format(e))
+                    flash(f"There was an error creating a user from the ORCID credentials: {e}")
                     return redirect(url_for("user.login"))
     else:
         print("!!! Authenticated User")
@@ -169,8 +169,8 @@ def orcid_error(orcid_blueprint, **kwargs):
     Result:
       Flashes error messages if they exist
     """
-    msg = "OAuth error from {name}! ".format(name=orcid_blueprint.name)
+    msg = f"OAuth error from {orcid_blueprint.name}! "
     for k, v in kwargs.items():
-        msg += "{} = {} ".format(k, str(v))
-    print("msg= {}".format(msg))
+        msg += f"{k} = {v!s} "
+    print(f"msg= {msg}")
     flash(msg, category="error")

@@ -27,7 +27,7 @@ SELECT DISTINCT ?data_portal ?title ?about_name WHERE {
   sdo:name ?title;
   nexus:deprecated false;
   conp:conp_portal_website ?data_portal;
-  sdo:about/sdo:name ?about_name.         
+  sdo:about/sdo:name ?about_name.
 FILTER regex(lcase(str(?about_name)), "alzheimer", "i")
 }
 """
@@ -70,7 +70,7 @@ PREFIX sdo: <https://schema.org/>
 PREFIX nexus: <https://bluebrain.github.io/nexus/vocabulary/>
 
 SELECT DISTINCT ?citation_name ?doi
-(GROUP_CONCAT(DISTINCT ?title; separator=" | ") as ?datasets) 
+(GROUP_CONCAT(DISTINCT ?title; separator=" | ") as ?datasets)
 (COUNT(DISTINCT ?title) as ?citation_count) WHERE {
 ?dataset a sdo:Dataset;
   sdo:name ?title;

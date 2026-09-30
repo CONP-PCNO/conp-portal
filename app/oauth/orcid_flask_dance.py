@@ -1,15 +1,12 @@
-# -*- coding: utf-8 -*-
 """ORCHID MODILE
 
 Module that contains the code necessary
 to create a orchid blueprint for Flask-Dance
 
 """
-from __future__ import unicode_literals
 
 import os
 import os.path
-from functools import partial
 
 from flask import g
 from flask.globals import LocalProxy
@@ -22,7 +19,7 @@ class JsonOath2Session(OAuth2Session):
         """
           custom json session to ensure we are getting back json from orchid
         """
-        super(JsonOath2Session, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.headers["Accept"] = "application/orcid+json"
 
 

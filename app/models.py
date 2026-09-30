@@ -1,24 +1,22 @@
-# -*- coding: utf-8 -*-
 """Models Module
 
 Module that contains the Data Models
 
 """
-from app import db
-from flask_user import UserMixin
-from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
-from sqlalchemy.orm.collections import attribute_mapped_collection
 from datetime import datetime, timedelta
+
+from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
+from flask_user import UserMixin
 from pytz import timezone
+from sqlalchemy.orm.collections import attribute_mapped_collection
+
+from app import db
 from app.oauth import OAuth_pretty
-from random import randrange
-from zipfile import ZipFile
-from contextlib import closing
-import os
 
 eastern = timezone('US/Eastern')
 
-class RoleMixin(object):
+
+class RoleMixin:
     """
     RoleMixin provides a method to set the default roles of a person
     at registration time.
@@ -136,7 +134,7 @@ class User(db.Model, UserMixin, RoleMixin):
             return False
 
     def __repr__(self):
-        return '<User {}: {}>'.format(self.email, self.full_name)
+        return f'<User {self.email}: {self.full_name}>'
 
 
 class AffiliationType(db.Model):
@@ -215,7 +213,7 @@ class Dataset(db.Model):
     is_private = db.Column(db.Boolean, index=True)
 
     def __repr__(self):
-        return '<Dataset {}>'.format(self.name)
+        return f'<Dataset {self.name}>'
 
 
 class DatasetAncestry(db.Model):
@@ -234,7 +232,7 @@ class DatasetAncestry(db.Model):
         'parent_dataset_id', 'child_dataset_id', name='uix_1'),)
 
     def __repr__(self):
-        return '<DatasetAncestry {}>'.format(self.id)
+        return f'<DatasetAncestry {self.id}>'
 
 
 class Pipeline(db.Model):
@@ -255,7 +253,7 @@ class Pipeline(db.Model):
                              default=datetime.now(tz=eastern))
 
     def __repr__(self):
-        return '<Pipeline {}>'.format(self.name)
+        return f'<Pipeline {self.name}>'
 
 
 class MatomoDailyVisitsSummary(db.Model):
@@ -289,7 +287,7 @@ class MatomoDailyVisitsSummary(db.Model):
     sum_visit_length = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<MatomoDailyVisitsSummary {}>'.format(self.id)
+        return f'<MatomoDailyVisitsSummary {self.id}>'
 
 
 class MatomoDailyGetPageUrlsSummary(db.Model):
@@ -322,7 +320,7 @@ class MatomoDailyGetPageUrlsSummary(db.Model):
     avg_time_on_page = db.Column(db.Float)
 
     def __repr__(self):
-        return '<MatomoDailyGetPageUrlsSummary {}>'.format(self.id)
+        return f'<MatomoDailyGetPageUrlsSummary {self.id}>'
 
 
 class MatomoDailyGetDatasetPageViewsSummary(db.Model):
@@ -354,7 +352,7 @@ class MatomoDailyGetDatasetPageViewsSummary(db.Model):
     avg_time_on_page = db.Column(db.Float)
 
     def __repr__(self):
-        return '<MatomoDailyGetDatasetPageViewsSummary {}>'.format(self.id)
+        return f'<MatomoDailyGetDatasetPageViewsSummary {self.id}>'
 
 
 class MatomoDailyGetPortalDownloadSummary(db.Model):
@@ -384,7 +382,7 @@ class MatomoDailyGetPortalDownloadSummary(db.Model):
     segment = db.Column(db.String(256))
 
     def __repr__(self):
-        return '<MatomoDailyGetPortalDownloadSummary {}>'.format(self.id)
+        return f'<MatomoDailyGetPortalDownloadSummary {self.id}>'
 
 
 class MatomoDailyGetSiteSearchKeywords(db.Model):
@@ -420,7 +418,7 @@ class MatomoDailyGetSiteSearchKeywords(db.Model):
     sum_time_spent = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<MatomoDailyGetSiteSearchKeywords {}>'.format(self.id)
+        return f'<MatomoDailyGetSiteSearchKeywords {self.id}>'
 
 
 class ArkId(db.Model):
@@ -434,7 +432,7 @@ class ArkId(db.Model):
     experiment_id = db.Column(db.String(256))
 
     def __repr__(self):
-        return '<ArkId {}>'.format(self.id)
+        return f'<ArkId {self.id}>'
 
 
 class GithubDailyClonesCount(db.Model):
@@ -459,7 +457,7 @@ class GithubDailyClonesCount(db.Model):
     unique_count = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<GithubDailyClonesCount {}>'.format(self.id)
+        return f'<GithubDailyClonesCount {self.id}>'
 
 
 class GithubDailyViewsCount(db.Model):
@@ -484,7 +482,8 @@ class GithubDailyViewsCount(db.Model):
     unique_count = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<GithubDailyViewsCount {}>'.format(self.id)
+        return f'<GithubDailyViewsCount {self.id}>'
+
 
 class Experiment(db.Model):
     __tablename__ = 'experiments'
@@ -500,10 +499,10 @@ class Experiment(db.Model):
     date_updated = db.Column(db.DateTime, default=datetime.now())
     date_added_to_portal = db.Column(db.DateTime, default=datetime.now())
     is_private = db.Column(db.Boolean, index=True)
-    #ALEX count downloads
+    # ALEX count downloads
     downloads = db.Column(db.Integer, default=0)
-    #ALEX count views
+    # ALEX count views
     views = db.Column(db.Integer, default=0)
 
     def __repr__(self):
-        return '<Dataset {}>'.format(self.name)
+        return f'<Dataset {self.name}>'
