@@ -19,7 +19,7 @@ class Config:
     """
 
     FLASK_ENV = os.environ.get('FLASK_ENV')
-    SECRET_KEY = os.environ.get('SECRET_KEY') or "conp-secret-key-for-here"
+    SECRET_KEY = os.environ.get('SECRET_KEY') or "conp-secret-key-for-here-ABC0321XYZHHHAAASSSHHH"
     DATA_PATH = os.environ.get('DATA_PATH') or os.path.join(
         basedir, "data")
     # Dataset cache
