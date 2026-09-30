@@ -3,15 +3,21 @@
 ignore = E501,W503
 exclude =
     __pycache__/
+    .git/
     .obsidian/
+    .ruff_cache/
     venv/
     .venv/
     .vscode/
     index/
+    kb/ # knowledge-base
     logs/
     test/
     tests/
     migrations/
+    node_modules/
+    app/static/v2/node_modules/
+    app/static/lib/conp-react/node_modules/
     app/static/data/
     data/
     app.db
