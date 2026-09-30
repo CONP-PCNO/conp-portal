@@ -8,6 +8,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    exclude-paths:
+      - "requirements-v1.0.0.txt"
+      - "requirements-v1.0.1.txt"
     labels:
       - "P: Dependencies"
       - "P: Python"
