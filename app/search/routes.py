@@ -89,6 +89,7 @@ def get_dataset_logo():
         Returns:
             path to the png file for the logo
     """
+    # @todo:ant: add to config
     logopath = "app/static/img/default_dataset.jpeg"
 
     dataset_id = request.args.get('id', '')
@@ -175,6 +176,7 @@ def dataset_search_suggestions():
     if not search_term:
         return json.dumps([])
     else:
+        # @todo:ant: add to config
         with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-terms-mapping.json")) as f:
             dataset_terms_mapping = json.load(f)
             f.close()
@@ -225,6 +227,7 @@ def _evidence_publication_types():
     try:
         with open(os.path.join(
                 os.getcwd(),
+                # @todo:ant: add to config
                 "app/static/datasets/evidence-publication-types.json")) as epf:
             return {k.lower(): v for k, v in json.load(epf).items()}
     except (OSError, ValueError):
@@ -260,6 +263,7 @@ def dataset_search():
             dataset_id=request.args.get('id')
         ).all()
     else:
+        # @todo:ant: add to config
         with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-terms-mapping.json")) as f:
             dataset_terms_mapping = json.load(f)
             f.close()
@@ -327,6 +331,7 @@ def dataset_search():
                     zipped = None
 
                 show_download_button = zipped is not None
+                # @todo:ant: add to config
                 # @todo: /data/ Should not be hard-coded. This is a temporary solution to get the zip location. The zip location should be stored in the database and retrieved from there.
                 zip_location = '/data/{}'.format(os.path.basename(zipped or ''))
 
@@ -680,6 +685,7 @@ def dataset_info():
         zipped = None
 
     show_download_button = zipped is not None
+    # @todo:ant: add to config
     # @todo: This is a temporary solution to get the zip location. The zip location should be stored in the database and retrieved from there.
     zip_location = '/data/{}'.format(os.path.basename(zipped or ''))
 
