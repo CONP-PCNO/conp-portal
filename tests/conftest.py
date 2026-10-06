@@ -24,7 +24,7 @@ from config import TestingConfig
 @pytest.fixture(scope='session')
 def app(request):
     """
-    This is creates the mock app for testing, it uses the
+    This creates the mock app for testing, it uses the
     TestingConfig in Config.py
     """
     app = create_app(config_settings=TestingConfig)
@@ -54,7 +54,7 @@ def app_context(app):
 @pytest.fixture(scope='session')
 def db(app, request):
     """
-    This is creates the test db
+    This creates the test db
     """
     test_db_file = app.config['SQLALCHEMY_DATABASE_URI'].split(":///")[1]
 
