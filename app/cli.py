@@ -168,6 +168,8 @@ def _seed_admin_acct_db(app):
 
         db.session.add(user)
         db.session.commit()
+        print("Created Admin User!")
+
 
 def _seed_test_datasets_db(app):
     """
@@ -206,6 +208,8 @@ def _update_datalad_objects(
 
     from app.models import ArkId
     from app.models import DatasetAncestry as DBDatasetAncestry
+
+    print("Updating datalad objects")
 
     datasetsdir = Path(app.config['DATA_PATH']) / repo_name
     datasetsdir.mkdir(parents=True, exist_ok=True)
