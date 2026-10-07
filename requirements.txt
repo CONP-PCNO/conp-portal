@@ -24,7 +24,7 @@ datalad==1.2.0 # prod
 ## programmatic access to commits, branches, and files.
 ## https://github.com/gitpython-developers/GitPython
 ## Development Status: maintenance mode
-GitPython==3.1.41 ## Prod
+GitPython==3.1.62 ## Prod
 # GitPython==3.1.58
 
 ## Python library to access the GitHub REST API v3 and manage
