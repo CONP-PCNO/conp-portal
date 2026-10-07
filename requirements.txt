@@ -16,7 +16,7 @@ click==8.1.6 ## Prod
 
 ## Distributed data management and version control system built on top of Git and git-annex.
 ## Requires: annexremote, boto3, chardet, distro, fasteners, giturlparse, humanize, iso8601, keyring, keyrings.alt, looseversion, msgpack, packaging, patool, platformdirs, python-gitlab, requests, tqdm
-datalad==1.2.0 # prod
+datalad==1.6.5 # prod
 #datalad==1.6.1
 
 ## GitPython # aka git, gitpython
