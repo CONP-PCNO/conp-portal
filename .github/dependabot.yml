@@ -4,7 +4,20 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    labels:
+      - "P: Dependencies"
+      - "P: GH Actions"
   - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    exclude-paths:
+      - "requirements-v1.0.0.txt"
+      - "requirements-v1.0.1.txt"
+    labels:
+      - "P: Dependencies"
+      - "P: Python"
+  - package-ecosystem: "uv"
     directory: "/"
     schedule:
       interval: "weekly"
