@@ -5,5 +5,5 @@
 
 ## Flake8
 #flake8==3.8.4 # Production version
-flake8==7.3.0
+flake8==7.4.1
 deptry>=0.25.1
