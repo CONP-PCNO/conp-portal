@@ -64,7 +64,7 @@ SQLAlchemy==2.0.38 ## Prod
 
 ## Collection of various utility functions, data types, and helpers to complement SQLAlchemy.
 ## aka: SQLAlchemy-Utils, sqlalchemy_utils
-sqlalchemy_utils==0.41.2 # Prod
+sqlalchemy_utils==0.42.1 # Prod
 # sqlalchemy_utils==0.42.1
 
 ## ASCII transliterations of Unicode text to safely convert accents, symbols, and non-Roman characters into plain text.
