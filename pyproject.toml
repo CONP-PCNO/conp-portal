@@ -10,7 +10,7 @@ authors = [{ name = "CONP-PCNO" }]
 dependencies = [
     "alembic==1.14.1",
     "boutiques==0.5.28",
-    "click==8.1.6",
+    "click==8.5.0",
     "datalad==1.2.0",
     "flask==3.0.3",
     # "flask-bootstrap==3.3.7.1", ## Not sure if needed
