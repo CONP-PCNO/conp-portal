@@ -9,13 +9,8 @@
 	- [Setup Flask Environment](#setup-flask-environment)
 	- [Initilize the test database](#initilize-the-test-database)
 - [Run Application](#run-application)
-	- [Using Flask Locally](#using-flask-locally)
-	- [AWS Cloud9 (Experimental)](#aws-cloud9-experimental)
 - [Docker](#docker)
 - [Developer and Contributor Information](#developer-and-contributor-information)
-	- [Experiments Portal](#experiments-portal)
-	- [Testing Code](#testing-code)
-	- [Coding Standards](#coding-standards)
 - [Deployment](#deployment)
 - [License](#license)
 - [Credits](#credits)
@@ -24,7 +19,7 @@
 
 ### Requirements
 
-- Python v3.10 through v3.14 (inclusive). To check the version(s) you may have
+- Python v3.12 through v3.14 (inclusive). To check the version(s) you may have
 installed open a terminal and type `python3 -V`.
 - NodeJS v16 - The CONP Portal front-end uses React.
 - datalad
@@ -57,7 +52,7 @@ In the top level directory:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install --require-virtualenv --requirement requirements.txt
+python3 -m pip install --require-virtualenv --requirement requirements.txt
 ```
 
 ### Setup Flask Environment
@@ -106,13 +101,13 @@ commands and should not be run repeatedly during development.
 
 ### Using Flask Locally
 
-In the top level directory:
+In the top level directory run the command:
 
 ```bash
 flask run
 ```
 
-The application should now be live on `http://localhost:5000/`
+Flask will serve the application on `http://localhost:5000/`
 
 ### AWS Cloud9 (Experimental)
 
@@ -143,21 +138,11 @@ docker exec -it my-conp-portal bash -c "cd /app/app/static/v2 && yarn dev"
 
 ## Developer and Contributor Information
 
-### Experiments Portal
-
-If you would like to run the run the experiments portal with hot module replacement, in a separate terminal run:
-
-    npm start --prefix app/static/lib/experiments-portal
-
-To build the experiments portal, run:
-
-    npm run build --prefix app/static/lib/experiments-portal
-
 ### Testing Code
 
 We use the `pytest` framework for testing all aspects of the application. This will be automatically run by CI workflows when a pull request is made.
 
-The tests exists in the `tests/` directory and should not effect any of the development or production builds to run. Please feel free to add unit and functional tests with any new feature.  Pytest will automatically pick up any tests that start with `test_` that are placed in the folder under a directory.  Please adhere to the structure there.
+The tests exists in the [`tests/`](./tests/) directory and should not effect any of the development or production builds to run. Please feel free to add unit and functional tests with any new feature.  Pytest will automatically pick up any tests that start with `test_` that are placed in the folder under a directory.  Please adhere to the structure there.
 
 - For unit tests of classes and utilities, use the folder `tests/unit_tests`.
 - For database specific testing, please use the folder `tests/database_tests`.
@@ -169,7 +154,7 @@ In order to keep the Python code maintainable and readable, please run `./lint.s
 
 ## Deployment
 
-See [deploy documentation](deploy/README_deploy.md).
+See the [deploy documentation](./deploy/README.md).
 
 ## License
 
