@@ -140,7 +140,7 @@ Flask-WTF==1.2.1 ## Prod
 Flask-User==1.0.2.2
 # Flask-User==1.0.1.5
 ## Requires Downgraded bcrypt
-bcrypt<4
+bcrypt<6
 # bcrypt==3.1.7 ## Prod
 
 ## Development ########################################################
