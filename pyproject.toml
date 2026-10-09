@@ -11,7 +11,7 @@ dependencies = [
     "alembic==1.14.1",
     "boutiques==0.5.28",
     "click==8.1.6",
-    "datalad==1.2.0",
+    "datalad==1.6.5",
     "flask==3.0.3",
     # "flask-bootstrap==3.3.7.1", ## Not sure if needed
     "flask-bootstrap4==4.0.2",

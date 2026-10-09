@@ -443,7 +443,7 @@ requires-dist = [
     { name = "bcrypt", specifier = "<4" },
     { name = "boutiques", specifier = "==0.5.28" },
     { name = "click", specifier = "==8.1.6" },
-    { name = "datalad", specifier = "==1.2.0" },
+    { name = "datalad", specifier = "==1.6.5" },
     { name = "flask", specifier = "==3.0.3" },
     { name = "flask-bootstrap4", specifier = "==4.0.2" },
     { name = "flask-dance", specifier = "==3.0.0" },
@@ -529,7 +529,7 @@ wheels = [
 
 [[package]]
 name = "datalad"
-version = "1.2.0"
+version = "1.6.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "annexremote" },
@@ -538,6 +538,7 @@ dependencies = [
     { name = "colorama", marker = "sys_platform == 'win32'" },
     { name = "distro" },
     { name = "fasteners" },
+    { name = "giturlparse" },
     { name = "humanize" },
     { name = "iso8601" },
     { name = "keyring" },
@@ -551,9 +552,9 @@ dependencies = [
     { name = "requests" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/06/09/1cafa5d584ca92fe9e9381282103e2d92944aae2997085ca1aee111c5c1c/datalad-1.2.0.tar.gz", hash = "sha256:4ea32977ee8dabc277fb08bdee375885427177768330b4e2f51c0c1502400a80", size = 1427791, upload-time = "2025-05-21T12:25:58.397Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/87/01/cd2f0dd3e706cc24caf47f91b1cb14fa156100ad5b4b994961b9b3a30a12/datalad-1.6.5.tar.gz", hash = "sha256:f23c4b6eeb0699f6a275a0d6ba9b4fcd267af2cea26c67b60df6566fe384e811", size = 1550407, upload-time = "2026-09-30T19:22:33.862Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/38/61/d23e8bdeff917eb02d738c5b8c2ef0cd5b9e2d42d2a077bbd1cf4487388e/datalad-1.2.0-py3-none-any.whl", hash = "sha256:1ff8eb7ba19cfeaccc14f7fbc4a34e1e6a4b7a932b95122a27ecdf58dbcb96fa", size = 1275254, upload-time = "2025-05-21T12:25:55.893Z" },
+    { url = "https://files.pythonhosted.org/packages/66/fc/183e4b31ed451f8ba8a435050d44ce3966ca1fd5abde79558991e3780770/datalad-1.6.5-py3-none-any.whl", hash = "sha256:e7a2c02f1a87c3cbf2ddcb13c51719df1f4f6167121a3a1432dba1d0ef058f2f", size = 1343756, upload-time = "2026-09-30T19:22:31.966Z" },
 ]
 
 [[package]]
@@ -767,6 +768,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/e5/c2/6e3a26945a7ff7cf2854b8825026cf3f22ac8e18285bc11b6b1ceeb8dc3f/GitPython-3.1.41.tar.gz", hash = "sha256:ed66e624884f76df22c8e16066d567aaa5a37d5b5fa19db2c6df6f7156db9048", size = 209029, upload-time = "2024-01-10T12:15:19.596Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/45/c6/a637a7a11d4619957cb95ca195168759a4502991b1b91c13d3203ffc3748/GitPython-3.1.41-py3-none-any.whl", hash = "sha256:c36b6634d069b3f719610175020a9aed919421c87552185b085e04fbbdb10b7c", size = 196354, upload-time = "2024-01-10T12:15:16.135Z" },
+]
+
+[[package]]
+name = "giturlparse"
+version = "0.15.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/8c/8a/b70b84cc78f9059d627f09560c81a11e8f046570d220a24e169489cad6c9/giturlparse-0.15.0.tar.gz", hash = "sha256:9af3f1fd5c4a0cac94ddb283593635005646393ee0debbe330d1bdff8866bf2c", size = 16138, upload-time = "2026-06-16T07:28:56.021Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c7/96/147a2771ab655b9353781fb2f95c94eaf1d8576dccc991c1a61d0d355067/giturlparse-0.15.0-py2.py3-none-any.whl", hash = "sha256:76d2e6983b037356ab99b30683e533ac3db96409b68e2163a20fc3aff6446f10", size = 16683, upload-time = "2026-06-16T07:28:55.184Z" },
 ]
 
 [[package]]
