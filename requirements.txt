@@ -113,7 +113,7 @@ Flask-Mail==0.9.1 ## Prod
 ## Flask-Migrate
 ## SQLAlchemy database migrations extension for Flask applications using Alembic.
 ## aka: flask_migrate
-Flask-Migrate==2.4.0 # Prod
+Flask-Migrate==4.1.0 # Prod
 # Flask-Migrate==4.1.0
 
 ## Flask-SQLAlchemy [aka flask-sqlalchemy]
