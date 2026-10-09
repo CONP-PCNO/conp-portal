@@ -1,5 +1,5 @@
 /*!
- * conp-react v1.0.2
+ * conp-react v1.0.3
  * MIT Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
