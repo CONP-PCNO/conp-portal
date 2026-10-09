@@ -72,7 +72,7 @@ Unidecode==1.3.8 ## Prod
 # Unidecode==1.4.0
 
 ## Comprehensive WSGI web application library providing request/response objects, routing, and debugging utilities.
-Werkzeug==3.0.6 ## Prod
+Werkzeug==3.1.9 ## Prod
 # Werkzeug==3.1.8
 
 ## Fast, pure-Python search engine library for indexing and searching text fields.
