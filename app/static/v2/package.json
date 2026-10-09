@@ -1,7 +1,7 @@
 {
   "name": "conp-portal",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack serve --mode development",
