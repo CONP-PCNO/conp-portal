@@ -41,7 +41,7 @@
     "@types/react-dom": "^16.8.4",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
-    "babel-loader": "^8.3.0",
+    "babel-loader": "^10.1.1",
     "css-loader": "^6.7.3",
     "eslint": "^8.33.0",
     "eslint-plugin-react": "^7.32.2",
