@@ -97,7 +97,7 @@ Flask-Bootstrap4==4.0.2
 ## Flask-Dance
 ## Flask extension providing turnkey OAuth consumer support for logging in via services like Google and GitHub.
 ## aka flask_dance
-Flask-Dance==3.0.0 ## Prod
+Flask-Dance==7.1.0 ## Prod
 # Flask-Dance==7.1.0
 
 ## Flask-Login
