@@ -31,7 +31,7 @@ dependencies = [
     "pytz==2018.9",
     "requests==2.34.2",
     "sqlalchemy==2.0.38",
-    "sqlalchemy-utils==0.41.2",
+    "sqlalchemy-utils==0.42.1",
     "unidecode==1.3.8",
     "werkzeug==3.0.6",
     "whoosh==2.7.4",
