@@ -1,7 +1,7 @@
 [flake8]
 # Error Codes: https://flake8.pycqa.org/en/latest/user/error-codes.html
-ignore = E501,W503
-exclude =
+extend-ignore = E501,W503
+extend-exclude =
     __pycache__/
     .git/
     .obsidian/
