@@ -144,6 +144,26 @@ const PipelineElement = (props) => {
 
             {platforms}
           </div>
+          {element.cbrain ?
+            <div className="row w-100 pt-1">
+              <small className="text-muted" data-testid="cbrain-versions">
+                {element.cbrain.versions && element.cbrain.versions.length > 0 ?
+                  <span>Runs on CBRAIN: {element.cbrain.software} {element.cbrain.versions.join(", ")}</span>
+                  : <span>Runs on CBRAIN (version not stated)</span>}
+                {!(element.platforms && element.platforms[0] && element.platforms[0].uri) ?
+                  <span>{" · "}
+                    <a
+                      href="https://portal.cbrain.mcgill.ca/available"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      find it on CBRAIN
+                    </a>
+                  </span>
+                  : null}
+              </small>
+            </div>
+            : null}
         </div>
       </div>
       {cbrainModalOpen ? (
@@ -178,6 +198,11 @@ PipelineElement.propTypes = {
   img: PropTypes.string,
   imagePath: PropTypes.string,
   cbrainIds: PropTypes.arrayOf(PropTypes.Object),
+  cbrain: PropTypes.shape({
+    tool: PropTypes.string,
+    software: PropTypes.string,
+    versions: PropTypes.arrayOf(PropTypes.string)
+  }),
 };
 
 export default PipelineElement;

@@ -1,0 +1,226 @@
+{
+  "_about": "Portal tools that run on CBRAIN in some version, and the underlying software versions CBRAIN offers. Source: https://portal.cbrain.mcgill.ca/available, checked 2026-10-13; versions cross-checked against container images in aces/cbrain-plugins-*. Launch links live in cbrain-conp-pipeline.json.",
+  "tools": {
+    "APPIANPET": {
+      "software": "APPIAN",
+      "versions": []
+    },
+    "Brainstorm": {
+      "software": "Brainstorm tool",
+      "versions": [
+        "v1.0",
+        "v1.0.1",
+        "v1.0.2",
+        "v1.0.3",
+        "v1.0.4",
+        "v1.0.5"
+      ]
+    },
+    "BraTSPipeline": {
+      "software": "BraTS pipeline (CaPTk)",
+      "versions": [
+        "1.8.1",
+        "1.9.0"
+      ]
+    },
+    "ePRS_5HTT": {
+      "software": "ePRS_5HTT",
+      "versions": [
+        "1.0.0"
+      ]
+    },
+    "FMRIprepBidsSubject": {
+      "software": "fMRIPrep",
+      "versions": [
+        "21.0.0",
+        "22.0.2",
+        "22.1.1",
+        "23.0.1",
+        "23.0.2",
+        "25.1.4",
+        "25.2.3"
+      ]
+    },
+    "FreeSurferReconAll": {
+      "software": "FreeSurfer",
+      "versions": [
+        "7.1.1",
+        "7.2.0",
+        "7.3.2",
+        "7.4.1",
+        "8.0.0-preview",
+        "8.1.0"
+      ]
+    },
+    "fsl_anat": {
+      "software": "FSL",
+      "versions": [
+        "5.0.0",
+        "5.0.9"
+      ]
+    },
+    "FslBedpostx": {
+      "software": "FSL",
+      "versions": [
+        "4.1.6",
+        "4.1.9",
+        "5.0.6",
+        "5.0.9"
+      ]
+    },
+    "FslBet": {
+      "software": "FSL",
+      "versions": [
+        "5.0.9"
+      ]
+    },
+    "FslFast": {
+      "software": "FSL",
+      "versions": [
+        "5.0.0",
+        "5.0.9"
+      ]
+    },
+    "FslFirst": {
+      "software": "FSL",
+      "versions": [
+        "5.0.0",
+        "5.0.9"
+      ]
+    },
+    "FslFlirt": {
+      "software": "FSL",
+      "versions": [
+        "4.1.6",
+        "4.1.9",
+        "5.0.6",
+        "5.0.9"
+      ]
+    },
+    "Fslstats": {
+      "software": "FSL",
+      "versions": [
+        "5.0.0",
+        "5.0.9"
+      ]
+    },
+    "HarMNqEEG": {
+      "software": "HarMNqEEG",
+      "versions": [
+        "1.0.0"
+      ]
+    },
+    "hippunfold": {
+      "software": "HippUnfold",
+      "versions": [
+        "1.0.0",
+        "1.1.0",
+        "1.2.0",
+        "1.3.2"
+      ]
+    },
+    "ICA_AROMA": {
+      "software": "ICA-AROMA",
+      "versions": [
+        "0.3.1"
+      ]
+    },
+    "ImputePrepSanger": {
+      "software": "imputePrepSanger",
+      "versions": [
+        "1.0.0"
+      ]
+    },
+    "MCFLIRT": {
+      "software": "FSL",
+      "versions": [
+        "6.0.5"
+      ]
+    },
+    "mfannot": {
+      "software": "MFannot",
+      "versions": [
+        "1.36"
+      ]
+    },
+    "MRIQC": {
+      "software": "MRIQC",
+      "versions": [
+        "22.0.1",
+        "24.0.2"
+      ]
+    },
+    "Nii2mnc": {
+      "software": "MINC tools",
+      "versions": [
+        "1.1.10",
+        "2.0.0",
+        "2.1.0",
+        "2.1.1",
+        "2.4.02"
+      ]
+    },
+    "PcEV": {
+      "software": "PCEV",
+      "versions": [
+        "1.0.0"
+      ]
+    },
+    "qEEG": {
+      "software": "qEEG",
+      "versions": []
+    },
+    "ReconAllLongi": {
+      "software": "FreeSurfer",
+      "versions": [
+        "5.1.0",
+        "5.3.0",
+        "6.0.0"
+      ]
+    }
+  },
+  "pipelines": {
+    "zenodo.6338035": "APPIANPET",
+    "zenodo.8250478": "Brainstorm",
+    "zenodo.14070498": "Brainstorm",
+    "zenodo.7779113": "BraTSPipeline",
+    "zenodo.4685127": "ePRS_5HTT",
+    "zenodo.1895219": "FMRIprepBidsSubject",
+    "zenodo.5889065": "FMRIprepBidsSubject",
+    "zenodo.4043546": "FreeSurferReconAll",
+    "zenodo.7738457": "FreeSurferReconAll",
+    "zenodo.7579820": "FreeSurferReconAll",
+    "zenodo.7542266": "FreeSurferReconAll",
+    "zenodo.7545769": "FreeSurferReconAll",
+    "zenodo.20847789": "FreeSurferReconAll",
+    "zenodo.1484547": "FreeSurferReconAll",
+    "zenodo.3899496": "fsl_anat",
+    "zenodo.2602072": "FslBedpostx",
+    "zenodo.1482743": "FslBet",
+    "zenodo.3267250": "FslBet",
+    "zenodo.1494308": "FslFast",
+    "zenodo.1494312": "FslFirst",
+    "zenodo.10305645": "FslFirst",
+    "zenodo.2597643": "FslFlirt",
+    "zenodo.10308707": "FslFlirt",
+    "zenodo.4472771": "Fslstats",
+    "zenodo.7041445": "HarMNqEEG",
+    "zenodo.6081609": "hippunfold",
+    "zenodo.1445789": "ICA_AROMA",
+    "zenodo.4687757": "ImputePrepSanger",
+    "zenodo.2602109": "MCFLIRT",
+    "zenodo.6515351": "mfannot",
+    "zenodo.3242714": "MRIQC",
+    "zenodo.7972313": "Nii2mnc",
+    "zenodo.6338382": "PcEV",
+    "zenodo.1451003": "qEEG",
+    "zenodo.7332026": "ReconAllLongi",
+    "zenodo.7339689": "ReconAllLongi",
+    "zenodo.7868966": "ReconAllLongi",
+    "zenodo.7884225": "ReconAllLongi",
+    "zenodo.7900700": "ReconAllLongi",
+    "zenodo.7900706": "ReconAllLongi",
+    "zenodo.7916240": "ReconAllLongi",
+    "zenodo.7920788": "ReconAllLongi"
+  }
+}

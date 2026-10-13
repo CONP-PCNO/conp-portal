@@ -13,6 +13,27 @@ from app.pipelines import pipelines as pipelines_utils
 from app.pipelines import pipelines_bp
 
 
+def get_cbrain_availability():
+    """ Map Zenodo ids of tools that run on CBRAIN (in some version) to the
+        CBRAIN tool and the underlying software versions CBRAIN offers.
+
+        Returns:
+            dict: {zenodo_id: {"tool": str, "software": str, "versions": [str]}}
+    """
+    with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-available-pipeline.json")) as f:
+        data = json.load(f)
+    tools = data.get("tools", {})
+    availability = {}
+    for zenodo_id, tool in data.get("pipelines", {}).items():
+        info = tools.get(tool, {})
+        availability[zenodo_id] = {
+            "tool": tool,
+            "software": info.get("software", tool),
+            "versions": info.get("versions", []),
+        }
+    return availability
+
+
 @pipelines_bp.route('/pipelines', methods=['GET'])
 def pipelines():
     """ Pipelines Route
@@ -86,10 +107,13 @@ def pipeline_search():
         filter(lambda e: (not e.get("DEPRECATED", None)), elements))
 
     if request.args.get('cbrain'):
+        # "Available on CBRAIN": the tool runs on CBRAIN in some version, whether
+        # or not the Portal has a launch link for it yet
         with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json")) as f:
-            zenodo_urls = json.load(f)
+            on_cbrain = set(json.load(f).keys())
+        on_cbrain |= set(get_cbrain_availability().keys())
         elements = list(
-            filter(lambda e: e["ID"] in zenodo_urls.keys(), elements)
+            filter(lambda e: e["ID"] in on_cbrain, elements)
         )
 
     blocked_pipelines_ids = list()
@@ -151,8 +175,10 @@ def pipeline_search():
 
     with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json")) as f:
         zenodo_urls = json.load(f)
+    cbrain_availability = get_cbrain_availability()
 
     for element in elements_on_page:
+        element["cbrain"] = cbrain_availability.get(element["id"])
         element["platforms"] = [{} for x in range(1)]
         element["platforms"][0]["img"] = url_for(
             'static', filename="img/run_on_cbrain_gray.png")
@@ -279,6 +305,8 @@ def pipeline_info():
 
     with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json")) as f:
         zenodo_urls = json.load(f)
+
+    element["cbrain"] = get_cbrain_availability().get(element["id"])
 
     if element["id"] in zenodo_urls.keys():
         element["platforms"][0]["img"] = url_for(
