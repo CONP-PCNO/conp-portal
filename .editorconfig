@@ -1,0 +1,36 @@
+# http://editorconfig.org
+
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+charset = utf-8
+insert_final_newline = true
+
+# Matches multiple files with brace expansion notation
+# Set default charset
+[*.{js,py,css,htm,html,md,txt}]
+charset = utf-8
+
+# Python Files
+[*.py]
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Makefile files
+[Makefile]
+indent_style = tab
+
+# Indentation override for all JS
+[app/static/**.js]
+indent_style = space
+indent_size = 4
+
+# YAML format, 2 spaces
+[*.yaml, *.yml]
+indent_style = space
+indent_size = 2
