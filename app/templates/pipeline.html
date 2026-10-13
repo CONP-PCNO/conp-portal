@@ -42,7 +42,17 @@
           <img class="img-fluid" alt="CBRAIN" src="/static/img/cbrain-icon-blue.png" />
           {% endif %}
         </div>
-        {% if pipeline.platforms[0].uri == "" %}
+        {% if pipeline.cbrain %}
+        <p class="small text-muted text-center mb-2">
+          {% if pipeline.cbrain.versions %}Runs on CBRAIN: {{ pipeline.cbrain.software }} {{ pipeline.cbrain.versions | join(", ") }}
+          {% else %}Runs on CBRAIN (version not stated){% endif %}
+        </p>
+        {% endif %}
+        {% if pipeline.platforms[0].uri == "" and pipeline.cbrain %}
+        <a target="_blank" rel="noopener noreferrer" href="https://portal.cbrain.mcgill.ca/available" class="btn-link"
+          >Find it on CBRAIN</a
+        >
+        {% elif pipeline.platforms[0].uri == "" %}
         <a href="{{ pipeline.platforms[0].uri }}" class="btn-link disabled">Not Available</a>
         {% else %}
         <a target="_blank" rel="noopener noreferrer" href="{{ pipeline.platforms[0].uri }}" class="btn-link"

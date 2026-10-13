@@ -24,6 +24,8 @@ const DataTableContainer = ({
     modalities: filters.modalities ? filters.modalities : [],
     formats: filters.formats ? filters.formats : [],
     tags: filters.tags ? filters.tags : [],
+    // Seed from the URL so a shared or reloaded link keeps the CBRAIN filter
+    cbrain: filters.cbrain ? [].concat(filters.cbrain) : [],
     sortKey: filters.sortKey ? filters.sortKey : "conpStatus",
     sortComparitor: filters.sortComparitor ? filters.sortComparitor : "asc",
     page: filters.page ? filters.page : 1,

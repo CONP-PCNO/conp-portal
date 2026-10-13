@@ -394,7 +394,7 @@ const DataTable = ({
                                value="cbrain.cbrain_id"
                                onChange={handleFiltersChange}/>
                         <label className="form-check-label" htmlFor="filterCBRAIN">
-                          Available in CBRAIN
+                          Available on CBRAIN
                         </label>
                       </div>
               </div>

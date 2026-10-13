@@ -1,5 +1,5 @@
 /*!
- * conp-react v1.0.1
+ * conp-react v1.0.2
  * MIT Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -29805,7 +29805,7 @@ var DataTable_DataTable = function DataTable(_ref) {
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
     className: "form-check-label",
     htmlFor: "filterCBRAIN"
-  }, "Available in CBRAIN"))), renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "Available on CBRAIN"))), renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex justify-content-end align-items-center pb-1 pr-3"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     className: "text-reset px-1",
@@ -30032,6 +30032,8 @@ var DataTableContainer_DataTableContainer = function DataTableContainer(_ref) {
       modalities: filters.modalities ? filters.modalities : [],
       formats: filters.formats ? filters.formats : [],
       tags: filters.tags ? filters.tags : [],
+      // Seed from the URL so a shared or reloaded link keeps the CBRAIN filter
+      cbrain: filters.cbrain ? [].concat(filters.cbrain) : [],
       sortKey: filters.sortKey ? filters.sortKey : "conpStatus",
       sortComparitor: filters.sortComparitor ? filters.sortComparitor : "asc",
       page: filters.page ? filters.page : 1,
@@ -38552,7 +38554,16 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     className: "col col-lg-3 d-flex flex-column justify-content-center align-items-end p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "row align-items-center w-100"
-  }, platforms))), cbrainModalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_CbrainModalPipeline, {
+  }, platforms), element.cbrain ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "row w-100 pt-1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("small", {
+    className: "text-muted",
+    "data-testid": "cbrain-versions"
+  }, element.cbrain.versions && element.cbrain.versions.length > 0 ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, "Runs on CBRAIN: ", element.cbrain.software, " ", element.cbrain.versions.join(", ")) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, "Runs on CBRAIN (version not stated)"), !(element.platforms && element.platforms[0] && element.platforms[0].uri) ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, " · ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+    href: "https://portal.cbrain.mcgill.ca/available",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "find it on CBRAIN")) : null)) : null)), cbrainModalOpen ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(src_CbrainModalPipeline, {
     platforms: element.platforms,
     title: element.title,
     cbrainIds: element.cbrainIds
@@ -38578,7 +38589,12 @@ PipelineElement_PipelineElement.propTypes = {
   url: prop_types_default.a.string,
   img: prop_types_default.a.string,
   imagePath: prop_types_default.a.string,
-  cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object)
+  cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object),
+  cbrain: prop_types_default.a.shape({
+    tool: prop_types_default.a.string,
+    software: prop_types_default.a.string,
+    versions: prop_types_default.a.arrayOf(prop_types_default.a.string)
+  })
 };
 /* harmony default export */ var src_PipelineElement = (PipelineElement_PipelineElement);
 // CONCATENATED MODULE: ./src/ExecutionRecordElement/index.js
