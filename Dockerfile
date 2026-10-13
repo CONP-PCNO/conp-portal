@@ -40,7 +40,7 @@ RUN pip install -r requirements-dev.txt
 COPY . .
 EXPOSE 4000
 
-COPY cli/docker-install.sh /docker-install.sh
+COPY bin/docker-install.sh /docker-install.sh
 RUN chmod +x /docker-install.sh
 # RUN flask db upgrade
 # RUN flask seed_test_db
