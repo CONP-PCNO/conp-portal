@@ -1,22 +1,55 @@
-<footer
-  id="footer"
-  class="container-fluid justify-content-center bg-mineshaft text-white"
->
-  <div class="row justify-content-center p-4">
-    <div
-      class="col-sm-6 d-flex flex-column justify-content-center align-items-center text-center p-4"
-    >
-      <h5 class="py-4">Canadian Open Neuroscience Platform</h5>
+<footer id="footer" class="container-fluid bg-mineshaft text-white">
+  <div class="conp-footer content-body">
+    <div class="conp-footer-col conp-footer-about">
+      <h5>Canadian Open Neuroscience Platform</h5>
+      <p class="conp-footer-tagline">Plateforme canadienne de neurosciences ouvertes</p>
+      <p>
+        Open access to neuroscience datasets and analysis tools, for
+        researchers in Canada and worldwide.
+      </p>
+      <p>
+        The CONP is supported by
+        <a class="footer-link" target="_blank" rel="noopener noreferrer" href="https://braincanada.ca/">Brain Canada</a>
+        and
+        <a class="footer-link" target="_blank" rel="noopener noreferrer" href="https://conp.ca/partners/">partner organizations</a>.
+      </p>
+    </div>
 
-      <a
-        class="footer-link pb-4"
-        href="https://github.com/CONP-PCNO/conp-portal"
-        >Code is available on
-        <span>Github <i class="fa fa-github"></i></span>
-      </a>
-      <a class="footer-link pb-4 btnShowPrivacyPolicy" href="#"
-        >Privacy Policy
-      </a>
+    <div class="conp-footer-col">
+      <h6>Explore</h6>
+      <ul>
+        <li><a class="footer-link" href="{{ url_for('search.search') }}">Data</a></li>
+        <li><a class="footer-link" href="{{ url_for('pipelines.pipelines') }}">Tools &amp; Pipelines</a></li>
+        <li><a class="footer-link" href="{{ url_for('main.share') }}">Share</a></li>
+        <li><a class="footer-link" href="{{ url_for('main.download') }}">Download</a></li>
+        <li><a class="footer-link" href="{{ url_for('main.tutorial') }}">Tutorial</a></li>
+        <li><a class="footer-link" href="{{ url_for('main.faq') }}">FAQ</a></li>
+      </ul>
+    </div>
+
+    <div class="conp-footer-col">
+      <h6>About</h6>
+      <ul>
+        <li><a class="footer-link" href="{{ url_for('main.about') }}">About the Portal</a></li>
+        <li><a class="footer-link" target="_blank" rel="noopener noreferrer" href="https://conp.ca/">CONP — conp.ca</a></li>
+        <li><a class="footer-link" href="{{ url_for('main.team') }}">Team</a></li>
+        <li><a class="footer-link" href="{{ url_for('main.contact_us') }}">Contact Us</a></li>
+        <li><a class="footer-link" target="_blank" rel="noopener noreferrer" href="https://bsky.app/profile/conp-pcno.bsky.social">Bluesky</a></li>
+        <li>
+          <a class="footer-link" target="_blank" rel="noopener noreferrer" href="https://github.com/CONP-PCNO/conp-portal"
+            >GitHub <i class="fa fa-github" aria-hidden="true"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="conp-footer-col">
+      <h6>Governance</h6>
+      <ul>
+        <li><a class="footer-link" href="{{ url_for('main.data_governance') }}">Data Governance</a></li>
+        <li><a class="footer-link btnShowTermsOfUse" href="#">Terms of Use</a></li>
+        <li><a class="footer-link btnShowPrivacyPolicy" href="#">Privacy Policy</a></li>
+      </ul>
     </div>
   </div>
 </footer>
@@ -24,7 +57,12 @@
 <script>
   $(function () {
     $(".btnShowPrivacyPolicy").on("click", function (event) {
+      event.preventDefault();
       $("#privacyPolicyModal").modal("show");
+    });
+    $(".btnShowTermsOfUse").on("click", function (event) {
+      event.preventDefault();
+      $("#termsModal").modal("show");
     });
   });
 </script>
