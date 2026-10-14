@@ -353,3 +353,56 @@ body .conp-hero-meta {
   color: var(--conp-grey-4);
   font-size: 0.95rem;
 }
+
+/*
+-------------------------------------------------------------
+Footer
+-------------------------------------------------------------
+The footer carries the platform's institutional story: mission line
+and funder acknowledgement, a navigation mirror, and the governance
+links, plus the CONP's Bluesky account.
+*/
+body .conp-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 3rem;
+  padding: 2.5rem 1.5rem;
+}
+body .conp-footer-col {
+  flex: 1 1 160px;
+  min-width: 150px;
+}
+body .conp-footer-about {
+  flex: 2 1 280px;
+  max-width: 420px;
+}
+body .conp-footer h5,
+body .conp-footer h6 {
+  color: #fff;
+  margin: 0 0 0.75rem;
+}
+body .conp-footer h6 {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.85rem;
+  color: var(--conp-grey-2);
+}
+body .conp-footer-tagline {
+  color: var(--conp-grey-3);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+body .conp-footer p {
+  font-size: 0.95rem;
+}
+body .conp-footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+body .conp-footer li {
+  margin-bottom: 0.5rem;
+}
+body .conp-footer .footer-link {
+  color: #fff;
+}
