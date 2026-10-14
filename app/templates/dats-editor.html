@@ -6,13 +6,39 @@
 {% endblock %}
 
 {% block styles %} {{ super() }}
-<link href="{{ url_for('static', filename='lib/conp-react/umd/main.4cc50107.css') }}" rel="stylesheet" />
+{% if editor_css %}
+<link href="{{ static_v(editor_css) }}" rel="stylesheet" />
+{% endif %}
+<style>
+  /* The editor draws its own "DATS Editor" heading under the page title. */
+  #dats-editor-container h1.MuiTypography-h4 {
+    display: none;
+  }
+  /* Phones: the five-step progress bar wraps its labels one letter per line
+     and widens the page past the screen. Show the step numbers only. */
+  @media (max-width: 575.98px) {
+    #dats-editor-container .MuiStepper-root {
+      padding: 16px 0;
+    }
+    #dats-editor-container .MuiStepLabel-labelContainer {
+      display: none;
+    }
+    #dats-editor-container .MuiStepLabel-iconContainer {
+      padding-right: 0;
+    }
+    #dats-editor-container .MuiPaper-root {
+      padding: 12px;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+</style>
 {% endblock %}
 
 {% block scripts %} {{ super() }}
 <script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>
 <script src=" {{ url_for('static',filename='v1/js/react-dom.development-16.11.0.js') }}"></script>
-<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='lib/conp-react/umd/conp-react.min.js') }}"></script>
 {% endblock %}
 
 <!-- Title Block -->

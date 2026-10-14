@@ -2,6 +2,7 @@
 
     Currently this module contains all of the routes for the main blueprint
 """
+import glob
 import json
 import os
 from urllib.parse import urlparse
@@ -239,7 +240,16 @@ def dats_editor():
             rendered template for dats-editor.html
     """
 
-    return render_template('dats-editor.html', title='CONP | DATS Editor', user=current_user)
+    # The conp-react build names its stylesheet with a content hash
+    # (main.<hash>.css) that changes on every rebuild. Look it up instead of
+    # hard-coding it: a stale name 404s and the editor's last step (the
+    # README editor) renders unstyled.
+    css_dir = os.path.join(current_app.static_folder, 'lib', 'conp-react', 'umd')
+    css_files = sorted(glob.glob(os.path.join(css_dir, 'main.*.css')), key=os.path.getmtime)
+    editor_css = 'lib/conp-react/umd/' + os.path.basename(css_files[-1]) if css_files else None
+
+    return render_template('dats-editor.html', title='CONP | DATS Editor', user=current_user,
+                           editor_css=editor_css)
 
 
 @main_bp.route('/ark:/<url_naan>/<url_ark_id>')
