@@ -29,7 +29,36 @@ def index():
             The rendered index.html template for the current_user
     """
 
-    return render_template('index.html', title='CONP | Home', user=current_user)
+    # Headline counts for the hero strip. Best-effort: the homepage must
+    # never fail because a count could not be computed (e.g. the Boutiques
+    # cache is absent in a fresh dev environment).
+    counts = None
+    try:
+        count_datasets = Dataset.query.count()
+
+        cache_dir = os.path.join(
+            os.path.expanduser('~'), ".cache", "boutiques", "production")
+        with open(os.path.join(cache_dir, "all_descriptors.json"), "r") as f:
+            all_descriptors = json.load(f)
+        with open(os.path.join(cache_dir, "detailed_all_descriptors.json"), "r") as f:
+            detailed_all_descriptors = json.load(f)
+        # Same rule as the Tools page: skip deprecated and blocked tools.
+        with open(os.path.join(os.getcwd(), "app/static/pipelines/block-list-pipeline.json")) as f:
+            blocked = set(json.load(f))
+        count_pipelines = len([
+            d_index
+            for d_index, descriptor in enumerate(all_descriptors)
+            if not detailed_all_descriptors[d_index]["DEPRECATED"]
+            and {**descriptor, **detailed_all_descriptors[d_index]}.get("ID") not in blocked
+        ])
+
+        counts = {"datasets": count_datasets, "pipelines": count_pipelines}
+    except Exception:
+        current_app.logger.warning(
+            "Could not compute homepage counts", exc_info=True)
+
+    return render_template('index.html', title='CONP | Home', user=current_user,
+                           counts=counts)
 
 
 @main_bp.route('/share')

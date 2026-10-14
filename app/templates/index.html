@@ -11,8 +11,6 @@
 <script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
 {% endblock %} {% block styles %} {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/highcharts.css') }}" />
-{% endblock %} {% block contenttitle %}
-<h2><span class="brand-accent">CONP</span> Portal</h2>
 {% endblock %}
 
 <!-- Content Block -->
@@ -23,34 +21,98 @@
 <div class="display-user">Welcome <strong>{{ user.username }}</strong></div>
 {% endif %}
 <div class="d-flex flex-column">
-  <div class="p-2 flex-fill">
-    <div class="card" data-type="dashboard">
-      <div class="dashboard-about-container">
-        <p>
-          The
-          <a target="_blank" rel="noopener noreferrer" href="https://conp.ca">
-            Canadian Open Neuroscience Platform (CONP)
-          </a>
-          Portal is a web interface that facilitates open science for the neuroscience community by simplifying global
-          access to and sharing of datasets and tools. The Portal internalizes the typical data cycle of a research
-          project, beginning with data acquisition, followed by data processing with published tools, and ultimately the
-          publication of results with a link to the original dataset.
-          <a href="{{url_for('main.about')}}"> Read more </a>
-        </p>
-        <p>
-          The CONP would like to thank its
-          <a target="_blank" rel="noopener noreferrer" href="https://conp.ca/funders/"> sponsors</a>,
-          <a target="_blank" rel="noopener noreferrer" href="https://conp.ca/partners/">
-            national partners
-          </a>
-          and
-          <a target="_blank" rel="noopener noreferrer" href="https://conp.ca/partners/">
-            international partners.
-          </a>
-        </p>
-      </div>
-    </div>
-  </div>
+  <!-- Hero: the Portal's primary task is finding data, so the homepage
+       leads with search. /search hydrates its table from the `search`
+       query parameter, so the form works without JavaScript; the script
+       below only adds the same type-ahead suggestions as the Data page. -->
+  <section class="conp-hero p-2">
+    <h1><span class="brand-accent">CONP</span> Portal</h1>
+    <p class="conp-hero-lead">
+      Find, share, and process open neuroscience data — open access to
+      datasets and analysis tools from the
+      <a target="_blank" rel="noopener noreferrer" href="https://conp.ca">Canadian Open Neuroscience Platform</a>.
+      <a href="{{ url_for('main.about') }}">Read more</a>
+    </p>
+    <form class="conp-hero-search" action="{{ url_for('search.search') }}" method="get" role="search">
+      <label class="sr-only" for="hero-search-input">Search datasets</label>
+      <input
+        id="hero-search-input"
+        type="search"
+        name="search"
+        class="form-control"
+        placeholder="Search datasets — e.g. MRI, EEG, connectome, Parkinson…"
+        list="hero-search-suggestions"
+        autocomplete="off"
+      />
+      <datalist id="hero-search-suggestions"></datalist>
+      <button class="btn btn-success" type="submit">Search</button>
+    </form>
+    <script type="text/javascript">
+      // Type-ahead matching the Data page's search box: after 2 characters,
+      // suggest dataset titles and keywords from /dataset-search-suggestions;
+      // picking a suggestion runs the search straight away.
+      (function () {
+        var input = document.getElementById('hero-search-input');
+        var list = document.getElementById('hero-search-suggestions');
+        if (!input || !list || !window.fetch) return;
+        var endpoint = "{{ url_for('search.dataset_search_suggestions') }}";
+        var options = [];
+        var timer = null;
+        var lastQuery = '';
+
+        function render(items) {
+          list.innerHTML = '';
+          items.forEach(function (value) {
+            var option = document.createElement('option');
+            option.value = value;
+            list.appendChild(option);
+          });
+          options = items;
+        }
+
+        input.addEventListener('input', function (e) {
+          // A suggestion picked from the list arrives without an inputType
+          // (Firefox) or as insertReplacementText (Chrome, Safari).
+          var picked = !e.inputType || e.inputType === 'insertReplacementText';
+          if (picked && options.indexOf(input.value) !== -1) {
+            input.form.submit();
+            return;
+          }
+          var query = input.value.trim();
+          clearTimeout(timer);
+          if (query.length < 2) {
+            render([]);
+            lastQuery = '';
+            return;
+          }
+          timer = setTimeout(function () {
+            if (query === lastQuery) return;
+            lastQuery = query;
+            fetch(endpoint + '?search=' + encodeURIComponent(query))
+              .then(function (response) { return response.json(); })
+              .then(function (json) {
+                if (input.value.trim() !== query) return;
+                render((json.datasets || []).concat(json.suggestions || []));
+              })
+              .catch(function () {});
+          }, 150);
+        });
+      })();
+    </script>
+    <p class="conp-hero-meta">
+      {% if counts %}
+      <strong>{{ counts.datasets }}</strong> datasets ·
+      <a href="{{ url_for('pipelines.pipelines') }}"><strong>{{ counts.pipelines }}</strong> tools &amp; pipelines</a>
+      {% else %}
+      <a href="{{ url_for('search.search') }}">Browse all datasets</a> ·
+      <a href="{{ url_for('pipelines.pipelines') }}">tools &amp; pipelines</a>
+      {% endif %}
+      — thanks to our contributors,
+      <a target="_blank" rel="noopener noreferrer" href="https://conp.ca/funders/">funders</a>,
+      and
+      <a target="_blank" rel="noopener noreferrer" href="https://conp.ca/partners/">partners</a>.
+    </p>
+  </section>
 
   <div class="p-2 flex-fill">
     <div class="card w-100 p-1 mx-1" data-type="dashboard">
