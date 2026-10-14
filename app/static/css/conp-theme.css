@@ -212,6 +212,21 @@ body .content-main img {
 
 /*
 -------------------------------------------------------------
+No sidebar gutter below the sidebar breakpoint
+-------------------------------------------------------------
+The sidebar is only shown from 992px up (d-lg-block), but
+#page-content keeps the 150px left padding reserved for it at every
+width (v2 _core.scss). On a 390px phone that leaves a 240px column
+pushed to the right. Drop the gutter whenever the sidebar is hidden.
+*/
+@media (max-width: 991.98px) {
+  body #page-content {
+    padding-left: 0;
+  }
+}
+
+/*
+-------------------------------------------------------------
 Small-screen fixes
 -------------------------------------------------------------
 At a 390px viewport the search, dataset, and tools pages currently
