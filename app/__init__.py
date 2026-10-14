@@ -28,6 +28,18 @@ def create_app(config_settings=None):
         config_settings = DevelopmentConfig
     app.config.from_object(config_settings)
 
+    @app.template_global()
+    def static_v(filename):
+        """URL for a static file with a ?v=<mtime> suffix, so browsers fetch
+        a changed stylesheet after a deploy instead of a cached copy."""
+        from flask import url_for
+        url = url_for('static', filename=filename)
+        try:
+            mtime = int(os.path.getmtime(os.path.join(app.static_folder, filename)))
+        except OSError:
+            return url
+        return '{}?v={}'.format(url, mtime)
+
     db.init_app(app)
     migrate.init_app(app, db)
     csrf_protect.init_app(app)

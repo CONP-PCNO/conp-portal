@@ -298,8 +298,9 @@ body .page-header {
 }
 body .page-header h2 {
   margin: 0 0 0.5rem;
-  font-size: 1.6rem;
-  font-weight: 600;
+  font-size: 2rem;       /* clearly above in-page section headings (1.5–1.75rem) */
+  font-weight: 700;
+  line-height: 1.2;
   color: var(--conp-charcoal);
 }
 body .page-header::after {
@@ -313,4 +314,42 @@ body .page-header::after {
 /* Pages with no title (e.g. a future hero) collapse cleanly. */
 body .page-header:empty {
   display: none;
+}
+
+/*
+-------------------------------------------------------------
+Homepage hero
+-------------------------------------------------------------
+*/
+body .conp-hero {
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  max-width: 760px;
+}
+body .conp-hero h1 {
+  margin-bottom: 0.5rem;
+}
+body .conp-hero-lead {
+  color: var(--conp-grey-4);
+  margin-bottom: 1.25rem;
+}
+body .conp-hero-search {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+body .conp-hero-search input[type='search'] {
+  flex: 1 1 auto;
+  height: auto;
+  padding: 0.6rem 0.9rem;
+  font-size: 1rem;
+}
+body .conp-hero-search .btn {
+  width: auto;           /* _core.scss makes .btn 100%-wide; keep this one inline */
+  padding: 0.6rem 1.5rem;
+  flex: 0 0 auto;
+}
+body .conp-hero-meta {
+  color: var(--conp-grey-4);
+  font-size: 0.95rem;
 }
