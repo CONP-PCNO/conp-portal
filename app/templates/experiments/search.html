@@ -11,12 +11,15 @@
 {% block appcontent %}
 <div id="experiments-search"></div>
 <script>
-  const { ExperimentsSearchPage, React, ReactDOM } = CONP;
-  const keywordData = "{{ keyword }}";
-  const element = React.createElement(ExperimentsSearchPage, {
-    experiments: {{ experiments|tojson }},
-    keyword: keywordData
-  })
-  ReactDOM.render(element, document.getElementById('experiments-search'));
+  // The bundle is loaded with defer, so wait until it has run.
+  document.addEventListener('DOMContentLoaded', function () {
+    const { ExperimentsSearchPage, React, ReactDOM } = CONP;
+    const keywordData = "{{ keyword }}";
+    const element = React.createElement(ExperimentsSearchPage, {
+      experiments: {{ experiments|tojson }},
+      keyword: keywordData
+    })
+    ReactDOM.render(element, document.getElementById('experiments-search'));
+  });
 </script>
 {% endblock %}
