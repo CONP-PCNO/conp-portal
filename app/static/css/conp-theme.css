@@ -283,3 +283,34 @@ rebuild.)
     align-items: center;
   }
 }
+
+/*
+-------------------------------------------------------------
+Page header
+-------------------------------------------------------------
+Replaces the former centred "CONP Portal | Page" band (+ full-width
+<hr>): the logo already identifies the site, so each page now leads
+with a compact, left-aligned page name over a short brand-red rule.
+*/
+body .page-header {
+  padding: 1.25rem 0.5rem 0;
+  margin-bottom: 1rem;
+}
+body .page-header h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--conp-charcoal);
+}
+body .page-header::after {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 3px;
+  background: var(--conp-red);
+  border-radius: 2px;
+}
+/* Pages with no title (e.g. a future hero) collapse cleanly. */
+body .page-header:empty {
+  display: none;
+}
