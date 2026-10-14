@@ -421,3 +421,26 @@ body .conp-footer li {
 body .conp-footer .footer-link {
   color: #fff;
 }
+
+/*
+Funder logo. The Brain Canada logo has dark grey lettering on a
+transparent background, so it sits on a white plate to stay legible
+on the dark footer without altering the funder's official colours.
+*/
+body .conp-footer .conp-footer-funder {
+  display: inline-block;
+  background: #fff;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-top: 0.25rem;
+  line-height: 0;
+}
+body .conp-footer .conp-footer-funder img {
+  width: 200px;
+  max-width: 100%;
+  height: auto;
+}
+body .conp-footer .conp-footer-funder:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
