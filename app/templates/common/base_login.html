@@ -6,14 +6,6 @@
 {% endif %}
 {% endblock %}
 
-{% block title %}
-  {% if title %}
-    {{ title }}
-  {% else %}
-    CONP Data Portal: Login-Page
-  {% endif %}
-{% endblock %}
-
 {% block styles %}
 <link rel="icon" href="{{ url_for('static', filename='img/conp.ico') }}" type="image/x-icon" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" />

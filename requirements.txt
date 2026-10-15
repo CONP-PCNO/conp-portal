@@ -89,10 +89,6 @@ WTForms==2.2.1 ## Prod
 Flask==3.0.3 ## Prod
 # Flask==3.1.3
 
-## Flask-Bootstrap4
-## Flask extension that integrates the Bootstrap front-end framework into Jinja2 templates.
-Flask-Bootstrap4==4.0.2
-
 ## Flask-Dance
 ## Flask extension providing turnkey OAuth consumer support for logging in via services like Google and GitHub.
 ## aka flask_dance

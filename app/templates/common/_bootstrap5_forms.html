@@ -1,0 +1,46 @@
+{% macro form_field(field, placeholder=None) -%}
+  {% set is_checkbox = field.type == 'BooleanField' %}
+  {% set is_select = field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField'] %}
+  {% set control_class = 'form-check-input' if is_checkbox else 'form-select' if is_select else 'form-control' %}
+  {% set invalid_class = ' is-invalid' if field.errors else '' %}
+  <div class="mb-3">
+    {% if is_checkbox %}
+      <div class="form-check">
+        {{ field(class_=control_class ~ invalid_class) }}
+        {{ field.label(class_='form-check-label') }}
+      </div>
+    {% else %}
+      {{ field.label(class_='form-label') }}
+      {% if placeholder %}
+        {{ field(class_=control_class ~ invalid_class, placeholder=placeholder) }}
+      {% else %}
+        {{ field(class_=control_class ~ invalid_class) }}
+      {% endif %}
+    {% endif %}
+    {% if field.errors %}
+      {% for error in field.errors %}
+        <div class="invalid-feedback d-block">{{ error }}</div>
+      {% endfor %}
+    {% endif %}
+  </div>
+{%- endmacro %}
+
+{% macro form_errors(form, hiddens='only') -%}
+  {% set collected = namespace(items=[]) %}
+  {% for field in form %}
+    {% if field.errors and (hiddens != 'only' or field.widget.input_type == 'hidden') %}
+      {% for error in field.errors %}
+        {% set collected.items = collected.items + [error] %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+  {% if collected.items %}
+    <div class="alert alert-danger" role="alert">
+      <ul class="mb-0">
+        {% for error in collected.items %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{%- endmacro %}
