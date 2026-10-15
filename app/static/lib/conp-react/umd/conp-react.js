@@ -29558,10 +29558,12 @@ var DataTable_DataTable = function DataTable(_ref) {
     return f["key"] === "modalities";
   }).length > 0 ? filterKeys.filter(function (f) {
     return f["key"] === "modalities";
-  })[0]["values"].map(function (modality) {
+  })[0]["values"].map(function (modality, index) {
     return modality !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      key: modality.id,
-      className: "dropdown-item ml-2"
+      key: modality,
+      className: "dropdown-item"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "form-check"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
       className: "form-check-input",
       type: "checkbox",
@@ -29569,12 +29571,12 @@ var DataTable_DataTable = function DataTable(_ref) {
         return f["key"] === "modalities";
       })[0]["values"].includes(modality),
       value: "modalities." + modality,
-      id: "filter" + modality,
+      id: "filter-modalities-" + index,
       onChange: handleFiltersChange
     }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
       className: "form-check-label",
-      htmlFor: "filter" + modality
-    }, modality)) : null;
+      htmlFor: "filter-modalities-" + index
+    }, modality))) : null;
   }) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "dropdown"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
@@ -29592,10 +29594,12 @@ var DataTable_DataTable = function DataTable(_ref) {
     return f["key"] === "formats";
   }).length > 0 ? filterKeys.filter(function (f) {
     return f["key"] === "formats";
-  })[0]["values"].map(function (format) {
+  })[0]["values"].map(function (format, index) {
     return format !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      key: format.id,
-      className: "dropdown-item ml-2"
+      key: format,
+      className: "dropdown-item"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "form-check"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
       className: "form-check-input",
       type: "checkbox",
@@ -29603,12 +29607,12 @@ var DataTable_DataTable = function DataTable(_ref) {
         return f["key"] === "formats";
       })[0]["values"].includes(format),
       value: "formats." + format,
-      id: "filter" + format,
+      id: "filter-formats-" + index,
       onChange: handleFiltersChange
     }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
       className: "form-check-label",
-      htmlFor: "filter" + format
-    }, format)) : null;
+      htmlFor: "filter-formats-" + index
+    }, format))) : null;
   }) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "dropdown"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
@@ -29626,10 +29630,12 @@ var DataTable_DataTable = function DataTable(_ref) {
     return f["key"] === "authorizations";
   }).length > 0 ? filterKeys.filter(function (f) {
     return f["key"] === "authorizations";
-  })[0]["values"].map(function (authorizations) {
+  })[0]["values"].map(function (authorizations, index) {
     return authorizations !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      key: authorizations.id,
-      className: "dropdown-item ml-2"
+      key: authorizations,
+      className: "dropdown-item"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "form-check"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
       className: "form-check-input",
       type: "checkbox",
@@ -29637,12 +29643,12 @@ var DataTable_DataTable = function DataTable(_ref) {
         return f["key"] === "authorizations";
       })[0]["values"].includes(authorizations),
       value: "authorizations." + authorizations,
-      id: "filter" + authorizations,
+      id: "filter-authorizations-" + index,
       onChange: handleFiltersChange
     }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
       className: "form-check-label",
-      htmlFor: "filter" + authorizations
-    }, authorizations)) : null;
+      htmlFor: "filter-authorizations-" + index
+    }, authorizations))) : null;
   }) : null))) : renderElement.name === "PipelineElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex align-items-center p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
@@ -29664,10 +29670,12 @@ var DataTable_DataTable = function DataTable(_ref) {
     return f["key"] === "tags";
   }).length > 0 ? filterKeys.filter(function (f) {
     return f["key"] === "tags";
-  })[0]["values"].map(function (tag) {
+  })[0]["values"].map(function (tag, index) {
     return tag !== '' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      key: tag.id,
-      className: "dropdown-item ml-2"
+      key: tag,
+      className: "dropdown-item"
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      className: "form-check"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
       className: "form-check-input",
       type: "checkbox",
@@ -29675,12 +29683,12 @@ var DataTable_DataTable = function DataTable(_ref) {
         return f["key"] === "tags";
       })[0]["values"].includes(tag),
       value: "tags." + tag,
-      id: "filter" + tag,
+      id: "filter-tags-" + index,
       onChange: handleFiltersChange
     }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("label", {
       className: "form-check-label",
-      htmlFor: "filter" + tag
-    }, tag)) : null;
+      htmlFor: "filter-tags-" + index
+    }, tag))) : null;
   }) : null))) : null, renderElement.name === "PipelineElement" || renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("form", {
     className: "input-group m-2",
     onSubmit: function onSubmit(e) {
@@ -29761,7 +29769,7 @@ var DataTable_DataTable = function DataTable(_ref) {
       }));
     }
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
-    className: "input-group-append pr-2"
+    className: "input-group-append pe-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
     className: "input-group-text",
     id: "basic-addon2"
@@ -29790,9 +29798,9 @@ var DataTable_DataTable = function DataTable(_ref) {
   })))) : null), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex justify-content-between"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex justify-content-start align-items-center pb-1 pl-3 ml-4"
+    className: "d-flex justify-content-start align-items-center pb-1 ps-3 ms-4"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    key: "cbrain".id
+    className: "form-check"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
     className: "form-check-input",
     type: "checkbox",
@@ -29806,7 +29814,7 @@ var DataTable_DataTable = function DataTable(_ref) {
     className: "form-check-label",
     htmlFor: "filterCBRAIN"
   }, "Available on CBRAIN"))), renderElement.name === "DatasetElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex justify-content-end align-items-center pb-1 pr-3"
+    className: "d-flex justify-content-end align-items-center pb-1 pe-3"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     className: "text-reset px-1",
     href: "/sparql"
@@ -37756,7 +37764,7 @@ var ArkIdElement_ArkIdElement = function ArkIdElement(props) {
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card-list-item"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "card-text pr-1"
+    className: "card-text pe-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "ARK ID ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
     icon: faQuestionCircle,
     color: "dimgray",
@@ -37811,7 +37819,10 @@ var DownloadModalWindowElement_DownloadModalWindowElement = function DownloadMod
   var size = props.size,
     zipLocation = props.zipLocation;
   var close = function close(event) {
-    $("#downloadModal").modal("hide");
+    var el = typeof document !== 'undefined' ? document.getElementById('downloadModal') : null;
+    if (el && window.bootstrap) {
+      bootstrap.Modal.getOrCreateInstance(el).hide();
+    }
   };
   return react_dom["createPortal"](/*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "modal-content"
@@ -37879,7 +37890,10 @@ var CbrainModalDataset_CbrainModalDataset = function CbrainModalDataset(props) {
     cbrainIds = props.cbrainIds,
     title = props.title;
   var finish = function finish(event) {
-    $("#cbrainModal").modal("hide");
+    var el = typeof document !== 'undefined' ? document.getElementById('cbrainModal') : null;
+    if (el && window.bootstrap) {
+      bootstrap.Modal.getOrCreateInstance(el).hide();
+    }
   };
   var cbrain_param = cbrain_id;
   if (cbrain_param.includes("?id=")) {
@@ -37893,7 +37907,13 @@ var CbrainModalDataset_CbrainModalDataset = function CbrainModalDataset(props) {
     return pipelineUrl.split("/userfiles?")[1];
   };
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-    $("#cbrainModal").modal("handleUpdate");
+    var el = typeof document !== 'undefined' ? document.getElementById('cbrainModal') : null;
+    if (el && window.bootstrap) {
+      var inst = bootstrap.Modal.getOrCreateInstance(el);
+      if (inst && typeof inst.handleUpdate === 'function') {
+        inst.handleUpdate();
+      }
+    }
   });
   return react_dom["createPortal"](/*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "You're about to load ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, title), " on CBRAIN. Please select a pipeline to process this dataset (or \"None\" to load only the dataset)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Note that not all pipelines are compatible with all datasets."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Please ensure you're", " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     href: "https://portal.cbrain.mcgill.ca",
@@ -38058,19 +38078,31 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     setShowDownloadTipText(false);
   };
   var openCbrainModal = function openCbrainModal() {
-    $("#cbrainModal").modal("show");
+    var modalEl = document.getElementById('cbrainModal');
+    if (modalEl && window.bootstrap) {
+      bootstrap.Modal.getOrCreateInstance(modalEl).show();
+    }
     setCbrainModalOpen(true);
   };
-  $("#cbrainModal").on("hidden.bs.modal", function (event) {
-    return setCbrainModalOpen(false);
-  });
+  var _cbrainModalEl = typeof document !== 'undefined' ? document.getElementById('cbrainModal') : null;
+  if (_cbrainModalEl) {
+    _cbrainModalEl.addEventListener('hidden.bs.modal', function () {
+      setCbrainModalOpen(false);
+    });
+  }
   var openDownloadModal = function openDownloadModal() {
-    $("#downloadModal").modal("show");
+    var downloadEl = document.getElementById('downloadModal');
+    if (downloadEl && window.bootstrap) {
+      bootstrap.Modal.getOrCreateInstance(downloadEl).show();
+    }
     setDownloadModalOpen(true);
   };
-  $("#downloadModal").on("hidden.bs.modal", function (event) {
-    return setDownloadModalOpen(false);
-  });
+  var _downloadModalEl = typeof document !== 'undefined' ? document.getElementById('downloadModal') : null;
+  if (_downloadModalEl) {
+    _downloadModalEl.addEventListener('hidden.bs.modal', function () {
+      setDownloadModalOpen(false);
+    });
+  }
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "card container-fluid",
     "data-type": "dataset"
@@ -38174,7 +38206,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }, "Direct Download (Not Available)")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-2 p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "card-text pl-1"
+    className: "card-text ps-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
     icon: faQuestionCircle,
     color: "dimgray",
@@ -38205,7 +38237,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-2 p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "card-text pl-1"
+    className: "card-text ps-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
     icon: faQuestionCircle,
     color: "dimgray",
@@ -38229,7 +38261,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
     onClick: openCbrainModal,
     className: "btn btn-outline-success m-1"
   }, "Process On ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-    className: "cbrain-img justify-content-center align-items-center pl-2",
+    className: "cbrain-img justify-content-center align-items-center ps-2",
     src: "static/img/cbrain-long-logo-blue.png",
     style: {
       maxHeight: '30px'
@@ -38238,7 +38270,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   })) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-outline-secondary disabled m-1"
   }, "Process On", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-    className: "cbrain-img justify-content-center align-items-center pl-2",
+    className: "cbrain-img justify-content-center align-items-center ps-2",
     src: "static/img/cbrain-long-logo-grey.png",
     style: {
       maxHeight: '30px'
@@ -38247,7 +38279,7 @@ var DatasetElement_DatasetElement = function DatasetElement(props) {
   }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "col-2 p-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "card-text pl-1"
+    className: "card-text ps-1"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
     icon: faQuestionCircle,
     color: "dimgray",
@@ -38367,14 +38399,23 @@ var CbrainModalPipeline_CbrainModalPipeline = function CbrainModalPipeline(props
     title = props.title,
     cbrainIds = props.cbrainIds;
   var finish = function finish(event) {
-    $("#cbrainModal").modal("hide");
+    var el = typeof document !== 'undefined' ? document.getElementById('cbrainModal') : null;
+    if (el && window.bootstrap) {
+      bootstrap.Modal.getOrCreateInstance(el).hide();
+    }
   };
   var baseUrl = platforms[0].uri;
   var getDatasetId = function getDatasetId(datasetUrl) {
     return "switch_group_id=" + (datasetUrl === null || datasetUrl === void 0 ? void 0 : datasetUrl.split("%3Fid%3D")[1]);
   };
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-    $("#cbrainModal").modal("handleUpdate");
+    var el = typeof document !== 'undefined' ? document.getElementById('cbrainModal') : null;
+    if (el && window.bootstrap) {
+      var inst = bootstrap.Modal.getOrCreateInstance(el);
+      if (inst && typeof inst.handleUpdate === 'function') {
+        inst.handleUpdate();
+      }
+    }
   });
   return react_dom["createPortal"](/*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "You're about to launch ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, title), " on CBRAIN. Please select a dataset to process with this pipeline (or \"None\" to load only the pipeline)."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Note that not all pipelines are compatible with all datasets."), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Please ensure you're", " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
     href: "https://portal.cbrain.mcgill.ca",
@@ -38477,12 +38518,18 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     cbrainModalOpen = _useState4[0],
     setCbrainModalOpen = _useState4[1];
   var openCbrainModal = function openCbrainModal(datasetTitle, datasetUrl, pipelineTitle, pipelineUrl) {
-    $("#cbrainModal").modal("show");
+    var modalEl = document.getElementById('cbrainModal');
+    if (modalEl && window.bootstrap) {
+      bootstrap.Modal.getOrCreateInstance(modalEl).show();
+    }
     setCbrainModalOpen(true);
   };
-  $("#cbrainModal").on("hidden.bs.modal", function (event) {
-    return setCbrainModalOpen(false);
-  });
+  var _cbrainModalEl = typeof document !== 'undefined' ? document.getElementById('cbrainModal') : null;
+  if (_cbrainModalEl) {
+    _cbrainModalEl.addEventListener('hidden.bs.modal', function () {
+      setCbrainModalOpen(false);
+    });
+  }
   var handleCrainMouseEnter = function handleCrainMouseEnter(e) {
     setShowCbrainTipText(true);
   };
@@ -38498,7 +38545,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
       className: "btn btn-outline-success m-1",
       onClick: openCbrainModal
     }, "Use On ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-      className: "cbrain-img justify-content-center align-items-center pl-2",
+      className: "cbrain-img justify-content-center align-items-center ps-2",
       src: "static/img/cbrain-long-logo-blue.png",
       style: {
         maxHeight: '30px'
@@ -38507,7 +38554,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     })) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
       className: "btn btn-outline-secondary disabled m-1"
     }, "Use On", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-      className: "cbrain-img justify-content-center align-items-center pl-2",
+      className: "cbrain-img justify-content-center align-items-center ps-2",
       src: "static/img/cbrain-long-logo-grey.png",
       style: {
         maxHeight: '30px'
@@ -38516,7 +38563,7 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: "col-2 p-2"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-      className: "card-text pl-1"
+      className: "card-text ps-1"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FontAwesomeIcon, {
       icon: faQuestionCircle,
       color: "dimgray",
@@ -38589,12 +38636,12 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Tags: "), element.tags && element.tags.domain ? Array.isArray(element.tags.domain) ? element.tags.domain.map(function (tag) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
       key: "tag" + tag,
-      className: "mr-1"
+      className: "me-1"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
-      className: "badge badge-primary"
+      className: "badge bg-primary"
     }, tag.toLowerCase()));
   }) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
-    className: "badge badge-primary"
+    className: "badge bg-primary"
   }, element.tags.domain.toLowerCase())) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
     className: "d-flex align-items-start"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
@@ -40012,18 +40059,18 @@ var ChartContainer_ChartContainer = function ChartContainer(props) {
   }, showToggle ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-row-reverse"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "dropdown show mt-2 mr-2",
+    className: "dropdown show mt-2 me-2",
     style: {
       zIndex: 1
     }
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "btn btn-secondary btn-sm dropdown-toggle",
     id: "dropdownMenuLink",
-    "data-toggle": "dropdown",
+    "data-bs-toggle": "dropdown",
     "aria-haspopup": "true",
     "aria-expanded": "false"
   }, "Select Chart"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "dropdown-menu dropdown-menu-right",
+    className: "dropdown-menu dropdown-menu-end",
     "aria-labelledby": "dropdownMenuLink"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
     className: "dropdown-item",
