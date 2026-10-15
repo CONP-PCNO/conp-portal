@@ -354,7 +354,7 @@ const elements = document.querySelectorAll(".code-snippet");
   ReactDOM.render(
     React.createElement(
       CONPReact.CodeSnippet,
-      {code: $(el).data('code')},
+      {code: JSON.parse(el.dataset.code)},
     ),
     el
   )
