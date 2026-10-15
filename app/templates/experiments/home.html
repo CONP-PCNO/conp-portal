@@ -12,11 +12,14 @@
 {% block appcontent %}
 <div id="experiments-home"></div>
 <script>
-  const { ExperimentsHomePage, React, ReactDOM } = CONP;
-  const element = React.createElement(ExperimentsHomePage, {
-    searchPageUrl: "{{ url_for('experiments.search') }}",
-    submitPageUrl: "{{ url_for('main.dats_editor') }}"
-  })
-  ReactDOM.render(element, document.getElementById('experiments-home'));
+  // The bundle is loaded with defer, so wait until it has run.
+  document.addEventListener('DOMContentLoaded', function () {
+    const { ExperimentsHomePage, React, ReactDOM } = CONP;
+    const element = React.createElement(ExperimentsHomePage, {
+      searchPageUrl: "{{ url_for('experiments.search') }}",
+      submitPageUrl: "{{ url_for('main.dats_editor') }}"
+    })
+    ReactDOM.render(element, document.getElementById('experiments-home'));
+  });
 </script>
 {% endblock %}

@@ -15,14 +15,17 @@
   {{ experiment|tojson|safe }}
 </script>
 <script>
-  const { ExperimentPage, React, ReactDOM } = CONP;
-  const experimentData = JSON.parse(document.getElementById('experiment-data').textContent);
-  console.log('experimentData', experimentData)
-    const element = React.createElement(ExperimentPage, {
-    experiment: experimentData,
-    downloadLink: "{{ url_for('experiments.download', experiment_id=experiment.id) }}",
-    readme: `{{ readme|safe }}`
+  // The bundle is loaded with defer, so wait until it has run.
+  document.addEventListener('DOMContentLoaded', function () {
+    const { ExperimentPage, React, ReactDOM } = CONP;
+    const experimentData = JSON.parse(document.getElementById('experiment-data').textContent);
+    console.log('experimentData', experimentData)
+      const element = React.createElement(ExperimentPage, {
+      experiment: experimentData,
+      downloadLink: "{{ url_for('experiments.download', experiment_id=experiment.id) }}",
+      readme: `{{ readme|safe }}`
+    });
+    ReactDOM.render(element, document.getElementById('experiment-page'));
   });
-  ReactDOM.render(element, document.getElementById('experiment-page'));
 </script>
 {% endblock %}
