@@ -72,9 +72,12 @@
         if (el) { bootstrap.Modal.getOrCreateInstance(el).show(); }
       });
     });
-    $(".btnShowTermsOfUse").on("click", function (event) {
-      event.preventDefault();
-      $("#termsModal").modal("show");
+    document.querySelectorAll('.btnShowTermsOfUse').forEach(function(btn) {
+      btn.addEventListener('click', function(event) {
+        event.preventDefault();
+        var el = document.getElementById('termsModal');
+        if (el) { bootstrap.Modal.getOrCreateInstance(el).show(); }
+      });
     });
   });
 </script>

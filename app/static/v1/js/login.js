@@ -1,4 +1,4 @@
-$( document ).ready(function() {
+function initializeLoginProfile() {
     // DOM ready
 
     // Test data
@@ -11,7 +11,13 @@ $( document ).ready(function() {
     // testLocalStorageData();
     // Load profile if it exits
     loadProfile();
-});
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener('DOMContentLoaded', initializeLoginProfile);
+} else {
+    initializeLoginProfile();
+}
 
 /**
  * Function that gets the data of the profile in case
@@ -43,11 +49,16 @@ function loadProfile() {
     // information to set the profile
     getLocalProfile(function(profileImgSrc, profileName, profileReAuthEmail) {
         //changes in the UI
-        $("#profile-img").attr("src",profileImgSrc);
-        $("#profile-name").html(profileName);
-        $("#reauth-email").html(profileReAuthEmail);
-        $("#inputEmail").hide();
-        $("#remember").hide();
+        var profileImage = document.getElementById("profile-img");
+        var profileNameElement = document.getElementById("profile-name");
+        var reauthEmail = document.getElementById("reauth-email");
+        var inputEmail = document.getElementById("inputEmail");
+        var remember = document.getElementById("remember");
+        if (profileImage) profileImage.src = profileImgSrc;
+        if (profileNameElement) profileNameElement.textContent = profileName;
+        if (reauthEmail) reauthEmail.textContent = profileReAuthEmail;
+        if (inputEmail) inputEmail.style.display = "none";
+        if (remember) remember.style.display = "none";
     });
 }
 

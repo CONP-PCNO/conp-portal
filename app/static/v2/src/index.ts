@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom';
 
 import './styles/main.scss';
 
-import 'jquery';
-import 'popper.js';
-
 export { React, ReactDOM };
 
 export * from './features';
