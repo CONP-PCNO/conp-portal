@@ -12,6 +12,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 ### Fixed
 
+## [1.1.1-rc.2]
+
+### Bootstrap 5.3.8
+
+- Migrates portal templates and frontend components to Bootstrap 5.3.8, including responsive navigation, modal/collapse/tooltip/alert attributes and APIs, and Bootstrap 5 utility classes.
+- Removes duplicate Bootstrap JavaScript, aligns the v2 Bootstrap dependency, and consolidates Bootstrap CSS loading through the shared template.
+- Replaces active jQuery modal, login, and dataset data-access code with native DOM and Bootstrap APIs; removes unused jQuery/Popper 1 dependencies and legacy multiselect/DataTables assets.
+- Fixes checkbox alignment and label associations in dataset, pipeline, and experiment filter dropdowns.
+- Removes the unused Bootstrap dependency from the CONP React package and rebuilds its UMD output.
+- Replaces Flask-Bootstrap4 form macros with Bootstrap 5 Jinja helpers for authentication and profile pages, updates validation/checkbox styling, and removes the Flask-Bootstrap4 extension.
+- Corrects the profile roles field's duplicate nested label in the native multiple-select control.
+
 ## [1.1.0] - 2026-10-07
 
 This release prepares CONP Portal for a modern Python and deployment toolchain. It upgrades the project’s supported runtime and framework stack, adds reproducible dependency management and GitHub Actions CI, replaces legacy deployment/CI configuration, modernizes Docker setup and tests, fixes compatibility issues, and refreshes project documentation.
