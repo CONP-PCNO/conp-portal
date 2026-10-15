@@ -2,9 +2,14 @@
 
 # Ensure `fnm` is installed and available in the PATH
 if ! command -v fnm &> /dev/null; then
-    echo "fnm is not installed or not in PATH"
+    echo "fnm is not installed or not in PATH."
+    echo "Please install Fast Node Manager (fnm) and ensure it's available in your PATH."
+    echo "Installation instructions: "
+    echo "curl -fsSL https://fnm.vercel.app/install | bash"
+    echo "After installation, restart your terminal or run 'source ~/.bashrc' (or equivalent) to load fnm."
     exit 1
 fi
+
 # set -euo pipefail
 ROOT_DIR=$(dirname "$0")/../  # Adjust this path as necessary to point to the root of your project
 cd "$ROOT_DIR" || exit 1
