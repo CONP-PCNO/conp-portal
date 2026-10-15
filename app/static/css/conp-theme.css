@@ -4,11 +4,10 @@ CONP Portal theme layer — design tokens + Bootstrap overrides
 =============================================================
 Loaded from base_main.html AFTER the Bootstrap CDN stylesheet, so its
 rules win over Bootstrap defaults at equal specificity. The v2 webpack
-bundle also injects its compiled Sass into <head> at runtime, AFTER
-this file — and that Sass bundles its own copy of Bootstrap (v5, from
-npm), so plain class selectors here would lose to it on document order.
-Every override therefore carries higher specificity (a leading `body`)
-or a justified `!important` (each one is commented).
+bundle injects portal-specific Sass into <head> at runtime, after this
+file; it no longer bundles a second copy of Bootstrap. Existing theme
+overrides retain their higher specificity or justified `!important`
+where needed to take precedence over the later portal-specific rules.
 
 This file is the single place for CONP brand decisions. The intent is
 that the legacy accents (`#ff0000`, Bootstrap green/teal/blue) migrate
