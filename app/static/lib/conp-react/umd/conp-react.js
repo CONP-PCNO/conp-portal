@@ -38494,12 +38494,18 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "flex-grow-1 d-flex flex-column justify-content-center align-items-center pb-3"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", {
-    alt: "dataset format",
+    alt: element.icon ? element.icon.label + " logo" : "Tool",
+    title: element.icon ? element.icon.label : undefined,
     className: "img-fluid p-2",
+    "data-testid": "tool-icon",
     style: {
-      maxWidth: '140px'
+      maxWidth: '140px',
+      maxHeight: '112px',
+      width: 'auto',
+      height: 'auto',
+      objectFit: 'contain'
     },
-    src: "static/img/cogs-solid-grey.png"
+    src: element.icon ? element.icon.src : "static/img/cogs-solid-grey.png"
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "d-flex flex-grow-2 flex-row justify-content-center align-items-end"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(social_ViewsIcon, {
@@ -38590,6 +38596,10 @@ PipelineElement_PipelineElement.propTypes = {
   img: prop_types_default.a.string,
   imagePath: prop_types_default.a.string,
   cbrainIds: prop_types_default.a.arrayOf(prop_types_default.a.Object),
+  icon: prop_types_default.a.shape({
+    src: prop_types_default.a.string,
+    label: prop_types_default.a.string
+  }),
   cbrain: prop_types_default.a.shape({
     tool: prop_types_default.a.string,
     software: prop_types_default.a.string,

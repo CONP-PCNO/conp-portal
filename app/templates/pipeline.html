@@ -14,7 +14,10 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 {% endblock %} {% block contenttitle %}
 <div class="search-header page-title">
-  <h2>{{ pipeline.title }}</h2>
+  <h2>
+    {% if pipeline.icon and not pipeline.icon.generic %}<img src="{{ pipeline.icon.src }}" alt="{{ pipeline.icon.label }} logo" title="{{ pipeline.icon.label }}"
+      style="max-height: 48px; max-width: 64px; width: auto; height: auto; object-fit: contain; vertical-align: middle; margin-right: 0.75rem;" />{% endif %}{{ pipeline.title }}
+  </h2>
 </div>
 {% endblock %} {% block appcontent %}
 <div id="mount-display" class="pipeline p-4"></div>

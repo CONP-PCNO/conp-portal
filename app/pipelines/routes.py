@@ -34,6 +34,46 @@ def get_cbrain_availability():
     return availability
 
 
+def get_tool_icons():
+    """ Map Zenodo ids of tools to the icon shown on their card: the logo of
+        the software the tool is (FreeSurfer, FSL, ...), read from
+        app/static/pipelines/tool-icons.json. Tools that are not mapped to a
+        family get the file's "default" entry, the CONP generic tool icon.
+
+        Returns:
+            tuple: ({zenodo_id: {"src": str, "label": str}},
+                    {"src": str, "label": str, "generic": True} or None when
+                    the file has no "default" entry)
+    """
+    with open(os.path.join(os.getcwd(), "app/static/pipelines/tool-icons.json")) as f:
+        data = json.load(f)
+    families = data.get("families", {})
+    icons = {}
+    for zenodo_id, family in data.get("pipelines", {}).items():
+        info = families.get(family)
+        if not info or not info.get("img"):
+            continue
+        icons[zenodo_id] = {
+            "src": url_for('static', filename=info["img"]),
+            "label": info.get("label", family),
+        }
+    default = data.get("default") or {}
+    default_icon = None
+    if default.get("img"):
+        default_icon = {
+            "src": url_for('static', filename=default["img"]),
+            "label": default.get("label", "Tool"),
+            "generic": True,
+        }
+    return icons, default_icon
+
+
+def tool_icon(zenodo_id, icons, default_icon):
+    """ The icon for one tool: its family's logo, else the generic icon. """
+    icon = icons.get(zenodo_id) or default_icon
+    return dict(icon) if icon else None
+
+
 @pipelines_bp.route('/pipelines', methods=['GET'])
 def pipelines():
     """ Pipelines Route
@@ -176,9 +216,11 @@ def pipeline_search():
     with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json")) as f:
         zenodo_urls = json.load(f)
     cbrain_availability = get_cbrain_availability()
+    tool_icons, default_tool_icon = get_tool_icons()
 
     for element in elements_on_page:
         element["cbrain"] = cbrain_availability.get(element["id"])
+        element["icon"] = tool_icon(element["id"], tool_icons, default_tool_icon)
         element["platforms"] = [{} for x in range(1)]
         element["platforms"][0]["img"] = url_for(
             'static', filename="img/run_on_cbrain_gray.png")
@@ -307,6 +349,7 @@ def pipeline_info():
         zenodo_urls = json.load(f)
 
     element["cbrain"] = get_cbrain_availability().get(element["id"])
+    element["icon"] = tool_icon(element["id"], *get_tool_icons())
 
     if element["id"] in zenodo_urls.keys():
         element["platforms"][0]["img"] = url_for(
