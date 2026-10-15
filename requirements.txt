@@ -152,7 +152,7 @@ alembic==1.14.1 ## Prod
 # alembic==1.19.1
 
 ## Robust testing framework that makes it easy to write small, readable scripts and scale to complex functional testing.
-pytest==8.3.5 ## Prod
+pytest==9.1.1 ## Prod
 # pytest==9.1.1
 
 # Gunicorn
