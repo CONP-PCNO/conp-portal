@@ -31,6 +31,7 @@ for dir in "${PROJECT_DIRS[@]}"; do
         # Load the Node.js version specified in .node-version using fnm
         if [ -f ".node-version" ]; then
             NODE_VERSION=$(cat .node-version)
+            fnm install "$NODE_VERSION"
             fnm use "$NODE_VERSION"
         else
             echo ".node-version file not found. Please create one with the desired Node.js version"
