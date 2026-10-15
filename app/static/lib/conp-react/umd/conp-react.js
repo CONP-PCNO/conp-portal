@@ -52013,7 +52013,7 @@ var NativeSelect_styles = function styles(theme) {
     }
   };
 };
-var NativeSelect_defaultInput = /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"](esm_Input_Input, null);
+var defaultInput = /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"](esm_Input_Input, null);
 /**
  * An alternative to `<Select native />` with a much smaller bundle size footprint.
  */
@@ -52024,7 +52024,7 @@ var NativeSelect_NativeSelect = /*#__PURE__*/external_root_React_commonjs2_react
       _props$IconComponent = props.IconComponent,
       IconComponent = _props$IconComponent === void 0 ? ArrowDropDown : _props$IconComponent,
       _props$input = props.input,
-      input = _props$input === void 0 ? NativeSelect_defaultInput : _props$input,
+      input = _props$input === void 0 ? defaultInput : _props$input,
       inputProps = props.inputProps,
       variant = props.variant,
       other = Object(esm_objectWithoutProperties["a" /* default */])(props, ["children", "classes", "IconComponent", "input", "inputProps", "variant"]);
@@ -139003,7 +139003,7 @@ function JsonTextField(props) {
   }, fieldProps));
 }
 
-var index_modern_useStyles$1 = styles_makeStyles(function (theme) {
+var index_modern_useStyles$1 = styles_makeStyles(function () {
   return {
     formControl: {
       minWidth: 220
@@ -139015,24 +139015,24 @@ function HybridSelectTextField(props) {
     label = props.label,
     options = props.options,
     inputProps = props.inputProps;
-  var value = field.value;
-  var validOption = value === '' || Object.values(options).includes(value);
-  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(!validOption),
+  var _useFormikContext = useFormikContext(),
+    touched = _useFormikContext.touched,
+    errors = _useFormikContext.errors,
+    values = _useFormikContext.values;
+  var meta = useField(field.name)[1];
+  var _useField$ = useField(field.name)[2],
+    setValue = _useField$.setValue,
+    setTouched = _useField$.setTouched;
+  var value = getIn(values, field.name);
+  var errorText = getIn(touched, field.name) && getIn(errors, field.name);
+  var showError = !!errorText && (!value || value === '');
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(value === 'other'),
     useTextInput = _useState[0],
     setUseTextInput = _useState[1];
-  var defaultSelect = useTextInput ? 'other' : value;
-  var defaultInput = useTextInput ? value : '';
   var classes = index_modern_useStyles$1();
-  function setValue(newVal) {
-    field.onChange({
-      target: {
-        name: field.name,
-        value: newVal
-      }
-    });
-  }
   var handleSelect = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (ev) {
     var newVal = ev.target.value;
+    setTouched(true);
     if (newVal === 'other') {
       setUseTextInput(true);
       setValue('');
@@ -139040,38 +139040,46 @@ function HybridSelectTextField(props) {
       setUseTextInput(false);
       setValue(newVal);
     }
-  }, [setUseTextInput, setValue]);
+  }, [setUseTextInput, setValue, setTouched]);
   Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-    if (!validOption) {
-      setUseTextInput(true);
+    if (!Object.values(options).includes(value)) {
+      setUseTextInput(false);
     }
-  });
+  }, [value, options]);
   return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
     my: 1
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormControl_FormControl, {
     className: classes.formControl,
-    variant: "outlined"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_InputLabel_InputLabel, null, label), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Select_Select, index_modern_extends({}, inputProps, {
+    variant: "outlined",
+    error: showError
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_InputLabel_InputLabel, null, label), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Select_Select, index_modern_extends({}, field, inputProps, {
     label: label,
     onChange: handleSelect,
-    value: defaultSelect
-  }), Object.entries(options).map(function (option) {
-    var optionValue = option[0],
-      optionLabel = option[1];
+    value: value || ''
+  }), Object.entries(options).map(function (_ref) {
+    var optionValue = _ref[0],
+      optionLabel = _ref[1];
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
       key: optionValue,
       value: optionValue
     }, optionLabel);
-  })))), Boolean(useTextInput) && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
+  }), !Object.values(options).includes("Other (Please Specify)") && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+    key: "other",
+    value: "other"
+  }, "Other (Please Specify)")), showError && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormHelperText_FormHelperText, null, errorText))), useTextInput && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
     my: 1
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_TextField_TextField, index_modern_extends({
     fullWidth: true,
     onChange: function onChange(ev) {
       return setValue(ev.target.value);
     },
-    value: defaultInput,
+    value: value || '',
     variant: "outlined"
-  }, inputProps))));
+  }, inputProps, {
+    name: field.name,
+    error: showError,
+    helperText: errorText
+  }))));
 }
 
 function JsonOtherSelectField(props) {
@@ -141433,7 +141441,14 @@ var DatsToForm = /*#__PURE__*/function () {
   }
   var _proto = DatsToForm.prototype;
   _proto.getJson = function getJson() {
-    var _this$data$extraPrope, _this$data$keywords, _this$data$distributi, _this$data$distributi2, _this$data$distributi3, _this$data$distributi4, _this$data$distributi5, _this$data$distributi6, _this$data$distributi7, _this$data$distributi8, _this$data$distributi9, _this$data$distributi10, _this$data$extraPrope2, _this$data$extraPrope3, _this$data$extraPrope4, _this$data$extraPrope5, _this$data$extraPrope6, _this$data$extraPrope7, _this$data$extraPrope8, _this$data$extraPrope9, _this$data$extraPrope10, _this$data$extraPrope11, _this$data$extraPrope12, _this$data$extraPrope13, _this$data$extraPrope14, _this$data$extraPrope15, _this$data$extraPrope16, _this$data$extraPrope17, _this$data$extraPrope18, _this$data$extraPrope19, _this$data$extraPrope20, _this$data$extraPrope21, _this$data$extraPrope22, _this$data$dimensions, _this$data$extraPrope23, _this$data$extraPrope24, _this$data$dates, _this$data$isAbout, _this$data$acknowledg, _this$data$extraPrope25, _this$data$extraPrope26, _readExtraProperties;
+    var _this$data$extraPrope, _this$data$extraPrope2, _this$data$keywords, _this$data$distributi, _this$data$distributi2, _this$data$distributi3, _this$data$distributi4, _this$data$distributi5, _this$data$distributi6, _this$data$distributi7, _this$data$distributi8, _this$data$distributi9, _this$data$distributi10, _this$data$extraPrope3, _this$data$extraPrope4, _this$data$extraPrope5, _this$data$extraPrope6, _this$data$extraPrope7, _this$data$extraPrope8, _this$data$extraPrope9, _this$data$extraPrope10, _this$data$extraPrope11, _this$data$extraPrope12, _this$data$extraPrope13, _this$data$extraPrope14, _this$data$extraPrope15, _this$data$extraPrope16, _this$data$extraPrope17, _this$data$extraPrope18, _this$data$extraPrope19, _this$data$extraPrope20, _this$data$dimensions, _this$data$extraPrope21, _this$data$extraPrope22, _this$data$dates, _this$data$isAbout, _this$data$acknowledg, _this$data$extraPrope23, _this$data$extraPrope24, _readExtraProperties;
+    var subjectsProperty = ((_this$data$extraPrope = this.data.extraProperties) === null || _this$data$extraPrope === void 0 ? void 0 : _this$data$extraPrope.find(function (p) {
+      return p.category === 'subjects';
+    })) || {
+      values: [{
+        value: "N/A"
+      }]
+    };
     var json = {
       title: this.data.title || '',
       creators: this.data.creators.map(function (a) {
@@ -141444,9 +141459,9 @@ var DatsToForm = /*#__PURE__*/function () {
           orcid: (_a$extraProperties = a.extraProperties) === null || _a$extraProperties === void 0 ? void 0 : (_a$extraProperties$0$ = _a$extraProperties[0].values) === null || _a$extraProperties$0$ === void 0 ? void 0 : _a$extraProperties$0$[0].value
         });
       }) || [],
-      contact: ((_this$data$extraPrope = this.data.extraProperties.filter(function (p) {
+      contact: ((_this$data$extraPrope2 = this.data.extraProperties.filter(function (p) {
         return p.category === 'contact';
-      })[0]) === null || _this$data$extraPrope === void 0 ? void 0 : _this$data$extraPrope.values.map(function (a) {
+      })[0]) === null || _this$data$extraPrope2 === void 0 ? void 0 : _this$data$extraPrope2.values.map(function (a) {
         var split = a.value.split(', ');
         var contact = {
           name: split[0]
@@ -141476,65 +141491,62 @@ var DatsToForm = /*#__PURE__*/function () {
         units: ((_this$data$distributi3 = this.data.distributions[0]) === null || _this$data$distributi3 === void 0 ? void 0 : (_this$data$distributi4 = _this$data$distributi3.unit) === null || _this$data$distributi4 === void 0 ? void 0 : _this$data$distributi4.value.toUpperCase()) || ''
       },
       access: {
-        landingPage: ((_this$data$distributi5 = this.data.distributions[0]) === null || _this$data$distributi5 === void 0 ? void 0 : (_this$data$distributi6 = _this$data$distributi5.access) === null || _this$data$distributi6 === void 0 ? void 0 : _this$data$distributi6.landingPage) || '',
+        landingPage: ((_this$data$distributi5 = this.data.distributions[0]) === null || _this$data$distributi5 === void 0 ? void 0 : (_this$data$distributi6 = _this$data$distributi5.access) === null || _this$data$distributi6 === void 0 ? void 0 : _this$data$distributi6.landingPage) || 'N/A',
         authorization: ((_this$data$distributi7 = this.data.distributions[0]) === null || _this$data$distributi7 === void 0 ? void 0 : (_this$data$distributi8 = _this$data$distributi7.access) === null || _this$data$distributi8 === void 0 ? void 0 : (_this$data$distributi9 = _this$data$distributi8.authorizations) === null || _this$data$distributi9 === void 0 ? void 0 : (_this$data$distributi10 = _this$data$distributi9[0]) === null || _this$data$distributi10 === void 0 ? void 0 : _this$data$distributi10.value) || 'public'
       },
       privacy: this.data.privacy || '',
-      files: ((_this$data$extraPrope2 = this.data.extraProperties) === null || _this$data$extraPrope2 === void 0 ? void 0 : (_this$data$extraPrope3 = _this$data$extraPrope2.filter(function (p) {
+      files: ((_this$data$extraPrope3 = this.data.extraProperties) === null || _this$data$extraPrope3 === void 0 ? void 0 : (_this$data$extraPrope4 = _this$data$extraPrope3.filter(function (p) {
         return p.category === 'files';
-      })[0]) === null || _this$data$extraPrope3 === void 0 ? void 0 : _this$data$extraPrope3.values.map(function (a) {
+      })[0]) === null || _this$data$extraPrope4 === void 0 ? void 0 : _this$data$extraPrope4.values.map(function (a) {
         return a.value;
       })[0]) || '',
       subjects: {
-        applicable: (_this$data$extraPrope4 = this.data.extraProperties) !== null && _this$data$extraPrope4 !== void 0 && _this$data$extraPrope4.filter(function (p) {
-          return p.category === 'subjects';
-        })[0] ? readExtraProperties(this.data, 'experimentLanguages') === null || readExtraProperties(this.data, 'experimentLanguages').length === 0 : false,
-        value: ((_this$data$extraPrope5 = this.data.extraProperties) === null || _this$data$extraPrope5 === void 0 ? void 0 : (_this$data$extraPrope6 = _this$data$extraPrope5.filter(function (p) {
-          return p.category === 'subjects';
-        })[0]) === null || _this$data$extraPrope6 === void 0 ? void 0 : _this$data$extraPrope6.values.map(function (a) {
-          return a.value === 'N/A' ? null : parseInt(a.value, 10);
-        })[0]) || null
+        applicable: subjectsProperty.values.length > 0,
+        value: subjectsProperty.values.map(function (a) {
+          var parsedValue = parseInt(a.value, 10);
+          return isNaN(parsedValue) || parsedValue <= 0 ? null : parsedValue;
+        })[0] || null
       },
-      conpStatus: ((_this$data$extraPrope7 = this.data.extraProperties) === null || _this$data$extraPrope7 === void 0 ? void 0 : (_this$data$extraPrope8 = _this$data$extraPrope7.filter(function (p) {
+      conpStatus: ((_this$data$extraPrope5 = this.data.extraProperties) === null || _this$data$extraPrope5 === void 0 ? void 0 : (_this$data$extraPrope6 = _this$data$extraPrope5.filter(function (p) {
         return p.category === 'CONP_status';
-      })[0]) === null || _this$data$extraPrope8 === void 0 ? void 0 : _this$data$extraPrope8.values.map(function (a) {
+      })[0]) === null || _this$data$extraPrope6 === void 0 ? void 0 : _this$data$extraPrope6.values.map(function (a) {
         return a.value;
       })[0]) || '',
       origin: {
-        institution: ((_this$data$extraPrope9 = this.data.extraProperties) === null || _this$data$extraPrope9 === void 0 ? void 0 : (_this$data$extraPrope10 = _this$data$extraPrope9.filter(function (p) {
+        institution: ((_this$data$extraPrope7 = this.data.extraProperties) === null || _this$data$extraPrope7 === void 0 ? void 0 : (_this$data$extraPrope8 = _this$data$extraPrope7.filter(function (p) {
           return p.category === 'origin_institution';
+        })[0]) === null || _this$data$extraPrope8 === void 0 ? void 0 : _this$data$extraPrope8.values.map(function (a) {
+          return a.value;
+        })[0]) || '',
+        consortium: ((_this$data$extraPrope9 = this.data.extraProperties) === null || _this$data$extraPrope9 === void 0 ? void 0 : (_this$data$extraPrope10 = _this$data$extraPrope9.filter(function (p) {
+          return p.category === 'origin_consortium';
         })[0]) === null || _this$data$extraPrope10 === void 0 ? void 0 : _this$data$extraPrope10.values.map(function (a) {
           return a.value;
         })[0]) || '',
-        consortium: ((_this$data$extraPrope11 = this.data.extraProperties) === null || _this$data$extraPrope11 === void 0 ? void 0 : (_this$data$extraPrope12 = _this$data$extraPrope11.filter(function (p) {
-          return p.category === 'origin_consortium';
+        city: ((_this$data$extraPrope11 = this.data.extraProperties) === null || _this$data$extraPrope11 === void 0 ? void 0 : (_this$data$extraPrope12 = _this$data$extraPrope11.filter(function (p) {
+          return p.category === 'origin_city';
         })[0]) === null || _this$data$extraPrope12 === void 0 ? void 0 : _this$data$extraPrope12.values.map(function (a) {
           return a.value;
         })[0]) || '',
-        city: ((_this$data$extraPrope13 = this.data.extraProperties) === null || _this$data$extraPrope13 === void 0 ? void 0 : (_this$data$extraPrope14 = _this$data$extraPrope13.filter(function (p) {
-          return p.category === 'origin_city';
+        province: ((_this$data$extraPrope13 = this.data.extraProperties) === null || _this$data$extraPrope13 === void 0 ? void 0 : (_this$data$extraPrope14 = _this$data$extraPrope13.filter(function (p) {
+          return p.category === 'origin_province';
         })[0]) === null || _this$data$extraPrope14 === void 0 ? void 0 : _this$data$extraPrope14.values.map(function (a) {
           return a.value;
         })[0]) || '',
-        province: ((_this$data$extraPrope15 = this.data.extraProperties) === null || _this$data$extraPrope15 === void 0 ? void 0 : (_this$data$extraPrope16 = _this$data$extraPrope15.filter(function (p) {
-          return p.category === 'origin_province';
-        })[0]) === null || _this$data$extraPrope16 === void 0 ? void 0 : _this$data$extraPrope16.values.map(function (a) {
-          return a.value;
-        })[0]) || '',
-        country: ((_this$data$extraPrope17 = this.data.extraProperties) === null || _this$data$extraPrope17 === void 0 ? void 0 : (_this$data$extraPrope18 = _this$data$extraPrope17.filter(function (p) {
+        country: ((_this$data$extraPrope15 = this.data.extraProperties) === null || _this$data$extraPrope15 === void 0 ? void 0 : (_this$data$extraPrope16 = _this$data$extraPrope15.filter(function (p) {
           return p.category === 'origin_country';
-        })[0]) === null || _this$data$extraPrope18 === void 0 ? void 0 : _this$data$extraPrope18.values.map(function (a) {
+        })[0]) === null || _this$data$extraPrope16 === void 0 ? void 0 : _this$data$extraPrope16.values.map(function (a) {
           return a.value;
         })[0]) || ''
       },
-      derivedFrom: ((_this$data$extraPrope19 = this.data.extraProperties) === null || _this$data$extraPrope19 === void 0 ? void 0 : (_this$data$extraPrope20 = _this$data$extraPrope19.filter(function (p) {
+      derivedFrom: ((_this$data$extraPrope17 = this.data.extraProperties) === null || _this$data$extraPrope17 === void 0 ? void 0 : (_this$data$extraPrope18 = _this$data$extraPrope17.filter(function (p) {
         return p.category === 'derivedFrom';
-      })[0]) === null || _this$data$extraPrope20 === void 0 ? void 0 : _this$data$extraPrope20.values.map(function (a) {
+      })[0]) === null || _this$data$extraPrope18 === void 0 ? void 0 : _this$data$extraPrope18.values.map(function (a) {
         return a.value;
       })[0]) || '',
-      parentDatasetId: ((_this$data$extraPrope21 = this.data.extraProperties) === null || _this$data$extraPrope21 === void 0 ? void 0 : (_this$data$extraPrope22 = _this$data$extraPrope21.filter(function (p) {
+      parentDatasetId: ((_this$data$extraPrope19 = this.data.extraProperties) === null || _this$data$extraPrope19 === void 0 ? void 0 : (_this$data$extraPrope20 = _this$data$extraPrope19.filter(function (p) {
         return p.category === 'parent_dataset_id';
-      })[0]) === null || _this$data$extraPrope22 === void 0 ? void 0 : _this$data$extraPrope22.values.map(function (a) {
+      })[0]) === null || _this$data$extraPrope20 === void 0 ? void 0 : _this$data$extraPrope20.values.map(function (a) {
         return a.value;
       })[0]) || '',
       primaryPublications: this.data.primaryPublications || [],
@@ -141548,9 +141560,9 @@ var DatsToForm = /*#__PURE__*/function () {
         identifier: '',
         identifierSource: ''
       },
-      logo: ((_this$data$extraPrope23 = this.data.extraProperties) === null || _this$data$extraPrope23 === void 0 ? void 0 : (_this$data$extraPrope24 = _this$data$extraPrope23.filter(function (p) {
+      logo: ((_this$data$extraPrope21 = this.data.extraProperties) === null || _this$data$extraPrope21 === void 0 ? void 0 : (_this$data$extraPrope22 = _this$data$extraPrope21.filter(function (p) {
         return p.category === 'logo';
-      })[0]) === null || _this$data$extraPrope24 === void 0 ? void 0 : _this$data$extraPrope24.values.map(function (a) {
+      })[0]) === null || _this$data$extraPrope22 === void 0 ? void 0 : _this$data$extraPrope22.values.map(function (a) {
         return a.value;
       })[0]) || '',
       registrationPageURL: this.data.extraProperties.filter(function (prop) {
@@ -141579,9 +141591,9 @@ var DatsToForm = /*#__PURE__*/function () {
       refinement: '',
       aggregation: this.data.aggregation || '',
       spatialCoverage: this.data.spatialCoverage || [],
-      reb_info: ((_this$data$extraPrope25 = this.data.extraProperties) === null || _this$data$extraPrope25 === void 0 ? void 0 : (_this$data$extraPrope26 = _this$data$extraPrope25.filter(function (p) {
+      reb_info: ((_this$data$extraPrope23 = this.data.extraProperties) === null || _this$data$extraPrope23 === void 0 ? void 0 : (_this$data$extraPrope24 = _this$data$extraPrope23.filter(function (p) {
         return p.category === 'REB_statement';
-      })[0]) === null || _this$data$extraPrope26 === void 0 ? void 0 : _this$data$extraPrope26.values.map(function (a) {
+      })[0]) === null || _this$data$extraPrope24 === void 0 ? void 0 : _this$data$extraPrope24.values.map(function (a) {
         return a.value;
       })) || '',
       reb_number: this.data.reb_number || '',
@@ -142038,83 +142050,47 @@ function DatsEditorForm(props) {
     setIsExperiment(event.target.value === 'experiment');
     setActiveStep(0);
   };
-  var handleNext = function handleNext(errors, values) {
+  function cleanModifiedErrors(modifiedErrors) {
+    if (!isExperiment) {
+      var fieldsToRemove = {
+        1: ['size', 'access', 'files', 'conpStatus'],
+        2: ['reb_info', 'contact', 'primaryPublications', 'subjects']
+      };
+      Object.entries(fieldsToRemove).forEach(function (_ref) {
+        var step = _ref[0],
+          fields = _ref[1];
+        if (activeStep !== parseInt(step)) {
+          fields.forEach(function (field) {
+            if (modifiedErrors[field]) {
+              delete modifiedErrors[field];
+            }
+          });
+        }
+      });
+    } else if (isExperiment) {
+      var _fieldsToRemove = {
+        1: ['size', 'access', 'files', 'conpStatus'],
+        2: ['contact', 'registrationPageURL', 'reb_info', 'primaryPublications', 'subjects'],
+        3: ['types', 'experimentsRequiredSoftware', 'experimentsFunctionAssessed', 'experimentsLanguages', 'experimentsModalities']
+      };
+      Object.entries(_fieldsToRemove).forEach(function (_ref2) {
+        var step = _ref2[0],
+          fields = _ref2[1];
+        if (activeStep !== parseInt(step)) {
+          fields.forEach(function (field) {
+            if (modifiedErrors[field]) {
+              delete modifiedErrors[field];
+            }
+          });
+        }
+      });
+    }
+    return modifiedErrors;
+  }
+  var handleNext = function handleNext(errors, values, setFieldTouched) {
     var modifiedErrors = index_modern_extends({}, errors);
     setNextClicked(true);
-    if (!isExperiment) {
-      if (activeStep !== 2) {
-        if (modifiedErrors['reb_info']) {
-          delete modifiedErrors['reb_info'];
-        }
-        if (modifiedErrors['contact']) {
-          delete modifiedErrors['contact'];
-        }
-        if (modifiedErrors['primaryPublications']) {
-          delete modifiedErrors['primaryPublications'];
-        }
-      }
-      if (activeStep !== 1) {
-        if (modifiedErrors['size']) {
-          delete modifiedErrors['size'];
-        }
-        if (modifiedErrors['access']) {
-          delete modifiedErrors['access'];
-        }
-        if (modifiedErrors['files']) {
-          delete modifiedErrors['files'];
-        }
-        if (modifiedErrors['conpStatus']) {
-          delete modifiedErrors['conpStatus'];
-        }
-      }
-    }
-    if (isExperiment) {
-      if (activeStep !== 1) {
-        if (modifiedErrors['size']) {
-          delete modifiedErrors['size'];
-        }
-        if (modifiedErrors['access']) {
-          delete modifiedErrors['access'];
-        }
-        if (modifiedErrors['files']) {
-          delete modifiedErrors['files'];
-        }
-        if (modifiedErrors['conpStatus']) {
-          delete modifiedErrors['conpStatus'];
-        }
-      }
-      if (activeStep !== 2) {
-        if (modifiedErrors['contact']) {
-          delete modifiedErrors['contact'];
-        }
-        if (delete modifiedErrors['registrationPageURL']) {
-          delete modifiedErrors['registrationPageURL'];
-        }
-        if (modifiedErrors['reb_info']) {
-          delete modifiedErrors['reb_info'];
-        }
-        if (modifiedErrors['primaryPublications']) {
-          delete modifiedErrors['primaryPublications'];
-        }
-      }
-      if (activeStep !== 3) {
-        if (modifiedErrors['types']) {
-          delete modifiedErrors['types'];
-        }
-        if (modifiedErrors['experimentsRequiredSoftware']) {
-          delete modifiedErrors['experimentsRequiredSoftware'];
-        }
-        if (modifiedErrors['experimentsFunctionAssessed']) {
-          delete modifiedErrors['experimentsFunctionAssessed'];
-        }
-        if (modifiedErrors['experimentsLanguages']) {
-          delete modifiedErrors['experimentsLanguages'];
-        }
-        if (modifiedErrors['experimentsModalities']) {
-          delete modifiedErrors['experimentsModalities'];
-        }
-      }
-    }
+    modifiedErrors = cleanModifiedErrors(modifiedErrors);
     if (Object.keys(modifiedErrors).length === 0) {
       setTimeout(function () {
         setActiveStep(activeStep + 1);
@@ -142130,7 +142106,7 @@ function DatsEditorForm(props) {
         firstErrorKey = firstErrorKey + '.0.name';
       } else if (firstErrorKey === 'size') {
         firstErrorKey = firstErrorKey + '.value';
-      } else if (firstErrorKey === 'conpStatus') ; else if (firstErrorKey === 'contact') {
+      } else if (firstErrorKey === 'contact') {
         firstErrorKey = firstErrorKey + '.name';
       } else if (firstErrorKey === 'primaryPublications') {
         for (var i = 0; i < 20; i++) {
@@ -142195,6 +142171,7 @@ function DatsEditorForm(props) {
           _childDivElement.focus();
         }
       } else if (firstErrorKey === 'licenses.0' && errorFieldElement) {
+        setFieldTouched('licenses', true, false);
         var _childDivElement2 = errorFieldElement.querySelector('div');
         if (_childDivElement2) {
           _childDivElement2.scrollIntoView({
@@ -142205,6 +142182,19 @@ function DatsEditorForm(props) {
             _childDivElement2.focus();
             _childDivElement2.blur();
             _childDivElement2.focus();
+          }
+        }
+      } else if (firstErrorKey === 'reb_info') {
+        var _childDivElement3 = document.querySelector('#mui-component-select-reb_info');
+        if (_childDivElement3) {
+          _childDivElement3.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+          if (_childDivElement3.focus) {
+            _childDivElement3.focus();
+            _childDivElement3.blur();
+            _childDivElement3.focus();
           }
         }
       } else if (errorFieldElement) {
@@ -142220,7 +142210,7 @@ function DatsEditorForm(props) {
       }
     }
   };
-  var handleConfirm = function handleConfirm(errors) {
+  var handleConfirm = function handleConfirm(errors, values) {
     setNextClicked(true);
     setValidateOnChange(true);
     if (Object.keys(errors).length === 0) ; else {
@@ -142233,7 +142223,7 @@ function DatsEditorForm(props) {
         firstErrorKey = firstErrorKey + '.0.name';
       } else if (firstErrorKey === 'size') {
         firstErrorKey = firstErrorKey + '.value';
-      } else if (firstErrorKey === 'conpStatus') ; else if (firstErrorKey === 'primaryPublications') {
+      } else if (firstErrorKey === 'primaryPublications') {
         for (var i = 0; i < 20; i++) {
           var _errors$primaryPublic11, _errors$primaryPublic12, _errors$primaryPublic13, _errors$primaryPublic14, _errors$primaryPublic15, _errors$primaryPublic16, _errors$primaryPublic17, _errors$primaryPublic18, _errors$primaryPublic19, _errors$primaryPublic20;
           if (errors.primaryPublications[i] && errors.primaryPublications[i].title) {
@@ -142333,8 +142323,8 @@ function DatsEditorForm(props) {
     initialValues: index_modern_extends({}, valuesState, {
       isExperiment: isExperiment
     }),
-    onSubmit: function onSubmit(data, _ref) {
-      var setSubmitting = _ref.setSubmitting;
+    onSubmit: function onSubmit(data, _ref3) {
+      var setSubmitting = _ref3.setSubmitting;
       setSubmitting(true);
       var datsJson = new index_modern_FormToDats(data);
       setDats(datsJson.getJson());
@@ -142346,12 +142336,13 @@ function DatsEditorForm(props) {
     context: {
       isExperiment: isExperiment
     }
-  }, function (_ref2) {
-    var values = _ref2.values,
-      errors = _ref2.errors,
-      touched = _ref2.touched,
-      isSubmitting = _ref2.isSubmitting,
-      handleReset = _ref2.handleReset;
+  }, function (_ref4) {
+    var values = _ref4.values,
+      errors = _ref4.errors,
+      touched = _ref4.touched,
+      isSubmitting = _ref4.isSubmitting,
+      handleReset = _ref4.handleReset,
+      setFieldTouched = _ref4.setFieldTouched;
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Form, null, shouldShowUploader(activeStep) ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: classes.section
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_DatsUploader, {
@@ -142422,7 +142413,7 @@ function DatsEditorForm(props) {
       className: classes.button,
       color: "primary",
       onClick: function onClick() {
-        return handleNext(errors);
+        return handleNext(errors, values, setFieldTouched);
       },
       variant: "contained"
     }, "Next") : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Button_Button, {
