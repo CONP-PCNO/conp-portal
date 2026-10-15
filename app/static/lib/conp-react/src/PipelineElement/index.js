@@ -81,10 +81,12 @@ const PipelineElement = (props) => {
         <div className="col col-lg-2 d-flex flex-column p-2">
           <div className="flex-grow-1 d-flex flex-column justify-content-center align-items-center pb-3">
             <img
-              alt="dataset format"
+              alt={element.icon ? `${element.icon.label} logo` : "Tool"}
+              title={element.icon ? element.icon.label : undefined}
               className="img-fluid p-2"
-              style={{ maxWidth: '140px' }}
-              src="static/img/cogs-solid-grey.png"
+              data-testid="tool-icon"
+              style={{ maxWidth: '140px', maxHeight: '112px', width: 'auto', height: 'auto', objectFit: 'contain' }}
+              src={element.icon ? element.icon.src : "static/img/cogs-solid-grey.png"}
             />
           </div>
           <div className="d-flex flex-grow-2 flex-row justify-content-center align-items-end">
@@ -198,6 +200,10 @@ PipelineElement.propTypes = {
   img: PropTypes.string,
   imagePath: PropTypes.string,
   cbrainIds: PropTypes.arrayOf(PropTypes.Object),
+  icon: PropTypes.shape({
+    src: PropTypes.string,
+    label: PropTypes.string
+  }),
   cbrain: PropTypes.shape({
     tool: PropTypes.string,
     software: PropTypes.string,
