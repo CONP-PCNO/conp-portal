@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
-// libs installed from npm
-@import 'bootstrap/scss/bootstrap';
+// Bootstrap CSS is loaded once from the shared portal template.
 @import 'font-awesome/css/font-awesome.min.css';
 
 // custom css

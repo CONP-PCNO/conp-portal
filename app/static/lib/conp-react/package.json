@@ -23,7 +23,6 @@
     "@fortawesome/free-regular-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
-    "bootstrap": "^5.0.0",
     "conp-dats-editor": "git://github.com/CONP-PCNO/conp-dats-editor.git#3d5582d7fb0f8129647597ad6ebde48fbd089e73",
     "highcharts": "^9.0.0",
     "highcharts-custom-events": "^3.0.10",
