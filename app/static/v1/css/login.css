@@ -10,6 +10,16 @@ body, html {
     /* background-image: linear-gradient(rgb(237, 34, 37), rgb(255, 255, 255)); */
 }
 
+/* The shared v2 bundle also contains the main portal's sidebar layout. */
+html body {
+    background-color: #fff;
+}
+
+html body #page-content.container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
 .card-container.card {
     max-width: 550px;
     padding: 40px 40px;

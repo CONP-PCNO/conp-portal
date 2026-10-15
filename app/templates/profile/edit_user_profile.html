@@ -1,5 +1,5 @@
 {% extends 'common/base_login.html' %}
-{% import 'bootstrap/wtf.html' as wtf %}
+{% import 'common/_bootstrap5_forms.html' as wtf %}
 {% from 'common/_formshelpers.html' import render_multiselect_field %}
 
 {% block cardtitle %}
@@ -10,9 +10,9 @@ CONP Portal: Edit User Profile
 <form action="" method="POST" class="form" role="form">
   {{ form.hidden_tag() }}
   {{ wtf.form_errors(form, hiddens="only") }}
-  {{ wtf.form_field(form.full_name, class='form-control', placeholder='Full Name') }}
-  {{ wtf.form_field(form.affiliation, class='form-control', placeholder="Your Current Affiliation") }}
-  {{ wtf.form_field(form.affiliation_type, class='form-control') }}
+  {{ wtf.form_field(form.full_name, placeholder='Full Name') }}
+  {{ wtf.form_field(form.affiliation, placeholder="Your Current Affiliation") }}
+  {{ wtf.form_field(form.affiliation_type) }}
   {% if edit_roles %}
     {{ render_multiselect_field(form.roles, current_roles) }}
   {% else %}

@@ -2,7 +2,6 @@ import os
 from logging.handlers import RotatingFileHandler
 
 from flask import Flask
-from flask_bootstrap import Bootstrap
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -15,7 +14,6 @@ config = DevelopmentConfig()
 migrate = Migrate(compare_type=True)
 csrf_protect = CSRFProtect()
 mail = Mail()
-bootstrap = Bootstrap()
 
 
 def create_app(config_settings=None):
@@ -44,7 +42,6 @@ def create_app(config_settings=None):
     migrate.init_app(app, db)
     csrf_protect.init_app(app)
     mail.init_app(app)
-    bootstrap.init_app(app)
 
     from app.main import main_bp
     app.register_blueprint(main_bp)

@@ -405,7 +405,6 @@ dependencies = [
     { name = "click" },
     { name = "datalad" },
     { name = "flask" },
-    { name = "flask-bootstrap4" },
     { name = "flask-dance" },
     { name = "flask-login" },
     { name = "flask-mail" },
@@ -447,7 +446,6 @@ requires-dist = [
     { name = "click", specifier = "==8.1.6" },
     { name = "datalad", specifier = "==1.2.0" },
     { name = "flask", specifier = "==3.0.3" },
-    { name = "flask-bootstrap4", specifier = "==4.0.2" },
     { name = "flask-dance", specifier = "==3.0.0" },
     { name = "flask-login", specifier = "==0.6.3" },
     { name = "flask-mail", specifier = "==0.9.1" },
@@ -605,15 +603,6 @@ wheels = [
 ]
 
 [[package]]
-name = "dominate"
-version = "2.9.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/fb/f3/1c8088ff19a0fcd9c3234802a0ee47006ea64bd8852f1019194f0e3583ff/dominate-2.9.1.tar.gz", hash = "sha256:558284687d9b8aae1904e3d6051ad132dd4a8c0cf551b37ea4e7e42a31d19dc4", size = 37715, upload-time = "2023-12-24T20:45:19.192Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/58/19/0380af745f151a1648657bbcef0fb49ac28bf09083d94498163ffd9b32dc/dominate-2.9.1-py2.py3-none-any.whl", hash = "sha256:cb7b6b79d33b15ae0a6e87856b984879927c7c2ebb29522df4c75b28ffd9b989", size = 29976, upload-time = "2023-12-24T20:45:17.154Z" },
-]
-
-[[package]]
 name = "fasteners"
 version = "0.20"
 source = { registry = "https://pypi.org/simple" }
@@ -650,20 +639,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/41/e1/d104c83026f8d35dfd2c261df7d64738341067526406b40190bc063e829a/flask-3.0.3.tar.gz", hash = "sha256:ceb27b0af3823ea2737928a4d99d125a06175b8512c445cbd9a9ce200ef76842", size = 676315, upload-time = "2024-04-07T19:26:11.035Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/61/80/ffe1da13ad9300f87c93af113edd0638c75138c42a0994becfacac078c06/flask-3.0.3-py3-none-any.whl", hash = "sha256:34e815dfaa43340d1d15a5c3a02b8476004037eb4840b34910c6e21679d288f3", size = 101735, upload-time = "2024-04-07T19:26:08.569Z" },
-]
-
-[[package]]
-name = "flask-bootstrap4"
-version = "4.0.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "dominate" },
-    { name = "flask" },
-    { name = "visitor" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/66/cc/bc97bd29a9c68c9ecb7c4e39c93bb7db1e9c821e1d61b7b7369f04758ef7/Flask-Bootstrap4-4.0.2.tar.gz", hash = "sha256:fcd52206a844573692b86ee79522f970363eb1df29f57c2eb52bd2cbc6ffb9ee", size = 1711391, upload-time = "2018-02-27T15:03:21.168Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/79/39/10e7248d003af4a835931856c165d990034322da5d741f89ed51ea8479fa/Flask_Bootstrap4-4.0.2-py3-none-any.whl", hash = "sha256:92780298aa8c22f34be4b4ed7cb4cdec1f5302b625cda7f519dc9aa6e1d0d023", size = 1725570, upload-time = "2018-02-27T15:03:17.449Z" },
 ]
 
 [[package]]
@@ -1775,12 +1750,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/2a/fd/163e6b835b9fabf9c
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ee/38/18c4bbe751a7357b3f6a33352e3af3305ad78f3e72ab7e3d667de4663ed9/urlobject-3.0.0-py3-none-any.whl", hash = "sha256:fd2465520d0a8c5ed983aa47518a2c5bcde0c276a4fd0eb28b0de5dcefd93b1e", size = 16261, upload-time = "2025-07-11T17:53:21.989Z" },
 ]
-
-[[package]]
-name = "visitor"
-version = "0.1.3"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/d7/58/785fcd6de4210049da5fafe62301b197f044f3835393594be368547142b0/visitor-0.1.3.tar.gz", hash = "sha256:2c737903b2b6864ebc6167eef7cf3b997126f1aa94bdf590f90f1436d23e480a", size = 3260, upload-time = "2016-05-18T19:27:53.383Z" }
 
 [[package]]
 name = "werkzeug"
