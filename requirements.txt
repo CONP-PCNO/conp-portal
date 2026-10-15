@@ -7,8 +7,7 @@
 ## @todo: include `deptry .` in tests
 
 ## Descriptive framework to publish, integrate, and execute command-line applications across computational platforms.
-boutiques==0.5.28 ## Prod
-#boutiques==0.5.33
+boutiques>=0.5.33
 
 ## Composable command-line interface toolkit for creating beautiful CLI applications.
 click==8.1.6 ## Prod

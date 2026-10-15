@@ -94,7 +94,7 @@ wheels = [
 
 [[package]]
 name = "boutiques"
-version = "0.5.28"
+version = "0.5.33"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jsonschema" },
@@ -102,9 +102,9 @@ dependencies = [
     { name = "tabulate" },
     { name = "termcolor" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/28/3a/f7c0e32e6444fe2247cf81bd1505694a017fd00c9fdc1b04fa623f86838e/boutiques-0.5.28.tar.gz", hash = "sha256:da35f50e9f4bbe7317921d5f57a22e4b9de7d9af2a6a27479913a2b469e3b018", size = 153746, upload-time = "2024-12-12T19:21:16.162Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/6f/78/f3671a8b7b5a8ff2d0152143fe52227a094755108d3e755579f7d210c993/boutiques-0.5.33.tar.gz", hash = "sha256:6c304b4c418d44b40792511b4829c78e934611823d7516893ccaf8a1b2494d98", size = 266701, upload-time = "2025-11-27T21:24:09.307Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f5/fd/0dc81ead1b12faf7a472f0b7a68dc4fce19240b4770f5ada8f3faae7b296/boutiques-0.5.28-py3-none-any.whl", hash = "sha256:2442ea7490fdd6b32bef293e3cb89e2b8a258210b5670128a0f9c1360498af79", size = 231706, upload-time = "2024-12-12T19:21:13.489Z" },
+    { url = "https://files.pythonhosted.org/packages/6d/a0/c4a85ba46b477f0e0a6441d535a4a8a1c573eeb97bf4fb0db3897d1d89ee/boutiques-0.5.33-py3-none-any.whl", hash = "sha256:c5c7bacab04edd8b660fe7cdd93cd11f72be1d5a097f51f5982a65aa6a1bd29d", size = 233548, upload-time = "2025-11-27T21:24:07.888Z" },
 ]
 
 [[package]]
@@ -442,7 +442,7 @@ dev = [
 requires-dist = [
     { name = "alembic", specifier = "==1.14.1" },
     { name = "bcrypt", specifier = "<4" },
-    { name = "boutiques", specifier = "==0.5.28" },
+    { name = "boutiques", specifier = ">=0.5.33" },
     { name = "click", specifier = "==8.1.6" },
     { name = "datalad", specifier = "==1.2.0" },
     { name = "flask", specifier = "==3.0.3" },
