@@ -13,7 +13,7 @@
 
 {% macro render_multiselect_field(field, selected) %}
   <div class="form-group">
-    <label class="form-label" for="{{ field.name }}">{{ field.label }}</label>
+    <label class="form-label" for="{{ field.id }}">{{ field.label.text }}</label>
     <select class="form-select" id="{{ field.name }}" name="{{ field.name }}" multiple>
       {% for o in field.choices %}
         {% if o[0] in selected %}
