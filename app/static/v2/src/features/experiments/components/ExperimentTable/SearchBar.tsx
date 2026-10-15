@@ -46,7 +46,7 @@ export const SearchBar = ({ onSubmit, word }: SearchBarProps) => {
                       </button>
                       <div className="dropdown-menu">
                         {Object.entries(filter.options).map(([name, active]) => (
-                          <div className="dropdown-item" key={name} onClick={() => toggleSearchFilter(key, name, !active)}>
+                          <div className="dropdown-item" key={name}>
                             <div className="form-check">
                               <input
                                 checked={active}
@@ -54,10 +54,10 @@ export const SearchBar = ({ onSubmit, word }: SearchBarProps) => {
                                 name={key}
                                 value={name}
                                 type="checkbox"
-                                id={key + name + 'checkbox'}
+                                id={key + '-' + name + '-checkbox'}
                                 onChange={() => toggleSearchFilter(key, name, !active)}
                               />
-                              <label className="form-check-label w-100" htmlFor={key}>
+                              <label className="form-check-label w-100" htmlFor={key + '-' + name + '-checkbox'}>
                                 {name}
                               </label>
                             </div>

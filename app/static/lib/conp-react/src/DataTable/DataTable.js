@@ -190,16 +190,18 @@ const DataTable = ({
                       </button>
                       <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         {filterKeys.filter(f => f["key"] === "modalities").length > 0 ?
-                            filterKeys.filter(f => f["key"] === "modalities")[0]["values"].map(modality => (
+                            filterKeys.filter(f => f["key"] === "modalities")[0]["values"].map((modality, index) => (
                                 modality !== '' ?
-                                    <div key={modality.id} className="dropdown-item ms-2">
-                                      <input className="form-check-input" type="checkbox"
-                                             checked={filters.filter(f => f["key"] === "modalities")[0]["values"].includes(modality)}
-                                             value={"modalities." + modality} id={"filter" + modality}
-                                             onChange={handleFiltersChange}/>
-                                      <label className="form-check-label" htmlFor={"filter" + modality}>
-                                        {modality}
-                                      </label>
+                                    <div key={modality} className="dropdown-item">
+                                      <div className="form-check">
+                                        <input className="form-check-input" type="checkbox"
+                                               checked={filters.filter(f => f["key"] === "modalities")[0]["values"].includes(modality)}
+                                               value={"modalities." + modality} id={"filter-modalities-" + index}
+                                               onChange={handleFiltersChange}/>
+                                        <label className="form-check-label" htmlFor={"filter-modalities-" + index}>
+                                          {modality}
+                                        </label>
+                                      </div>
                                     </div>
                                     : null
                             ))
@@ -214,16 +216,18 @@ const DataTable = ({
                       </button>
                       <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         {filterKeys.filter(f => f["key"] === "formats").length > 0 ?
-                            filterKeys.filter(f => f["key"] === "formats")[0]["values"].map(format => (
+                            filterKeys.filter(f => f["key"] === "formats")[0]["values"].map((format, index) => (
                                 format !== '' ?
-                                    <div key={format.id} className="dropdown-item ms-2">
-                                      <input className="form-check-input" type="checkbox"
-                                             checked={filters.filter(f => f["key"] === "formats")[0]["values"].includes(format)}
-                                             value={"formats." + format} id={"filter" + format}
-                                             onChange={handleFiltersChange}/>
-                                      <label className="form-check-label" htmlFor={"filter" + format}>
-                                        {format}
-                                      </label>
+                                    <div key={format} className="dropdown-item">
+                                      <div className="form-check">
+                                        <input className="form-check-input" type="checkbox"
+                                               checked={filters.filter(f => f["key"] === "formats")[0]["values"].includes(format)}
+                                               value={"formats." + format} id={"filter-formats-" + index}
+                                               onChange={handleFiltersChange}/>
+                                        <label className="form-check-label" htmlFor={"filter-formats-" + index}>
+                                          {format}
+                                        </label>
+                                      </div>
                                     </div>
                                     : null
                             ))
@@ -238,16 +242,18 @@ const DataTable = ({
                       </button>
                       <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         {filterKeys.filter(f => f["key"] === "authorizations").length > 0 ?
-                            filterKeys.filter(f => f["key"] === "authorizations")[0]["values"].map(authorizations => (
+                            filterKeys.filter(f => f["key"] === "authorizations")[0]["values"].map((authorizations, index) => (
                                 authorizations !== '' ?
-                                    <div key={authorizations.id} className="dropdown-item ms-2">
-                                      <input className="form-check-input" type="checkbox"
-                                             checked={filters.filter(f => f["key"] === "authorizations")[0]["values"].includes(authorizations)}
-                                             value={"authorizations." + authorizations} id={"filter" + authorizations}
-                                             onChange={handleFiltersChange}/>
-                                      <label className="form-check-label" htmlFor={"filter" + authorizations}>
-                                        {authorizations}
-                                      </label>
+                                    <div key={authorizations} className="dropdown-item">
+                                      <div className="form-check">
+                                        <input className="form-check-input" type="checkbox"
+                                               checked={filters.filter(f => f["key"] === "authorizations")[0]["values"].includes(authorizations)}
+                                               value={"authorizations." + authorizations} id={"filter-authorizations-" + index}
+                                               onChange={handleFiltersChange}/>
+                                        <label className="form-check-label" htmlFor={"filter-authorizations-" + index}>
+                                          {authorizations}
+                                        </label>
+                                      </div>
                                     </div>
                                     : null
                             ))
@@ -266,19 +272,21 @@ const DataTable = ({
                       </button>
                       <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         {filterKeys.filter(f => f["key"] === "tags").length > 0 ?
-                            filterKeys.filter(f => f["key"] === "tags")[0]["values"].map(tag => (
+                            filterKeys.filter(f => f["key"] === "tags")[0]["values"].map((tag, index) => (
                                 tag !== '' ?
-                                    <div key={tag.id} className="dropdown-item ms-2">
-                                      <input
-                                          className="form-check-input"
-                                          type="checkbox"
-                                          checked={filters.filter(f => f["key"] === "tags")[0]["values"].includes(tag)}
-                                          value={"tags." + tag} id={"filter" + tag}
-                                          onChange={handleFiltersChange}
-                                      />
-                                      <label className="form-check-label" htmlFor={"filter" + tag}>
-                                        {tag}
-                                      </label>
+                                    <div key={tag} className="dropdown-item">
+                                      <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            checked={filters.filter(f => f["key"] === "tags")[0]["values"].includes(tag)}
+                                            value={"tags." + tag} id={"filter-tags-" + index}
+                                            onChange={handleFiltersChange}
+                                        />
+                                        <label className="form-check-label" htmlFor={"filter-tags-" + index}>
+                                          {tag}
+                                        </label>
+                                      </div>
                                     </div>
                                     : null
                             ))
@@ -386,7 +394,7 @@ const DataTable = ({
             </div>
             <div className="d-flex justify-content-between">
               <div className="d-flex justify-content-start align-items-center pb-1 ps-3 ms-4">
-                      <div key={"cbrain".id}>
+                      <div className="form-check">
                         <input className="form-check-input" type="checkbox" id="filterCBRAIN"
                                checked={filters.filter(f => f["key"] === "cbrain")[0].values.includes("cbrain_id")}
                                value="cbrain.cbrain_id"
