@@ -1,8 +1,18 @@
-# CONP Changelog
+# Changelog
 
-## Release v1.1.0
+All notable changes to this project will be documented in this file.
 
-@hatzopoulos released on 2027-10-07
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Removed
+### Changed
+### Added
+### Fixed
+
+## [1.1.0] - 2026-10-07
 
 This release prepares CONP Portal for a modern Python and deployment toolchain. It upgrades the project’s supported runtime and framework stack, adds reproducible dependency management and GitHub Actions CI, replaces legacy deployment/CI configuration, modernizes Docker setup and tests, fixes compatibility issues, and refreshes project documentation.
 
@@ -92,6 +102,8 @@ This release prepares CONP Portal for a modern Python and deployment toolchain. 
 * Hotfix cbrain ids url encoding by @hatzopoulos in https://github.com/CONP-PCNO/conp-portal/pull/866
 * Hotfix conp react urlencode by @hatzopoulos in https://github.com/CONP-PCNO/conp-portal/pull/867
 * Release/v1.1 by @hatzopoulos in https://github.com/CONP-PCNO/conp-portal/pull/943
+
+## [1.0.1]
 
 ### v1.0.0 to v1.0.1 Changes
 
