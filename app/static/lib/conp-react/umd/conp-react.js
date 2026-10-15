@@ -29738,14 +29738,14 @@ var DataTable_DataTable = function DataTable(_ref) {
     onChange: function onChange(e) {
       return setTempSearch(e.currentTarget.value);
     }
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
-    className: "input-group-append"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
-    className: "input-group-text",
-    id: "basic-addon2"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    className: "btn btn-outline-secondary search-submit",
+    type: "submit",
+    id: "basic-addon2",
+    "aria-label": "Search"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", {
     className: "fa fa-search"
-  })))) : null, renderElement.name === "ExecutionRecordElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }))) : null, renderElement.name === "ExecutionRecordElement" ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: "input-group m-2"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", {
     className: "form-control p-2",
@@ -38417,15 +38417,65 @@ function PipelineElement_objectWithoutPropertiesLoose(source, excluded) { if (so
 
 
 
+
+// A long description shows six lines, fades out over the next two, and
+// offers "more" to reveal the rest. The look lives in conp-theme.css
+// (.tool-description), so it can be tuned without rebuilding this bundle.
+var PipelineElement_ToolDescription = function ToolDescription(_ref) {
+  var text = _ref.text,
+    id = _ref.id;
+  var ref = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
+    expanded = _useState[0],
+    setExpanded = _useState[1];
+  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
+    overflows = _useState2[0],
+    setOverflows = _useState2[1];
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useLayoutEffect"])(function () {
+    var el = ref.current;
+    if (!el) return;
+    var measure = function measure() {
+      if (!el.classList.contains("is-clamped")) {
+        el.classList.add("is-clamped");
+        setOverflows(el.scrollHeight > el.clientHeight + 1);
+        el.classList.remove("is-clamped");
+      }
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return function () {
+      return window.removeEventListener("resize", measure);
+    };
+  }, [text]);
+  if (!text) return null;
+  var clamped = overflows && !expanded;
+  var textId = "tool-description-" + id;
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "tool-description-wrap"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    id: textId,
+    ref: ref,
+    className: "tool-description" + (clamped ? " is-clamped" : ""),
+    "data-testid": "tool-description"
+  }, text), overflows ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
+    type: "button",
+    className: "tool-description-toggle",
+    "aria-expanded": expanded,
+    "aria-controls": textId,
+    onClick: function onClick() {
+      return setExpanded(!expanded);
+    }
+  }, expanded ? "less" : "more") : null);
+};
 var PipelineElement_PipelineElement = function PipelineElement(props) {
   var authorized = props.authorized,
     element = PipelineElement_objectWithoutPropertiesLoose(props, PipelineElement_excluded);
-  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
-    showCbrainTipText = _useState[0],
-    setShowCbrainTipText = _useState[1];
-  var _useState2 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
-    cbrainModalOpen = _useState2[0],
-    setCbrainModalOpen = _useState2[1];
+  var _useState3 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
+    showCbrainTipText = _useState3[0],
+    setShowCbrainTipText = _useState3[1];
+  var _useState4 = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
+    cbrainModalOpen = _useState4[0],
+    setCbrainModalOpen = _useState4[1];
   var openCbrainModal = function openCbrainModal(datasetTitle, datasetUrl, pipelineTitle, pipelineUrl) {
     $("#cbrainModal").modal("show");
     setCbrainModalOpen(true);
@@ -38515,9 +38565,16 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
     type: "pipeline",
     id: element.id
   }) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "col col-lg-7 card-body d-flex p-2"
+    className: "col col-lg-7 card-body d-flex p-2",
+    style: {
+      minWidth: 0
+    }
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "d-flex flex-column justify-content-center"
+    className: "d-flex flex-column justify-content-center",
+    style: {
+      minWidth: 0,
+      width: "100%"
+    }
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("h5", {
     className: "card-title text-card-title"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
@@ -38545,8 +38602,11 @@ var PipelineElement_PipelineElement = function PipelineElement(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Publication Date: "), " ", element.publicationdate)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
     className: "d-flex align-items-start"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
-    className: "card-list-item"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Description: "), " ", element.description)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
+    className: "card-list-item tool-description-item"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, "Description: "), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(PipelineElement_ToolDescription, {
+    text: element.description,
+    id: element.id
+  }))), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
     className: "d-flex align-items-start"
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
     className: "card-list-item"

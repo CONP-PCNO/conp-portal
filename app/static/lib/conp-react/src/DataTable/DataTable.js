@@ -338,11 +338,9 @@ const DataTable = ({
                       onChange={e => setTempSearch(e.currentTarget.value)}
                     />
                   }
-                  <span className="input-group-append">
-                    <button className="input-group-text" id="basic-addon2">
-                      <i className="fa fa-search"/>
-                    </button>
-                  </span>
+                  <button className="btn btn-outline-secondary search-submit" type="submit" id="basic-addon2" aria-label="Search">
+                    <i className="fa fa-search"/>
+                  </button>
                 </form>
               : null}
 

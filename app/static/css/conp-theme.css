@@ -444,3 +444,85 @@ body .conp-footer .conp-footer-funder:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 3px;
 }
+
+/*
+Tool descriptions on the Tools & Pipelines cards (conp-react PipelineElement).
+A long description shows six lines, fades out over the next two, and a "more"
+button reveals the rest. 1.5em per line: 12em = 8 lines, the last 3em fade.
+*/
+body .tool-description-item {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+body .tool-description {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+body .tool-description.is-clamped {
+  max-height: 12em;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 3em), transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 3em), transparent 100%);
+}
+body .tool-description-toggle {
+  background: none;
+  border: 0;
+  padding: 0.15rem 0;
+  color: #177245;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+body .tool-description-toggle:focus-visible {
+  outline: 2px solid #177245;
+  outline-offset: 2px;
+}
+body .tool-description-full {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+/*
+Search box + search button on the Data and Tools pages (conp-react
+DataTable): one unit, rounded outside corners, square where they meet. The
+red keyboard-focus ring goes round the whole unit (rounded) instead of round
+the input alone, where its square right end ran under the button.
+*/
+body form.input-group:has(> .search-submit) {
+  flex-wrap: nowrap;
+  border-radius: 6px;
+}
+body form.input-group:has(> .search-submit):focus-within {
+  outline: 2px solid var(--conp-red);
+  outline-offset: 2px;
+}
+body form.input-group > #searchInput:focus-visible,
+body form.input-group > .rbt input:focus-visible,
+body form.input-group > .search-submit:focus-visible {
+  outline: none !important;
+}
+body form.input-group > #searchInput,
+body form.input-group > .rbt {
+  flex: 1 1 0%;
+  width: 1%;
+  min-width: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+body form.input-group > #searchInput:focus {
+  position: relative;
+  z-index: 3;
+  box-shadow: none;
+}
+body form.input-group > .search-submit {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  width: auto;
+  margin-left: -1px;
+  border-color: #ced4da;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}

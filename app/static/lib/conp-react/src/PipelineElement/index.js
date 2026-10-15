@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 
 import ViewsIcon from "../social/ViewsIcon"
@@ -8,6 +8,57 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
 import ReactToolTip from "react-tooltip";
 import CbrainModalPipeline from "../CbrainModalPipeline";
+
+// A long description shows six lines, fades out over the next two, and
+// offers "more" to reveal the rest. The look lives in conp-theme.css
+// (.tool-description), so it can be tuned without rebuilding this bundle.
+const ToolDescription = ({ text, id }) => {
+  const ref = useRef(null);
+  const [expanded, setExpanded] = useState(false);
+  const [overflows, setOverflows] = useState(false);
+
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = () => {
+      if (!el.classList.contains("is-clamped")) {
+        el.classList.add("is-clamped");
+        setOverflows(el.scrollHeight > el.clientHeight + 1);
+        el.classList.remove("is-clamped");
+      }
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [text]);
+
+  if (!text) return null;
+  const clamped = overflows && !expanded;
+  const textId = `tool-description-${id}`;
+  return (
+    <div className="tool-description-wrap">
+      <div
+        id={textId}
+        ref={ref}
+        className={"tool-description" + (clamped ? " is-clamped" : "")}
+        data-testid="tool-description"
+      >
+        {text}
+      </div>
+      {overflows ?
+        <button
+          type="button"
+          className="tool-description-toggle"
+          aria-expanded={expanded}
+          aria-controls={textId}
+          onClick={() => setExpanded(!expanded)}
+        >
+          {expanded ? "less" : "more"}
+        </button>
+        : null}
+    </div>
+  );
+};
 
 const PipelineElement = (props) => {
   const { authorized, ...element } = props;
@@ -95,8 +146,8 @@ const PipelineElement = (props) => {
           </div>
         </div>
 
-        <div className="col col-lg-7 card-body d-flex p-2">
-          <div className="d-flex flex-column justify-content-center">
+        <div className="col col-lg-7 card-body d-flex p-2" style={{ minWidth: 0 }}>
+          <div className="d-flex flex-column justify-content-center" style={{ minWidth: 0, width: "100%" }}>
             <h5 className="card-title text-card-title">
               <a className="text-reset" href={`pipeline?id=${element.id}`}>
                 {element.title}
@@ -118,8 +169,9 @@ const PipelineElement = (props) => {
                 </li>
               </ul>
               <ul className="d-flex align-items-start">
-                <li className="card-list-item">
-                  <strong>Description: </strong> {element.description}
+                <li className="card-list-item tool-description-item">
+                  <strong>Description: </strong>
+                  <ToolDescription text={element.description} id={element.id} />
                 </li>
               </ul>
               <ul className="d-flex align-items-start">
