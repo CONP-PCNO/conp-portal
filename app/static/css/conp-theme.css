@@ -495,22 +495,11 @@ body .tool-description-full {
 
 /*
 Search box + search button on the Data and Tools pages (conp-react
-DataTable): one unit, rounded outside corners, square where they meet. The
-red keyboard-focus ring goes round the whole unit (rounded) instead of round
-the input alone, where its square right end ran under the button.
+DataTable): one unit, rounded outside corners, square where they meet.
 */
-body form.input-group:has(> .search-submit) {
+body form.input-group {
   flex-wrap: nowrap;
-  border-radius: 6px;
-}
-body form.input-group:has(> .search-submit):focus-within {
-  outline: 2px solid var(--conp-red);
-  outline-offset: 2px;
-}
-body form.input-group > #searchInput:focus-visible,
-body form.input-group > .rbt input:focus-visible,
-body form.input-group > .search-submit:focus-visible {
-  outline: none !important;
+  border-radius: 0.25rem;
 }
 body form.input-group > #searchInput,
 body form.input-group > .rbt {
@@ -520,18 +509,57 @@ body form.input-group > .rbt {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-body form.input-group > #searchInput:focus {
-  position: relative;
-  z-index: 3;
-  box-shadow: none;
+body form.input-group > .rbt .rbt-input-main {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 body form.input-group > .search-submit {
   display: inline-flex;
   align-items: center;
+  align-self: stretch;     /* same height as the search box */
+  padding-top: 0;
+  padding-bottom: 0;
   flex: 0 0 auto;
   width: auto;
   margin-left: -1px;
   border-color: #ced4da;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+}
+
+/*
+Focus on text boxes: a red border and a soft red halo, the same in every
+browser. Outlines (the previous ring) are drawn differently by each browser:
+square or rounded corners, a gap or none, and inside an input group they ran
+under the neighbouring button. A box-shadow follows the rounded corners
+everywhere. In the search units above, the halo goes round input and button
+together and both borders turn red. Buttons and links keep their outline ring.
+*/
+body input[type='text']:focus,
+body input[type='search']:focus,
+body input[type='email']:focus,
+body input:not([type]):focus,
+body textarea:focus,
+body .form-control:focus {
+  outline: none !important;
+  border-color: var(--conp-red);
+  box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.2);
+}
+body form.input-group:focus-within {
+  box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.2);
+}
+body form.input-group input:focus,
+body form.input-group .rbt-input-main:focus,
+body form.input-group .form-control:focus {
+  box-shadow: none;
+}
+body form.input-group:focus-within > #searchInput,
+body form.input-group:focus-within > .rbt .rbt-input-main,
+body form.input-group:focus-within > .search-submit {
+  border-color: var(--conp-red);
+  position: relative;
+  z-index: 3;
+}
+body form.input-group > .search-submit:focus-visible {
+  outline: none !important;
 }
