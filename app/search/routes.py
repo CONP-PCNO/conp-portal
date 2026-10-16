@@ -8,6 +8,7 @@ import re
 
 from flask import (
     current_app,
+    redirect,
     render_template,
     request,
     send_from_directory,
@@ -16,6 +17,7 @@ from flask import (
 from flask_login import current_user
 
 from app.analytics.routes import datasets_downloads, datasets_views
+from app.dats import load_dataset_logos, resolve_dataset_logo
 from app.models import ArkId, Dataset, DatasetAncestry, Experiment
 from app.search import search_bp
 from app.search.models import DatasetCache, DATSDataset
@@ -104,7 +106,12 @@ def get_dataset_logo():
         dataset.fspath
     )
 
-    logopath = DATSDataset(datasetrootdir).LogoFilepath
+    logopath = DATSDataset(datasetrootdir, dataset_id=dataset.dataset_id).LogoFilepath
+
+    # A logo given as a URL (in DATS.json or in dataset-logos.json) is not a
+    # file on this server: send the browser there instead.
+    if logopath.lower().startswith("http"):
+        return redirect(logopath)
 
     with open(logopath, 'rb') as logofile:
         return logofile.read()
@@ -304,6 +311,7 @@ def dataset_search():
                 datasets = searcher.documents()
 
             evidence_publication_types = _evidence_publication_types()
+            dataset_logos = load_dataset_logos()
 
             # Get the number of views of datasets
             views = json.loads(datasets_views())
@@ -363,7 +371,11 @@ def dataset_search():
                     "authorizations": d.get('authorizations'),
                     "principalInvestigators": parse_field(d.get('principalInvestigators')),
                     "primaryPublications": parse_field(d.get('primaryPublications')),
-                    "logoFilepath": d.get('logoFilePath'),
+                    # The index stores the logo found when it was built; a
+                    # dataset with none there gets its dataset-logos.json entry.
+                    "logoFilepath": resolve_dataset_logo(
+                        d['id'], d.get('logoFilePath'), dataset_logos
+                    ),
                     "status": d.get('status'),
                     "cbrain_id": url_for(
                         "main.redirect_to_cbrain", cbrainurl=d.get('cBrainId')
@@ -659,7 +671,7 @@ def dataset_info():
 
     # Query dataset
     d = Dataset.query.filter_by(dataset_id=dataset_id).first()
-    datsdataset = DATSDataset(d.fspath)
+    datsdataset = DATSDataset(d.fspath, dataset_id=d.dataset_id)
 
     if current_user.is_authenticated:
         authorized = True

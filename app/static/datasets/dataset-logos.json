@@ -1,0 +1,159 @@
+{
+  "_about": "Logos for datasets whose DATS.json has no logo of its own. Keys are Portal dataset ids (the /dataset?id= value). Each entry gives either img (a file under app/static/) or url, plus label, source (where the image came from), why (why this logo identifies the dataset) and tier (A: project, lab or organisation logo; B: institution mark only; C: hosting-service mark). A logo in the dataset's own DATS.json always wins over this file.",
+  "datasets": {
+    "projects/celltypes": {
+      "img": "img/datasets/allen-institute.png",
+      "label": "Allen Institute",
+      "source": "GitHub organisation avatar, https://github.com/AllenInstitute.png",
+      "why": "Released by the Allen Institute for Brain Science, which is both creator and origin in DATS.",
+      "tier": "A"
+    },
+    "projects/NiMARE_Neuroimaging_Meta-Analysis_Research_Environment": {
+      "img": "img/datasets/neurostuff.png",
+      "label": "NiMARE (neurostuff)",
+      "source": "GitHub organisation avatar, https://github.com/neurostuff.png",
+      "why": "NiMARE is developed in the neurostuff GitHub organisation; this is that organisation's own mark.",
+      "tier": "A"
+    },
+    "projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics": {
+      "img": "img/datasets/mica-lab.png",
+      "label": "MICA lab",
+      "source": "GitHub organisation avatar, https://github.com/MICA-MNI.png",
+      "why": "MICA-PNI is the MICA lab's (Bernhardt lab, The Neuro) own dataset.",
+      "tier": "A"
+    },
+    "projects/An_open_dataset_of_cerebral_tau_deposition_in_young_healthy_adults_based_on__18F_MK6240_positron_emission_tomography": {
+      "img": "img/datasets/mica-lab.png",
+      "label": "MICA lab",
+      "source": "GitHub organisation avatar, https://github.com/MICA-MNI.png",
+      "why": "Acquired by the MICA lab (Bernhardt lab) at the Montreal Neurological Institute, the origin in DATS.",
+      "tier": "A"
+    },
+    "projects/spins_travelling_phantoms": {
+      "img": "img/datasets/tigrlab.png",
+      "label": "TIGRLab (CAMH)",
+      "source": "GitHub organisation avatar, https://github.com/TIGRLab.png",
+      "why": "SPINS travelling phantoms come from the Kimel Family Translational Imaging-Genetics Lab (TIGRLab) at CAMH, Toronto.",
+      "tier": "A"
+    },
+    "projects/Reusing-Neuro-Data": {
+      "img": "img/datasets/ubc.png",
+      "label": "University of British Columbia",
+      "source": "Wikimedia Commons, https://commons.wikimedia.org/wiki/Special:FilePath/British%20columbia%20ca%20univ%20logo.svg?width=640",
+      "why": "Pavlidis lab, University of British Columbia (origin in DATS); no lab logo was found, so the university wordmark is used.",
+      "tier": "A"
+    },
+    "projects/Systematic_phenomics_analysis_of_autism-associated_genes": {
+      "img": "img/datasets/ubc.png",
+      "label": "University of British Columbia",
+      "source": "Wikimedia Commons, https://commons.wikimedia.org/wiki/Special:FilePath/British%20columbia%20ca%20univ%20logo.svg?width=640",
+      "why": "Origin in DATS is the University of British Columbia; no project or lab logo was found, so the university wordmark is used.",
+      "tier": "A"
+    },
+    "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations": {
+      "img": "img/datasets/ubc.png",
+      "label": "University of British Columbia",
+      "source": "Wikimedia Commons, https://commons.wikimedia.org/wiki/Special:FilePath/British%20columbia%20ca%20univ%20logo.svg?width=640",
+      "why": "Origin in DATS is the University of British Columbia; no project or lab logo was found, so the university wordmark is used.",
+      "tier": "A"
+    },
+    "projects/PiDose": {
+      "img": "img/datasets/ubc.png",
+      "label": "University of British Columbia",
+      "source": "Wikimedia Commons, https://commons.wikimedia.org/wiki/Special:FilePath/British%20columbia%20ca%20univ%20logo.svg?width=640",
+      "why": "PiDose was developed at the University of British Columbia; the project has no logo of its own, so the university wordmark is used.",
+      "tier": "A"
+    },
+    "projects/3-step_CPCA": {
+      "img": "img/datasets/ubc.png",
+      "label": "University of British Columbia",
+      "source": "Wikimedia Commons, https://commons.wikimedia.org/wiki/Special:FilePath/British%20columbia%20ca%20univ%20logo.svg?width=640",
+      "why": "3-step CPCA comes from the Woodward lab, University of British Columbia; no lab logo was found, so the university wordmark is used.",
+      "tier": "A"
+    },
+    "projects/mousebytesdataset": {
+      "img": "img/datasets/mousebytes.png",
+      "label": "MouseBYTES",
+      "source": "MouseBYTES site logo, https://mousebytes.ca/assets/images/logo.png",
+      "why": "Published through MouseBYTES (Prado and Winters, Western University), the platform's own logo.",
+      "tier": "A"
+    },
+    "projects/mousebytes/MB-Cholinergic-deficient-mouse-model": {
+      "img": "img/datasets/mousebytes.png",
+      "label": "MouseBYTES",
+      "source": "MouseBYTES site logo, https://mousebytes.ca/assets/images/logo.png",
+      "why": "A MouseBYTES dataset (Prado lab, Robarts Research Institute); the platform's own logo.",
+      "tier": "A"
+    },
+    "projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons": {
+      "img": "img/datasets/mousebytes.png",
+      "label": "MouseBYTES",
+      "source": "MouseBYTES site logo, https://mousebytes.ca/assets/images/logo.png",
+      "why": "A MouseBYTES dataset (Prado lab, Robarts Research Institute); the platform's own logo.",
+      "tier": "A"
+    },
+    "projects/mousebytes/MB-Heterogenous-task-representative-data": {
+      "img": "img/datasets/mousebytes.png",
+      "label": "MouseBYTES",
+      "source": "MouseBYTES site logo, https://mousebytes.ca/assets/images/logo.png",
+      "why": "A MouseBYTES dataset (Prado lab, Robarts Research Institute); the platform's own logo.",
+      "tier": "A"
+    },
+    "projects/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_network": {
+      "img": "img/datasets/mcgill.png",
+      "label": "McGill University",
+      "source": "Official McGill shield and wordmark, supplied as a local file in July 2026 (dataset-logos/logo-preview/mcgill_preferred_logo.png); no public URL recorded",
+      "why": "Silveira lab, McGill University (origin in DATS); only the institution mark was available.",
+      "tier": "B"
+    },
+    "projects/mcgill-emc-rna-seq-experiment": {
+      "img": "img/datasets/mcgill.png",
+      "label": "McGill University",
+      "source": "Official McGill shield and wordmark, supplied as a local file in July 2026 (dataset-logos/logo-preview/mcgill_preferred_logo.png); no public URL recorded",
+      "why": "McGill EMC, McGill University (creator and origin in DATS); only the institution mark was available.",
+      "tier": "B"
+    },
+    "projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regulates_the_spre": {
+      "img": "img/datasets/western.png",
+      "label": "Western University",
+      "source": "Wikipedia, https://en.wikipedia.org/wiki/Special:FilePath/University%20of%20Western%20Ontario%20Logo.svg?width=640",
+      "why": "Prado lab, Robarts Research Institute, Western University; only the institution mark was available.",
+      "tier": "B"
+    },
+    "projects/Neural_capacity_limits_on_the_responses_to_memory_interference_during_working_me": {
+      "img": "img/datasets/uottawa.png",
+      "label": "University of Ottawa",
+      "source": "Official uOttawa wordmark, supplied as a local file in July 2026 (dataset-logos/logo-preview/university-of-ottawa2.png); no public URL recorded",
+      "why": "Steffener lab, University of Ottawa; only the institution mark was available.",
+      "tier": "B"
+    },
+    "projects/Relational_and_Item-Specific_Encoding_(RISE)": {
+      "img": "img/datasets/ucdavis.png",
+      "label": "UC Davis",
+      "source": "GitHub organisation avatar, https://github.com/ucdavis.png (the university seal)",
+      "why": "RISE comes from the Ragland lab, UC Davis; the UC Davis GitHub avatar is the university seal, the only mark available.",
+      "tier": "B"
+    },
+    "projects/Feasibility_of_high_resolution_perfusion_imaging_using_Arterial_Spin_Labelling_MRI_at_3_Tesla___Dataset": {
+      "img": "img/datasets/uhn.png",
+      "label": "University Health Network",
+      "source": "GitHub organisation avatar, https://github.com/UHN.png (the UHN symbol, same mark as https://github.com/UHN-Digital)",
+      "why": "Krembil Brain Institute, University Health Network, Toronto (origin in DATS); only the institution mark was available.",
+      "tier": "B"
+    },
+    "projects/Dataset_Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin_in_Vivo": {
+      "url": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg",
+      "label": "Zenodo",
+      "source": "Zenodo logo URL as written by the Zenodo crawler, https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg",
+      "why": "A NeuroLibre/Evidence-derived dataset hosted on Zenodo; all 15 other NeuroLibre-derived datasets on the Portal already show this Zenodo logo.",
+      "tier": "C"
+    },
+    "projects/Participant_level_contrast_maps": {
+      "url": "https://osf.io/static/img/institutions/shields/cos-shield.png",
+      "label": "OSF",
+      "source": "OSF shield URL as written by the OSF crawler, https://osf.io/static/img/institutions/shields/cos-shield.png",
+      "why": "An OSF crawl with no identifiable lab; the 10 other OSF-crawled datasets on the Portal already show this OSF shield.",
+      "tier": "C"
+    }
+  }
+}
