@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removes the unused Bootstrap dependency from the CONP React package and rebuilds its UMD output.
 - Replaces Flask-Bootstrap4 form macros with Bootstrap 5 Jinja helpers for authentication and profile pages, updates validation/checkbox styling, and removes the Flask-Bootstrap4 extension.
 - Corrects the profile roles field's duplicate nested label in the native multiple-select control.
+- Fixes the contact form iframe height so the embedded Google Form is not clipped to a video-style aspect ratio.
 
 ## [1.1.0] - 2026-10-07
 

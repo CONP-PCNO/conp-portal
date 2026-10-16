@@ -209,6 +209,16 @@ body .content-main img {
   height: auto;
 }
 
+body .content-main .contact-form-container {
+  max-width: 100%;
+}
+body .content-main .contact-form-container iframe {
+  border: 0;
+  height: 1200px;
+  max-width: 100%;
+  width: 900px;
+}
+
 /*
 -------------------------------------------------------------
 No sidebar gutter below the sidebar breakpoint
