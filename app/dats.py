@@ -2,16 +2,74 @@ import fnmatch
 import json
 import os
 
+DEFAULT_LOGO = "app/static/img/default_dataset.jpeg"
+DATASET_LOGOS_JSON = "app/static/datasets/dataset-logos.json"
+LOGO_EXTENSIONS = (".png", ".jpg", ".jpeg", ".svg", ".gif", ".webp")
+
+
+def load_dataset_logos():
+    """ Read app/static/datasets/dataset-logos.json: logos for datasets whose
+        DATS.json has no logo of its own, keyed by Portal dataset id
+        (e.g. "projects/PiDose").
+
+        Returns:
+            dict: {dataset_id: {"img" or "url": str, "label": str, ...}}
+    """
+    try:
+        with open(os.path.join(os.getcwd(), DATASET_LOGOS_JSON)) as f:
+            return json.load(f).get("datasets", {})
+    except (OSError, ValueError):
+        return {}
+
+
+def dataset_logo_override(dataset_id, logos=None):
+    """ The logo dataset-logos.json gives a dataset, or None when it has none.
+
+        Returns a path under app/static/ for an "img" entry (the same kind of
+        value LogoFilepath returns for a logo file in the dataset folder), or
+        the URL of a "url" entry.
+    """
+    if not dataset_id:
+        return None
+    if logos is None:
+        logos = load_dataset_logos()
+    entry = logos.get(dataset_id)
+    if not entry:
+        return None
+    if entry.get("img"):
+        return os.path.join("app/static", entry["img"])
+    return entry.get("url") or None
+
+
+def resolve_dataset_logo(dataset_id, own_logo, logos=None):
+    """ The logo to show for a dataset: its own DATS logo when it has one,
+        else its dataset-logos.json entry, else the default image.
+
+        own_logo may be None or DEFAULT_LOGO (both mean "no logo of its own"),
+        which is what the search index stores for such datasets.
+    """
+    if own_logo and own_logo != DEFAULT_LOGO:
+        return own_logo
+    return dataset_logo_override(dataset_id, logos) or DEFAULT_LOGO
+
 
 class DATSObject:
-    def __init__(self, datasetpath):
+    def __init__(self, datasetpath, dataset_id=None):
         """
           store the datsetopath and tries to find a DATS.json file
+
+          dataset_id is the Portal id ("projects/<name>"). When it is not
+          given it is derived from the path for datasets under
+          conp-dataset/projects/.
         """
         if not os.path.isdir(datasetpath):
             raise RuntimeError(f'No dataset found at {datasetpath}')
 
         self.datasetpath = datasetpath
+        if dataset_id is None and 'conp-dataset/projects/' in datasetpath:
+            dataset_id = 'projects/' + \
+                datasetpath.split('conp-dataset/projects/')[-1].rstrip('/')
+        self.dataset_id = dataset_id
 
         with open(self.DatsFilepath) as f:
             try:
@@ -38,22 +96,65 @@ class DATSObject:
         return descriptor
 
     @property
-    def LogoFilepath(self):
-        logopath = "app/static/img/default_dataset.jpeg"
+    def OwnLogoFilepath(self):
+        """ The dataset's own logo: the one its DATS.json names (a path in
+            the dataset folder, or a URL); failing that, a logo file kept in
+            the dataset folder (see RepoLogoFilepath); else None.
+        """
+        logopath = None
         extraprops = self.descriptor.get('extraProperties', {})
         for prop in extraprops:
-            if prop.get('category') == 'logo' and len(prop.get('values')) > 0:
-                logofilename = prop.get('values').pop().get('value', '')
+            if prop.get('category') == 'logo' and len(prop.get('values') or []) > 0:
+                # Read the last value without removing it (this used to
+                # pop(), so a second read of LogoFilepath lost the logo).
+                logofilename = prop.get('values')[-1].get('value', '')
+                if not logofilename:
+                    continue
                 if not logofilename.lower().startswith("http"):
-                    logofilepath = os.path.join(
+                    logopath = os.path.join(
                         self.datasetpath,
                         logofilename
                     )
-                    logopath = logofilepath
                 else:
                     logopath = logofilename
 
-        return logopath
+        if logopath and not logopath.lower().startswith("http") \
+                and not os.path.isfile(logopath):
+            # DATS names a logo file that is not in the dataset folder:
+            # treat it as no logo rather than fail when serving it.
+            logopath = None
+
+        return logopath or self.RepoLogoFilepath
+
+    @property
+    def RepoLogoFilepath(self):
+        """ A logo file kept in the dataset folder next to DATS.json and
+            README.md (logo.png, logo.jpg, logo.jpeg, logo.svg, logo.gif or
+            logo.webp, any case) that DATS.json does not name; None if there
+            is none.
+        """
+        try:
+            names = sorted(os.listdir(self.datasetpath))
+        except OSError:
+            return None
+        for name in names:
+            stem, ext = os.path.splitext(name)
+            if stem.lower() == "logo" and ext.lower() in LOGO_EXTENSIONS:
+                path = os.path.join(self.datasetpath, name)
+                # isfile follows symlinks, so a DataLad file whose content
+                # has not been fetched is skipped.
+                if os.path.isfile(path):
+                    return path
+        return None
+
+    @property
+    def LogoFilepath(self):
+        """ The dataset's own logo (named in DATS.json, or a logo file in
+            the dataset folder); failing that, its entry in
+            app/static/datasets/dataset-logos.json; failing that, the
+            default image. The dataset's own logo always wins.
+        """
+        return resolve_dataset_logo(self.dataset_id, self.OwnLogoFilepath)
 
     @property
     def ReadmeFilepath(self):

@@ -480,7 +480,7 @@ def _update_index(
 
     for d in datasets:
         try:
-            datsdataset = DATSDataset(d.fspath)
+            datsdataset = DATSDataset(d.fspath, dataset_id=d.dataset_id)
         except Exception:
             # If the DATS file can't be loaded, skip this dataset.
             # There should be an error message in the logs/update_datsets.log
