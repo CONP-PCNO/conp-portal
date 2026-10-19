@@ -17,7 +17,6 @@
     - `admin_bp_tests/` - Admin routes
     - `main_bp_tests/` - Main/index routes
     - `search_bp_tests/` - Search functionality endpoints
-    - `forums_bp_tests/` - Forums/discussion routes
     - `profile_bp_tests/` - User profile endpoints
     - `pipelines_bp_tests/` - Pipelines endpoints and search
 
