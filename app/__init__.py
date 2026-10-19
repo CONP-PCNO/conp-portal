@@ -58,9 +58,6 @@ def create_app(config_settings=None):
     from app.search import search_bp
     app.register_blueprint(search_bp)
 
-    from app.forums import forums_bp
-    app.register_blueprint(forums_bp)
-
     from app.profile import profile_bp
     app.register_blueprint(profile_bp)
 
