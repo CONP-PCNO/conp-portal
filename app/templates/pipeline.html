@@ -123,10 +123,10 @@
         <div class="tp-route-logo"><img src="{{ url_for('static', filename='img/alliance-logo-en.svg') }}" alt="Digital Research Alliance of Canada" /></div>
         <div class="tp-route-body">
           <h3>On an Alliance (DRAC) cluster</h3>
-          <p>Docker isn't available on Alliance clusters; Apptainer runs the same container. Set up once on a login node (it needs internet access, which compute nodes on some clusters don't have), then run the tool in a job. Work in a folder you can write to: the commands below use <code>$SCRATCH/conp</code>.</p>
+          <p>Docker isn't available on Alliance clusters; Apptainer runs the same container. Work in a folder you can write to: the commands below use <code>$SCRATCH/conp</code>.</p>
           <p class="tp-step">1. Once, on a login node</p>
           {{ codebox([
-            'module load python apptainer',
+            'module load python',
             'virtualenv --no-download ~/boutiques-env',
             'source ~/boutiques-env/bin/activate',
             'pip install --no-index --upgrade pip',
@@ -134,18 +134,25 @@
             'mkdir -p $SCRATCH/conp && cd $SCRATCH/conp',
             'bosh pull ' ~ pipeline.id,
             'bosh example ' ~ pipeline.id ~ ' > invocation.json   # fill in your inputs',
-            'export APPTAINER_CACHEDIR=/tmp/$USER/apptainer APPTAINER_TMPDIR=/tmp/$USER/apptainer',
+          ]) }}
+          <p class="tp-step">2. Once, build the image in an interactive job (a login node doesn't allow enough memory)</p>
+          {{ codebox([
+            'salloc --time=1:00:00 --cpus-per-task=4 --mem=16G',
+            'module load apptainer',
+            'cd $SCRATCH/conp',
+            'export APPTAINER_CACHEDIR=$SLURM_TMPDIR/apptainer APPTAINER_TMPDIR=$SLURM_TMPDIR/apptainer',
             'mkdir -p $APPTAINER_CACHEDIR',
             'apptainer build ' ~ page.container.sif ~ ' ' ~ page.container.pull,
+            'exit',
           ]) }}
-          <p class="tp-step">2. In your job script (sbatch) or an interactive job (salloc)</p>
+          <p class="tp-step">3. In your job script (sbatch) or an interactive job (salloc)</p>
           {{ codebox([
             'module load python apptainer',
             'source ~/boutiques-env/bin/activate',
             'cd $SCRATCH/conp',
             'bosh exec launch -s ' ~ pipeline.id ~ ' invocation.json --imagepath ' ~ page.container.sif,
           ]) }}
-          <p class="tp-note">Boutiques mounts the current directory and the input files named in <code>invocation.json</code>; add <code>-v /project:/project</code> for anything else. Scratch is for temporary files (<a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Scratch_purging_policy">older ones are purged</a>), so keep images you reuse in <code>/project</code>. Ask the scheduler for the resources under Details.
+          <p class="tp-note">Boutiques mounts the current directory and the input files named in <code>invocation.json</code>; add <code>-v /project:/project</code> for anything else. Scratch is for temporary files (<a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Scratch_purging_policy">older ones are purged</a>), so keep images you reuse in <code>/project</code>. Smaller images need less than 16 GB; if the build job can't reach Docker Hub, ask <a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Technical_support">Alliance support</a>. Ask the scheduler for the resources under Details.
             <a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Apptainer">Apptainer</a> ·
             <a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Python#Creating_and_using_a_virtual_environment">Python virtual environments</a> ·
             <a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Running_jobs">Running jobs</a> on Alliance clusters</p>
