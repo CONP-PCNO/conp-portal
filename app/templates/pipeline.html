@@ -1,5 +1,41 @@
 {% extends 'common/base_main.html' %}
 
+{#
+  Tool page (2026 page review, option A).
+  Header: logo, title, author/date/record, description, tags. Then the ways
+  to run the tool, each with its platform's logo (CBRAIN only when the tool
+  runs there; Boutiques on your computer; an Alliance cluster with
+  Apptainer), the inputs (required first), the outputs, and a Details list
+  (container image, the descriptor's suggested resources, identifiers).
+  Everything is filled from the Boutiques descriptor and the Portal's data
+  files; no conp-react rebuild is needed (the page no longer mounts a React
+  component).
+#}
+
+{% macro icon(name) -%}
+<svg class="tp-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+{%- if name == 'copy' -%}<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>{%- endif -%}
+</svg>
+{%- endmacro %}
+
+{% macro codebox(lines) -%}
+<div class="tp-codebox">
+  <pre class="tp-code"><code>{{ lines | join('\n') }}</code></pre>
+  <button class="tp-copy" type="button" aria-label="Copy commands" title="Copy">{{ icon('copy') }}</button>
+</div>
+{%- endmacro %}
+
+{% macro input_row(i) -%}
+<tr>
+  <td>{{ i.name or i.id }}{% if not i.optional %} <span class="tp-req">required</span>{% endif %}</td>
+  <td>{{ i.type }}{% if i.list %} list{% endif %}</td>
+  <td>{% if i.description %}{{ i.description }}{% else %}<span class="tp-muted">(no description in the record)</span>{% endif %}
+    {%- if i['value-choices'] %}<div class="tp-choices">Choices: {{ i['value-choices'] | join(', ') }}</div>{% endif %}</td>
+</tr>
+{%- endmacro %}
+
+{% set downloads = pipeline.downloads | int if pipeline.downloads is not none else 0 %}
+
 {% block head %} {{ super() }}
 <title>CONP Portal | {{ pipeline.title }}</title>
 {% endblock %}
@@ -7,189 +43,159 @@
 {% block og_title %}{{ pipeline.title }} | CONP Portal{% endblock %}
 {% block og_description %}{% if pipeline.description is defined and pipeline.description|length %}{{ pipeline.description | striptags | truncate(200) }}{% else %}An analysis tool or pipeline on the Canadian Open Neuroscience Platform (CONP) Portal.{% endif %}{% endblock %}
 
+{% block styles %} {{ super() }}
+<link href="{{ static_v('css/tool-page.css') }}" rel="stylesheet" />
+{% endblock %}
+
 {% block scripts %} {{ super() }}
-<script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>
-<script src=" {{ url_for('static',filename='v1/js/react-dom.development-16.11.0.js') }}"></script>
-<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
-{% endblock %} {% block contenttitle %}
-<div class="search-header page-title">
-  <h2>
-    {% if pipeline.icon and not pipeline.icon.generic %}<img src="{{ pipeline.icon.src }}" alt="{{ pipeline.icon.label }} logo" title="{{ pipeline.icon.label }}"
-      style="max-height: 48px; max-width: 64px; width: auto; height: auto; object-fit: contain; vertical-align: middle; margin-right: 0.75rem;" />{% endif %}{{ pipeline.title }}
-  </h2>
-</div>
-{% endblock %} {% block appcontent %}
-<div id="mount-display" class="pipeline p-4"></div>
+<script src="{{ static_v('js/tool-page.js') }}" defer></script>
+{% endblock %}
 
-<div class="d-flex p-4">
-  <div class="col-4">
-    <div class="card h-100">
-      <div class="card-body d-flex flex-column justify-content-between align-items-center">
-        <h6 class="card-title text-center">Run Locally Using Boutiques</h6>
-        <div class="row py-4 w-100 justify-content-center">
-          <img class="img-fluid" alt="Boutiques" src="/static/img/boutiques.png" />
-        </div>
-        <a href="#boutiques" class="btn-link">Click here for instructions</a>
-      </div>
-    </div>
-  </div>
-  <div class="col-4">
-    <div class="card h-100">
-      <div class="card-body d-flex flex-column justify-content-between align-items-center">
-        <h6 class="card-title text-center">Run on the CBRAIN Platform</h6>
-        <div class="row py-4 w-100 justify-content-center">
-          {% if pipeline.platforms[0].uri == "" %}
-          <img class="img-fluid" alt="Online platform" src="/static/img/cbrain-icon-grey.png" />
-          {% else %}
-          <img class="img-fluid" alt="CBRAIN" src="/static/img/cbrain-icon-blue.png" />
-          {% endif %}
-        </div>
-        {% if pipeline.cbrain %}
-        <p class="small text-muted text-center mb-2">
-          {% if pipeline.cbrain.versions %}Runs on CBRAIN: {{ pipeline.cbrain.software }} {{ pipeline.cbrain.versions | join(", ") }}
-          {% else %}Runs on CBRAIN (version not stated){% endif %}
-        </p>
-        {% endif %}
-        {% if pipeline.platforms[0].uri == "" and pipeline.cbrain %}
-        <a target="_blank" rel="noopener noreferrer" href="https://portal.cbrain.mcgill.ca/available" class="btn-link"
-          >Find it on CBRAIN</a
-        >
-        {% elif pipeline.platforms[0].uri == "" %}
-        <a href="{{ pipeline.platforms[0].uri }}" class="btn-link disabled">Not Available</a>
-        {% else %}
-        <a target="_blank" rel="noopener noreferrer" href="{{ pipeline.platforms[0].uri }}" class="btn-link"
-          >Click here to begin</a
-        >
-        {% endif %}
-      </div>
-    </div>
-  </div>
-  <div class="col-4">
-    <div class="card h-100">
-      <div class="card-body d-flex flex-column justify-content-between align-items-center">
-        <h6 class="card-title text-center">Run on HPCs with Clowdr</h6>
-        <div class="row py-4 w-100 justify-content-center">
-          <img class="img-fluid" alt="Compute Canada" src="/static/img/compute_canada_logo.png" />
-        </div>
-        <a target="_blank" rel="noopener noreferrer" href="https://clowdr.readthedocs.io/en/latest/" class="btn-link">
-          Click here for instructions
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
+{% block contenttitle %}{% endblock %}
 
-<div class="d-flex flex-column p-4">
-  {% if pipeline.author is defined and pipeline.author|length %}
-  <div class="row p-2">
-    <div class="col-2 text-right">
-      <p><strong>Author: </strong></p>
-    </div>
-    <div class="col-10">
-      <p>{{ pipeline.author }}</p>
-    </div>
-  </div>
-  {% endif %} {% if pipeline.url is defined and pipeline.url|length %}
-  <div class="row p-2">
-    <div class="col-2 text-right">
-      <p><strong>URL: </strong></p>
-    </div>
-    <div class="col-10">
-      <a target="_blank" rel="noopener noreferrer" href="{{ pipeline.url }}">{{ pipeline.url }}</a>
-    </div>
-  </div>
-  {% endif %} {% if pipeline.description is defined and pipeline.description|length %}
-  <div class="row p-2">
-    <div class="col-2 text-right">
-      <p><strong>Description: </strong></p>
-    </div>
-    <div class="col-10">
-      <p class="tool-description-full">{{ pipeline.description }}</p>
+{% block appcontent %}
+<article class="tp-card" data-tool-title="{{ pipeline.title }}">
+  <div class="tp-head">
+    {% if pipeline.icon and pipeline.icon.src %}<img class="tp-logo" src="{{ pipeline.icon.src }}" alt="" title="{{ pipeline.icon.label }}" />{% endif %}
+    <div class="tp-main">
+      <h1 class="tp-title">{{ pipeline.title }}</h1>
+      <p class="tp-sub">
+        {%- if pipeline.author %}{{ pipeline.author | trim }}{% endif %}
+        {%- if pipeline.publicationdate %} · published {{ pipeline.publicationdate }}{% endif %}
+        {%- if pipeline.doi %} · <a href="https://doi.org/{{ pipeline.doi }}" target="_blank" rel="noopener noreferrer">{{ pipeline.id }}</a>{% endif %}
+        {%- if downloads > 0 %} · {{ '{:,}'.format(downloads) }} download{{ 's' if downloads != 1 }}{% endif %}
+      </p>
+      {% if pipeline.description %}
+      <div class="tp-desc tool-description-full" id="tp-desc">{{ pipeline.description }}</div>
+      <button class="tp-more" type="button" aria-controls="tp-desc" aria-expanded="false" hidden>more</button>
+      {% endif %}
+      {% if page.tags %}
+      <ul class="tp-tags" aria-label="Tags">{% for t in page.tags %}<li><a href="{{ url_for('pipelines.pipelines', search=t) }}">{{ t }}</a></li>{% endfor %}</ul>
+      {% endif %}
     </div>
   </div>
-  {% endif %} {% if pipeline["descriptor-url"] is defined and pipeline["descriptor-url"]|length %}
-  <div class="row p-2">
-    <div class="col-2 text-right">
-      <p><strong>Descriptor URL: </strong></p>
+
+  <section class="tp-sect" aria-labelledby="tp-run">
+    <h2 class="tp-h2" id="tp-run">Ways to run it</h2>
+    <div class="tp-routes">
+
+      {% if page.cbrain_launch %}
+      <div class="tp-route">
+        <div class="tp-route-logo"><img src="{{ url_for('static', filename='img/cbrain-long-logo-blue.png') }}" alt="CBRAIN" /></div>
+        <div class="tp-route-body tp-route-row">
+          <div>
+            <h3>On CBRAIN</h3>
+            <p>No installation: runs on Canadian HPC through the web. Needs a CBRAIN account.
+              {%- if pipeline.cbrain and pipeline.cbrain.versions %} CBRAIN runs {{ pipeline.cbrain.software }} {{ pipeline.cbrain.versions | join(', ') }}.{% endif %}</p>
+          </div>
+          <button class="btn btn-success tp-btn" type="button" data-tp-cbrain data-launch-url="{{ page.cbrain_launch }}" data-datasets-url="{{ url_for('search.dataset_search') }}">Use on CBRAIN</button>
+        </div>
+      </div>
+      {% elif pipeline.cbrain %}
+      <div class="tp-route">
+        <div class="tp-route-logo"><img src="{{ url_for('static', filename='img/cbrain-long-logo-blue.png') }}" alt="CBRAIN" /></div>
+        <div class="tp-route-body tp-route-row">
+          <div>
+            <h3>On CBRAIN</h3>
+            <p>CBRAIN runs {{ pipeline.cbrain.software }}{% if pipeline.cbrain.versions %} {{ pipeline.cbrain.versions | join(', ') }}{% endif %}, but not from this record. Look for it in CBRAIN's list of tools.</p>
+          </div>
+          <a class="btn btn-outline-success tp-btn" target="_blank" rel="noopener noreferrer" href="https://portal.cbrain.mcgill.ca/available">Find it on CBRAIN</a>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="tp-route" id="boutiques">
+        <div class="tp-route-logo"><img src="{{ url_for('static', filename='img/boutiques.png') }}" alt="Boutiques" class="tp-logo-square" /></div>
+        <div class="tp-route-body">
+          <h3>On your computer, with Boutiques</h3>
+          <p>Needs Docker or Apptainer/Singularity. <code>bosh example</code> writes an invocation file with the required inputs (add <code>--complete</code> for all of them); fill it in, then launch.</p>
+          {{ codebox([
+            'pip install boutiques',
+            'bosh example ' ~ pipeline.id ~ ' > invocation.json   # fill in your inputs',
+            'bosh exec launch -s ' ~ pipeline.id ~ ' invocation.json -v /data:/data',
+          ]) }}
+          <p class="tp-note"><a target="_blank" rel="noopener noreferrer" href="https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb">Boutiques tutorial</a></p>
+        </div>
+      </div>
+
+      {% if page.container and page.container.pull %}
+      <div class="tp-route" id="hpc">
+        <div class="tp-route-logo"><img src="{{ url_for('static', filename='img/alliance-logo-en.svg') }}" alt="Digital Research Alliance of Canada" /></div>
+        <div class="tp-route-body">
+          <h3>On an Alliance (DRAC) cluster</h3>
+          <p>Docker isn't available on Alliance clusters; Apptainer runs the same container. Set up once on a login node (it needs internet access, which compute nodes on some clusters don't have), then run the tool in a job.</p>
+          <p class="tp-step">1. Once, on a login node</p>
+          {{ codebox([
+            'module load python apptainer',
+            'virtualenv --no-download ~/boutiques-env',
+            'source ~/boutiques-env/bin/activate',
+            'pip install --no-index --upgrade pip',
+            'pip install boutiques   # from PyPI: no Alliance wheel for it',
+            'bosh pull ' ~ pipeline.id,
+            'bosh example ' ~ pipeline.id ~ ' > invocation.json   # fill in your inputs',
+            'export APPTAINER_CACHEDIR=/tmp/$USER APPTAINER_TMPDIR=/tmp/$USER',
+            'mkdir -p $APPTAINER_CACHEDIR',
+            'apptainer build ' ~ page.container.sif ~ ' ' ~ page.container.pull,
+          ]) }}
+          <p class="tp-step">2. In your job script (sbatch) or an interactive job (salloc)</p>
+          {{ codebox([
+            'module load python apptainer',
+            'source ~/boutiques-env/bin/activate',
+            'bosh exec launch -s ' ~ pipeline.id ~ ' invocation.json --imagepath ' ~ page.container.sif,
+          ]) }}
+          <p class="tp-note">Boutiques mounts the current directory and the input files named in <code>invocation.json</code>; add <code>-v /project:/project</code> (or <code>/scratch</code>) for anything else. Ask the scheduler for the resources under Details.
+            <a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Apptainer">Apptainer</a> ·
+            <a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Python#Creating_and_using_a_virtual_environment">Python virtual environments</a> ·
+            <a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Running_jobs">Running jobs</a> on Alliance clusters</p>
+        </div>
+      </div>
+      {% endif %}
     </div>
-    <div class="col-10">
-      <a target="_blank" rel="noopener noreferrer" href="{{ pipeline['descriptor-url'] }}"
-        >{{ pipeline["descriptor-url"] }}</a
-      >
+  </section>
+
+  {% if page.required_inputs or page.optional_inputs %}
+  <section class="tp-sect" aria-labelledby="tp-inputs">
+    <h2 class="tp-h2" id="tp-inputs">Inputs</h2>
+    <div class="tp-scroll">
+      <table class="tp-table">
+        <thead><tr><th scope="col">Input</th><th scope="col">Type</th><th scope="col">What it is</th></tr></thead>
+        <tbody>
+          {% for i in page.required_inputs %}{{ input_row(i) }}{% endfor %}
+        </tbody>
+        {% if page.optional_inputs %}
+        <tbody id="tp-optional" hidden>
+          {% for i in page.optional_inputs %}{{ input_row(i) }}{% endfor %}
+        </tbody>
+        {% endif %}
+      </table>
     </div>
-  </div>
-  {% endif %} {% if pipeline["container-image"] is defined and pipeline["container-image"]|length %}
-  <div class="row p-2">
-    <div class="col-2 text-right">
-      <p><strong>Container Image: </strong></p>
-    </div>
-    <div class="col-10">
-      {% for key in pipeline["container-image"].keys() %}
-      <p><strong>{{ key + ": "}}</strong>{{ pipeline["container-image"][key] }}</p>
-      {% endfor %}
-    </div>
-  </div>
-  {% endif %} {% if pipeline["tool-doi"] is defined and pipeline["tool-doi"]|length %}
-  <div class="row p-2">
-    <div class="col-2 text-right">
-      <p><strong>Tool DOI: </strong></p>
-    </div>
-    <div class="col-10">
-      <p>{{ pipeline["tool-doi"] }}</p>
-    </div>
-  </div>
+    {% if page.optional_inputs %}
+    <button class="tp-toggle" type="button" aria-controls="tp-optional" aria-expanded="false"
+      data-show="Show {{ page.optional_inputs|length }} optional input{{ 's' if page.optional_inputs|length != 1 }}"
+      data-hide="Hide the optional inputs">Show {{ page.optional_inputs|length }} optional input{{ 's' if page.optional_inputs|length != 1 }}</button>
+    {% endif %}
+  </section>
   {% endif %}
-</div>
 
-<div class="d-flex flex-column p-2">
-  <div class="row p-3">
-    <div class="col-2 text-right">
-      <h4 id="boutiques">Instructions</h4>
-    </div>
-    <div class="col-9 py-1">
-      <h6>How to run the tool locally</h6>
-      <p>
-        CONP pipelines can be easily installed and run on any computer wth a container engine. The preferred container
-        for the tool is available in the Container Image field above. For detailed information on how to use Boutiques,
-        please visit this
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb"
-          >tutorial</a
-        >.
-      </p>
-      <p class="font-italic ms-4">1. List the inputs/outputs needed for the pipeline to run</p>
-      <div class="alert alert-dark" role="alert">bosh example {{ pipeline.id }}</div>
-      <p>
-        Note: this command will list only the required options to run the pipeline. To view the complete list of
-        options, use
-      </p>
-      <p><code>bosh example --complete {{ pipeline.id }}</code></p>
-      <p class="font-italic ms-4">
-        2. Create an invocation JSON file based on the output of the
-        <code>bosh example</code>
-      </p>
-      <p class="font-italic ms-4">3. Run the pipeline with the invocation JSON file created in 2.</p>
-      <div class="alert alert-dark" role="alert">
-        bosh exec launch -s {{ pipeline.id }} ./invocation.json -v /data:/data
-      </div>
-      <p>
-        Note: the option <code>-s</code> will show <code>STDERR</code>, <code>STDOUT</code> in the terminal. The option
-        <code>-v</code> allows mounting a directory from your system onto the container engine.
-      </p>
-    </div>
-  </div>
-  <div class="d-flex flex-column p-2"></div>
+  {% if page.outputs %}
+  <section class="tp-sect" aria-labelledby="tp-outputs">
+    <h2 class="tp-h2" id="tp-outputs">Output{{ 's' if page.outputs|length > 1 }}</h2>
+    <ul class="tp-outputs">
+      {% for o in page.outputs %}<li><strong>{{ o.name or o.id }}</strong>{% if o['path-template'] %} <code>{{ o['path-template'] }}</code>{% endif %}{% if o.description %}: {{ o.description }}{% endif %}{% if o.optional %} <span class="tp-muted">(optional)</span>{% endif %}</li>{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
 
-  <script type="text/javascript">
-
-        const element = {{ pipeline| tojson}};
-        const complementUrl = "{{ url_for('search.dataset_search') }}";
-    const reactElement = React.createElement(CONPReact.ElementContainer, {"element": CONPReact.PipelineElement, "elementProps": element, "complementUrl": complementUrl});
-        ReactDOM.render(reactElement, document.querySelector("#mount-display"));
-  </script>
-</div>
-<!--/span-->
+  <section class="tp-sect" aria-labelledby="tp-details">
+    <h2 class="tp-h2" id="tp-details">Details</h2>
+    <dl class="tp-dl">
+      {% if page.container %}<dt>Container image</dt><dd>{% if page.container.hub_url %}<a class="tp-mono" target="_blank" rel="noopener noreferrer" href="{{ page.container.hub_url }}">{{ page.container.reference }}</a>{% else %}<span class="tp-mono">{{ page.container.reference }}</span>{% endif %}</dd>{% endif %}
+      {% if page.resources %}<dt>Suggested resources</dt><dd>{{ page.resources }} <span class="tp-muted">(as stated in the descriptor: a guide for job requests, not a benchmark)</span></dd>{% endif %}
+      {% if pipeline['tool-version'] or pipeline.version %}<dt>Version</dt><dd>{{ pipeline['tool-version'] or pipeline.version }}</dd>{% endif %}
+      {% if pipeline.doi %}<dt>Descriptor</dt><dd><a target="_blank" rel="noopener noreferrer" href="https://doi.org/{{ pipeline.doi }}">doi:{{ pipeline.doi }}</a>{% if pipeline['schema-version'] %} · Boutiques schema {{ pipeline['schema-version'] }}{% endif %}</dd>{% endif %}
+      {% if pipeline.url %}<dt>Project page</dt><dd><a target="_blank" rel="noopener noreferrer" href="{{ pipeline.url }}">{{ pipeline.url }}</a></dd>{% endif %}
+      {% if pipeline.ark_id %}<dt>ARK identifier</dt><dd><a href="{{ pipeline.ark_id }}">{{ pipeline.ark_id }}</a></dd>{% endif %}
+    </dl>
+  </section>
+</article>
 {% endblock %}
