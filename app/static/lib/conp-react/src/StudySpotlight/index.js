@@ -154,6 +154,7 @@ const StudySpotlight = (props) => {
         <ol className="carousel-indicators">
           {studies.map((study, i) =>
             <li
+              key={i}
               data-bs-target="#study-spotlight-carousel"
               data-bs-slide-to={i}
               className={i === 0 ? "active" : ""}
@@ -162,7 +163,7 @@ const StudySpotlight = (props) => {
         </ol>
         <div className="carousel-inner">
           {studies.map((study, i) =>
-            <div className={i === 0 ? "carousel-item active" : "carousel-item"}>
+            <div key={study.title} className={i === 0 ? "carousel-item active" : "carousel-item"}> {}
               <div className="card-description-text">
                 <div className="card-img d-flex justify-content-center">
                   {study.logo && <img style={{ maxHeight: '220px', maxWidth: '250px' }} alt="Project image" className="img-fluid" src={study.logo} />}
@@ -172,7 +173,7 @@ const StudySpotlight = (props) => {
               </div>
               <div className="d-flex mt-4 justify-content-around">
                 {study.buttons.map((button) =>
-                  <div>
+                  <div key={button.link}> {}
                     <a href={button.link}>
                       <button className="btn btn-outline-secondary" type="button">
                         {button.label}
