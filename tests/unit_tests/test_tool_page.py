@@ -84,8 +84,9 @@ def test_tool_page_not_on_cbrain(app):
     assert 'virtualenv --no-download ~/boutiques-env' in html
     assert 'bosh pull zenodo.123' in html
     assert 'cd $SCRATCH/conp' in html             # never build into an unwritable working directory
-    assert html.index('salloc --time') < html.index('apptainer build')   # build in a job, not on a login node
-    assert 'APPTAINER_CACHEDIR=$SLURM_TMPDIR' in html
+    assert html.index('salloc --account') < html.index('apptainer build')   # build in a job, not on a login node
+    assert 'APPTAINER_CACHEDIR=${SLURM_TMPDIR:?not in the job yet}/apptainer' in html   # stops outside a job
+    assert 'salloc --account=' in html
     assert 'Show 1 optional input' in html
     assert 'https://hub.docker.com/r/org/tool' in html
 

@@ -135,12 +135,13 @@
             'bosh pull ' ~ pipeline.id,
             'bosh example ' ~ pipeline.id ~ ' > invocation.json   # fill in your inputs',
           ]) }}
-          <p class="tp-step">2. Once, build the image in an interactive job (a login node doesn't allow enough memory)</p>
+          <p class="tp-step">2. Once, build the image in an interactive job (a login node doesn't allow enough memory). Wait for the job's prompt before going on; <code>def-yourpi</code> is your group's account (<code>sshare -U</code> lists them).</p>
           {{ codebox([
-            'salloc --time=1:00:00 --cpus-per-task=4 --mem=16G',
+            'salloc --account=def-yourpi --time=1:00:00 --cpus-per-task=4 --mem=16G',
             'module load apptainer',
             'cd $SCRATCH/conp',
-            'export APPTAINER_CACHEDIR=$SLURM_TMPDIR/apptainer APPTAINER_TMPDIR=$SLURM_TMPDIR/apptainer',
+            'export APPTAINER_CACHEDIR=${SLURM_TMPDIR:?not in the job yet}/apptainer',
+            'export APPTAINER_TMPDIR=$APPTAINER_CACHEDIR',
             'mkdir -p $APPTAINER_CACHEDIR',
             'apptainer build ' ~ page.container.sif ~ ' ' ~ page.container.pull,
             'exit',
