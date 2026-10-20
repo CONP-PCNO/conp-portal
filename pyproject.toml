@@ -41,6 +41,7 @@ dependencies = [
 dev = [
     "deptry>=0.25.1",
     "flake8>=7.4.1",
+    "pipdeptree>=4.2.8",
     "prek>=0.5.2",
     "pytest==8.3.5",
     "ruff>=0.16.8",
