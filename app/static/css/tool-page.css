@@ -70,8 +70,19 @@ Uses the theme tokens from conp-theme.css. All rules are scoped to .tp-*.
 .tp-route p.tp-note { margin-top: 8px; font-size: .86rem; }
 .tp-route p.tp-step { margin: 14px 0 0; font-size: .86rem; font-weight: 700; color: #3a404c; }
 .tp-route p.tp-step + .tp-codebox { margin-top: 6px; }
+.tp-route p.tp-src { margin: 6px 0 0; font-size: .8rem; color: var(--conp-grey-4); }
 .tp-card .tp-btn { white-space: nowrap; width: auto; }
 
+.tp-card :not(pre) > code {
+  font-family: SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .88em;
+  color: #1d2129;
+  background: #eef1f5;
+  border: 1px solid #dde2e8;
+  border-radius: 4px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
 .tp-codebox { position: relative; margin-top: 10px; }
 .tp-code {
   background: #1f2430;

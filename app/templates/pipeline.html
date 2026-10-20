@@ -25,6 +25,10 @@
 </div>
 {%- endmacro %}
 
+{% macro sources(links) -%}
+<p class="tp-src">Source:{% for label, href in links %} <a target="_blank" rel="noopener noreferrer" href="{{ href }}">{{ label }}</a>{% if not loop.last %} ·{% endif %}{% endfor %}</p>
+{%- endmacro %}
+
 {% macro input_row(i) -%}
 <tr>
   <td>{{ i.name or i.id }}{% if not i.optional %} <span class="tp-req">required</span>{% endif %}</td>
@@ -108,7 +112,7 @@
         <div class="tp-route-logo"><img src="{{ url_for('static', filename='img/boutiques.png') }}" alt="Boutiques" class="tp-logo-square" /></div>
         <div class="tp-route-body">
           <h3>On your computer, with Boutiques</h3>
-          <p>Needs Docker or Apptainer/Singularity. <code>bosh example</code> writes an invocation file with the required inputs (add <code>--complete</code> for all of them); fill it in, then launch.</p>
+          <p>Requires Docker or Apptainer/Singularity. <code>bosh example</code> writes an invocation file with the required inputs (add <code>--complete</code> for all of them); fill it in, then launch.</p>
           {{ codebox([
             'pip install boutiques',
             'bosh example ' ~ pipeline.id ~ ' > invocation.json   # fill in your inputs',
@@ -123,7 +127,7 @@
         <div class="tp-route-logo"><img src="{{ url_for('static', filename='img/alliance-logo-en.svg') }}" alt="Digital Research Alliance of Canada" /></div>
         <div class="tp-route-body">
           <h3>On an Alliance (DRAC) cluster</h3>
-          <p>Docker isn't available on Alliance clusters; Apptainer runs the same container. Work in a folder you can write to: the commands below use <code>$SCRATCH/conp</code>.</p>
+          <p>Docker isn't available on Alliance clusters, but Apptainer can run the same container. Work in a folder you can write to: the commands below use <code>$SCRATCH/conp</code> as an example.</p>
           <p class="tp-step">1. Once, on a login node</p>
           {{ codebox([
             'module load python',
@@ -135,16 +139,24 @@
             'bosh pull ' ~ pipeline.id,
             'bosh example ' ~ pipeline.id ~ ' > invocation.json   # fill in your inputs',
           ]) }}
-          <p class="tp-step">2. Once, build the image in an interactive job (a login node doesn't allow enough memory). Wait for the job's prompt before going on; <code>def-yourpi</code> is your group's account (<code>sshare -U</code> lists them).</p>
+          {{ sources([
+            ('Alliance: Python virtual environments', 'https://docs.alliancecan.ca/wiki/Python#Creating_and_using_a_virtual_environment'),
+            ('Alliance: available Python wheels', 'https://docs.alliancecan.ca/wiki/Available_Python_wheels'),
+            ('Boutiques tutorial', 'https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb'),
+          ]) }}
+          <p class="tp-step">2. Once, build the image on a login node (it needs internet access, which compute nodes on some clusters, Rorqual among them, don't have). Apptainer's working files go on scratch, because <code>/tmp</code> on a login node uses memory.</p>
           {{ codebox([
-            'salloc --account=def-yourpi --time=1:00:00 --cpus-per-task=4 --mem=16G',
             'module load apptainer',
             'cd $SCRATCH/conp',
-            'export APPTAINER_CACHEDIR=${SLURM_TMPDIR:?not in the job yet}/apptainer',
-            'export APPTAINER_TMPDIR=$APPTAINER_CACHEDIR',
-            'mkdir -p $APPTAINER_CACHEDIR',
+            'export APPTAINER_CACHEDIR=$SCRATCH/apptainer/cache APPTAINER_TMPDIR=$SCRATCH/apptainer/tmp',
+            'mkdir -p $APPTAINER_CACHEDIR $APPTAINER_TMPDIR',
             'apptainer build ' ~ page.container.sif ~ ' ' ~ page.container.pull,
-            'exit',
+          ]) }}
+          {{ sources([
+            ('Alliance: building an Apptainer image', 'https://docs.alliancecan.ca/wiki/Apptainer#Building_an_SIF_image'),
+            ('Alliance: changing Apptainer\'s directories', 'https://docs.alliancecan.ca/wiki/Apptainer#Changing_Apptainer%27s_default_directories'),
+            ('Alliance: Rorqual (no internet on compute nodes)', 'https://docs.alliancecan.ca/wiki/Rorqual/en'),
+            ('Apptainer: build environment', 'https://apptainer.org/docs/user/latest/build_env.html'),
           ]) }}
           <p class="tp-step">3. In your job script (sbatch) or an interactive job (salloc)</p>
           {{ codebox([
@@ -153,10 +165,12 @@
             'cd $SCRATCH/conp',
             'bosh exec launch -s ' ~ pipeline.id ~ ' invocation.json --imagepath ' ~ page.container.sif,
           ]) }}
-          <p class="tp-note">Boutiques mounts the current directory and the input files named in <code>invocation.json</code>; add <code>-v /project:/project</code> for anything else. Scratch is for temporary files (<a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Scratch_purging_policy">older ones are purged</a>), so keep images you reuse in <code>/project</code>. Smaller images need less than 16 GB; if the build job can't reach Docker Hub, ask <a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Technical_support">Alliance support</a>. Ask the scheduler for the resources under Details.
-            <a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Apptainer">Apptainer</a> ·
-            <a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Python#Creating_and_using_a_virtual_environment">Python virtual environments</a> ·
-            <a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Running_jobs">Running jobs</a> on Alliance clusters</p>
+          {{ sources([
+            ('Alliance: running jobs', 'https://docs.alliancecan.ca/wiki/Running_jobs'),
+            ('Alliance: Apptainer', 'https://docs.alliancecan.ca/wiki/Apptainer'),
+            ('Boutiques tutorial', 'https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb'),
+          ]) }}
+          <p class="tp-note">Boutiques mounts the current directory and the input files named in <code>invocation.json</code>; add <code>-v /project:/project</code> for anything else. Scratch is for temporary files (<a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Scratch_purging_policy">older ones are purged</a>), so keep images you reuse in your group's project space (under <code>/project</code>; linked from your home directory, e.g. <code>~/links/projects</code> on Rorqual). Large images (FreeSurfer, fMRIPrep) take a while to build; if a build is stopped for memory, ask <a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Technical_support">Alliance support</a>. Ask the scheduler for the resources under Details.</p>
         </div>
       </div>
       {% endif %}
