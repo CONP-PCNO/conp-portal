@@ -16,4 +16,3 @@ app/static/v1/js/react-dom.development-16.11.0.js linguist-vendored
 app/static/v1/js/react.development-16.11.0.js linguist-vendored
 # v2 bundled and vendored assets
 app/static/v2/dist/* linguist-generated
-app/static/v2/src/styles/highcharts.css linguist-vendored
