@@ -11,6 +11,7 @@ from flask_login import current_user
 from app.models import ArkId
 from app.pipelines import pipelines as pipelines_utils
 from app.pipelines import pipelines_bp
+from app.pipelines.tool_page import tool_page_context
 
 
 def get_cbrain_availability():
@@ -370,5 +371,6 @@ def pipeline_info():
     return render_template(
         'pipeline.html',
         title='CONP | Pipeline',
-        pipeline=element
+        pipeline=element,
+        page=tool_page_context(element),
     )
