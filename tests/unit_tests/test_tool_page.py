@@ -84,9 +84,10 @@ def test_tool_page_not_on_cbrain(app):
     assert 'virtualenv --no-download ~/boutiques-env' in html
     assert 'bosh pull zenodo.123' in html
     assert 'cd $SCRATCH/conp' in html             # never build into an unwritable working directory
-    assert html.index('salloc --account') < html.index('apptainer build')   # build in a job, not on a login node
-    assert 'APPTAINER_CACHEDIR=${SLURM_TMPDIR:?not in the job yet}/apptainer' in html   # stops outside a job
-    assert 'salloc --account=' in html
+    assert 'APPTAINER_TMPDIR=$SCRATCH/apptainer/tmp' in html   # not /tmp, which uses memory on login nodes
+    assert 'href="https://docs.alliancecan.ca/wiki/Python#Creating_and_using_a_virtual_environment"' in html   # each step cites its source
+    assert 'href="https://docs.alliancecan.ca/wiki/Running_jobs"' in html
+    assert 'salloc --account' not in html         # compute nodes on some clusters have no internet: build on a login node
     assert 'Show 1 optional input' in html
     assert 'https://hub.docker.com/r/org/tool' in html
 
