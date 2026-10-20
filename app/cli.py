@@ -87,11 +87,12 @@ def register(app):
         is_flag=True,
         show_default=True,
         default=False,
-        help='Specify if the schema should be regenerated',
+        help='Kept for compatibility: the index is now always rebuilt from scratch',
     )
     def update_index(schema):
         """
-        Wrapper to call the updating of the search index
+        Rebuild the search index from the datasets table (always from
+        scratch, so running it more than once never duplicates datasets)
         """
         _update_index(app, DBDataset, schema)
 
@@ -462,14 +463,16 @@ def _update_index(
     object_class: type[db.Model],
     schema,
 ):
-    from whoosh.index import open_dir
 
     from app.search.models import DATSDataset
 
-    if schema:
-        ix = _update_schema(app)
-    else:
-        ix = open_dir("index")
+    # Always build a fresh index. The index is small (one document per
+    # dataset) and Whoosh's add_document() never replaces an existing
+    # document, so adding to the open index (the old behaviour without
+    # --schema) listed every dataset twice after `flask update_datasets`
+    # (which rebuilds) was followed by `flask update_index`. The `schema`
+    # argument is kept so existing scripts and the --schema flag still work.
+    ix = _update_schema(app)
 
     writer = ix.writer()
     datasets = DBDataset.query.order_by(DBDataset.id).all()
