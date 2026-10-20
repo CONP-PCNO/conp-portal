@@ -15,11 +15,22 @@ from flask import (
     url_for,
 )
 from flask_login import current_user
+from sqlalchemy import func
 
 from app.analytics.routes import datasets_downloads, datasets_views
 from app.dats import load_dataset_logos, resolve_dataset_logo
 from app.models import ArkId, Dataset, DatasetAncestry, Experiment
+from app.models import MatomoDailyGetDatasetPageViewsSummary
 from app.search import search_bp
+from app.search.dataset_page import (
+    citation_bibtex,
+    citation_key,
+    citation_ris,
+    citation_text,
+    clean_version,
+    licence_badges,
+    strip_title_heading,
+)
 from app.search.models import DatasetCache, DATSDataset
 from app.search.queries import (
     example_query_1,
@@ -221,6 +232,18 @@ def dataset_search_suggestions():
                     'datasets': datasets,
                 }
             )
+
+
+def _dataset_page_views(dataset_id):
+    """Matomo page views of this dataset's page, summed over the daily
+    summaries (collected since January 2021). 0 when none are recorded."""
+    try:
+        total = (MatomoDailyGetDatasetPageViewsSummary.query
+                 .with_entities(func.sum(MatomoDailyGetDatasetPageViewsSummary.nb_hits))
+                 .filter_by(dataset_id=dataset_id).scalar())
+    except Exception:  # analytics must never break the page
+        return 0
+    return int(total or 0)
 
 
 def _evidence_publication_types():
@@ -726,7 +749,7 @@ def dataset_info():
         "formats": datsdataset.formats,
         "modalities": datsdataset.modalities,
         "licenses": datsdataset.licenses,
-        "version": datsdataset.version,
+        "version": clean_version(datsdataset.version),
         "sources": datsdataset.sources,
         "conpStatus": datsdataset.conpStatus,
         "authorizations": datsdataset.authorizations,
@@ -747,7 +770,26 @@ def dataset_info():
 
     metadata = get_dataset_metadata_information(d)
 
-    readme = get_dataset_readme(d.dataset_id)
+    readme = strip_title_heading(get_dataset_readme(d.dataset_id), dataset["title"])
+
+    # Dataset landing page (option B of the 2026 page review): short licence
+    # badges, a ready-made citation and the year the dataset was added.
+    year_added = (dataset["dateAdded"] or "")[:4] or None
+    page = {
+        "licences": licence_badges(datsdataset.licenses),
+        "citation": citation_text(
+            datsdataset.creators, year_added, dataset["title"],
+            dataset["version"], dataset["ark_id"]),
+        "citation_bibtex": citation_bibtex(
+            datsdataset.creators, year_added, dataset["title"],
+            dataset["version"], dataset["ark_id"], dataset["id"]),
+        "citation_ris": citation_ris(
+            datsdataset.creators, year_added, dataset["title"],
+            dataset["version"], dataset["ark_id"]),
+        "citation_key": citation_key(dataset["id"], year_added),
+        "cbrainPipelinesUrl": url_for('pipelines.pipeline_search'),
+        "views": _dataset_page_views(d.dataset_id),
+    }
 
     if dataset["status"] == "Working":
         color = "success"
@@ -765,6 +807,7 @@ def dataset_info():
         data=dataset,
         metadata=metadata,
         readme=readme,
+        page=page,
         ciBadgeUrl=ci_badge_url,
         user=current_user
     )
