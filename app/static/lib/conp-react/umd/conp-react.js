@@ -40164,6 +40164,7 @@ var StudySpotlight_StudySpotlight = function StudySpotlight(props) {
     className: "carousel-indicators"
   }, studies.map(function (study, i) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+      key: i,
       "data-bs-target": "#study-spotlight-carousel",
       "data-bs-slide-to": i,
       className: i === 0 ? "active" : ""
@@ -40172,8 +40173,9 @@ var StudySpotlight_StudySpotlight = function StudySpotlight(props) {
     className: "carousel-inner"
   }, studies.map(function (study, i) {
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+      key: study.title,
       className: i === 0 ? "carousel-item active" : "carousel-item"
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    }, " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: "card-description-text"
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: "card-img d-flex justify-content-center"
@@ -40190,7 +40192,9 @@ var StudySpotlight_StudySpotlight = function StudySpotlight(props) {
     }, study.title), study.description), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
       className: "d-flex mt-4 justify-content-around"
     }, study.buttons.map(function (button) {
-      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
+      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+        key: button.link
+      }, " ", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", {
         href: button.link
       }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("button", {
         className: "btn btn-outline-secondary",
