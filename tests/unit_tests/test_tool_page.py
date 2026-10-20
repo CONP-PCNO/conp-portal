@@ -83,6 +83,7 @@ def test_tool_page_not_on_cbrain(app):
     assert '--user' not in html                   # Alliance docs warn against pip install --user
     assert 'virtualenv --no-download ~/boutiques-env' in html
     assert 'bosh pull zenodo.123' in html
+    assert 'cd $SCRATCH/conp' in html             # never build into an unwritable working directory
     assert 'Show 1 optional input' in html
     assert 'https://hub.docker.com/r/org/tool' in html
 
