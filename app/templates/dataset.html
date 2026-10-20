@@ -1,5 +1,57 @@
 {% extends 'common/base_main.html' %}
 
+{#
+  Dataset landing page (2026 page review, option B).
+  Header: logo, title, one line of provenance, the description (clamped at
+  five lines), and the basic facts as labelled chips (the licence is one of
+  them). Below, four tabs: Get the data · About · All metadata · Cite.
+  "Get the data" shows only the routes this dataset actually has.
+  Everything is filled from the DATS record, the README and the Portal
+  database, as before; no conp-react rebuild is needed (the page no longer
+  mounts a React component).
+#}
+
+{% macro icon(name) -%}
+<svg class="dp-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+{%- if name == 'size' -%}<rect x="3" y="13" width="18" height="7" rx="2"/><path d="M5.5 13 8 5h8l2.5 8"/><circle cx="7.5" cy="16.5" r=".9" fill="currentColor" stroke="none"/>
+{%- elif name == 'files' -%}<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>
+{%- elif name == 'subjects' -%}<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>
+{%- elif name == 'modality' -%}<path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M8 12h8"/>
+{%- elif name == 'formats' -%}<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="m10 12-2 2.5 2 2.5M14 12l2 2.5-2 2.5"/>
+{%- elif name == 'licence' -%}<path d="M12 4v16M8 20h8M5 7h14"/><path d="M5 7 2.5 13a2.6 2.6 0 0 0 5 0zM19 7l-2.5 6a2.6 2.6 0 0 0 5 0z"/>
+{%- elif name == 'eye' -%}<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>
+{%- elif name == 'copy' -%}<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>
+{%- endif -%}
+</svg>
+{%- endmacro %}
+
+{% macro chip(name, label, text, href=None, tip=None) -%}
+{% if href %}<a class="dp-chip" href="{{ href }}" target="_blank" rel="noopener noreferrer" title="{{ tip or label }}">{% else %}<span class="dp-chip" title="{{ tip or label }}">{% endif %}
+{{- icon(name) }}<span class="visually-hidden">{{ label }}: </span>{{ text -}}
+{% if href %}</a>{% else %}</span>{% endif %}
+{%- endmacro %}
+
+{% macro codebox(lines, id=None) -%}
+<div class="dp-codebox"{% if id %} id="{{ id }}"{% endif %}>
+  <pre class="dp-code"><code>{{ lines | join('\n') }}</code></pre>
+  <button class="dp-copy" type="button" aria-label="Copy commands" title="Copy">{{ icon('copy') }}</button>
+</div>
+{%- endmacro %}
+
+{% set evidence_tiers = {
+  'wired': {'accent': '#90c37f', 'wash': '#f4f7f3', 'blurb': 'a live publication: figures connected to their data, and analyses you can re-run'},
+  're-executable': {'accent': '#4d6e8e', 'wash': '#f2f5f8', 'blurb': 'an archived publication whose analyses you can re-run'},
+  'interactive': {'accent': '#488099', 'wash': '#f2f6f8', 'blurb': 'an archived publication with interactive figures'},
+  'archived': {'accent': '#7a8494', 'wash': '#f5f6f7', 'blurb': 'an archived, citable publication bundle'},
+} %}
+{% set evidence_fallback = {'accent': '#4d6e8e', 'wash': '#f2f5f8', 'blurb': 'an archived publication bundle'} %}
+
+{% set registered = data.authorizations in ['private', 'registered', 'controlled'] %}
+{% set offsite = metadata.downloadOptions == 'offsite' %}
+{% set landing = metadata.sources if metadata.sources and metadata.sources.startswith('http') else None %}
+{% set logo_src = data.logoFilepath if data.logoFilepath and data.logoFilepath.startswith('http') else data.thumbnailURL %}
+{% set creators = data.creators or [] %}
+
 {% block head %} {{ super() }}
 <title>CONP Portal | {{ data.title if data.title else 'Dataset' }}</title>
 {% endblock %}
@@ -8,389 +60,211 @@
 {% block og_description %}{% if metadata.description %}{{ metadata.description | striptags | truncate(200) }}{% else %}A dataset on the Canadian Open Neuroscience Platform (CONP) Portal.{% endif %}{% endblock %}
 {% block og_url %}https://portal.conp.ca/dataset?id={{ data.id }}{% endblock %}
 
-{% block scripts %} {{ super() }}
-<script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>
-<script src=" {{ url_for('static',filename='v1/js/react-dom.development-16.11.0.js') }}"></script>
-<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+{% block styles %} {{ super() }}
+<link href="{{ static_v('css/dataset-page.css') }}" rel="stylesheet" />
+{% endblock %}
 
+{% block scripts %} {{ super() }}
 <!-- ADD JSON-LD DESCRIPTOR -->
 <script type="application/ld+json">
   {{ metadata.schema_org_metadata | tojson }}
 </script>
+<script src="{{ static_v('js/dataset-page.js') }}" defer></script>
+{% endblock %}
 
-<script type="text/javascript">
-  document.addEventListener('DOMContentLoaded', function () {
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (el) { return new bootstrap.Tooltip(el); });
-  });
-</script>
-{% endblock %} {% block contenttitle %}
-<div class="search-header page-title">
-  <h2>Dataset</h2>
-</div>
-{% endblock %} {% block appcontent %}
-<div id="mount-display" class="dataset"></div>
+{% block contenttitle %}{% endblock %}
 
-<div class="d-flex flex-column p-4">
-  {% if metadata.keywords is defined and metadata.keywords is not none %}
-  <div class="py-2">
-    <strong>Keywords: </strong>
-    {% for d in metadata.keywords %} {% if d is defined %} {% set href = "search?search=" ~ d %}
-    <span class="me-1"><a class="badge bg-info text-dark" href="{{ href }}">{{ d }}</a></span>
-    {% endif %} {% endfor %}
-  </div>
-  {% endif %} {% if data.title is defined and data.title is not none %}
-  <h5><strong> {{ data.title }} </strong></h5>
-  {% endif %} {% if data.creators is defined and data.creators is not none %}
-  <div class="py-2">
-    <strong>Creators: </strong> {{ data.creators|join(', ') }}
-  </div>
-  {% endif %} {% if data.principalInvestigators is defined and
-  data.principalInvestigators is not none %}
-  <div class="py-1">
-    <strong>Principal Investigator: </strong>{{ data.principalInvestigators|join(', ') }}
-  </div>
-  {% endif %} {% if metadata.contact is defined and metadata.contact is not none
-  %}
-  <div class="py-1"><strong>Contact: </strong> {{ metadata.contact }}</div>
-  {% endif %} {% if metadata.licenses is defined and metadata.licenses is not
-  none %}
-  <div class="py-1">
-    <strong>Licenses: </strong> {{ metadata.licenses|join(', ') }}
-  </div>
-  {% endif %} {% if metadata.version is defined and metadata.version is not none
-  %}
-  <div class="py-1"><strong>Version: </strong> {{ metadata.version }}</div>
-  {% endif %} {% if data.modalities is defined and data.modalities is not none %}
-  <div class="py-1">
-    <strong>Modalities: </strong>
-    {% for d in data.modalities %} {% if d is defined %} {% set href = "search?modalities=" ~ d %}
-    <span class="me-1"><a class="badge bg-info text-dark" href="{{ href }}">{{ d }}</a></span>
-    {% endif %} {% endfor %}
-  </div>
-  {% endif %}{% if data.formats is defined and data.formats is not none %}
-  <div class="py-1">
-    <strong>Formats: </strong>
-    {% for d in data.formats %} {% if d is defined %} {% set href = "search?formats=" ~ d %}
-    <span class="me-1"><a class="badge bg-info text-dark" href="{{ href }}">{{ d }}</a></span>
-    {% endif %} {% endfor %}
-  </div>
-  {% endif %} {% if data.size is defined and data.size is not none %}
-  <div class="py-1"><strong>Size: </strong> {{ data.size }}</div>
-  {% endif %} {% if data.files is defined and data.files is not none %}
-  <div class="py-1"><strong>No of Files: </strong> {{ data.files }}</div>
-  {% endif %} {% if data.subjects is defined and data.subjects is not none %}
-  <div class="py-1"><strong>No of Subjects: </strong> {{ data.subjects }}</div>
-  {% endif %} {% if metadata.parentDatasets is defined and metadata.parentDatasets is not none %}
-  <div class="py-1">
-    <strong>Input Datasets: </strong>
-    {% for d in metadata.parentDatasets %}
-      {% if d is defined %} {% set href = "/dataset?id=projects/" ~ d %}
-        {% if d.startswith('http') %}
-          {% set href = d %}
-        {% endif %}
-        <span class="me-1"><a class="badge bg-info text-dark" href="{{ href }}">{{ d }}</a></span>
+{% block appcontent %}
+<article class="dp-card" data-dataset-id="{{ data.id }}" data-dataset-title="{{ data.title }}">
+  <div class="dp-head">
+    <div class="dp-side">
+      {% if logo_src %}<img class="dp-logo" src="{{ logo_src }}" alt="" />{% endif %}
+      {% if data.conpStatus and data.conpStatus | lower != 'external' %}
+      <span class="dp-origin"><img src="{{ url_for('static', filename='img/canada.svg') }}" alt="" width="14" height="14" />Canadian dataset</span>
       {% endif %}
-    {% endfor %}
-  </div>
-  {% endif %} {% if metadata.childDatasets is defined and metadata.childDatasets|length > 0 %}
-  <div class="py-1">
-    <strong>Derived Datasets: </strong>
-    {% for d in metadata.childDatasets %} {% set href = "/dataset?id=" ~ d.child_dataset_id %}
-    <span class="me-1"><a class="badge bg-info text-dark" href="{{ href }}">{{ d.name }}</a></span>
-    {% endfor %}
-  </div>
-  {% endif %} {% if metadata.primaryPublications is defined and metadata.primaryPublications is not none %} {% if
-  metadata.primaryPublications|length > 1 %}
-  <div class="py-1">
-    <strong>Primary Publications: </strong>
-    {% for p in metadata.primaryPublications %}
-    <ul>
-      <li>
-        {{p.title}} {{p.author}} <em>{{p.journal}}</em>
-        {% if p.doi is defined %}
-        <a target="_blank" rel="noopener noreferrer" href="{{ p.doi }}">{{ p.doi }}</a>
-        {% endif %}
-      </li>
-    </ul>
-    {% endfor %}
-  </div>
-  {% elif metadata.primaryPublications|length == 1 %}
-  <div class="py-1">
-    <strong>Primary Publication: </strong>
-    {{metadata.primaryPublications[0].title}} {{metadata.primaryPublications[0].author}}
-    <em>{{metadata.primaryPublications[0].journal}}</em>
-    {% if metadata.primaryPublications[0].doi is defined %}
-    <a target="_blank" rel="noopener noreferrer" href="{{ metadata.primaryPublications[0].doi }}">
-      {{ metadata.primaryPublications[0].doi }}
-    </a>
-    {% endif %}
-  </div>
-  {% endif %} {% endif %} {% if metadata.remoteUrl is defined and metadata.remoteUrl is not none %}
-  <div class="py-1">
-    <strong>Browse on GitHub: </strong
-    ><a class="text-reset" target="_blank" rel="noopener noreferrer" href="{{ metadata.remoteUrl }}"
-      >{{ metadata.remoteUrl }}</a
-    >
-  </div>
-  {% endif %}
-  {% if metadata.sources is defined and metadata.sources is not none %}
-  <div class="py-1">
-    <strong>Project Landing Page: </strong
-    ><a class="text-reset" target="_blank" rel="noopener noreferrer" href="{{ metadata.sources }}"
-      >{{ metadata.sources }}</a
-    >
-  </div>
- 
-  {% if metadata.registrationPage is defined and metadata.registrationPage is not none %}
-  <div class="py-1">
-    <strong>Registration Page: </strong
-    ><a class="text-reset" target="_blank" rel="noopener noreferrer" href="{{ metadata.registrationPage }}"
-      >{{ metadata.registrationPage }}</a
-    >
-  </div>
-  {% endif %}
-
-  <div class="py-1">
-    <strong>Metadata file: </strong>
-    <a class="text-reset" href="#" onclick="downloadMetadata()"> DATS.json </a>
-    <i
-      class="fa fa-question-circle"
-      data-bs-toggle="tooltip"
-      title="The DAta Tag Suite (DATS) model is a data description convention that
-      ensures uniform and extensible descriptions of data and their provenance,
-      chosen for its flexibility and capability for rich dataset descriptions
-      and facilitation of adherence to the FAIR principles."
-      style="
-         {
-          color: dimgray;
-        }
-      "
-    ></i>
-  </div>
-  {% endif %} {% if (metadata.dimensions is not none) or (metadata.producedBy is not none) or (metadata.isAbout is not
-  none) or (metadata.acknowledges is not none) or (metadata.spatialCoverage is not none) or (metadata.dates is not none)
-  %}
-  <div class="py-1">
-    <div class="d-inline-flex">
-      <button
-        class="btn btn-link text-reset p-0"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseExample"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-      >
-        more...
-      </button>
+      {% if page.views %}
+      <span class="dp-views" title="{{ '{:,}'.format(page.views) }} page views on the Portal since January 2021">{{ icon('eye') }}<span class="visually-hidden">Page views: </span>{{ '{:,}'.format(page.views) }}</span>
+      {% endif %}
     </div>
-    <div class="collapse py-1" id="collapseExample">
-      <table class="table">
-        <tbody>
-          {% if metadata.dimensions is not none %}
-          <tr>
-            <th scope="row">Dimensions:</th>
-            <td>{{metadata.dimensions|join(", ")}}</td>
-          </tr>
-          {% endif %} {% if metadata.producedBy is not none %}
-          <tr>
-            <th scope="row">Produced By:</th>
-            <td>{{metadata.producedBy|join(", ")}}</td>
-          </tr>
-          {% endif %} {% if metadata.isAbout is not none %}
-          <tr>
-            <th scope="row">Is About:</th>
-            <td>{{metadata.isAbout|join(", ")}}</td>
-          </tr>
-          {% endif %} {% if metadata.acknowledges is not none %}
-          <tr>
-            <th scope="row">Acknowledges:</th>
-            <td>{{metadata.acknowledges|join(", ")}}</td>
-          </tr>
-          {% endif %} {% if metadata.spatialCoverage is not none %}
-          <tr>
-            <th scope="row">Spatial Coverage:</th>
-            <td>{{metadata.spatialCoverage|join(", ")}}</td>
-          </tr>
-          {% endif %} {% if metadata.dates is not none %}
-          <tr>
-            <th scope="row">Other Dates:</th>
-            <td>
-              {% for key, value in metadata.dates.items() %}
-              <i>{{ key }}:</i> {{ value }} {{" -- " if not loop.last else "" }} {% endfor %}
-            </td>
-          </tr>
-          {% endif %}
-        </tbody>
-      </table>
+    <div class="dp-main">
+      <h1 class="dp-title">{{ data.title }}</h1>
+      <p class="dp-sub">
+        {%- if creators %}{{ creators[:3] | join(', ') }}{% if creators|length > 3 %} et al.{% endif %}{% endif %}
+        {%- if metadata.parentDatasets %} · derived from
+          {% for d in metadata.parentDatasets %}<a href="{{ d if d.startswith('http') else '/dataset?id=projects/' ~ d }}">{{ d }}</a>{{ ', ' if not loop.last }}{% endfor %}
+        {%- endif %}
+        {%- if data.version %} · version {{ data.version }}{% endif %}
+        {%- if data.dateAdded %}{{ ',' if data.version else ' ·' }} added {{ data.dateAdded }}{% endif %}
+        {%- if data.dateUpdated %}{{ ',' if data.version or data.dateAdded else ' ·' }} updated {{ data.dateUpdated }}{% endif %}
+      </p>
+
+      {% if metadata.description %}
+      <div class="dp-desc" id="dp-desc">{{ metadata.description | safe }}</div>
+      <button class="dp-more" type="button" aria-controls="dp-desc" aria-expanded="false" hidden>more</button>
+      {% endif %}
+
+      <ul class="dp-chips" aria-label="Key facts">
+        {% if data.size %}<li>{{ chip('size', 'Size', data.size | replace('.0 ', ' ')) }}</li>{% endif %}
+        {% if data.files %}<li>{{ chip('files', 'Files', '{:,} file{}'.format(data.files, '' if data.files == 1 else 's') if data.files is number else data.files ~ ' files') }}</li>{% endif %}
+        {% if data.subjects %}<li>{{ chip('subjects', 'Subjects', '{:,} subject{}'.format(data.subjects, '' if data.subjects == 1 else 's') if data.subjects is number else data.subjects ~ ' subjects') }}</li>{% endif %}
+        {% if data.modalities %}{% set mods = data.modalities %}<li>{{ chip('modality', 'Modality', (mods[:3] | join(', ')) ~ (' +' ~ (mods|length - 3) ~ ' more' if mods|length > 3 else ''), None, 'Modality: ' ~ (mods | join(', '))) }}</li>{% endif %}
+        {% if data.formats %}<li>{{ chip('formats', 'Formats', data.formats | map('string') | join(', ')) }}</li>{% endif %}
+        {% for lic in page.licences %}<li>{{ chip('licence', 'Licence', lic.label, lic.url, 'Licence: ' ~ lic.full) }}</li>{% endfor %}
+      </ul>
+
+      {% if data.evidencePublication %}
+      {% set tier = evidence_tiers.get((data.evidencePublicationType or '') | lower, evidence_fallback) %}
+      <a class="dp-evidence" href="https://doi.org/{{ data.evidencePublication }}" target="_blank" rel="noopener noreferrer"
+         style="--ev-accent: {{ tier.accent }}; --ev-wash: {{ tier.wash }};">
+        <img src="{{ url_for('static', filename='img/evidence_logo.svg') }}" alt="" width="28" height="28" />
+        {% if data.evidencePublicationType %}<span class="dp-evidence-type">{{ data.evidencePublicationType }}</span>{% endif %}
+        <span><strong>NeuroLibre/Evidence publication</strong>: this dataset is part of {{ tier.blurb }} <span aria-hidden="true">↗</span></span>
+      </a>
+      {% endif %}
     </div>
   </div>
-  {% endif %}
-</div>
 
-<div class="d-flex flex-column p-4">
-  {% if metadata.description is defined and metadata.description is not none %}
-  <h5><strong>Description: </strong></h5>
-  <div class="py-1">{{ metadata.description|safe }}</div>
-  {% endif %}
-</div>
+  <div class="dp-tabs" role="tablist" aria-label="Dataset sections">
+    <button role="tab" id="tab-get" aria-controls="get" aria-selected="true">Get the data</button>
+    <button role="tab" id="tab-about" aria-controls="about" aria-selected="false" tabindex="-1">About</button>
+    <button role="tab" id="tab-metadata" aria-controls="metadata" aria-selected="false" tabindex="-1">All metadata</button>
+    <button role="tab" id="tab-cite" aria-controls="cite" aria-selected="false" tabindex="-1">Cite</button>
+  </div>
 
-<div class="d-flex flex-column p-2">
-  <h2>Dataset README information</h2>
-  <div class="card">
-    <div class="card-header">README.md</div>
-    <div class="card-body">{{readme|safe}}</div>
-  </div>
-</div>
-
-{% if metadata.downloadOptions not in ['offsite'] %}
-<div class="d-flex flex-column p-2">
-  <div class="d-flex flex-row align-items-center">
-    <a name="dataladInstructions"></a>
-  </div>
-  <div class="d-flex flex-row align-items-center">
-    <h2 class="px-2">Download Using DataLad</h2>
-    <a
-      class="px-2"
-      target="_blank"
-      rel="noopener noreferrer"
-      href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master"
-    >
-      <img src="{{ ciBadgeUrl }}" alt="CircleCI status" />
-    </a>
-    <div>
-      <button
-        type="button"
-        class="btn btn-default p-0"
-        data-bs-toggle="tooltip"
-        data-bs-placement="right"
-        title="The CONP integrates datasets stored in multiple platforms, to accommodate the various governance models adopted by
-          diverse research groups. While this decentralized architecture nicely fits with open-science goals, it also has
-          challenges, as the availability of dataset storage locations may fluctuate. For this reason, CONP datasets are
-          periodically tested (every few hours), to ensure a satisfying user experience. This status badge shows the status of
-          the dataset as returned by the latest iteration of the tests. In general, it gives a good indication whether data
-          download can expected to succeed. In some cases, however, status may flicker due to temporary network glitches,
-          transient misconfiguration or other issues. In any case, the CONP team is working hard to ensure the
-          high-availability of the datasets present in the platform!"
-      >
-        <span style="font-size: 1em; color: Gray"><i class="fa fa-question"></i></span>
-      </button>
-    </div>
-  </div>
-  {% if data.authorizations in ["private","registered","controlled"] %}
-  <div class="alert alert-info" role="alert">
-    <div style="font-size: 16px"><strong>Note:</strong> An account is required to access this dataset.
-    Please contact the 
-    {% if metadata.registrationPage is defined and metadata.registrationPage is not none %}
-      {% if metadata.registrationEmail %}
-      <a target="_blank" href="mailto:{{metadata.registrationPage}}">dataset maintainers</a>
-      {% else %}
-      <a target="_blank" href="{{metadata.registrationPage}}">dataset maintainers</a>
+  {# ---------------- Get the data ---------------- #}
+  <section class="dp-panel" id="get" role="tabpanel" aria-labelledby="tab-get">
+    <div class="dp-routes">
+    {% if offsite %}
+      {% if metadata.registrationPage %}
+      <div class="dp-route">
+        <div><h2>1. Request access</h2><p>Registration page: {{ metadata.registrationPage | replace('https://', '') | replace('http://', '') | trim('/') }}</p></div>
+        <a class="btn btn-success dp-btn" href="{{ ('mailto:' if metadata.registrationEmail else '') ~ metadata.registrationPage }}" target="_blank" rel="noopener noreferrer">Request access</a>
+      </div>
+      {% endif %}
+      {% if landing and landing != metadata.registrationPage %}
+      <div class="dp-route">
+        <div><h2>{{ '2. ' if metadata.registrationPage }}Download at the source</h2><p>{{ landing | replace('https://', '') | replace('http://', '') | trim('/') }}. The files are not stored on the CONP.</p></div>
+        <a class="btn {{ 'btn-outline-success' if metadata.registrationPage else 'btn-success' }} dp-btn" href="{{ landing }}" target="_blank" rel="noopener noreferrer">Go to the source</a>
+      </div>
+      {% endif %}
+      {% if not metadata.registrationPage and not landing %}
+      <div class="dp-route"><div><h2>Download at the source</h2><p>The files are hosted by the data provider{% if metadata.contact %}; contact: {{ metadata.contact }}{% endif %}.</p></div></div>
       {% endif %}
     {% else %}
-    dataset maintainers
+      {% if registered and metadata.registrationPage %}
+      <div class="dp-route">
+        <div><h2>Request access first</h2><p>A third-party account is needed before the files can be downloaded with DataLad.</p></div>
+        <a class="btn btn-success dp-btn" href="{{ ('mailto:' if metadata.registrationEmail else '') ~ metadata.registrationPage }}" target="_blank" rel="noopener noreferrer">Request access</a>
+      </div>
+      {% endif %}
+      {% if data.showDownloadButton %}
+      <div class="dp-route">
+        <div><h2>In your browser</h2><p>All files, {{ data.size | replace('.0 ', ' ') }}, in a single tar.gz file.</p></div>
+        <a class="btn btn-success dp-btn" href="{{ data.zipLocation }}" data-dp-download data-size="{{ data.size }}">Download</a>
+      </div>
+      {% endif %}
+      <div class="dp-route dp-route--wide" id="dataladInstructions">
+        <div>
+          <h2>With DataLad</h2>
+          <p>This option provides you file-level access, versioning, and ability to include these read/write operations in scripts.{% if registered and not metadata.registrationPage %} An account from the dataset maintainers is needed first.{% endif %}</p>
+          {{ codebox([
+            'datalad install https://github.com/CONP-PCNO/conp-dataset.git',
+            'cd conp-dataset/projects',
+            'datalad install ' ~ data.name,
+            'cd ' ~ data.name,
+            'datalad get *   # all files; or give individual paths',
+          ]) }}
+          <details class="dp-more-info">
+            <summary>More about DataLad</summary>
+            <p>DataLad requires basic knowledge of the command line. To install it, see the <a target="_blank" rel="noopener noreferrer" href="http://handbook.datalad.org/en/latest/intro/installation.html#install">install section of the DataLad Handbook</a>. For maximum compatibility with <code>conp-dataset</code>, the CONP recommends Python 3.12+, git-annex 10.20241202+ and DataLad 1.1.4+.</p>
+            <p>After <code>datalad install</code>, the files are symbolic links; <code>datalad get</code> downloads their content.</p>
+            <p>Datasets are tested every few hours to check that their storage locations respond. Latest status:
+              <a target="_blank" rel="noopener noreferrer" href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master"><img src="{{ ciBadgeUrl }}" alt="Test status: {{ data.status }}" /></a>
+            </p>
+          </details>
+        </div>
+      </div>
+      {% if data.cbrain_id %}
+      <div class="dp-route">
+        <div><h2>On CBRAIN</h2><p>Analyze on Canadian HPC without downloading. Needs a CBRAIN account.</p></div>
+        <button class="btn btn-outline-success dp-btn" type="button" data-dp-cbrain data-cbrain-url="{{ data.cbrain_id }}" data-pipelines-url="{{ page.cbrainPipelinesUrl }}">Open in <img src="{{ url_for('static', filename='img/cbrain-long-logo-blue.png') }}" alt="CBRAIN" class="dp-cbrain-logo" /></button>
+      </div>
+      {% endif %}
     {% endif %}
-    to request an account before proceeding with a DataLad download.
     </div>
-  </div>
-  {% endif %}
-<p>
-  The following instructions require a basic understanding of UNIX/LINUX command lines. A subset of open datasets on the Portal are also available through a browser-based download button. The instructions below regard dataset download with the use of <a target="_blank" rel="noopener noreferrer" href="https://www.datalad.org/">DataLad</a>. To install DataLad on your system, please refer to the
-  <a
-    target="_blank"
-    rel="noopener noreferrer"
-    href="http://handbook.datalad.org/en/latest/intro/installation.html#install"
-  >
-    install section of the DataLad Handbook
-  </a>.
-</p>
-<p>
-  <strong>
-    Note: For maximum compatibility with <code>conp-dataset</code>, the CONP recommends versions 3.12+ of Python, 10.20241202+ of git-annex, and 1.1.4+ of datalad.
-  </strong>
-</p>
-<h6>1) Initiate the CONP dataset</h6>
-<p>
-  Run the following command in the directory where you want the CONP dataset (<code>conp-dataset</code>) to be installed:
-</p>
-<div class="code-snippet" data-code='["datalad install https://github.com/CONP-PCNO/conp-dataset.git"]'></div>
+  </section>
 
-<h6>2) Install the <b>{{data.name}}</b> dataset</h6>
-<p>
-  To install the <code>{{data.name}}</code> dataset, run the following commands to move into the "projects" subdirectory under the "conp-dataset" directory (created in the previous step) and run <code>datalad install</code>:
-</p>
-<div class="code-snippet" data-code='["cd conp-dataset/projects", "datalad install {{data.name}}"]'></div>
+  {# ---------------- About ---------------- #}
+  <section class="dp-panel" id="about" role="tabpanel" aria-labelledby="tab-about" hidden>
+    {% if metadata.keywords %}
+    <ul class="dp-keywords" aria-label="Keywords">
+      {% for k in metadata.keywords %}<li><a href="search?search={{ k | urlencode }}">{{ k }}</a></li>{% endfor %}
+    </ul>
+    {% endif %}
+    {% if readme %}
+    <div class="dp-readme readme">{{ readme | safe }}</div>
+    {% else %}
+    <p class="dp-muted">This dataset has no README.</p>
+    {% endif %}
+  </section>
 
-<h6>3) Download data from the <b>{{data.name}}</b> dataset</h6>
-<p>
-  Now that the dataset has been installed, go into the <code>{{data.name}}</code> dataset directory.
-</p>
-<div class="code-snippet" data-code='["cd {{data.name}}"]'></div>
-<p>
-  The files visible after installing the dataset but before downloading (in the next step) are symbolic links and need to be downloaded manually using the <code>datalad get</code> command:
-</p>
-</p>
-<div class="code-snippet" data-code='["datalad get <filepath>"]'></div>
-<p>
-  If you run <code>datalad get *</code> command, all the files available in the dataset directory will be downloaded.
-</p>
-<br>
-<h6>
-  For more information on how DataLad works, please visit the <a target="_blank" rel="noopener noreferrer" href="http://handbook.datalad.org/en/latest/">DataLad Handbook documentation</a>.
-</h6>
-</div>
-{% endif %}
+  {# ---------------- All metadata ---------------- #}
+  <section class="dp-panel" id="metadata" role="tabpanel" aria-labelledby="tab-metadata" hidden>
+    <dl class="dp-dl">
+      {% if creators %}<dt>Creators</dt><dd>{{ creators | join(', ') }}</dd>{% endif %}
+      {% if data.principalInvestigators %}<dt>Principal investigators</dt><dd>{{ data.principalInvestigators | join(', ') }}</dd>{% endif %}
+      {% if data.origin %}<dt>Origin</dt><dd>{{ data.origin }}</dd>{% endif %}
+      {% if metadata.contact %}<dt>Contact</dt><dd>{{ metadata.contact }}</dd>{% endif %}
+      {% if data.version %}<dt>Version</dt><dd>{{ data.version }}</dd>{% endif %}
+      {% if data.dateAdded or data.dateUpdated %}<dt>On the Portal</dt><dd>{% if data.dateAdded %}added {{ data.dateAdded }}{% endif %}{% if data.dateAdded and data.dateUpdated %}, {% endif %}{% if data.dateUpdated %}updated {{ data.dateUpdated }}{% endif %}</dd>{% endif %}
+      {% if metadata.licenses %}<dt>Licence</dt><dd>{{ metadata.licenses | join(', ') if metadata.licenses is not string else metadata.licenses }}</dd>{% endif %}
+      {% if data.modalities %}<dt>Modalities</dt><dd>{% for d in data.modalities %}<a href="search?modalities={{ d | urlencode }}">{{ d }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
+      {% if data.formats %}<dt>Formats</dt><dd>{% for d in data.formats %}<a href="search?formats={{ d | urlencode }}">{{ d }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
+      {% if data.size %}<dt>Size</dt><dd>{{ data.size | replace('.0 ', ' ') }}</dd>{% endif %}
+      {% if data.files %}<dt>Files</dt><dd>{{ data.files }}</dd>{% endif %}
+      {% if data.subjects %}<dt>Subjects</dt><dd>{{ data.subjects }}</dd>{% endif %}
+      {% if metadata.parentDatasets %}<dt>Input datasets</dt><dd>{% for d in metadata.parentDatasets %}<a href="{{ d if d.startswith('http') else '/dataset?id=projects/' ~ d }}">{{ d }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
+      {% if metadata.childDatasets %}<dt>Derived datasets</dt><dd>{% for d in metadata.childDatasets %}<a href="/dataset?id={{ d.child_dataset_id }}">{{ d.name }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
+      {% if metadata.primaryPublications %}<dt>Primary publication{{ 's' if metadata.primaryPublications|length > 1 }}</dt><dd>{% for p in metadata.primaryPublications %}<div>{{ p.title }} {{ p.author }} <em>{{ p.journal }}</em>{% if p.doi %} <a target="_blank" rel="noopener noreferrer" href="{{ p.doi }}">{{ p.doi }}</a>{% endif %}</div>{% endfor %}</dd>{% endif %}
+      {% if landing %}<dt>Project page</dt><dd><a target="_blank" rel="noopener noreferrer" href="{{ landing }}">{{ landing }}</a></dd>{% endif %}
+      {% if metadata.registrationPage %}<dt>Registration page</dt><dd><a target="_blank" rel="noopener noreferrer" href="{{ ('mailto:' if metadata.registrationEmail else '') ~ metadata.registrationPage }}">{{ metadata.registrationPage }}</a></dd>{% endif %}
+      {% if metadata.remoteUrl %}<dt>On GitHub</dt><dd><a target="_blank" rel="noopener noreferrer" href="{{ metadata.remoteUrl | trim }}">{{ metadata.remoteUrl | trim }}</a></dd>{% endif %}
+      <dt>ARK identifier</dt><dd><a href="{{ data.ark_id }}">{{ data.ark_id }}</a></dd>
+      {% if metadata.dimensions %}<dt>Dimensions</dt><dd>{{ metadata.dimensions | join(', ') }}</dd>{% endif %}
+      {% if metadata.producedBy %}<dt>Produced by</dt><dd>{{ metadata.producedBy | join(', ') }}</dd>{% endif %}
+      {% if metadata.isAbout %}<dt>Is about</dt><dd>{{ metadata.isAbout | join(', ') }}</dd>{% endif %}
+      {% if metadata.acknowledges %}<dt>Acknowledges</dt><dd>{{ metadata.acknowledges | join(', ') }}</dd>{% endif %}
+      {% if metadata.spatialCoverage %}<dt>Spatial coverage</dt><dd>{{ metadata.spatialCoverage | join(', ') }}</dd>{% endif %}
+      {% if metadata.dates %}<dt>Other dates</dt><dd>{% for key, value in metadata.dates.items() %}{{ key }}: {{ value }}{{ '; ' if not loop.last }}{% endfor %}</dd>{% endif %}
+      <dt>Metadata file</dt><dd><a href="{{ url_for('search.download_metadata', dataset=data.id) }}">DATS.json</a> <span class="dp-muted">(the DAta Tag Suite record this page is built from)</span></dd>
+    </dl>
+  </section>
 
-<script type="text/javascript">
-const element = {{ data | tojson }};
-const complementUrl = "{{ url_for('pipelines.pipeline_search') }}";
-element.showDownload = true;
-const reactElement = React.createElement(CONPReact.ElementContainer, {"element": CONPReact.DatasetElement, "elementProps": element, "complementUrl": complementUrl} );
-ReactDOM.render(reactElement, document.querySelector("#mount-display"));
-
-const elements = document.querySelectorAll(".code-snippet");
-[...elements].forEach(el =>
-  ReactDOM.render(
-    React.createElement(
-      CONPReact.CodeSnippet,
-      {code: JSON.parse(el.dataset.code)},
-    ),
-    el
-  )
-);
-
-const downloadMetadata = (event) => {
-  fetch(`${window.origin}/download_metadata?dataset=${element.id}`)
-    .then((response) => {
-      if (response.ok) {
-        return response.blob();
-      } else {
-        return response.text().then((text) => {
-          throw new Error(text);
-        });
-      }
-    })
-    .then(function (blob) {
-      var file = window.URL.createObjectURL(blob, { type: 'application/json' });
-      let link = document.createElement('a');
-      link.href = file;
-      link.download = `${element.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9]/g, "_")}.dats.json`;
-      link.click();
-
-      // For Firefox it is necessary to delay revoking the ObjectURL.
-      setTimeout(() => {
-        window.URL.revokeObjectURL(file);
-      }, 250);
-    })
-    .catch(function (error) {
-      const message = "Something went wrong when trying to download the metadata: " + error
-      // document.getElementById("dats-download-alert").innerHTML = message;
-      // document.getElementById("dats-download-alert").hidden = false;
-      console.error(message);
-    });
-};
-</script>
-
-<!--/span-->
+  {# ---------------- Cite ---------------- #}
+  <section class="dp-panel" id="cite" role="tabpanel" aria-labelledby="tab-cite" hidden>
+    <div class="dp-cite-bar">
+      <div class="dp-formats" role="group" aria-label="Citation format">
+        <button type="button" class="dp-format" aria-pressed="true" data-cite-format="text">Text</button>
+        <button type="button" class="dp-format" aria-pressed="false" data-cite-format="bibtex">BibTeX</button>
+        <button type="button" class="dp-format" aria-pressed="false" data-cite-format="ris">RIS</button>
+      </div>
+      <a class="dp-cite-download" id="dp-cite-download" href="#" download="{{ page.citation_key }}.txt">Download <span>.txt</span></a>
+    </div>
+    <div class="dp-cite">
+      <p id="dp-cite-text" data-cite-block="text" data-ext="txt">{{ page.citation }}</p>
+      {% if page.citation_bibtex %}<pre id="dp-cite-bibtex" data-cite-block="bibtex" data-ext="bib" hidden>{{ page.citation_bibtex }}</pre>{% endif %}
+      {% if page.citation_ris %}<pre id="dp-cite-ris" data-cite-block="ris" data-ext="ris" hidden>{{ page.citation_ris }}</pre>{% endif %}
+      <button class="dp-copy dp-copy--light" type="button" data-copy-target="dp-cite-text" aria-label="Copy citation" title="Copy">{{ icon('copy') }}</button>
+    </div>
+    {% if metadata.primaryPublications %}
+    <h2 class="dp-h2">Please also cite</h2>
+    <ul class="dp-pubs">
+      {% for p in metadata.primaryPublications %}<li>{{ p.author }} {{ p.title }} <em>{{ p.journal }}</em>{% if p.doi %} <a target="_blank" rel="noopener noreferrer" href="{{ p.doi }}">{{ p.doi }}</a>{% endif %}</li>{% endfor %}
+    </ul>
+    {% endif %}
+    {% if data.evidencePublication %}
+    <p class="dp-muted">This dataset is part of a NeuroLibre/Evidence publication: <a href="https://doi.org/{{ data.evidencePublication }}" target="_blank" rel="noopener noreferrer">doi:{{ data.evidencePublication }}</a>.</p>
+    {% endif %}
+  </section>
+</article>
 {% endblock %}

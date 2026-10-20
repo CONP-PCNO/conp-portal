@@ -1,0 +1,231 @@
+/*
+ * Dataset landing page (dataset.html): tabs, the description's "more" link,
+ * copy buttons, the download confirmation and the CBRAIN pipeline chooser.
+ * Plain JavaScript; Bootstrap 5 (loaded by base_main.html) is used for the
+ * two modals when it is present, with simple fallbacks otherwise.
+ */
+(function () {
+  'use strict';
+
+  function ready(fn) {
+    if (document.readyState !== 'loading') { fn(); } else { document.addEventListener('DOMContentLoaded', fn); }
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  // ---------- tabs ----------
+  function initTabs() {
+    var tabs = [].slice.call(document.querySelectorAll('.dp-tabs [role="tab"]'));
+    if (!tabs.length) { return; }
+
+    function select(tab, focus) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (focus) { tab.focus(); }
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () {
+        select(tab, false);
+        history.replaceState(null, '', '#' + tab.getAttribute('aria-controls'));
+      });
+      tab.addEventListener('keydown', function (e) {
+        var next = null;
+        if (e.key === 'ArrowRight') { next = tabs[(i + 1) % tabs.length]; }
+        if (e.key === 'ArrowLeft') { next = tabs[(i - 1 + tabs.length) % tabs.length]; }
+        if (e.key === 'Home') { next = tabs[0]; }
+        if (e.key === 'End') { next = tabs[tabs.length - 1]; }
+        if (next) { e.preventDefault(); select(next, true); }
+      });
+    });
+
+    // Deep links: #about, #metadata, #cite; anything inside a panel
+    // (for example the old #dataladInstructions anchor) opens that panel.
+    var hash = decodeURIComponent(location.hash.slice(1));
+    if (hash) {
+      var target = document.getElementById(hash);
+      var panel = target && (target.getAttribute('role') === 'tabpanel' ? target : target.closest('[role="tabpanel"]'));
+      if (panel) {
+        var tab = document.querySelector('[aria-controls="' + panel.id + '"]');
+        if (tab) { select(tab, false); }
+        if (target !== panel) { target.scrollIntoView(); }
+      }
+    }
+  }
+
+  // ---------- description: five lines, then "more" ----------
+  function initMore() {
+    var desc = document.getElementById('dp-desc');
+    var btn = document.querySelector('.dp-more');
+    if (!desc || !btn) { return; }
+    function check() {
+      if (desc.classList.contains('is-open')) { btn.hidden = false; return; }
+      btn.hidden = desc.scrollHeight <= desc.clientHeight + 2;
+    }
+    btn.addEventListener('click', function () {
+      var open = desc.classList.toggle('is-open');
+      btn.textContent = open ? 'less' : 'more';
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    check();
+    window.addEventListener('resize', check);
+  }
+
+  // ---------- copy buttons ----------
+  function copyText(text, done) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () {});
+      return;
+    }
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'absolute';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) { /* ignore */ }
+    document.body.removeChild(ta);
+  }
+
+  function initCopy() {
+    document.querySelectorAll('.dp-copy').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var src = btn.dataset.copyTarget ? document.getElementById(btn.dataset.copyTarget)
+          : btn.parentNode.querySelector('code');
+        if (!src) { return; }
+        copyText(src.textContent.trim(), function () {
+          btn.classList.add('is-copied');
+          btn.title = 'Copied';
+          setTimeout(function () { btn.classList.remove('is-copied'); btn.title = 'Copy'; }, 1500);
+        });
+      });
+    });
+  }
+
+  // ---------- citation formats ----------
+  // Text / BibTeX / RIS switch: shows one block, points the copy button and
+  // the download link at it. The download is built in the browser (a Blob),
+  // so no extra route is needed.
+  function initCiteFormats() {
+    var buttons = document.querySelectorAll('[data-cite-format]');
+    var copy = document.querySelector('#cite .dp-copy');
+    var download = document.getElementById('dp-cite-download');
+    if (!buttons.length || !copy) { return; }
+    var objectUrl = null;
+    function show(format) {
+      var shown = null;
+      document.querySelectorAll('[data-cite-block]').forEach(function (block) {
+        var on = block.dataset.citeBlock === format;
+        block.hidden = !on;
+        if (on) { shown = block; }
+      });
+      if (!shown) { return; }
+      buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.citeFormat === format)); });
+      copy.dataset.copyTarget = shown.id;
+      if (download) {
+        var ext = shown.dataset.ext || 'txt';
+        if (objectUrl) { URL.revokeObjectURL(objectUrl); }
+        var type = ext === 'bib' ? 'application/x-bibtex' : (ext === 'ris' ? 'application/x-research-info-systems' : 'text/plain');
+        objectUrl = URL.createObjectURL(new Blob([shown.textContent.trim() + '\n'], { type: type }));
+        download.href = objectUrl;
+        download.setAttribute('download', download.getAttribute('download').replace(/\.[a-z]+$/, '') + '.' + ext);
+        download.querySelector('span').textContent = '.' + ext;
+      }
+    }
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () { show(b.dataset.citeFormat); });
+    });
+    show('text');
+  }
+
+  function showModal(id) {
+    var el = document.getElementById(id);
+    if (el && window.bootstrap && bootstrap.Modal) {
+      bootstrap.Modal.getOrCreateInstance(el).show();
+      return true;
+    }
+    return false;
+  }
+
+  // ---------- direct download: confirm the size first ----------
+  function initDownload() {
+    var link = document.querySelector('[data-dp-download]');
+    var doc = document.getElementById('downloadModalDocument');
+    if (!link) { return; }
+    link.addEventListener('click', function (e) {
+      var size = link.dataset.size || '';
+      if (doc && window.bootstrap) {
+        e.preventDefault();
+        doc.innerHTML =
+          '<div class="modal-content">' +
+          '<div class="modal-body"><h4 class="modal-title text-center">You are about to download a ' + escapeHtml(size) + ' file.</h4></div>' +
+          '<div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>' +
+          '<a class="btn btn-success" id="confirmDownload" href="' + escapeHtml(link.getAttribute('href')) + '">Download</a></div></div>';
+        doc.querySelector('#confirmDownload').addEventListener('click', function () {
+          bootstrap.Modal.getOrCreateInstance(document.getElementById('downloadModal')).hide();
+        });
+        showModal('downloadModal');
+      } else if (!window.confirm('You are about to download a ' + size + ' file. Continue?')) {
+        e.preventDefault();
+      }
+    });
+  }
+
+  // ---------- CBRAIN: choose a pipeline (or none) ----------
+  function initCbrain() {
+    var btn = document.querySelector('[data-dp-cbrain]');
+    var body = document.getElementById('cbrainModalBody');
+    if (!btn) { return; }
+    var card = document.querySelector('.dp-card');
+    var title = card ? card.dataset.datasetTitle : '';
+    var cbrainUrl = btn.dataset.cbrainUrl;
+    var param = cbrainUrl.indexOf('?id=') >= 0 ? cbrainUrl.split('?id=')[1] : (cbrainUrl.split('?id%3D')[1] || '');
+
+    btn.addEventListener('click', function () {
+      if (!body || !window.bootstrap) { window.open(cbrainUrl, '_blank', 'noopener'); return; }
+      body.innerHTML =
+        '<p>You\'re about to load <strong>' + escapeHtml(title) + '</strong> on CBRAIN. Please select a pipeline to process this dataset (or "None" to load only the dataset).</p>' +
+        '<p>Not all pipelines are compatible with all datasets. Please make sure you are <a href="https://portal.cbrain.mcgill.ca" target="_blank" rel="noreferrer">logged into CBRAIN</a> first.</p>' +
+        '<div class="list-group" id="dpCbrainList"><a class="list-group-item list-group-item-action" target="_blank" rel="noreferrer" href="' + escapeHtml(cbrainUrl) + '">None</a></div>';
+      showModal('cbrainModal');
+      var list = document.getElementById('dpCbrainList');
+      list.addEventListener('click', function (e) {
+        if (e.target.closest('a')) { bootstrap.Modal.getOrCreateInstance(document.getElementById('cbrainModal')).hide(); }
+      });
+      fetch(btn.dataset.pipelinesUrl + '?max_per_page=All&cbrain=true&sortKey=title')
+        .then(function (r) { return r.ok ? r.json() : { elements: [] }; })
+        .then(function (json) {
+          (json.elements || []).forEach(function (el) {
+            var url = el.platforms && el.platforms[0] ? el.platforms[0].uri : el.cbrain_id;
+            if (!url) { return; }
+            var a = document.createElement('a');
+            a.className = 'list-group-item list-group-item-action';
+            a.target = '_blank';
+            a.rel = 'noreferrer';
+            a.href = url + '%26switch_group_id%3D' + param;
+            a.textContent = el.title;
+            list.appendChild(a);
+          });
+        })
+        .catch(function (err) { console.error(err); });
+    });
+  }
+
+  ready(function () {
+    initTabs();
+    initMore();
+    initCopy();
+    initCiteFormats();
+    initDownload();
+    initCbrain();
+  });
+})();
