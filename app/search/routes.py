@@ -28,6 +28,12 @@ from app.search.dataset_page import (
     citation_ris,
     citation_text,
     clean_version,
+    created_year,
+    dataset_doi,
+    dats_record_html,
+    direct_download,
+    publication_citations,
+    title_html,
     licence_badges,
     strip_title_heading,
 )
@@ -775,18 +781,33 @@ def dataset_info():
     # Dataset landing page (option B of the 2026 page review): short licence
     # badges, a ready-made citation and the year the dataset was added.
     year_added = (dataset["dateAdded"] or "")[:4] or None
+    descriptor = datsdataset.descriptor
+    # A dataset with its own DOI (Zenodo, OSF, ...) is cited by that DOI; the
+    # others by the Portal's ARK. Titles may carry HTML (e.g. T<sub>1</sub>).
+    doi, doi_publisher = dataset_doi(descriptor)
+    cite_year = (created_year(descriptor) or year_added) if doi else year_added
+    cite_title = re.sub(r'<[^>]+>', '', dataset["title"] or '')
+    cite_args = (datsdataset.creators, cite_year, cite_title, dataset["version"], dataset["ark_id"])
+    parents = []
+    for parent_id in (datsdataset.parentDatasetId or []):
+        pid = parent_id if parent_id.startswith('projects/') else 'projects/' + parent_id
+        row = None if parent_id.startswith('http') else Dataset.query.filter_by(dataset_id=pid).first()
+        parents.append({
+            "url": parent_id if parent_id.startswith('http') else '/dataset?id=' + pid,
+            "title": row.name if row is not None else parent_id,
+        })
     page = {
         "licences": licence_badges(datsdataset.licenses),
-        "citation": citation_text(
-            datsdataset.creators, year_added, dataset["title"],
-            dataset["version"], dataset["ark_id"]),
-        "citation_bibtex": citation_bibtex(
-            datsdataset.creators, year_added, dataset["title"],
-            dataset["version"], dataset["ark_id"], dataset["id"]),
-        "citation_ris": citation_ris(
-            datsdataset.creators, year_added, dataset["title"],
-            dataset["version"], dataset["ark_id"]),
-        "citation_key": citation_key(dataset["id"], year_added),
+        "citation": citation_text(*cite_args, doi=doi, publisher=doi_publisher),
+        "citation_bibtex": citation_bibtex(*cite_args, dataset["id"], doi=doi, publisher=doi_publisher),
+        "citation_ris": citation_ris(*cite_args, doi=doi, publisher=doi_publisher),
+        "citation_key": citation_key(dataset["id"], cite_year),
+        "doi": doi,
+        "publications": publication_citations(descriptor),
+        "direct_download": direct_download(descriptor),
+        "dats_html": dats_record_html(descriptor),
+        "parents": parents,
+        "title_html": title_html(dataset["title"]),
         "cbrainPipelinesUrl": url_for('pipelines.pipeline_search'),
         "views": _dataset_page_views(d.dataset_id),
     }

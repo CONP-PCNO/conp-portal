@@ -87,11 +87,11 @@
       {% endif %}
     </div>
     <div class="dp-main">
-      <h1 class="dp-title">{{ data.title }}</h1>
+      <h1 class="dp-title">{{ page.title_html or data.title }}</h1>
       <p class="dp-sub">
         {%- if creators %}{{ creators[:3] | join(', ') }}{% if creators|length > 3 %} et al.{% endif %}{% endif %}
-        {%- if metadata.parentDatasets %} · derived from
-          {% for d in metadata.parentDatasets %}<a href="{{ d if d.startswith('http') else '/dataset?id=projects/' ~ d }}">{{ d }}</a>{{ ', ' if not loop.last }}{% endfor %}
+        {%- if page.parents %} · derived from
+          {% for p in page.parents %}<a href="{{ p.url }}">{{ p.title }}</a>{{ ', ' if not loop.last }}{% endfor %}
         {%- endif %}
         {%- if data.version %} · version {{ data.version }}{% endif %}
         {%- if data.dateAdded %}{{ ',' if data.version else ' ·' }} added {{ data.dateAdded }}{% endif %}
@@ -157,7 +157,15 @@
         <a class="btn btn-success dp-btn" href="{{ ('mailto:' if metadata.registrationEmail else '') ~ metadata.registrationPage }}" target="_blank" rel="noopener noreferrer">Request access</a>
       </div>
       {% endif %}
-      {% if data.showDownloadButton %}
+      {% set direct = page.direct_download %}
+      {% if direct %}
+      <div class="dp-route">
+        <div><h2>In your browser</h2><p>All files, {{ data.size | replace('.0 ', ' ') }},
+          {%- if direct.format %} in a single {{ direct.format }} file,{% elif direct.filename %} as one file ({{ direct.filename }}),{% endif %}
+          downloaded directly from the dataset's {% if direct.record %}<a href="{{ direct.record }}" target="_blank" rel="noopener noreferrer">{{ direct.host }} record</a>{% else %}{{ direct.host }} record{% endif %}.</p></div>
+        <a class="btn btn-success dp-btn" href="{{ direct.url }}" data-dp-download data-size="{{ data.size }}" rel="noopener noreferrer">Download</a>
+      </div>
+      {% elif data.showDownloadButton %}
       <div class="dp-route">
         <div><h2>In your browser</h2><p>All files, {{ data.size | replace('.0 ', ' ') }}, in a single tar.gz file.</p></div>
         <a class="btn btn-success dp-btn" href="{{ data.zipLocation }}" data-dp-download data-size="{{ data.size }}">Download</a>
@@ -223,7 +231,7 @@
       {% if data.size %}<dt>Size</dt><dd>{{ data.size | replace('.0 ', ' ') }}</dd>{% endif %}
       {% if data.files %}<dt>Files</dt><dd>{{ data.files }}</dd>{% endif %}
       {% if data.subjects %}<dt>Subjects</dt><dd>{{ data.subjects }}</dd>{% endif %}
-      {% if metadata.parentDatasets %}<dt>Input datasets</dt><dd>{% for d in metadata.parentDatasets %}<a href="{{ d if d.startswith('http') else '/dataset?id=projects/' ~ d }}">{{ d }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
+      {% if page.parents %}<dt>Derived from</dt><dd>{% for p in page.parents %}<a href="{{ p.url }}">{{ p.title }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
       {% if metadata.childDatasets %}<dt>Derived datasets</dt><dd>{% for d in metadata.childDatasets %}<a href="/dataset?id={{ d.child_dataset_id }}">{{ d.name }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
       {% if metadata.primaryPublications %}<dt>Primary publication{{ 's' if metadata.primaryPublications|length > 1 }}</dt><dd>{% for p in metadata.primaryPublications %}<div>{{ p.title }} {{ p.author }} <em>{{ p.journal }}</em>{% if p.doi %} <a target="_blank" rel="noopener noreferrer" href="{{ p.doi }}">{{ p.doi }}</a>{% endif %}</div>{% endfor %}</dd>{% endif %}
       {% if landing %}<dt>Project page</dt><dd><a target="_blank" rel="noopener noreferrer" href="{{ landing }}">{{ landing }}</a></dd>{% endif %}
@@ -236,8 +244,16 @@
       {% if metadata.acknowledges %}<dt>Acknowledges</dt><dd>{{ metadata.acknowledges | join(', ') }}</dd>{% endif %}
       {% if metadata.spatialCoverage %}<dt>Spatial coverage</dt><dd>{{ metadata.spatialCoverage | join(', ') }}</dd>{% endif %}
       {% if metadata.dates %}<dt>Other dates</dt><dd>{% for key, value in metadata.dates.items() %}{{ key }}: {{ value }}{{ '; ' if not loop.last }}{% endfor %}</dd>{% endif %}
-      <dt>Metadata file</dt><dd><a href="{{ url_for('search.download_metadata', dataset=data.id) }}">DATS.json</a> <span class="dp-muted">(the DAta Tag Suite record this page is built from)</span></dd>
+      {% if page.doi %}<dt>DOI</dt><dd><a target="_blank" rel="noopener noreferrer" href="https://doi.org/{{ page.doi }}">https://doi.org/{{ page.doi }}</a></dd>{% endif %}
     </dl>
+    <details class="dp-dats-box">
+      <summary>Show the full metadata record (DATS)</summary>
+      <div class="dp-dats-head">
+        <h2 class="dp-h2">Full metadata record (DATS)</h2>
+        <a href="{{ url_for('search.download_metadata', dataset=data.id) }}">Download DATS.json</a>
+      </div>
+      {{ page.dats_html }}
+    </details>
   </section>
 
   {# ---------------- Cite ---------------- #}
@@ -248,20 +264,26 @@
         <button type="button" class="dp-format" aria-pressed="false" data-cite-format="bibtex">BibTeX</button>
         <button type="button" class="dp-format" aria-pressed="false" data-cite-format="ris">RIS</button>
       </div>
-      <a class="dp-cite-download" id="dp-cite-download" href="#" download="{{ page.citation_key }}.txt">Download <span>.txt</span></a>
+      <a class="dp-cite-download" id="dp-cite-download" href="#" download="{{ page.citation_key }}.txt">Download <span>.txt</span>{% if page.publications %} (all references){% endif %}</a>
     </div>
-    <div class="dp-cite">
+    <h2 class="dp-h2">The dataset</h2>
+    <div class="dp-cite" data-cite-group>
       <p id="dp-cite-text" data-cite-block="text" data-ext="txt">{{ page.citation }}</p>
       {% if page.citation_bibtex %}<pre id="dp-cite-bibtex" data-cite-block="bibtex" data-ext="bib" hidden>{{ page.citation_bibtex }}</pre>{% endif %}
       {% if page.citation_ris %}<pre id="dp-cite-ris" data-cite-block="ris" data-ext="ris" hidden>{{ page.citation_ris }}</pre>{% endif %}
-      <button class="dp-copy dp-copy--light" type="button" data-copy-target="dp-cite-text" aria-label="Copy citation" title="Copy">{{ icon('copy') }}</button>
+      <button class="dp-copy dp-copy--light" type="button" data-copy-target="dp-cite-text" aria-label="Copy the dataset citation" title="Copy">{{ icon('copy') }}</button>
     </div>
-    {% if metadata.primaryPublications %}
-    <h2 class="dp-h2">Please also cite</h2>
-    <ul class="dp-pubs">
-      {% for p in metadata.primaryPublications %}<li>{{ p.author }} {{ p.title }} <em>{{ p.journal }}</em>{% if p.doi %} <a target="_blank" rel="noopener noreferrer" href="{{ p.doi }}">{{ p.doi }}</a>{% endif %}</li>{% endfor %}
-    </ul>
-    {% endif %}
+    {% if page.doi %}<p class="dp-muted dp-cite-note">The dataset has its own DOI, so the citation uses it. Also listed on the CONP Portal: <a href="{{ data.ark_id }}">{{ data.ark_id }}</a></p>{% endif %}
+    {% for pub in page.publications %}
+    <h2 class="dp-h2">{{ 'The publication describing it' if page.publications | length == 1 else 'Publication ' ~ loop.index ~ ' describing it' }}</h2>
+    <div class="dp-cite" data-cite-group>
+      <p id="dp-pub{{ loop.index }}-text" data-cite-block="text" data-ext="txt">{{ pub.text }}</p>
+      <pre id="dp-pub{{ loop.index }}-bibtex" data-cite-block="bibtex" data-ext="bib" hidden>{{ pub.bibtex }}</pre>
+      <pre id="dp-pub{{ loop.index }}-ris" data-cite-block="ris" data-ext="ris" hidden>{{ pub.ris }}</pre>
+      <button class="dp-copy dp-copy--light" type="button" data-copy-target="dp-pub{{ loop.index }}-text" aria-label="Copy the publication reference" title="Copy">{{ icon('copy') }}</button>
+    </div>
+    {% if not pub.doi %}<p class="dp-muted dp-cite-note">Built from the record's primary publication, which gives no DOI.</p>{% endif %}
+    {% endfor %}
     {% if data.evidencePublication %}
     <p class="dp-muted">This dataset is part of a NeuroLibre/Evidence publication: <a href="https://doi.org/{{ data.evidencePublication }}" target="_blank" rel="noopener noreferrer">doi:{{ data.evidencePublication }}</a>.</p>
     {% endif %}

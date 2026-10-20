@@ -112,30 +112,39 @@
   }
 
   // ---------- citation formats ----------
-  // Text / BibTeX / RIS switch: shows one block, points the copy button and
-  // the download link at it. The download is built in the browser (a Blob),
-  // so no extra route is needed.
+  // One Text / BibTeX / RIS switch for every reference on the tab (the
+  // dataset, then each publication). It shows that format in each group,
+  // points each group's copy button at it, and builds the download (all
+  // shown references in one file) in the browser, so no extra route is needed.
   function initCiteFormats() {
     var buttons = document.querySelectorAll('[data-cite-format]');
-    var copy = document.querySelector('#cite .dp-copy');
+    var groups = document.querySelectorAll('#cite [data-cite-group]');
     var download = document.getElementById('dp-cite-download');
-    if (!buttons.length || !copy) { return; }
+    if (!buttons.length || !groups.length) { return; }
     var objectUrl = null;
     function show(format) {
-      var shown = null;
-      document.querySelectorAll('[data-cite-block]').forEach(function (block) {
-        var on = block.dataset.citeBlock === format;
-        block.hidden = !on;
-        if (on) { shown = block; }
+      var shownAll = [];
+      var ext = 'txt';
+      groups.forEach(function (group) {
+        var shown = null;
+        group.querySelectorAll('[data-cite-block]').forEach(function (block) {
+          var on = block.dataset.citeBlock === format;
+          block.hidden = !on;
+          if (on) { shown = block; }
+        });
+        var copy = group.querySelector('.dp-copy');
+        if (shown) {
+          shownAll.push(shown.textContent.trim());
+          ext = shown.dataset.ext || ext;
+          if (copy) { copy.dataset.copyTarget = shown.id; }
+        }
       });
-      if (!shown) { return; }
+      if (!shownAll.length) { return; }
       buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.citeFormat === format)); });
-      copy.dataset.copyTarget = shown.id;
       if (download) {
-        var ext = shown.dataset.ext || 'txt';
         if (objectUrl) { URL.revokeObjectURL(objectUrl); }
         var type = ext === 'bib' ? 'application/x-bibtex' : (ext === 'ris' ? 'application/x-research-info-systems' : 'text/plain');
-        objectUrl = URL.createObjectURL(new Blob([shown.textContent.trim() + '\n'], { type: type }));
+        objectUrl = URL.createObjectURL(new Blob([shownAll.join('\n\n') + '\n'], { type: type }));
         download.href = objectUrl;
         download.setAttribute('download', download.getAttribute('download').replace(/\.[a-z]+$/, '') + '.' + ext);
         download.querySelector('span').textContent = '.' + ext;

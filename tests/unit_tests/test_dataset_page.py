@@ -1,4 +1,5 @@
 """Tests for the dataset landing page helpers and template (dataset.html)."""
+import json
 import pytest
 from flask import render_template
 
@@ -8,6 +9,11 @@ from app.search.dataset_page import (
     citation_ris,
     citation_text,
     clean_version,
+    dataset_doi,
+    dats_record_html,
+    direct_download,
+    publication_citations,
+    title_html,
     licence_badges,
     short_licence,
     strip_title_heading,
@@ -152,3 +158,87 @@ def test_dataset_page_registered_offsite(app):
     assert 'Go to the source' in html
     assert 'data-dp-download' not in html
     assert 'datalad install' not in html
+
+
+ZEN = {
+    "identifier": {"identifier": "https://doi.org/10.5281/zenodo.10589601", "identifierSource": "DOI"},
+    "title": "Paper is not enough",
+    "dates": [{"date": "2024-01-31 17:09:34", "type": {"value": "date created"}}],
+    "distributions": [{"formats": ["ZIP"], "size": 789.1, "unit": {"value": "MB"}, "access": {
+        "landingPage": "https://zenodo.org/records/10589602",
+        "accessURL": "https://zenodo.org/api/records/10589602/files/Dataset_x.zip/content",
+        "authorizations": [{"value": "public"}]}}],
+    "extraProperties": [{"category": "CONP_status", "values": [{"value": "Canadian"}]}],
+}
+
+
+def test_dataset_doi_and_doi_citation():
+    assert dataset_doi(ZEN) == ("10.5281/zenodo.10589601", "Zenodo")
+    assert dataset_doi({"identifier": {"identifier": "https://n2t.net/ark:/70798/x"}}) == (None, None)
+    text = citation_text(["A", "B"], "2024", "T", None, "https://n2t.net/ark:/1/x",
+                         doi="10.5281/zenodo.10589601", publisher="Zenodo")
+    assert text == "A, B (2024). T [Data set]. Zenodo. https://doi.org/10.5281/zenodo.10589601"
+    bib = citation_bibtex(["A"], "2024", "T", None, None, "projects/x", doi="10.5281/zenodo.1", publisher="Zenodo")
+    assert "doi = {10.5281/zenodo.1}" in bib and "CONP Portal" not in bib
+    ris = citation_ris(["A"], "2024", "T", None, None, doi="10.5281/zenodo.1", publisher="Zenodo")
+    assert "DO  - 10.5281/zenodo.1" in ris and "PB  - Zenodo" in ris
+
+
+def test_direct_download():
+    d = direct_download(ZEN)
+    assert d["host"] == "Zenodo" and d["format"] == "ZIP" and d["url"].endswith("/content")
+    no_url = json.loads(json.dumps(ZEN))
+    del no_url["distributions"][0]["access"]["accessURL"]
+    assert direct_download(no_url)["url"] == "https://zenodo.org/api/records/10589602/files-archive"
+    private = json.loads(json.dumps(ZEN))
+    private["distributions"][0]["access"]["authorizations"] = [{"value": "private"}]
+    assert direct_download(private) is None
+    assert direct_download({"distributions": [{"access": {"landingPage": "https://example.org",
+                                                          "authorizations": [{"value": "public"}]}}]}) is None
+    osf = {"distributions": [{"access": {"landingPage": "https://osf.io/q482e",
+                                         "accessURL": "https://files.us.osf.io/v1/resources/znt9d/providers/osfstorage/?zip=q482e",
+                                         "authorizations": [{"value": "public"}]}}]}
+    assert direct_download(osf)["host"] == "OSF" and direct_download(osf)["format"] == "ZIP"
+
+
+def test_publication_citations():
+    pubs = publication_citations({"primaryPublications": [
+        {"title": "BigBrain: an ultrahigh-resolution 3D human brain model", "publicationVenue": "Science",
+         "authorsList": "Amunts, Katrin, et al."},
+        {"title": "Second.", "authors": [{"fullName": "Jane Doe"}, {"firstName": "J", "lastName": "Roe"}],
+         "dates": [{"date": "2021-03-01"}], "identifier": {"identifier": "https://doi.org/10.1000/xyz"}},
+    ]})
+    assert pubs[0]["text"] == "Amunts, Katrin, et al.. BigBrain: an ultrahigh-resolution 3D human brain model. Science." \
+        or pubs[0]["text"].startswith("Amunts, Katrin, et al. BigBrain")
+    assert pubs[0]["doi"] is None and "TY  - JOUR" in pubs[0]["ris"]
+    assert pubs[1]["text"] == "Jane Doe, J Roe (2021). Second. https://doi.org/10.1000/xyz"
+    assert "doi = {10.1000/xyz}" in pubs[1]["bibtex"] and pubs[1]["bibtex"].startswith("@article{doe_2021_2,")
+    assert publication_citations({}) == []
+
+
+def test_dats_record_html_escapes():
+    html = str(dats_record_html({"title": "<b>x</b>", "keywords": [{"value": "a"}, {"value": "b"}],
+                                 "extraProperties": [{"category": "CONP_status", "values": [{"value": "Canadian"}]}]}))
+    assert "&lt;b&gt;x&lt;/b&gt;" in html
+    assert "a, b" in html and "CONP status" in html and "extraProperties · CONP_status" in html
+
+
+def test_dataset_page_cite_and_dats(app):
+    data = _data()
+    with app.test_request_context('/dataset?id=projects/demo'):
+        page = {"licences": [], "citation": "C.", "cbrainPipelinesUrl": "/p", "views": 0,
+                "publications": publication_citations({"primaryPublications": [{"title": "P", "publicationVenue": "J"}]}),
+                "direct_download": direct_download(ZEN), "dats_html": dats_record_html(ZEN), "doi": "10.5281/zenodo.10589601",
+                "parents": [{"url": "/dataset?id=projects/parent", "title": "Parent dataset"}]}
+        html = render_template('dataset.html', title='t', data=data, metadata=_metadata(), readme='',
+                               page=page, ciBadgeUrl='', user=None)
+    assert 'The publication describing it' in html and 'dp-pub1-bibtex' in html
+    assert 'Show the full metadata record (DATS)' in html and 'dp-dats-key' in html
+    assert 'in a single ZIP file' in html and 'Zenodo record' in html and 'tar.gz' not in html
+    assert 'derived from' in html and 'Parent dataset' in html
+    assert 'Also listed on the CONP Portal' in html
+
+
+def test_title_html_sub_sup_only():
+    html = str(title_html('T<sub>1</sub> <script>x</script>'))
+    assert html == 'T<sub>1</sub> &lt;script&gt;x&lt;/script&gt;'
