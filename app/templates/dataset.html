@@ -97,6 +97,14 @@
         {%- if data.dateAdded %}{{ ',' if data.version else ' ·' }} added {{ data.dateAdded }}{% endif %}
         {%- if data.dateUpdated %}{{ ',' if data.version or data.dateAdded else ' ·' }} updated {{ data.dateUpdated }}{% endif %}
       </p>
+      {% if data.ark_id %}
+      <p class="dp-ark">
+        <a class="dp-ark-link" href="{{ data.ark_id }}" title="Persistent identifier (ARK) of this dataset">ARK PID</a>
+        <span class="dp-ark-id" id="dp-ark-id">{{ data.ark_id | replace('https://n2t.net/', '') }}</span>
+        <span id="dp-ark-url" hidden>{{ data.ark_id }}</span>
+        <button class="dp-copy dp-copy--light dp-copy--inline" type="button" data-copy-target="dp-ark-url" aria-label="Copy the ARK persistent identifier" title="Copy">{{ icon('copy') }}</button>
+      </p>
+      {% endif %}
 
       {% if metadata.description %}
       <div class="dp-desc" id="dp-desc">{{ metadata.description | safe }}</div>
@@ -219,6 +227,8 @@
   {# ---------------- All metadata ---------------- #}
   <section class="dp-panel" id="metadata" role="tabpanel" aria-labelledby="tab-metadata" hidden>
     <dl class="dp-dl">
+      <dt>ARK identifier</dt><dd class="dp-ark-row"><a id="dp-ark-meta" href="{{ data.ark_id }}">{{ data.ark_id }}</a>
+        <button class="dp-copy dp-copy--light dp-copy--inline" type="button" data-copy-target="dp-ark-meta" aria-label="Copy the ARK identifier" title="Copy">{{ icon('copy') }}</button></dd>
       {% if creators %}<dt>Creators</dt><dd>{{ creators | join(', ') }}</dd>{% endif %}
       {% if data.principalInvestigators %}<dt>Principal investigators</dt><dd>{{ data.principalInvestigators | join(', ') }}</dd>{% endif %}
       {% if data.origin %}<dt>Origin</dt><dd>{{ data.origin }}</dd>{% endif %}
@@ -237,7 +247,6 @@
       {% if landing %}<dt>Project page</dt><dd><a target="_blank" rel="noopener noreferrer" href="{{ landing }}">{{ landing }}</a></dd>{% endif %}
       {% if metadata.registrationPage %}<dt>Registration page</dt><dd><a target="_blank" rel="noopener noreferrer" href="{{ ('mailto:' if metadata.registrationEmail else '') ~ metadata.registrationPage }}">{{ metadata.registrationPage }}</a></dd>{% endif %}
       {% if metadata.remoteUrl %}<dt>On GitHub</dt><dd><a target="_blank" rel="noopener noreferrer" href="{{ metadata.remoteUrl | trim }}">{{ metadata.remoteUrl | trim }}</a></dd>{% endif %}
-      <dt>ARK identifier</dt><dd><a href="{{ data.ark_id }}">{{ data.ark_id }}</a></dd>
       {% if metadata.dimensions %}<dt>Dimensions</dt><dd>{{ metadata.dimensions | join(', ') }}</dd>{% endif %}
       {% if metadata.producedBy %}<dt>Produced by</dt><dd>{{ metadata.producedBy | join(', ') }}</dd>{% endif %}
       {% if metadata.isAbout %}<dt>Is about</dt><dd>{{ metadata.isAbout | join(', ') }}</dd>{% endif %}
