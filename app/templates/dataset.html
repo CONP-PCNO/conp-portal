@@ -142,29 +142,47 @@
   {# ---------------- Get the data ---------------- #}
   <section class="dp-panel" id="get" role="tabpanel" aria-labelledby="tab-get">
     <div class="dp-routes">
-    {% if offsite %}
-      {% if metadata.registrationPage %}
+    {#
+      Only the routes that work for this dataset (the access-by-status rule, Oct 2026):
+      - an account step when the record's authorization is registered, private
+        or controlled (the record decides, not the host), named after the host;
+      - a browser download only for public data: the Zenodo/OSF file link for
+        crawled datasets, else the Portal's tar.gz archive;
+      - DataLad only when the dataset's repository holds data to fetch;
+      - "Download at the source" when DataLad has nothing to fetch;
+      - CBRAIN when the dataset is on it. downloadOptions "offsite" still
+        forces the offsite display.
+    #}
+    {% set acc = page.access or {'restricted': registered, 'has_data': True, 'host': None, 'source_host': None} %}
+    {% set reg = metadata.registrationPage %}
+    {% set reg_href = ('mailto:' if metadata.registrationEmail else '') ~ (reg or '') %}
+    {% set source_name = acc.source_host or 'the source' %}
+    {% if offsite or not acc.has_data %}
+      {% set ask = reg and (acc.restricted or offsite) %}
+      {% if ask %}
       <div class="dp-route">
-        <div><h2>1. Request access</h2><p>Registration page: {{ metadata.registrationPage | replace('https://', '') | replace('http://', '') | trim('/') }}</p></div>
-        <a class="btn btn-success dp-btn" href="{{ ('mailto:' if metadata.registrationEmail else '') ~ metadata.registrationPage }}" target="_blank" rel="noopener noreferrer">Request access</a>
+        <div><h2>1. Request access{% if acc.host %} at {{ acc.host }}{% endif %}</h2><p>Registration page: {{ reg | replace('https://', '') | replace('http://', '') | trim('/') }}</p></div>
+        <a class="btn btn-success dp-btn" href="{{ reg_href }}" target="_blank" rel="noopener noreferrer">Request access</a>
       </div>
       {% endif %}
-      {% if landing and landing != metadata.registrationPage %}
+      {% if landing and landing != reg %}
       <div class="dp-route">
-        <div><h2>{{ '2. ' if metadata.registrationPage }}Download at the source</h2><p>{{ landing | replace('https://', '') | replace('http://', '') | trim('/') }}. The files are not stored on the CONP.</p></div>
-        <a class="btn {{ 'btn-outline-success' if metadata.registrationPage else 'btn-success' }} dp-btn" href="{{ landing }}" target="_blank" rel="noopener noreferrer">Go to the source</a>
+        <div><h2>{{ '2. ' if ask }}Download at the source</h2><p>{{ landing | replace('https://', '') | replace('http://', '') | trim('/') }}{% if ask %}, once your access is approved{% elif acc.restricted %}. An account is needed{% endif %}. The files are not stored on the CONP.</p></div>
+        <a class="btn {{ 'btn-outline-success' if ask else 'btn-success' }} dp-btn" href="{{ landing }}" target="_blank" rel="noopener noreferrer">Go to {{ source_name }}</a>
       </div>
       {% endif %}
-      {% if not metadata.registrationPage and not landing %}
+      {% if not reg and not landing %}
       <div class="dp-route"><div><h2>Download at the source</h2><p>The files are hosted by the data provider{% if metadata.contact %}; contact: {{ metadata.contact }}{% endif %}.</p></div></div>
       {% endif %}
     {% else %}
-      {% if registered and metadata.registrationPage %}
+      {% set ask = acc.restricted and reg %}
+      {% if ask %}
       <div class="dp-route">
-        <div><h2>Request access first</h2><p>A third-party account is needed before the files can be downloaded with DataLad.</p></div>
-        <a class="btn btn-success dp-btn" href="{{ ('mailto:' if metadata.registrationEmail else '') ~ metadata.registrationPage }}" target="_blank" rel="noopener noreferrer">Request access</a>
+        <div><h2>1. Request access{% if acc.host %} at {{ acc.host }}{% endif %}</h2><p>An account is needed before the files can be downloaded with DataLad. Registration page: {{ reg | replace('https://', '') | replace('http://', '') | trim('/') }}</p></div>
+        <a class="btn btn-success dp-btn" href="{{ reg_href }}" target="_blank" rel="noopener noreferrer">Request access</a>
       </div>
       {% endif %}
+      {% if not acc.restricted %}
       {% set direct = page.direct_download %}
       {% if direct %}
       <div class="dp-route">
@@ -179,10 +197,13 @@
         <a class="btn btn-success dp-btn" href="{{ data.zipLocation }}" data-dp-download data-size="{{ data.size }}">Download</a>
       </div>
       {% endif %}
+      {% endif %}
       <div class="dp-route dp-route--wide" id="dataladInstructions">
         <div>
-          <h2>With DataLad</h2>
-          <p>This option provides you file-level access, versioning, and the ability to include these read/write operations in scripts.{% if registered and not metadata.registrationPage %} An account from the dataset maintainers is needed first.{% endif %}</p>
+          <h2>{{ '2. ' if ask }}With DataLad</h2>
+          <p>This option provides you file-level access, versioning, and the ability to include these read/write operations in scripts.
+            {%- if ask %} Use your {{ acc.host or 'data provider' }} account.
+            {%- elif acc.restricted %} An account from the dataset maintainers is needed first{% if landing %}; see <a href="{{ landing }}" target="_blank" rel="noopener noreferrer">{{ source_name }}</a>{% endif %}.{% endif %}</p>
           {{ codebox([
             'datalad install https://github.com/CONP-PCNO/conp-dataset.git',
             'cd conp-dataset/projects',
