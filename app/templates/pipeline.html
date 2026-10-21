@@ -1,4 +1,5 @@
 {% extends 'common/base_main.html' %}
+{% from 'macros/doi.html' import doi_link %}
 
 {#
   Tool page (2026 page review, option A).
@@ -66,7 +67,7 @@
       <p class="tp-sub">
         {%- if pipeline.author %}{{ pipeline.author | trim }}{% endif %}
         {%- if pipeline.publicationdate %} · published {{ pipeline.publicationdate }}{% endif %}
-        {%- if pipeline.doi %} · <a href="https://doi.org/{{ pipeline.doi }}" target="_blank" rel="noopener noreferrer">{{ pipeline.id }}</a>{% endif %}
+        {%- if pipeline.doi %} · {{ doi_link(pipeline.doi, pipeline.id) }}{% endif %}
         {%- if downloads > 0 %} · {{ '{:,}'.format(downloads) }} download{{ 's' if downloads != 1 }}{% endif %}
       </p>
       {% if pipeline.description %}
@@ -216,7 +217,7 @@
       {% if page.container %}<dt>Container image</dt><dd>{% if page.container.hub_url %}<a class="tp-mono" target="_blank" rel="noopener noreferrer" href="{{ page.container.hub_url }}">{{ page.container.reference }}</a>{% else %}<span class="tp-mono">{{ page.container.reference }}</span>{% endif %}</dd>{% endif %}
       {% if page.resources %}<dt>Suggested resources</dt><dd>{{ page.resources }} <span class="tp-muted">(as stated in the descriptor: a guide for job requests, not a benchmark)</span></dd>{% endif %}
       {% if pipeline['tool-version'] or pipeline.version %}<dt>Version</dt><dd>{{ pipeline['tool-version'] or pipeline.version }}</dd>{% endif %}
-      {% if pipeline.doi %}<dt>Descriptor</dt><dd><a target="_blank" rel="noopener noreferrer" href="https://doi.org/{{ pipeline.doi }}">doi:{{ pipeline.doi }}</a>{% if pipeline['schema-version'] %} · Boutiques schema {{ pipeline['schema-version'] }}{% endif %}</dd>{% endif %}
+      {% if pipeline.doi %}<dt>Descriptor</dt><dd>{{ doi_link(pipeline.doi) }}{% if pipeline['schema-version'] %} · Boutiques schema {{ pipeline['schema-version'] }}{% endif %}</dd>{% endif %}
       {% if pipeline.url %}<dt>Project page</dt><dd><a target="_blank" rel="noopener noreferrer" href="{{ pipeline.url }}">{{ pipeline.url }}</a></dd>{% endif %}
       {% if pipeline.ark_id %}<dt>ARK identifier</dt><dd><a href="{{ pipeline.ark_id }}">{{ pipeline.ark_id }}</a></dd>{% endif %}
     </dl>

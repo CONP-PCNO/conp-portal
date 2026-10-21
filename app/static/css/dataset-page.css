@@ -305,3 +305,8 @@ a.dp-chip:hover { border-color: #b8c0cc; color: #1d2129; }
   .dp-dats, .dp-dats-sub { grid-template-columns: minmax(0, 1fr); gap: 2px; }
   .dp-dats dd { margin-bottom: 8px; }
 }
+
+/* DOI with the icon of the service that registered it (macros/doi.html) */
+.doi-link { white-space: nowrap; }
+.doi-src { width: auto; height: 16px; max-width: 48px; vertical-align: -3px; margin-right: 5px; border-radius: 3px; }
+.dp-doi { margin-left: 10px; font-size: 14px; }
