@@ -38,6 +38,9 @@ def create_app(config_settings=None):
             return url
         return '{}?v={}'.format(url, mtime)
 
+    from app.doi_sources import doi_source as _doi_source
+    app.add_template_global(_doi_source, 'doi_source')
+
     db.init_app(app)
     migrate.init_app(app, db)
     csrf_protect.init_app(app)

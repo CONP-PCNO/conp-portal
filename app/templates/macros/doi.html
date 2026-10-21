@@ -1,0 +1,11 @@
+{#
+  doi_link(value, label=None): a DOI as a link with a small icon of the
+  service that registered it (app/doi_sources.py). value may be a bare DOI
+  or a DOI URL; label replaces the displayed text (default "doi:<DOI>").
+#}
+{% macro doi_link(value, label=None) -%}
+{%- set src = doi_source(value) -%}
+{%- if src -%}
+<a class="doi-link" href="{{ src.url }}" target="_blank" rel="noopener noreferrer" title="{{ ('DOI registered through ' ~ src.name) if src.name else 'DOI' }}"><img class="doi-src" src="{{ url_for('static', filename=src.icon) }}" alt="" height="16" /><span class="visually-hidden">{{ src.name ~ ' ' if src.name }}DOI: </span>{{ label or ('doi:' ~ src.doi) }}</a>
+{%- elif value -%}{{ value }}{%- endif -%}
+{%- endmacro %}

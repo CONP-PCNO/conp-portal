@@ -157,3 +157,7 @@ Uses the theme tokens from conp-theme.css. All rules are scoped to .tp-*.
   .tp-dl { grid-template-columns: minmax(0, 1fr); gap: 2px; }
   .tp-dl dd { margin-bottom: 10px; }
 }
+
+/* DOI with the icon of the service that registered it (macros/doi.html) */
+.doi-link { white-space: nowrap; }
+.doi-src { width: auto; height: 16px; max-width: 48px; vertical-align: -3px; margin-right: 5px; border-radius: 3px; }
