@@ -158,6 +158,10 @@ Uses the theme tokens from conp-theme.css. All rules are scoped to .tp-*.
   .tp-dl dd { margin-bottom: 10px; }
 }
 
-/* DOI with the icon of the service that registered it (macros/doi.html) */
-.doi-link { white-space: nowrap; }
-.doi-src { width: auto; height: 16px; max-width: 48px; vertical-align: -3px; margin-right: 5px; border-radius: 3px; }
+/* DOI with the icon of the service that registered it (macros/doi.html).
+   Only on the DOI line itself (dataset: All metadata → DOI; tool: Details →
+   Descriptor). The selector must beat conp-theme.css's
+   "body .content-main img { height: auto }", which otherwise shows the icon
+   at its natural size. */
+.doi-link { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+body .content-main img.doi-src { height: 16px; width: auto; max-width: 44px; margin: 0; flex: none; border-radius: 3px; }

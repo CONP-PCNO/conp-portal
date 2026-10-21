@@ -104,7 +104,6 @@
         <span class="dp-ark-id" id="dp-ark-id">{{ data.ark_id | replace('https://n2t.net/', '') }}</span>
         <span id="dp-ark-url" hidden>{{ data.ark_id }}</span>
         <button class="dp-copy dp-copy--light dp-copy--inline" type="button" data-copy-target="dp-ark-url" aria-label="Copy the ARK persistent identifier" title="Copy">{{ icon('copy') }}</button>
-        {% if page.doi %}<span class="dp-doi">{{ doi_link(page.doi) }}</span>{% endif %}
       </p>
       {% endif %}
 
@@ -269,7 +268,7 @@
       {% if data.subjects %}<dt>Subjects</dt><dd>{{ data.subjects }}</dd>{% endif %}
       {% if page.parents %}<dt>Derived from</dt><dd>{% for p in page.parents %}<a href="{{ p.url }}">{{ p.title }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
       {% if metadata.childDatasets %}<dt>Derived datasets</dt><dd>{% for d in metadata.childDatasets %}<a href="/dataset?id={{ d.child_dataset_id }}">{{ d.name }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
-      {% if metadata.primaryPublications %}<dt>Primary publication{{ 's' if metadata.primaryPublications|length > 1 }}</dt><dd>{% for p in metadata.primaryPublications %}<div>{{ p.title }} {{ p.author }} <em>{{ p.journal }}</em>{% if p.doi %} {% if doi_source(p.doi) %}{{ doi_link(p.doi) }}{% else %}<a target="_blank" rel="noopener noreferrer" href="{{ p.doi }}">{{ p.doi }}</a>{% endif %}{% endif %}</div>{% endfor %}</dd>{% endif %}
+      {% if metadata.primaryPublications %}<dt>Primary publication{{ 's' if metadata.primaryPublications|length > 1 }}</dt><dd>{% for p in metadata.primaryPublications %}<div>{{ p.title }} {{ p.author }} <em>{{ p.journal }}</em>{% if p.doi %} <a target="_blank" rel="noopener noreferrer" href="{{ p.doi }}">{{ p.doi }}</a>{% endif %}</div>{% endfor %}</dd>{% endif %}
       {% if landing %}<dt>Project page</dt><dd><a target="_blank" rel="noopener noreferrer" href="{{ landing }}">{{ landing }}</a></dd>{% endif %}
       {% if metadata.registrationPage %}<dt>Registration page</dt><dd><a target="_blank" rel="noopener noreferrer" href="{{ ('mailto:' if metadata.registrationEmail else '') ~ metadata.registrationPage }}">{{ metadata.registrationPage }}</a></dd>{% endif %}
       {% if metadata.remoteUrl %}<dt>On GitHub</dt><dd><a target="_blank" rel="noopener noreferrer" href="{{ metadata.remoteUrl | trim }}">{{ metadata.remoteUrl | trim }}</a></dd>{% endif %}
@@ -320,7 +319,7 @@
     {% if not pub.doi %}<p class="dp-muted dp-cite-note">Built from the record's primary publication, which gives no DOI.</p>{% endif %}
     {% endfor %}
     {% if data.evidencePublication %}
-    <p class="dp-muted">This dataset is part of a NeuroLibre/Evidence publication: {{ doi_link(data.evidencePublication) }}.</p>
+    <p class="dp-muted">This dataset is part of a NeuroLibre/Evidence publication: <a href="https://doi.org/{{ data.evidencePublication }}" target="_blank" rel="noopener noreferrer">doi:{{ data.evidencePublication }}</a>.</p>
     {% endif %}
   </section>
 </article>
