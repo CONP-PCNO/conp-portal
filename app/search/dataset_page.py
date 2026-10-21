@@ -514,3 +514,79 @@ def title_html(title):
     for tag in ('sub', 'sup'):
         s = s.replace('&lt;{}&gt;'.format(tag), '<{}>'.format(tag)).replace('&lt;/{}&gt;'.format(tag), '</{}>'.format(tag))
     return Markup(s)
+
+
+# --------------------------------------------------------------------------
+# Which ways to get the data apply to this dataset
+# --------------------------------------------------------------------------
+# Files a dataset repository holds besides its data: the DATS record, the
+# README, a logo, crawler bookkeeping, licence files and git/DataLad plumbing.
+_METADATA_ONLY = re.compile(
+    r'^(DATS\.jsonld?|dats\.json|README(\.md|\.txt)?|readme\.md|logo\.\w+|LICEN[CS]E.*|CHANGES.*|'
+    r'temp\.txt|\.gitattributes|\.gitmodules|\.conp-\w+-crawler\.json|[^/]+\.(png|jpe?g|svg|gif))$', re.I)
+_PLUMBING_DIRS = ('.git', '.datalad', '.github')
+
+
+def repository_has_data(dataset_dir):
+    """True when the dataset's repository holds data DataLad can fetch
+    (annexed files, plain data files or subdatasets), False when it holds
+    only metadata (DATS, README, logo). None when the folder can't be read,
+    so the page keeps its DataLad instructions rather than hide them."""
+    import os
+    if not dataset_dir or not os.path.isdir(dataset_dir):
+        return None
+    try:
+        gitmodules = os.path.join(dataset_dir, '.gitmodules')
+        if os.path.exists(gitmodules) and '[submodule' in open(gitmodules).read():
+            return True
+        for root, dirs, files in os.walk(dataset_dir):
+            dirs[:] = [d for d in dirs if d not in _PLUMBING_DIRS]
+            rel = os.path.relpath(root, dataset_dir)
+            if rel != '.':
+                return True  # any folder of its own holds data
+            if any(not _METADATA_ONLY.match(f) for f in files):
+                return True
+        return False
+    except OSError:
+        return None
+
+
+_HOSTS = (
+    ('cbigr', 'C-BIG'), ('cbig.', 'C-BIG'), ('braincode', 'Brain-CODE'), ('eegnet', 'EEGNet'),
+    ('preventad', 'PREVENT-AD'), ('centre-stopad', 'PREVENT-AD'), ('zenodo.org', 'Zenodo'),
+    ('osf.io', 'OSF'), ('openneuro', 'OpenNeuro'), ('borealisdata', 'Borealis'),
+    ('scholarsportal', 'Borealis'), ('frdr', 'FRDR'),
+)
+
+
+def host_name(url):
+    """A readable name for the site a URL belongs to: "Brain-CODE" for
+    braincode.ca, "C-BIG" for cbigr.loris.ca; otherwise the bare domain."""
+    s = str(url or '').lower()
+    if not s:
+        return None
+    for key, name in _HOSTS:
+        if key in s:
+            return name
+    m = re.match(r'(?:mailto:)?(?:https?://)?(?:www\.)?([^/?#@]+@)?([^/?#]+)', s)
+    return m.group(2) if m else None
+
+
+RESTRICTED = ('registered', 'private', 'controlled')
+
+
+def access_context(authorization, registration_page, landing_page, dataset_dir):
+    """What the Get the data tab needs to decide which routes to show.
+
+    restricted: the record's authorization says an account is needed (the
+    authorization decides, not the host: LORIS also serves open data).
+    has_data: the repository holds something DataLad can fetch.
+    host: the name used in "Request access at …" / "Go to …"."""
+    restricted = str(authorization or '').strip().lower() in RESTRICTED
+    has_data = repository_has_data(dataset_dir)
+    return {
+        'restricted': restricted,
+        'has_data': True if has_data is None else has_data,
+        'host': host_name(registration_page) or host_name(landing_page),
+        'source_host': host_name(landing_page),
+    }

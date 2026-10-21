@@ -24,6 +24,7 @@ from app.models import MatomoDailyGetDatasetPageViewsSummary
 from app.search import search_bp
 from app.search.dataset_query import build_dataset_query, matches_suggestion
 from app.search.dataset_page import (
+    access_context,
     citation_bibtex,
     citation_key,
     citation_ris,
@@ -797,6 +798,8 @@ def dataset_info():
         "direct_download": direct_download(descriptor, d.fspath),
         "dats_html": dats_record_html(descriptor),
         "parents": parents,
+        "access": access_context(
+            dataset["authorizations"], datsdataset.registrationPage, datsdataset.sources, d.fspath),
         "title_html": title_html(dataset["title"]),
         "cbrainPipelinesUrl": url_for('pipelines.pipeline_search'),
         "views": _dataset_page_views(d.dataset_id),
