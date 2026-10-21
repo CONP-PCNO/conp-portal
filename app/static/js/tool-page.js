@@ -76,6 +76,20 @@
     });
   }
 
+  // Group (dataset) ids come as ".../groups/switch?id=123", "...?id%3D123" or,
+  // through /cbrainredirect, "...switch?id%3D123". Tool links are either plain
+  // CBRAIN URLs or /cbrainredirect?cbrainurl=<URL with an encoded query>.
+  function cbrainGroupId(url) {
+    var m = /[?&]id(?:=|%3D)(\d+)/i.exec(url || '') || /(?:%3F|%26)id%3D(\d+)/i.exec(url || '');
+    return m ? m[1] : '';
+  }
+  function withSwitchGroup(url, id) {
+    if (!id) { return url; }
+    var encoded = url.indexOf('cbrainredirect') >= 0;
+    var sep = encoded ? '%26' : (url.indexOf('?') >= 0 ? '&' : '?');
+    return url + sep + 'switch_group_id' + (encoded ? '%3D' : '=') + id;
+  }
+
   // CBRAIN: choose a dataset to process (or none), as on the Tools page.
   function initCbrain() {
     var btn = document.querySelector('[data-tp-cbrain]');
@@ -99,14 +113,13 @@
         .then(function (r) { return r.ok ? r.json() : { elements: [] }; })
         .then(function (json) {
           (json.elements || []).forEach(function (el) {
-            var url = el.cbrain_id || '';
-            var id = url.indexOf('%3Fid%3D') >= 0 ? url.split('%3Fid%3D')[1] : url.split('?id=')[1];
+            var id = cbrainGroupId(el.cbrain_id);
             if (!id) { return; }
             var a = document.createElement('a');
             a.className = 'list-group-item list-group-item-action';
             a.target = '_blank';
             a.rel = 'noreferrer';
-            a.href = launch + '%26switch_group_id=' + id;
+            a.href = withSwitchGroup(launch, id);
             a.textContent = el.title;
             list.appendChild(a);
           });
