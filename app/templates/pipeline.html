@@ -67,7 +67,7 @@
       <p class="tp-sub">
         {%- if pipeline.author %}{{ pipeline.author | trim }}{% endif %}
         {%- if pipeline.publicationdate %} · published {{ pipeline.publicationdate }}{% endif %}
-        {%- if pipeline.doi %} · {{ doi_link(pipeline.doi, pipeline.id) }}{% endif %}
+        {%- if pipeline.doi %} · <a href="https://doi.org/{{ pipeline.doi }}" target="_blank" rel="noopener noreferrer">{{ pipeline.id }}</a>{% endif %}
         {%- if downloads > 0 %} · {{ '{:,}'.format(downloads) }} download{{ 's' if downloads != 1 }}{% endif %}
       </p>
       {% if pipeline.description %}

@@ -38,5 +38,6 @@ def test_dataset_page_shows_doi_with_icon(app):
                 "doi": "10.5281/zenodo.3518486"}
         html = render_template_string("{% extends 'dataset.html' %}", data=_data(), metadata=_metadata(),
                                       readme='', page=page, ciBadgeUrl='', user=None, title='t')
-    assert html.count('/static/img/doi/zenodo.svg') >= 2      # header and All metadata
-    assert 'class="dp-doi"' in html
+    # only on the DOI line of All metadata, not in the header next to the ARK
+    assert html.count('/static/img/doi/zenodo.svg') == 1
+    assert 'class="dp-doi"' not in html
