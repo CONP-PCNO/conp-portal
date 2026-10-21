@@ -13,7 +13,7 @@ class DATSExperiment(DATSObject):
     def function_assessed(self) -> str | None:
         try:
             return self.find_extra_property("experimentFunctionAssessed").pop()
-        except KeyError:
+        except (KeyError, IndexError):   # no value: pop() on an empty list
             return None
 
     @property
