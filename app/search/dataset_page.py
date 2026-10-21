@@ -126,35 +126,35 @@ def clean_version(version):
 
 
 def citation_text(creators, year, title, version, ark_url, doi=None, publisher=None):
-    """Plain-text citation built from the record:
-    Creators (year). Title, version X. CONP Portal. ARK.
-    When the dataset has its own DOI, the DOI and its publisher replace the
-    Portal and the ARK: Creators (year). Title [Data set]. Zenodo. DOI URL."""
-    names = [c for c in (creators or []) if c]
+    """Plain-text citation in DataCite's recommended form
+    (https://datacite-metadata-schema.readthedocs.io/en/4.7/introduction/citation/):
+
+        Creator (PublicationYear): Title. Version. Publisher. (dataset). Identifier
+
+    A dataset with its own DOI is cited by that DOI and its publisher
+    (Zenodo, OSF, ...); the others by the Portal ("CONP Portal") and the ARK.
+    Creators are separated by semicolons, as in DataCite's examples; more than
+    three become "et al."."""
+    names = [str(c).strip() for c in (creators or []) if c and str(c).strip()]
     if len(names) > 3:
-        who = ', '.join(names[:3]) + ', et al.'
+        who = '; '.join(names[:3]) + '; et al.'
     else:
-        who = ', '.join(names)
+        who = '; '.join(names)
     parts = []
     if who:
-        if year:
-            parts.append('{} ({}).'.format(who, year))
-        else:
-            parts.append(who if who.endswith('.') else who + '.')
+        parts.append('{} ({}):'.format(who, year) if year else who + ':')
     head = (title or '').strip()
+    parts.append(head if head.endswith(('.', '?', '!')) else head + '.')
     if version:
-        head += ', version {}'.format(version)
+        v = re.sub(r'^(?:v(?:ersion)?\.?\s*)', '', str(version).strip(), flags=re.I)
+        parts.append('V. {}.'.format(v))
+    parts.append((publisher if doi else 'CONP Portal') + '.' if (publisher or not doi) else '')
+    parts.append('(dataset).')
     if doi:
-        parts.append(head + ' [Data set].')
-        if publisher:
-            parts.append(publisher + '.')
         parts.append('https://doi.org/' + doi)
-        return ' '.join(parts)
-    parts.append(head + '.')
-    parts.append('CONP Portal.')
-    if ark_url:
+    elif ark_url:
         parts.append(ark_url)
-    return ' '.join(parts)
+    return ' '.join(p for p in parts if p)
 
 
 # Reference-manager formats (BibTeX, RIS), built from the same fields.

@@ -89,3 +89,12 @@ def test_access_context(tmp_path):
     # the record decides, not the host: open LORIS data needs no account
     assert access_context('public', None, 'https://phantom.loris.ca', None)['restricted'] is False
     assert access_context('public', None, None, None)['has_data'] is True   # unreadable folder: keep DataLad
+
+
+def test_get_tab_restricted_with_data_no_registration_page(app):
+    # PERFORM (Zenodo, restricted): private, files in the repository, no registration page
+    get = _get_tab(app, 'private', True, landing='https://zenodo.org/record/3518486')
+    assert '1. Request access at Zenodo' in get
+    assert "Request it on the dataset page: zenodo.org/record/3518486" in get
+    assert '2. With DataLad' in get and 'Use your Zenodo account' in get
+    assert 'tar.gz' not in get

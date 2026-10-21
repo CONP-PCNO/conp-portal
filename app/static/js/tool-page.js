@@ -34,6 +34,14 @@
     window.addEventListener('resize', check);
   }
 
+  // Copy without the dimmed "# ..." notes (zsh does not treat # as a
+  // comment at an interactive prompt).
+  function commandText(src) {
+    var node = src.cloneNode(true);
+    [].forEach.call(node.querySelectorAll('.tp-comment'), function (c) { c.parentNode.removeChild(c); });
+    return node.textContent.split('\n').map(function (l) { return l.replace(/\s+$/, ''); }).join('\n').trim();
+  }
+
   function copyText(text, done) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(done, function () {});
@@ -55,7 +63,7 @@
       btn.addEventListener('click', function () {
         var code = btn.parentNode.querySelector('code');
         if (!code) { return; }
-        copyText(code.textContent.trim(), function () {
+        copyText(commandText(code), function () {
           btn.classList.add('is-copied');
           btn.title = 'Copied';
           setTimeout(function () { btn.classList.remove('is-copied'); btn.title = 'Copy'; }, 1500);

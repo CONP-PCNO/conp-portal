@@ -163,6 +163,9 @@ a.dp-chip:hover { border-color: #b8c0cc; color: #1d2129; }
   overflow-x: auto;
 }
 .dp-code code { color: inherit; background: none; padding: 0; font-size: inherit; }
+.dp-comment { color: #9aa3b2; user-select: none; }
+.dp-dl dt, .dp-dl dd { transition: background-color .6s; }
+.dp-dl dt.is-flash, .dp-dl dt.is-flash + dd { background-color: #fff3c4; }
 .dp-copy {
   position: absolute;
   top: 6px;
