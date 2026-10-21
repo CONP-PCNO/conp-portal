@@ -20,7 +20,7 @@
 
 {% macro codebox(lines) -%}
 <div class="tp-codebox">
-  <pre class="tp-code"><code>{{ lines | join('\n') }}</code></pre>
+  <pre class="tp-code"><code>{% for line in lines %}{% set cmd, sep, note = line.partition('   # ') %}{{ cmd }}{% if sep %}<span class="tp-comment">   # {{ note }}</span>{% endif %}{{ '\n' if not loop.last }}{% endfor %}</code></pre>
   <button class="tp-copy" type="button" aria-label="Copy commands" title="Copy">{{ icon('copy') }}</button>
 </div>
 {%- endmacro %}

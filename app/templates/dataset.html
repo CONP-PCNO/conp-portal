@@ -26,14 +26,14 @@
 {%- endmacro %}
 
 {% macro chip(name, label, text, href=None, tip=None) -%}
-{% if href %}<a class="dp-chip" href="{{ href }}" target="_blank" rel="noopener noreferrer" title="{{ tip or label }}">{% else %}<span class="dp-chip" title="{{ tip or label }}">{% endif %}
+{% if href %}<a class="dp-chip" href="{{ href }}"{% if not href.startswith('#') %} target="_blank" rel="noopener noreferrer"{% endif %} title="{{ tip or label }}">{% else %}<span class="dp-chip" title="{{ tip or label }}">{% endif %}
 {{- icon(name) }}<span class="visually-hidden">{{ label }}: </span>{{ text -}}
 {% if href %}</a>{% else %}</span>{% endif %}
 {%- endmacro %}
 
 {% macro codebox(lines, id=None) -%}
 <div class="dp-codebox"{% if id %} id="{{ id }}"{% endif %}>
-  <pre class="dp-code"><code>{{ lines | join('\n') }}</code></pre>
+  <pre class="dp-code"><code>{% for line in lines %}{% set cmd, sep, note = line.partition('   # ') %}{{ cmd }}{% if sep %}<span class="dp-comment">   # {{ note }}</span>{% endif %}{{ '\n' if not loop.last }}{% endfor %}</code></pre>
   <button class="dp-copy" type="button" aria-label="Copy commands" title="Copy">{{ icon('copy') }}</button>
 </div>
 {%- endmacro %}
@@ -117,7 +117,7 @@
         {% if data.subjects %}<li>{{ chip('subjects', 'Subjects', '{:,} subject{}'.format(data.subjects, '' if data.subjects == 1 else 's') if data.subjects is number else data.subjects ~ ' subjects') }}</li>{% endif %}
         {% if data.modalities %}{% set mods = data.modalities %}<li>{{ chip('modality', 'Modality', (mods[:3] | join(', ')) ~ (' +' ~ (mods|length - 3) ~ ' more' if mods|length > 3 else ''), None, 'Modality: ' ~ (mods | join(', '))) }}</li>{% endif %}
         {% if data.formats %}<li>{{ chip('formats', 'Formats', data.formats | map('string') | join(', ')) }}</li>{% endif %}
-        {% for lic in page.licences %}<li>{{ chip('licence', 'Licence', lic.label, lic.url, 'Licence: ' ~ lic.full) }}</li>{% endfor %}
+        {% for lic in page.licences %}<li>{{ chip('licence', 'Licence', lic.label, lic.url or '#dp-licence', 'Licence: ' ~ lic.full) }}</li>{% endfor %}
       </ul>
 
       {% if data.evidencePublication %}
@@ -154,7 +154,10 @@
         forces the offsite display.
     #}
     {% set acc = page.access or {'restricted': registered, 'has_data': True, 'host': None, 'source_host': None} %}
-    {% set reg = metadata.registrationPage %}
+    {# A restricted record with files but no registration page (e.g. a restricted Zenodo record):
+       access is requested on its landing page, so that becomes step 1. #}
+    {% set reg_from_landing = acc.restricted and acc.has_data and not offsite and not metadata.registrationPage and landing %}
+    {% set reg = metadata.registrationPage or (landing if reg_from_landing else None) %}
     {% set reg_href = ('mailto:' if metadata.registrationEmail else '') ~ (reg or '') %}
     {% set source_name = acc.source_host or 'the source' %}
     {% if offsite or not acc.has_data %}
@@ -178,7 +181,7 @@
       {% set ask = acc.restricted and reg %}
       {% if ask %}
       <div class="dp-route">
-        <div><h2>1. Request access{% if acc.host %} at {{ acc.host }}{% endif %}</h2><p>An account is needed before the files can be downloaded with DataLad. Registration page: {{ reg | replace('https://', '') | replace('http://', '') | trim('/') }}</p></div>
+        <div><h2>1. Request access{% if acc.host %} at {{ acc.host }}{% endif %}</h2><p>An account is needed before the files can be downloaded with DataLad. {{ 'Request it on the dataset page' if reg_from_landing else 'Registration page' }}: {{ reg | replace('https://', '') | replace('http://', '') | trim('/') }}</p></div>
         <a class="btn btn-success dp-btn" href="{{ reg_href }}" target="_blank" rel="noopener noreferrer">Request access</a>
       </div>
       {% endif %}
@@ -209,7 +212,7 @@
             'cd conp-dataset/projects',
             'datalad install ' ~ data.name,
             'cd ' ~ data.name,
-            'datalad get *   # all files; or give individual paths',
+            'datalad get .   # all files; or give individual paths',
           ]) }}
           <details class="dp-more-info">
             <summary>More about DataLad</summary>
@@ -256,7 +259,7 @@
       {% if metadata.contact %}<dt>Contact</dt><dd>{{ metadata.contact }}</dd>{% endif %}
       {% if data.version %}<dt>Version</dt><dd>{{ data.version }}</dd>{% endif %}
       {% if data.dateAdded or data.dateUpdated %}<dt>On the Portal</dt><dd>{% if data.dateAdded %}added {{ data.dateAdded }}{% endif %}{% if data.dateAdded and data.dateUpdated %}, {% endif %}{% if data.dateUpdated %}updated {{ data.dateUpdated }}{% endif %}</dd>{% endif %}
-      {% if metadata.licenses %}<dt>Licence</dt><dd>{{ metadata.licenses | join(', ') if metadata.licenses is not string else metadata.licenses }}</dd>{% endif %}
+      {% if metadata.licenses %}{% set lics = [metadata.licenses] if metadata.licenses is string else metadata.licenses %}<dt id="dp-licence">Licence</dt><dd>{% for l in lics %}{% if l is string and l.startswith('http') %}<a href="{{ l }}" target="_blank" rel="noopener noreferrer">{{ l }}</a>{% else %}{{ l }}{% endif %}{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
       {% if data.modalities %}<dt>Modalities</dt><dd>{% for d in data.modalities %}<a href="search?modalities={{ d | lower | urlencode }}">{{ d }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
       {% if data.formats %}<dt>Formats</dt><dd>{% for d in data.formats %}<a href="search?formats={{ d | urlencode }}">{{ d }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
       {% if data.size %}<dt>Size</dt><dd>{{ data.size | replace('.0 ', ' ') }}</dd>{% endif %}

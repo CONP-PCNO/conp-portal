@@ -67,16 +67,27 @@
 
     // Deep links: #about, #metadata, #cite; anything inside a panel
     // (for example the old #dataladInstructions anchor) opens that panel.
-    var hash = decodeURIComponent(location.hash.slice(1));
-    if (hash) {
-      var target = document.getElementById(hash);
+    function open(hash) {
+      var target = hash && document.getElementById(hash);
       var panel = target && (target.getAttribute('role') === 'tabpanel' ? target : target.closest('[role="tabpanel"]'));
-      if (panel) {
-        var tab = document.querySelector('[aria-controls="' + panel.id + '"]');
-        if (tab) { select(tab, false); }
-        if (target !== panel) { target.scrollIntoView(); }
+      if (!panel) { return false; }
+      var tab = document.querySelector('[aria-controls="' + panel.id + '"]');
+      if (tab) { select(tab, false); }
+      if (target !== panel) {
+        target.scrollIntoView({ block: 'center' });
+        target.classList.add('is-flash');
+        setTimeout(function () { target.classList.remove('is-flash'); }, 1600);
       }
+      return true;
     }
+    open(decodeURIComponent(location.hash.slice(1)));
+    // In-page links such as the licence chip (#dp-licence) open their tab.
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (!a) { return; }
+      var id = decodeURIComponent(a.getAttribute('href').slice(1));
+      if (open(id)) { e.preventDefault(); history.replaceState(null, '', '#' + id); }
+    });
   }
 
   // ---------- description: five lines, then "more" ----------
@@ -114,13 +125,22 @@
     document.body.removeChild(ta);
   }
 
+  // What a copy button copies: the text without the dimmed "# ..." notes
+  // (zsh, the macOS default shell, does not treat # as a comment when
+  // commands are pasted at the prompt).
+  function commandText(src) {
+    var node = src.cloneNode(true);
+    [].forEach.call(node.querySelectorAll('.dp-comment'), function (c) { c.parentNode.removeChild(c); });
+    return node.textContent.split('\n').map(function (l) { return l.replace(/\s+$/, ''); }).join('\n').trim();
+  }
+
   function initCopy() {
     document.querySelectorAll('.dp-copy').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var src = btn.dataset.copyTarget ? document.getElementById(btn.dataset.copyTarget)
           : btn.parentNode.querySelector('code');
         if (!src) { return; }
-        copyText(src.textContent.trim(), function () {
+        copyText(commandText(src), function () {
           btn.classList.add('is-copied');
           btn.title = 'Copied';
           setTimeout(function () { btn.classList.remove('is-copied'); btn.title = 'Copy'; }, 1500);

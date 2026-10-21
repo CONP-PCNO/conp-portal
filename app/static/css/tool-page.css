@@ -94,6 +94,7 @@ Uses the theme tokens from conp-theme.css. All rules are scoped to .tp-*.
   line-height: 1.55;
   overflow-x: auto;
 }
+.tp-comment { color: #9aa3b2; user-select: none; }
 .tp-code code { color: inherit; background: none; padding: 0; font-size: inherit; }
 .tp-copy {
   position: absolute;

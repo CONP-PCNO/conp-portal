@@ -96,8 +96,14 @@ def test_citation_key():
 
 def test_citation_text():
     text = citation_text(["A", "B", "C", "D"], "2020", "Title", "1.0", "https://n2t.net/ark:/1/x")
-    assert text == "A, B, C, et al. (2020). Title, version 1.0. CONP Portal. https://n2t.net/ark:/1/x"
-    assert citation_text(None, None, "T", None, None) == "T. CONP Portal."
+    assert text == "A; B; C; et al. (2020): Title. V. 1.0. CONP Portal. (dataset). https://n2t.net/ark:/1/x"
+    assert citation_text(None, None, "T", None, None) == "T. CONP Portal. (dataset)."
+    # DataCite form with a DOI: the DOI's publisher replaces the Portal and the ARK
+    text = citation_text(["PERFORM Centre Concordia University"], "2019", "PERFORM Dataset; one control subject",
+                         "1.0", "https://n2t.net/ark:/1/x", doi="10.5281/zenodo.3518486", publisher="Zenodo")
+    assert text == ("PERFORM Centre Concordia University (2019): PERFORM Dataset; one control subject. "
+                    "V. 1.0. Zenodo. (dataset). https://doi.org/10.5281/zenodo.3518486")
+    assert "V. 2.1." in citation_text(["A"], "2009", "T", "v2.1", None)
 
 
 def _data(**over):
@@ -146,7 +152,7 @@ def test_dataset_page_open_dataset(app):
     assert 'and the ability to include' in html
     assert 'Canadian dataset' in html            # conpStatus "Canadian"
     assert 'dp-views' in html and '1,234' in html
-    assert 'cd demo' in html and 'datalad get *' in html
+    assert 'cd demo' in html and 'datalad get .<span class="dp-comment">' in html
     assert 'Open in' not in html                  # no CBRAIN id: no CBRAIN row
     assert 'Request access' not in html
     assert html.index('aria-controls="metadata"') < html.index('aria-controls="cite"')
@@ -178,7 +184,7 @@ def test_dataset_doi_and_doi_citation():
     assert dataset_doi({"identifier": {"identifier": "https://n2t.net/ark:/70798/x"}}) == (None, None)
     text = citation_text(["A", "B"], "2024", "T", None, "https://n2t.net/ark:/1/x",
                          doi="10.5281/zenodo.10589601", publisher="Zenodo")
-    assert text == "A, B (2024). T [Data set]. Zenodo. https://doi.org/10.5281/zenodo.10589601"
+    assert text == "A; B (2024): T. Zenodo. (dataset). https://doi.org/10.5281/zenodo.10589601"
     bib = citation_bibtex(["A"], "2024", "T", None, None, "projects/x", doi="10.5281/zenodo.1", publisher="Zenodo")
     assert "doi = {10.5281/zenodo.1}" in bib and "CONP Portal" not in bib
     ris = citation_ris(["A"], "2024", "T", None, None, doi="10.5281/zenodo.1", publisher="Zenodo")
@@ -282,3 +288,18 @@ def test_ark_is_prominent_and_copyable(app):
     # the ARK row is the first one under All metadata
     meta = html[html.index('id="metadata"'):]
     assert meta.index('ARK identifier') < meta.index('Creators')
+
+
+def test_licence_chip_links_to_licence_row(app):
+    html = _render(app, _data(), _metadata(licenses=["Refer to Brain-CODE Governance Policy"]))
+    assert 'href="#dp-licence"' in html and 'id="dp-licence"' in html
+    chip = html[html.index('href="#dp-licence"') - 40:html.index('href="#dp-licence"') + 120]
+    assert 'target="_blank"' not in chip                       # stays on the page
+    html = _render(app, _data(), _metadata(licenses=["CC0"]))
+    assert 'creativecommons.org/publicdomain/zero' in html or 'href="#dp-licence"' not in html
+
+
+def test_datalad_comment_is_separate_from_the_command(app):
+    html = _render(app, _data(), _metadata())
+    assert 'datalad get .<span class="dp-comment">   # all files; or give individual paths</span>' in html
+    assert 'datalad get *' not in html
