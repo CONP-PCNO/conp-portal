@@ -273,3 +273,12 @@ def test_authorizations_does_not_empty_the_record(tmp_path):
     assert dats.authorizations == 'public'
     assert dats.authorizations == 'public'                      # was "None" the second time
     assert direct_download(dats.descriptor)['host'] == 'Zenodo'
+
+
+def test_ark_is_prominent_and_copyable(app):
+    html = _render(app, _data(), _metadata())
+    assert 'class="dp-ark-link" href="https://n2t.net/ark:/1/x"' in html
+    assert 'data-copy-target="dp-ark-url"' in html and 'data-copy-target="dp-ark-meta"' in html
+    # the ARK row is the first one under All metadata
+    meta = html[html.index('id="metadata"'):]
+    assert meta.index('ARK identifier') < meta.index('Creators')

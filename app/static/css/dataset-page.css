@@ -250,6 +250,12 @@ a.dp-chip:hover { border-color: #b8c0cc; color: #1d2129; }
 .dp-cite-download { font-size: .88rem; font-weight: 600; color: #1a5fb4; }
 .dp-copy--light { border-color: #cfd5dd; background: #fff; color: #3a404c; }
 .dp-copy--light:hover { background: #f0f2f5; }
+.dp-copy--inline { position: static; flex: none; }
+.dp-ark { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0 0; font-size: .9rem; }
+.dp-ark-link { font-weight: 700; text-decoration: none; color: #1a5fb4; border: 1px solid #c9d7ea; background: #f2f6fc; border-radius: 6px; padding: 2px 10px; }
+.dp-ark-link:hover { background: #e6eef9; color: #123f78; }
+.dp-ark-id { font-family: SFMono-Regular, Menlo, Consolas, monospace; font-size: .86rem; color: #1d2129; overflow-wrap: anywhere; }
+.dp-ark-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .dp-card h2.dp-h2 { font-size: 1rem; font-weight: 700; margin: 16px 0 6px; }
 .dp-pubs { padding-left: 18px; font-size: .92rem; }
 .dp-muted { color: var(--conp-grey-4); font-size: .9rem; }
