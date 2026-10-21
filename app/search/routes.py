@@ -19,7 +19,7 @@ from sqlalchemy import func
 
 from app.analytics.routes import datasets_downloads, datasets_views
 from app.dats import load_dataset_logos, resolve_dataset_logo
-from app.models import ArkId, Dataset, DatasetAncestry, Experiment
+from app.models import ArkId, Dataset, DatasetAncestry
 from app.models import MatomoDailyGetDatasetPageViewsSummary
 from app.search import search_bp
 from app.search.dataset_query import build_dataset_query, matches_suggestion
@@ -883,8 +883,8 @@ def download_metadata_experiment():
     """
     from unidecode import unidecode
 
-    experiment_id = request.args.get('experiment', '')
-    experiment = Experiment.query.filter_by(id=experiment_id).first()
+    from app.experiments.routes import find_experiment
+    experiment = find_experiment(request.args.get('experiment', ''))
 
     if experiment is None:
         return 'Experiment Not Found', 400
@@ -908,7 +908,7 @@ def download_metadata_experiment():
         os.path.dirname(dats_path),
         os.path.basename(dats_path),
         as_attachment=True,
-        attachment_filename=safe_filename,
+        download_name=safe_filename,   # Flask 2.2+: attachment_filename was removed (500 error)
         mimetype='application/json'
     )
 

@@ -64,6 +64,14 @@ def register(app):
         """
         _update_experiments(app)
 
+    @app.cli.command('update_experiments')
+    def update_experiments():
+        """
+        Refresh the conp-experiments checkout and the Experiment rows
+        (same as seed_test_experiments, which is kept for old scripts)
+        """
+        _update_experiments(app)
+
     @app.cli.command('update_pipeline_data')
     def update_pipeline_data():
         """

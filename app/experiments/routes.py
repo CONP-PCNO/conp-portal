@@ -2,15 +2,11 @@ import os
 
 from flask import (
     abort,
-    current_app,
-    flash,
     make_response,
     redirect,
     render_template,
     request,
     send_file,
-    send_from_directory,
-    session,
     url_for,
 )
 from sqlalchemy import inspect
@@ -18,10 +14,7 @@ from sqlalchemy import inspect
 from .. import db
 from ..models import Experiment
 from . import experiments_bp
-from .data import data
 from .dats import DATSExperiment
-from .forms import ExperimentForm
-from .utils import upload_file
 
 
 def to_camel_case(snake_str: str):
@@ -33,9 +26,31 @@ def object_as_dict(obj: object):
     return {to_camel_case(c.key): getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
 
 
+def experiment_slug(exp: Experiment) -> str:
+    """The stable part of an experiment's address: its folder name in
+    conp-experiments ("projects/BADE-evidence-integration" ->
+    "BADE-evidence-integration"). Database ids change when the table is
+    rebuilt; this does not."""
+    return (exp.experiment_id or str(exp.id)).split('/', 1)[-1]
+
+
+def find_experiment(key):
+    """An experiment by its address: the folder name, the full
+    experiment_id ("projects/…") or, for old links, the numeric id."""
+    key = str(key or '').strip().strip('/')
+    if not key:
+        return None
+    if key.isdigit():
+        return Experiment.query.filter(Experiment.id == int(key)).first()
+    return Experiment.query.filter(
+        Experiment.experiment_id.in_([key, 'projects/' + key])).first()
+
+
 def experiment_as_dict(exp: Experiment):
     dats = DATSExperiment(exp.fspath)
     return {
+        "slug": experiment_slug(exp),
+        "pageUrl": url_for('experiments.view', key=experiment_slug(exp)),
         "title": exp.name,
         "description": dats.description,
         "creators": dats.creators,
@@ -70,8 +85,6 @@ def experiment_as_dict(exp: Experiment):
 
 @experiments_bp.route("/")
 def home():
-    # return render_template("experiments/home.html")
-
     # Récupérer le paramètre 'keyword' de l'URL, sinon None par défaut
     keyword = request.args.get('keyword')
     experiments = Experiment.query.all()
@@ -105,9 +118,15 @@ def download(experiment_id):
     return send_file(experiment_zip_path, as_attachment=True, download_name=os.path.basename(experiment_zip_path))
 
 
-@experiments_bp.route("/view/<int:experiment_id>")
-def view(experiment_id):
-    experiment = Experiment.query.filter(Experiment.id == experiment_id).first_or_404()
+@experiments_bp.route("/view/<path:key>")
+def view(key):
+    experiment = find_experiment(key)
+    if experiment is None:
+        abort(404)
+    # Old numeric links (/experiments/view/1) move to the stable address.
+    if key.strip('/') != experiment_slug(experiment):
+        return redirect(url_for('experiments.view', key=experiment_slug(experiment)), code=301)
+    experiment_id = experiment.id
     readme_path = os.path.join(experiment.fspath, "README.md")
     readme_content = ""
 
@@ -142,8 +161,10 @@ def get_experiment_logo(experiment_id):
     experiment = Experiment.query.get_or_404(experiment_id)
 
     dats = DATSExperiment(experiment.fspath)
-    with open(dats.LogoFilepath, 'rb') as logo_file:
-        return logo_file.read()
+    if not dats.LogoFilepath or not os.path.isfile(dats.LogoFilepath):
+        abort(404)
+    # send_file sets the image type from the file name (was sent as text/html)
+    return send_file(dats.LogoFilepath)
 
 
 @experiments_bp.route("/search")
@@ -164,57 +185,7 @@ def search():
 
 @experiments_bp.route("/submit", methods=["GET", "POST"])
 def submit():
-    form = ExperimentForm()
-
-    if request.files and request.files.get("repository"):
-        session["repository_file"] = upload_file(request.files.get("repository"))
-    elif request.files and request.files.get("image_file"):
-        session["image_file"] = upload_file(request.files.get("image_file"))
-
-    if form.validate_on_submit():
-        try:
-            repository_file = session["repository_file"]
-        except KeyError:
-            flash("Uploading a repository is required!")
-            return redirect(url_for(".submit"))
-        try:
-            image_file = session["image_file"]
-        except KeyError:
-            image_file = None
-
-        flash("Done!")
-
-        form.license.data = form.license.data.replace(' (Recommended)', '')
-
-        params = {
-            "title": form.title.data or None,
-            "description": form.description.data or None,
-            "creators": form.creators.data or None,
-            "origin": form.origin.data or None,
-            "contact_person": form.contact_person.data or None,
-            "contact_email": form.contact_email.data or None,
-            "version": form.version.data or None,
-            "license": form.license.data or None,
-            "keywords": form.keywords.data or None,
-            "modalities": form.modalities.data or None,
-            "primary_software": form.primary_software.data or None,
-            "other_software": form.other_software.data or None,
-            "primary_function": form.primary_function.data or None,
-            "other_functions": form.other_functions.data or None,
-            "doi": form.doi.data or None,
-            "acknowledgements": form.acknowledgements.data or None,
-            "repository_file": repository_file or None,
-            "image_file": image_file or None
-        }
-
-        experiment = Experiment(**params)
-        db.session.add(experiment)
-        db.session.commit()
-        return redirect(url_for(".submit"))
-
-    return render_template("experiments/submit.html", data=data, form=form)
-
-
-@experiments_bp.route("/uploads/<name>")
-def download_file(name):
-    return send_from_directory(current_app.config["EXPERIMENTS_UPLOAD_DIRECTORY"], name)
+    """Experiments are curated by hand for now: the old submission form
+    (2022) wrote to columns the Experiment table no longer has and failed
+    with an error. Experiment metadata is prepared in the DATS editor."""
+    return redirect(url_for('main.dats_editor'), code=302)

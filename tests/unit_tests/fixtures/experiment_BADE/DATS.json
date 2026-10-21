@@ -1,0 +1,484 @@
+{
+  "title": "BADE Evidence Integration",
+  "description": "Image-based evidence integration task assessing the bias against disconfirmatory evidence (BADE) for fMRI and EEG/behavioural administration.",
+  "identifier": {
+    "identifier": "https://doi.org/10.17605/OSF.IO/EKDU5",
+    "identifierSource": "DOI"
+  },
+  "creators": [
+    {
+      "abbreviation": "",
+      "fullName": "Katie M Lavigne",
+      "firstName": "Katie",
+      "middleInitial": "M",
+      "lastName": "Lavigne",
+      "email": "katie.lavigne@mcgill.ca",
+      "affiliations": [
+        {
+          "name": "University of British Columbia"
+        }
+      ],
+      "roles": [
+        {
+          "value": "Contributor"
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "ORCID",
+          "values": [
+            {
+              "value": "https://orcid.org/0000-0002-3918-691X"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fullName": "Todd S Woodward",
+      "firstName": "Todd",
+      "middleInitial": "S",
+      "lastName": "Woodward",
+      "email": "",
+      "affiliations": [
+        {
+          "name": "University of British Columbia"
+        }
+      ],
+      "roles": [
+        {
+          "value": "Principal Investigator"
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "ORCID",
+          "values": [
+            {
+              "value": "https://orcid.org/0000-0001-8083-0079"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fullName": "Steffen Moritz",
+      "firstName": "Steffen",
+      "lastName": "Moritz",
+      "affiliations": [
+        {
+          "name": "University Medical Center Hamburg"
+        }
+      ],
+      "roles": [
+        {
+          "value": "Contributor"
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "ORCID",
+          "values": [
+            {
+              "value": "https://orcid.org/0000-0001-8601-0143"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "types": [
+    {
+      "information": {
+        "value": "Tabular data"
+      }
+    }
+  ],
+  "version": "1.0",
+  "privacy": "open",
+  "licenses": [
+    {
+      "name": "Academic Public License"
+    },
+    {
+      "name": "CC BY-NC-SA"
+    }
+  ],
+  "distributions": [
+    {
+      "formats": [
+        "LOG"
+      ],
+      "size": 335,
+      "unit": {
+        "value": "MB"
+      },
+      "access": {
+        "landingPage": "https://doi.org/10.17605/OSF.IO/EKDU5",
+        "authorizations": [
+          {
+            "value": "public"
+          }
+        ]
+      }
+    }
+  ],
+  "primaryPublications": [
+    {
+      "title": "Functional brain networks underlying evidence integration and delusions in schizophrenia",
+      "publicationVenue": "Schizophrenia Bulletin",
+      "authors": [
+        {
+          "fullName": "Katie M Lavigne",
+          "firstName": "Katie",
+          "middleInitial": "M",
+          "lastName": "Lavigne",
+          "affiliations": [
+            {
+              "name": "Department of Psychiatry, University of British Columbia, Vancouver, BC, Canada"
+            },
+            {
+              "name": "BC Mental Health and Addictions Research Institute, Vancouver, BC, Canada"
+            }
+          ]
+        },
+        {
+          "fullName": "Mahesh Menon",
+          "firstName": "Mahesh",
+          "middleInitial": "",
+          "lastName": "Menon",
+          "affiliations": [
+            {
+              "name": "Department of Psychiatry, University of British Columbia, Vancouver, BC, Canada"
+            }
+          ]
+        },
+        {
+          "fullName": "Todd S Woodward",
+          "firstName": "Todd",
+          "middleInitial": "S",
+          "lastName": "Woodward",
+          "affiliations": [
+            {
+              "name": "Department of Psychiatry, University of British Columbia, Vancouver, BC, Canada"
+            },
+            {
+              "name": "BC Mental Health and Addictions Research Institute, Vancouver, BC, Canada"
+            }
+          ]
+        }
+      ],
+      "dates": [
+        {
+          "date": "2019-05-03 00:00:00",
+          "type": {
+            "value": "published"
+          }
+        }
+      ],
+      "identifier": {
+        "identifier": "https://doi.org/10.1093/schbul/sbz032",
+        "identifierSource": "DOI"
+      }
+    },
+    {
+      "title": "Functional brain networks underlying evidence integration and delusional ideation",
+      "publicationVenue": "Schizophrenia Research",
+      "authors": [
+        {
+          "fullName": "Katie M Lavigne",
+          "firstName": "Katie",
+          "middleInitial": "M",
+          "lastName": "Lavigne",
+          "affiliations": [
+            {
+              "name": "Department of Psychiatry, University of British Columbia, Vancouver, BC, Canada"
+            },
+            {
+              "name": "BC Mental Health and Addictions Research Institute, Vancouver, BC, Canada"
+            }
+          ]
+        },
+        {
+          "fullName": "Mahesh Menon",
+          "firstName": "Mahesh",
+          "middleInitial": "",
+          "lastName": "Menon",
+          "affiliations": [
+            {
+              "name": "Department of Psychiatry, University of British Columbia, Vancouver, BC, Canada"
+            }
+          ]
+        },
+        {
+          "fullName": "Steffen Moritz",
+          "firstName": "Steffen",
+          "middleInitial": "",
+          "lastName": "Moritz",
+          "affiliations": [
+            {
+              "name": "Department of Psychiatry and Psychotherapy, University Medical Center Hamburg-Eppendorf, Hamburg, Germany"
+            }
+          ]
+        },
+        {
+          "fullName": "Todd S Woodward",
+          "firstName": "Todd",
+          "middleInitial": "S",
+          "lastName": "Woodward",
+          "affiliations": [
+            {
+              "name": "Department of Psychiatry, University of British Columbia, Vancouver, BC, Canada"
+            },
+            {
+              "name": "BC Mental Health and Addictions Research Institute, Vancouver, BC, Canada"
+            }
+          ]
+        }
+      ],
+      "dates": [
+        {
+          "date": "2020-05-15 00:00:00",
+          "description": "",
+          "type": {
+            "value": "version of record"
+          }
+        }
+      ],
+      "identifier": {
+        "identifier": "https://doi.org/10.1016/j.schres.2019.11.038",
+        "identifierSource": "DOI"
+      }
+    }
+  ],
+  "isAbout": [
+    {
+      "name": "Homo sapiens",
+      "identifier": {
+        "identifier": "https://www.ncbi.nlm.nih.gov/taxonomy/9606",
+        "identifierSource": "NCBI Taxonomy Database"
+      }
+    }
+  ],
+  "acknowledges": [
+    {
+      "name": "Grants",
+      "funders": [
+        {
+          "name": "Canadian Institutes of Health Research",
+          "abbreviation": "CIHR"
+        }
+      ]
+    }
+  ],
+  "keywords": [
+    {
+      "value": "bias against disconfirmatory evidence"
+    },
+    {
+      "value": "disconfirmation bias"
+    },
+    {
+      "value": "cognitive bias"
+    },
+    {
+      "value": "evidence accumulation"
+    }
+  ],
+  "extraProperties": [
+    {
+      "category": "subjects",
+      "values": [
+        {
+          "value": "N/A"
+        }
+      ]
+    },
+    {
+      "category": "files",
+      "values": [
+        {
+          "value": "3086"
+        }
+      ]
+    },
+    {
+      "category": "CONP_status",
+      "values": [
+        {
+          "value": "Canadian"
+        }
+      ]
+    },
+    {
+      "category": "origin_institution",
+      "values": [
+        {
+          "value": "University of British Columbia"
+        }
+      ]
+    },
+    {
+      "category": "origin_city",
+      "values": [
+        {
+          "value": "Vancouver"
+        }
+      ]
+    },
+    {
+      "category": "origin_province",
+      "values": [
+        {
+          "value": "BC"
+        }
+      ]
+    },
+    {
+      "category": "origin_country",
+      "values": [
+        {
+          "value": "Canada"
+        }
+      ]
+    },
+    {
+      "category": "logo",
+      "values": [
+        {
+          "value": "logo.png"
+        }
+      ]
+    },
+    {
+      "category": "contact",
+      "values": [
+        {
+          "value": "Katie M Lavigne, katie.lavigne@mcgill.ca"
+        }
+      ]
+    },
+    {
+      "category": "experimentFunctionAssessed",
+      "values": [
+        {
+          "value": "Cognitive"
+        }
+      ]
+    },
+    {
+      "category": "experimentLanguages",
+      "values": [
+        {
+          "value": "English"
+        }
+      ]
+    },
+    {
+      "category": "experimentValidationMeasures",
+      "values": [
+        {
+          "value": "Construct validity"
+        },
+        {
+          "value": "Sensitivity (Schizophrenia-spectrum disorder)"
+        },
+        {
+          "value": ""
+        }
+      ]
+    },
+    {
+      "category": "experimentValidationPopulations",
+      "values": [
+        {
+          "value": "Adult"
+        },
+        {
+          "value": "Healthy"
+        },
+        {
+          "value": "Disease"
+        }
+      ]
+    },
+    {
+      "category": "experimentAccessibility",
+      "values": [
+        {
+          "value": "Colour-blindness"
+        },
+        {
+          "value": "Hearing impairment"
+        }
+      ]
+    },
+    {
+      "category": "experimentModalities",
+      "values": [
+        {
+          "value": "fMRI"
+        },
+        {
+          "value": "EEG"
+        },
+        {
+          "value": "Behavioural"
+        }
+      ]
+    },
+    {
+      "category": "experimentRequiredDevices",
+      "values": [
+        {
+          "value": "Computer"
+        },
+        {
+          "value": "Laptop"
+        }
+      ]
+    },
+    {
+      "category": "experimentRequiredSoftware",
+      "values": [
+        {
+          "value": "NBS Presentation version 17"
+        }
+      ]
+    },
+    {
+      "category": "experimentStimuli",
+      "values": [
+        {
+          "value": "Image"
+        }
+      ]
+    },
+    {
+      "category": "experimentAdditionalRequirements",
+      "values": [
+        {
+          "value": [
+            [
+              [
+                [
+                  [
+                    "2-button response box or mouse/keyboard required"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "category": "REB_statement",
+      "values": [
+        {
+          "value": "In submitting this dataset for inclusion, I declare that these data are not derived from human participants."
+        }
+      ]
+    }
+  ]
+}
