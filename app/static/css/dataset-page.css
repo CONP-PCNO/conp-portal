@@ -310,3 +310,9 @@ a.dp-chip:hover { border-color: #b8c0cc; color: #1d2129; }
 .doi-link { white-space: nowrap; }
 .doi-src { width: auto; height: 16px; max-width: 48px; vertical-align: -3px; margin-right: 5px; border-radius: 3px; }
 .dp-doi { margin-left: 10px; font-size: 14px; }
+/* Experiment pages (experiments/experiment.html) reuse this sheet. */
+.dp-crumbs { margin: 0 0 12px; font-size: .9rem; color: var(--conp-grey-4); }
+.dp-kicker { margin: 0 0 4px; font-size: .8rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--conp-grey-4); }
+.dp-needs { background: #fafbfc; }
+.dp-needs .dp-dl { margin-top: 8px; }
+.dp-btns { display: flex; gap: 8px; flex-wrap: wrap; }

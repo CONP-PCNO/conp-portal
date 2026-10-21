@@ -37,8 +37,8 @@ def test_stable_address_renders_and_readme_is_escaped(session, test_client, tmp_
     assert res.status_code == 200
     html = res.get_data(as_text=True)
     assert 'rel="canonical"' in html and '/experiments/view/BADE-evidence-integration' in html
-    # the README is a JSON string, not text dropped inside a JS template literal
-    assert 'readme: "# BADE' in html and 'readme: `' not in html
+    # the README is rendered on the server (a backtick or ${ in it can't break the page)
+    assert 'readme: `' not in html
     assert test_client.get('/experiments/view/no-such-experiment').status_code == 404
 
 

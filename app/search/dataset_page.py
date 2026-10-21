@@ -125,7 +125,7 @@ def clean_version(version):
     return None if version.lower() in ('', 'none', 'null', 'n/a') else version
 
 
-def citation_text(creators, year, title, version, ark_url, doi=None, publisher=None):
+def citation_text(creators, year, title, version, ark_url, doi=None, publisher=None, resource_type='dataset'):
     """Plain-text citation in DataCite's recommended form
     (https://datacite-metadata-schema.readthedocs.io/en/4.7/introduction/citation/):
 
@@ -134,7 +134,8 @@ def citation_text(creators, year, title, version, ark_url, doi=None, publisher=N
     A dataset with its own DOI is cited by that DOI and its publisher
     (Zenodo, OSF, ...); the others by the Portal ("CONP Portal") and the ARK.
     Creators are separated by semicolons, as in DataCite's examples; more than
-    three become "et al."."""
+    three become "et al.". resource_type is DataCite's resourceTypeGeneral,
+    lower case ("dataset"; experiments use "software")."""
     names = [str(c).strip() for c in (creators or []) if c and str(c).strip()]
     if len(names) > 3:
         who = '; '.join(names[:3]) + '; et al.'
@@ -149,7 +150,7 @@ def citation_text(creators, year, title, version, ark_url, doi=None, publisher=N
         v = re.sub(r'^(?:v(?:ersion)?\.?\s*)', '', str(version).strip(), flags=re.I)
         parts.append('V. {}.'.format(v))
     parts.append((publisher if doi else 'CONP Portal') + '.' if (publisher or not doi) else '')
-    parts.append('(dataset).')
+    parts.append('({}).'.format(resource_type))
     if doi:
         parts.append('https://doi.org/' + doi)
     elif ark_url:
@@ -184,7 +185,8 @@ def citation_key(dataset_id, year):
     return 'conp_' + (short or 'dataset') + ('_' + str(year) if year else '')
 
 
-def citation_bibtex(creators, year, title, version, ark_url, dataset_id=None, doi=None, publisher=None):
+def citation_bibtex(creators, year, title, version, ark_url, dataset_id=None, doi=None, publisher=None,
+                    kind='Dataset'):
     """BibTeX @misc entry (the type every BibTeX style knows)."""
     names = [c for c in (creators or []) if c]
     fields = []
@@ -202,16 +204,17 @@ def citation_bibtex(creators, year, title, version, ark_url, dataset_id=None, do
         fields.append(('url', 'https://doi.org/' + doi))
     else:
         fields.append(('publisher', 'CONP Portal'))
-        fields.append(('howpublished', 'Dataset, Canadian Open Neuroscience Platform (CONP) Portal'))
+        fields.append(('howpublished', kind + ', Canadian Open Neuroscience Platform (CONP) Portal'))
         if ark_url:
             fields.append(('url', ark_url))
     body = ',\n'.join('  {} = {{{}}}'.format(k, v) for k, v in fields)
     return '@misc{' + citation_key(dataset_id, year) + ',\n' + body + '\n}'
 
 
-def citation_ris(creators, year, title, version, ark_url, doi=None, publisher=None):
-    """RIS record of type DATA (Zotero, EndNote, Mendeley import it)."""
-    lines = ['TY  - DATA']
+def citation_ris(creators, year, title, version, ark_url, doi=None, publisher=None, ris_type='DATA'):
+    """RIS record of type DATA (Zotero, EndNote, Mendeley import it); experiments
+    use COMP (computer program)."""
+    lines = ['TY  - ' + ris_type]
     for name in (creators or []):
         if name:
             lines.append('AU  - ' + name.strip())
