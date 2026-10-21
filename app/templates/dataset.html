@@ -174,7 +174,7 @@
       <div class="dp-route dp-route--wide" id="dataladInstructions">
         <div>
           <h2>With DataLad</h2>
-          <p>This option provides you file-level access, versioning, and ability to include these read/write operations in scripts.{% if registered and not metadata.registrationPage %} An account from the dataset maintainers is needed first.{% endif %}</p>
+          <p>This option provides you file-level access, versioning, and the ability to include these read/write operations in scripts.{% if registered and not metadata.registrationPage %} An account from the dataset maintainers is needed first.{% endif %}</p>
           {{ codebox([
             'datalad install https://github.com/CONP-PCNO/conp-dataset.git',
             'cd conp-dataset/projects',
@@ -226,7 +226,7 @@
       {% if data.version %}<dt>Version</dt><dd>{{ data.version }}</dd>{% endif %}
       {% if data.dateAdded or data.dateUpdated %}<dt>On the Portal</dt><dd>{% if data.dateAdded %}added {{ data.dateAdded }}{% endif %}{% if data.dateAdded and data.dateUpdated %}, {% endif %}{% if data.dateUpdated %}updated {{ data.dateUpdated }}{% endif %}</dd>{% endif %}
       {% if metadata.licenses %}<dt>Licence</dt><dd>{{ metadata.licenses | join(', ') if metadata.licenses is not string else metadata.licenses }}</dd>{% endif %}
-      {% if data.modalities %}<dt>Modalities</dt><dd>{% for d in data.modalities %}<a href="search?modalities={{ d | urlencode }}">{{ d }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
+      {% if data.modalities %}<dt>Modalities</dt><dd>{% for d in data.modalities %}<a href="search?modalities={{ d | lower | urlencode }}">{{ d }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
       {% if data.formats %}<dt>Formats</dt><dd>{% for d in data.formats %}<a href="search?formats={{ d | urlencode }}">{{ d }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
       {% if data.size %}<dt>Size</dt><dd>{{ data.size | replace('.0 ', ' ') }}</dd>{% endif %}
       {% if data.files %}<dt>Files</dt><dd>{{ data.files }}</dd>{% endif %}

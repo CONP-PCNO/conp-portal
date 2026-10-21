@@ -22,6 +22,7 @@ from app.dats import load_dataset_logos, resolve_dataset_logo
 from app.models import ArkId, Dataset, DatasetAncestry, Experiment
 from app.models import MatomoDailyGetDatasetPageViewsSummary
 from app.search import search_bp
+from app.search.dataset_query import build_dataset_query, matches_suggestion
 from app.search.dataset_page import (
     citation_bibtex,
     citation_key,
@@ -78,7 +79,9 @@ def search():
     search = request.args.get('search')
     sortComparitor = request.args.get('sortComparitor')
     sortKey = request.args.get('sortKey')
-    max_per_page = request.args.get('max_per_page')
+    # 30 datasets per page unless the link asks for something else
+    max_per_page = request.args.get('max_per_page') or '30'
+    limit = request.args.get('limit') or max_per_page
     page = request.args.get('page')
 
     filters = {
@@ -90,6 +93,7 @@ def search():
         "sortComparitor": sortComparitor,
         "sortKey": sortKey,
         "max_per_page": max_per_page,
+        "limit": limit,
         "page": page
     }
 
@@ -213,17 +217,17 @@ def dataset_search_suggestions():
             for field in fields:
                 for f in r.iter_field(field):
                     s = f[0].decode("utf-8")
-                    if search_term in s:
+                    if matches_suggestion(search_term, s):
                         suggestions.add(s)
 
             for f in r.iter_field('title'):
                 s = f[0].decode("utf-8")
-                if search_term in s:
+                if matches_suggestion(search_term, s):
                     datasets.add(s)
 
             # Adding mapping terms
             for t in dataset_terms_mapping:
-                if search_term in t:
+                if matches_suggestion(search_term, t):
                     suggestions.add(t)
 
             suggestions = list(suggestions)
@@ -284,8 +288,6 @@ def dataset_search():
     """
     import logging
 
-    from whoosh.qparser import QueryParser, QueryParserError
-
     logger = logging.getLogger(__name__)
 
     if current_user.is_authenticated:
@@ -312,26 +314,14 @@ def dataset_search():
         with ix.searcher() as searcher:
             # If search term exists filter results here
             if request.args.get('search'):
-                search_term = request.args.get('search').lower()
-
-                if ' ' in search_term:
-                    s = '"' + search_term + '"'
-                else:
-                    # Search prefix
-                    s = search_term + '*'
-
-                for t in dataset_terms_mapping:
-                    if search_term in t:
-                        s = s + ' OR "' + dataset_terms_mapping[t] + '"'
-
+                search_term = request.args.get('search')
+                myquery = build_dataset_query(ix.schema, search_term, dataset_terms_mapping)
                 _datasets = []
-                for field in ix.schema.scorable_names():
+                if myquery is not None:
                     try:
-                        parser = QueryParser(field, ix.schema)
-                        myquery = parser.parse(s)
-                        _datasets.extend(searcher.search(myquery, limit=None))
-                    except QueryParserError as e:
-                        logger.warning("Cannot perform term search %s in field %s: %s", s, field, e)
+                        _datasets = list(searcher.search(myquery, limit=None))
+                    except Exception as e:  # never a server error for a search
+                        logger.warning("Search failed for %r: %s", search_term, e)
 
                 ds = set()
                 ds_add = ds.add
@@ -460,7 +450,7 @@ def dataset_search():
                 filter(lambda e: e['modalities'] is not None, elements)
             )
             elements = list(filter(lambda e: any(
-                item in (
+                item.lower() in (
                     m.lower() for m in e['modalities']
                 ) for item in filter_modalities
             ), elements))
@@ -804,7 +794,7 @@ def dataset_info():
         "citation_key": citation_key(dataset["id"], cite_year),
         "doi": doi,
         "publications": publication_citations(descriptor),
-        "direct_download": direct_download(descriptor),
+        "direct_download": direct_download(descriptor, d.fspath),
         "dats_html": dats_record_html(descriptor),
         "parents": parents,
         "title_html": title_html(dataset["title"]),

@@ -17,6 +17,21 @@
     });
   }
 
+  // ---------- CBRAIN links ----------
+  // Group (dataset) ids come as ".../groups/switch?id=123", "...?id%3D123" or,
+  // through /cbrainredirect, "...switch?id%3D123". Tool links are either plain
+  // CBRAIN URLs or /cbrainredirect?cbrainurl=<URL with an encoded query>.
+  function cbrainGroupId(url) {
+    var m = /[?&]id(?:=|%3D)(\d+)/i.exec(url || '') || /(?:%3F|%26)id%3D(\d+)/i.exec(url || '');
+    return m ? m[1] : '';
+  }
+  function withSwitchGroup(url, id) {
+    if (!id) { return url; }
+    var encoded = url.indexOf('cbrainredirect') >= 0;
+    var sep = encoded ? '%26' : (url.indexOf('?') >= 0 ? '&' : '?');
+    return url + sep + 'switch_group_id' + (encoded ? '%3D' : '=') + id;
+  }
+
   // ---------- tabs ----------
   function initTabs() {
     var tabs = [].slice.call(document.querySelectorAll('.dp-tabs [role="tab"]'));
@@ -38,6 +53,9 @@
         history.replaceState(null, '', '#' + tab.getAttribute('aria-controls'));
       });
       tab.addEventListener('keydown', function (e) {
+        // Cmd/Alt/Ctrl + arrow are the browser's back/forward and other
+        // shortcuts: leave them to the browser.
+        if (e.metaKey || e.altKey || e.ctrlKey) { return; }
         var next = null;
         if (e.key === 'ArrowRight') { next = tabs[(i + 1) % tabs.length]; }
         if (e.key === 'ArrowLeft') { next = tabs[(i - 1 + tabs.length) % tabs.length]; }
@@ -197,7 +215,7 @@
     var card = document.querySelector('.dp-card');
     var title = card ? card.dataset.datasetTitle : '';
     var cbrainUrl = btn.dataset.cbrainUrl;
-    var param = cbrainUrl.indexOf('?id=') >= 0 ? cbrainUrl.split('?id=')[1] : (cbrainUrl.split('?id%3D')[1] || '');
+    var param = cbrainGroupId(cbrainUrl);
 
     btn.addEventListener('click', function () {
       if (!body || !window.bootstrap) { window.open(cbrainUrl, '_blank', 'noopener'); return; }
@@ -220,7 +238,7 @@
             a.className = 'list-group-item list-group-item-action';
             a.target = '_blank';
             a.rel = 'noreferrer';
-            a.href = url + '%26switch_group_id%3D' + param;
+            a.href = withSwitchGroup(url, param);
             a.textContent = el.title;
             list.appendChild(a);
           });

@@ -143,6 +143,7 @@ def test_dataset_page_open_dataset(app):
     assert 'datalad install demo' in html
     assert 'version 1.0, added 2020-01-01, updated 2021-01-01' in html
     assert 'in a single tar.gz file' in html
+    assert 'and the ability to include' in html
     assert 'Canadian dataset' in html            # conpStatus "Canadian"
     assert 'dp-views' in html and '1,234' in html
     assert 'cd demo' in html and 'datalad get *' in html
@@ -242,3 +243,33 @@ def test_dataset_page_cite_and_dats(app):
 def test_title_html_sub_sup_only():
     html = str(title_html('T<sub>1</sub> <script>x</script>'))
     assert html == 'T<sub>1</sub> &lt;script&gt;x&lt;/script&gt;'
+
+
+def test_modality_links_are_lower_case(app):
+    html = _render(app, _data(modalities=["PET", "MRI"]), _metadata())
+    assert 'search?modalities=pet' in html and 'search?modalities=mri' in html
+
+
+def test_search_page_shows_30_per_page_by_default(app):
+    with app.test_client() as client:
+        html = client.get('/search').get_data(as_text=True)
+        assert '"max_per_page": "30"' in html and '"limit": "30"' in html
+        html = client.get('/search?max_per_page=10').get_data(as_text=True)
+        assert '"max_per_page": "10"' in html
+
+
+def test_direct_download_only_for_crawled_datasets(tmp_path):
+    assert direct_download(ZEN, str(tmp_path)) is None          # no crawler marker
+    (tmp_path / '.conp-zenodo-crawler.json').write_text('{}')
+    assert direct_download(ZEN, str(tmp_path))['host'] == 'Zenodo'
+
+
+def test_authorizations_does_not_empty_the_record(tmp_path):
+    from app.search.models import DATSDataset
+    d = tmp_path / 'conp-dataset' / 'projects' / 'demo'
+    d.mkdir(parents=True)
+    (d / 'DATS.json').write_text(json.dumps(ZEN))
+    dats = DATSDataset(str(d))
+    assert dats.authorizations == 'public'
+    assert dats.authorizations == 'public'                      # was "None" the second time
+    assert direct_download(dats.descriptor)['host'] == 'Zenodo'

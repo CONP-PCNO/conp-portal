@@ -372,12 +372,24 @@ def publication_citations(descriptor):
 # --------------------------------------------------------------------------
 # Direct download from the host (Zenodo, OSF) instead of the Portal archive
 # --------------------------------------------------------------------------
-def direct_download(descriptor):
+CRAWLER_MARKERS = ('.conp-zenodo-crawler.json', '.conp-osf-crawler.json')
+
+
+def direct_download(descriptor, dataset_dir=None):
     """A browser download link at the dataset's host, when there is one.
 
-    Only for public records on Zenodo or OSF. Uses the record's own access
-    URL; for a Zenodo record without one, Zenodo's "download all" archive.
+    Only for public records on Zenodo or OSF, and only for datasets the
+    Zenodo/OSF crawlers imported (their repository carries the crawler's
+    marker file), so the files behind the link are the dataset's files. A
+    dataset deposited elsewhere whose record still names an older Zenodo/OSF
+    project (e.g. Calgary Preschool, now on the CONP community server) gets
+    no such link. Uses the record's own access URL; for a Zenodo record
+    without one, Zenodo's "download all" archive.
     Returns {"url", "host", "record", "format", "filename"} or None."""
+    if dataset_dir is not None:
+        import os
+        if not any(os.path.exists(os.path.join(dataset_dir, m)) for m in CRAWLER_MARKERS):
+            return None
     dists = (descriptor or {}).get('distributions') or []
     dist = dists[0] if isinstance(dists, list) and dists else (dists if isinstance(dists, dict) else {})
     access = dist.get('access') or {}

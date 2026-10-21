@@ -228,7 +228,9 @@ class DATSDataset(DATSObject):
         authorizations = dist.get('access', {}).get('authorizations', '')
 
         if isinstance(authorizations, list) and len(authorizations) > 0:
-            auth = authorizations.pop().get('value', None)
+            # Read, don't pop: pop() emptied the record for everything that
+            # read it afterwards (the page's DATS view, the direct download).
+            auth = (authorizations[-1] or {}).get('value', None)
         else:
             auth = None
 
