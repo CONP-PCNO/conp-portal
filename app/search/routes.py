@@ -11,6 +11,7 @@ from flask import (
     redirect,
     render_template,
     request,
+    send_file,
     send_from_directory,
     url_for,
 )
@@ -18,7 +19,7 @@ from flask_login import current_user
 from sqlalchemy import func
 
 from app.analytics.routes import datasets_downloads, datasets_views
-from app.dats import load_dataset_logos, resolve_dataset_logo
+from app.dats import DEFAULT_LOGO, load_dataset_logos, resolve_dataset_logo
 from app.models import ArkId, Dataset, DatasetAncestry
 from app.models import MatomoDailyGetDatasetPageViewsSummary
 from app.search import search_bp
@@ -114,7 +115,7 @@ def get_dataset_logo():
             path to the png file for the logo
     """
     # @todo:ant: add to config
-    logopath = "app/static/img/default_dataset.jpeg"
+    logopath = DEFAULT_LOGO
 
     dataset_id = request.args.get('id', '')
     dataset = Dataset.query.filter_by(dataset_id=dataset_id).first()
@@ -135,8 +136,9 @@ def get_dataset_logo():
     if logopath.lower().startswith("http"):
         return redirect(logopath)
 
-    with open(logopath, 'rb') as logofile:
-        return logofile.read()
+    # send_file sets the image type from the file name: the bytes alone were
+    # sent as text/html, which browsers tolerate for PNG/JPEG but not for SVG.
+    return send_file(os.path.abspath(logopath))
 
 
 def _ensure_search_index():
