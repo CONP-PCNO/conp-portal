@@ -2,7 +2,8 @@ import fnmatch
 import json
 import os
 
-DEFAULT_LOGO = "app/static/img/default_dataset.jpeg"
+# CONP generic dataset icon (folder + soma, chosen 2026-10-21); was img/default_dataset.jpeg
+DEFAULT_LOGO = "app/static/img/datasets/default.svg"
 DATASET_LOGOS_JSON = "app/static/datasets/dataset-logos.json"
 LOGO_EXTENSIONS = (".png", ".jpg", ".jpeg", ".svg", ".gif", ".webp")
 

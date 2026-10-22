@@ -173,3 +173,16 @@ def test_dataset_logo_route_serves_override(session, test_client, tmp_path):
     res = test_client.get("/dataset_logo", query_string={"id": URL_ID})
     assert res.status_code == 302
     assert res.headers["Location"] == logos[URL_ID]["url"]
+
+
+def test_dataset_logo_route_serves_generic_icon(session, test_client, tmp_path):
+    """
+    GIVEN a dataset with no logo of its own and no override
+    THEN "/dataset_logo" serves the CONP generic dataset icon (an SVG)
+    """
+    session.add(Dataset(dataset_id=UNKNOWN_ID, name="No logo", version="1.0", is_private=False,
+                        fspath=_make_dataset(tmp_path, name="nologo")))
+    session.flush()
+    res = test_client.get("/dataset_logo", query_string={"id": UNKNOWN_ID})
+    assert res.status_code == 200 and res.mimetype == "image/svg+xml"
+    assert DEFAULT_LOGO.endswith("img/datasets/default.svg") and os.path.isfile(DEFAULT_LOGO)
