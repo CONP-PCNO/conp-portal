@@ -42,6 +42,25 @@ def test_stable_address_renders_and_readme_is_escaped(session, test_client, tmp_
     assert test_client.get('/experiments/view/no-such-experiment').status_code == 404
 
 
+def test_search_skips_an_experiment_with_missing_metadata(session, test_client, tmp_path, caplog):
+    good = _experiment(session, tmp_path)
+    bad = Experiment(
+        experiment_id='projects/missing-metadata',
+        name='Missing metadata',
+        fspath=str(tmp_path / 'missing-metadata'),
+        version='1.0',
+        is_private=False,
+    )
+    session.add(bad)
+    session.flush()
+
+    response = test_client.get('/experiments/')
+
+    assert response.status_code == 200
+    assert good.name in response.get_data(as_text=True)
+    assert 'Skipping experiment projects/missing-metadata' in caplog.text
+
+
 def test_dats_download(session, test_client, tmp_path):
     exp = _experiment(session, tmp_path)
     for key in (exp.id, 'BADE-evidence-integration'):

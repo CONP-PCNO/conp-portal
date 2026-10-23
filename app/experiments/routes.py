@@ -2,6 +2,7 @@ import os
 
 from flask import (
     abort,
+    current_app,
     make_response,
     redirect,
     render_template,
@@ -83,14 +84,33 @@ def experiment_as_dict(exp: Experiment):
     }
 
 
+def experiment_cards():
+    """Build the search cards without letting one bad repository break search.
+
+    Experiment metadata lives in each repository rather than entirely in the
+    database.  A deleted checkout, unreadable directory, or invalid DATS file
+    must therefore be treated as a bad search result, not as a 500 for the
+    whole catalogue.  The exception log retains the experiment id and the
+    traceback so the repository or database row can be repaired.
+    """
+    cards = []
+    for experiment in Experiment.query.all():
+        try:
+            cards.append(experiment_as_dict(experiment))
+        except (OSError, RuntimeError, ValueError, TypeError, KeyError,
+                IndexError, AttributeError):
+            current_app.logger.exception(
+                "Skipping experiment %s while building the experiments index",
+                experiment.experiment_id or experiment.id,
+            )
+    return cards
+
+
 @experiments_bp.route("/")
 def home():
     # Récupérer le paramètre 'keyword' de l'URL, sinon None par défaut
     keyword = request.args.get('keyword')
-    experiments = Experiment.query.all()
-    experiment_dict = [
-        experiment_as_dict(exp) for exp in experiments
-    ]
+    experiment_dict = experiment_cards()
 
     # Si le paramètre keyword est vide (chaîne vide), vous pouvez le traiter comme non spécifié.
     if not keyword:
@@ -171,10 +191,7 @@ def get_experiment_logo(experiment_id):
 def search():
     # Récupérer le paramètre 'keyword' de l'URL, sinon None par défaut
     keyword = request.args.get('keyword')
-    experiments = Experiment.query.all()
-    experiment_dict = [
-        experiment_as_dict(exp) for exp in experiments
-    ]
+    experiment_dict = experiment_cards()
 
     # Si le paramètre keyword est vide (chaîne vide), vous pouvez le traiter comme non spécifié.
     if not keyword:
