@@ -10,6 +10,8 @@ from app.dats import (
     DEFAULT_LOGO,
     dataset_logo_override,
     load_dataset_logos,
+    load_remote_logo_copies,
+    local_logo_copy,
     resolve_dataset_logo,
 )
 from app.models import Dataset
@@ -67,8 +69,9 @@ def test_dataset_without_dats_logo_gets_override(tmp_path):
     assert dats.LogoFilepath == os.path.join("app/static", logos[IMG_ID]["img"])
     assert os.path.isfile(dats.LogoFilepath)
 
+    # A "url" entry is served from its local copy when it has one.
     dats = DATSDataset(_make_dataset(tmp_path, name="ds2"), dataset_id=URL_ID)
-    assert dats.LogoFilepath == logos[URL_ID]["url"]
+    assert dats.LogoFilepath == local_logo_copy(logos[URL_ID]["url"])
 
 
 def test_dataset_with_dats_logo_keeps_its_own(tmp_path):
@@ -153,8 +156,8 @@ def test_resolve_dataset_logo_for_index_values():
 def test_dataset_logo_route_serves_override(session, test_client, tmp_path):
     """
     GIVEN calling the route "/dataset_logo" for datasets with no DATS logo
-    THEN an "img" override is served from app/static, and a "url" override
-         redirects to that URL
+    THEN an "img" override is served from app/static, and so is a "url"
+         override that has a local copy; a logo URL with no copy redirects
     """
     logos = load_dataset_logos()
     session.add(Dataset(dataset_id=IMG_ID, name="PiDose", version="1.0", is_private=False,
@@ -171,8 +174,17 @@ def test_dataset_logo_route_serves_override(session, test_client, tmp_path):
         assert res.data == f.read()
 
     res = test_client.get("/dataset_logo", query_string={"id": URL_ID})
+    assert res.status_code == 200
+    with open(local_logo_copy(logos[URL_ID]["url"]), "rb") as f:
+        assert res.data == f.read()
+
+    url = "https://example.org/no-copy-logo.png"
+    session.add(Dataset(dataset_id="projects/remote-logo", name="Remote logo", version="1.0",
+                        is_private=False, fspath=_make_dataset(tmp_path, logo=url, name="remote")))
+    session.flush()
+    res = test_client.get("/dataset_logo", query_string={"id": "projects/remote-logo"})
     assert res.status_code == 302
-    assert res.headers["Location"] == logos[URL_ID]["url"]
+    assert res.headers["Location"] == url
 
 
 def test_dataset_logo_route_serves_generic_icon(session, test_client, tmp_path):
@@ -186,3 +198,75 @@ def test_dataset_logo_route_serves_generic_icon(session, test_client, tmp_path):
     res = test_client.get("/dataset_logo", query_string={"id": UNKNOWN_ID})
     assert res.status_code == 200 and res.mimetype == "image/svg+xml"
     assert DEFAULT_LOGO.endswith("img/datasets/default.svg") and os.path.isfile(DEFAULT_LOGO)
+
+
+# --------------------------------------------------------------------------
+# Local copies of logos given as a URL ("remote_copies")
+# --------------------------------------------------------------------------
+
+BRAINCODE_URL = "https://www.braincode.ca/sites/default/files/CP-NET%20logo.jpg"
+
+
+def test_remote_copies_data_is_consistent():
+    """
+    GIVEN the remote_copies part of dataset-logos.json
+    THEN every key is a URL and every copy is a file that exists
+    """
+    copies = load_remote_logo_copies()
+    assert copies, "no remote logo copies are listed"
+    for url, entry in copies.items():
+        assert url.startswith(("https://", "http://")), url
+        for key in ("img", "label", "source", "fetched"):
+            assert entry.get(key), f"{url}: no {key}"
+        assert os.path.isfile(os.path.join("app/static", entry["img"])), entry["img"]
+
+
+def test_dats_logo_url_with_copy_is_served_locally(tmp_path):
+    """
+    GIVEN a dataset whose DATS.json logo is a URL that has a local copy
+    THEN the Portal uses the copy, not the URL
+    """
+    path = _make_dataset(tmp_path, logo=BRAINCODE_URL)
+    logo = DATSDataset(path, dataset_id="projects/braincode_CP-NET").LogoFilepath
+    assert logo == "app/static/img/datasets/remote/braincode-cp-net.jpg"
+    assert os.path.isfile(logo)
+
+
+def test_logo_url_matches_with_or_without_percent_encoding():
+    """
+    GIVEN the same logo URL written with a space instead of %20
+    THEN it finds the same copy
+    """
+    spaced = BRAINCODE_URL.replace("%20", " ")
+    assert local_logo_copy(spaced) == local_logo_copy(BRAINCODE_URL)
+    assert not local_logo_copy(spaced).startswith("http")
+
+
+def test_logo_url_without_copy_is_unchanged(tmp_path):
+    """
+    GIVEN a DATS logo URL with no local copy
+    THEN the URL is kept (the Portal links to it as before)
+    """
+    url = "https://example.org/some-logo.png"
+    assert local_logo_copy(url) == url
+    path = _make_dataset(tmp_path, logo=url)
+    assert DATSDataset(path, dataset_id=UNKNOWN_ID).LogoFilepath == url
+
+
+def test_url_override_with_copy_is_served_locally():
+    """
+    GIVEN a dataset-logos.json "url" entry whose URL has a local copy
+    THEN the copy is used
+    """
+    logo = resolve_dataset_logo(URL_ID, None)
+    assert not logo.startswith("http"), logo
+    assert os.path.isfile(logo)
+
+
+def test_local_files_are_not_touched():
+    """
+    GIVEN a logo that is already a local path
+    THEN it is returned unchanged
+    """
+    assert local_logo_copy("app/static/img/datasets/mcgill.png") == "app/static/img/datasets/mcgill.png"
+    assert local_logo_copy(None) is None
