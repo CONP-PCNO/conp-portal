@@ -1,6 +1,7 @@
 import fnmatch
 import json
 import os
+from urllib.parse import quote, unquote
 
 # CONP generic dataset icon (folder + soma, chosen 2026-10-21); was img/default_dataset.jpeg
 DEFAULT_LOGO = "app/static/img/datasets/default.svg"
@@ -42,16 +43,50 @@ def dataset_logo_override(dataset_id, logos=None):
     return entry.get("url") or None
 
 
-def resolve_dataset_logo(dataset_id, own_logo, logos=None):
+def load_remote_logo_copies():
+    """ Read the "remote_copies" part of dataset-logos.json: local copies of
+        logos that DATS records (or "url" entries) give as a URL, keyed by
+        that URL. The Portal serves the copy, so a logo stays visible when
+        the site it came from is down or has moved (www.braincode.ca,
+        October 2026).
+
+        Returns:
+            dict: {url: {"img": str, "source": str, "fetched": str, ...}}
+    """
+    try:
+        with open(os.path.join(os.getcwd(), DATASET_LOGOS_JSON)) as f:
+            return json.load(f).get("remote_copies", {})
+    except (OSError, ValueError):
+        return {}
+
+
+def local_logo_copy(logo, copies=None):
+    """ The local copy of a logo given as a URL (a path under app/static/),
+        or the logo unchanged when it is not a URL or has no copy yet.
+    """
+    if not logo or not str(logo).lower().startswith("http"):
+        return logo
+    if copies is None:
+        copies = load_remote_logo_copies()
+    entry = copies.get(logo) or copies.get(unquote(logo)) or copies.get(quote(logo, safe=":/?=&%"))
+    if entry and entry.get("img"):
+        return os.path.join("app/static", entry["img"])
+    return logo
+
+
+def resolve_dataset_logo(dataset_id, own_logo, logos=None, copies=None):
     """ The logo to show for a dataset: its own DATS logo when it has one,
-        else its dataset-logos.json entry, else the default image.
+        else its dataset-logos.json entry, else the default image. A logo
+        given as a URL is replaced by its local copy when the Portal has one
+        ("remote_copies" in dataset-logos.json).
 
         own_logo may be None or DEFAULT_LOGO (both mean "no logo of its own"),
         which is what the search index stores for such datasets.
     """
     if own_logo and own_logo != DEFAULT_LOGO:
-        return own_logo
-    return dataset_logo_override(dataset_id, logos) or DEFAULT_LOGO
+        return local_logo_copy(own_logo, copies)
+    override = dataset_logo_override(dataset_id, logos)
+    return local_logo_copy(override, copies) if override else DEFAULT_LOGO
 
 
 class DATSObject:
