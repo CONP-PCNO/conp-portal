@@ -37,8 +37,8 @@ def test_stable_address_renders_and_readme_is_escaped(session, test_client, tmp_
     assert res.status_code == 200
     html = res.get_data(as_text=True)
     assert 'rel="canonical"' in html and '/experiments/view/BADE-evidence-integration' in html
-    # the README is a JSON string, not text dropped inside a JS template literal
-    assert 'readme: "# BADE' in html and 'readme: `' not in html
+    # the README is rendered on the server (a backtick or ${ in it can't break the page)
+    assert 'readme: `' not in html
     assert test_client.get('/experiments/view/no-such-experiment').status_code == 404
 
 
@@ -79,3 +79,16 @@ def test_logo_is_an_image(session, test_client, tmp_path):
 def test_submit_goes_to_the_dats_editor(test_client):
     res = test_client.get('/experiments/submit')
     assert res.status_code == 302 and res.headers['Location'].endswith('/dats-editor')
+
+
+def test_unreadable_experiment_page_is_not_found(session, test_client, tmp_path):
+    """
+    GIVEN an experiment row whose folder no longer exists (e.g. a submodule
+          renamed in conp-experiments, like RISE on 23 Oct 2026)
+    THEN its page answers 404, not 500
+    """
+    gone = Experiment(experiment_id='projects/renamed-away', name='Renamed away',
+                      fspath=str(tmp_path / 'renamed-away'), version='1.0', is_private=False)
+    session.add(gone)
+    session.flush()
+    assert test_client.get('/experiments/view/renamed-away').status_code == 404

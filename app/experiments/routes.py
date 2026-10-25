@@ -10,21 +10,12 @@ from flask import (
     send_file,
     url_for,
 )
-from sqlalchemy import inspect
 
 from .. import db
 from ..models import Experiment
 from . import experiments_bp
 from .dats import DATSExperiment
-
-
-def to_camel_case(snake_str: str):
-    components = snake_str.split('_')
-    return components[0] + ''.join(x.title() for x in components[1:])
-
-
-def object_as_dict(obj: object):
-    return {to_camel_case(c.key): getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
+from .experiment_page import FACETS, SORTS, experiment_card, experiment_page, filter_cards
 
 
 def experiment_slug(exp: Experiment) -> str:
@@ -47,58 +38,19 @@ def find_experiment(key):
         Experiment.experiment_id.in_([key, 'projects/' + key])).first()
 
 
-def experiment_as_dict(exp: Experiment):
-    dats = DATSExperiment(exp.fspath)
-    return {
-        "slug": experiment_slug(exp),
-        "pageUrl": url_for('experiments.view', key=experiment_slug(exp)),
-        "title": exp.name,
-        "description": dats.description,
-        "creators": dats.creators,
-        "version": dats.version,
-        "dateAdded": exp.date_added_to_portal,
-        "dateUpdated": exp.date_updated,
-        "license": dats.licenses,
-        "modalities": dats.experiment_modalities,
-        "primarySoftware": dats.software_requirements,
-        "primaryFunction": dats.function_assessed,
-        "primaryPublications": dats.primaryPublications,
-        "doi": "",
-        "views": exp.views,
-        "downloads": exp.downloads,
-        "imageFile": dats.LogoFilepath,
-        "repositoryFileCount": dats.fileCount,
-        "repositorySize": dats.size,
-        "repositoryFile": dats.DatsFilepath,
-        "id": exp.id,
-        "origin": dats.origin,
-        "contactPerson": dats.contacts if dats.contacts else None,
-        "contactEmail": dats.contacts if dats.contacts else None,
-        "privacy": dats.privacy,
-        "keywords": ", ".join(dats.keywords),
-        "otherSoftware": dats.software_requirements,
-        "otherFunctions": dats.function_assessed,
-        "acknowledgements": dats.acknowledges,
-        "source": dats.sources,
-        "remoteUrl": exp.remoteUrl
-    }
+# Errors that mean an experiment's folder or DATS record can't be read (a
+# deleted or half-cloned checkout, invalid JSON). From #1032: such an
+# experiment is skipped in the list and logged, never a 500.
+_UNREADABLE = (OSError, RuntimeError, ValueError, TypeError, KeyError, IndexError, AttributeError)
 
 
 def experiment_cards():
-    """Build the search cards without letting one bad repository break search.
-
-    Experiment metadata lives in each repository rather than entirely in the
-    database.  A deleted checkout, unreadable directory, or invalid DATS file
-    must therefore be treated as a bad search result, not as a 500 for the
-    whole catalogue.  The exception log retains the experiment id and the
-    traceback so the repository or database row can be repaired.
-    """
+    """The list's cards, skipping (and logging) any experiment that can't be read."""
     cards = []
     for experiment in Experiment.query.all():
         try:
-            cards.append(experiment_as_dict(experiment))
-        except (OSError, RuntimeError, ValueError, TypeError, KeyError,
-                IndexError, AttributeError):
+            cards.append(experiment_card(experiment))
+        except _UNREADABLE:
             current_app.logger.exception(
                 "Skipping experiment %s while building the experiments index",
                 experiment.experiment_id or experiment.id,
@@ -107,16 +59,19 @@ def experiment_cards():
 
 
 @experiments_bp.route("/")
+@experiments_bp.route("/search")
 def home():
-    # Récupérer le paramètre 'keyword' de l'URL, sinon None par défaut
-    keyword = request.args.get('keyword')
-    experiment_dict = experiment_cards()
-
-    # Si le paramètre keyword est vide (chaîne vide), vous pouvez le traiter comme non spécifié.
-    if not keyword:
-        return render_template("experiments/search.html", experiments=experiment_dict, keyword="")
-
-    return render_template("experiments/search.html", experiments=experiment_dict, keyword=keyword)
+    """The Experiments list: search box, filters and sort as plain GET
+    parameters (q, function, modality, software, language, sort), so every
+    view has its own address. "keyword" (old links) is read as q."""
+    query = (request.args.get('q') or request.args.get('keyword') or '').strip()
+    sort = request.args.get('sort', 'added')
+    selected = {key: request.args.getlist(key) for key, _label, _field in FACETS}
+    cards = experiment_cards()
+    shown, facets = filter_cards(cards, query, selected, sort)
+    return render_template("experiments/search.html", cards=shown, total=len(cards), facets=facets,
+                           query=query, sort=sort, sorts=SORTS,
+                           filtered=bool(query or any(selected.values())))
 
 
 @experiments_bp.route("/download/<int:experiment_id>")
@@ -147,22 +102,13 @@ def view(key):
     if key.strip('/') != experiment_slug(experiment):
         return redirect(url_for('experiments.view', key=experiment_slug(experiment)), code=301)
     experiment_id = experiment.id
-    readme_path = os.path.join(experiment.fspath, "README.md")
-    readme_content = ""
-
-    if os.path.exists(readme_path):
-        try:
-            with open(readme_path) as file:
-                readme_content = file.read()
-        except Exception as e:
-            print(e)  # Il est préférable de loguer l'exception plutôt que de passer silencieusement
-
-    readme_md = readme_content
-
-    # Préparez la réponse et rendez le template
-    resp = make_response(render_template("experiments/experiment.html",
-                                         experiment=experiment_as_dict(experiment),
-                                         readme=readme_md))
+    try:
+        page = experiment_page(experiment, _readme_html(experiment))
+    except _UNREADABLE:
+        # A row whose checkout is gone or broken: not found, not a 500.
+        current_app.logger.exception("Experiment %s can't be read", experiment.experiment_id or experiment_id)
+        abort(404)
+    resp = make_response(render_template("experiments/experiment.html", page=page))
 
     # Vérifiez si le cookie est déjà défini pour cet utilisateur et cette expérience spécifique
     cookie_name = f'viewed_exp_{experiment_id}'
@@ -187,22 +133,25 @@ def get_experiment_logo(experiment_id):
     return send_file(dats.LogoFilepath)
 
 
-@experiments_bp.route("/search")
-def search():
-    # Récupérer le paramètre 'keyword' de l'URL, sinon None par défaut
-    keyword = request.args.get('keyword')
-    experiment_dict = experiment_cards()
-
-    # Si le paramètre keyword est vide (chaîne vide), vous pouvez le traiter comme non spécifié.
-    if not keyword:
-        return render_template("experiments/search.html", experiments=experiment_dict, keyword="")
-
-    return render_template("experiments/search.html", experiments=experiment_dict, keyword=keyword)
-
-
 @experiments_bp.route("/submit", methods=["GET", "POST"])
 def submit():
     """Experiments are curated by hand for now: the old submission form
     (2022) wrote to columns the Experiment table no longer has and failed
     with an error. Experiment metadata is prepared in the DATS editor."""
     return redirect(url_for('main.dats_editor'), code=302)
+
+
+def _readme_html(experiment):
+    """The README rendered as on dataset pages (GitHub's Markdown API), with a
+    first heading that repeats the title removed; '' when there is none."""
+    from app.search.dataset_page import strip_title_heading
+    from app.services import github
+    path = os.path.join(experiment.fspath or '', 'README.md')
+    if not os.path.isfile(path):
+        return ''
+    try:
+        with open(path) as f:
+            return strip_title_heading(github.render_content(f.read()), experiment.name)
+    except Exception as e:  # GitHub unreachable: the page still renders
+        print(e)
+        return ''
