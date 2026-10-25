@@ -19,7 +19,7 @@ from flask_login import current_user
 from sqlalchemy import func
 
 from app.analytics.routes import datasets_downloads, datasets_views
-from app.dats import DEFAULT_LOGO, load_dataset_logos, resolve_dataset_logo
+from app.dats import DEFAULT_LOGO, load_dataset_logos, load_remote_logo_copies, resolve_dataset_logo
 from app.models import ArkId, Dataset, DatasetAncestry
 from app.models import MatomoDailyGetDatasetPageViewsSummary
 from app.search import search_bp
@@ -334,6 +334,7 @@ def dataset_search():
 
             evidence_publication_types = _evidence_publication_types()
             dataset_logos = load_dataset_logos()
+            remote_logo_copies = load_remote_logo_copies()
 
             # Get the number of views of datasets
             views = json.loads(datasets_views())
@@ -394,9 +395,10 @@ def dataset_search():
                     "principalInvestigators": parse_field(d.get('principalInvestigators')),
                     "primaryPublications": parse_field(d.get('primaryPublications')),
                     # The index stores the logo found when it was built; a
-                    # dataset with none there gets its dataset-logos.json entry.
+                    # dataset with none there gets its dataset-logos.json entry,
+                    # and a logo URL with a local copy gets the copy.
                     "logoFilepath": resolve_dataset_logo(
-                        d['id'], d.get('logoFilePath'), dataset_logos
+                        d['id'], d.get('logoFilePath'), dataset_logos, remote_logo_copies
                     ),
                     "status": d.get('status'),
                     "cbrain_id": url_for(

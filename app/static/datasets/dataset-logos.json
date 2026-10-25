@@ -155,5 +155,62 @@
       "why": "An OSF crawl with no identifiable lab; the 10 other OSF-crawled datasets on the Portal already show this OSF shield.",
       "tier": "C"
     }
-  }
+  },
+  "remote_copies": {
+    "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg": {
+      "img": "img/datasets/remote/zenodo.svg",
+      "label": "Zenodo",
+      "source": "Downloaded from the URL",
+      "fetched": "2026-10-22"
+    },
+    "https://osf.io/static/img/institutions/shields/cos-shield.png": {
+      "img": "img/datasets/remote/osf-cos-shield.png",
+      "label": "OSF (Center for Open Science)",
+      "source": "Downloaded from the URL",
+      "fetched": "2026-10-22"
+    },
+    "https://algonautsproject.com/img/2024/logo_light.png": {
+      "img": "img/datasets/remote/algonauts-2024.png",
+      "label": "Algonauts Project",
+      "source": "Downloaded from the URL, resized to 480 px",
+      "fetched": "2026-10-22"
+    },
+    "http://fcon_1000.projects.nitrc.org/indi/retro/Parkinsons/logo_ICI.png": {
+      "img": "img/datasets/remote/nitrc-ici.png",
+      "label": "INDI / NITRC",
+      "source": "Downloaded from the URL",
+      "fetched": "2026-10-22"
+    },
+    "https://www.braincode.ca/sites/default/files/dr008_logo_cbn.png": {
+      "img": "img/datasets/remote/braincode-can-bind.png",
+      "label": "CAN-BIND",
+      "source": "Wayback Machine copy (web.archive.org, 2025 capture) of the URL (www.braincode.ca returned 503 on 2026-10-21/22)",
+      "fetched": "2026-10-22"
+    },
+    "https://www.braincode.ca/sites/default/files/CP-NET%20logo.jpg": {
+      "img": "img/datasets/remote/braincode-cp-net.jpg",
+      "label": "CP-NET",
+      "source": "Wayback Machine copy (web.archive.org, 2025 capture) of the URL (www.braincode.ca returned 503 on 2026-10-21/22), resized to 480 px",
+      "fetched": "2026-10-22"
+    },
+    "https://www.braincode.ca/sites/default/files/EPL03%20Image.png": {
+      "img": "img/datasets/remote/braincode-eplink.png",
+      "label": "EpLink",
+      "source": "Wayback Machine copy (web.archive.org, 2025 capture) of the URL (www.braincode.ca returned 503 on 2026-10-21/22)",
+      "fetched": "2026-10-22"
+    },
+    "https://www.braincode.ca/sites/default/files/dr014_CON_logo.png": {
+      "img": "img/datasets/remote/braincode-connect-recover.png",
+      "label": "CONNECT/RECOVER",
+      "source": "Wayback Machine copy (web.archive.org, 2025 capture) of the URL (www.braincode.ca returned 503 on 2026-10-21/22), resized to 480 px",
+      "fetched": "2026-10-22"
+    },
+    "https://www.braincode.ca/sites/default/files/DR006_DR_image.jpg": {
+      "img": "img/datasets/remote/braincode-pond.png",
+      "label": "POND",
+      "source": "Not a copy: the URL is a photograph of a person beside an MRI screen, not a logo. Uses POND.png from conpdatasets/braincode_POND_Registry_Clinical_Data_Release (the same POND programme's logo)",
+      "fetched": "2026-10-22"
+    }
+  },
+  "_about_remote_copies": "Local copies of logos that DATS records (or url entries above) give as a URL, keyed by that URL. The Portal serves the copy instead of linking to the other site, so the logo stays visible when that site is down or moves. Adding one: save the image under app/static/img/datasets/remote/ and add the URL here; no DATS change needed. A URL with no copy here is still linked as before."
 }
