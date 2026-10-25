@@ -228,7 +228,54 @@ def test_dats_record_html_escapes():
     html = str(dats_record_html({"title": "<b>x</b>", "keywords": [{"value": "a"}, {"value": "b"}],
                                  "extraProperties": [{"category": "CONP_status", "values": [{"value": "Canadian"}]}]}))
     assert "&lt;b&gt;x&lt;/b&gt;" in html
-    assert "a, b" in html and "CONP status" in html and "extraProperties · CONP_status" in html
+    assert "a, b" in html and "CONP status" in html
+    # Plain names only (no raw DATS keys); the definition is in a tooltip.
+    assert "extraProperties" not in html and "dp-dats-key" not in html
+    assert 'class="dp-term"' in html and 'role="tooltip"' in html
+
+
+def test_dats_record_html_flattens_nesting_and_drops_noise():
+    """
+    GIVEN a distribution with nested access, an empty description and @type
+    THEN nested fields come out as one level of name/value lines, the size
+         carries its unit, and empty fields and @type are left out
+    """
+    html = str(dats_record_html({
+        "distributions": [{"formats": ["EDF", "JSON"], "size": 9.2, "unit": {"value": "GB"},
+                           "access": {"landingPage": "https://eegnet.loris.ca",
+                                      "authorizations": [{"value": "registered"}]}}],
+        "spatialCoverage": [{"name": "North America", "description": ""}],
+        "licenses": [{"@type": "License", "name": "CC-BY", "version": "4.0"}],
+    }))
+    assert "9.2 GB" in html and "EDF, JSON" in html
+    assert "Landing page" in html and "Authorizations" in html and ">Access<" not in html
+    assert "Description" not in html and "@type" not in html and "License<" not in html
+    # One block of lines (the distribution); single values and named things read as one line.
+    assert html.count('class="dp-dats-sub"') == 1 and "dp-dats-item" not in html
+    assert ">North America<" in html.replace('<div class="dp-dats-line">', '>') and "Name" not in html
+    assert 'CC-BY <span class="dp-dats-note">· 4.0</span>' in html
+    assert "The technical format of the dataset distribution" in html  # from the CONP DATS field guide
+
+
+def test_dats_record_html_people_and_dates_read_as_lines():
+    html = str(dats_record_html({
+        "creators": [{"name": "McGill University"},
+                     {"name": "Philippe Albouy", "roles": [{"value": "Principal Investigator"}]}],
+        "dates": [{"date": "2019-10-31 00:00:00", "type": {"value": "start date"}}],
+    }))
+    assert 'Philippe Albouy <span class="dp-dats-note">· Principal Investigator</span>' in html
+    assert '2019-10-31 <span class="dp-dats-note">· start date</span>' in html and "00:00:00" not in html
+
+
+def test_dats_field_definitions_cover_the_top_level_labels():
+    """Every top-level field the record names has a definition."""
+    from app.search.dataset_page import _DATS_LABELS, dats_field_definitions
+    defs = dats_field_definitions()
+    top = ['title', 'description', 'creators', 'types', 'version', 'licenses', 'keywords', 'distributions',
+           'privacy', 'isAbout', 'primaryPublications', 'spatialCoverage', 'dates', 'identifier', 'acknowledges']
+    missing = [k for k in top if k not in defs]
+    assert not missing, missing
+    assert all(k in _DATS_LABELS for k in top)
 
 
 def test_dataset_page_cite_and_dats(app):
@@ -241,7 +288,7 @@ def test_dataset_page_cite_and_dats(app):
         html = render_template('dataset.html', title='t', data=data, metadata=_metadata(), readme='',
                                page=page, ciBadgeUrl='', user=None)
     assert 'The publication describing it' in html and 'dp-pub1-bibtex' in html
-    assert 'Show the full metadata record (DATS)' in html and 'dp-dats-key' in html
+    assert 'Show the full metadata record (DATS)' in html and 'class="dp-term"' in html
     assert 'in a single ZIP file' in html and 'Zenodo record' in html and 'tar.gz' not in html
     assert 'derived from' in html and 'Parent dataset' in html
     assert 'Also listed on the CONP Portal' in html

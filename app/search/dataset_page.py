@@ -451,7 +451,8 @@ _DATS_EXTRA = {
     'derivedFrom': 'Derived from', 'parent_dataset_id': 'Parent dataset', 'REB_statement': 'Ethics (REB) statement',
     'REB_number': 'Ethics (REB) number', 'registrationPage': 'Registration page', 'downloadOptions': 'Download options',
     'evidence_publication': 'Evidence publication', 'files': 'Files', 'subjects': 'Subjects', 'contact': 'Contact',
-    'logo': 'Logo', 'Total number of sessions': 'Sessions',
+    'logo': 'Logo', 'Total number of sessions': 'Sessions', 'source': 'Imported from',
+    'zenodo_record_id': 'Zenodo record', 'osf_node_id': 'OSF project',
 }
 
 
@@ -476,40 +477,199 @@ def _dats_value(v):
     return str(escape(s))
 
 
-def _dats_render(v):
+_DATS_SKIP = {'@type', '@context', '@id', 'valueIRI'}
+_DATS_DEFS_FILE = 'app/static/datasets/dats-field-definitions.json'
+_dats_defs_cache = None
+
+
+def dats_field_definitions():
+    """{DATS path: definition} for the tooltips (dats-field-definitions.json,
+    taken from the CONP DATS field guide)."""
+    global _dats_defs_cache
+    if _dats_defs_cache is None:
+        import json
+        import os
+        try:
+            with open(os.path.join(os.getcwd(), _DATS_DEFS_FILE)) as f:
+                _dats_defs_cache = json.load(f).get('fields', {})
+        except (OSError, ValueError):
+            _dats_defs_cache = {}
+    return _dats_defs_cache
+
+
+def _dats_empty(v):
+    v = _dats_flat(v)
+    return v is None or v == '' or v == [] or v == {}
+
+
+def _dats_definition(path):
+    """The definition for a DATS path ("distributions.access.landingPage").
+    Exact paths only: "identifier" inside isAbout is not the dataset's."""
+    return dats_field_definitions().get(path)
+
+
+class _Terms:
+    """Numbers the tooltips of one record so their ids are unique."""
+
+    def __init__(self):
+        self.n = 0
+
+    def term(self, label, path):
+        """A field name; with a definition, a focusable term that shows it on
+        hover, keyboard focus or tap."""
+        from markupsafe import escape
+        definition = _dats_definition(path)
+        if not definition:
+            return '<span class="dp-term-plain">{}</span>'.format(escape(label))
+        self.n += 1
+        tid = 'dp-def-{}'.format(self.n)
+        return ('<span class="dp-term" tabindex="0" aria-describedby="{0}">{1}'
+                '<span class="dp-tip" role="tooltip" id="{0}">{2}</span></span>').format(
+                    tid, escape(label), escape(definition))
+
+
+def _dats_inline(v):
+    """A value deep inside the record as one line of text: lists joined with
+    "; ", objects as their values joined with ", "."""
     v = _dats_flat(v)
     if isinstance(v, list):
-        items = [_dats_flat(x) for x in v]
-        if all(not isinstance(x, (dict, list)) for x in items):
-            return ', '.join(_dats_value(x) for x in items)
-        return ''.join('<div class="dp-dats-item">{}</div>'.format(_dats_render(x)) for x in items)
+        return '; '.join(x for x in (_dats_inline(i) for i in v) if x)
     if isinstance(v, dict):
         if 'size' in v and 'unit' in v:
-            v = dict(v)
-            v['size'] = '{} {}'.format(v['size'], _dats_flat(v.pop('unit')))
-        from markupsafe import escape
-        rows = ''.join('<dt>{}</dt><dd>{}</dd>'.format(escape(_DATS_LABELS.get(k, k)), _dats_render(x)) for k, x in v.items())
-        return '<dl class="dp-dats-sub">{}</dl>'.format(rows)
+            return '{} {}'.format(v['size'], _dats_flat(v['unit']))
+        parts = [_dats_inline(i) for k, i in v.items() if k not in _DATS_SKIP]
+        return ', '.join(x for x in parts if x)
+    return _dats_value(v) if v not in (None, '') else ''
+
+
+def _dats_scalar(v):
+    v = _dats_flat(v)
+    if isinstance(v, list):
+        return ', '.join(_dats_value(_dats_flat(x)) for x in v if not _dats_empty(x))
+    if isinstance(v, dict):
+        return _dats_inline(v)
+    return _dats_value(v)
+
+
+def _dats_pairs(v, path):
+    """An object as flat (label, path, value html) lines. Nested objects are
+    opened up in place (distributions > access > landingPage becomes one
+    "Landing page" line), so the reader sees a single level of names."""
+    out = []
+    v = _dats_flat(v)
+    if isinstance(v, dict) and 'size' in v and 'unit' in v:
+        v = dict(v)
+        v['size'] = '{} {}'.format(v['size'], _dats_flat(v.pop('unit')))
+    if not isinstance(v, dict):
+        return [('', path, _dats_scalar(v))]
+    for k, x in v.items():
+        if k in _DATS_SKIP or _dats_empty(x):
+            continue
+        sub = '{}.{}'.format(path, k)
+        x = _dats_flat(x)
+        if isinstance(x, dict) and not ('size' in x and 'unit' in x):
+            out.extend(_dats_pairs(x, sub))
+        elif isinstance(x, list) and any(isinstance(_dats_flat(i), dict) for i in x):
+            out.append((_DATS_LABELS.get(k, k), sub, _dats_inline(x)))
+        else:
+            out.append((_DATS_LABELS.get(k, k), sub, _dats_scalar(x)))
+    return out
+
+
+_NAME_KEYS = ('fullName', 'name', 'title')
+
+
+def _dats_short_date(v):
+    s = str(_dats_flat(v) or '')
+    return s[:10] if re.match(r'^\d{4}-\d{2}-\d{2}[ T]00:00(:00)?', s) else s
+
+
+def _dats_compact(x):
+    """One readable line for a person, organisation or date, or None:
+    "Philippe Albouy · Principal Investigator", "2019-10-31 · start date"."""
+    from markupsafe import escape
+    x = {k: v for k, v in x.items() if k not in _DATS_SKIP and not _dats_empty(v)}
+    if 'date' in x and set(x) <= {'date', 'type'}:
+        rest = _dats_inline(x.get('type')) if 'type' in x else ''
+        return str(escape(_dats_short_date(x['date']))) + (' <span class="dp-dats-note">· {}</span>'.format(rest) if rest else '')
+    key = next((k for k in _NAME_KEYS if k in x and not isinstance(_dats_flat(x[k]), (dict, list))), None)
+    if key is None or len(x) > 4:
+        return None
+    # Only flat things (a name plus roles, an affiliation): anything with an
+    # identifier or other nested object keeps its name/value lines.
+    if any(isinstance(_dats_flat(v), dict) or
+           (isinstance(v, list) and any(isinstance(_dats_flat(i), (dict, list)) and not
+                                        (isinstance(_dats_flat(i), dict) and set(_dats_flat(i)) <= {'name'})
+                                        for i in v))
+           for k, v in x.items() if k != key):
+        return None
+    if key == 'fullName':
+        x.pop('firstName', None), x.pop('lastName', None)
+    head = _dats_value(_dats_flat(x.pop(key)))
+    rest = _dats_inline(x)
+    return head + (' <span class="dp-dats-note">· {}</span>'.format(rest) if rest else '')
+
+
+def _dats_block(pairs, terms):
+    if not pairs:
+        return ''
+    if len(pairs) == 1 and pairs[0][0] in ('', 'Name'):
+        return pairs[0][2]  # {"name": "North America"} reads as "North America"
+    rows = ''.join('<dt>{}</dt><dd>{}</dd>'.format(terms.term(label, path), val) for label, path, val in pairs)
+    return '<dl class="dp-dats-sub">{}</dl>'.format(rows)
+
+
+def _dats_render(v, path='', terms=None):
+    """A top-level value: plain text, a comma list, or, for objects, one block
+    of name/value lines per item, items divided by a thin rule."""
+    terms = terms or _Terms()
+    v = _dats_flat(v)
+    if isinstance(v, list):
+        items = [_dats_flat(x) for x in v if not _dats_empty(x)]
+        if all(not isinstance(x, (dict, list)) for x in items):
+            return ', '.join(_dats_value(x) for x in items)
+        blocks = []
+        for x in items:
+            if isinstance(x, dict):
+                blocks.append(_dats_compact(x) or _dats_block(_dats_pairs(x, path), terms))
+            else:
+                blocks.append(_dats_scalar(x))
+        if all('<dl' not in b for b in blocks):
+            return ''.join('<div class="dp-dats-line">{}</div>'.format(b) for b in blocks)
+        if len(blocks) == 1:
+            return blocks[0]
+        return ''.join('<div class="dp-dats-item">{}</div>'.format(b) for b in blocks)
+    if isinstance(v, dict):
+        return _dats_block(_dats_pairs(v, path), terms)
     return _dats_value(v)
 
 
 def dats_record_html(descriptor):
-    """The DATS record as nested definition lists: readable labels, with the
-    raw field name underneath. Values are escaped; URLs become links."""
-    from markupsafe import Markup, escape
+    """The DATS record for reading: one row per field, named in plain words,
+    with the definition from the CONP DATS field guide on hover, focus or
+    tap. Nested fields are opened up into name/value lines (no boxes within
+    boxes); empty fields and JSON-LD bookkeeping (@type) are left out.
+    Values are escaped; URLs become links."""
+    from markupsafe import Markup
+    terms = _Terms()
     rows = []
     for key, value in (descriptor or {}).items():
+        if key in _DATS_SKIP:
+            continue
         if key == 'extraProperties' and isinstance(value, list):
             for prop in value:
                 if not isinstance(prop, dict):
                     continue
                 cat = str(prop.get('category', ''))
-                vals = ', '.join(_dats_value(_dats_flat(x)) for x in prop.get('values') or [])
-                rows.append((_DATS_EXTRA.get(cat, cat), 'extraProperties · ' + cat, vals))
+                vals = ', '.join(_dats_value(_dats_flat(x)) for x in prop.get('values') or []
+                                 if not _dats_empty(x))
+                if vals:
+                    rows.append((_DATS_EXTRA.get(cat, cat), 'extraProperties.' + cat, vals))
             continue
-        rows.append((_DATS_LABELS.get(key, key), key, _dats_render(value)))
-    body = ''.join('<dt>{}<span class="dp-dats-key">{}</span></dt><dd>{}</dd>'.format(escape(label), escape(raw), val)
-                   for label, raw, val in rows)
+        if _dats_empty(value):
+            continue
+        rows.append((_DATS_LABELS.get(key, key), key, _dats_render(value, key, terms)))
+    body = ''.join('<dt>{}</dt><dd>{}</dd>'.format(terms.term(label, path), val) for label, path, val in rows)
     return Markup('<dl class="dp-dats">{}</dl>'.format(body))
 
 
