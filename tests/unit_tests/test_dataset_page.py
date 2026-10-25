@@ -87,6 +87,7 @@ def test_clean_version():
     assert clean_version("None") is None
     assert clean_version(None) is None
     assert clean_version(" ") is None
+    assert clean_version("2024-08-01T21:15:15.153118") == "2024-08-01"
 
 
 def test_citation_key():

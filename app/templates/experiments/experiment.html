@@ -1,29 +1,225 @@
 {% extends 'common/base_main.html' %}
+{% from 'macros/doi.html' import doi_link %}
+
+{#
+  Experiment page (2026 redesign): the dataset-page pattern. Header: logo,
+  title, creators and dates, DOI, description, facts as chips. Tabs: Get the
+  task · About · All metadata · Cite. Built from the DATS record, the README
+  and the Experiment row (app/experiments/experiment_page.py); reuses the
+  dataset page's CSS and script, no conp-react component.
+#}
+
+{% macro icon(name) -%}
+<svg class="dp-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+{%- if name == 'size' -%}<rect x="3" y="13" width="18" height="7" rx="2"/><path d="M5.5 13 8 5h8l2.5 8"/>
+{%- elif name == 'function' -%}<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>
+{%- elif name == 'modality' -%}<path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M8 12h8"/>
+{%- elif name == 'stimuli' -%}<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m21 16-5-5-8 8"/>
+{%- elif name == 'software' -%}<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>
+{%- elif name == 'language' -%}<path d="M4 5h9M8.5 3v2M6 5c0 4 2.5 7 6 8M11 5c-.5 3.5-3 6.5-7 8"/><path d="m13 21 4-9 4 9M14.5 18h5"/>
+{%- elif name == 'licence' -%}<path d="M12 4v16M8 20h8M5 7h14"/><path d="M5 7 2.5 13a2.6 2.6 0 0 0 5 0zM19 7l-2.5 6a2.6 2.6 0 0 0 5 0z"/>
+{%- elif name == 'eye' -%}<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>
+{%- elif name == 'copy' -%}<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>
+{%- endif -%}
+</svg>
+{%- endmacro %}
+
+{% macro chip(name, label, text, href=None, tip=None) -%}
+{% if href %}<a class="dp-chip" href="{{ href }}"{% if not href.startswith('#') %} target="_blank" rel="noopener noreferrer"{% endif %} title="{{ tip or label }}">{% else %}<span class="dp-chip" title="{{ tip or label }}">{% endif %}
+{{- icon(name) }}<span class="visually-hidden">{{ label }}: </span>{{ text -}}
+{% if href %}</a>{% else %}</span>{% endif %}
+{%- endmacro %}
+
+{% macro codebox(lines) -%}
+<div class="dp-codebox">
+  <pre class="dp-code"><code>{% for line in lines %}{% set cmd, sep, note = line.partition('   # ') %}{{ cmd }}{% if sep %}<span class="dp-comment">   # {{ note }}</span>{% endif %}{{ '\n' if not loop.last }}{% endfor %}</code></pre>
+  <button class="dp-copy" type="button" aria-label="Copy commands" title="Copy">{{ icon('copy') }}</button>
+</div>
+{%- endmacro %}
+
+{% set c = page.card %}
 
 {% block head %} {{ super() }}
-<title>CONP Portal | {{ experiment.title }}</title>
-<link rel="canonical" href="{{ url_for('experiments.view', key=experiment.slug, _external=True) }}" />
+<title>CONP Portal | {{ c.title }}</title>
+<link rel="canonical" href="{{ url_for('experiments.view', key=c.slug, _external=True) }}" />
 {% endblock %}
 
-{% block og_title %}{{ experiment.title }} | CONP Portal{% endblock %}
-{% block og_description %}{% if experiment.description is defined and experiment.description %}{{ experiment.description | striptags | truncate(200) }}{% else %}An experiment on the Canadian Open Neuroscience Platform (CONP) Portal.{% endif %}{% endblock %}
+{% block og_title %}{{ c.title }} | CONP Portal{% endblock %}
+{% block og_description %}{% if page.description %}{{ page.description | striptags | truncate(200) }}{% else %}An experiment on the Canadian Open Neuroscience Platform (CONP) Portal.{% endif %}{% endblock %}
+{% block og_url %}{{ url_for('experiments.view', key=c.slug, _external=True) }}{% endblock %}
 
-{% block contenttitle %}
-<h2>{{ experiment.title }}</h2>
-{% endblock %} {% block appcontent %}
-<div id="experiment-page"></div>
-<script id="experiment-data" type="application/json">
-  {{ experiment|tojson|safe }}
-</script>
-<script>
-  const { ExperimentPage, React, ReactDOM } = CONP;
-  const experimentData = JSON.parse(document.getElementById('experiment-data').textContent);
-  console.log('experimentData', experimentData)
-    const element = React.createElement(ExperimentPage, {
-    experiment: experimentData,
-    downloadLink: "{{ url_for('experiments.download', experiment_id=experiment.id) }}",
-    readme: {{ readme|tojson }}
-  });
-  ReactDOM.render(element, document.getElementById('experiment-page'));
-</script>
+{% block styles %} {{ super() }}
+<link href="{{ static_v('css/dataset-page.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block scripts %} {{ super() }}
+<script src="{{ static_v('js/dataset-page.js') }}" defer></script>
+{% endblock %}
+
+{% block contenttitle %}{% endblock %}
+
+{% block appcontent %}
+<article class="dp-card" data-dataset-id="{{ c.slug }}" data-dataset-title="{{ c.title }}">
+  <p class="dp-crumbs"><a href="{{ url_for('experiments.home') }}">Experiments</a> <span aria-hidden="true">›</span> <span>{{ c.title }}</span></p>
+  <div class="dp-head">
+    <div class="dp-side">
+      <img class="dp-logo" src="{{ c.logo }}" alt="" />
+      {% if c.canadian %}<span class="dp-origin"><img src="{{ url_for('static', filename='img/canada.svg') }}" alt="" width="14" height="14" />Canadian</span>{% endif %}
+      {% if c.views %}<span class="dp-views" title="{{ '{:,}'.format(c.views) }} page views on the Portal">{{ icon('eye') }}<span class="visually-hidden">Page views: </span>{{ '{:,}'.format(c.views) }}</span>{% endif %}
+    </div>
+    <div class="dp-main">
+      <p class="dp-kicker">Experiment · task</p>
+      <h1 class="dp-title">{{ c.title }}</h1>
+      <p class="dp-sub">
+        {%- if c.creators %}{{ c.creators[:3] | join(', ') }}{% if c.creators | length > 3 %} et al.{% endif %}{% endif %}
+        {%- if page.origin %} · {{ page.origin.split(', ')[0] }}{% endif %}
+        {%- if c.version %} · version {{ c.version }}{% endif %}
+        {%- if c.added %}{{ ',' if c.version else ' ·' }} added {{ c.added }}{% endif %}
+      </p>
+      {% if page.doi %}
+      <p class="dp-ark">
+        {{ doi_link(page.doi) }}
+        <span id="ex-doi-url" hidden>https://doi.org/{{ page.doi }}</span>
+        <button class="dp-copy dp-copy--light dp-copy--inline" type="button" data-copy-target="ex-doi-url" aria-label="Copy the DOI" title="Copy">{{ icon('copy') }}</button>
+      </p>
+      {% endif %}
+      {% if page.description %}
+      <div class="dp-desc" id="dp-desc">{{ page.description }}</div>
+      <button class="dp-more" type="button" aria-controls="dp-desc" aria-expanded="false" hidden>more</button>
+      {% endif %}
+      <ul class="dp-chips" aria-label="Key facts">
+        {% for f in c.functions %}<li>{{ chip('function', 'Function assessed', f | lower) }}</li>{% endfor %}
+        {% if c.modalities %}<li>{{ chip('modality', 'Modalities', c.modalities | join(', ')) }}</li>{% endif %}
+        {% if page.stimuli %}<li>{{ chip('stimuli', 'Stimuli', (page.stimuli | join(', ') | lower) ~ ' stimuli') }}</li>{% endif %}
+        {% if c.software_label %}<li>{{ chip('software', 'Software', c.software_label) }}</li>{% endif %}
+        {% if c.languages %}<li>{{ chip('language', 'Languages', c.languages | join(', ')) }}</li>{% endif %}
+        {% if c.size %}<li>{{ chip('size', 'Size', c.size | replace('.0 ', ' ')) }}</li>{% endif %}
+        {% for lic in page.licences %}<li>{{ chip('licence', 'Licence', lic.label, lic.url or '#dp-licence', 'Licence: ' ~ lic.full) }}</li>{% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="dp-tabs" role="tablist" aria-label="Experiment sections">
+    <button role="tab" id="tab-get" aria-controls="get" aria-selected="true">Get the task</button>
+    <button role="tab" id="tab-about" aria-controls="about" aria-selected="false" tabindex="-1">About</button>
+    <button role="tab" id="tab-metadata" aria-controls="metadata" aria-selected="false" tabindex="-1">All metadata</button>
+    <button role="tab" id="tab-cite" aria-controls="cite" aria-selected="false" tabindex="-1">Cite</button>
+  </div>
+
+  {# ---------------- Get the task ---------------- #}
+  <section class="dp-panel" id="get" role="tabpanel" aria-labelledby="tab-get">
+    <div class="dp-routes">
+      {% if page.needs %}
+      <div class="dp-route dp-route--wide dp-needs">
+        <div>
+          <h2>What you need to run the experiment</h2>
+          <dl class="dp-dl">{% for label, value in page.needs %}<dt>{{ label }}</dt><dd>{{ value }}</dd>{% endfor %}</dl>
+        </div>
+      </div>
+      {% endif %}
+      {% if page.download %}
+      <div class="dp-route">
+        <div><h2>Download from this browser</h2><p>The task, stimuli and scripts{% if c.size %}: {{ c.size | replace('.0 ', ' ') }}{% endif %} in a single .zip file.</p></div>
+        <a class="btn btn-success dp-btn" href="{{ page.download }}" data-dp-download data-size="{{ c.size }}">Download</a>
+      </div>
+      {% endif %}
+      <div class="dp-route dp-route--wide" id="dataladInstructions">
+        <div>
+          <h2>With DataLad</h2>
+          <p>File-level access and versioning; useful if you adapt the task and want to track your changes.</p>
+          {{ codebox([
+            'datalad install https://github.com/CONP-PCNO/conp-experiments.git',
+            'cd conp-experiments/projects',
+            'datalad install ' ~ c.slug,
+            'cd ' ~ c.slug,
+            'datalad get .   # all files; or give individual paths',
+          ]) }}
+        </div>
+      </div>
+      {% if page.source_url or page.remote_url %}
+      <div class="dp-route">
+        <div><h2>At the source</h2><p>{% if page.source_url %}The authors' {% if page.source_name %}{{ page.source_name }} {% endif %}record{% endif %}{% if page.source_url and page.remote_url %} and {% endif %}{% if page.remote_url %}the task's code repository on GitHub{% endif %}.</p></div>
+        <div class="dp-btns">
+          {% if page.source_url %}<a class="btn btn-outline-success dp-btn" href="{{ page.source_url }}" target="_blank" rel="noopener noreferrer">Go to {{ page.source_name }}</a>{% endif %}
+          {% if page.remote_url %}<a class="btn btn-outline-success dp-btn" href="{{ page.remote_url }}" target="_blank" rel="noopener noreferrer">Go to GitHub</a>{% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  {# ---------------- About ---------------- #}
+  <section class="dp-panel" id="about" role="tabpanel" aria-labelledby="tab-about" hidden>
+    {% if c.keywords %}
+    <ul class="dp-keywords" aria-label="Keywords">
+      {% for k in c.keywords %}<li><a href="{{ url_for('experiments.home', q=k) }}">{{ k }}</a></li>{% endfor %}
+    </ul>
+    {% endif %}
+    {% if page.readme %}<div class="dp-readme readme">{{ page.readme | safe }}</div>{% else %}<p class="dp-muted">This experiment has no README.</p>{% endif %}
+    {% if page.validation_measures or page.validation_populations %}
+    <h2 class="dp-h2">Validation</h2>
+    <p>{% if page.validation_measures %}Measures: {{ page.validation_measures | join('; ') }}.{% endif %}{% if page.validation_populations %} Populations: {{ page.validation_populations | join('; ') }}.{% endif %}</p>
+    {% endif %}
+    {% if page.publications %}
+    <h2 class="dp-h2">Publications using this task</h2>
+    <ul class="dp-pubs">{% for pub in page.publications %}<li>{{ pub.text }}</li>{% endfor %}</ul>
+    {% endif %}
+    {% if page.funding %}<p class="dp-muted">Funding: {{ page.funding | join(', ') }}</p>{% endif %}
+  </section>
+
+  {# ---------------- All metadata ---------------- #}
+  <section class="dp-panel" id="metadata" role="tabpanel" aria-labelledby="tab-metadata" hidden>
+    <dl class="dp-dl">
+      {% if page.doi %}<dt>DOI</dt><dd>{{ doi_link(page.doi, 'https://doi.org/' ~ page.doi) }}</dd>{% endif %}
+      {% if c.creators %}<dt>Creators</dt><dd>{{ c.creators | join(', ') }}</dd>{% endif %}
+      {% if page.contact %}<dt>Contact</dt><dd>{{ page.contact }}</dd>{% endif %}
+      {% if page.origin %}<dt>Origin</dt><dd>{{ page.origin }}</dd>{% endif %}
+      {% if c.version %}<dt>Version</dt><dd>{{ c.version }}</dd>{% endif %}
+      {% if c.added %}<dt>On the Portal</dt><dd>added {{ c.added }}</dd>{% endif %}
+      {% if page.licence_names %}<dt id="dp-licence">Licences</dt><dd>{{ page.licence_names | join('; ') }}</dd>{% endif %}
+      {% if c.functions %}<dt>Function assessed</dt><dd>{% for f in c.functions %}<a href="{{ url_for('experiments.home', function=f) }}">{{ f | lower }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
+      {% if c.modalities %}<dt>Modalities</dt><dd>{% for m in c.modalities %}<a href="{{ url_for('experiments.home', modality=m) }}">{{ m }}</a>{{ ', ' if not loop.last }}{% endfor %}</dd>{% endif %}
+      {% if page.stimuli %}<dt>Stimuli</dt><dd>{{ page.stimuli | join(', ') }}</dd>{% endif %}
+      {% if c.languages %}<dt>Languages</dt><dd>{{ c.languages | join(', ') }}</dd>{% endif %}
+      {% if c.software_label %}<dt>Software</dt><dd>{{ c.software_label }}</dd>{% endif %}
+      {% if page.devices %}<dt>Devices</dt><dd>{{ page.devices | join(', ') }}</dd>{% endif %}
+      {% if page.other_requirements %}<dt>Other requirements</dt><dd>{{ page.other_requirements | join('; ') }}</dd>{% endif %}
+      {% if page.validation_measures or page.validation_populations %}<dt>Validation</dt><dd>{{ page.validation_measures | join('; ') }}{% if page.validation_populations %} · populations: {{ page.validation_populations | join(', ') }}{% endif %}</dd>{% endif %}
+      {% for label, value in page.needs if label == 'Accessibility' %}<dt>Accessibility</dt><dd>{{ value }}</dd>{% endfor %}
+      {% if page.is_about %}<dt>Species</dt><dd>{{ page.is_about | join(', ') }}</dd>{% endif %}
+      {% if c.size %}<dt>Size</dt><dd>{{ c.size | replace('.0 ', ' ') }}</dd>{% endif %}
+      {% if page.funding %}<dt>Funding</dt><dd>{{ page.funding | join(', ') }}</dd>{% endif %}
+      {% if page.remote_url %}<dt>On GitHub</dt><dd><a href="{{ page.remote_url }}" target="_blank" rel="noopener noreferrer">{{ page.remote_url }}</a></dd>{% endif %}
+    </dl>
+    <p class="dp-dats-head"><a href="{{ url_for('search.download_metadata_experiment', experiment=c.slug) }}">Download DATS.json</a></p>
+  </section>
+
+  {# ---------------- Cite ---------------- #}
+  <section class="dp-panel" id="cite" role="tabpanel" aria-labelledby="tab-cite" hidden>
+    <div class="dp-cite-bar">
+      <div class="dp-formats" role="group" aria-label="Citation format">
+        <button type="button" class="dp-format" aria-pressed="true" data-cite-format="text">Text</button>
+        <button type="button" class="dp-format" aria-pressed="false" data-cite-format="bibtex">BibTeX</button>
+        <button type="button" class="dp-format" aria-pressed="false" data-cite-format="ris">RIS</button>
+      </div>
+      <a class="dp-cite-download" id="dp-cite-download" href="#" download="{{ page.citation_key }}.txt">Download <span>.txt</span>{% if page.publications %} (all references){% endif %}</a>
+    </div>
+    <h2 class="dp-h2">The task</h2>
+    <div class="dp-cite" data-cite-group>
+      <p id="dp-cite-text" data-cite-block="text" data-ext="txt">{{ page.citation }}</p>
+      <pre id="dp-cite-bibtex" data-cite-block="bibtex" data-ext="bib" hidden>{{ page.citation_bibtex }}</pre>
+      <pre id="dp-cite-ris" data-cite-block="ris" data-ext="ris" hidden>{{ page.citation_ris }}</pre>
+      <button class="dp-copy dp-copy--light" type="button" data-copy-target="dp-cite-text" aria-label="Copy the task citation" title="Copy">{{ icon('copy') }}</button>
+    </div>
+    {% for pub in page.publications %}
+    <h2 class="dp-h2">{{ 'The publication using it' if page.publications | length == 1 else 'Publication ' ~ loop.index ~ ' using it' }}</h2>
+    <div class="dp-cite" data-cite-group>
+      <p id="dp-pub{{ loop.index }}-text" data-cite-block="text" data-ext="txt">{{ pub.text }}</p>
+      <pre id="dp-pub{{ loop.index }}-bibtex" data-cite-block="bibtex" data-ext="bib" hidden>{{ pub.bibtex }}</pre>
+      <pre id="dp-pub{{ loop.index }}-ris" data-cite-block="ris" data-ext="ris" hidden>{{ pub.ris }}</pre>
+      <button class="dp-copy dp-copy--light" type="button" data-copy-target="dp-pub{{ loop.index }}-text" aria-label="Copy the publication reference" title="Copy">{{ icon('copy') }}</button>
+    </div>
+    {% endfor %}
+  </section>
+</article>
 {% endblock %}

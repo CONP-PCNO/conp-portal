@@ -1,22 +1,102 @@
 {% extends 'common/base_main.html' %}
 
+{#
+  Experiments list (2026 redesign, the data-search pattern): a search box,
+  filters by function, modality, software and language, and one card per
+  experiment. Plain GET parameters (q, function, modality, software,
+  language, sort), so every filtered view has its own address; no
+  conp-react component.
+#}
+
 {% block head %} {{ super() }}
-<title>CONP Portal | Experiments Search</title>
+<title>CONP Portal | Experiments</title>
+{% endblock %}
+
+{% block og_title %}Experiments | CONP Portal{% endblock %}
+{% block og_description %}Ready-to-run experimental tasks, with their stimuli and scripts, on the Canadian Open Neuroscience Platform (CONP) Portal.{% endblock %}
+
+{% block styles %} {{ super() }}
+<link href="{{ static_v('css/experiments.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block scripts %} {{ super() }}
+<script>
+  // Filters and sort apply as soon as they change (the Apply button is for
+  // browsers without scripts).
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('ex-form');
+    if (!form) { return; }
+    form.querySelectorAll('input[type="checkbox"], select').forEach(function (el) {
+      el.addEventListener('change', function () { form.submit(); });
+    });
+    var apply = document.getElementById('ex-apply');
+    if (apply) { apply.hidden = true; }
+  });
+</script>
 {% endblock %}
 
 {% block contenttitle %}
-<h2>Experiments Search</h2>
+<h2>Experiments</h2>
 {% endblock %}
 
 {% block appcontent %}
-<div id="experiments-search"></div>
-<script>
-  const { ExperimentsSearchPage, React, ReactDOM } = CONP;
-  const keywordData = "{{ keyword }}";
-  const element = React.createElement(ExperimentsSearchPage, {
-    experiments: {{ experiments|tojson }},
-    keyword: keywordData
-  })
-  ReactDOM.render(element, document.getElementById('experiments-search'));
-</script>
+<form class="ex-page" id="ex-form" method="get" action="{{ url_for('experiments.home') }}" role="search">
+  <p class="ex-intro">Ready-to-run experimental tasks, with their stimuli and scripts.</p>
+
+  <div class="ex-search">
+    <label for="ex-q" class="visually-hidden">Search experiments</label>
+    <input id="ex-q" name="q" type="search" value="{{ query }}" placeholder="Search by name, keyword, function, software…" />
+    <button type="submit">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      Search
+    </button>
+  </div>
+
+  <div class="ex-layout">
+    <aside class="ex-filters" aria-label="Filters">
+      {% for facet in facets %}
+      <fieldset>
+        <legend>{{ facet.label }}</legend>
+        {% for item in facet['items'] %}
+        <label><input type="checkbox" name="{{ facet.key }}" value="{{ item.value }}"{% if item.checked %} checked{% endif %} /><span>{{ item.value }}</span><span class="ex-count">{{ item.count }}</span></label>
+        {% endfor %}
+      </fieldset>
+      {% endfor %}
+      <button type="submit" id="ex-apply" class="ex-apply">Apply</button>
+      {% if filtered %}<a class="ex-clear" href="{{ url_for('experiments.home') }}">Clear search and filters</a>{% endif %}
+    </aside>
+
+    <section class="ex-results" aria-label="Results">
+      <div class="ex-bar">
+        <p><strong>{{ cards | length }} experiment{{ 's' if cards | length != 1 }}</strong>{% if filtered %} <span class="ex-muted">of {{ total }}</span>{% endif %}</p>
+        <label>Sort
+          <select name="sort">
+            {% for value, label in sorts %}<option value="{{ value }}"{% if sort == value %} selected{% endif %}>{{ label }}</option>{% endfor %}
+          </select>
+        </label>
+      </div>
+
+      {% for c in cards %}
+      <article class="ex-card">
+        <img class="ex-logo" src="{{ c.logo }}" alt="" loading="lazy" />
+        <div class="ex-body">
+          <div class="ex-titlerow">
+            <h3><a href="{{ c.url }}">{{ c.title }}</a></h3>
+            {% if c.canadian %}<span class="ex-origin"><img src="{{ url_for('static', filename='img/canada.svg') }}" alt="" width="14" height="14" />Canadian</span>{% endif %}
+          </div>
+          <p class="ex-sub">{{ c.creators[:3] | join(', ') }}{% if c.creators | length > 3 %}, et al.{% endif %}{% if c.added %} · added {{ c.added }}{% endif %}{% if c.version %} · version {{ c.version }}{% endif %}</p>
+          <p class="ex-desc">{{ c.description | striptags }}</p>
+          <ul class="ex-facts" aria-label="Key facts">
+            {% if c.modalities %}<li>{{ c.modalities | join(', ') }}</li>{% endif %}
+            {% if c.software_label %}<li>{{ c.software_label }}</li>{% endif %}
+            {% if c.size %}<li>{{ c.size | replace('.0 ', ' ') }}</li>{% endif %}
+          </ul>
+        </div>
+      </article>
+      {% else %}
+      <p class="ex-none">No experiment matches. <a href="{{ url_for('experiments.home') }}">Show all experiments</a>.</p>
+      {% endfor %}
+    </section>
+  </div>
+</form>
 {% endblock %}
