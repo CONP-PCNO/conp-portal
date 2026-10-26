@@ -7,6 +7,7 @@ FslBet601…) are shown as one card with "+ n related descriptors" unless the
 visitor asks to see every descriptor separately.
 """
 import re
+from html import unescape
 
 FACETS = (
     ('runs', 'Runs on', 'runs_facet'),
@@ -99,7 +100,7 @@ def tool_card(e, cbrain_info, on_cbrain, launch_ids, icon):
     else:
         cbrain_label = None
     inputs = e.get('inputs') or []
-    description = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', str(e.get('description') or ''))).strip()
+    description = re.sub(r'\s+', ' ', unescape(unescape(re.sub(r'<[^>]+>', ' ', str(e.get('description') or ''))))).strip()
     return {
         'id': tid,
         'url': '/pipeline?id={}'.format(tid),

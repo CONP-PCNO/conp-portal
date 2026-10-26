@@ -1,3 +1,6 @@
+<!doctype html>
+<html lang="en">
+<head>
 {% block head %}
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -58,8 +61,10 @@
 </script>
 <!-- End Matomo Code -->
 {% endblock %}
-
+</head>
+<body>
 {% block body %}
+<a class="skip-link" href="#main">Skip to content</a>
 <!-- Modal -->
 <div
   class="modal fade"
@@ -412,13 +417,15 @@
     <div class="mx-0">{% block sidebar %} {% include "fragments/sidebar.html" %} {% endblock %}</div>
 
     <div class="d-flex flex-column w-100">
-      <div class="content-body container-fluid pb-4 min-vh-100">
+      <main id="main" class="content-body container-fluid pb-4 min-vh-100" tabindex="-1">
         <header class="page-header">{% block contenttitle %}{% endblock %}</header>
         <div class="content-main px-2">{% block appcontent %}{% endblock %}</div>
-      </div>
+      </main>
       {% block footer %} {% include "/fragments/footer.html" %} {% endblock %}
     </div>
   </div>
 </div>
 
 {% endblock %}
+</body>
+</html>

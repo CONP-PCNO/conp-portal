@@ -412,7 +412,7 @@ body .conp-footer h6 {
   color: var(--conp-grey-2);
 }
 body .conp-footer-tagline {
-  color: var(--conp-grey-3);
+  color: #bdbdbd;   /* was grey-3 (#979797): 4.26:1 on the footer, below WCAG AA */
   font-size: 0.9rem;
   margin-bottom: 1rem;
 }
@@ -580,3 +580,22 @@ body .navigation-bar .navbar-brand {
 body .page-crumbs { margin: 0 0 12px; font-size: .9rem; color: var(--conp-grey-4); }
 body .page-crumbs a { font-weight: 500; }
 body .page-crumbs span[aria-current] { color: #3a404c; }
+
+/* Accessibility in the page frame (Oct 2026 evaluation) ------------------- */
+/* Skip link: first thing a keyboard user reaches, hidden until focused. */
+body .skip-link {
+  position: absolute; left: 8px; top: -60px; z-index: 2000;
+  padding: 8px 14px; border-radius: 6px; background: #177245; color: #fff; font-weight: 600;
+}
+body .skip-link:focus { top: 8px; color: #fff; }
+body main.content-body:focus { outline: none; }
+/* Links inside running text are underlined, not told apart by colour alone
+   (WCAG 1.4.1); classed links (buttons, chips, tags, cards) keep their look. */
+body .content-main p a:not([class]),
+body .content-main dd a:not([class]),
+body .content-main td a:not([class]),
+body .content-main ul:not([class]) > li > a:not([class]),
+body .content-main ol:not([class]) > li > a:not([class]) {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
