@@ -88,6 +88,12 @@ def experiment_card(exp):
         'languages': _flat(dats.languages),
         'size': _size(dats),
         'keywords': [str(k) for k in (dats.keywords or [])],
+        # The list's "Get the task" row: the ways the experiment page offers.
+        'zip': os.path.isfile((exp.fspath or '') + '.zip'),
+        'open': str(dats.privacy or '').strip().lower() == 'open',
+        'source_label': _join([
+            (host_name(dats.sources) or 'source record') if str(dats.sources or '').startswith('http') else None,
+            'GitHub' if str(exp.remoteUrl or '').startswith('http') else None], ' and '),
     }
 
 

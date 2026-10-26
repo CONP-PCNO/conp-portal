@@ -116,3 +116,18 @@ def test_experiment_from_a_crawled_dataset_record(session, test_client, tmp_path
     assert res.status_code == 200
     assert 'version 2024-08-01' in html and 'T21:15' not in html
     assert "The authors' OSF record" in html and "the source record" not in html
+
+
+def test_list_card_has_get_the_task_links(session, test_client, tmp_path, monkeypatch):
+    _add(session, tmp_path, monkeypatch)
+    html = test_client.get('/experiments/').get_data(as_text=True)
+    assert 'Get the task' in html
+    assert 'href="/experiments/view/BADE-evidence-integration#dataladInstructions"' in html
+    assert 'href="/experiments/view/BADE-evidence-integration#route-browser"' in html  # the fixture has a .zip
+    assert '#route-source">' in html and 'GitHub' in html
+
+
+def test_experiments_search_box_suggests(session, test_client, tmp_path, monkeypatch):
+    _add(session, tmp_path, monkeypatch)
+    html = test_client.get('/experiments/').get_data(as_text=True)
+    assert 'data-suggest-terms="lp-terms"' in html and '"BADE Evidence Integration"' in html
