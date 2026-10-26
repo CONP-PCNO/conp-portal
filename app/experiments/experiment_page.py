@@ -8,6 +8,7 @@ from flask import url_for
 
 from app.dats import DEFAULT_LOGO
 from app.experiments.dats import DATSExperiment, _flat
+from app.search.dataset_query import stem
 from app.search.dataset_page import (
     citation_bibtex,
     citation_key,
@@ -119,7 +120,7 @@ SORTS = (('added', 'Recently added'), ('name', 'Name A–Z'), ('views', 'Most vi
 def filter_cards(cards, query, selected, sort):
     """The list page: text search, facet filters (any value within a facet,
     all facets together), sort, and facet counts over the matching set."""
-    words = [w for w in re.split(r'\W+', (query or '').lower()) if w]
+    words = [stem(w) for w in re.split(r'\W+', (query or '').lower()) if w]
 
     def text(card):
         return ' '.join([card['title'], card['description'], ' '.join(card['creators']),

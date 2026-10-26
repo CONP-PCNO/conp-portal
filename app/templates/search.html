@@ -157,7 +157,7 @@
         </div>
       </article>
       {% else %}
-      <p class="lp-none">No dataset matches. <a href="{{ url_for('search.search') }}">Show all datasets</a>.</p>
+      <p class="lp-none">No dataset matches.{% if suggestion %} Did you mean <a href="{{ url_for('search.search', search=suggestion) }}">{{ suggestion }}</a>?{% endif %} <a href="{{ url_for('search.search') }}">Show all datasets</a>.</p>
       {% endfor %}
 
       {% if pages > 1 %}

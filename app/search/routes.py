@@ -24,7 +24,7 @@ from app.dats import DEFAULT_LOGO, load_dataset_logos, load_remote_logo_copies, 
 from app.models import ArkId, Dataset, DatasetAncestry
 from app.models import MatomoDailyGetDatasetPageViewsSummary
 from app.search import search_bp
-from app.search.dataset_query import build_dataset_query, matches_suggestion
+from app.search.dataset_query import build_dataset_query, matches_suggestion, suggest_correction, vocabulary
 from app.search.dataset_page import (
     access_context,
     as_url,
@@ -112,12 +112,84 @@ def search():
         args.update(changes)
         return url_for('search.search', **{k: v for k, v in args.items() if v not in (None, [], '')})
 
+    suggestion = None
+    if query and not shown:
+        suggestion = _did_you_mean(query)
     return render_template('search.html', title='CONP | Data', user=current_user,
-                           query=query, cards=on_page, matching=len(shown), total=total,
+                           query=query, cards=on_page, matching=len(shown), total=total, suggestion=suggestion,
                            facets=facets, sort=sort, sorts=SORTS, per_page=per_page,
                            per_page_options=PER_PAGE, page=page, pages=pages,
                            page_links=page_links(page, pages), link=link,
                            filtered=bool(query or any(selected.values())))
+
+
+def _did_you_mean(query):
+    """A corrected search for one that found nothing, from the words of the
+    titles, keywords, modalities, tools and experiments the Portal lists."""
+    texts = []
+    try:
+        ix = _ensure_search_index()
+        with ix.searcher() as searcher:
+            for d in searcher.documents():
+                texts.extend([d.get('title'), d.get('keywords'), d.get('modalities'), d.get('formats')])
+    except Exception:
+        pass
+    try:
+        from app.pipelines.routes import _tool_elements
+        texts.extend(e.get('title') or e.get('name') for e in _tool_elements())
+    except Exception:
+        pass
+    return suggest_correction(query, vocabulary(texts))
+
+
+@search_bp.route('/find')
+def find():
+    """One search across the Portal (the home page's search box): the
+    datasets, tools and experiments that match, a few of each, with a link
+    to the full list in each section."""
+    from app.experiments.experiment_page import filter_cards as experiment_filter
+    from app.experiments.routes import experiment_cards
+    from app.pipelines.routes import _tool_elements, get_cbrain_availability, get_tool_icons, tool_icon
+    from app.pipelines.tool_list import filter_cards as tool_filter, group_related, tool_card
+    from app.search.dataset_list import dataset_card
+
+    query = (request.args.get('q') or request.args.get('search') or '').strip()
+    if not query:
+        return redirect(url_for('main.index'))
+    shown = 5
+
+    datasets = []
+    for e in _dataset_elements(query, bool(current_user.is_authenticated)):
+        try:
+            datasets.append(dataset_card(e))
+        except Exception:
+            current_app.logger.exception("Skipping dataset %s on /find", e.get('id'))
+
+    try:
+        availability = get_cbrain_availability()
+        icons, default_icon = get_tool_icons()
+        tool_cards = [tool_card(e, availability.get(e.get('id')), set(availability), set(),
+                                tool_icon(e.get('id'), icons, default_icon)) for e in _tool_elements()]
+        tools, _ = tool_filter(tool_cards, query, {}, 'downloads')
+        tool_count = len(tools)
+        tools = group_related(tools)
+    except Exception:
+        current_app.logger.exception("Tools unavailable on /find")
+        tools, tool_count = [], 0
+
+    try:
+        experiments, _ = experiment_filter(experiment_cards(), query, {}, 'added')
+    except Exception:
+        current_app.logger.exception("Experiments unavailable on /find")
+        experiments = []
+
+    found = bool(datasets or tools or experiments)
+    return render_template(
+        'find.html', title='CONP | Search', user=current_user, query=query,
+        datasets=datasets[:shown], dataset_count=len(datasets),
+        tools=tools[:shown], tool_count=tool_count,
+        experiments=experiments[:shown], experiment_count=len(experiments),
+        suggestion=None if found else _did_you_mean(query))
 
 
 @search_bp.route('/dataset_logo')

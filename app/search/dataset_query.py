@@ -36,6 +36,52 @@ def words(text):
     return kept or found
 
 
+def stem(word):
+    """A plural or possessive "s" dropped, so "alzheimers" finds "Alzheimer's"
+    and "parkinsons" finds "Parkinson's" (prefix matching then covers both
+    forms). Short words and words in "ss" ("mass") are kept as typed."""
+    w = str(word or '')
+    if len(w) > 4 and w.endswith('s') and not w.endswith(('ss', 'us', 'is')):
+        return w[:-1]
+    return w
+
+
+def search_words(text):
+    """The words to look for, stemmed (see stem)."""
+    return [stem(w) for w in words(text)]
+
+
+def suggest_correction(text, vocabulary, cutoff=0.8):
+    """A "Did you mean" for a search that found nothing: each typed word not
+    found in the vocabulary is replaced by the closest word that is, when one
+    is close enough ("parkisnon" -> "parkinson"). None when nothing changes."""
+    import difflib
+    vocab = sorted({v for v in vocabulary if v and len(v) > 2})
+    if not vocab:
+        return None
+    vocab_set = set(vocab)
+    out, changed = [], False
+    for w in _WORD.findall(str(text or '').lower()):
+        if w in vocab_set or any(v.startswith(stem(w)) for v in vocab if v[:2] == w[:2]):
+            out.append(w)
+            continue
+        close = difflib.get_close_matches(w, vocab, n=1, cutoff=cutoff)
+        if close:
+            out.append(close[0])
+            changed = True
+        else:
+            out.append(w)
+    return ' '.join(out) if changed else None
+
+
+def vocabulary(texts):
+    """Lower-case words of the given strings, for suggest_correction."""
+    found = set()
+    for t in texts:
+        found.update(_WORD.findall(str(t or '').lower()))
+    return found
+
+
 def _field_word_query(schema, field, word):
     """One word in one field, or None when the field can't match it."""
     ftype = schema[field]
@@ -56,7 +102,7 @@ def _field_word_query(schema, field, word):
 def _phrase_query(schema, fields, text):
     """All the words of `text`, each in at least one field."""
     parts = []
-    for word in words(text):
+    for word in search_words(text):
         alternatives = [q for q in (_field_word_query(schema, f, word) for f in fields) if q is not None]
         if not alternatives:
             return None
