@@ -31,6 +31,10 @@ def test_find_lists_all_three_sections(session, test_client, tmp_path, monkeypat
     assert '7 datasets' in html and 'See all 7 in Data' in html and 'href="/search?search=freesurfer"' in html
     assert 'FreeSurfer-Recon-all' in html and '1 tool<' in html and 'BET' not in html
     assert 'No experiment matches.' in html
+    # the same cards as each section's list
+    assert html.count('<article class="lp-card">') == 6               # 5 datasets + 1 tool card
+    assert 'Get it' in html and 'Run it' in html
+    assert 'href="#fd-tools"' in html and 'See all 7 datasets in Data, with filters' in html
     assert test_client.get('/find').status_code == 302          # empty search: back to the home page
 
 

@@ -1,4 +1,5 @@
 {% extends 'common/base_main.html' %}
+{% from 'macros/cards.html' import dataset_card %}
 
 {#
   The Data page (2026 redesign, option A of the Portal page mockups): a
@@ -126,36 +127,7 @@
       </div>
 
       {% for c in cards %}
-      <article class="lp-card">
-        <img class="lp-logo" src="{{ c.logo }}" alt="" loading="lazy" />
-        <div class="lp-body">
-          <div class="lp-titlerow">
-            <h3><a href="{{ c.url }}">{{ c.title_html or c.title }}</a></h3>
-            <span class="lp-tags">
-              {% if c.origin == 'Canadian dataset' %}<span class="lp-origin"><img src="{{ url_for('static', filename='img/canada.svg') }}" alt="" width="14" height="14" />Canadian dataset</span>{% endif %}
-              {% if c.open %}<span class="lp-open">{{ icon('open') }}Open</span>{% elif c.restricted %}<span class="lp-account">{{ icon('locked') }}Account needed</span>{% endif %}
-            </span>
-          </div>
-          <p class="lp-sub">{{ c.creators[:3] | join(', ') }}{% if c.creators | length > 3 %}, et al. ({{ c.creators | length }}){% endif %}{% if c.year %}{{ ' · ' if c.creators }}added {{ c.year }}{% endif %}{% if c.version %} · version {{ c.version }}{% endif %}</p>
-          {% if c.description %}<p class="lp-desc">{{ c.description }}</p>{% endif %}
-          <ul class="lp-facts" aria-label="Key facts">
-            {% if c.size %}<li>{{ icon('size') }}<span class="visually-hidden">Size: </span>{{ c.size | replace('.0 ', ' ') }}</li>{% endif %}
-            {% if c.subjects_label %}<li>{{ icon('subjects') }}{{ c.subjects_label }}</li>{% endif %}
-            {% if c.modalities %}<li>{{ icon('modality') }}<span class="visually-hidden">Modality: </span>{{ c.modalities[:3] | join(', ') }}</li>{% endif %}
-            {% if c.formats %}<li>{{ icon('formats') }}<span class="visually-hidden">Format: </span>{{ c.formats[:3] | join(', ') }}{% if c.formats | length > 3 %} +{{ c.formats | length - 3 }}{% endif %}</li>{% endif %}
-            {% if c.licence %}<li>{{ icon('licence') }}<span class="visually-hidden">Licence: </span>{{ c.licence }}</li>{% endif %}
-          </ul>
-          <div class="lp-get">
-            <span class="lp-get-label">Get it</span>
-            {#- Each way opens the dataset page at that way under "Get the data", which glows briefly. #}
-            {% if c.download %}<a class="lp-get-download" href="{{ c.url }}#route-browser">{{ icon('download') }}Download</a>{% endif %}
-            {% if c.datalad %}<a href="{{ c.url }}#dataladInstructions">{{ icon('datalad') }}DataLad</a>{% endif %}
-            {% if c.cbrain %}<a class="lp-get-cbrain" href="{{ c.url }}#route-cbrain">On <img src="{{ url_for('static', filename='img/cbrain-long-logo-blue.png') }}" alt="CBRAIN" /></a>{% endif %}
-            {% if c.request %}<a class="lp-get-request" href="{{ c.url }}#route-request">{{ icon('key') }}{{ c.request }}</a>{% elif c.at_source %}<a href="{{ c.url }}#route-source">{{ icon('globe') }}At the source</a>{% endif %}
-            {% if c.evidence %}<span class="lp-evidence"><img src="{{ url_for('static', filename='img/evidence_logo.svg') }}" alt="" />{{ c.evidence }}</span>{% endif %}
-          </div>
-        </div>
-      </article>
+      {{ dataset_card(c) }}
       {% else %}
       <p class="lp-none">No dataset matches.{% if suggestion %} Did you mean <a href="{{ url_for('search.search', search=suggestion) }}">{{ suggestion }}</a>?{% endif %} <a href="{{ url_for('search.search') }}">Show all datasets</a>.</p>
       {% endfor %}

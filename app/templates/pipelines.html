@@ -1,4 +1,5 @@
 {% extends 'common/base_main.html' %}
+{% from 'macros/cards.html' import tool_card %}
 
 {#
   Tools & Pipelines list (2026 redesign, option A, the Data page pattern):
@@ -118,36 +119,7 @@
       </div>
 
       {% for c in cards %}
-      <article class="lp-card">
-        {% if c.icon %}<img class="lp-logo" src="{{ c.icon }}" alt="" loading="lazy" />{% endif %}
-        <div class="lp-body">
-          <div class="lp-titlerow">
-            <h3><a href="{{ c.url }}">{{ c.title }}</a></h3>
-            {% if c.family %}<span class="lp-tags"><span class="lp-family">{{ c.family }}</span></span>{% endif %}
-          </div>
-          <p class="lp-sub">{{ c.author }}{% if c.published %}{{ ' · ' if c.author }}published {{ c.published }}{% endif %}{% if c.version %} · version {{ c.version }}{% endif %}</p>
-          {% if c.description %}<p class="lp-desc">{{ c.description }}</p>{% endif %}
-          {% if c.related %}
-          <details class="lp-related">
-            <summary>+ {{ c.related | length }} related descriptor{{ 's' if c.related | length != 1 }}</summary>
-            <ul>{% for r in c.related %}<li><a href="{{ r.url }}">{{ r.title }}</a></li>{% endfor %}</ul>
-          </details>
-          {% endif %}
-          <ul class="lp-facts" aria-label="Key facts">
-            <li>{{ icon('domain') }}<span class="visually-hidden">Domain: </span>{{ c.domains | join(', ') if c.domains else 'Domain not stated' }}</li>
-            {% if c.container %}<li>{{ icon('container') }}<span class="visually-hidden">Container: </span>{{ c.container }}</li>{% endif %}
-            {% if c.inputs %}<li>{{ icon('inputs') }}{{ c.inputs }} input{{ 's' if c.inputs != 1 }}</li>{% endif %}
-            <li>{{ icon('downloads') }}{{ '{:,}'.format(c.downloads) }} download{{ 's' if c.downloads != 1 }}</li>
-          </ul>
-          <div class="lp-get">
-            <span class="lp-get-label">Run it</span>
-            {#- Each way opens the tool page at that way under "Ways to run it", which glows briefly. #}
-            {% if c.cbrain %}<a class="lp-get-cbrain lp-get-download" href="{{ c.url }}#cbrain">On <img src="{{ url_for('static', filename='img/cbrain-long-logo-blue.png') }}" alt="CBRAIN" />{% if c.cbrain_label %}<span class="lp-muted">{{ c.cbrain_label }}</span>{% endif %}</a>{% endif %}
-            <a class="lp-get-boutiques" href="{{ c.url }}#boutiques"><img src="{{ url_for('static', filename='img/boutiques.png') }}" alt="" />On your computer</a>
-            {% if c.cluster %}<a href="{{ c.url }}#hpc">{{ icon('cluster') }}Alliance cluster</a>{% endif %}
-          </div>
-        </div>
-      </article>
+      {{ tool_card(c) }}
       {% else %}
       <p class="lp-none">No tool matches. <a href="{{ url_for('pipelines.pipelines') }}">Show all tools</a>.</p>
       {% endfor %}
