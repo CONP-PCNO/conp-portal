@@ -10,13 +10,14 @@ filter values over the matching set.
 import json
 import os
 import re
+from html import unescape
 
 from app.search.dataset_page import (
     RESTRICTED,
     clean_version,
-    direct_download,
-    host_name,
+    get_routes,
     repository_has_data,
+    title_html,
 )
 
 # Filters in the sidebar: (GET parameter, heading, card field).
@@ -135,29 +136,31 @@ def dataset_card(e):
     auth = str(e.get('authorizations') or '').strip().lower()
     restricted = auth in RESTRICTED
     open_ = auth in ('public', 'open')
-    offsite = str(e.get('downloadOptions') or '').strip().lower() == 'offsite'
     has_data = repository_has_data(fspath)
     has_data = True if has_data is None else has_data
     sources = _listify(e.get('sources'))
     landing = sources[0] if sources and str(sources[0]).startswith('http') else None
     registration = e.get('registrationPage')
 
-    download = False
-    if not restricted and not offsite:
-        download = bool(direct_download(_descriptor(fspath), fspath) or e.get('showDownloadButton'))
-    datalad = has_data and not offsite
-    at_source = offsite or not has_data
-    host = host_name(registration) or host_name(landing)
-    request = ('Request access at {}'.format(host) if host else 'Request access') if restricted else None
+    # Same decision as the dataset page's "Get the data" tab, so every "Get it"
+    # item lands on a way the page actually shows.
+    r = get_routes(e.get('authorizations'), e.get('downloadOptions'), registration, landing, fspath,
+                   descriptor=_descriptor(fspath), archive=bool(e.get('showDownloadButton')),
+                   cbrain=bool(e.get('cbrain_id')), has_data=has_data)
+    download = bool(r['browser'])
+    datalad = r['datalad']
+    at_source = r['source'] or r['source_contact']   # the page has a "Download at the source" step
+    host = r['host']
+    request = ('Request access at {}'.format(host) if host else 'Request access') if r['request'] else None
 
     routes = []
     if download:
         routes.append(ROUTE_DOWNLOAD)
     if datalad:
         routes.append(ROUTE_DATALAD)
-    if e.get('cbrain_id'):
+    if r['cbrain']:
         routes.append(ROUTE_CBRAIN)
-    if at_source:
+    if r['offsite_branch']:   # got from the host, after a request step or not
         routes.append(ROUTE_SOURCE)
 
     status = str(e.get('conpStatus') or '').strip().lower()
@@ -175,12 +178,13 @@ def dataset_card(e):
     evidence = _EVIDENCE_LABEL.get(evidence_type, 'Evidence publication') if e.get('evidencePublication') else None
     views = sum(v for v in _listify(e.get('views')) if isinstance(v, (int, float)))
     description = re.sub(r'<[^>]+>', ' ', str(e.get('_description') or ''))
-    description = re.sub(r'\s+', ' ', description).strip()
+    description = re.sub(r'\s+', ' ', unescape(unescape(description))).strip()
 
     return {
         'id': e['id'],
         'url': '/dataset?id={}'.format(e['id']),
         'title': e.get('title') or e['id'],
+        'title_html': title_html(e.get('title') or e['id']),
         'logo': e['logoFilepath'] if str(e.get('logoFilepath') or '').startswith('http') else e.get('thumbnailURL'),
         'origin': origin,
         'open': open_,
@@ -202,8 +206,8 @@ def dataset_card(e):
         'licence': ', '.join(licences[:2]) or None,
         'download': download,
         'datalad': datalad,
-        'cbrain': bool(e.get('cbrain_id')),
-        'at_source': at_source and not restricted,
+        'cbrain': r['cbrain'],
+        'at_source': at_source,
         'request': request,
         'evidence': evidence,
         'views': views,
@@ -247,6 +251,14 @@ def chosen_per_page(args):
     return n if n in PER_PAGE else PER_PAGE[0]
 
 
+def sort_title(title):
+    """Sort key for a title: case-insensitive, without a leading "(Dataset)" or
+    similar bracketed label the Zenodo crawler keeps, and without markup."""
+    t = re.sub(r'<[^>]+>', '', str(title or ''))
+    t = re.sub(r'^\s*[\(\[][^\)\]]{1,20}[\)\]]\s*', '', t)
+    return t.strip().lower()
+
+
 def filter_cards(cards, selected, sort):
     """Facet filters (any value within a facet, all facets together), sort,
     and the counts of each filter value over the matching set."""
@@ -261,7 +273,7 @@ def filter_cards(cards, selected, sort):
 
     shown = [c for c in cards if keep(c)]
     if sort == 'name':
-        shown.sort(key=lambda c: c['title'].lower())
+        shown.sort(key=lambda c: sort_title(c['title']))
     elif sort == 'updated':
         shown.sort(key=lambda c: c['updated'] or '', reverse=True)
     elif sort == 'subjects':

@@ -382,17 +382,23 @@ def publication_citations(descriptor):
 CRAWLER_MARKERS = ('.conp-zenodo-crawler.json', '.conp-osf-crawler.json')
 
 
-def direct_download(descriptor, dataset_dir=None):
-    """A browser download link at the dataset's host, when there is one.
+_OSF_ID = re.compile(r'osf\.io/([a-z0-9]{5})(?:[/?#]|$)', re.I)
 
-    Only for public records on Zenodo or OSF, and only for datasets the
-    Zenodo/OSF crawlers imported (their repository carries the crawler's
-    marker file), so the files behind the link are the dataset's files. A
-    dataset deposited elsewhere whose record still names an older Zenodo/OSF
-    project (e.g. Calgary Preschool, now on the CONP community server) gets
-    no such link. Uses the record's own access URL; for a Zenodo record
-    without one, Zenodo's "download all" archive.
-    Returns {"url", "host", "record", "format", "filename"} or None."""
+
+def osf_zip_url(landing):
+    """OSF's "download as zip" address for a project, from its landing page
+    (osf.io/<id>): the form OSF agreed the CONP may link to (conp-portal #879)."""
+    m = _OSF_ID.search(str(landing or ''))
+    return 'https://files.us.osf.io/v1/resources/{}/providers/osfstorage/?zip='.format(m.group(1).lower()) if m else None
+
+
+def _public_host_record(descriptor, dataset_dir=None):
+    """(access dict, host, landing page) for a public record on Zenodo or OSF
+    that a CONP crawler imported, else None. Only crawled datasets (their
+    repository carries the crawler's marker file), so the files behind the
+    record are the dataset's files: a dataset deposited elsewhere whose record
+    still names an older Zenodo/OSF project (e.g. Calgary Preschool, now on
+    the CONP community server) gets none."""
     if dataset_dir is not None:
         import os
         if not any(os.path.exists(os.path.join(dataset_dir, m)) for m in CRAWLER_MARKERS):
@@ -402,30 +408,104 @@ def direct_download(descriptor, dataset_dir=None):
     access = dist.get('access') or {}
     auths = access.get('authorizations') or [{}]
     first = auths[0] if isinstance(auths, list) and auths else {}
-    if str((first or {}).get('value', '')).lower() != 'public':
+    if str((first or {}).get('value', '')).lower() not in ('public', 'open'):   # some OSF records say "open"
         return None
     landing = str(access.get('landingPage') or '')
     url = str(access.get('accessURL') or '')
     host = 'Zenodo' if 'zenodo.org' in (url + landing) else ('OSF' if 'osf.io' in (url + landing) else None)
-    if not host:
+    return (access, host, landing) if host else None
+
+
+def direct_download(descriptor, dataset_dir=None):
+    """A browser download link at the dataset's host, when there is one.
+
+    The record's own access URL (the single file Zenodo lists, or OSF's zip,
+    added by conp-dataset #1046/#1048); for an OSF record without one, OSF's
+    zip address built from the landing page. A Zenodo record without one has
+    several files and no download-all link Zenodo will serve (its
+    /files-archive address returns 404), so it gets none: those datasets use
+    the Portal archive, or a link to the record (host_record).
+    Returns {"url", "host", "record", "format", "filename"} or None."""
+    found = _public_host_record(descriptor, dataset_dir)
+    if not found:
         return None
-    if not url:
-        m = re.search(r'zenodo\.org/records?/(\d+)', landing)
-        if host == 'Zenodo' and m:
-            url = 'https://zenodo.org/api/records/{}/files-archive'.format(m.group(1))
-        else:
-            return None
-    if not url.startswith('https://'):
+    access, host, landing = found
+    url = str(access.get('accessURL') or '')
+    if not url and host == 'OSF':
+        url = osf_zip_url(landing) or ''
+    if not url.startswith('https://') or 'files-archive' in url:
         return None
     filename = None
     m = re.search(r'/files/([^/?]+)', url)
     if m:
         filename = unescape(m.group(1))
-    if '?zip=' in url or 'files-archive' in url or (filename or '').lower().endswith('.zip'):
+    if '?zip=' in url or (filename or '').lower().endswith('.zip'):
         fmt = 'ZIP'
     else:
         fmt = None
     return {'url': url, 'host': host, 'record': landing or None, 'format': fmt, 'filename': filename}
+
+
+def host_record(descriptor, dataset_dir=None):
+    """The public Zenodo/OSF record of a crawled dataset, for a "files on the
+    record" link when there is neither a direct download nor a Portal archive.
+    Returns {"host", "url"} or None."""
+    found = _public_host_record(descriptor, dataset_dir)
+    if not found or not found[2].startswith('http'):
+        return None
+    return {'host': found[1], 'url': found[2]}
+
+
+def get_routes(authorization, download_options, registration_page, landing_page, dataset_dir,
+               descriptor=None, archive=False, cbrain=False, has_data=None, direct=None):
+    """The ways to get a dataset, decided once for both the dataset page's
+    "Get the data" tab and the Data page card's "Get it" row, so the card never
+    offers a step the page doesn't have.
+
+    - restricted (registered/private/controlled): a "Request access" step when
+      there is a registration page (or, for a restricted record with files on
+      a landing page, that page);
+    - offsite, or a repository with nothing for DataLad: "Download at the
+      source" (the landing page) and, when an account is needed, the request
+      step first;
+    - otherwise DataLad, and for public data a browser download: the host's
+      file (direct), else the Portal archive, else the host record's file list;
+    - CBRAIN when the dataset is on it (not for offsite data)."""
+    restricted = str(authorization or '').strip().lower() in RESTRICTED
+    offsite = str(download_options or '').strip().lower() == 'offsite'
+    if has_data is None:
+        has_data = repository_has_data(dataset_dir)
+    has_data = True if has_data is None else bool(has_data)
+    landing = landing_page if landing_page and str(landing_page).startswith('http') else None
+    registration = registration_page or None
+    reg_from_landing = bool(restricted and has_data and not offsite and not registration and landing)
+    reg = registration or (landing if reg_from_landing else None)
+    host = host_name(registration) or host_name(landing)
+    r = {
+        'restricted': restricted, 'offsite_branch': offsite or not has_data, 'reg': reg,
+        'reg_from_landing': reg_from_landing, 'host': host, 'source_host': host_name(landing),
+        'request': False, 'source': False, 'source_contact': False,
+        'browser': None, 'direct': None, 'record': None, 'datalad': False, 'cbrain': False,
+    }
+    if r['offsite_branch']:
+        r['request'] = bool(reg and (restricted or offsite))
+        r['source'] = bool(landing and landing != reg)
+        r['source_contact'] = not reg and not landing
+    else:
+        r['request'] = bool(restricted and reg)
+        r['datalad'] = True
+        r['cbrain'] = bool(cbrain)
+        if not restricted:
+            r['direct'] = direct or (direct_download(descriptor, dataset_dir) if descriptor is not None else None)
+            if r['direct']:
+                r['browser'] = 'direct'
+            elif archive:
+                r['browser'] = 'archive'
+            else:
+                r['record'] = host_record(descriptor, dataset_dir) if descriptor is not None else None
+                r['browser'] = 'record' if r['record'] else None
+    r['ask'] = r['request']
+    return r
 
 
 # --------------------------------------------------------------------------
@@ -671,6 +751,69 @@ def dats_record_html(descriptor):
         rows.append((_DATS_LABELS.get(key, key), key, _dats_render(value, key, terms)))
     body = ''.join('<dt>{}</dt><dd>{}</dd>'.format(terms.term(label, path), val) for label, path, val in rows)
     return Markup('<dl class="dp-dats">{}</dl>'.format(body))
+
+
+_DOI_PATH = re.compile(r'^(?:doi:)?(10\.\d{4,9}/\S+)$', re.I)
+_BARE_HOST = re.compile(r'^(?:www\.)?[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.([a-z]{2,})(?:[/?#:]|$)', re.I)
+_FILE_EXTS = {'png', 'jpg', 'jpeg', 'gif', 'svg', 'md', 'csv', 'tsv', 'txt', 'json', 'jsonld', 'pdf', 'zip',
+              'gz', 'tar', 'nii', 'mnc', 'py', 'ipynb', 'html', 'htm', 'xml', 'yml', 'yaml', 'sh', 'mat', 'edf'}
+_ATTR = re.compile(r'(<(?:a|img)\b[^>]*?\s)(href|src)="([^"]*)"', re.I)
+
+
+def as_url(value):
+    """A link target for an identifier a record gives as text: a bare DOI
+    ("10.1002/alz.12632", "doi:10.…") -> https://doi.org/…; "https://doi.org:10.…"
+    (a typo seen in records) -> https://doi.org/10.…; "www.example.org" ->
+    https://www.example.org. Anything else is returned unchanged."""
+    u = str(value or '').strip()
+    if not u:
+        return u
+    u = re.sub(r'^(https?://(?:dx\.)?doi\.org):(?=10\.)', r'\1/', u, flags=re.I)
+    d = _DOI_PATH.match(u)
+    if d:
+        return 'https://doi.org/' + d.group(1)
+    h = _BARE_HOST.match(u)
+    if h and h.group(1).lower() not in _FILE_EXTS and not re.match(r'^[a-z][a-z0-9+.-]*:', u, re.I):
+        return 'https://' + u
+    return u
+
+
+def fix_readme_links(html, repo_url=None):
+    """Make a README's links work on the Portal, where the page address is
+    /dataset?id=…, not the dataset's GitHub folder:
+    - a DOI written without https:// ("10.3389/fnagi.2016.00040") -> doi.org;
+    - a web address without its scheme ("www.cdip-pcid.ca") -> https://;
+    - a file in the repository ("media/figure_2.png") -> that file on GitHub
+      (raw for images), when the repository is on GitHub.
+    Absolute links, page anchors, mailto: and Portal paths ("/…") are kept."""
+    if not html or not isinstance(html, str):
+        return html
+    repo = str(repo_url or '').strip().rstrip('/')
+    if repo.endswith('.git'):
+        repo = repo[:-4]
+    m = re.match(r'https://github\.com/([^/]+)/([^/]+)$', repo)
+    raw_base = 'https://raw.githubusercontent.com/{}/{}/HEAD/'.format(*m.groups()) if m else None
+    blob_base = repo + '/blob/HEAD/' if m else None
+
+    def fix(match):
+        head, attr, url = match.group(1), match.group(2), match.group(3)
+        u = url.strip()
+        has_scheme = bool(re.match(r'^[a-z][a-z0-9+.-]*:', u, re.I))
+        if not u or (has_scheme and not _DOI_PATH.match(u)) or u.startswith(('#', '/', '?')):
+            return match.group(0)
+        d = _DOI_PATH.match(u)
+        if d:
+            new = 'https://doi.org/' + d.group(1)
+        elif _BARE_HOST.match(u) and _BARE_HOST.match(u).group(1).lower() not in _FILE_EXTS:
+            new = 'https://' + u
+        elif raw_base:
+            path = u[2:] if u.startswith('./') else u
+            new = (raw_base if attr.lower() == 'src' else blob_base) + path
+        else:
+            return match.group(0)
+        return '{}{}="{}"'.format(head, attr, new)
+
+    return _ATTR.sub(fix, html)
 
 
 def title_html(title):

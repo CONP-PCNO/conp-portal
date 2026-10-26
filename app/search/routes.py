@@ -27,6 +27,7 @@ from app.search import search_bp
 from app.search.dataset_query import build_dataset_query, matches_suggestion
 from app.search.dataset_page import (
     access_context,
+    as_url,
     citation_bibtex,
     citation_key,
     citation_ris,
@@ -36,6 +37,8 @@ from app.search.dataset_page import (
     dataset_doi,
     dats_record_html,
     direct_download,
+    fix_readme_links,
+    get_routes,
     publication_citations,
     title_html,
     licence_badges,
@@ -51,6 +54,17 @@ from app.search.queries import (
 )
 from app.services import github
 from config import Config
+
+
+@search_bp.app_template_filter('as_url')
+def _as_url_filter(value):
+    return as_url(value)
+
+
+@search_bp.app_template_global('dataset_routes')
+def _dataset_routes_global(*args, **kwargs):
+    """get_routes for templates rendered without page.routes (tests, older callers)."""
+    return get_routes(*args, **kwargs)
 
 
 @search_bp.route('/search')
@@ -356,7 +370,8 @@ def _dataset_elements(search_term, authorized):
                 "authorized": authorized,
                 "ark_id": ark_id,
                 "id": d['id'],
-                "title": d['title'].replace("'", "\'"),
+                # the database keeps the title as written; the index strips quotes
+                "title": dataset_metadata.name or d['title'],
                 "remoteUrl": dataset_metadata.remoteUrl,
                 "isPrivate": dataset_metadata.is_private,
                 "thumbnailURL": "/dataset_logo?id={}".format(d['id']),
@@ -792,7 +807,8 @@ def dataset_info():
 
     metadata = get_dataset_metadata_information(d)
 
-    readme = strip_title_heading(get_dataset_readme(d.dataset_id), dataset["title"])
+    readme = fix_readme_links(strip_title_heading(get_dataset_readme(d.dataset_id), dataset["title"]),
+                              d.remoteUrl)
 
     # Dataset landing page (option B of the 2026 page review): short licence
     # badges, a ready-made citation and the year the dataset was added.
@@ -825,6 +841,10 @@ def dataset_info():
         "parents": parents,
         "access": access_context(
             dataset["authorizations"], datsdataset.registrationPage, datsdataset.sources, d.fspath),
+        "routes": get_routes(
+            dataset["authorizations"], datsdataset.downloadOptions, datsdataset.registrationPage,
+            datsdataset.sources, d.fspath, descriptor=descriptor, archive=show_download_button,
+            cbrain=bool(dataset_cbrain_id)),
         "title_html": title_html(dataset["title"]),
         "cbrainPipelinesUrl": url_for('pipelines.pipeline_search'),
         "views": _dataset_page_views(d.dataset_id),

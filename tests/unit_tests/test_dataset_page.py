@@ -12,6 +12,8 @@ from app.search.dataset_page import (
     dataset_doi,
     dats_record_html,
     direct_download,
+    host_record,
+    osf_zip_url,
     publication_citations,
     title_html,
     licence_badges,
@@ -197,7 +199,10 @@ def test_direct_download():
     assert d["host"] == "Zenodo" and d["format"] == "ZIP" and d["url"].endswith("/content")
     no_url = json.loads(json.dumps(ZEN))
     del no_url["distributions"][0]["access"]["accessURL"]
-    assert direct_download(no_url)["url"] == "https://zenodo.org/api/records/10589602/files-archive"
+    # a Zenodo record without an access URL has several files and no archive Zenodo serves:
+    # no direct link (the Portal archive or the record's file list is used instead)
+    assert direct_download(no_url) is None
+    assert host_record(no_url) == {"host": "Zenodo", "url": no_url["distributions"][0]["access"]["landingPage"]}
     private = json.loads(json.dumps(ZEN))
     private["distributions"][0]["access"]["authorizations"] = [{"value": "private"}]
     assert direct_download(private) is None
@@ -207,6 +212,11 @@ def test_direct_download():
                                          "accessURL": "https://files.us.osf.io/v1/resources/znt9d/providers/osfstorage/?zip=q482e",
                                          "authorizations": [{"value": "public"}]}}]}
     assert direct_download(osf)["host"] == "OSF" and direct_download(osf)["format"] == "ZIP"
+    # an OSF record without an access URL: OSF's zip address from the landing page
+    del osf["distributions"][0]["access"]["accessURL"]
+    assert direct_download(osf)["url"] == "https://files.us.osf.io/v1/resources/q482e/providers/osfstorage/?zip="
+    assert osf_zip_url("https://osf.io/ZEJ5W/") == "https://files.us.osf.io/v1/resources/zej5w/providers/osfstorage/?zip="
+    assert osf_zip_url("https://example.org") is None
 
 
 def test_publication_citations():

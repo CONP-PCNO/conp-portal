@@ -60,7 +60,7 @@ def test_experiment_page_renders(session, test_client, tmp_path, monkeypatch):
     html = res.get_data(as_text=True)
     assert 'Get the task' in html and 'What you need to run the experiment' in html
     assert 'NBS Presentation 17' in html and 'Colour-blindness, Hearing impairment' in html
-    assert 'Download from this browser' in html and '/experiments/download/' in html
+    assert 'In your browser' in html and '/experiments/download/' in html
     assert 'datalad install BADE-evidence-integration' in html and 'datalad get .<span class="dp-comment">' in html
     assert '/static/img/doi/osf.png' in html                          # DOI with its source icon
     assert '(software).' in html and 'https://doi.org/10.17605/OSF.IO/EKDU5' in html
@@ -116,6 +116,10 @@ def test_experiment_from_a_crawled_dataset_record(session, test_client, tmp_path
     assert res.status_code == 200
     assert 'version 2024-08-01' in html and 'T21:15' not in html
     assert "The authors' OSF record" in html and "the source record" not in html
+    # no .zip on the server: the browser download is OSF's zip of the record
+    assert 'href="https://files.us.osf.io/v1/resources/zej5w/providers/osfstorage/?zip="' in html
+    assert "downloaded directly from the authors' OSF record" in html
+    assert '#route-browser' in test_client.get('/experiments/').get_data(as_text=True)
 
 
 def test_list_card_has_get_the_task_links(session, test_client, tmp_path, monkeypatch):

@@ -130,7 +130,7 @@
         <img class="lp-logo" src="{{ c.logo }}" alt="" loading="lazy" />
         <div class="lp-body">
           <div class="lp-titlerow">
-            <h3><a href="{{ c.url }}">{{ c.title }}</a></h3>
+            <h3><a href="{{ c.url }}">{{ c.title_html or c.title }}</a></h3>
             <span class="lp-tags">
               {% if c.origin == 'Canadian dataset' %}<span class="lp-origin"><img src="{{ url_for('static', filename='img/canada.svg') }}" alt="" width="14" height="14" />Canadian dataset</span>{% endif %}
               {% if c.open %}<span class="lp-open">{{ icon('open') }}Open</span>{% elif c.restricted %}<span class="lp-account">{{ icon('locked') }}Account needed</span>{% endif %}
