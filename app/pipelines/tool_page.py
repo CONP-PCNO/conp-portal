@@ -32,6 +32,10 @@ def tag_list(tags):
     return result
 
 
+_DOCKER_HUB_HOSTS = ('index.docker.io', 'docker.io', 'hub.docker.com',
+                     'registry.hub.docker.com', 'registry-1.docker.io')
+
+
 def container_info(image):
     """Describe the descriptor's container image.
 
@@ -44,6 +48,20 @@ def container_info(image):
     name = str(image['image']).strip()
     index = str(image.get('index') or '').strip()
     ctype = str(image.get('type') or '').strip().lower()
+    # Descriptors name Docker images' registry in several ways; Apptainer
+    # builds all of them from docker://. Docker Hub given as a host name
+    # (index.docker.io, docker.io, hub.docker.com, ...) is docker://; another
+    # registry host (ghcr.io, quay.io, ...) goes in front of the image name
+    # unless the name already starts with it; "docker:<image>:<tag>" (no //)
+    # carries the full image reference itself.
+    if index.startswith('docker:') and not index.startswith('docker://'):
+        name = index[len('docker:'):].strip() or name
+        index = 'docker://'
+    elif ctype == 'docker' and index and '://' not in index:
+        host = index.strip('/').lower()
+        if host not in _DOCKER_HUB_HOSTS and not name.lower().startswith(host + '/'):
+            name = host + '/' + name
+        index = 'docker://'
     if not index:
         index = 'docker://' if ctype == 'docker' or '/' in name or ':' in name else ''
     if index and not index.endswith('://'):
