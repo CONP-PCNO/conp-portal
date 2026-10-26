@@ -1,58 +1,43 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 # =================================================================
 # Script Name: update_datasets.sh
-# Description: Professional update for CONP portal. Handles Git,
-#              encodings (UTF-8/Latin-1), and Flask synchronization.
+# Description: Professional update for CONP portal.
 # =================================================================
+
+# This script is used to update the datasets in the CONP portal. It performs the following steps:
+# 1. Updates the Git repositories for the datasets.
+# 2. Fixes any encoding issues in the DATS.json files.
+# 3. Triggers the Flask application to update the database with the new dataset information.
 
 # --- 1. Configuration ---
 
-# Set the dataset directory
-DATASET_DIR="/data/not_backed_up/conp-portal/data/conp-dataset"
+# Set strict mode for the script;
+# exit on any error, treat unset variables as an error
+# and any command in a pipeline that fails will cause the entire pipeline to fail.
+set -Eeuo pipefail
 
 # Set the Flask application directory
-APP_DIR="/home/conp-admin/conp-portal"
+# SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+APP_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE}")/../../" &>/dev/null && pwd)
+echo "Flask App Directory: $APP_DIR"
+# APP_DIR=/home/conp-admin/conp-portal
+cd "$APP_DIR" || { echo "Error: Cannot enter $APP_DIR"; exit 1; }
 
 # Set the virtual environment Python executable
-VENV_PYTHON="$APP_DIR/venv/bin/python3"
+VENV_DIR="venv"
+VENV_PYTHON="$APP_DIR/$VENV_DIR/bin/python3"
+source "$APP_DIR/$VENV_DIR/bin/activate" || { echo "Error: Cannot activate virtual environment"; exit 1; }
 
 echo "----------------------------------------------------"
 echo "Full Update Process started: $(date)"
 
-# --- 2. Update Git Repositories ---
-echo "Step 1: Fetching latest data from Git..."
+# --- Trigger Flask Application Update ---
+echo "Triggering Flask portal update..."
 
-# Ensure the dataset directory exists
-cd "$DATASET_DIR" || { echo "Error: Cannot enter $DATASET_DIR"; exit 1; }
-
-# Force main repo to be clean and up-to-date
-git fetch origin
-git checkout master
-git pull origin master
-
-# Synchronize submodule URLs and force update all dataset folders
-git submodule sync --recursive
-git submodule update --init --recursive --force
-git submodule update --remote --recursive
-
-# --- 3. Data Sanitization (Encoding Fixes) ---
-echo "Step 2: Fixing DATS.json encoding issues..."
-
-# A. Convert files from Latin-1 to UTF-8 if they fail the UTF-8 check
-# This fixes the 'invalid continuation byte' error (e.g., Mendonça Filho)
-find projects/ -name "DATS.json" -type f -exec sh -c '
-    iconv -f utf-8 -t utf-8 "{}" >/dev/null 2>&1 || \
-    (iconv -f latin1 -t utf-8 "{}" > "{}.tmp" && mv "{}.tmp" "{}")
-' \;
-
-# B. Replace Greek characters with ASCII equivalents
-# This fixes the MySQL 'Incorrect string value' error (e.g., α -> alpha)
-find projects/ -name "DATS.json" -type f -writable -exec sed -i 's/\xCE\xB1/alpha/g' {} + 2>/dev/null
-
-# --- 4. Trigger Flask Application Update ---
-echo "Step 3: Triggering Flask portal update..."
-cd "$APP_DIR" || { echo "Error: Cannot enter $APP_DIR"; exit 1; }
+# @todo: we do not have flock, yet
+# LOCK=/var/lock/conp-update-datasets.lock
+# exec flock -n "$LOCK" \
+#   "$APP_DIR/$VENV_DIR/bin/python3" -m flask --app "$APP_DIR/conp.py" update_datasets
 
 # Run the metadata update command
 $VENV_PYTHON -m flask update_datasets
@@ -61,7 +46,7 @@ $VENV_PYTHON -m flask update_datasets
 if [ $? -eq 0 ]; then
     echo "SUCCESS: Git updated, encodings fixed, and DB synced."
 else
-    echo "ERROR: Flask task failed. Check /home/conp-admin/conp-portal/logs (if any)."
+    echo "ERROR: Flask task failed. Check $APP_DIR/logs (if any)."
     exit 1
 fi
 
