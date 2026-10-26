@@ -151,7 +151,7 @@ def find():
     from app.experiments.routes import experiment_cards
     from app.pipelines.routes import _tool_elements, get_cbrain_availability, get_tool_icons, tool_icon
     from app.pipelines.tool_list import filter_cards as tool_filter, group_related, tool_card
-    from app.search.dataset_list import dataset_card
+    from app.search.dataset_list import dataset_card, filter_cards as dataset_filter
 
     query = (request.args.get('q') or request.args.get('search') or '').strip()
     if not query:
@@ -164,15 +164,20 @@ def find():
             datasets.append(dataset_card(e))
         except Exception:
             current_app.logger.exception("Skipping dataset %s on /find", e.get('id'))
+    datasets, _ = dataset_filter(datasets, {}, 'added')    # the Data page's default order
 
     try:
+        # The same cards as the Tools & Pipelines list (CBRAIN launch links included).
+        with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json")) as f:
+            launch_ids = set(json.load(f).keys())
         availability = get_cbrain_availability()
         icons, default_icon = get_tool_icons()
-        tool_cards = [tool_card(e, availability.get(e.get('id')), set(availability), set(),
+        tool_cards = [tool_card(e, availability.get(e.get('id')), launch_ids | set(availability), launch_ids,
                                 tool_icon(e.get('id'), icons, default_icon)) for e in _tool_elements()]
         tools, _ = tool_filter(tool_cards, query, {}, 'downloads')
         tool_count = len(tools)
-        tools = group_related(tools)
+        order = {c['id']: i for i, c in enumerate(tools)}
+        tools = sorted(group_related(tools), key=lambda c: order[c['id']])
     except Exception:
         current_app.logger.exception("Tools unavailable on /find")
         tools, tool_count = [], 0
