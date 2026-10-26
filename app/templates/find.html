@@ -1,0 +1,94 @@
+{% extends 'common/base_main.html' %}
+
+{#
+  One search across the Portal (Oct 2026): the home page's search box lands
+  here with the datasets, tools and experiments that match, the first few of
+  each, and a link to each section's full list with the same search.
+#}
+
+{% block head %} {{ super() }}
+<title>CONP Portal | Search: {{ query }}</title>
+{% endblock %}
+
+{% block og_title %}Search | CONP Portal{% endblock %}
+
+{% block styles %} {{ super() }}
+<link href="{{ static_v('css/list-page.css') }}" rel="stylesheet" />
+<style>
+  .fd-sect { margin-top: 28px; }
+  .fd-sect h2 { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; font-size: 1.25rem; margin: 0 0 4px; }
+  .fd-sect h2 .fd-count { font-size: .95rem; font-weight: 400; color: var(--conp-grey-4, #5b6270); }
+  .fd-all { margin-left: auto; font-size: .95rem; font-weight: 600; }
+  .fd-list { list-style: none; margin: 0; padding: 0; }
+  .fd-list li { padding: 12px 0; border-bottom: 1px solid #e2e5ea; }
+  .fd-list li:last-child { border-bottom: 0; }
+  .fd-list a.fd-title { font-weight: 700; color: #1d2129; text-decoration: none; }
+  .fd-list a.fd-title:hover { text-decoration: underline; }
+  .fd-meta { margin: 2px 0 0; font-size: .9rem; color: var(--conp-grey-4, #5b6270); }
+  .fd-desc { margin: 4px 0 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .fd-none { color: var(--conp-grey-4, #5b6270); margin: 4px 0 0; }
+</style>
+{% endblock %}
+
+{% block contenttitle %}
+<h2>Search</h2>
+{% endblock %}
+
+{% block appcontent %}
+<div class="lp-page">
+  <form class="lp-search" method="get" action="{{ url_for('search.find') }}" role="search">
+    <label for="fd-q" class="visually-hidden">Search the Portal</label>
+    <input id="fd-q" name="q" type="search" value="{{ query }}" placeholder="Search datasets, tools and experiments…" autocomplete="off" />
+    <button type="submit" aria-label="Search">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="lp-search-label">Search</span>
+    </button>
+  </form>
+
+  {% if suggestion %}
+  <p class="lp-intro" style="margin-top:14px">Nothing matches “{{ query }}”. Did you mean <a href="{{ url_for('search.find', q=suggestion) }}">{{ suggestion }}</a>?</p>
+  {% endif %}
+
+  <section class="fd-sect" aria-labelledby="fd-datasets">
+    <h2 id="fd-datasets">Data <span class="fd-count">{{ dataset_count }} dataset{{ 's' if dataset_count != 1 }}</span>
+      {% if dataset_count > datasets|length %}<a class="fd-all" href="{{ url_for('search.search', search=query) }}">See all {{ dataset_count }} in Data</a>{% endif %}</h2>
+    {% if datasets %}
+    <ul class="fd-list">
+      {% for c in datasets %}
+      <li><a class="fd-title" href="{{ c.url }}">{{ c.title_html or c.title }}</a>
+        <p class="fd-meta">{{ (c.creators or [])[:3] | join(', ') }}{% if c.year %} · added {{ c.year }}{% endif %}{% if c.open %} · Open{% elif c.restricted %} · Account needed{% endif %}</p>
+        {% if c.description %}<p class="fd-desc">{{ c.description }}</p>{% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% else %}<p class="fd-none">No dataset matches.</p>{% endif %}
+  </section>
+
+  <section class="fd-sect" aria-labelledby="fd-tools">
+    <h2 id="fd-tools">Tools &amp; Pipelines <span class="fd-count">{{ tool_count }} tool{{ 's' if tool_count != 1 }}</span>
+      {% if tool_count > tools|length %}<a class="fd-all" href="{{ url_for('pipelines.pipelines', search=query) }}">See all {{ tool_count }} in Tools &amp; Pipelines</a>{% endif %}</h2>
+    {% if tools %}
+    <ul class="fd-list">
+      {% for c in tools %}
+      <li><a class="fd-title" href="{{ c.url }}">{{ c.title }}</a>
+        <p class="fd-meta">{{ c.family or c.author }}{% if c.related %} · + {{ c.related | length }} related descriptor{{ 's' if c.related | length != 1 }}{% endif %}{% if c.cbrain %} · runs on CBRAIN{% endif %}</p>
+        {% if c.description %}<p class="fd-desc">{{ c.description }}</p>{% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% else %}<p class="fd-none">No tool matches.</p>{% endif %}
+  </section>
+
+  <section class="fd-sect" aria-labelledby="fd-experiments">
+    <h2 id="fd-experiments">Experiments <span class="fd-count">{{ experiment_count }} experiment{{ 's' if experiment_count != 1 }}</span>
+      {% if experiment_count > experiments|length %}<a class="fd-all" href="{{ url_for('experiments.home', q=query) }}">See all {{ experiment_count }} in Experiments</a>{% endif %}</h2>
+    {% if experiments %}
+    <ul class="fd-list">
+      {% for c in experiments %}
+      <li><a class="fd-title" href="{{ c.url }}">{{ c.title }}</a>
+        <p class="fd-meta">{{ (c.creators or [])[:3] | join(', ') }}{% if c.functions %} · {{ c.functions | join(', ') }}{% endif %}</p>
+        {% if c.description %}<p class="fd-desc">{{ c.description }}</p>{% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% else %}<p class="fd-none">No experiment matches.</p>{% endif %}
+  </section>
+</div>
+{% endblock %}

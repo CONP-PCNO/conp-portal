@@ -9,6 +9,8 @@ visitor asks to see every descriptor separately.
 import re
 from html import unescape
 
+from app.search.dataset_query import stem
+
 FACETS = (
     ('runs', 'Runs on', 'runs_facet'),
     ('software', 'Software', 'software_facet'),
@@ -177,7 +179,7 @@ def chosen_per_page(args):
 
 
 def filter_cards(cards, query, selected, sort):
-    words = [w for w in re.split(r'\W+', (query or '').lower()) if w]
+    words = [stem(w) for w in re.split(r'\W+', (query or '').lower()) if w]
 
     def text(c):
         return ' '.join([c['title'], c['description'], c['author'], c['family'] or '', ' '.join(c['domains']),

@@ -33,14 +33,14 @@
       <a target="_blank" rel="noopener noreferrer" href="https://conp.ca">Canadian Open Neuroscience Platform</a>.
       <a href="{{ url_for('main.about') }}">Read more</a>
     </p>
-    <form class="conp-hero-search" action="{{ url_for('search.search') }}" method="get" role="search">
-      <label class="sr-only" for="hero-search-input">Search datasets</label>
+    <form class="conp-hero-search" action="{{ url_for('search.find') }}" method="get" role="search">
+      <label class="sr-only" for="hero-search-input">Search datasets, tools and experiments</label>
       <input
         id="hero-search-input"
         type="search"
-        name="search"
+        name="q"
         class="form-control"
-        placeholder="Search datasets — e.g. MRI, EEG, connectome, Parkinson…"
+        placeholder="Search datasets, tools and experiments — e.g. MRI, EEG, FreeSurfer, memory…"
         list="hero-search-suggestions"
         autocomplete="off"
       />
