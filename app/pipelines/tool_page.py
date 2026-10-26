@@ -73,6 +73,7 @@ def container_info(image):
         repo = name.split('@')[0].rsplit(':', 1)[0] if ':' in name.split('/')[-1] else name.split('@')[0]
         first = repo.split('/')[0]
         if '.' not in first and ':' not in first:  # not another registry (quay.io, ghcr.io, ...)
+            repo = repo.lower()  # Docker Hub names are lower-case; descriptors sometimes aren't
             hub_url = ('https://hub.docker.com/r/' + repo) if '/' in repo else ('https://hub.docker.com/_/' + repo)
 
     pull = None
@@ -134,6 +135,70 @@ def split_inputs(inputs):
     return required, optional
 
 
+def licence_input(element):
+    """The required input that asks for a software licence file (FreeSurfer's
+    license.txt in 41 descriptors), so the page can say where to get one.
+    Returns {"id", "name", "freesurfer"} or None."""
+    text = ' '.join(str(element.get(k) or '') for k in ('name', 'title', 'description', 'tool-version')).lower()
+    image = str((element.get('container-image') or {}).get('image') or '').lower()
+    icon = element.get('icon') if isinstance(element.get('icon'), dict) else {}
+    for i in _as_list(element.get('inputs')):
+        if not isinstance(i, dict) or i.get('optional', False):
+            continue
+        label = '{} {}'.format(i.get('id') or '', i.get('name') or '').lower()
+        if 'licen' in label:
+            fs = ('freesurfer' in label or 'freesurfer' in text or 'freesurfer' in image
+                  or 'recon-all' in text or str(icon.get('label') or '').lower() == 'freesurfer')
+            return {'id': i.get('id'), 'name': i.get('name') or i.get('id'), 'freesurfer': fs}
+    return None
+
+
+def runs_long(element):
+    """True for tools whose real runs take hours whatever the descriptor's
+    estimate says (FreeSurfer's recon-all family)."""
+    text = ' '.join(str(element.get(k) or '') for k in ('name', 'title', 'description')).lower()
+    return 'recon-all' in text or 'recon_all' in text or 'reconall' in text
+
+
+def tool_citation(element):
+    """The tool's references in the three formats the dataset pages use. A
+    tool on the Portal is its Boutiques descriptor's Zenodo record, so that is
+    what is cited (DataCite form, resource type "software"); the page says to
+    cite the software itself too. Returns a dict, or None without a DOI."""
+    from app.search.dataset_page import citation_bibtex, citation_key, citation_ris, citation_text
+    doi = str(element.get('doi') or '').strip()
+    if not doi:
+        return None
+    doi = re.sub(r'^(https?://(dx\.)?doi\.org/|doi:)', '', doi, flags=re.I)
+    author = re.sub(r'\s+', ' ', str(element.get('author') or '')).strip()
+    creators = [author] if author else []
+    year = str(element.get('publicationdate') or '')[:4] or None
+    title = element.get('title') or element.get('name') or element.get('id')
+    version = str(element.get('tool-version') or element.get('version') or '').strip() or None
+    args = (creators, year, title, version, None)
+    key_id = str(element.get('id') or 'tool').replace('.', '_')
+    return {
+        'text': citation_text(*args, doi=doi, publisher='Zenodo', resource_type='software'),
+        'bibtex': citation_bibtex(*args, key_id, doi=doi, publisher='Zenodo', kind='Software'),
+        'ris': citation_ris(*args, doi=doi, publisher='Zenodo', ris_type='COMP'),
+        'key': citation_key(key_id, year),
+        'doi': doi,
+    }
+
+
+def job_size(resources):
+    """Cores and memory (GB, rounded up) for the example job script, from the
+    descriptor's suggested resources (RAM over 256 is read as MB)."""
+    import math
+    if not isinstance(resources, dict):
+        return None, None
+    cores = _num(resources.get('cpu-cores'))
+    ram = _num(resources.get('ram'))
+    if ram and ram >= 256:
+        ram = ram / 1024.0
+    return (int(cores) if cores and cores >= 1 else None), (int(math.ceil(ram)) if ram and ram > 0 else None)
+
+
 def tool_page_context(element):
     """Everything the tool page needs beyond the descriptor fields."""
     required, optional = split_inputs(element.get('inputs'))
@@ -142,6 +207,11 @@ def tool_page_context(element):
         'tags': tag_list(element.get('tags')),
         'container': container_info(element.get('container-image')),
         'resources': resources_text(element.get('suggested-resources')),
+        'runs_long': runs_long(element),
+        'cpus': job_size(element.get('suggested-resources'))[0],
+        'mem_gb': job_size(element.get('suggested-resources'))[1],
+        'licence_input': licence_input(element),
+        'cite': tool_citation(element),
         'required_inputs': required,
         'optional_inputs': optional,
         'outputs': [o for o in _as_list(element.get('output-files')) if isinstance(o, dict)],
