@@ -210,7 +210,6 @@ def _update_datalad_objects(
     import traceback
     from pathlib import Path
 
-    import git
     from datalad import api
     from datalad.api import Dataset as DataladDataset
     from sqlalchemy import exc
@@ -223,22 +222,9 @@ def _update_datalad_objects(
     datasetsdir = Path(app.config['DATA_PATH']) / repo_name
     datasetsdir.mkdir(parents=True, exist_ok=True)
 
-    # Initialize the git repository object
-    try:
-        repo = git.Repo(datasetsdir)
-    except git.exc.InvalidGitRepositoryError:
-        repo = git.Repo.clone_from(
-            f'https://github.com/CONP-PCNO/{repo_name}',
-            datasetsdir,
-            branch='master'
-        )
-
-    # Update to latest commit
-    origin = repo.remotes.origin
-    origin.pull('master')
-    repo.submodule_update(recursive=True, force_reset=True, force_remove=True, to_latest_revision=True, keep_going=True)
-    # @todo: This runs in parallell and then there is a race condition.
-
+    # DataLad owns this checkout.  Do not mix GitPython's recursive
+    # submodule operations with DataLad: both try to create and update the
+    # same subdataset paths, and can leave partial nested checkouts behind.
     d = DataladDataset(path=datasetsdir)
     if not d.is_installed():
         api.clone(
@@ -248,7 +234,21 @@ def _update_datalad_objects(
         d = DataladDataset(path=datasetsdir)
 
     try:
-        d.install(path='', recursive=True)
+        # Fast-forward the superdataset and reset only its direct
+        # subdatasets to the revisions registered by it.  The portal only
+        # reads first-level project metadata, so do not descend into each
+        # project's own dependency datasets.
+        d.update(
+            how='ff-only',
+            how_subds='reset',
+            follow='parentds-lazy',
+            recursive=True,
+            recursion_limit=1,
+        )
+
+        # Install direct subdatasets added by the update.  This is
+        # idempotent for subdatasets that are already installed.
+        d.install(path='', recursive=True, recursion_limit=1)
     except Exception as e:
         print("\033[91m")
         print("[ERROR  ] An exception occurred in datalad update.")
@@ -547,14 +547,14 @@ def _update_index(
 
 def _update_datasets(app):
     """
-    Updates from conp-datasets
+    Refreshes metadata from conp-dataset.
     """
     _update_datalad_objects(app, "dataset", "conp-dataset", DBDataset)
 
 
 def _update_experiments(app):
     """
-    Updates from conp-datasets
+    Refreshes metadata from conp-experiments.
     """
     _update_datalad_objects(app, "experiment", "conp-experiments", DBExperiment)
 
@@ -1017,6 +1017,8 @@ def _update_github_traffic_counts(app):
     from app import db
     from app.models import GithubDailyClonesCount, GithubDailyViewsCount
 
+    # @todo: remove PyGithub dependency. the only place this is used is g.get_repo
+    # @todo: check if the path exists.
     datasetsdir = Path(app.config['DATA_PATH']) / 'conp-dataset'
     try:
         repo = git.Repo(datasetsdir)
