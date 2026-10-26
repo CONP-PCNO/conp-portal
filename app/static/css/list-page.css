@@ -32,7 +32,10 @@
 .lp-muted { color: #5b6270; font-weight: 400; }
 
 .lp-card { display: flex; gap: 20px; background: #fff; border: 1px solid #e2e5ea; border-radius: 10px; padding: 18px 20px; margin-top: 14px; }
-.lp-logo { width: 88px; height: 88px; object-fit: contain; flex: none; }
+/* Image sizes carry "body .content-main" so they beat conp-theme.css's
+   "body .content-main img { height: auto }" (which drew the CBRAIN logo at
+   its natural size). */
+body .content-main img.lp-logo { width: 160px; height: 120px; object-fit: contain; flex: none; }
 .lp-body { flex: 1 1 auto; min-width: 0; }
 .lp-titlerow { display: flex; gap: 8px 12px; align-items: flex-start; flex-wrap: wrap; }
 .lp-titlerow h3 { margin: 0; font-size: 1.12rem; font-weight: 700; line-height: 1.3; flex: 1 1 320px; min-width: 0; }
@@ -41,6 +44,7 @@
 .lp-tags { display: inline-flex; flex-wrap: wrap; gap: 6px; flex: none; }
 .lp-origin, .lp-open, .lp-account { flex: none; display: inline-flex; align-items: center; gap: 5px; font-size: .8rem; font-weight: 600; border-radius: 999px; padding: 3px 10px; }
 .lp-origin { color: #8a1520; background: #fbeaec; }
+body .content-main .lp-origin img { width: 14px; height: 14px; margin: 0; }
 .lp-open { color: #14623a; background: #e3f3ea; }
 .lp-account { color: #7a4a00; background: #fdf0d8; }
 .lp-sub { margin: 3px 0 0; font-size: .85rem; color: #5b6270; }
@@ -49,13 +53,16 @@
 .lp-facts li { display: inline-flex; align-items: center; gap: 5px; border: 1px solid #dfe3e8; border-radius: 6px; padding: 2px 9px; background: #f7f8fa; }
 .lp-icon { width: 14px; height: 14px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .lp-get { margin-top: 12px; padding-top: 10px; border-top: 1px solid #eef0f3; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; font-size: .88rem; font-weight: 600; color: #3a404c; }
-.lp-get > span { display: inline-flex; align-items: center; gap: 5px; }
+.lp-get > span, .lp-get > a { display: inline-flex; align-items: center; gap: 5px; }
+.lp-get > a { color: inherit; text-decoration: none; border-radius: 4px; }
+.lp-get > a:hover { text-decoration: underline; }
+.lp-get > a:focus-visible { outline: 2px solid #1a5fb4; outline-offset: 2px; }
 .lp-get-label { color: #5b6270; }
-.lp-get-download { color: #14623a; }
-.lp-get-request { color: #7a4a00; }
-.lp-get-cbrain img { height: 14px; width: auto; }
+.lp-get > .lp-get-download { color: #14623a; }
+.lp-get > .lp-get-request { color: #7a4a00; }
+body .content-main .lp-get-cbrain img { height: 14px; width: auto; max-width: 70px; margin: 0; }
 .lp-evidence { margin-left: auto; font-weight: 500; background: #f0f2f5; border-radius: 6px; padding: 2px 8px; }
-.lp-evidence img { width: 16px; height: 16px; }
+body .content-main .lp-evidence img { width: 16px; height: 16px; margin: 0; }
 .lp-none { margin-top: 18px; }
 
 .lp-pages { display: flex; gap: 6px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 24px; font-size: .9rem; }
@@ -75,6 +82,6 @@
   .lp-search button { padding: 0 16px; }
   .lp-search-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .lp-card { flex-direction: column; gap: 12px; }
-  .lp-logo { width: 64px; height: 64px; }
+  body .content-main img.lp-logo { width: 120px; height: 90px; object-position: left center; }
   .lp-evidence { margin-left: 0; }
 }

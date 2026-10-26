@@ -168,24 +168,24 @@
     {% if offsite or not acc.has_data %}
       {% set ask = reg and (acc.restricted or offsite) %}
       {% if ask %}
-      <div class="dp-route">
+      <div class="dp-route" id="route-request">
         <div><h2>1. Request access{% if acc.host %} at {{ acc.host }}{% endif %}</h2><p>Registration page: {{ reg | replace('https://', '') | replace('http://', '') | trim('/') }}</p></div>
         <a class="btn btn-success dp-btn" href="{{ reg_href }}" target="_blank" rel="noopener noreferrer">Request access</a>
       </div>
       {% endif %}
       {% if landing and landing != reg %}
-      <div class="dp-route">
+      <div class="dp-route" id="route-source">
         <div><h2>{{ '2. ' if ask }}Download at the source</h2><p>{{ landing | replace('https://', '') | replace('http://', '') | trim('/') }}{% if ask %}, once your access is approved{% elif acc.restricted %}. An account is needed{% endif %}. The files are not stored on the CONP.</p></div>
         <a class="btn {{ 'btn-outline-success' if ask else 'btn-success' }} dp-btn" href="{{ landing }}" target="_blank" rel="noopener noreferrer">Go to {{ source_name }}</a>
       </div>
       {% endif %}
       {% if not reg and not landing %}
-      <div class="dp-route"><div><h2>Download at the source</h2><p>The files are hosted by the data provider{% if metadata.contact %}; contact: {{ metadata.contact }}{% endif %}.</p></div></div>
+      <div class="dp-route" id="route-source"><div><h2>Download at the source</h2><p>The files are hosted by the data provider{% if metadata.contact %}; contact: {{ metadata.contact }}{% endif %}.</p></div></div>
       {% endif %}
     {% else %}
       {% set ask = acc.restricted and reg %}
       {% if ask %}
-      <div class="dp-route">
+      <div class="dp-route" id="route-request">
         <div><h2>1. Request access{% if acc.host %} at {{ acc.host }}{% endif %}</h2><p>An account is needed before the files can be downloaded with DataLad. {{ 'Request it on the dataset page' if reg_from_landing else 'Registration page' }}: {{ reg | replace('https://', '') | replace('http://', '') | trim('/') }}</p></div>
         <a class="btn btn-success dp-btn" href="{{ reg_href }}" target="_blank" rel="noopener noreferrer">Request access</a>
       </div>
@@ -193,14 +193,14 @@
       {% if not acc.restricted %}
       {% set direct = page.direct_download %}
       {% if direct %}
-      <div class="dp-route">
+      <div class="dp-route" id="route-browser">
         <div><h2>In your browser</h2><p>All files, {{ data.size | replace('.0 ', ' ') }},
           {%- if direct.format %} in a single {{ direct.format }} file,{% elif direct.filename %} as one file ({{ direct.filename }}),{% endif %}
           downloaded directly from the dataset's {% if direct.record %}<a href="{{ direct.record }}" target="_blank" rel="noopener noreferrer">{{ direct.host }} record</a>{% else %}{{ direct.host }} record{% endif %}.</p></div>
         <a class="btn btn-success dp-btn" href="{{ direct.url }}" data-dp-download data-size="{{ data.size }}" rel="noopener noreferrer">Download</a>
       </div>
       {% elif data.showDownloadButton %}
-      <div class="dp-route">
+      <div class="dp-route" id="route-browser">
         <div><h2>In your browser</h2><p>All files, {{ data.size | replace('.0 ', ' ') }}, in a single tar.gz file.</p></div>
         <a class="btn btn-success dp-btn" href="{{ data.zipLocation }}" data-dp-download data-size="{{ data.size }}">Download</a>
       </div>
@@ -223,14 +223,11 @@
             <summary>More about DataLad</summary>
             <p>DataLad requires basic knowledge of the command line. To install it, see the <a target="_blank" rel="noopener noreferrer" href="http://handbook.datalad.org/en/latest/intro/installation.html#install">install section of the DataLad Handbook</a>. For maximum compatibility with <code>conp-dataset</code>, the CONP recommends Python 3.12+, git-annex 10.20241202+ and DataLad 1.1.4+.</p>
             <p>After <code>datalad install</code>, the files are symbolic links; <code>datalad get</code> downloads their content.</p>
-            <p>Datasets are tested every few hours to check that their storage locations respond. Latest status:
-              <a target="_blank" rel="noopener noreferrer" href="https://app.circleci.com/pipelines/github/CONP-PCNO/conp-dataset?branch=master"><img src="{{ ciBadgeUrl }}" alt="Test status: {{ data.status }}" /></a>
-            </p>
           </details>
         </div>
       </div>
       {% if data.cbrain_id %}
-      <div class="dp-route">
+      <div class="dp-route" id="route-cbrain">
         <div><h2>On CBRAIN</h2><p>Analyze on Canadian HPC without downloading. Needs a CBRAIN account.</p></div>
         <button class="btn btn-outline-success dp-btn" type="button" data-dp-cbrain data-cbrain-url="{{ data.cbrain_id }}" data-pipelines-url="{{ page.cbrainPipelinesUrl }}">Open in <img src="{{ url_for('static', filename='img/cbrain-long-logo-blue.png') }}" alt="CBRAIN" class="dp-cbrain-logo" /></button>
       </div>
