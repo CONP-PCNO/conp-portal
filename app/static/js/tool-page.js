@@ -136,10 +136,22 @@
     });
   }
 
+  // Arriving from the Tools list (#cbrain, #boutiques, #hpc): bring that
+  // way to run the tool into view and let it glow briefly.
+  function initArrival() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    var target = id && document.getElementById(id);
+    if (!target || !target.classList.contains('tp-route')) { return; }
+    target.scrollIntoView({ block: 'center' });
+    target.classList.add('is-flash');
+    setTimeout(function () { target.classList.remove('is-flash'); }, 2400);
+  }
+
   ready(function () {
     initMore();
     initCopy();
     initOptionalInputs();
     initCbrain();
+    initArrival();
   });
 })();

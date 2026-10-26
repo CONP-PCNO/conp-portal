@@ -75,42 +75,78 @@ def tool_icon(zenodo_id, icons, default_icon):
     return dict(icon) if icon else None
 
 
+def _tool_elements():
+    """Every tool the Portal lists (the Boutiques cache without deprecated
+    or blocked descriptors), keys lower-cased without hyphens or spaces, as
+    pipeline_search builds them."""
+    elements = pipelines_utils.get_pipelines_from_cache(None)
+    elements = [e for e in elements if not e.get("DEPRECATED", None)]
+    with open(os.path.join(os.getcwd(), "app/static/pipelines/block-list-pipeline.json")) as f:
+        blocked = set(json.load(f))
+    elements = [e for e in elements if e.get('ID') not in blocked]
+    return [{k.lower().replace("-", "").replace(" ", ""): v for k, v in e.items()} for e in elements]
+
+
 @pipelines_bp.route('/pipelines', methods=['GET'])
 def pipelines():
-    """ Pipelines Route
-
-        The route that leads to the pipelines page
-
-        Args:
-            page: the page that you want to display (default: 1)
-            max_per_page: the number of items per page (default: 20)
-
-        Returns:
-            Rendered template for pipelines.html
+    """ The Tools & Pipelines list: one card per tool (related descriptors
+        grouped), a filter sidebar (runs on, software, domain, container),
+        sort and pages; plain GET parameters (search, runs, software,
+        domain, container, sort, show, page, separate). The old list's
+        parameters (tags, cbrain, sortKey, max_per_page) still work.
     """
-    page = int(request.args.get('page') or 1)
-    max_per_page = request.args.get('max_per_page') or 20
-    if max_per_page != 'All':
-        max_per_page = int(max_per_page)
-    cbrain = request.args.get('cbrain')
-    search = request.args.get('search') or ""
-    tags = request.args.get('tags') or ""
-    sortComparitor = request.args.get('sortComparitor')
-    sortKey = request.args.get('sortKey')
+    from app.pipelines.tool_list import (
+        FACETS,
+        PER_PAGE,
+        SORTS,
+        chosen_per_page,
+        chosen_sort,
+        filter_cards,
+        group_related,
+        selected_filters,
+        tool_card,
+    )
+    from app.search.dataset_list import page_links, page_of
 
-    filters = {
-        "page": page,
-        "max_per_page": max_per_page,
-        "cbrain": cbrain,
-        "search": search,
-        "tags": tags,
-        "sortComparitor": sortComparitor,
-        "sortKey": sortKey,
-    }
+    query = (request.args.get('search') or '').strip()
+    selected = selected_filters(request.args)
+    sort = chosen_sort(request.args)
+    per_page = chosen_per_page(request.args)
+    separate = request.args.get('separate') in ('1', 'true', 'on')
 
-    return render_template('pipelines.html',
-                           title='CONP | Tools & Pipelines',
-                           filters=filters)
+    with open(os.path.join(os.getcwd(), "app/static/pipelines/cbrain-conp-pipeline.json")) as f:
+        launch_ids = set(json.load(f).keys())
+    availability = get_cbrain_availability()
+    on_cbrain = launch_ids | set(availability.keys())
+    icons, default_icon = get_tool_icons()
+
+    cards = [tool_card(e, availability.get(e.get('id')), on_cbrain, launch_ids,
+                       tool_icon(e.get('id'), icons, default_icon))
+             for e in _tool_elements()]
+    shown, facets = filter_cards(cards, query, selected, sort)
+    matching = len(shown)
+    # Type-ahead terms for the search box: tool names, software, domains.
+    suggest_terms = sorted({c['title'] for c in cards} | {c['family'] for c in cards if c['family']}
+                           | {d for c in cards for d in c['domains']}, key=str.lower)
+    if not separate:
+        order = {c['id']: i for i, c in enumerate(shown)}
+        shown = sorted(group_related(shown), key=lambda c: order[c['id']])
+    on_page, page, pages = page_of(shown, request.args.get('page'), per_page)
+
+    def link(**changes):
+        args = {'search': query or None, 'sort': sort if sort != 'downloads' else None,
+                'show': per_page if per_page != PER_PAGE[0] else None, 'separate': '1' if separate else None}
+        for key, _label, _field in FACETS:
+            args[key] = selected.get(key) or None
+        args.update(changes)
+        return url_for('pipelines.pipelines', **{k: v for k, v in args.items() if v not in (None, [], '')})
+
+    return render_template('pipelines.html', title='CONP | Tools & Pipelines', user=current_user,
+                           query=query, cards=on_page, matching=matching, entries=len(shown), total=len(cards),
+                           facets=facets, sort=sort, sorts=SORTS, per_page=per_page, per_page_options=PER_PAGE,
+                           page=page, pages=pages, page_links=page_links(page, pages), link=link,
+                           separate=separate, suggest_terms=suggest_terms,
+                           filtered=bool(query or any(selected.values())))
 
 
 @pipelines_bp.route('/pipeline-search', methods=['GET'])

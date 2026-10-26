@@ -88,7 +88,7 @@
     <div class="tp-routes">
 
       {% if page.cbrain_launch %}
-      <div class="tp-route">
+      <div class="tp-route" id="cbrain">
         <div class="tp-route-logo"><img src="{{ url_for('static', filename='img/cbrain-long-logo-blue.png') }}" alt="CBRAIN" /></div>
         <div class="tp-route-body tp-route-row">
           <div>
@@ -100,7 +100,7 @@
         </div>
       </div>
       {% elif pipeline.cbrain %}
-      <div class="tp-route">
+      <div class="tp-route" id="cbrain">
         <div class="tp-route-logo"><img src="{{ url_for('static', filename='img/cbrain-long-logo-blue.png') }}" alt="CBRAIN" /></div>
         <div class="tp-route-body tp-route-row">
           <div>
