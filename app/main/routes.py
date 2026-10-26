@@ -49,7 +49,7 @@ def index():
         count_pipelines = len([
             d_index
             for d_index, descriptor in enumerate(all_descriptors)
-            if not detailed_all_descriptors[d_index]["DEPRECATED"]
+            if not detailed_all_descriptors[d_index].get("DEPRECATED", False)
             and {**descriptor, **detailed_all_descriptors[d_index]}.get("ID") not in blocked
         ])
 
