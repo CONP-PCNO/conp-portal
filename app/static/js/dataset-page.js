@@ -69,6 +69,12 @@
     // (for example the old #dataladInstructions anchor) opens that panel.
     function open(hash) {
       var target = hash && document.getElementById(hash);
+      // A way to get the data this dataset doesn't offer (links from the
+      // Data page use #route-browser, #route-request, #route-source,
+      // #route-cbrain, #dataladInstructions): open Get the data.
+      if (!target && hash && (hash.indexOf('route-') === 0 || hash === 'dataladInstructions')) {
+        target = document.getElementById('get');
+      }
       var panel = target && (target.getAttribute('role') === 'tabpanel' ? target : target.closest('[role="tabpanel"]'));
       if (!panel) { return false; }
       var tab = document.querySelector('[aria-controls="' + panel.id + '"]');
@@ -76,7 +82,7 @@
       if (target !== panel) {
         target.scrollIntoView({ block: 'center' });
         target.classList.add('is-flash');
-        setTimeout(function () { target.classList.remove('is-flash'); }, 1600);
+        setTimeout(function () { target.classList.remove('is-flash'); }, 2400);
       }
       return true;
     }

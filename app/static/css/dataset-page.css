@@ -166,6 +166,15 @@ a.dp-chip:hover { border-color: #b8c0cc; color: #1d2129; }
 .dp-comment { color: #9aa3b2; user-select: none; }
 .dp-dl dt, .dp-dl dd { transition: background-color .6s; }
 .dp-dl dt.is-flash, .dp-dl dt.is-flash + dd { background-color: #fff3c4; }
+/* A way to get the data reached from a Data page link (#route-…): a short glow. */
+.dp-route.is-flash { animation: dp-glow 2.4s ease-out; }
+@keyframes dp-glow {
+  0%, 35% { box-shadow: 0 0 0 3px #177245, 0 0 18px 4px rgba(23, 114, 69, .35); }
+  100% { box-shadow: 0 0 0 0 rgba(23, 114, 69, 0), 0 0 0 0 rgba(23, 114, 69, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dp-route.is-flash { animation: none; box-shadow: 0 0 0 3px #177245; }
+}
 .dp-copy {
   position: absolute;
   top: 6px;

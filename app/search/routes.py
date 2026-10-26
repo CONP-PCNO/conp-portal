@@ -830,16 +830,8 @@ def dataset_info():
         "views": _dataset_page_views(d.dataset_id),
     }
 
-    if dataset["status"] == "Working":
-        color = "success"
-    elif dataset["status"] == "Unknown":
-        color = "lightgrey"
-    else:
-        color = "critical"
-
-    ci_badge_url = "https://img.shields.io/badge/circleci-" + \
-        dataset["status"] + "-" + color + "?style=flat-square&logo=circleci"
-
+    # The CircleCI test badge is gone: the dataset tests stopped running on
+    # 1 Oct 2026 and every page showed "Test status: Unknown".
     return render_template(
         'dataset.html',
         title='CONP | Dataset',
@@ -847,7 +839,6 @@ def dataset_info():
         metadata=metadata,
         readme=readme,
         page=page,
-        ciBadgeUrl=ci_badge_url,
         user=current_user
     )
 

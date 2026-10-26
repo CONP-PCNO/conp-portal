@@ -20,6 +20,8 @@
 {%- elif name == 'external' -%}<path d="M15 3h6v6M21 3l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/>
 {%- elif name == 'open' -%}<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/>
 {%- elif name == 'locked' -%}<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+{%- elif name == 'key' -%}<circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3M14 9l2 2"/>
+{%- elif name == 'globe' -%}<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>
 {%- elif name == 'filter' -%}<path d="M4 6h16M7 12h10M10 18h4"/>
 {%- endif -%}
 </svg>
@@ -37,6 +39,7 @@
 {% endblock %}
 
 {% block scripts %} {{ super() }}
+<script src="{{ static_v('js/list-suggest.js') }}" defer></script>
 <script>
   // Filters, sort and page size apply as soon as they change (the Apply
   // button is for browsers without scripts). On phones the filters start
@@ -71,7 +74,9 @@
 
   <div class="lp-search">
     <label for="lp-q" class="visually-hidden">Search datasets</label>
-    <input id="lp-q" name="search" type="search" value="{{ query }}" placeholder="Search by name, keyword, modality, contributor…" />
+    <input id="lp-q" name="search" type="search" value="{{ query }}" placeholder="Search by name, keyword, modality, contributor…"
+           autocomplete="off" list="lp-suggestions" data-suggest-url="{{ url_for('search.dataset_search_suggestions') }}" />
+    <datalist id="lp-suggestions"></datalist>
     <button type="submit" aria-label="Search">
       <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <span class="lp-search-label">Search</span>
@@ -142,10 +147,11 @@
           </ul>
           <div class="lp-get">
             <span class="lp-get-label">Get it</span>
-            {% if c.download %}<span class="lp-get-download">{{ icon('download') }}Download</span>{% endif %}
-            {% if c.datalad %}<span>{{ icon('datalad') }}DataLad</span>{% endif %}
-            {% if c.cbrain %}<span class="lp-get-cbrain">On <img src="{{ url_for('static', filename='img/cbrain-long-logo-blue.png') }}" alt="CBRAIN" /></span>{% endif %}
-            {% if c.request %}<span class="lp-get-request">{{ icon('external') }}{{ c.request }}</span>{% elif c.at_source %}<span>{{ icon('external') }}At the source</span>{% endif %}
+            {#- Each way opens the dataset page at that way under "Get the data", which glows briefly. #}
+            {% if c.download %}<a class="lp-get-download" href="{{ c.url }}#route-browser">{{ icon('download') }}Download</a>{% endif %}
+            {% if c.datalad %}<a href="{{ c.url }}#dataladInstructions">{{ icon('datalad') }}DataLad</a>{% endif %}
+            {% if c.cbrain %}<a class="lp-get-cbrain" href="{{ c.url }}#route-cbrain">On <img src="{{ url_for('static', filename='img/cbrain-long-logo-blue.png') }}" alt="CBRAIN" /></a>{% endif %}
+            {% if c.request %}<a class="lp-get-request" href="{{ c.url }}#route-request">{{ icon('key') }}{{ c.request }}</a>{% elif c.at_source %}<a href="{{ c.url }}#route-source">{{ icon('globe') }}At the source</a>{% endif %}
             {% if c.evidence %}<span class="lp-evidence"><img src="{{ url_for('static', filename='img/evidence_logo.svg') }}" alt="" />{{ c.evidence }}</span>{% endif %}
           </div>
         </div>
