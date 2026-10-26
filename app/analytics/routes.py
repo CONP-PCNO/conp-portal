@@ -338,6 +338,35 @@ def keywords():
     # Filter out short keywords
     elements = list(filter(lambda e: len(e['label']) > 2, elements))
 
+    elements = clean_search_keywords(elements)
     elements.sort(key=lambda e: e["nb_hits"], reverse=True)
 
     return json.dumps(elements)
+
+
+# Searches that are not people looking for data: security scanners' probes
+# ("sssiedhsearchxsx", quotes, tags, SQL), and ontology identifiers or web
+# addresses that keyword links once put in the search box.
+_PROBE = re.compile(r'sssied|xsx|[<>"\'`;{}\\]|\b(select|union|script|alert)\b', re.I)
+_IDENTIFIER = re.compile(r'^\s*(https?://|www\.|[a-z]{2,10}[:_]\d{3,}\b)', re.I)
+
+
+def clean_search_keywords(elements):
+    """The "Most searched keywords" list without probes and identifiers, with
+    spellings that differ only in case merged ("prevent-ad" + "PREVENT-AD")
+    under the most searched spelling."""
+    merged = {}
+    for e in elements:
+        label = str(e.get('label') or '').strip()
+        if not label or _PROBE.search(label) or _IDENTIFIER.match(label):
+            continue
+        key = label.lower()
+        hits = e.get('nb_hits') or 0
+        if key not in merged:
+            merged[key] = {'label': e['label'], 'nb_hits': hits, '_best': hits}
+        else:
+            m = merged[key]
+            m['nb_hits'] += hits
+            if hits > m['_best']:
+                m['label'], m['_best'] = e['label'], hits
+    return [{'label': m['label'], 'nb_hits': m['nb_hits']} for m in merged.values()]

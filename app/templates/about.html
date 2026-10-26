@@ -82,9 +82,12 @@
                 streamlined data download capabilities
             </li>
             <li>
-                <a target="_blank" rel="noopener noreferrer" href="/sparql">advanced dataset querying</a>
-                with
-                <a target="_blank" rel="noopener noreferrer" href="https://bluebrainnexus.io">Nexus</a>
+                ready-made citations for every dataset, tool and experiment (plain text, BibTeX and RIS)
+            </li>
+            <li>
+                links between datasets and the
+                <a target="_blank" rel="noopener noreferrer" href="https://neurolibre.org">NeuroLibre/Evidence</a>
+                publications that use them
             </li>
             <li>
                 a
@@ -92,11 +95,6 @@
                 representation of CONP Portal content and activities
             </li>
         </ul>
-        <p>
-            Among a number of upcoming features, we are working on integrating citation capabilities
-            and the publishing of Notebooks via
-            <a target="_blank" rel="noopener noreferrer" href="http://neurolibre.conp.ca/">Neurolibre</a>.
-        </p>
         <p></p>
         <img class="img-fluid" style="width:80%;margin-left:auto;margin-right:auto"
              alt="CONP graph" src="/static/img/CONP-features.png"/>
@@ -134,17 +132,15 @@
         <p>
             The CONP Portal was designed to parse existing datasets from both external and
             internal sources, allowing it to provide access to a very wide variety of data.
-            To access data, the user will first go to the
+            To find data, go to the
             <a target="_blank" rel="noopener noreferrer" href="/search">
-                Data Search page
-            </a>
-            and filter for data of interest by keyword in the search box. Clicking on an individual dataset
-            among the search results will provide more detailed information and download instructions.
-            Depending on the dataset, data download may be available through both the
-            <a target="_blank" rel="noopener noreferrer" href="http://www.datalad.org">
-                DataLad
-            </a>
-            data management system and a one-click direct download function.
+                Data page</a>,
+            search by keyword and narrow the list with the filters (origin, access, how to get it, modality,
+            format). Each dataset's page shows only the ways of getting it that work for that dataset:
+            a download in your browser, the
+            <a target="_blank" rel="noopener noreferrer" href="http://www.datalad.org">DataLad</a>
+            data management system, processing on CBRAIN, or a request for access to the repository that
+            holds it.
         </p>
         <p>
             The CONP Portal allows you to access and process data on both public and private
@@ -183,22 +179,24 @@
                 and a container engine
                 (<a target="_blank" rel="noopener noreferrer" href="http://www.docker.com">Docker</a>
                 or
-                <a target="_blank" rel="noopener noreferrer" href="https://sylabs.io/docs/">Singularity</a>)
+                <a target="_blank" rel="noopener noreferrer" href="https://apptainer.org/">Apptainer/Singularity</a>)
                 based on the
                 <a target="_blank" rel="noopener noreferrer" href="https://zenodo.org/">
                     Zenodo
                 </a>
-                ID of the tool. (If you have never used Boutiques in the past, we recommend the
-                following
+                ID of the tool (if you have never used Boutiques, we recommend
                 <a target="_blank" rel="noopener noreferrer"
                    href="https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb">this
                     tutorial</a>)
             </li>
             <li>
-                on High Perfomance Computing infrastructure via
+                through the web on Canadian High Performance Computing infrastructure via
                 <a target="_blank" rel="noopener noreferrer" href="https://mcin.ca/technology/cbrain/">CBRAIN</a>
-                or
-                <a target="_blank" rel="noopener noreferrer" href="https://clowdr.org/">Clowdr</a>
+            </li>
+            <li>
+                on a
+                <a target="_blank" rel="noopener noreferrer" href="https://alliancecan.ca/en">Digital Research Alliance of Canada</a>
+                cluster with Apptainer (step-by-step commands on each tool's page)
             </li>
         </ul>
 
