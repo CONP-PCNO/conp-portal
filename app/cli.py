@@ -300,14 +300,20 @@ def _update_datalad_objects(
             continue
 
         try:
-            with open(os.path.join(ds['path'], descriptor)) as f:
+            # Try standard UTF-8 first
+            with open(os.path.join(ds['path'], descriptor), encoding='utf-8') as f:
                 dats = json.load(f)
-        except Exception as e:
-            print("\033[91m")
-            print("[ERROR  ] Descriptor file can't be read.")
-            print(e.args)
-            print("\033[0m")
-            continue
+        except (UnicodeDecodeError, Exception):
+            try:
+                # Fallback to latin-1/cp1252 to handle legacy character encodings gracefully
+                with open(os.path.join(ds['path'], descriptor), encoding='latin-1') as f:
+                    dats = json.load(f)
+            except Exception as e:
+                print("\033[91m")
+                print("[ERROR  ] Descriptor file can't be read.")
+                print(e.args)
+                print("\033[0m")
+                continue
 
         # use dats.json data to fill the datasets table
         # avoid duplication / REPLACE instead of insert
