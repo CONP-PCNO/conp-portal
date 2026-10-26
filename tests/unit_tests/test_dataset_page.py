@@ -307,9 +307,9 @@ def test_modality_links_are_lower_case(app):
 def test_search_page_shows_30_per_page_by_default(app):
     with app.test_client() as client:
         html = client.get('/search').get_data(as_text=True)
-        assert '"max_per_page": "30"' in html and '"limit": "30"' in html
-        html = client.get('/search?max_per_page=10').get_data(as_text=True)
-        assert '"max_per_page": "10"' in html
+        assert '<option value="30" selected>' in html
+        html = client.get('/search?max_per_page=50').get_data(as_text=True)  # old parameter
+        assert '<option value="50" selected>' in html
 
 
 def test_direct_download_only_for_crawled_datasets(tmp_path):

@@ -55,52 +55,55 @@ from config import Config
 
 @search_bp.route('/search')
 def search():
-    """ Dataset Search Route
-
-        This route executes a dataset search
-
-        Args:
-            search is the search term in the GET Request
-
-        Retuns:
-            JSON containing the matching datasets
+    """ The Data page: datasets as cards with a filter sidebar, sort and
+        pages, all plain GET parameters (search, origin, access, get,
+        modality, format, linked, sort, show, page), so every view has its
+        own address. The Data page's earlier parameters (modalities,
+        formats, authorizations, cbrain, sortKey, max_per_page) still work.
     """
+    from app.search.dataset_list import (
+        FACETS,
+        PER_PAGE,
+        SORTS,
+        chosen_per_page,
+        chosen_sort,
+        dataset_card,
+        filter_cards,
+        page_links,
+        page_of,
+        selected_filters,
+    )
 
-    modalities = request.args.get('modalities')
-    if modalities is not None:
-        modalities = modalities.split(",")
+    query = (request.args.get('search') or request.args.get('q') or '').strip()
+    selected = selected_filters(request.args)
+    sort = chosen_sort(request.args)
+    per_page = chosen_per_page(request.args)
 
-    formats = request.args.get('formats')
-    if formats is not None:
-        formats = formats.split(",")
+    cards = []
+    for e in _dataset_elements(query or None, bool(current_user.is_authenticated)):
+        try:
+            cards.append(dataset_card(e))
+        except Exception:  # one odd record must not take the Data page down
+            current_app.logger.exception("Skipping dataset %s on the Data page", e.get('id'))
+    total = Dataset.query.count() or len(cards)
+    shown, facets = filter_cards(cards, selected, sort)
+    on_page, page, pages = page_of(shown, request.args.get('page'), per_page)
 
-    authorizations = request.args.get('authorizations')
-    if authorizations is not None:
-        authorizations = authorizations.split(",")
+    def link(**changes):
+        """This page's address with some parameters changed (None drops one)."""
+        args = {'search': query or None, 'sort': sort if sort != 'added' else None,
+                'show': per_page if per_page != PER_PAGE[0] else None}
+        for key, _label, _field in FACETS:
+            args[key] = selected.get(key) or None
+        args.update(changes)
+        return url_for('search.search', **{k: v for k, v in args.items() if v not in (None, [], '')})
 
-    cbrain = request.args.get('cbrain')
-    search = request.args.get('search')
-    sortComparitor = request.args.get('sortComparitor')
-    sortKey = request.args.get('sortKey')
-    # 30 datasets per page unless the link asks for something else
-    max_per_page = request.args.get('max_per_page') or '30'
-    limit = request.args.get('limit') or max_per_page
-    page = request.args.get('page')
-
-    filters = {
-        "modalities": modalities,
-        "formats": formats,
-        "authorizations": authorizations,
-        "cbrain": cbrain,
-        "search": search,
-        "sortComparitor": sortComparitor,
-        "sortKey": sortKey,
-        "max_per_page": max_per_page,
-        "limit": limit,
-        "page": page
-    }
-
-    return render_template('search.html', title='CONP | Search', user=current_user, filters=filters)
+    return render_template('search.html', title='CONP | Data', user=current_user,
+                           query=query, cards=on_page, matching=len(shown), total=total,
+                           facets=facets, sort=sort, sorts=SORTS, per_page=per_page,
+                           per_page_options=PER_PAGE, page=page, pages=pages,
+                           page_links=page_links(page, pages), link=link,
+                           filtered=bool(query or any(selected.values())))
 
 
 @search_bp.route('/dataset_logo')
@@ -278,6 +281,136 @@ def _evidence_publication_types():
         return {}
 
 
+def _dataset_elements(search_term, authorized):
+    """Every dataset matching search_term (all of them when it is empty),
+    as the dicts /dataset-search returns and the Data page lists."""
+    import logging
+
+    logger = logging.getLogger(__name__)
+    elements = []
+    # @todo:ant: add to config
+    with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-terms-mapping.json")) as f:
+        dataset_terms_mapping = json.load(f)
+        f.close()
+
+    # Query datasets
+    datasets = []
+    ix = _ensure_search_index()
+    # Element input for payload
+    with ix.searcher() as searcher:
+        # If search term exists filter results here
+        if search_term:
+            myquery = build_dataset_query(ix.schema, search_term, dataset_terms_mapping)
+            _datasets = []
+            if myquery is not None:
+                try:
+                    _datasets = list(searcher.search(myquery, limit=None))
+                except Exception as e:  # never a server error for a search
+                    logger.warning("Search failed for %r: %s", search_term, e)
+
+            ds = set()
+            ds_add = ds.add
+            datasets = [d for d in _datasets if not (d['title'] in ds or ds_add(d['title']))]
+        else:
+            datasets = searcher.documents()
+
+        evidence_publication_types = _evidence_publication_types()
+        dataset_logos = load_dataset_logos()
+        remote_logo_copies = load_remote_logo_copies()
+
+        # Get the number of views of datasets
+        views = json.loads(datasets_views())
+        downloads = json.loads(datasets_downloads())
+
+        for d in datasets:
+            dataset_metadata = Dataset.query.filter_by(dataset_id=d['id']).first()
+            if dataset_metadata is None:
+                # In the search index but not in the database (an index older
+                # than the last update): skip it rather than fail the list.
+                continue
+
+            views_nb = [v["nb_hits"] for v in views if v["dataset_id"] == d['id']]
+            download_id = os.path.basename(d['datasetPath']) + "_version"
+            downloads_nb = [
+                e["nb_hits"] for e in downloads if e["dataset_id"].startswith(download_id)
+            ]
+
+            ark_id_row = ArkId.query.filter_by(dataset_id=d['id']).first()
+            # Python 3.14 compatibility: ArkId rows may not exist for all
+            # datasets if they were added before the ARK ID generation CLI
+            # command ran. Guard against AttributeError by checking if the
+            # row exists before accessing its ark_id field.
+            ark_id = 'https://n2t.net/' + ark_id_row.ark_id if ark_id_row else None
+
+            try:
+                zipped = DatasetCache(current_app).getZipLocation(d['datasetPath'])
+            except OSError:
+                zipped = None
+
+            show_download_button = zipped is not None
+            # @todo:ant: add to config
+            # @todo: /data/ Should not be hard-coded. This is a temporary solution to get the zip location. The zip location should be stored in the database and retrieved from there.
+            zip_location = '/data/{}'.format(os.path.basename(zipped or ''))
+
+            dataset = {
+                "authorized": authorized,
+                "ark_id": ark_id,
+                "id": d['id'],
+                "title": d['title'].replace("'", "\'"),
+                "remoteUrl": dataset_metadata.remoteUrl,
+                "isPrivate": dataset_metadata.is_private,
+                "thumbnailURL": "/dataset_logo?id={}".format(d['id']),
+                "downloadPath": d['id'],
+                "URL": '?',
+                "downloads": downloads_nb,
+                "views": views_nb,
+                "dateAdded": str(dataset_metadata.date_added_to_portal.date()) if dataset_metadata.date_added_to_portal else None,
+                "dateUpdated": str(dataset_metadata.date_updated.date()),
+                "creators": parse_field(d.get('creators')),
+                "origin": d.get('origin'),
+                "size": d.get('size'),
+                "files": d.get('fileCount'),
+                "subjects": d.get('subjectCount'),
+                "formats": parse_field(d.get('formats')),
+                "modalities": parse_field(d.get('modalities')),
+                "licenses": parse_field(d.get('licenses')),
+                "version": d.get('version'),
+                "sources": parse_field(d.get('sources')),
+                "conpStatus": d.get('conpStatus'),
+                "authorizations": d.get('authorizations'),
+                "principalInvestigators": parse_field(d.get('principalInvestigators')),
+                "primaryPublications": parse_field(d.get('primaryPublications')),
+                # The index stores the logo found when it was built; a
+                # dataset with none there gets its dataset-logos.json entry,
+                # and a logo URL with a local copy gets the copy.
+                "logoFilepath": resolve_dataset_logo(
+                    d['id'], d.get('logoFilePath'), dataset_logos, remote_logo_copies
+                ),
+                "status": d.get('status'),
+                "cbrain_id": url_for(
+                    "main.redirect_to_cbrain", cbrainurl=d.get('cBrainId')
+                )
+                if d.get('cBrainId')
+                else None,
+                "showDownloadButton": show_download_button,
+                "zipLocation": zip_location,
+                "downloadOptions": d.get('downloadOptions'),
+                "registrationPage": d.get('registrationPage'),
+                "evidencePublication": d.get('evidencePublication'),
+                "evidencePublicationType": evidence_publication_types.get(
+                    (d.get('evidencePublication') or '').lower()
+                ),
+                # For the Data page only (server paths, never sent as JSON;
+                # see _public): the folder and the text it searches/lists.
+                "_fspath": d.get('datasetPath'),
+                "_description": d.get('description'),
+                "_keywords": parse_field(d.get('keywords')),
+                "_creators_text": d.get('creators'),
+            }
+            elements.append(dataset)
+    return elements
+
+
 @search_bp.route('/dataset-search', methods=['GET'])
 def dataset_search():
     """ Dataset Search Route
@@ -290,133 +423,13 @@ def dataset_search():
         Retuns:
             JSON containing the matching datasets
     """
-    import logging
-
-    logger = logging.getLogger(__name__)
-
-    if current_user.is_authenticated:
-        authorized = True
-    else:
-        authorized = False
+    authorized = bool(current_user.is_authenticated)
 
     if request.args.get('id'):
-        # Query datasets
-        datasets = Dataset.query.filter_by(
-            dataset_id=request.args.get('id')
-        ).all()
+        # One dataset (it raised a NameError here before: no elements built)
+        elements = [e for e in _dataset_elements(None, authorized) if e['id'] == request.args.get('id')]
     else:
-        # @todo:ant: add to config
-        with open(os.path.join(os.getcwd(), "app/static/datasets/dataset-terms-mapping.json")) as f:
-            dataset_terms_mapping = json.load(f)
-            f.close()
-
-        # Query datasets
-        datasets = []
-        ix = _ensure_search_index()
-        # Element input for payload
-        elements = []
-        with ix.searcher() as searcher:
-            # If search term exists filter results here
-            if request.args.get('search'):
-                search_term = request.args.get('search')
-                myquery = build_dataset_query(ix.schema, search_term, dataset_terms_mapping)
-                _datasets = []
-                if myquery is not None:
-                    try:
-                        _datasets = list(searcher.search(myquery, limit=None))
-                    except Exception as e:  # never a server error for a search
-                        logger.warning("Search failed for %r: %s", search_term, e)
-
-                ds = set()
-                ds_add = ds.add
-                datasets = [d for d in _datasets if not (d['title'] in ds or ds_add(d['title']))]
-            else:
-                datasets = searcher.documents()
-
-            evidence_publication_types = _evidence_publication_types()
-            dataset_logos = load_dataset_logos()
-            remote_logo_copies = load_remote_logo_copies()
-
-            # Get the number of views of datasets
-            views = json.loads(datasets_views())
-            downloads = json.loads(datasets_downloads())
-
-            for d in datasets:
-                dataset_metadata = Dataset.query.filter_by(dataset_id=d['id']).first()
-
-                views_nb = [v["nb_hits"] for v in views if v["dataset_id"] == d['id']]
-                download_id = os.path.basename(d['datasetPath']) + "_version"
-                downloads_nb = [
-                    e["nb_hits"] for e in downloads if e["dataset_id"].startswith(download_id)
-                ]
-
-                ark_id_row = ArkId.query.filter_by(dataset_id=d['id']).first()
-                # Python 3.14 compatibility: ArkId rows may not exist for all
-                # datasets if they were added before the ARK ID generation CLI
-                # command ran. Guard against AttributeError by checking if the
-                # row exists before accessing its ark_id field.
-                ark_id = 'https://n2t.net/' + ark_id_row.ark_id if ark_id_row else None
-
-                try:
-                    zipped = DatasetCache(current_app).getZipLocation(d['datasetPath'])
-                except OSError:
-                    zipped = None
-
-                show_download_button = zipped is not None
-                # @todo:ant: add to config
-                # @todo: /data/ Should not be hard-coded. This is a temporary solution to get the zip location. The zip location should be stored in the database and retrieved from there.
-                zip_location = '/data/{}'.format(os.path.basename(zipped or ''))
-
-                dataset = {
-                    "authorized": authorized,
-                    "ark_id": ark_id,
-                    "id": d['id'],
-                    "title": d['title'].replace("'", "\'"),
-                    "remoteUrl": dataset_metadata.remoteUrl,
-                    "isPrivate": dataset_metadata.is_private,
-                    "thumbnailURL": "/dataset_logo?id={}".format(d['id']),
-                    "downloadPath": d['id'],
-                    "URL": '?',
-                    "downloads": downloads_nb,
-                    "views": views_nb,
-                    "dateAdded": str(dataset_metadata.date_added_to_portal.date()) if dataset_metadata.date_added_to_portal else None,
-                    "dateUpdated": str(dataset_metadata.date_updated.date()),
-                    "creators": parse_field(d.get('creators')),
-                    "origin": d.get('origin'),
-                    "size": d.get('size'),
-                    "files": d.get('fileCount'),
-                    "subjects": d.get('subjectCount'),
-                    "formats": parse_field(d.get('formats')),
-                    "modalities": parse_field(d.get('modalities')),
-                    "licenses": parse_field(d.get('licenses')),
-                    "version": d.get('version'),
-                    "sources": parse_field(d.get('sources')),
-                    "conpStatus": d.get('conpStatus'),
-                    "authorizations": d.get('authorizations'),
-                    "principalInvestigators": parse_field(d.get('principalInvestigators')),
-                    "primaryPublications": parse_field(d.get('primaryPublications')),
-                    # The index stores the logo found when it was built; a
-                    # dataset with none there gets its dataset-logos.json entry,
-                    # and a logo URL with a local copy gets the copy.
-                    "logoFilepath": resolve_dataset_logo(
-                        d['id'], d.get('logoFilePath'), dataset_logos, remote_logo_copies
-                    ),
-                    "status": d.get('status'),
-                    "cbrain_id": url_for(
-                        "main.redirect_to_cbrain", cbrainurl=d.get('cBrainId')
-                    )
-                    if d.get('cBrainId')
-                    else None,
-                    "showDownloadButton": show_download_button,
-                    "zipLocation": zip_location,
-                    "downloadOptions": d.get('downloadOptions'),
-                    "registrationPage": d.get('registrationPage'),
-                    "evidencePublication": d.get('evidencePublication'),
-                    "evidencePublicationType": evidence_publication_types.get(
-                        (d.get('evidencePublication') or '').lower()
-                    ),
-                }
-                elements.append(dataset)
+        elements = _dataset_elements(request.args.get('search'), authorized)
 
     modalities = []
     for e in elements:
@@ -672,10 +685,15 @@ def dataset_search():
                 "values": authorizations
             }
         ],
-        "elements": paginated
+        "elements": [_public(e) for e in paginated]
     }
 
     return json.dumps(payload)
+
+
+def _public(element):
+    """A dataset dict without its private keys (server paths)."""
+    return {k: v for k, v in element.items() if not k.startswith('_')}
 
 
 @search_bp.route('/dataset', methods=['GET'])

@@ -16,7 +16,7 @@
 {% block og_description %}Ready-to-run experimental tasks, with their stimuli and scripts, on the Canadian Open Neuroscience Platform (CONP) Portal.{% endblock %}
 
 {% block styles %} {{ super() }}
-<link href="{{ static_v('css/experiments.css') }}" rel="stylesheet" />
+<link href="{{ static_v('css/list-page.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block scripts %} {{ super() }}
@@ -29,7 +29,7 @@
     form.querySelectorAll('input[type="checkbox"], select').forEach(function (el) {
       el.addEventListener('change', function () { form.submit(); });
     });
-    var apply = document.getElementById('ex-apply');
+    var apply = document.getElementById('lp-apply');
     if (apply) { apply.hidden = true; }
   });
 </script>
@@ -40,35 +40,38 @@
 {% endblock %}
 
 {% block appcontent %}
-<form class="ex-page" id="ex-form" method="get" action="{{ url_for('experiments.home') }}" role="search">
-  <p class="ex-intro">Ready-to-run experimental tasks, with their stimuli and scripts.</p>
+<form class="lp-page" id="ex-form" method="get" action="{{ url_for('experiments.home') }}" role="search">
+  <p class="lp-intro">Ready-to-run experimental tasks, with their stimuli and scripts.</p>
 
-  <div class="ex-search">
+  <div class="lp-search">
     <label for="ex-q" class="visually-hidden">Search experiments</label>
     <input id="ex-q" name="q" type="search" value="{{ query }}" placeholder="Search by name, keyword, function, software…" />
-    <button type="submit">
+    <button type="submit" aria-label="Search">
       <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      Search
+      <span class="lp-search-label">Search</span>
     </button>
   </div>
 
-  <div class="ex-layout">
-    <aside class="ex-filters" aria-label="Filters">
+  <div class="lp-layout">
+    <details class="lp-filterbox" id="lp-filterbox" open>
+      <summary>Filters</summary>
+      <div class="lp-filters" role="group" aria-label="Filters">
       {% for facet in facets %}
       <fieldset>
         <legend>{{ facet.label }}</legend>
         {% for item in facet['items'] %}
-        <label><input type="checkbox" name="{{ facet.key }}" value="{{ item.value }}"{% if item.checked %} checked{% endif %} /><span>{{ item.value }}</span><span class="ex-count">{{ item.count }}</span></label>
+        <label><input type="checkbox" name="{{ facet.key }}" value="{{ item.value }}"{% if item.checked %} checked{% endif %} /><span>{{ item.value }}</span><span class="lp-count">{{ item.count }}</span></label>
         {% endfor %}
       </fieldset>
       {% endfor %}
-      <button type="submit" id="ex-apply" class="ex-apply">Apply</button>
-      {% if filtered %}<a class="ex-clear" href="{{ url_for('experiments.home') }}">Clear search and filters</a>{% endif %}
-    </aside>
+      <button type="submit" id="lp-apply" class="lp-apply">Apply</button>
+      {% if filtered %}<a class="lp-clear" href="{{ url_for('experiments.home') }}">Clear search and filters</a>{% endif %}
+      </div>
+    </details>
 
-    <section class="ex-results" aria-label="Results">
-      <div class="ex-bar">
-        <p><strong>{{ cards | length }} experiment{{ 's' if cards | length != 1 }}</strong>{% if filtered %} <span class="ex-muted">of {{ total }}</span>{% endif %}</p>
+    <section class="lp-results" aria-label="Results">
+      <div class="lp-bar">
+        <p><strong>{{ cards | length }} experiment{{ 's' if cards | length != 1 }}</strong>{% if filtered %} <span class="lp-muted">of {{ total }}</span>{% endif %}</p>
         <label>Sort
           <select name="sort">
             {% for value, label in sorts %}<option value="{{ value }}"{% if sort == value %} selected{% endif %}>{{ label }}</option>{% endfor %}
@@ -77,16 +80,16 @@
       </div>
 
       {% for c in cards %}
-      <article class="ex-card">
-        <img class="ex-logo" src="{{ c.logo }}" alt="" loading="lazy" />
-        <div class="ex-body">
-          <div class="ex-titlerow">
+      <article class="lp-card">
+        <img class="lp-logo" src="{{ c.logo }}" alt="" loading="lazy" />
+        <div class="lp-body">
+          <div class="lp-titlerow">
             <h3><a href="{{ c.url }}">{{ c.title }}</a></h3>
-            {% if c.canadian %}<span class="ex-origin"><img src="{{ url_for('static', filename='img/canada.svg') }}" alt="" width="14" height="14" />Canadian</span>{% endif %}
+            {% if c.canadian %}<span class="lp-origin"><img src="{{ url_for('static', filename='img/canada.svg') }}" alt="" width="14" height="14" />Canadian</span>{% endif %}
           </div>
-          <p class="ex-sub">{{ c.creators[:3] | join(', ') }}{% if c.creators | length > 3 %}, et al.{% endif %}{% if c.added %} · added {{ c.added }}{% endif %}{% if c.version %} · version {{ c.version }}{% endif %}</p>
-          <p class="ex-desc">{{ c.description | striptags }}</p>
-          <ul class="ex-facts" aria-label="Key facts">
+          <p class="lp-sub">{{ c.creators[:3] | join(', ') }}{% if c.creators | length > 3 %}, et al.{% endif %}{% if c.added %} · added {{ c.added }}{% endif %}{% if c.version %} · version {{ c.version }}{% endif %}</p>
+          <p class="lp-desc">{{ c.description | striptags }}</p>
+          <ul class="lp-facts" aria-label="Key facts">
             {% if c.modalities %}<li>{{ c.modalities | join(', ') }}</li>{% endif %}
             {% if c.software_label %}<li>{{ c.software_label }}</li>{% endif %}
             {% if c.size %}<li>{{ c.size | replace('.0 ', ' ') }}</li>{% endif %}
@@ -94,7 +97,7 @@
         </div>
       </article>
       {% else %}
-      <p class="ex-none">No experiment matches. <a href="{{ url_for('experiments.home') }}">Show all experiments</a>.</p>
+      <p class="lp-none">No experiment matches. <a href="{{ url_for('experiments.home') }}">Show all experiments</a>.</p>
       {% endfor %}
     </section>
   </div>

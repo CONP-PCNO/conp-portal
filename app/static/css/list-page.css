@@ -1,0 +1,80 @@
+/* List pages with a filter sidebar (option A of the 2026 Portal mockups):
+   the Data page (search.html) and the Experiments list
+   (experiments/search.html); Tools can adopt it. */
+.lp-page { max-width: 1240px; }
+.lp-intro { margin: 0 0 14px; color: var(--conp-grey-4, #5b6270); }
+.lp-search { display: flex; max-width: 820px; }
+.lp-search input { flex: 1 1 auto; min-width: 0; height: 48px; padding: 0 16px; font: inherit; border: 1px solid #b9c0ca; border-right: 0; border-radius: 8px 0 0 8px; background: #fff; }
+.lp-search button { height: 48px; padding: 0 22px; font: inherit; font-weight: 600; color: #fff; background: #177245; border: 1px solid #177245; border-radius: 0 8px 8px 0; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.lp-layout { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 24px; align-items: flex-start; }
+
+/* Sidebar: open on wide screens; on phones a "Filters" button opens it. */
+.lp-filterbox { flex: 1 1 220px; max-width: 260px; }
+.lp-filterbox > summary { display: none; }
+.lp-filters { display: flex; flex-direction: column; gap: 20px; }
+.lp-filters fieldset { border: 0; margin: 0; padding: 0; }
+.lp-filters legend { font-size: .8rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #3a404c; margin-bottom: 6px; }
+.lp-filters label { display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: .92rem; cursor: pointer; margin: 0; }
+.lp-filters input[type="checkbox"] { width: 17px; height: 17px; margin: 0; flex: none; accent-color: #177245; }
+.lp-filters label span:first-of-type { flex: 1 1 auto; }
+.lp-count { color: #5b6270; font-size: .82rem; }
+.lp-more > summary { cursor: pointer; font-size: .88rem; font-weight: 600; color: #1a5fb4; margin-top: 4px; width: fit-content; }
+.lp-more[open] > summary { margin-bottom: 4px; }
+.lp-apply { align-self: flex-start; padding: 6px 14px; font: inherit; font-weight: 600; border: 1px solid #177245; color: #177245; background: #fff; border-radius: 6px; }
+.lp-clear { font-size: .9rem; font-weight: 600; }
+
+.lp-results { flex: 999 1 560px; min-width: 0; }
+.lp-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding-bottom: 12px; border-bottom: 1px solid #dfe3e8; }
+.lp-bar p { margin: 0; }
+.lp-bar-controls { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.lp-bar label { display: flex; align-items: center; gap: 8px; color: #3a404c; font-size: .9rem; margin: 0; }
+.lp-bar select { font: inherit; height: 36px; padding: 0 10px; border: 1px solid #b9c0ca; border-radius: 6px; background: #fff; }
+.lp-muted { color: #5b6270; font-weight: 400; }
+
+.lp-card { display: flex; gap: 20px; background: #fff; border: 1px solid #e2e5ea; border-radius: 10px; padding: 18px 20px; margin-top: 14px; }
+.lp-logo { width: 88px; height: 88px; object-fit: contain; flex: none; }
+.lp-body { flex: 1 1 auto; min-width: 0; }
+.lp-titlerow { display: flex; gap: 8px 12px; align-items: flex-start; flex-wrap: wrap; }
+.lp-titlerow h3 { margin: 0; font-size: 1.12rem; font-weight: 700; line-height: 1.3; flex: 1 1 320px; min-width: 0; }
+.lp-titlerow h3 a { color: #1d2129; text-decoration: none; }
+.lp-titlerow h3 a:hover { text-decoration: underline; }
+.lp-tags { display: inline-flex; flex-wrap: wrap; gap: 6px; flex: none; }
+.lp-origin, .lp-open, .lp-account { flex: none; display: inline-flex; align-items: center; gap: 5px; font-size: .8rem; font-weight: 600; border-radius: 999px; padding: 3px 10px; }
+.lp-origin { color: #8a1520; background: #fbeaec; }
+.lp-open { color: #14623a; background: #e3f3ea; }
+.lp-account { color: #7a4a00; background: #fdf0d8; }
+.lp-sub { margin: 3px 0 0; font-size: .85rem; color: #5b6270; }
+.lp-desc { margin: 8px 0 0; font-size: .92rem; color: #2b303a; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.lp-facts { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; font-size: .85rem; color: #3a404c; }
+.lp-facts li { display: inline-flex; align-items: center; gap: 5px; border: 1px solid #dfe3e8; border-radius: 6px; padding: 2px 9px; background: #f7f8fa; }
+.lp-icon { width: 14px; height: 14px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.lp-get { margin-top: 12px; padding-top: 10px; border-top: 1px solid #eef0f3; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; font-size: .88rem; font-weight: 600; color: #3a404c; }
+.lp-get > span { display: inline-flex; align-items: center; gap: 5px; }
+.lp-get-label { color: #5b6270; }
+.lp-get-download { color: #14623a; }
+.lp-get-request { color: #7a4a00; }
+.lp-get-cbrain img { height: 14px; width: auto; }
+.lp-evidence { margin-left: auto; font-weight: 500; background: #f0f2f5; border-radius: 6px; padding: 2px 8px; }
+.lp-evidence img { width: 16px; height: 16px; }
+.lp-none { margin-top: 18px; }
+
+.lp-pages { display: flex; gap: 6px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 24px; font-size: .9rem; }
+.lp-pages a, .lp-pages span { min-width: 40px; height: 40px; padding: 0 12px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; text-decoration: none; }
+.lp-pages a { border: 1px solid #dfe3e8; background: #fff; color: #1d2129; }
+.lp-pages a:hover { border-color: #b9c0ca; }
+.lp-pages a[aria-current="page"] { background: #1d2129; border-color: #1d2129; color: #fff; font-weight: 600; }
+.lp-pages .lp-gap { min-width: 0; padding: 0 4px; color: #5b6270; }
+
+@media (max-width: 899px) {
+  .lp-filterbox { flex-basis: 100%; max-width: none; }
+  .lp-filterbox > summary { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; font-weight: 600; border: 1px solid #b9c0ca; border-radius: 8px; background: #fff; cursor: pointer; list-style: none; }
+  .lp-filterbox > summary::-webkit-details-marker { display: none; }
+  .lp-filterbox[open] > summary { margin-bottom: 14px; }
+}
+@media (max-width: 600px) {
+  .lp-search button { padding: 0 16px; }
+  .lp-search-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .lp-card { flex-direction: column; gap: 12px; }
+  .lp-logo { width: 64px; height: 64px; }
+  .lp-evidence { margin-left: 0; }
+}
