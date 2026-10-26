@@ -60,6 +60,9 @@
 
 {% block appcontent %}
 <article class="tp-card" data-tool-title="{{ pipeline.title }}">
+  {%- set tools_url = url_for('pipelines.pipelines') %}
+  {%- set back = request.referrer if request.referrer and request.referrer.startswith(request.host_url ~ 'pipelines') else tools_url %}
+  <nav aria-label="Breadcrumb"><p class="page-crumbs"><a href="{{ back }}">Tools &amp; Pipelines</a> <span aria-hidden="true">›</span> <span aria-current="page">{{ pipeline.title }}</span></p></nav>
   <div class="tp-head">
     {% if pipeline.icon and pipeline.icon.src %}<img class="tp-logo" src="{{ pipeline.icon.src }}" alt="" title="{{ pipeline.icon.label }}" />{% endif %}
     <div class="tp-main">

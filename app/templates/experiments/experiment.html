@@ -60,7 +60,9 @@
 
 {% block appcontent %}
 <article class="dp-card" data-dataset-id="{{ c.slug }}" data-dataset-title="{{ c.title }}">
-  <p class="dp-crumbs"><a href="{{ url_for('experiments.home') }}">Experiments</a> <span aria-hidden="true">›</span> <span>{{ c.title }}</span></p>
+  {%- set experiments_url = url_for('experiments.home') %}
+  {%- set back = request.referrer if request.referrer and request.referrer.startswith(request.host_url ~ 'experiments/') and '/view/' not in request.referrer else experiments_url %}
+  <nav aria-label="Breadcrumb"><p class="page-crumbs"><a href="{{ back }}">Experiments</a> <span aria-hidden="true">›</span> <span aria-current="page">{{ c.title }}</span></p></nav>
   <div class="dp-head">
     <div class="dp-side">
       <img class="dp-logo" src="{{ c.logo }}" alt="" />

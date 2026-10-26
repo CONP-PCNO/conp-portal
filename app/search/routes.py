@@ -7,6 +7,7 @@ import os
 import re
 
 from flask import (
+    abort,
     current_app,
     redirect,
     render_template,
@@ -695,6 +696,8 @@ def dataset_info():
 
     # Query dataset
     d = Dataset.query.filter_by(dataset_id=dataset_id).first()
+    if d is None:
+        abort(404)  # an unknown id (old link, typo) is not found, not a server error
     datsdataset = DATSDataset(d.fspath, dataset_id=d.dataset_id)
 
     if current_user.is_authenticated:
