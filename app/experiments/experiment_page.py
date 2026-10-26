@@ -18,6 +18,7 @@ from app.search.dataset_page import (
     dataset_doi,
     host_name,
     licence_badges,
+    osf_zip_url,
     publication_citations,
 )
 
@@ -65,6 +66,19 @@ def logo_url(exp, dats):
     return url_for('static', filename='img/experiments/default.svg')
 
 
+def experiment_download(exp, dats):
+    """The browser download for an experiment: the Portal's own .zip when the
+    server has one, else OSF's zip of the authors' record for an open
+    experiment on OSF (the address OSF agreed the CONP may link to).
+    Returns {"url", "host"} or None."""
+    if os.path.isfile((exp.fspath or '') + '.zip'):
+        return {'url': url_for('experiments.download', experiment_id=exp.id), 'host': None}
+    if str(dats.privacy or '').strip().lower() not in ('open', 'public', ''):
+        return None
+    osf = osf_zip_url(dats.sources)
+    return {'url': osf, 'host': 'OSF'} if osf else None
+
+
 def experiment_card(exp):
     """What the Experiments list shows for one experiment (and filters on)."""
     dats = DATSExperiment(exp.fspath)
@@ -89,7 +103,7 @@ def experiment_card(exp):
         'size': _size(dats),
         'keywords': [str(k) for k in (dats.keywords or [])],
         # The list's "Get the task" row: the ways the experiment page offers.
-        'zip': os.path.isfile((exp.fspath or '') + '.zip'),
+        'zip': bool(experiment_download(exp, dats)),
         'open': str(dats.privacy or '').strip().lower() == 'open',
         'source_label': _join([
             (host_name(dats.sources) or 'source record') if str(dats.sources or '').startswith('http') else None,
@@ -153,7 +167,6 @@ def experiment_page(exp, readme_html=''):
     year = created_year(descriptor) or (card['added'] or '')[:4] or None
     creators = card['creators']
     version = card['version']
-    zip_path = (exp.fspath or '') + '.zip'
     software = [software_short(s) for s in (dats.software_requirements or []) if s]
     devices = _flat(dats.device_requirements)
     other = dats.additional_requirements
@@ -178,7 +191,8 @@ def experiment_page(exp, readme_html=''):
             ('Set-ups', _join(card['modalities'])),
             ('Accessibility', _join(_flat(dats.accessibility))),
         ) if row[1]],
-        'download': url_for('experiments.download', experiment_id=exp.id) if os.path.isfile(zip_path) else None,
+        'download': (experiment_download(exp, dats) or {}).get('url'),
+        'download_host': (experiment_download(exp, dats) or {}).get('host'),
         'source_url': ('https://doi.org/' + doi) if doi else (dats.sources if str(dats.sources or '').startswith('http') else None),
         'source_name': publisher or host_name(dats.sources),
         'remote_url': remote if remote.startswith('http') else None,
