@@ -85,3 +85,13 @@ body .content-main .lp-evidence img { width: 16px; height: 16px; margin: 0; }
   body .content-main img.lp-logo { width: 120px; height: 90px; object-position: left center; }
   .lp-evidence { margin-left: 0; }
 }
+
+/* Tools list (pipelines.html) */
+.lp-family { flex: none; display: inline-flex; align-items: center; font-size: .8rem; font-weight: 600; color: #3a404c; background: #eef1f5; border-radius: 999px; padding: 3px 10px; }
+.lp-option { border-top: 1px solid #dfe3e8 !important; padding-top: 10px !important; }
+.lp-related { margin-top: 6px; font-size: .88rem; }
+.lp-related > summary { cursor: pointer; font-weight: 600; color: #1a5fb4; width: fit-content; }
+.lp-related ul { margin: 6px 0 0; padding-left: 18px; columns: 2 220px; column-gap: 24px; }
+.lp-related li { break-inside: avoid; }
+body .content-main .lp-get-boutiques img { width: 16px; height: 16px; margin: 0; }
+.lp-get .lp-muted { font-weight: 500; margin-left: 4px; }

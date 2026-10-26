@@ -69,8 +69,14 @@ def home():
     selected = {key: request.args.getlist(key) for key, _label, _field in FACETS}
     cards = experiment_cards()
     shown, facets = filter_cards(cards, query, selected, sort)
+    # Type-ahead terms for the search box: titles, functions, modalities,
+    # software, languages, keywords.
+    words = set()
+    for c in cards:
+        words.update([c['title']] + c['functions'] + c['modalities'] + c['software'] + c['languages'] + c['keywords'])
+    suggest_terms = sorted((t for t in words if t), key=str.lower)
     return render_template("experiments/search.html", cards=shown, total=len(cards), facets=facets,
-                           query=query, sort=sort, sorts=SORTS,
+                           query=query, sort=sort, sorts=SORTS, suggest_terms=suggest_terms,
                            filtered=bool(query or any(selected.values())))
 
 

@@ -1,37 +1,169 @@
 {% extends 'common/base_main.html' %}
 
-<!-- Head Block -->
+{#
+  Tools & Pipelines list (2026 redesign, option A, the Data page pattern):
+  a search box, filters (runs on, software, domain, container) and one card
+  per tool, with related descriptors grouped under their most downloaded
+  one. Plain GET parameters; the conp-react DataTable is no longer used.
+#}
+
+{% macro icon(name) -%}
+<svg class="lp-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+{%- if name == 'domain' -%}<path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M8 12h8"/>
+{%- elif name == 'container' -%}<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/>
+{%- elif name == 'inputs' -%}<path d="M4 12h12M12 6l6 6-6 6"/>
+{%- elif name == 'downloads' -%}<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>
+{%- elif name == 'cluster' -%}<rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/><path d="M7 7h.01M7 17h.01"/>
+{%- elif name == 'filter' -%}<path d="M4 6h16M7 12h10M10 18h4"/>
+{%- endif -%}
+</svg>
+{%- endmacro %}
+
 {% block head %} {{ super() }}
-<title>CONP Portal | Tools & Pipelines Search</title>
+<title>CONP Portal | Tools &amp; Pipelines</title>
+{% endblock %}
+
+{% block og_title %}Tools &amp; Pipelines | CONP Portal{% endblock %}
+{% block og_description %}Neuroscience tools with Boutiques descriptors on the Canadian Open Neuroscience Platform (CONP) Portal: run them on CBRAIN, on your computer, or on an Alliance cluster.{% endblock %}
+
+{% block styles %} {{ super() }}
+<link href="{{ static_v('css/list-page.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block scripts %} {{ super() }}
-<script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>
-<script src=" {{ url_for('static',filename='v1/js/react-dom.development-16.11.0.js') }}"></script>
-<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<script src="{{ static_v('js/list-suggest.js') }}" defer></script>
+<script>
+  // Filters, sort and page size apply as soon as they change (the Apply
+  // button is for browsers without scripts). On phones the filters start
+  // closed unless some are ticked.
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('lp-form');
+    if (!form) { return; }
+    form.querySelectorAll('input[type="checkbox"], select').forEach(function (el) {
+      el.addEventListener('change', function () { form.submit(); });
+    });
+    var apply = document.getElementById('lp-apply');
+    if (apply) { apply.hidden = true; }
+    var box = document.getElementById('lp-filterbox');
+    if (box && window.matchMedia('(max-width: 899px)').matches && !box.querySelector('input:checked')) {
+      box.open = false;
+    }
+  });
+</script>
 {% endblock %}
-
-<!-- Title Block -->
 
 {% block contenttitle %}
-<h2>Tools & Pipelines Search</h2>
+<h2>Tools &amp; Pipelines</h2>
 {% endblock %}
 
-<!-- Content Block -->
-
 {% block appcontent %}
-<div>
-  <div id="pipelines-datatable-mount"></div>
-  <script type="text/javascript">
-    const reactElement = React.createElement(CONPReact.DataTableContainer, {
-      endpointURL: "{{ url_for('pipelines.pipeline_search') }}",
-      imagePath: "/static/img",
-      renderElement: CONPReact.PipelineElement,
-      complementEndpointUrl: "{{ url_for('search.dataset_search') }}",
-      filters: {{ filters|tojson }}
-    });
-    ReactDOM.render(reactElement, document.querySelector("#pipelines-datatable-mount"));
-  </script>
-</div>
+<form class="lp-page" id="lp-form" method="get" action="{{ url_for('pipelines.pipelines') }}" role="search">
+  <p class="lp-intro">{{ total }} tools with Boutiques descriptors: run them on CBRAIN, on your computer, or on an Alliance cluster.</p>
+
+  <div class="lp-search">
+    <label for="lp-q" class="visually-hidden">Search tools</label>
+    <input id="lp-q" name="search" type="search" value="{{ query }}" placeholder="Search by name, software, author…"
+           autocomplete="off" list="lp-suggestions" data-suggest-terms="lp-terms" />
+    <datalist id="lp-suggestions"></datalist>
+    <script type="application/json" id="lp-terms">{{ suggest_terms | tojson }}</script>
+    <button type="submit" aria-label="Search">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="lp-search-label">Search</span>
+    </button>
+  </div>
+
+  <div class="lp-layout">
+    <details class="lp-filterbox" id="lp-filterbox" open>
+      <summary>{{ icon('filter') }}Filters</summary>
+      <div class="lp-filters" role="group" aria-label="Filters">
+        {% for facet in facets %}
+        <fieldset>
+          <legend>{{ facet.label }}</legend>
+          {% for item in facet['items'] %}
+          <label><input type="checkbox" name="{{ facet.key }}" value="{{ item.value }}"{% if item.checked %} checked{% endif %} /><span>{{ item.value }}</span><span class="lp-count">{{ item.count }}</span></label>
+          {% endfor %}
+          {% if facet.more %}
+          <details class="lp-more">
+            <summary>More ({{ facet.more | length }})</summary>
+            {% for item in facet.more %}
+            <label><input type="checkbox" name="{{ facet.key }}" value="{{ item.value }}" /><span>{{ item.value }}</span><span class="lp-count">{{ item.count }}</span></label>
+            {% endfor %}
+          </details>
+          {% endif %}
+        </fieldset>
+        {% endfor %}
+        <fieldset class="lp-option">
+          <label><input type="checkbox" name="separate" value="1"{% if separate %} checked{% endif %} /><span>Show related descriptors separately</span></label>
+        </fieldset>
+        <button type="submit" id="lp-apply" class="lp-apply">Apply</button>
+        {% if filtered %}<a class="lp-clear" href="{{ url_for('pipelines.pipelines') }}">Clear search and filters</a>{% endif %}
+      </div>
+    </details>
+
+    <section class="lp-results" aria-label="Results">
+      <div class="lp-bar">
+        <p><strong>{{ matching }} tool{{ 's' if matching != 1 }}</strong>{% if filtered %} <span class="lp-muted">of {{ total }}</span>{% endif %}{% if entries != matching %} <span class="lp-muted">· {{ entries }} cards, related descriptors grouped</span>{% endif %}</p>
+        <div class="lp-bar-controls">
+          <label>Sort
+            <select name="sort">
+              {% for value, label in sorts %}<option value="{{ value }}"{% if sort == value %} selected{% endif %}>{{ label }}</option>{% endfor %}
+            </select>
+          </label>
+          <label>Show
+            <select name="show">
+              {% for n in per_page_options %}<option value="{{ n }}"{% if per_page == n %} selected{% endif %}>{{ n }}</option>{% endfor %}
+            </select>
+          </label>
+        </div>
+      </div>
+
+      {% for c in cards %}
+      <article class="lp-card">
+        {% if c.icon %}<img class="lp-logo" src="{{ c.icon }}" alt="" loading="lazy" />{% endif %}
+        <div class="lp-body">
+          <div class="lp-titlerow">
+            <h3><a href="{{ c.url }}">{{ c.title }}</a></h3>
+            {% if c.family %}<span class="lp-tags"><span class="lp-family">{{ c.family }}</span></span>{% endif %}
+          </div>
+          <p class="lp-sub">{{ c.author }}{% if c.published %}{{ ' · ' if c.author }}published {{ c.published }}{% endif %}{% if c.version %} · version {{ c.version }}{% endif %}</p>
+          {% if c.description %}<p class="lp-desc">{{ c.description }}</p>{% endif %}
+          {% if c.related %}
+          <details class="lp-related">
+            <summary>+ {{ c.related | length }} related descriptor{{ 's' if c.related | length != 1 }}</summary>
+            <ul>{% for r in c.related %}<li><a href="{{ r.url }}">{{ r.title }}</a></li>{% endfor %}</ul>
+          </details>
+          {% endif %}
+          <ul class="lp-facts" aria-label="Key facts">
+            <li>{{ icon('domain') }}<span class="visually-hidden">Domain: </span>{{ c.domains | join(', ') if c.domains else 'Domain not stated' }}</li>
+            {% if c.container %}<li>{{ icon('container') }}<span class="visually-hidden">Container: </span>{{ c.container }}</li>{% endif %}
+            {% if c.inputs %}<li>{{ icon('inputs') }}{{ c.inputs }} input{{ 's' if c.inputs != 1 }}</li>{% endif %}
+            <li>{{ icon('downloads') }}{{ '{:,}'.format(c.downloads) }} download{{ 's' if c.downloads != 1 }}</li>
+          </ul>
+          <div class="lp-get">
+            <span class="lp-get-label">Run it</span>
+            {#- Each way opens the tool page at that way under "Ways to run it", which glows briefly. #}
+            {% if c.cbrain %}<a class="lp-get-cbrain lp-get-download" href="{{ c.url }}#cbrain">On <img src="{{ url_for('static', filename='img/cbrain-long-logo-blue.png') }}" alt="CBRAIN" />{% if c.cbrain_label %}<span class="lp-muted">{{ c.cbrain_label }}</span>{% endif %}</a>{% endif %}
+            <a class="lp-get-boutiques" href="{{ c.url }}#boutiques"><img src="{{ url_for('static', filename='img/boutiques.png') }}" alt="" />On your computer</a>
+            {% if c.cluster %}<a href="{{ c.url }}#hpc">{{ icon('cluster') }}Alliance cluster</a>{% endif %}
+          </div>
+        </div>
+      </article>
+      {% else %}
+      <p class="lp-none">No tool matches. <a href="{{ url_for('pipelines.pipelines') }}">Show all tools</a>.</p>
+      {% endfor %}
+
+      {% if pages > 1 %}
+      <nav class="lp-pages" aria-label="Pages">
+        {% if page > 1 %}<a href="{{ link(page=page - 1) }}" rel="prev">Previous</a>{% endif %}
+        {% for n in page_links %}
+          {% if n is none %}<span class="lp-gap" aria-hidden="true">…</span>
+          {% elif n == page %}<a href="{{ link(page=n) }}" aria-current="page">{{ n }}</a>
+          {% else %}<a href="{{ link(page=n) }}">{{ n }}</a>{% endif %}
+        {% endfor %}
+        {% if page < pages %}<a href="{{ link(page=page + 1) }}" rel="next">Next</a>{% endif %}
+      </nav>
+      {% endif %}
+    </section>
+  </div>
+</form>
 {% endblock %}
