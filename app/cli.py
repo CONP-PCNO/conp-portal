@@ -325,7 +325,7 @@ def _update_datalad_objects(
         createDate = datetime.utcnow()
         try:
             createTimeStamp = os.popen(
-                "git -C {} log --pretty=format:%ct --reverse | head -1".format(ds['path'])).read()
+                "git -C '{}' log --pretty=format:%ct --reverse | head -1".format(ds['path'])).read()
             createDate = datetime.fromtimestamp(int(createTimeStamp))
         except Exception:
             print("[ERROR  ] Create Date couldnt be read.")
@@ -333,8 +333,8 @@ def _update_datalad_objects(
         firstMergeDate = datetime.utcnow()
         try:
             firstMergeTimeStamp = os.popen(
-                "git -C {} log --pretty=format:%ct --reverse {} | head -1".format(
-                    app.config['DATA_PATH'] + f"/{repo_name}",
+                "git -C '{}' log --pretty=format:%ct --reverse '{}' | head -1".format(
+                    app.config['DATA_PATH'],
                     ds['path']
                 )).read()
             firstMergeDate = datetime.fromtimestamp(int(firstMergeTimeStamp))
@@ -345,7 +345,7 @@ def _update_datalad_objects(
         updateDate = datetime.utcnow()
         try:
             createTimeStamp = os.popen(
-                "git -C {} log --pretty=format:%ct | head -1".format(ds['path'])).read()
+                "git -C '{}' log --pretty=format:%ct | head -1".format(ds['path'])).read()
             updateDate = datetime.fromtimestamp(int(createTimeStamp))
         except Exception:
             print("[ERROR  ] Update Date couldnt be read.")
@@ -354,7 +354,7 @@ def _update_datalad_objects(
         remoteUrl = None
         try:
             remoteUrl = os.popen(
-                "git -C {} config --get remote.origin.url".format(ds['path'])).read()
+                "git -C '{}' config --get remote.origin.url".format(ds['path'])).read()
         except Exception:
             print("[ERROR  ] Remote URL couldnt be read.")
 
