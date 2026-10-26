@@ -33,6 +33,29 @@ def test_container_info_official_and_other_registry():
     assert container_info(None) is None
 
 
+def test_container_info_registry_spellings_all_build_with_apptainer():
+    # Docker Hub named by host: these 40 tools had no Alliance section
+    for host in ("index.docker.io", "docker.io", "hub.docker.com", "index.docker.io/"):
+        info = container_info({"image": "mcin/docker-fsl:latest", "index": host, "type": "docker"})
+        assert info["pull"] == "docker://mcin/docker-fsl:latest"
+        assert info["reference"] == "docker://mcin/docker-fsl:latest"
+        assert info["hub_url"] == "https://hub.docker.com/r/mcin/docker-fsl"
+        assert info["sif"] == "docker-fsl_latest.sif"
+    # another registry, already in the image name
+    ghcr = container_info({"image": "ghcr.io/rob-luke/app:v0.3.8", "index": "ghcr.io", "type": "docker"})
+    assert ghcr["pull"] == "docker://ghcr.io/rob-luke/app:v0.3.8" and ghcr["hub_url"] is None
+    # another registry, not in the image name
+    quay = container_info({"image": "org/tool:1", "index": "quay.io", "type": "docker"})
+    assert quay["pull"] == "docker://quay.io/org/tool:1"
+    # "docker:<image>:<tag>" in the index carries the whole reference
+    odd = container_info({"image": "elodiegermani/nguyen-etal-2021",
+                          "index": "docker:elodiegermani/nguyen-etal-2021:latest", "type": "docker"})
+    assert odd["pull"] == "docker://elodiegermani/nguyen-etal-2021:latest"
+    # unchanged: docker:// and shub:// indexes, Singularity without an index
+    assert container_info({"image": "a/b:1", "index": "docker://", "type": "docker"})["pull"] == "docker://a/b:1"
+    assert container_info({"image": "c/d", "index": "shub://", "type": "singularity"})["pull"] == "shub://c/d"
+
+
 def test_resources_text():
     assert resources_text({"cpu-cores": 4, "ram": 16384, "walltime-estimate": 1440}) == \
         "4 cores, 16 GB memory, walltime estimate about 24 min"
