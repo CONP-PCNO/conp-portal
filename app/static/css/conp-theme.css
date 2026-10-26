@@ -563,3 +563,20 @@ body form.input-group:focus-within > .search-submit {
 body form.input-group > .search-submit:focus-visible {
   outline: none !important;
 }
+
+/* -------------------------------------------------------------------------
+   Header logo: room on the left (it sat against the window edge).
+   ------------------------------------------------------------------------- */
+body .navigation-bar .navbar-brand {
+  margin-left: 16px;
+}
+@media (min-width: 992px) {
+  body .navigation-bar .navbar-brand { margin-left: 24px; }
+}
+
+/* -------------------------------------------------------------------------
+   Breadcrumb above a dataset, tool or experiment page: "Data › <title>".
+   ------------------------------------------------------------------------- */
+body .page-crumbs { margin: 0 0 12px; font-size: .9rem; color: var(--conp-grey-4); }
+body .page-crumbs a { font-weight: 500; }
+body .page-crumbs span[aria-current] { color: #3a404c; }

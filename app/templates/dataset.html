@@ -77,6 +77,10 @@
 
 {% block appcontent %}
 <article class="dp-card" data-dataset-id="{{ data.id }}" data-dataset-title="{{ data.title }}">
+  {#- Back to the Data page, with the visitor's search and filters when they came from it. #}
+  {%- set data_url = url_for('search.search') %}
+  {%- set back = request.referrer if request.referrer and request.referrer.startswith(request.host_url ~ 'search') else data_url %}
+  <nav aria-label="Breadcrumb"><p class="page-crumbs"><a href="{{ back }}">Data</a> <span aria-hidden="true">›</span> <span aria-current="page">{{ data.title }}</span></p></nav>
   <div class="dp-head">
     <div class="dp-side">
       {% if logo_src %}<img class="dp-logo" src="{{ logo_src }}" alt="" />{% endif %}

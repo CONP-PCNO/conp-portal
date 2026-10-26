@@ -328,7 +328,6 @@ a.dp-chip:hover { border-color: #b8c0cc; color: #1d2129; }
 .doi-link { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 body .content-main img.doi-src { height: 16px; width: auto; max-width: 44px; margin: 0; flex: none; border-radius: 3px; }
 /* Experiment pages (experiments/experiment.html) reuse this sheet. */
-.dp-crumbs { margin: 0 0 12px; font-size: .9rem; color: var(--conp-grey-4); }
 .dp-kicker { margin: 0 0 4px; font-size: .8rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--conp-grey-4); }
 .dp-needs { background: #fafbfc; }
 .dp-needs .dp-dl { margin-top: 8px; }
