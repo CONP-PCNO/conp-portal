@@ -262,6 +262,7 @@ def _update_datalad_objects(
 
     for ds in d.subdatasets():
         print('[INFO   ] Updating ' + ds['gitmodule_url'])
+        print('[INFO   ] Subdataset path: ' + ds['path'])
         subdataset = DataladDataset(path=ds['path'])
         if not subdataset.is_installed():
             try:
@@ -332,12 +333,19 @@ def _update_datalad_objects(
 
         firstMergeDate = datetime.utcnow()
         try:
+            # Derive the root dataset repo (2 levels up: /.../conp-dataset)
+            parent_repo = os.path.dirname(os.path.dirname(ds['path']))
+            # Get the relative path of the submodule (e.g., projects/3-step_CPCA)
+            sub_relpath = os.path.relpath(ds['path'], parent_repo)
+
             firstMergeTimeStamp = os.popen(
-                "git -C '{}' log --pretty=format:%ct --reverse '{}' | head -1".format(
-                    app.config['DATA_PATH'],
-                    ds['path']
-                )).read()
-            firstMergeDate = datetime.fromtimestamp(int(firstMergeTimeStamp))
+                "git -C '{}' log --pretty=format:%ct --reverse -- '{}' | head -1".format(
+                    parent_repo,
+                    sub_relpath
+                )).read().strip()
+
+            if firstMergeTimeStamp:
+                firstMergeDate = datetime.fromtimestamp(int(firstMergeTimeStamp))
         except Exception:
             print("[ERROR  ] First merge date of the submodule dataset could not be read.")
 
