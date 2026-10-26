@@ -177,3 +177,12 @@ body .content-main img.doi-src { height: 16px; width: auto; max-width: 44px; mar
 @media (prefers-reduced-motion: reduce) {
   .tp-route.is-flash { animation: none; box-shadow: 0 0 0 3px #177245; }
 }
+
+/* Licence callout, the complete job script, the Cite section (Oct 2026) */
+.tp-callout { margin: 0 0 12px; padding: 10px 14px; border-left: 4px solid #c8a200; background: #fdf8e4; border-radius: 4px; font-size: .95rem; }
+.tp-details { margin: 8px 0 4px; }
+.tp-details > summary { cursor: pointer; font-weight: 600; color: #1a5fb4; }
+.tp-details > p { margin: 6px 0; }
+#tp-cite .dp-cite-bar { justify-content: flex-start; }
+#tp-cite .dp-cite-bar .tp-h2 { margin: 0 8px 0 0; }
+#tp-cite .dp-cite-download { margin-left: auto; }

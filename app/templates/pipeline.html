@@ -49,6 +49,7 @@
 {% block og_description %}{% if pipeline.description is defined and pipeline.description|length %}{{ pipeline.description | striptags | truncate(200) }}{% else %}An analysis tool or pipeline on the Canadian Open Neuroscience Platform (CONP) Portal.{% endif %}{% endblock %}
 
 {% block styles %} {{ super() }}
+<link href="{{ static_v('css/dataset-page.css') }}" rel="stylesheet" />
 <link href="{{ static_v('css/tool-page.css') }}" rel="stylesheet" />
 {% endblock %}
 
@@ -85,6 +86,12 @@
 
   <section class="tp-sect" aria-labelledby="tp-run">
     <h2 class="tp-h2" id="tp-run">Ways to run it</h2>
+    {% if page.licence_input %}
+    <p class="tp-callout" id="tp-licence"><strong>Licence file needed.</strong> The input
+      “{{ page.licence_input.name }}” is the path to a licence file.
+      {%- if page.licence_input.freesurfer %} FreeSurfer licences are free: <a target="_blank" rel="noopener noreferrer" href="https://surfer.nmr.mgh.harvard.edu/registration.html">register with FreeSurfer</a> to receive <code>license.txt</code> by email.{% else %} Ask the tool's authors how to get one.{% endif %}
+      Put the file where the tool can read it (your home or project space on a cluster) and give its path for <code>{{ page.licence_input.id }}</code> in <code>invocation.json</code>.</p>
+    {% endif %}
     <div class="tp-routes">
 
       {% if page.cbrain_launch %}
@@ -169,12 +176,27 @@
             'cd $SCRATCH/conp',
             'bosh exec launch -s ' ~ pipeline.id ~ ' invocation.json --imagepath ' ~ page.container.sif,
           ]) }}
+          <details class="tp-details">
+            <summary>A complete job script</summary>
+            <p>Save as <code>run.sh</code>, set the account and the resources for your data, then <code>sbatch run.sh</code>.</p>
+            {{ codebox([
+              '#!/bin/bash',
+              '#SBATCH --account=def-yourpi   # your group\'s allocation',
+              '#SBATCH --time=' ~ ('12:00:00' if page.runs_long else '01:00:00') ~ '   # hh:mm:ss',
+              '#SBATCH --cpus-per-task=' ~ (page.cpus or 1),
+              '#SBATCH --mem=' ~ (page.mem_gb or 4) ~ 'G',
+              'module load python apptainer',
+              'source ~/boutiques-env/bin/activate',
+              'cd $SCRATCH/conp',
+              'bosh exec launch -s ' ~ pipeline.id ~ ' invocation.json --imagepath ' ~ page.container.sif,
+            ]) }}
+          </details>
           {{ sources([
             ('Alliance: running jobs', 'https://docs.alliancecan.ca/wiki/Running_jobs'),
             ('Alliance: Apptainer', 'https://docs.alliancecan.ca/wiki/Apptainer'),
             ('Boutiques tutorial', 'https://nbviewer.jupyter.org/github/boutiques/tutorial/blob/master/notebooks/boutiques-tutorial.ipynb'),
           ]) }}
-          <p class="tp-note">Boutiques mounts the current directory and the input files named in <code>invocation.json</code>; add <code>-v /project:/project</code> for anything else. Scratch is for temporary files (<a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Scratch_purging_policy">older ones are purged</a>), so keep images you reuse in your group's project space (under <code>/project</code>; linked from your home directory, e.g. <code>~/links/projects</code> on Rorqual). Large images (FreeSurfer, fMRIPrep) take a while to build; if a build is stopped for memory, ask <a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Technical_support">Alliance support</a>. Ask the scheduler for the resources under Details.</p>
+          <p class="tp-note">Boutiques mounts the current directory and the input files named in <code>invocation.json</code>; add <code>-v /project:/project</code> for anything else. Scratch is for temporary files (<a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Scratch_purging_policy">older ones are purged</a>), so keep images you reuse in your group's project space (under <code>/project</code>; linked from your home directory, e.g. <code>~/links/projects</code> on Rorqual). Large images (FreeSurfer, fMRIPrep) take a while to build; if a build is stopped for memory, ask <a target="_blank" rel="noopener noreferrer" href="https://docs.alliancecan.ca/wiki/Technical_support">Alliance support</a>. Size the job for your data:{% if page.runs_long %} a full recon-all run usually takes hours per subject;{% endif %} the estimate under Details is the descriptor authors' and can be far off.</p>
         </div>
       </div>
       {% endif %}
@@ -218,12 +240,33 @@
     <h2 class="tp-h2" id="tp-details">Details</h2>
     <dl class="tp-dl">
       {% if page.container %}<dt>Container image</dt><dd>{% if page.container.hub_url %}<a class="tp-mono" target="_blank" rel="noopener noreferrer" href="{{ page.container.hub_url }}">{{ page.container.reference }}</a>{% else %}<span class="tp-mono">{{ page.container.reference }}</span>{% endif %}</dd>{% endif %}
-      {% if page.resources %}<dt>Suggested resources</dt><dd>{{ page.resources }} <span class="tp-muted">(as stated in the descriptor: a guide for job requests, not a benchmark)</span></dd>{% endif %}
+      {% if page.resources %}<dt>Suggested resources</dt><dd>{{ page.resources }} <span class="tp-muted">(the descriptor authors' estimate, not a measurement{% if page.runs_long %}; a full recon-all run usually takes hours{% endif %})</span></dd>{% endif %}
       {% if pipeline['tool-version'] or pipeline.version %}<dt>Version</dt><dd>{{ pipeline['tool-version'] or pipeline.version }}</dd>{% endif %}
       {% if pipeline.doi %}<dt>Descriptor</dt><dd>{{ doi_link(pipeline.doi) }}{% if pipeline['schema-version'] %} · Boutiques schema {{ pipeline['schema-version'] }}{% endif %}</dd>{% endif %}
       {% if pipeline.url %}<dt>Project page</dt><dd><a target="_blank" rel="noopener noreferrer" href="{{ pipeline.url }}">{{ pipeline.url }}</a></dd>{% endif %}
       {% if pipeline.ark_id %}<dt>ARK identifier</dt><dd><a href="{{ pipeline.ark_id }}">{{ pipeline.ark_id }}</a></dd>{% endif %}
     </dl>
   </section>
+
+  {% if page.cite %}
+  <section class="tp-sect" id="tp-cite" aria-labelledby="tp-cite-h">
+    <div class="dp-cite-bar">
+      <h2 class="tp-h2" id="tp-cite-h">Cite</h2>
+      <div class="dp-formats" role="group" aria-label="Citation format">
+        <button type="button" class="dp-format" aria-pressed="true" data-cite-format="text">Text</button>
+        <button type="button" class="dp-format" aria-pressed="false" data-cite-format="bibtex">BibTeX</button>
+        <button type="button" class="dp-format" aria-pressed="false" data-cite-format="ris">RIS</button>
+      </div>
+      <a class="dp-cite-download" id="dp-cite-download" href="#" download="{{ page.cite.key }}.txt">Download <span>.txt</span></a>
+    </div>
+    <div class="dp-cite" data-cite-group>
+      <p id="tp-cite-text" data-cite-block="text" data-ext="txt">{{ page.cite.text }}</p>
+      <pre id="tp-cite-bibtex" data-cite-block="bibtex" data-ext="bib" hidden>{{ page.cite.bibtex }}</pre>
+      <pre id="tp-cite-ris" data-cite-block="ris" data-ext="ris" hidden>{{ page.cite.ris }}</pre>
+      <button class="dp-copy dp-copy--light" type="button" data-copy-target="tp-cite-text" aria-label="Copy the citation" title="Copy">{{ icon('copy') }}</button>
+    </div>
+    <p class="dp-muted dp-cite-note">This cites the tool's Boutiques descriptor on Zenodo, the record the CONP Portal lists. Cite the software itself too, as its authors ask{% if pipeline.url %} (see the <a target="_blank" rel="noopener noreferrer" href="{{ pipeline.url }}">project page</a>){% endif %}.</p>
+  </section>
+  {% endif %}
 </article>
 {% endblock %}

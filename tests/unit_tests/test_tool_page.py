@@ -121,3 +121,30 @@ def test_tool_page_on_cbrain(app):
         cbrain={"software": "Tool", "versions": ["1.0"], "tool": "T"}))
     assert 'Use on CBRAIN' in html
     assert 'CBRAIN runs Tool 1.0.' in html
+
+
+def test_tool_page_cite_licence_and_job(app):
+    html = _render(app, _pipeline(
+        title='FreeSurfer-Recon-all', name='FreeSurfer-Recon-all', author='Martinos Center for Biomedical Imaging',
+        publicationdate='2020-09-23', doi='10.5281/zenodo.4043546', **{'tool-version': 'v6.0.0'},
+        description='Runs recon-all on a T1-weighted image.',
+        inputs=[{'id': 'license', 'name': 'License file', 'type': 'File'},
+                {'id': 'input', 'name': 'NIFTI file', 'type': 'File'}],
+        **{'suggested-resources': {'cpu-cores': 1, 'ram': 10240, 'walltime-estimate': 960}}))
+    # Cite: the descriptor's Zenodo record in three formats, with a note to cite the software too
+    assert 'id="tp-cite"' in html and 'data-cite-format="bibtex"' in html
+    assert 'Martinos Center for Biomedical Imaging (2020): FreeSurfer-Recon-all. V. 6.0.0. Zenodo. (software). https://doi.org/10.5281/zenodo.4043546' in html
+    assert 'TY  - COMP' in html and 'Cite the software itself too' in html
+    # Licence file: where to get FreeSurfer's, and which input takes it
+    assert 'id="tp-licence"' in html and 'surfer.nmr.mgh.harvard.edu/registration.html' in html
+    assert '<code>license</code> in <code>invocation.json</code>' in html
+    # The 16-minute estimate is labelled as the authors' and recon-all as taking hours
+    assert "the descriptor authors' estimate, not a measurement" in html
+    assert 'a full recon-all run usually takes hours' in html
+    # A complete job script, sized from the descriptor (10240 MB -> 10G), 12 h for recon-all
+    assert '#SBATCH --time=12:00:00' in html and '#SBATCH --mem=10G' in html and '#SBATCH --cpus-per-task=1' in html
+
+
+def test_docker_hub_links_are_lower_case():
+    info = container_info({"image": "MontrealSergiy/BEst:latest", "index": "docker://", "type": "docker"})
+    assert info["hub_url"] == "https://hub.docker.com/r/montrealsergiy/best"

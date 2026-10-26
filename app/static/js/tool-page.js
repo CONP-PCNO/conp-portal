@@ -147,9 +147,53 @@
     setTimeout(function () { target.classList.remove('is-flash'); }, 2400);
   }
 
+  // The Cite section: Text / BibTeX / RIS switch, its copy button and the
+  // download, as on dataset pages (dataset-page.js).
+  function initCite() {
+    var box = document.getElementById('tp-cite');
+    if (!box) { return; }
+    var buttons = box.querySelectorAll('[data-cite-format]');
+    var copy = box.querySelector('.dp-copy');
+    var download = document.getElementById('dp-cite-download');
+    var objectUrl = null;
+    function show(format) {
+      var shown = null;
+      box.querySelectorAll('[data-cite-block]').forEach(function (block) {
+        block.hidden = block.dataset.citeBlock !== format;
+        if (!block.hidden) { shown = block; }
+      });
+      if (!shown) { return; }
+      buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.citeFormat === format)); });
+      if (copy) { copy.dataset.copyTarget = shown.id; }
+      if (download) {
+        var ext = shown.dataset.ext || 'txt';
+        if (objectUrl) { URL.revokeObjectURL(objectUrl); }
+        var type = ext === 'bib' ? 'application/x-bibtex' : (ext === 'ris' ? 'application/x-research-info-systems' : 'text/plain');
+        objectUrl = URL.createObjectURL(new Blob([shown.textContent.trim() + '\n'], { type: type }));
+        download.href = objectUrl;
+        download.setAttribute('download', download.getAttribute('download').replace(/\.[a-z]+$/, '') + '.' + ext);
+        download.querySelector('span').textContent = '.' + ext;
+      }
+    }
+    buttons.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.citeFormat); }); });
+    if (copy) {
+      copy.addEventListener('click', function () {
+        var src = document.getElementById(copy.dataset.copyTarget);
+        if (!src) { return; }
+        copyText(src.textContent.trim(), function () {
+          copy.classList.add('is-copied');
+          copy.title = 'Copied';
+          setTimeout(function () { copy.classList.remove('is-copied'); copy.title = 'Copy'; }, 1500);
+        });
+      });
+    }
+    show('text');
+  }
+
   ready(function () {
     initMore();
     initCopy();
+    initCite();
     initOptionalInputs();
     initCbrain();
     initArrival();
