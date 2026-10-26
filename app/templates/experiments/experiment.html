@@ -120,7 +120,7 @@
       </div>
       {% endif %}
       {% if page.download %}
-      <div class="dp-route">
+      <div class="dp-route" id="route-browser">
         <div><h2>Download from this browser</h2><p>The task, stimuli and scripts{% if c.size %}: {{ c.size | replace('.0 ', ' ') }}{% endif %} in a single .zip file.</p></div>
         <a class="btn btn-success dp-btn" href="{{ page.download }}" data-dp-download data-size="{{ c.size }}">Download</a>
       </div>
@@ -139,10 +139,10 @@
         </div>
       </div>
       {% if page.source_url or page.remote_url %}
-      <div class="dp-route">
+      <div class="dp-route" id="route-source">
         <div><h2>At the source</h2><p>{% if page.source_url %}The authors' {% if page.source_name %}{{ page.source_name }} {% endif %}record{% endif %}{% if page.source_url and page.remote_url %} and {% endif %}{% if page.remote_url %}the task's code repository on GitHub{% endif %}.</p></div>
         <div class="dp-btns">
-          {% if page.source_url %}<a class="btn btn-outline-success dp-btn" href="{{ page.source_url }}" target="_blank" rel="noopener noreferrer">Go to {{ page.source_name }}</a>{% endif %}
+          {% if page.source_url %}<a class="btn btn-outline-success dp-btn" href="{{ page.source_url }}" target="_blank" rel="noopener noreferrer">Go to {{ page.source_name or 'the source' }}</a>{% endif %}
           {% if page.remote_url %}<a class="btn btn-outline-success dp-btn" href="{{ page.remote_url }}" target="_blank" rel="noopener noreferrer">Go to GitHub</a>{% endif %}
         </div>
       </div>

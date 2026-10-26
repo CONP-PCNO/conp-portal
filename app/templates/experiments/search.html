@@ -20,6 +20,7 @@
 {% endblock %}
 
 {% block scripts %} {{ super() }}
+<script src="{{ static_v('js/list-suggest.js') }}" defer></script>
 <script>
   // Filters and sort apply as soon as they change (the Apply button is for
   // browsers without scripts).
@@ -45,7 +46,10 @@
 
   <div class="lp-search">
     <label for="ex-q" class="visually-hidden">Search experiments</label>
-    <input id="ex-q" name="q" type="search" value="{{ query }}" placeholder="Search by name, keyword, function, software…" />
+    <input id="ex-q" name="q" type="search" value="{{ query }}" placeholder="Search by name, keyword, function, software…"
+           autocomplete="off" list="lp-suggestions" data-suggest-terms="lp-terms" />
+    <datalist id="lp-suggestions"></datalist>
+    <script type="application/json" id="lp-terms">{{ suggest_terms | tojson }}</script>
     <button type="submit" aria-label="Search">
       <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <span class="lp-search-label">Search</span>
@@ -85,7 +89,10 @@
         <div class="lp-body">
           <div class="lp-titlerow">
             <h3><a href="{{ c.url }}">{{ c.title }}</a></h3>
-            {% if c.canadian %}<span class="lp-origin"><img src="{{ url_for('static', filename='img/canada.svg') }}" alt="" width="14" height="14" />Canadian</span>{% endif %}
+            <span class="lp-tags">
+              {% if c.canadian %}<span class="lp-origin"><img src="{{ url_for('static', filename='img/canada.svg') }}" alt="" width="14" height="14" />Canadian</span>{% endif %}
+              {% if c.open %}<span class="lp-open"><svg class="lp-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg>Open</span>{% endif %}
+            </span>
           </div>
           <p class="lp-sub">{{ c.creators[:3] | join(', ') }}{% if c.creators | length > 3 %}, et al.{% endif %}{% if c.added %} · added {{ c.added }}{% endif %}{% if c.version %} · version {{ c.version }}{% endif %}</p>
           <p class="lp-desc">{{ c.description | striptags }}</p>
@@ -94,6 +101,13 @@
             {% if c.software_label %}<li>{{ c.software_label }}</li>{% endif %}
             {% if c.size %}<li>{{ c.size | replace('.0 ', ' ') }}</li>{% endif %}
           </ul>
+          <div class="lp-get">
+            <span class="lp-get-label">Get the task</span>
+            {#- Each way opens the experiment page at that way under "Get the task", which glows briefly. #}
+            {% if c.zip %}<a class="lp-get-download" href="{{ c.url }}#route-browser"><svg class="lp-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>{% endif %}
+            <a href="{{ c.url }}#dataladInstructions"><svg class="lp-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 17l6-6-6-6M12 19h8"/></svg>DataLad</a>
+            {% if c.source_label %}<a href="{{ c.url }}#route-source"><svg class="lp-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>{{ c.source_label }}</a>{% endif %}
+          </div>
         </div>
       </article>
       {% else %}
