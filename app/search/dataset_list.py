@@ -147,7 +147,7 @@ def dataset_card(e):
     r = get_routes(e.get('authorizations'), e.get('downloadOptions'), registration, landing, fspath,
                    descriptor=_descriptor(fspath), archive=bool(e.get('showDownloadButton')),
                    cbrain=bool(e.get('cbrain_id')), has_data=has_data)
-    download = bool(r['browser'])
+    download = r['browser'] not in (None, 'too_large')   # too large: no browser download
     datalad = r['datalad']
     at_source = r['source'] or r['source_contact']   # the page has a "Download at the source" step
     host = r['host']

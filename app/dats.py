@@ -3,6 +3,8 @@ import json
 import os
 from urllib.parse import quote, unquote
 
+from app.downloads import size_label, total_bytes
+
 # CONP generic dataset icon (folder + soma, chosen 2026-10-21); was img/default_dataset.jpeg
 DEFAULT_LOGO = "app/static/img/datasets/default.svg"
 DATASET_LOGOS_JSON = "app/static/datasets/dataset-logos.json"
@@ -440,8 +442,13 @@ class DATSObject:
                 dist = dists
             else:
                 dist = {}
+        elif len(dists) > 1:
+            # A record split into parts lists one size per part: show the total.
+            total = total_bytes(self.descriptor)
+            if total is not None:
+                return size_label(total)
+            dist = dists[0]
         else:
-            # Taking the first distribution size. (arbitrary choice)
             dist = dists[0]
 
         size = float(dist.get('size', 0))

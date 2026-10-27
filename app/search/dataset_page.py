@@ -7,6 +7,8 @@ import json
 import re
 from html import unescape
 
+from app.downloads import download_parts
+
 # --------------------------------------------------------------------------
 # Licence badge
 # --------------------------------------------------------------------------
@@ -386,8 +388,10 @@ _OSF_ID = re.compile(r'osf\.io/([a-z0-9]{5})(?:[/?#]|$)', re.I)
 
 
 def osf_zip_url(landing):
-    """OSF's "download as zip" address for a project, from its landing page
-    (osf.io/<id>): the form OSF agreed the CONP may link to (conp-portal #879)."""
+    """OSF's "download as zip" address for a project's own storage, from its
+    landing page (osf.io/<id>). Not used to offer downloads any more: a
+    project's own storage can be empty (files in components or add-ons), so
+    the Portal only links the zips a record lists (app.downloads)."""
     m = _OSF_ID.search(str(landing or ''))
     return 'https://files.us.osf.io/v1/resources/{}/providers/osfstorage/?zip='.format(m.group(1).lower()) if m else None
 
@@ -417,33 +421,29 @@ def _public_host_record(descriptor, dataset_dir=None):
 
 
 def direct_download(descriptor, dataset_dir=None):
-    """A browser download link at the dataset's host, when there is one.
+    """The browser download(s) at the dataset's host, when the record lists any.
 
-    The record's own access URL (the single file Zenodo lists, or OSF's zip,
-    added by conp-dataset #1046/#1048); for an OSF record without one, OSF's
-    zip address built from the landing page. A Zenodo record without one has
-    several files and no download-all link Zenodo will serve (its
-    /files-archive address returns 404), so it gets none: those datasets use
-    the Portal archive, or a link to the record (host_record).
-    Returns {"url", "host", "record", "format", "filename"} or None."""
+    Only the links the record's distributions give as accessURL, each checked
+    against the record (app.downloads.check_access_url): a link to another
+    OSF project or Zenodo record, a non-empty OSF ``zip=`` value or an OSF
+    add-on zip is never shown, and no zip address is guessed from the landing
+    page. A record split into parts (OSF components, a linked code
+    repository) lists one link per part; a part over the size limit is listed
+    without a button. Returns the first downloadable part
+    ({"url", "host", "record", "format", "filename", "title", "size",
+    "too_large"}) with "parts" (all of them), or None when none can be
+    downloaded in a browser."""
     found = _public_host_record(descriptor, dataset_dir)
     if not found:
         return None
-    access, host, landing = found
-    url = str(access.get('accessURL') or '')
-    if not url and host == 'OSF':
-        url = osf_zip_url(landing) or ''
-    if not url.startswith('https://') or 'files-archive' in url:
+    parts = download_parts(descriptor)
+    usable = [p for p in parts if not p['too_large']]
+    if not usable:
         return None
-    filename = None
-    m = re.search(r'/files/([^/?]+)', url)
-    if m:
-        filename = unescape(m.group(1))
-    if '?zip=' in url or (filename or '').lower().endswith('.zip'):
-        fmt = 'ZIP'
-    else:
-        fmt = None
-    return {'url': url, 'host': host, 'record': landing or None, 'format': fmt, 'filename': filename}
+    first = dict(usable[0])
+    first['record'] = first.get('record') or found[2] or None
+    first['parts'] = parts
+    return first
 
 
 def host_record(descriptor, dataset_dir=None):
@@ -485,7 +485,7 @@ def get_routes(authorization, download_options, registration_page, landing_page,
         'restricted': restricted, 'offsite_branch': offsite or not has_data, 'reg': reg,
         'reg_from_landing': reg_from_landing, 'host': host, 'source_host': host_name(landing),
         'request': False, 'source': False, 'source_contact': False,
-        'browser': None, 'direct': None, 'record': None, 'datalad': False, 'cbrain': False,
+        'browser': None, 'direct': None, 'parts': [], 'record': None, 'datalad': False, 'cbrain': False,
     }
     if r['offsite_branch']:
         r['request'] = bool(reg and (restricted or offsite))
@@ -499,11 +499,20 @@ def get_routes(authorization, download_options, registration_page, landing_page,
             r['direct'] = direct or (direct_download(descriptor, dataset_dir) if descriptor is not None else None)
             if r['direct']:
                 r['browser'] = 'direct'
+                r['parts'] = r['direct'].get('parts') or [r['direct']]
             elif archive:
                 r['browser'] = 'archive'
             else:
                 r['record'] = host_record(descriptor, dataset_dir) if descriptor is not None else None
-                r['browser'] = 'record' if r['record'] else None
+                # parts the record lists that are all too large for one streamed zip:
+                # say so (and why) instead of falling back to the file list silently
+                found = _public_host_record(descriptor, dataset_dir) if descriptor is not None else None
+                r['parts'] = download_parts(descriptor) if found else []
+                if r['parts'] and all(p['too_large'] for p in r['parts']):
+                    r['browser'] = 'too_large'
+                else:
+                    r['parts'] = []
+                    r['browser'] = 'record' if r['record'] else None
     r['ask'] = r['request']
     return r
 

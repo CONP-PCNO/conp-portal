@@ -121,7 +121,7 @@
       {% endif %}
       {% if page.download %}
       <div class="dp-route" id="route-browser">
-        <div><h2>In your browser</h2><p>The task, stimuli and scripts{% if c.size %}: {{ c.size | replace('.0 ', ' ') }}{% endif %} in a single .zip file{% if page.download_host %}, downloaded directly from the authors' {{ page.download_host }} record{% endif %}.</p></div>
+        <div><h2>In your browser</h2><p>The task, stimuli and scripts{% if c.size %}: {{ c.size | replace('.0 ', ' ') }}{% endif %} in a single .zip file{% if page.download_host %}, downloaded directly from the authors' {{ page.download_host }} {{ 'repository' if page.download_host in ('GitHub', 'GitLab') else 'record' }}{% endif %}.</p></div>
         <a class="btn btn-success dp-btn" href="{{ page.download }}" data-dp-download data-size="{{ c.size }}"{% if page.download_host %} rel="noopener noreferrer"{% endif %}>Download</a>
       </div>
       {% endif %}

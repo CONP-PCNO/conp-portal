@@ -208,13 +208,18 @@ def test_direct_download():
     assert direct_download(private) is None
     assert direct_download({"distributions": [{"access": {"landingPage": "https://example.org",
                                                           "authorizations": [{"value": "public"}]}}]}) is None
+    # an accessURL naming another OSF project (21 Jan 2026 records: the tau dataset's znt9d with
+    # ?zip=<own id>, which OSF ignores) is never shown
     osf = {"distributions": [{"access": {"landingPage": "https://osf.io/q482e",
                                          "accessURL": "https://files.us.osf.io/v1/resources/znt9d/providers/osfstorage/?zip=q482e",
                                          "authorizations": [{"value": "public"}]}}]}
+    assert direct_download(osf) is None
+    osf["distributions"][0]["access"]["accessURL"] = "https://files.us.osf.io/v1/resources/q482e/providers/osfstorage/?zip="
     assert direct_download(osf)["host"] == "OSF" and direct_download(osf)["format"] == "ZIP"
-    # an OSF record without an access URL: OSF's zip address from the landing page
+    # an OSF record without an access URL: no zip is guessed from the landing page any more
+    # (the project's own storage can be empty: files in components or add-ons)
     del osf["distributions"][0]["access"]["accessURL"]
-    assert direct_download(osf)["url"] == "https://files.us.osf.io/v1/resources/q482e/providers/osfstorage/?zip="
+    assert direct_download(osf) is None
     assert osf_zip_url("https://osf.io/ZEJ5W/") == "https://files.us.osf.io/v1/resources/zej5w/providers/osfstorage/?zip="
     assert osf_zip_url("https://example.org") is None
 

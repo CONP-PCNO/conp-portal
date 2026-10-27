@@ -192,16 +192,39 @@
       {% endif %}
       {% if r.browser == 'direct' %}
       {% set direct = r.direct %}
+      {% if (r.parts or []) | length > 1 %}
+      <div class="dp-route dp-route--wide" id="route-browser">
+        <div><h2>In your browser</h2><p>The files ({{ data.size | replace('.0 ', ' ') }} in all) come in {{ r.parts | length }} parts, downloaded directly from the dataset's {% if direct.record %}<a href="{{ direct.record }}" target="_blank" rel="noopener noreferrer">{{ direct.host }} record</a>{% else %}{{ direct.host }} record{% endif %}{% for h in r.parts | map(attribute='host') | unique if h and h != direct.host %} and the linked {{ h }} repository{% endfor %}{% if r.parts | selectattr('too_large') | list %}. Parts over {{ config.get('BROWSER_DOWNLOAD_MAX_GB', 50) }} GB are too large for one browser download (the zip is built while it is sent, so it cannot be resumed): use DataLad below for those{% endif %}.</p>
+          <ul class="dp-parts">
+            {% for part in r.parts %}
+            <li class="dp-part">
+              <span class="dp-part-name">{{ part.title or ('Part ' ~ loop.index) }}{% if part.size %} <span class="dp-part-size">{{ part.size }}</span>{% endif %}{% if part.format and not part.too_large %} <span class="dp-part-size">{{ part.format }}</span>{% endif %}</span>
+              {% if part.too_large %}<span class="dp-part-note">Too large for a browser: use DataLad</span>
+              {% else %}<a class="btn btn-outline-success btn-sm dp-part-btn" href="{{ part.url }}" data-dp-download data-size="{{ part.size }}" rel="noopener noreferrer">Download</a>{% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% else %}
       <div class="dp-route" id="route-browser">
-        <div><h2>In your browser</h2><p>All files, {{ data.size | replace('.0 ', ' ') }},
+        <div><h2>In your browser</h2><p>All files, {{ (direct.size or data.size) | replace('.0 ', ' ') }},
           {%- if direct.format %} in a single {{ direct.format }} file,{% elif direct.filename %} as one file ({{ direct.filename }}),{% endif %}
           downloaded directly from the dataset's {% if direct.record %}<a href="{{ direct.record }}" target="_blank" rel="noopener noreferrer">{{ direct.host }} record</a>{% else %}{{ direct.host }} record{% endif %}.</p></div>
-        <a class="btn btn-success dp-btn" href="{{ direct.url }}" data-dp-download data-size="{{ data.size }}" rel="noopener noreferrer">Download</a>
+        <a class="btn btn-success dp-btn" href="{{ direct.url }}" data-dp-download data-size="{{ direct.size or data.size }}" rel="noopener noreferrer">Download</a>
       </div>
+      {% endif %}
       {% elif r.browser == 'archive' %}
       <div class="dp-route" id="route-browser">
         <div><h2>In your browser</h2><p>All files, {{ data.size | replace('.0 ', ' ') }}, in a single tar.gz file.</p></div>
         <a class="btn btn-success dp-btn" href="{{ data.zipLocation }}" data-dp-download data-size="{{ data.size }}">Download</a>
+      </div>
+      {% elif r.browser == 'too_large' %}
+      <div class="dp-route" id="route-browser">
+        <div><h2>In your browser</h2><p>{% if r.parts | length > 1 %}Each part{% else %}At {{ r.parts[0].size }}, the dataset{% endif %} is too large for one browser download: {{ r.parts[0].host or 'the host' }} builds the zip while it sends it, so a download that stops cannot be resumed. Use DataLad below (it fetches file by file and can pick up where it stopped), or download single files at {{ r.parts[0].host or 'the source' }}.</p>
+          {% if r.parts | length > 1 %}<ul class="dp-parts">{% for part in r.parts %}<li class="dp-part"><span class="dp-part-name">{{ part.title or ('Part ' ~ loop.index) }} <span class="dp-part-size">{{ part.size }}</span></span></li>{% endfor %}</ul>{% endif %}
+        </div>
+        {% if r.record %}<a class="btn btn-outline-success dp-btn" href="{{ r.record.url }}" target="_blank" rel="noopener noreferrer">Go to {{ r.record.host }}</a>{% endif %}
       </div>
       {% elif r.browser == 'record' %}
       <div class="dp-route" id="route-browser">
