@@ -7,6 +7,7 @@ import re
 from flask import url_for
 
 from app.dats import DEFAULT_LOGO
+from app.downloads import download_parts
 from app.experiments.dats import DATSExperiment, _flat
 from app.search.dataset_query import stem
 from app.search.dataset_page import (
@@ -19,7 +20,6 @@ from app.search.dataset_page import (
     dataset_doi,
     host_name,
     licence_badges,
-    osf_zip_url,
     publication_citations,
 )
 
@@ -69,15 +69,18 @@ def logo_url(exp, dats):
 
 def experiment_download(exp, dats):
     """The browser download for an experiment: the Portal's own .zip when the
-    server has one, else OSF's zip of the authors' record for an open
-    experiment on OSF (the address OSF agreed the CONP may link to).
+    server has one, else the first download link the experiment's DATS lists
+    (accessURL, checked like a dataset's: app.downloads), e.g. the GitHub
+    archive of the task. No zip is guessed from the OSF landing page: the
+    authors' OSF projects keep their files in GitHub/GitLab add-ons, and the
+    guessed zip of the project's own storage was an empty 22-byte file.
     Returns {"url", "host"} or None."""
     if os.path.isfile((exp.fspath or '') + '.zip'):
         return {'url': url_for('experiments.download', experiment_id=exp.id), 'host': None}
     if str(dats.privacy or '').strip().lower() not in ('open', 'public', ''):
         return None
-    osf = osf_zip_url(dats.sources)
-    return {'url': osf, 'host': 'OSF'} if osf else None
+    parts = [p for p in download_parts(dats.descriptor, require_public=False) if not p['too_large']]
+    return {'url': parts[0]['url'], 'host': parts[0]['host']} if parts else None
 
 
 def experiment_card(exp):

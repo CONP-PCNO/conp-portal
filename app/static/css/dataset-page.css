@@ -139,6 +139,12 @@ a.dp-chip:hover { border-color: #b8c0cc; color: #1d2129; }
 .dp-card .dp-route h2 { font-size: 1rem; font-weight: 700; margin: 0; color: #1d2129; }
 .dp-route p { font-size: .9rem; color: var(--conp-grey-4); margin: 2px 0 0; }
 .dp-btn { white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
+.dp-parts { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 6px; }
+.dp-part { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px;
+  padding: 7px 0; border-top: 1px solid #eef0f3; font-size: .92rem; color: #1d2129; }
+.dp-part-size { color: var(--conp-grey-4); font-size: .85rem; margin-left: 6px; }
+.dp-part-note { color: var(--conp-grey-4); font-size: .85rem; }
+.dp-part .dp-part-btn { white-space: nowrap; width: auto; flex: 0 0 auto; padding: .3rem .9rem; }
 .dp-card img.dp-cbrain-logo { height: 16px; width: auto; max-width: none; }
 
 .dp-card :not(pre) > code {

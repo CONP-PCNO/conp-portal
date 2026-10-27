@@ -8,6 +8,7 @@ import dateutil
 import requests
 
 from app.dats import DATSObject
+from app.downloads import size_label, total_bytes
 
 
 @lru_cache(maxsize=1)
@@ -369,8 +370,13 @@ class DATSDataset(DATSObject):
                 dist = dists
             else:
                 dist = {}
+        elif len(dists) > 1:
+            # A record split into parts lists one size per part: show the total.
+            total = total_bytes(self.descriptor)
+            if total is not None:
+                return size_label(total)
+            dist = dists[0]
         else:
-            # Taking the first distribution size. (arbitrary choice)
             dist = dists[0]
 
         size = float(dist.get('size', 0))

@@ -116,10 +116,10 @@ def test_experiment_from_a_crawled_dataset_record(session, test_client, tmp_path
     assert res.status_code == 200
     assert 'version 2024-08-01' in html and 'T21:15' not in html
     assert "The authors' OSF record" in html and "the source record" not in html
-    # no .zip on the server: the browser download is OSF's zip of the record
-    assert 'href="https://files.us.osf.io/v1/resources/zej5w/providers/osfstorage/?zip="' in html
-    assert "downloaded directly from the authors' OSF record" in html
-    assert '#route-browser' in test_client.get('/experiments/').get_data(as_text=True)
+    # no .zip on the server and no accessURL in the record: no browser download (no zip of the OSF
+    # project's own storage is guessed: it is empty for most experiments, files in add-ons)
+    assert 'zip=' not in html and 'id="route-browser"' not in html
+    assert 'conp-dataset-RISE#route-browser' not in test_client.get('/experiments/').get_data(as_text=True)
 
 
 def test_list_card_has_get_the_task_links(session, test_client, tmp_path, monkeypatch):

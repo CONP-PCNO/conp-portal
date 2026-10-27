@@ -211,25 +211,26 @@
 
   // ---------- direct download: confirm the size first ----------
   function initDownload() {
-    var link = document.querySelector('[data-dp-download]');
+    var links = document.querySelectorAll('[data-dp-download]');
     var doc = document.getElementById('downloadModalDocument');
-    if (!link) { return; }
-    link.addEventListener('click', function (e) {
-      var size = link.dataset.size || '';
-      if (doc && window.bootstrap) {
-        e.preventDefault();
-        doc.innerHTML =
-          '<div class="modal-content">' +
-          '<div class="modal-body"><h4 class="modal-title text-center">You are about to download a ' + escapeHtml(size) + ' file.</h4></div>' +
-          '<div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>' +
-          '<a class="btn btn-success" id="confirmDownload" href="' + escapeHtml(link.getAttribute('href')) + '">Download</a></div></div>';
-        doc.querySelector('#confirmDownload').addEventListener('click', function () {
-          bootstrap.Modal.getOrCreateInstance(document.getElementById('downloadModal')).hide();
-        });
-        showModal('downloadModal');
-      } else if (!window.confirm('You are about to download a ' + size + ' file. Continue?')) {
-        e.preventDefault();
-      }
+    Array.prototype.forEach.call(links, function (link) {
+      link.addEventListener('click', function (e) {
+        var size = link.dataset.size || '';
+        if (doc && window.bootstrap) {
+          e.preventDefault();
+          doc.innerHTML =
+            '<div class="modal-content">' +
+            '<div class="modal-body"><h4 class="modal-title text-center">You are about to download a ' + escapeHtml(size) + ' file.</h4></div>' +
+            '<div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>' +
+            '<a class="btn btn-success" id="confirmDownload" href="' + escapeHtml(link.getAttribute('href')) + '">Download</a></div></div>';
+          doc.querySelector('#confirmDownload').addEventListener('click', function () {
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('downloadModal')).hide();
+          });
+          showModal('downloadModal');
+        } else if (!window.confirm('You are about to download a ' + size + ' file. Continue?')) {
+          e.preventDefault();
+        }
+      });
     });
   }
 
