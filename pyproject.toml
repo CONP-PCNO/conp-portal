@@ -37,6 +37,11 @@ dependencies = [
     "gunicorn>=26.2.0",
 ]
 
+[tool.uv]
+# Change the default virtual environment folder name or path
+# If relative, it resolves relative to your project workspace root.
+# environment-path = "venv"
+
 [dependency-groups]
 dev = [
     "deptry>=0.25.1",
