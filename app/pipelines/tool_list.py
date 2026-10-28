@@ -9,7 +9,7 @@ visitor asks to see every descriptor separately.
 import re
 from html import unescape
 
-from app.search.dataset_query import stem
+from app.search.text_match import score as match_score
 
 FACETS = (
     ('runs', 'Runs on', 'runs_facet'),
@@ -18,6 +18,7 @@ FACETS = (
     ('container', 'Container', 'container_facet'),
 )
 SORTS = (
+    ('relevance', 'Best match'),
     ('downloads', 'Most downloaded'),
     ('published', 'Recently published'),
     ('name', 'Name A–Z'),
@@ -168,9 +169,13 @@ _OLD_SORTS = {'downloads-desc': 'downloads', 'publicationdate-desc': 'published'
               'conpStatus': 'published'}
 
 
-def chosen_sort(args):
-    sort = args.get('sort') or _OLD_SORTS.get(args.get('sortKey') or '', 'downloads')
-    return sort if sort in dict(SORTS) else 'downloads'
+def chosen_sort(args, query=None):
+    """The sort asked for, or the default: best match when there is a search,
+    most downloaded otherwise."""
+    sort = args.get('sort') or _OLD_SORTS.get(args.get('sortKey') or '')
+    if sort in dict(SORTS) and (sort != 'relevance' or query):
+        return sort
+    return 'relevance' if query else 'downloads'
 
 
 def chosen_per_page(args):
@@ -179,18 +184,17 @@ def chosen_per_page(args):
 
 
 def filter_cards(cards, query, selected, sort):
-    words = [stem(w) for w in re.split(r'\W+', (query or '').lower()) if w]
-
-    def text(c):
-        return ' '.join([c['title'], c['description'], c['author'], c['family'] or '', ' '.join(c['domains']),
-                         c['id'] or '']).lower()
+    # Every word must start a word somewhere (as on the Data page), with the
+    # same spelling folds and ranking (app/search/text_match).
+    if query:
+        for c in cards:
+            c['score'] = match_score({'title': c['title'], 'description': c['description'], 'author': c['author'],
+                                      'family': c['family'] or '', 'domains': c['domains'], 'id': c['id'] or ''},
+                                     query)
 
     def keep(c, skip=None):
-        # Every word must start a word somewhere (as on the Data page since #1021).
-        if words:
-            tokens = re.findall(r'\w+', text(c))
-            if not all(any(t.startswith(w) for t in tokens) for w in words):
-                return False
+        if query and not c.get('score'):
+            return False
         for key, _label, field in FACETS:
             if key == skip:
                 continue
@@ -200,7 +204,11 @@ def filter_cards(cards, query, selected, sort):
         return True
 
     shown = [c for c in cards if keep(c)]
-    if sort == 'name':
+    if sort == 'relevance':
+        # Ties: most downloaded first, as without a search.
+        shown.sort(key=lambda c: (-c['downloads'], c['title'].lower()))
+        shown.sort(key=lambda c: -(c.get('score') or 0))
+    elif sort == 'name':
         shown.sort(key=lambda c: c['title'].lower())
     elif sort == 'published':
         shown.sort(key=lambda c: c['published'] or '', reverse=True)

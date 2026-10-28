@@ -106,11 +106,12 @@ def pipelines():
         selected_filters,
         tool_card,
     )
-    from app.search.dataset_list import page_links, page_of
+    from app.search.dataset_list import page_links, page_of, sort_options
 
     query = (request.args.get('search') or '').strip()
     selected = selected_filters(request.args)
-    sort = chosen_sort(request.args)
+    sort = chosen_sort(request.args, query)
+    default_sort = 'relevance' if query else 'downloads'
     per_page = chosen_per_page(request.args)
     separate = request.args.get('separate') in ('1', 'true', 'on')
 
@@ -134,7 +135,7 @@ def pipelines():
     on_page, page, pages = page_of(shown, request.args.get('page'), per_page)
 
     def link(**changes):
-        args = {'search': query or None, 'sort': sort if sort != 'downloads' else None,
+        args = {'search': query or None, 'sort': sort if sort != default_sort else None,
                 'show': per_page if per_page != PER_PAGE[0] else None, 'separate': '1' if separate else None}
         for key, _label, _field in FACETS:
             args[key] = selected.get(key) or None
@@ -143,7 +144,8 @@ def pipelines():
 
     return render_template('pipelines.html', title='CONP | Tools & Pipelines', user=current_user,
                            query=query, cards=on_page, matching=matching, entries=len(shown), total=len(cards),
-                           facets=facets, sort=sort, sorts=SORTS, per_page=per_page, per_page_options=PER_PAGE,
+                           facets=facets, sort='' if sort == default_sort else sort,
+                           sorts=sort_options(SORTS, query, 'downloads'), per_page=per_page, per_page_options=PER_PAGE,
                            page=page, pages=pages, page_links=page_links(page, pages), link=link,
                            separate=separate, suggest_terms=suggest_terms,
                            filtered=bool(query or any(selected.values())))

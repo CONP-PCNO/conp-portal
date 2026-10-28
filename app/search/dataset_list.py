@@ -30,6 +30,7 @@ FACETS = (
     ('linked', 'Linked publication', 'linked_facet'),
 )
 SORTS = (
+    ('relevance', 'Best match'),
     ('added', 'Recently added'),
     ('updated', 'Recently updated'),
     ('name', 'Name A–Z'),
@@ -183,6 +184,7 @@ def dataset_card(e):
     return {
         'id': e['id'],
         'url': '/dataset?id={}'.format(e['id']),
+        'score': e.get('_score') or 0,
         'title': e.get('title') or e['id'],
         'title_html': title_html(e.get('title') or e['id']),
         'logo': e['logoFilepath'] if str(e.get('logoFilepath') or '').startswith('http') else e.get('thumbnailURL'),
@@ -241,9 +243,23 @@ _OLD_SORTS = {'title': 'name', 'dateAddedDesc': 'added', 'dateUpdatedDesc': 'upd
               'sizeDes': 'size', 'evidencePublication': 'evidence'}
 
 
-def chosen_sort(args):
-    sort = args.get('sort') or _OLD_SORTS.get(args.get('sortKey') or '', 'added')
-    return sort if sort in dict(SORTS) else 'added'
+def chosen_sort(args, query=None):
+    """The sort asked for, or the default: best match when there is a search,
+    newest first otherwise."""
+    sort = args.get('sort') or _OLD_SORTS.get(args.get('sortKey') or '')
+    if sort in dict(SORTS) and (sort != 'relevance' or query):
+        return sort
+    return 'relevance' if query else 'added'
+
+
+def sort_options(sorts, query, default_without_query):
+    """The Sort menu as (value, label) pairs. The default has an empty
+    value, so a new search submitted from the form gets its own default (best
+    match) instead of the order the previous page happened to show. Without a
+    search there is no "Best match"."""
+    if query:
+        return [('' if v == 'relevance' else v, label) for v, label in sorts]
+    return [('' if v == default_without_query else v, label) for v, label in sorts if v != 'relevance']
 
 
 def chosen_per_page(args):
@@ -272,7 +288,11 @@ def filter_cards(cards, selected, sort):
         return True
 
     shown = [c for c in cards if keep(c)]
-    if sort == 'name':
+    if sort == 'relevance':
+        # Ties: newest first, as without a search.
+        shown.sort(key=lambda c: c['added'] or '', reverse=True)
+        shown.sort(key=lambda c: -(c.get('score') or 0))
+    elif sort == 'name':
         shown.sort(key=lambda c: sort_title(c['title']))
     elif sort == 'updated':
         shown.sort(key=lambda c: c['updated'] or '', reverse=True)

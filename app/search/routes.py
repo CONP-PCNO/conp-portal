@@ -24,7 +24,8 @@ from app.dats import DEFAULT_LOGO, load_dataset_logos, load_remote_logo_copies, 
 from app.models import ArkId, Dataset, DatasetAncestry
 from app.models import MatomoDailyGetDatasetPageViewsSummary
 from app.search import search_bp
-from app.search.dataset_query import build_dataset_query, matches_suggestion, suggest_correction, vocabulary
+from app.search.dataset_query import matches_suggestion, suggest_correction, vocabulary
+from app.search.text_match import rank, score as match_score
 from app.search.dataset_page import (
     access_context,
     as_url,
@@ -86,11 +87,13 @@ def search():
         page_links,
         page_of,
         selected_filters,
+        sort_options,
     )
 
     query = (request.args.get('search') or request.args.get('q') or '').strip()
     selected = selected_filters(request.args)
-    sort = chosen_sort(request.args)
+    sort = chosen_sort(request.args, query)
+    default_sort = 'relevance' if query else 'added'
     per_page = chosen_per_page(request.args)
 
     cards = []
@@ -105,7 +108,7 @@ def search():
 
     def link(**changes):
         """This page's address with some parameters changed (None drops one)."""
-        args = {'search': query or None, 'sort': sort if sort != 'added' else None,
+        args = {'search': query or None, 'sort': sort if sort != default_sort else None,
                 'show': per_page if per_page != PER_PAGE[0] else None}
         for key, _label, _field in FACETS:
             args[key] = selected.get(key) or None
@@ -117,7 +120,8 @@ def search():
         suggestion = _did_you_mean(query)
     return render_template('search.html', title='CONP | Data', user=current_user,
                            query=query, cards=on_page, matching=len(shown), total=total, suggestion=suggestion,
-                           facets=facets, sort=sort, sorts=SORTS, per_page=per_page,
+                           facets=facets, sort='' if sort == default_sort else sort,
+                           sorts=sort_options(SORTS, query, 'added'), per_page=per_page,
                            per_page_options=PER_PAGE, page=page, pages=pages,
                            page_links=page_links(page, pages), link=link,
                            filtered=bool(query or any(selected.values())))
@@ -164,7 +168,7 @@ def find():
             datasets.append(dataset_card(e))
         except Exception:
             current_app.logger.exception("Skipping dataset %s on /find", e.get('id'))
-    datasets, _ = dataset_filter(datasets, {}, 'added')    # the Data page's default order
+    datasets, _ = dataset_filter(datasets, {}, 'relevance')    # best match first, as on the Data page
 
     try:
         # The same cards as the Tools & Pipelines list (CBRAIN launch links included).
@@ -174,7 +178,7 @@ def find():
         icons, default_icon = get_tool_icons()
         tool_cards = [tool_card(e, availability.get(e.get('id')), launch_ids | set(availability), launch_ids,
                                 tool_icon(e.get('id'), icons, default_icon)) for e in _tool_elements()]
-        tools, _ = tool_filter(tool_cards, query, {}, 'downloads')
+        tools, _ = tool_filter(tool_cards, query, {}, 'relevance')
         tool_count = len(tools)
         order = {c['id']: i for i, c in enumerate(tools)}
         tools = sorted(group_related(tools), key=lambda c: order[c['id']])
@@ -183,7 +187,7 @@ def find():
         tools, tool_count = [], 0
 
     try:
-        experiments, _ = experiment_filter(experiment_cards(), query, {}, 'added')
+        experiments, _ = experiment_filter(experiment_cards(), query, {}, 'relevance')
     except Exception:
         current_app.logger.exception("Experiments unavailable on /find")
         experiments = []
@@ -386,18 +390,26 @@ def _dataset_elements(search_term, authorized):
 
     # Query datasets
     datasets = []
+    scores = {}
     ix = _ensure_search_index()
     # Element input for payload
     with ix.searcher() as searcher:
         # If search term exists filter results here
         if search_term:
-            myquery = build_dataset_query(ix.schema, search_term, dataset_terms_mapping)
+            # Every typed word must start a word in some searchable field
+            # (folded spellings, hyphenated words also joined; see text_match),
+            # scored for the "Best match" order.
+            fields = [f for f in ix.schema.scorable_names() if f in ix.schema.names()]
             _datasets = []
-            if myquery is not None:
+            for d in searcher.documents():
                 try:
-                    _datasets = list(searcher.search(myquery, limit=None))
+                    s = match_score({f: d.get(f) for f in fields}, search_term, dataset_terms_mapping)
                 except Exception as e:  # never a server error for a search
-                    logger.warning("Search failed for %r: %s", search_term, e)
+                    logger.warning("Search failed for %r on %s: %s", search_term, d.get('id'), e)
+                    s = 0
+                if s:
+                    scores[d['id']] = s
+                    _datasets.append(d)
 
             ds = set()
             ds_add = ds.add
@@ -498,8 +510,12 @@ def _dataset_elements(search_term, authorized):
                 "_description": d.get('description'),
                 "_keywords": parse_field(d.get('keywords')),
                 "_creators_text": d.get('creators'),
+                "_score": scores.get(d['id'], 0),
             }
             elements.append(dataset)
+    if search_term:
+        # Best match first (as the index's own ranking did for /dataset-search).
+        elements = rank(elements, key='_score')
     return elements
 
 
