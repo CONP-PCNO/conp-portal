@@ -12,6 +12,7 @@ SECRET_KEY=you-will-never-guess
 # -------------------------------------------------------------------
 # DATABASE SETTINGS
 # -------------------------------------------------------------------
+# mysql should have ?charset=utf8mb4 at end
 DATABASE_URL=sqlite:///<ENTER FLASK TOP DIR>/app.db
 SQLALCHEMY_TRACK_MODIFICATIONS=False
 
