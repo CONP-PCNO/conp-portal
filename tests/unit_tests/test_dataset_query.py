@@ -1,4 +1,5 @@
-"""Tests for the dataset search query (app/search/dataset_query.py)."""
+"""Tests for the dataset search (app/search/dataset_query.py and text_match.py,
+as _dataset_elements uses them: over the search index's stored fields)."""
 import json
 
 from whoosh.analysis import LowercaseFilter, StopFilter
@@ -6,7 +7,8 @@ from whoosh.fields import KEYWORD, STORED, TEXT, Schema
 from whoosh.filedb.filestore import RamStorage
 
 from app.JsonTokenizer import JsonTokenizer
-from app.search.dataset_query import build_dataset_query, matches_suggestion, normalize, words
+from app.search.dataset_query import matches_suggestion, normalize, words
+from app.search.text_match import score
 
 TITLE = "Long-term, Phantom Quality Assurance data for functional Magnetic Resonance Imaging from 13 3T research scanners"
 
@@ -34,11 +36,10 @@ def _index():
 
 
 def _ids(ix, text, mapping=None):
-    q = build_dataset_query(ix.schema, text, mapping)
-    if q is None:
-        return set()
+    """The ids _dataset_elements keeps for this search: same fields, same rule."""
+    fields = [f for f in ix.schema.scorable_names() if f in ix.schema.names()]
     with ix.searcher() as s:
-        return {h['id'] for h in s.search(q, limit=None)}
+        return {d['id'] for d in s.documents() if score({f: d.get(f) for f in fields}, text, mapping)}
 
 
 def test_words_and_normalize():

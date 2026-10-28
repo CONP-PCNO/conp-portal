@@ -9,7 +9,7 @@ from flask import url_for
 from app.dats import DEFAULT_LOGO
 from app.downloads import download_parts
 from app.experiments.dats import DATSExperiment, _flat
-from app.search.dataset_query import stem
+from app.search.text_match import score as match_score
 from app.search.dataset_page import (
     citation_bibtex,
     citation_key,
@@ -117,21 +117,32 @@ def experiment_card(exp):
 
 FACETS = (('function', 'Function assessed', 'functions'), ('modality', 'Modality', 'modalities'),
           ('software', 'Software', 'software'), ('language', 'Language', 'languages'))
-SORTS = (('added', 'Recently added'), ('name', 'Name A–Z'), ('views', 'Most viewed'))
+SORTS = (('relevance', 'Best match'), ('added', 'Recently added'), ('name', 'Name A–Z'), ('views', 'Most viewed'))
+
+
+def chosen_sort(args, query=None):
+    """The sort asked for, or the default: best match when there is a search,
+    newest first otherwise."""
+    sort = args.get('sort') or ''
+    if sort in dict(SORTS) and (sort != 'relevance' or query):
+        return sort
+    return 'relevance' if query else 'added'
 
 
 def filter_cards(cards, query, selected, sort):
     """The list page: text search, facet filters (any value within a facet,
     all facets together), sort, and facet counts over the matching set."""
-    words = [stem(w) for w in re.split(r'\W+', (query or '').lower()) if w]
-
-    def text(card):
-        return ' '.join([card['title'], card['description'], ' '.join(card['creators']),
-                         ' '.join(card['keywords']), ' '.join(card['functions']), ' '.join(card['modalities']),
-                         card['software_label'], ' '.join(card['languages'])]).lower()
+    # Every word must start a word somewhere (it was "anywhere" before), with
+    # the spelling folds and ranking of the Data and Tools pages (text_match).
+    if query:
+        for card in cards:
+            card['score'] = match_score({
+                'title': card['title'], 'description': card['description'], 'creators': card['creators'],
+                'keywords': card['keywords'], 'functions': card['functions'], 'modalities': card['modalities'],
+                'software': card['software_label'], 'languages': card['languages']}, query)
 
     def keep(card):
-        if any(w not in text(card) for w in words):
+        if query and not card.get('score'):
             return False
         for key, _label, field in FACETS:
             want = selected.get(key) or []
@@ -146,6 +157,8 @@ def filter_cards(cards, query, selected, sort):
         shown.sort(key=lambda c: -c['views'])
     else:
         shown.sort(key=lambda c: c['added'] or '', reverse=True)
+        if sort == 'relevance':   # ties: newest first
+            shown.sort(key=lambda c: -(c.get('score') or 0))
 
     facets = []
     for key, label, field in FACETS:

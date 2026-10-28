@@ -48,11 +48,15 @@
   document.addEventListener('DOMContentLoaded', function () {
     var form = document.getElementById('lp-form');
     if (!form) { return; }
+    // The Sort menu's default has an empty value: leave it out of the address,
+    // so a new search gets its own default order (best match).
+    function dropEmpty() { form.querySelectorAll('select').forEach(function (s) { if (!s.value) { s.disabled = true; } }); }
+    form.addEventListener('submit', dropEmpty);
     form.querySelectorAll('input[type="checkbox"], select').forEach(function (el) {
       el.addEventListener('change', function () {
         var page = form.querySelector('input[name="page"]');
         if (page) { page.remove(); }  // a new filter starts at page 1
-        form.submit();
+        dropEmpty(); form.submit();
       });
     });
     var apply = document.getElementById('lp-apply');

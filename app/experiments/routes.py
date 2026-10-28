@@ -11,11 +11,13 @@ from flask import (
     url_for,
 )
 
+from app.search.dataset_list import sort_options
+
 from .. import db
 from ..models import Experiment
 from . import experiments_bp
 from .dats import DATSExperiment
-from .experiment_page import FACETS, SORTS, experiment_card, experiment_page, filter_cards
+from .experiment_page import FACETS, SORTS, chosen_sort, experiment_card, experiment_page, filter_cards
 
 
 def experiment_slug(exp: Experiment) -> str:
@@ -65,7 +67,8 @@ def home():
     parameters (q, function, modality, software, language, sort), so every
     view has its own address. "keyword" (old links) is read as q."""
     query = (request.args.get('q') or request.args.get('keyword') or '').strip()
-    sort = request.args.get('sort', 'added')
+    sort = chosen_sort(request.args, query)
+    default_sort = 'relevance' if query else 'added'
     selected = {key: request.args.getlist(key) for key, _label, _field in FACETS}
     cards = experiment_cards()
     shown, facets = filter_cards(cards, query, selected, sort)
@@ -76,7 +79,8 @@ def home():
         words.update([c['title']] + c['functions'] + c['modalities'] + c['software'] + c['languages'] + c['keywords'])
     suggest_terms = sorted((t for t in words if t), key=str.lower)
     return render_template("experiments/search.html", cards=shown, total=len(cards), facets=facets,
-                           query=query, sort=sort, sorts=SORTS, suggest_terms=suggest_terms,
+                           query=query, sort='' if sort == default_sort else sort,
+                           sorts=sort_options(SORTS, query, 'added'), suggest_terms=suggest_terms,
                            filtered=bool(query or any(selected.values())))
 
 
