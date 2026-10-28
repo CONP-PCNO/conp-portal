@@ -20,9 +20,9 @@ def upgrade():
     # Get the current database dialect name (e.g., 'sqlite', 'mysql', etc.)
     bind = op.get_bind()
     dialect_name = bind.dialect.name
-    if dialect_name == 'mysql':
+    if dialect_name in ('mysql', 'mariadb'):
         # Convert database, table, and column character set to utf8mb4
-        op.execute("ALTER DATABASE CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
+        op.execute("ALTER DATABASE CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
         op.execute("ALTER TABLE datasets CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
     else:
         # SQLite doesn't need (or support) charset conversion statements.
@@ -33,7 +33,6 @@ def upgrade():
 def downgrade():
     bind = op.get_bind()
     dialect_name = bind.dialect.name
-    if dialect_name == 'mysql':
+    if dialect_name in ('mysql', 'mariadb'):
         # Reverting back to utf8/latin1 if needed (optional, often left empty or set to utf8)
         op.execute("ALTER TABLE datasets CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;")
-
