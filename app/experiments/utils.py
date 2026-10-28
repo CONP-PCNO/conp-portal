@@ -1,8 +1,6 @@
 import os
+import re
 import uuid
-
-from werkzeug.datastructures import FileStorage
-from werkzeug.utils import secure_filename
 
 from .. import config
 from ..models import Experiment
@@ -16,12 +14,18 @@ def flatten(xs):
             yield x
 
 
-def upload_file(file: FileStorage) -> str:
+def upload_file(file) -> str:
     upload_dir = config.EXPERIMENTS_UPLOAD_DIRECTORY
     if not os.path.isdir(upload_dir):
         os.makedirs(upload_dir)
-    file_ext = file.filename.split('.')[-1]
-    filepath = os.path.join(upload_dir, secure_filename(f"{uuid.uuid4()}.{file_ext}"))
+
+    # Extract extension safely and sanitize it to alphanumeric characters only
+    raw_ext = file.filename.split('.')[-1] if '.' in file.filename else ''
+    file_ext = re.sub(r'[^a-zA-Z0-9]', '', raw_ext).lower()
+
+    filename = f"{uuid.uuid4()}.{file_ext}" if file_ext else str(uuid.uuid4())
+    filepath = os.path.join(upload_dir, filename)
+
     file.save(filepath)
     return filepath
 
