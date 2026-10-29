@@ -34,6 +34,7 @@ dependencies = [
     "whoosh==2.7.4",
     "wtforms==2.2.1",
     "gunicorn>=26.2.0",
+    "pymysql==1.2.3",
 ]
 
 [dependency-groups]
