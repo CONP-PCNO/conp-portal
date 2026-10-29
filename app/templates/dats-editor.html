@@ -2,15 +2,16 @@
 
 <!-- Head Block -->
 {% block head %} {{ super() }}
-<title>CONP Portal | DATS Editor</title>
+<title>CONP Portal | Metadata Editor</title>
 {% endblock %}
 
 {% block styles %} {{ super() }}
 {% if editor_css %}
 <link href="{{ static_v(editor_css) }}" rel="stylesheet" />
 {% endif %}
+<link href="{{ static_v('css/metadata-editor.css') }}" rel="stylesheet" />
 <style>
-  /* The editor draws its own "DATS Editor" heading under the page title. */
+  /* The editor draws its own heading under the page title. */
   #dats-editor-container h1.MuiTypography-h4 {
     display: none;
   }
@@ -44,7 +45,8 @@
 <!-- Title Block -->
 
 {% block contenttitle %}
-<h2>DATS Editor</h2>
+<h2>Metadata Editor</h2>
+<p class="page-lede">Describe a dataset or an experiment for the CONP Portal: this makes the two files its page is built from, DATS.json (the metadata) and README.md.</p>
 {% endblock %}
 
 <!-- Content Block -->

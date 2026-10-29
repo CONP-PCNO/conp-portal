@@ -248,7 +248,7 @@ def dats_editor():
     css_files = sorted(glob.glob(os.path.join(css_dir, 'main.*.css')), key=os.path.getmtime)
     editor_css = 'lib/conp-react/umd/' + os.path.basename(css_files[-1]) if css_files else None
 
-    return render_template('dats-editor.html', title='CONP | DATS Editor', user=current_user,
+    return render_template('dats-editor.html', title='CONP | Metadata Editor', user=current_user,
                            editor_css=editor_css)
 
 
