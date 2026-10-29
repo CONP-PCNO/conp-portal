@@ -5,7 +5,7 @@
 import glob
 import json
 import os
-from urllib.parse import urlparse
+from urllib.parse import urlencode, urlparse
 
 from flask import abort, current_app, redirect, render_template
 from flask import request as flask_request
@@ -134,11 +134,37 @@ def data_governance():
     return render_template('data_governance.html', title='CONP | Data Governance', user=current_user, content=content)
 
 
+CONTACT_FORM = ('https://docs.google.com/forms/d/e/'
+                '1FAIpQLSe01Po0tXd11JDzYF9Jtfpj1eReiSPDXCEknpxK_6NEGL6D2A/viewform')
+# The Google Form branches on "Nature of your feedback?" (entry 1130948154); each
+# branch ends in its own message box. topic= picks the branch, message= starts the text.
+CONTACT_TOPICS = {
+    'bug': ('Problem or bug report', 1130875829),
+    'ux': ('Suggestions or comments regarding user experience', 702605877),
+    'suggestion': ('Feature, dataset, or pipeline suggestion', 694294914),
+    'other': ('Other topic or general feedback', 470057101),
+}
+
+
+def contact_form_src(topic=None, message=None):
+    """The embedded form's address, pre-filled when topic (and message) are given."""
+    params = [('embedded', 'true')]
+    if topic in CONTACT_TOPICS:
+        label, message_entry = CONTACT_TOPICS[topic]
+        params += [('usp', 'pp_url'), ('entry.1130948154', label)]
+        if message:
+            params.append((f'entry.{message_entry}', message.strip()[:500]))
+    return CONTACT_FORM + '?' + urlencode(params)
+
+
 @main_bp.route('/contact_us')
 def contact_us():
     """ Contact Us Route
 
-        Route to lead to the contact page
+        Route to lead to the contact page. Optional query parameters pre-fill the
+        form: topic (bug, ux, suggestion, other) and message, e.g. a dataset page's
+        "Tell us about a paper we missed" link:
+        /contact_us?topic=other&message=A paper that used "<title>" is missing...
 
         Args:
             None
@@ -147,7 +173,8 @@ def contact_us():
             rendered template for contact_us.html
     """
 
-    return render_template('contact_us.html', title='CONP | Contact Us', user=current_user)
+    form_src = contact_form_src(flask_request.args.get('topic'), flask_request.args.get('message'))
+    return render_template('contact_us.html', title='CONP | Contact Us', user=current_user, form_src=form_src)
 
 
 @main_bp.route('/about')
