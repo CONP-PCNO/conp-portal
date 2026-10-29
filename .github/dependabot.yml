@@ -28,7 +28,9 @@ updates:
       - "P: Dependencies"
       - "P: Python"
   - package-ecosystem: "npm"
-    directory: "/app/static/v2"
+    directories:
+      - "/app/static/v2"
+      - "/app/static/lib/conp-react"
     schedule:
       interval: "monthly"
     labels:
