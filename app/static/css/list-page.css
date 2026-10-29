@@ -95,3 +95,20 @@ body .content-main .lp-evidence img { width: 16px; height: 16px; margin: 0; }
 .lp-related li { break-inside: avoid; }
 body .content-main .lp-get-boutiques img { width: 16px; height: 16px; margin: 0; }
 .lp-get .lp-muted { font-weight: 500; margin-left: 4px; }
+
+/* Ways to get or run it, on Data, Tools and Experiments cards: a thin divider
+   between ways, so each reads as one unit ("On CBRAIN FSL 5.0.9" | "On your
+   computer" | "Alliance cluster") instead of one run of bold text. On narrow
+   screens the row wraps, so the ways are spaced instead (a divider would start
+   the second line). */
+.lp-get { gap: 8px 0; }
+.lp-get > .lp-get-label { margin-right: 14px; }
+.lp-get > a { padding: 2px 14px; }
+.lp-get > .lp-get-label + a { padding-left: 0; }
+.lp-get > a + a { border-left: 1px solid #c9ced4; border-radius: 0; }
+.lp-get > a:focus-visible { border-radius: 4px; }
+@media (max-width: 600px) {
+  .lp-get { gap: 8px 18px; }
+  .lp-get > a, .lp-get > .lp-get-label + a { padding: 2px 0; }
+  .lp-get > a + a { border-left: 0; }
+}
