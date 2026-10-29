@@ -23,6 +23,7 @@ datalad~=1.7
 ## https://github.com/gitpython-developers/GitPython
 ## Development Status: maintenance mode
 GitPython==3.2.1
+gitdb==4.0.12
 
 ## Python library to access the GitHub REST API v3 and manage
 ## repositories, users, and organizations.
