@@ -84,11 +84,11 @@
       <li>{{ icon('downloads') }}{{ '{:,}'.format(c.downloads) }} download{{ 's' if c.downloads != 1 }}</li>
     </ul>
     <div class="lp-get">
-      <span class="lp-get-label">Run it</span>
+      <span class="lp-get-label">Run it on</span>
       {#- Each way opens the tool page at that way under "Ways to run it", which glows briefly. #}
-      {% if c.cbrain %}<a class="lp-get-cbrain lp-get-download" href="{{ c.url }}#cbrain">On <img src="{{ url_for('static', filename='img/cbrain-long-logo-blue.png') }}" alt="CBRAIN" />{% if c.cbrain_label %}<span class="lp-muted">{{ c.cbrain_label }}</span>{% endif %}</a>{% endif %}
-      <a class="lp-get-boutiques" href="{{ c.url }}#boutiques"><img src="{{ url_for('static', filename='img/boutiques.png') }}" alt="" />On your computer</a>
-      {% if c.cluster %}<a href="{{ c.url }}#hpc">{{ icon('cluster') }}Alliance cluster</a>{% endif %}
+      {% if c.cbrain %}<a class="lp-get-cbrain lp-get-download" href="{{ c.url }}#cbrain"><img src="{{ url_for('static', filename='img/cbrain-long-logo-blue.png') }}" alt="CBRAIN" />{% if c.cbrain_label %}<span class="lp-muted">{{ c.cbrain_label }}</span>{% endif %}</a>{% endif %}
+      <a class="lp-get-boutiques" href="{{ c.url }}#boutiques"><img src="{{ url_for('static', filename='img/boutiques.png') }}" alt="" />Your computer</a>
+      {% if c.cluster %}<a href="{{ c.url }}#hpc">{{ icon('cluster') }}Alliance HPC</a>{% endif %}
     </div>
   </div>
 </article>

@@ -31,7 +31,8 @@ OTHER_SOFTWARE = 'Other tools'
 
 RUN_CBRAIN = 'CBRAIN'
 RUN_COMPUTER = 'Your computer (Boutiques)'
-RUN_CLUSTER = 'Alliance cluster (container)'
+RUN_CLUSTER = 'Alliance HPC (container)'
+RUN_CLUSTER_OLD = 'Alliance cluster (container)'   # links made before Oct 2026
 
 # Descriptor domain tags -> filter labels; tags that say nothing about the
 # kind of data (neuroinformatics, boutiques, typos) are left out.
@@ -157,6 +158,7 @@ def selected_filters(args):
     """Ticked values, plus the old list's parameters: tags= (domain tags,
     comma-separated) and cbrain=."""
     selected = {key: [v for v in args.getlist(key) if v] for key, _label, _field in FACETS}
+    selected['runs'] = [RUN_CLUSTER if v == RUN_CLUSTER_OLD else v for v in selected['runs']]
     for t in (args.get('tags') or '').split(','):
         if t.strip():
             selected['domain'] += domain_labels([t.strip()]) or []

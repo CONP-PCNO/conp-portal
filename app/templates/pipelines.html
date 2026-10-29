@@ -25,7 +25,7 @@
 {% endblock %}
 
 {% block og_title %}Tools &amp; Pipelines | CONP Portal{% endblock %}
-{% block og_description %}Neuroscience tools with Boutiques descriptors on the Canadian Open Neuroscience Platform (CONP) Portal: run them on CBRAIN, on your computer, or on an Alliance cluster.{% endblock %}
+{% block og_description %}Neuroscience tools with Boutiques descriptors on the Canadian Open Neuroscience Platform (CONP) Portal: run them on CBRAIN, on your computer, or on Alliance HPC.{% endblock %}
 
 {% block styles %} {{ super() }}
 <link href="{{ static_v('css/list-page.css') }}" rel="stylesheet" />
@@ -63,7 +63,7 @@
 
 {% block appcontent %}
 <form class="lp-page" id="lp-form" method="get" action="{{ url_for('pipelines.pipelines') }}" role="search">
-  <p class="lp-intro">{{ total }} tools with Boutiques descriptors: run them on CBRAIN, on your computer, or on an Alliance cluster.</p>
+  <p class="lp-intro">{{ total }} tools with Boutiques descriptors: run them on CBRAIN, on your computer, or on Alliance HPC.</p>
 
   <div class="lp-search">
     <label for="lp-q" class="visually-hidden">Search tools</label>
