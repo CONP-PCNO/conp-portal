@@ -404,6 +404,22 @@
       if (termsEl3) { bootstrap.Modal.getOrCreateInstance(termsEl3).show(); }
     }
 
+    // "/" puts the cursor in the page's search box (Data, Tools, Experiments,
+    // home, search results), as on GitHub or MDN; not while typing in a field.
+    var searchBox = document.querySelector('main input[type="search"], .content-main input[type="search"], input[type="search"]');
+    if (searchBox) { searchBox.setAttribute('aria-keyshortcuts', '/'); }
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey || e.defaultPrevented) { return; }
+      var t = e.target;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) { return; }
+      if (document.querySelector('.modal.show')) { return; }
+      var box = document.querySelector('main input[type="search"], .content-main input[type="search"], input[type="search"]');
+      if (!box) { return; }
+      e.preventDefault();
+      box.focus();
+      if (box.select) { box.select(); }
+    });
+
     if (window.location.href.indexOf('#privacy') != -1) {
       var privacyEl = document.getElementById('privacyPolicyModal');
       if (privacyEl) { bootstrap.Modal.getOrCreateInstance(privacyEl).show(); }

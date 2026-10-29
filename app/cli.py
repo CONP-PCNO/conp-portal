@@ -87,6 +87,24 @@ def register(app):
         """
         _update_datasets(app)
         _update_index(app, DBDataset, True)
+        _report_stale_datasets(app)
+
+    @app.cli.command('prune_datasets')
+    @click.option('--apply', 'apply_changes', is_flag=True, default=False,
+                  help='Remove the rows listed (without it, only list them).')
+    @click.option('--reason', default=None,
+                  help='Why they were removed, shown on their ARK page.')
+    @click.option('--replaced-by', 'replaced_by', default=None,
+                  help='dataset_id of the dataset that replaces them, linked from their page.')
+    @click.option('--force', is_flag=True, default=False,
+                  help='Allow removing more than a quarter of the datasets.')
+    def prune_datasets(apply_changes, reason, replaced_by, force):
+        """
+        List (or, with --apply, remove) datasets the Portal still has but
+        conp-dataset no longer lists. Their ARKs are kept: each becomes a
+        "retired" record that its ARK and old address show (HTTP 410).
+        """
+        _prune_datasets(app, apply_changes=apply_changes, reason=reason, replaced_by=replaced_by, force=force)
 
     @app.cli.command('update_index')
     @click.option(
@@ -557,6 +575,108 @@ def _update_index(
         )
 
     writer.commit()
+
+
+RETIRED_REASON = 'Removed from the CONP catalogue (no longer listed in conp-dataset).'
+
+
+def _submodule_names(repo_dir):
+    """The submodule names in a superdataset's .gitmodules (the names
+    update_datasets stores as dataset_id, e.g. "projects/bigbrain-datalad",
+    which may differ from the folder). Empty when it can't be read."""
+    import subprocess
+
+    gitmodules = os.path.join(str(repo_dir), '.gitmodules')
+    if not os.path.isfile(gitmodules):
+        return set()
+    try:
+        out = subprocess.run(
+            ['git', 'config', '--file', gitmodules, '--name-only', '--get-regexp', r'^submodule\..*\.path$'],
+            capture_output=True, text=True, check=True,
+        ).stdout
+    except (OSError, subprocess.CalledProcessError):
+        return set()
+    names = set()
+    for key in out.splitlines():
+        key = key.strip()
+        if key.startswith('submodule.') and key.endswith('.path'):
+            names.add(key[len('submodule.'):-len('.path')])
+    return names
+
+
+def _stale_datasets(app):
+    """Dataset rows whose dataset_id conp-dataset no longer lists, or None
+    when conp-dataset's .gitmodules can't be read (never treat that as
+    "everything is stale")."""
+    from pathlib import Path
+
+    names = _submodule_names(Path(app.config['DATA_PATH']) / 'conp-dataset')
+    if not names:
+        return None
+    return [d for d in DBDataset.query.order_by(DBDataset.dataset_id).all() if d.dataset_id not in names]
+
+
+def _report_stale_datasets(app):
+    """After update_datasets: name the rows conp-dataset no longer lists
+    (update_datasets adds and updates rows but never removes one)."""
+    try:
+        stale = _stale_datasets(app)
+    except Exception as e:  # a report must never fail the update
+        print(f"[WARNING] Could not check for removed datasets: {e}")
+        return
+    if stale:
+        print(f"[WARNING] {len(stale)} dataset(s) are no longer in conp-dataset but still on the Portal:")
+        for d in stale:
+            print(f"[WARNING]   {d.dataset_id}")
+        print("[WARNING] Run `flask prune_datasets` to review them, then `flask prune_datasets --apply`.")
+
+
+def _prune_datasets(app, apply_changes=False, reason=None, replaced_by=None, force=False):
+    """List, or remove, the datasets conp-dataset no longer lists.
+
+    Removing one deletes its `datasets` and `dataset_ancestry` rows and adds
+    a `retired_dataset` record. Its ARK row is never touched, so the ARK
+    keeps resolving (to the retired record). The search index is rebuilt
+    afterwards. Returns the list of dataset_ids concerned."""
+    from app import db
+    from app.models import ArkId, DatasetAncestry, RetiredDataset
+
+    stale = _stale_datasets(app)
+    if stale is None:
+        print("[ERROR  ] conp-dataset's .gitmodules can't be read; nothing done.")
+        return []
+    if replaced_by and DBDataset.query.filter_by(dataset_id=replaced_by).first() is None:
+        print(f"[ERROR  ] --replaced-by {replaced_by} is not a dataset on the Portal; nothing done.")
+        return []
+    total = DBDataset.query.count()
+    print(f"[INFO   ] {len(stale)} of {total} dataset rows are no longer in conp-dataset.")
+    for d in stale:
+        ark = db.session.query(ArkId.ark_id).filter_by(dataset_id=d.dataset_id).first()
+        on_disk = bool(d.fspath) and os.path.isdir(d.fspath)
+        print(f"  {d.dataset_id} | {d.name} | {ark[0] if ark else 'no ARK'} | folder {'present' if on_disk else 'gone'}")
+    ids = [d.dataset_id for d in stale]
+    if not apply_changes:
+        if stale:
+            print("[INFO   ] Dry run: nothing changed. Add --apply to remove these rows (their ARKs are kept).")
+        return ids
+    if total and len(stale) > total / 4 and not force:
+        print("[ERROR  ] More than a quarter of the datasets would be removed; nothing done. "
+              "Check conp-dataset's checkout, or add --force.")
+        return []
+    for d in stale:
+        if RetiredDataset.query.filter_by(dataset_id=d.dataset_id).first() is None:
+            db.session.add(RetiredDataset(dataset_id=d.dataset_id, name=d.name,
+                                          retired_on=datetime.utcnow(), reason=reason or RETIRED_REASON,
+                                          replaced_by=replaced_by))
+        DatasetAncestry.query.filter(
+            (DatasetAncestry.child_dataset_id == d.dataset_id) | (DatasetAncestry.parent_dataset_id == d.dataset_id)
+        ).delete(synchronize_session=False)
+        db.session.delete(d)
+    db.session.commit()
+    print(f"[INFO   ] Removed {len(ids)} dataset row(s); their ARKs now show a \"retired\" page.")
+    if ids:
+        _update_index(app, DBDataset, True)
+    return ids
 
 
 def _update_datasets(app):
