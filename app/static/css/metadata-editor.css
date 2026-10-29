@@ -199,8 +199,44 @@
 
 /* One line under the page title saying what the editor is for. */
 body .page-header .page-lede {
-  margin: 6px 0 0;
+  margin: 12px 0 0;
   max-width: 760px;
   color: #4a525a;
   font-size: 1rem;
+}
+
+/* Bootstrap 5 floats every <legend> (float:left; margin-bottom:.5rem;
+   line-height:inherit). Material UI draws each field's border as a fieldset
+   whose legend cuts the gap for the raised label; floated, the legend no
+   longer cuts it, so the border ran through or under the label. Put back
+   Material UI's own legend rules. */
+#dats-editor-container fieldset.MuiOutlinedInput-notchedOutline > legend,
+.MuiPopover-root fieldset.MuiOutlinedInput-notchedOutline > legend {
+  float: none;
+  margin: 0;
+  line-height: 11px;
+}
+
+/* The red rule under the page title belongs under the title, not under the
+   last line of the description beneath it. */
+body .page-header:has(.page-lede) {
+  display: flex;
+  flex-direction: column;
+}
+body .page-header:has(.page-lede)::after {
+  order: 1;
+}
+body .page-header .page-lede {
+  order: 2;
+}
+
+/* The Portal's text-box focus (red border and red halo, conp-theme.css) also
+   hit the bare <input> inside each Material UI field, drawing a pink box
+   inside the field's own green focus border. Inside the editor the green
+   border is the focus indicator. */
+#dats-editor-container .MuiInputBase-input:focus,
+#dats-editor-container .MuiInputBase-input:focus-visible {
+  border-color: transparent;
+  box-shadow: none;
+  outline: none !important;
 }
