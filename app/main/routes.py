@@ -269,22 +269,35 @@ def redirect_ark_ids(url_naan, url_ark_id):
     requested_full_ark_id = f"ark:/{url_naan}/{url_ark_id}"
     redirect_url = None
 
+    # An ARK we never minted is "not found" (it was a server error: the
+    # lookup's empty result was indexed). A retired dataset's ARK still
+    # redirects: /dataset shows its "retired" page.
     if url_ark_id.startswith('d7'):
         db_entry = db.session.query(ArkId.dataset_id).filter_by(
             ark_id=requested_full_ark_id
         ).first()
-        redirect_url = f'/dataset?id={db_entry[0]}'
+        if db_entry and db_entry[0]:
+            redirect_url = f'/dataset?id={db_entry[0]}'
     elif url_ark_id.startswith('p7'):
         db_entry = db.session.query(ArkId.pipeline_id).filter_by(
             ark_id=requested_full_ark_id
         ).first()
-        redirect_url = f'/pipeline?id={db_entry[0]}'
+        if db_entry and db_entry[0]:
+            redirect_url = f'/pipeline?id={db_entry[0]}'
+    elif url_ark_id.startswith('e7'):
+        # Experiments (the minter has an "e7" shoulder; none are minted yet).
+        db_entry = db.session.query(ArkId.experiment_id).filter_by(
+            ark_id=requested_full_ark_id
+        ).first()
+        if db_entry and db_entry[0]:
+            folder = str(db_entry[0]).split('/', 1)[-1] if str(db_entry[0]).startswith('projects/') else db_entry[0]
+            redirect_url = f'/experiments/view/{folder}'
 
     if not redirect_url:
         abort(
             404,
             f'The provided ARK ID {requested_full_ark_id} does not match any '
-            f' dataset or pipeline from the CONP portal. Please verify the URL.'
+            f' dataset, pipeline or experiment from the CONP portal. Please verify the URL.'
         )
 
     return redirect(redirect_url)

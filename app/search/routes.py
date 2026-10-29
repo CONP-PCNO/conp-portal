@@ -804,6 +804,24 @@ def _public(element):
     return {k: v for k, v in element.items() if not k.startswith('_')}
 
 
+def _retired_dataset_page(dataset_id):
+    """The page for a dataset removed from the catalogue (flask
+    prune_datasets), with HTTP 410 Gone, or None when it never existed."""
+    from app.models import ArkId, RetiredDataset
+
+    if not dataset_id:
+        return None
+    retired = RetiredDataset.query.filter_by(dataset_id=dataset_id).first()
+    if retired is None:
+        return None
+    ark = ArkId.query.filter_by(dataset_id=dataset_id).first()
+    name = retired.name or dataset_id.split('/')[-1]
+    successor = Dataset.query.filter_by(dataset_id=retired.replaced_by).first() if retired.replaced_by else None
+    return render_template('retired_dataset.html', title='CONP | Dataset removed', user=current_user,
+                           name=name, retired=retired, ark_id=ark.ark_id if ark else None,
+                           successor=successor), 410
+
+
 @search_bp.route('/dataset', methods=['GET'])
 def dataset_info():
     """ Dataset Route
@@ -823,8 +841,19 @@ def dataset_info():
     # Query dataset
     d = Dataset.query.filter_by(dataset_id=dataset_id).first()
     if d is None:
+        retired = _retired_dataset_page(dataset_id)
+        if retired is not None:
+            return retired
         abort(404)  # an unknown id (old link, typo) is not found, not a server error
-    datsdataset = DATSDataset(d.fspath, dataset_id=d.dataset_id)
+    try:
+        datsdataset = DATSDataset(d.fspath, dataset_id=d.dataset_id)
+        datsdataset.descriptor  # read now, so a missing folder or record fails here
+    except (OSError, RuntimeError, ValueError, TypeError, KeyError) as e:
+        # The row exists but its folder or DATS.json can't be read (a failed
+        # checkout, or a dataset removed from conp-dataset but not yet pruned):
+        # say so instead of a server error.
+        current_app.logger.warning("Dataset %s can't be read from %s: %s", d.dataset_id, d.fspath, e)
+        abort(503, description="This dataset's record can't be read at the moment. Please try again later.")
 
     if current_user.is_authenticated:
         authorized = True

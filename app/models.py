@@ -216,6 +216,27 @@ class Dataset(db.Model):
         return f'<Dataset {self.name}>'
 
 
+class RetiredDataset(db.Model):
+    """
+        A dataset removed from conp-dataset (flask prune_datasets). Its
+        `datasets` row is deleted, but its ARK must keep working: the ARK and
+        the old /dataset?id= address show this record (HTTP 410) instead of
+        an error.
+    """
+    __tablename__ = 'retired_dataset'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    dataset_id = db.Column(db.String(256), index=True, unique=True)
+    name = db.Column(db.String(256))
+    retired_on = db.Column(db.DateTime, default=datetime.utcnow)
+    reason = db.Column(db.Text)
+    # dataset_id of the dataset that replaces it, if any (linked from its page)
+    replaced_by = db.Column(db.String(256))
+
+    def __repr__(self):
+        return f'<RetiredDataset {self.dataset_id}>'
+
+
 class DatasetAncestry(db.Model):
     """
         Provides DatasetAncestry Model

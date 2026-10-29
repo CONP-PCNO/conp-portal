@@ -1,0 +1,28 @@
+{% extends 'common/base_main.html' %}
+
+{#
+  A dataset removed from the CONP catalogue (flask prune_datasets). Served
+  with HTTP 410 at its old /dataset?id= address, which is also where its
+  ARK leads: the ARK keeps resolving, to this explanation.
+#}
+
+{% block head %} {{ super() }}
+<title>CONP Portal | Dataset removed: {{ name }}</title>
+<meta name="robots" content="noindex" />
+{% endblock %}
+
+{% block og_title %}Dataset removed | CONP Portal{% endblock %}
+
+{% block contenttitle %}
+<h2>Dataset removed</h2>
+{% endblock %}
+
+{% block appcontent %}
+<section class="retired-dataset" style="max-width: 760px">
+  <p><strong>{{ name }}</strong> is no longer in the CONP catalogue{% if retired.retired_on %} (since {{ retired.retired_on.strftime('%Y-%m-%d') }}){% endif %}.</p>
+  {% if retired.reason %}<p>{{ retired.reason }}</p>{% endif %}
+  {% if successor %}<p>It is replaced by <a href="{{ url_for('search.dataset_info', id=successor.dataset_id) }}">{{ successor.name }}</a>.</p>{% endif %}
+  {% if ark_id %}<p>Its persistent identifier stays valid and leads to this page: <code>{{ ark_id }}</code></p>{% endif %}
+  <p><a href="{{ url_for('search.search', search=name) }}">Search the Data page for similar datasets</a> · <a href="{{ url_for('main.contact_us') }}">Contact us</a></p>
+</section>
+{% endblock %}
