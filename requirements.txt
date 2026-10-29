@@ -50,6 +50,8 @@ python-dateutil==2.8.0 ## Prod
 pytz==2018.9 ## Prod
 # pytz==2026.3.post1
 
+pymysql==1.2.3
+
 ## Elegant and simple HTTP library for sending requests without manual query string encoding or POST-data formatting.
 ## aka: requests
 # requests==2.32.0 ## Prod | requests==2.32.0` is yanked (reason: "Yanked due to conflicts with CVE-2024-35195 mitigation").
