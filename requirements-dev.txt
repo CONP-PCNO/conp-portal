@@ -8,6 +8,6 @@
 deptry==0.25.*
 flake8==7.*
 prek==0.5.*
-pytest==8.*
+pytest>=8,<10
 ruff==0.17.*
 semver==3.*
