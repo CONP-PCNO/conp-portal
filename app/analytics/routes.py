@@ -7,7 +7,7 @@ import json
 import re
 from datetime import datetime
 
-from flask import render_template, request
+from flask import current_app, render_template, request
 from flask_login import current_user
 
 from app.analytics import analytics_bp
@@ -374,3 +374,18 @@ def clean_search_keywords(elements):
             if hits > m['_best']:
                 m['label'], m['_best'] = e['label'], hits
     return [{'label': m['label'], 'nb_hits': m['nb_hits']} for m in merged.values()]
+
+
+@analytics_bp.route('/analytics/research-use/changes')
+def research_use_changes():
+    """What changed in the research-use lists from one weekly update to the next
+    (DATA_PATH/research_use/CHANGES.md, newest first)."""
+    import os
+    path = os.path.join(current_app.config['DATA_PATH'], 'research_use', 'CHANGES.md')
+    text = open(path, encoding='utf-8').read() if os.path.exists(path) else ''
+    entries = []
+    for block in re.split(r'^## ', text, flags=re.M)[1:]:
+        date, _, body = block.partition('\n')
+        entries.append({'date': date.strip(), 'lines': [ln for ln in body.strip().split('\n')]})
+    return render_template('research_use_changes.html', title='CONP Portal | Research use: changes',
+                           user=current_user, entries=entries)
