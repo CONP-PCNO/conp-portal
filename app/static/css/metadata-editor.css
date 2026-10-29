@@ -1,0 +1,206 @@
+/* Metadata Editor (/dats-editor): the Portal's look for the editor's
+   Material UI form (Oct 2026). The editor itself is the conp-dats-editor
+   React component in the conp-react bundle; this file only restyles it, so
+   it ships without a rebuild. Scoped to #dats-editor-container.
+   Colours and type come from conp-theme.css (--conp-*). */
+
+#dats-editor-container {
+  --me-ink: #1d2129;
+  --me-muted: #4a525a;
+  --me-line: #dfe2e6;
+  --me-wash: #f1f7f3;
+  --me-error: #b3001b;
+  --me-focus: rgba(23, 114, 69, 0.35);
+  color: var(--me-ink);
+}
+
+/* One typeface with the rest of the Portal (Material UI defaults to Roboto). */
+#dats-editor-container .MuiTypography-root,
+#dats-editor-container .MuiButton-root,
+#dats-editor-container .MuiInputBase-root,
+#dats-editor-container .MuiFormLabel-root,
+#dats-editor-container .MuiFormHelperText-root,
+#dats-editor-container .MuiStepLabel-label,
+#dats-editor-container .MuiFormControlLabel-label,
+#dats-editor-container .MuiMenuItem-root,
+.MuiPopover-root .MuiMenuItem-root {
+  font-family: var(--conp-font, inherit);
+}
+
+/* The form sits on a card like the dataset and tool pages, not a raised sheet. */
+#dats-editor-container .MuiPaper-root.MuiPaper-elevation1,
+#dats-editor-container .MuiPaper-root.MuiPaper-elevation2,
+#dats-editor-container .MuiPaper-root.MuiPaper-elevation3 {
+  box-shadow: none;
+  border: 1px solid var(--me-line);
+  border-radius: 8px;
+}
+
+/* Progress: green for done and current, grey for later steps. */
+#dats-editor-container .MuiStepper-root {
+  background: transparent;
+}
+#dats-editor-container .MuiStepIcon-root {
+  color: #c3c8cf;
+}
+#dats-editor-container .MuiStepIcon-root.MuiStepIcon-active,
+#dats-editor-container .MuiStepIcon-root.MuiStepIcon-completed {
+  color: var(--conp-green, #177245);
+}
+#dats-editor-container .MuiStepLabel-label {
+  font-size: 0.95rem;
+  color: var(--me-muted);
+}
+#dats-editor-container .MuiStepLabel-label.MuiStepLabel-active {
+  color: var(--me-ink);
+  font-weight: 600;
+}
+#dats-editor-container .MuiStepConnector-line {
+  border-color: var(--me-line);
+}
+
+/* Headings and help text at the Portal's sizes. */
+#dats-editor-container .MuiTypography-h5 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+#dats-editor-container .MuiTypography-h6 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+#dats-editor-container .MuiTypography-body2,
+#dats-editor-container .MuiTypography-caption {
+  color: var(--me-muted);
+  font-size: 0.93rem;
+  line-height: 1.5;
+}
+#dats-editor-container .MuiDivider-root {
+  background-color: #eceef1;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+/* Buttons: the Portal's green for the main action, outlined green for "Add
+   another …", plain outlined for Back and Clear. No capitals. */
+#dats-editor-container .MuiButton-root {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  min-height: 44px;
+  padding: 8px 16px;
+  box-shadow: none;
+}
+#dats-editor-container .MuiButton-containedPrimary {
+  background-color: var(--conp-green, #177245);
+  color: #fff;
+}
+#dats-editor-container .MuiButton-containedPrimary:hover {
+  background-color: var(--conp-green-dark, #115a37);
+  box-shadow: none;
+}
+#dats-editor-container .MuiButton-contained:not(.MuiButton-containedPrimary):not(.Mui-disabled) {
+  background-color: #fff;
+  color: var(--me-ink);
+  border: 1px solid #c9ced4;
+}
+#dats-editor-container .MuiButton-contained:not(.MuiButton-containedPrimary):hover {
+  background-color: #f6f7f8;
+}
+#dats-editor-container .MuiButton-outlined,
+#dats-editor-container .MuiButton-outlinedSecondary,
+#dats-editor-container .MuiButton-outlinedPrimary {
+  color: var(--conp-green, #177245);
+  border-color: var(--conp-green, #177245);
+  background-color: #fff;
+}
+#dats-editor-container .MuiButton-outlined:hover,
+#dats-editor-container .MuiButton-outlinedSecondary:hover,
+#dats-editor-container .MuiButton-outlinedPrimary:hover {
+  background-color: var(--me-wash);
+}
+/* "Save a draft" carries an inline blue in the editor (until conp-dats-editor
+   drops it): a secondary action, outlined green like "Add another …". */
+#dats-editor-container .MuiButton-contained[style*="63, 81, 181"],
+#dats-editor-container .MuiButton-contained[style*="3f51b5"] {
+  background-color: #fff !important;
+  color: var(--conp-green, #177245) !important;
+  border: 1px solid var(--conp-green, #177245);
+}
+#dats-editor-container .MuiButton-root:focus-visible,
+#dats-editor-container .MuiIconButton-root:focus-visible {
+  outline: 3px solid var(--me-focus);
+  outline-offset: 2px;
+}
+#dats-editor-container .MuiIconButton-root {
+  color: var(--me-muted);
+}
+
+/* Fields: green when focused, the Portal's red for errors. */
+#dats-editor-container .MuiOutlinedInput-notchedOutline {
+  border-color: #c9ced4;
+}
+#dats-editor-container .MuiOutlinedInput-root:hover:not(.Mui-disabled) .MuiOutlinedInput-notchedOutline {
+  border-color: #8a939b;
+}
+#dats-editor-container .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--conp-green, #177245);
+  border-width: 2px;
+}
+#dats-editor-container .MuiFormLabel-root.Mui-focused {
+  color: var(--conp-green, #177245);
+}
+#dats-editor-container .MuiFormLabel-root.Mui-error,
+#dats-editor-container .MuiFormHelperText-root.Mui-error {
+  color: var(--me-error);
+}
+#dats-editor-container .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+  border-color: var(--me-error);
+}
+#dats-editor-container .MuiRadio-root.Mui-checked,
+#dats-editor-container .MuiCheckbox-root.Mui-checked,
+#dats-editor-container .MuiSwitch-colorSecondary.Mui-checked {
+  color: var(--conp-green, #177245);
+}
+#dats-editor-container .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+  background-color: var(--conp-green, #177245);
+}
+
+/* "Upload your DATS.json file here". */
+#dats-editor-container [role='button'][tabindex='0']:not(.MuiButtonBase-root):not(.MuiSelect-root) {
+  border-color: #c9ced4 !important;
+  border-radius: 8px !important;
+  background-color: #f6f7f8 !important;
+  color: var(--me-muted) !important;
+}
+
+/* The list of fields to complete (DatsErrors) reads as one notice. */
+#dats-editor-container [role='alert'] {
+  border: 1px solid #f1c4cb;
+  background: #fdf2f4;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-top: 16px;
+}
+#dats-editor-container [role='alert'] ul {
+  margin: 4px 0 0;
+  padding-left: 20px;
+}
+
+/* README step: the Markdown editor's frame in the same greys. */
+#dats-editor-container .w-md-editor {
+  box-shadow: none;
+  border: 1px solid var(--me-line);
+  border-radius: 8px;
+}
+
+/* One line under the page title saying what the editor is for. */
+body .page-header .page-lede {
+  margin: 6px 0 0;
+  max-width: 760px;
+  color: #4a525a;
+  font-size: 1rem;
+}
