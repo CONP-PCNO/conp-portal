@@ -566,6 +566,44 @@ def work_link(w):
     return w.get('openalex')
 
 
+# Venue names as sources spell them ("Elife") mapped to the journal's own spelling.
+VENUE_NAMES = {
+    'elife': 'eLife', 'neuroimage': 'NeuroImage', 'neuroimage: clinical': 'NeuroImage: Clinical',
+    'neuroimage. clinical': 'NeuroImage: Clinical', 'biorxiv': 'bioRxiv', 'medrxiv': 'medRxiv',
+    'plos one': 'PLOS ONE', 'plos biology': 'PLOS Biology', 'plos computational biology': 'PLOS Computational Biology',
+    'eneuro': 'eNeuro', 'jneurosci': 'Journal of Neuroscience', 'the journal of neuroscience': 'Journal of Neuroscience',
+    'scientific data': 'Scientific Data', 'scientific reports': 'Scientific Reports', 'arxiv': 'arXiv',
+}
+
+
+def venue_name(venue):
+    v = re.sub(r'\s+', ' ', str(venue or '')).strip()
+    return VENUE_NAMES.get(v.lower(), v) or None
+
+
+def reference(w):
+    """A paper as a reference, in the Cite tab's (DataCite) style:
+    Authors (Year): Title. Venue. https://doi.org/...
+    Up to three authors, then "et al."; the DOI is shown as a full link,
+    as Crossref asks; without a DOI, a PubMed Central, PubMed or OpenAlex link."""
+    names = [str(a).strip() for a in (w.get('authors') or []) if a and str(a).strip()]
+    authors = '; '.join(names[:3]) + ('; et al.' if len(names) > 3 else '')
+    title = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', w.get('title') or w.get('doi') or 'Untitled')).strip()
+    title = title if title.endswith(('.', '?', '!')) else title + '.'
+    if w.get('doi'):
+        link, label = 'https://doi.org/' + w['doi'], 'https://doi.org/' + w['doi']
+    elif w.get('pmcid'):
+        link, label = work_link(w), 'Europe PMC ' + str(w['pmcid'])
+    elif w.get('pmid'):
+        link, label = work_link(w), 'PubMed ' + str(w['pmid'])
+    elif w.get('openalex'):
+        link, label = w['openalex'], 'OpenAlex'
+    else:
+        link, label = None, None
+    return {'authors': authors, 'title': title, 'venue': venue_name(w.get('venue')), 'link': link,
+            'link_label': label}
+
+
 def dataset_view(data_path, dataset_id):
     """The dataset page's "Used in research" tab, or None when no paper was found."""
     latest = cached_latest(data_path)
@@ -575,8 +613,7 @@ def dataset_view(data_path, dataset_id):
     works = []
     for w in d['works']:
         kind = TYPE_LABELS.get(str(w.get('type') or '').lower(), str(w.get('type') or 'article').replace('-', ' '))
-        works.append({'title': re.sub(r'<[^>]+>', '', w.get('title') or w.get('doi') or 'Untitled'),
-                      'url': work_link(w), 'venue': w.get('venue'), 'year': w.get('year'), 'type': kind,
+        works.append({**reference(w), 'url': work_link(w), 'year': w.get('year'), 'type': kind,
                       'how': w.get('how') or 'mentions', 'team': bool(w.get('by_dataset_team')),
                       'note': w.get('note')})
     cites = [w for w in works if w['how'] == 'cites']

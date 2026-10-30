@@ -40,7 +40,7 @@ def test_dataset_view_groups_links_and_years(tmp_path):
     _write(str(tmp_path))
     v = research_use.dataset_view(str(tmp_path), 'projects/calgary')
     assert v['n'] == 3 and v['n_team'] == 1
-    assert [w['title'] for w in v['cites']] == ['Growth and development of the precuneus']
+    assert [w['title'] for w in v['cites']] == ['Growth and development of the precuneus.']
     assert [w['url'] for w in v['mentions']] == ['https://europepmc.org/article/PMC/123',
                                                  'https://pubmed.ncbi.nlm.nih.gov/31533000/']
     assert v['mentions'][0]['type'] == 'preprint' and v['mentions'][1]['team']
@@ -119,7 +119,7 @@ def test_dataset_page_tab_and_chip(app, tmp_path):
     assert html.index('Cite the dataset') < html.index('Mention it in the text')
     assert '· 2 more' in html and "by the dataset's team" in html
     assert 'https://doi.org/10.1093/cercor/bhaf305' in html
-    assert '(10.17605/osf.io/axz5r)' in html and 'Updated 2026-10-30' in html
+    assert '(<a href="https://doi.org/10.17605/osf.io/axz5r"' in html and 'Updated 2026-10-30' in html
     assert 'contact_us?topic=other' in html and 'Tell us about a paper we missed' in html
     assert 'Paper describing the dataset' in html
     # the tab is last, after Cite
