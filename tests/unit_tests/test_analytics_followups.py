@@ -120,3 +120,16 @@ def test_show_all_datasets():
 def test_show_menu_offers_all(test_client):
     html = test_client.get('/search?show=all').get_data(as_text=True)
     assert '<option value="all" selected>All</option>' in html
+
+
+def test_section_links_only_show_the_red_line():
+    css = open(os.path.join('app', 'static', 'css', 'analytics.css')).read()
+    hover = [line for line in css.splitlines() if line.startswith('.an-nav a:hover')][0]
+    assert 'border-bottom-color: #b3001b' in hover and 'text-decoration: none' in hover
+
+
+def test_anchor_targets_stop_below_the_sticky_navigation_bar():
+    css = open(os.path.join('app', 'static', 'css', 'conp-theme.css')).read()
+    assert 'body .content-main [id] { scroll-margin-top: 90px; }' in css
+    js = open(os.path.join('app', 'static', 'js', 'dataset-page.js')).read()
+    assert "tab.closest('.dp-tabs').scrollIntoView({ block: 'start' })" in js   # #research shows its tab bar

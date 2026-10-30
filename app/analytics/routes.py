@@ -40,27 +40,6 @@ def analytics():
                            a=page_context(period))
 
 
-@analytics_bp.route('/analytics/data/<name>.csv')
-def analytics_csv(name):
-    """The numbers behind one chart of the Analytics page, as CSV."""
-    import csv
-    import io
-
-    from flask import Response, abort
-
-    from app.analytics.page import csv_rows, page_context
-    period = '12m' if request.args.get('period') == '12m' else 'all'
-    header, rows = csv_rows(page_context(period), name)
-    if header is None:
-        abort(404)
-    buf = io.StringIO()
-    w = csv.writer(buf)
-    w.writerow(header)
-    w.writerows(rows)
-    return Response(buf.getvalue(), mimetype='text/csv',
-                    headers={'Content-Disposition': f'attachment; filename=conp-portal-{name}.csv'})
-
-
 @analytics_bp.route('/analytics/visitors')
 def visitors():
     """ Analytics/Visitors Route

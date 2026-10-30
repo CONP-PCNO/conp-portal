@@ -67,7 +67,7 @@
 
     // Deep links: #about, #metadata, #cite; anything inside a panel
     // (for example the old #dataladInstructions anchor) opens that panel.
-    function open(hash) {
+    function open(hash, scroll) {
       var target = hash && document.getElementById(hash);
       // A way to get the data this dataset doesn't offer (links from the
       // Data page use #route-browser, #route-request, #route-source,
@@ -79,6 +79,12 @@
       if (!panel) { return false; }
       var tab = document.querySelector('[aria-controls="' + panel.id + '"]');
       if (tab) { select(tab, false); }
+      if (target === panel && tab && scroll !== false) {
+        // A link to a tab (#research from a Data card, #cite, ...): show the
+        // tab bar with the chosen tab, just below the sticky navigation bar
+        // (scroll-margin-top), rather than the panel's first line under it.
+        tab.closest('.dp-tabs').scrollIntoView({ block: 'start' });
+      }
       if (target !== panel) {
         target.scrollIntoView({ block: 'center' });
         target.classList.add('is-flash');

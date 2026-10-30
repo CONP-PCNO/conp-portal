@@ -513,7 +513,8 @@ def page_context(period='all'):
 
 
 def csv_rows(ctx, name):
-    """(header, rows) for /analytics/data/<name>.csv."""
+    """(header, rows) behind one chart, by name. The CSV downloads that used
+    them (/analytics/data/<name>.csv) were taken off the page on 29 Oct 2026."""
     cat = ctx['catalogue']
     if name == 'catalogue-growth':
         g = cat['growth']

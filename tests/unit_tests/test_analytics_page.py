@@ -37,9 +37,10 @@ def test_research_and_visitors_sections_from_data_files(test_client, tmp_path):
         assert 'Calgary Preschool MRI Dataset' in html and '253' in html
         assert 'United States: 2,067 visits (58%)' in html          # map tooltip
         assert 'contact_us?topic=other' in html
-        csv = test_client.get('/analytics/data/countries.csv')
-        assert csv.status_code == 200 and 'United States,2067' in csv.get_data(as_text=True)
-        assert test_client.get('/analytics/data/nonsense.csv').status_code == 404
+        assert 'All 2 countries' in html and '>2,067<' in html       # the full list, as a table
+        assert '.csv' not in html and 'an-csv' not in html            # no CSV downloads for now
+        assert test_client.get('/analytics/data/countries.csv').status_code == 404
+        assert page.csv_rows(page.page_context('all'), 'countries')[1] == [('United States', 2067), ('Canada', 1527)]
     finally:
         app.config['DATA_PATH'] = old
         page.clear_cache()
