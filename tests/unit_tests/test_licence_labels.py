@@ -51,3 +51,18 @@ def test_dataset_page_chip_and_metadata_row_link_to_the_terms(app):
     url = OPEN[0]['identifier']['identifier']
     assert html.count(f'href="{url}"') == 2        # chip and the Licence row
     assert 'Data use terms' not in html
+
+
+def test_licence_pill_icon_and_label_are_spaced_like_other_facts(tmp_path):
+    # The pill (a flex <li> with a gap) must hold the icon directly; a wrapper
+    # around icon and text made them touch (30 Oct).
+    for links in (licence_entries(OPEN), [{'name': 'Open PREVENT-AD Terms of Use', 'url': None}]):
+        e = _element(tmp_path, 'projects/p' + str(bool(links[0]['url'])), licenses=['x'], licenceLinks=links)
+        html = render_template_string("{% from 'macros/cards.html' import dataset_card %}{{ dataset_card(c) }}",
+                                      c=dl.dataset_card(e))
+        li = html[html.index('<li title="Licence:'):]
+        li = li[li.index('>') + 1:li.index('</li>')]      # the pill's content, after its title attribute
+        assert li.startswith('<svg') and li.index('</svg>') < li.index('Open PREVENT-AD Terms of Use')
+        assert '<span title' not in li and ('<a class="lp-licence"' in li) == bool(links[0]['url'])
+        if links[0]['url']:
+            assert li.index('</svg>') < li.index('<a class="lp-licence"')

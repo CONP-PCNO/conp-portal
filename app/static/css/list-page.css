@@ -56,8 +56,7 @@ body .content-main .lp-origin img { width: 14px; height: 14px; margin: 0; }
 .lp-used a { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; color: #14532d; font-weight: 600; text-decoration: none; border-radius: 6px; }
 .lp-used a:hover { text-decoration: underline; }
 .lp-used a:focus-visible { outline: 2px solid #1a5fb4; outline-offset: 2px; }
-.lp-facts li:has(> a.lp-licence) { padding: 0; }
-.lp-licence { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; color: inherit; text-decoration: none; border-radius: 6px; }
+.lp-licence { color: inherit; text-decoration: none; }
 .lp-licence:hover { text-decoration: underline; }
 .lp-licence:focus-visible { outline: 2px solid #1a5fb4; outline-offset: 2px; }
 .lp-icon { width: 14px; height: 14px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
