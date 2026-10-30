@@ -563,6 +563,7 @@ def _build_dataset_elements(authorized):
                 "formats": parse_field(d.get('formats')),
                 "modalities": parse_field(d.get('modalities')),
                 "licenses": parse_field(d.get('licenses')),
+                "licenceLinks": parse_field(d.get('licenceLinks')),
                 "version": d.get('version'),
                 "sources": parse_field(d.get('sources')),
                 "conpStatus": d.get('conpStatus'),
@@ -1045,7 +1046,7 @@ def dataset_info():
             "title": row.name if row is not None else parent_id,
         })
     page = {
-        "licences": licence_badges(datsdataset.licenses),
+        "licences": licence_badges(datsdataset.licenceLinks or datsdataset.licenses),
         "citation": citation_text(*cite_args, doi=doi, publisher=doi_publisher),
         "citation_bibtex": citation_bibtex(*cite_args, dataset["id"], doi=doi, publisher=doi_publisher),
         "citation_ris": citation_ris(*cite_args, doi=doi, publisher=doi_publisher),

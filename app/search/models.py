@@ -345,6 +345,12 @@ class DATSDataset(DATSObject):
         return real_values(formats)
 
     @property
+    def licenceLinks(self):
+        """The licences with their web addresses ([{"name", "url"}])."""
+        from app.search.dataset_page import licence_entries
+        return licence_entries(self.descriptor.get('licenses'))
+
+    @property
     def licenses(self):
         licenses = []
         lics = self.descriptor.get('licenses', None)
@@ -571,6 +577,10 @@ class DATSDataset(DATSObject):
                     license_creative_work = {}
                     license_creative_work["@type"] = "CreativeWork"
                     license_creative_work["name"] = license["name"]
+                    ident = license.get("identifier")
+                    ident = ident.get("identifier") if isinstance(ident, dict) else ident
+                    if isinstance(ident, str) and ident.startswith("http"):
+                        license_creative_work["url"] = ident
                     licenses.append(license_creative_work)
             jsonld_obj["license"] = licenses
             jsonld_obj["keywords"] = [keyword["value"]
