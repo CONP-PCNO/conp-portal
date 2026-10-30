@@ -359,9 +359,11 @@ body .content-main img.doi-src { height: 16px; width: auto; max-width: 44px; mar
 .dp-research-lead { margin: 0 0 4px; color: #39424a; }
 .dp-papers { list-style: none; margin: 0 0 18px; padding: 0; }
 .dp-papers li { padding: 10px 0; border-bottom: 1px solid #eef0f3; }
-.dp-papers a, .dp-paper-title { font-weight: 600; color: #1d2129; text-decoration: none; }
-.dp-papers a:hover { text-decoration: underline; color: #123f78; }
-.dp-papers p { margin: 2px 0 0; font-size: .88rem; color: var(--conp-grey-4); }
+.dp-papers p { margin: 0; }
+.dp-ref { color: #39424a; line-height: 1.5; }
+.dp-ref-title { font-weight: 600; color: #1d2129; }
+.dp-ref a { overflow-wrap: anywhere; }
+.dp-papers p.dp-ref-meta { margin-top: 2px; font-size: .88rem; color: var(--conp-grey-4); }
 .dp-by-team { font-weight: 600; color: #7a4b00; }
 .dp-research-note { margin-top: 4px; }
 .dp-side-box { border: 1px solid #e2e5ea; border-radius: 8px; padding: 14px 16px; }

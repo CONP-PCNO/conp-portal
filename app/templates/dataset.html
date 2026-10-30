@@ -358,8 +358,9 @@
   {% macro paper_list(works) -%}
   <ul class="dp-papers">
     {% for w in works %}
-    <li>{% if w.url %}<a href="{{ w.url }}" target="_blank" rel="noopener noreferrer">{{ w.title }}</a>{% else %}<span class="dp-paper-title">{{ w.title }}</span>{% endif %}
-      <p>{{ [w.venue, w.year, w.type] | select | join(' · ') }}{% if w.team %} · <span class="dp-by-team">by the dataset's team</span>{% endif %}{% if w.note %} · {{ w.note }}{% endif %}</p></li>
+    {#- A reference in the Cite tab's (DataCite) style; the DOI shown as a full link. -#}
+    <li><p class="dp-ref">{% if w.authors %}{{ w.authors }} {% endif %}{% if w.year %}({{ w.year }}){% endif %}{% if w.authors or w.year %}: {% endif %}<span class="dp-ref-title">{{ w.title }}</span>{% if w.venue %} <i>{{ w.venue }}</i>.{% endif %}{% if w.link %} <a href="{{ w.link }}" target="_blank" rel="noopener noreferrer">{{ w.link_label }}</a>{% endif %}</p>
+      <p class="dp-ref-meta">{{ w.type | capitalize }}{% if w.team %} · <span class="dp-by-team">by the dataset's team</span>{% endif %}{% if w.note %} · {{ w.note }}{% endif %}</p></li>
     {% endfor %}
   </ul>
   {%- endmacro %}
@@ -375,7 +376,7 @@
         <h2 class="dp-h2">Mention it in the text <span class="dp-muted">· {{ r.mentions | length }}{{ ' more' if r.cites }}</span></h2>
         {{ paper_list(r.mentions) }}
         {% endif %}
-        <p class="dp-muted dp-research-note">Found through OpenAlex, Europe PMC and DataCite, which look for this dataset's DOI{% if page.doi %} ({{ page.doi }}){% endif %} in reference lists and in the text of open-access papers, and for its title in papers that name the CONP. A paper found by more than one counts once. Papers that use the data without citing or naming it can't be found this way. Updated {{ r.updated }}. <a href="{{ url_for('main.contact_us', topic='other', message='A paper that used the dataset "' ~ data.title ~ '" is missing from its page. Title, DOI or link: ') }}">Tell us about a paper we missed</a></p>
+        <p class="dp-muted dp-research-note">Found through OpenAlex, Europe PMC and DataCite, which look for this dataset's DOI{% if page.doi %} (<a href="https://doi.org/{{ page.doi }}" target="_blank" rel="noopener noreferrer">https://doi.org/{{ page.doi }}</a>){% endif %} in reference lists and in the text of open-access papers, and for its title in papers that name the CONP. A paper found by more than one counts once. Papers that use the data without citing or naming it can't be found this way. Updated {{ r.updated }}. <a href="{{ url_for('main.contact_us', topic='other', message='A paper that used the dataset "' ~ data.title ~ '" is missing from its page. Title, DOI or link: ') }}">Tell us about a paper we missed</a></p>
       </div>
       <aside class="dp-research-side">
         {% if page.publications %}
