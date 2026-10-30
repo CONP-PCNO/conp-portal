@@ -13,7 +13,7 @@ dependencies = [
     "click==8.5.0",
     "datalad~=1.7",
     "flask==3.0.3",
-    "flask-dance==3.0.0",
+    "flask-dance==7.1.0",
     "flask-login==0.6.3",
     "flask-mail==0.9.1",
     "flask-migrate==2.*",
