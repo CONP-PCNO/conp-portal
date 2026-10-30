@@ -14,7 +14,9 @@ import datetime as dt
 import json
 import math
 import os
+import pickle
 import re
+import threading
 import time
 from collections import Counter, defaultdict
 from html import escape
@@ -77,10 +79,14 @@ def _nice_tick(ymax):
     return 10 * step
 
 
-def line_chart(series, labels, label, gaps=(), w=1040, h=240, end_labels=True):
+def line_chart(series, labels, label, gaps=(), w=1040, h=240, end_labels=True, tips=None):
     """One or more lines over the same x labels; None values leave a gap; `gaps`
-    are (first index, last index) ranges drawn hatched with "not recorded"."""
-    pl, pr, pt, pb = 46, 130 if end_labels else 16, 14, 30
+    are (first index, last index) ranges drawn hatched with "not recorded".
+    A label may be (line 1, line 2), e.g. ("Jan", "2025"): every month gets
+    its own label and the year shows under January. `tips` (one per x) are
+    shown on hover over that column."""
+    two_rows = any(isinstance(lab, tuple) for lab in labels)
+    pl, pr, pt, pb = 46, 130 if end_labels else 16, 14, 46 if two_rows else 30
     iw, ih = w - pl - pr, h - pt - pb
     n = max(len(labels) - 1, 1)
     ymax = max([v for s in series for v in s['values'] if v is not None] or [1])
@@ -107,8 +113,14 @@ def line_chart(series, labels, label, gaps=(), w=1040, h=240, end_labels=True):
         out.append(f'<text x="{pl - 8}" y="{Y(t) + 4:.1f}" font-size="12" fill="{MUTED}" text-anchor="end">{int(t):,}</text>')
         t += tick
     for i, lab in enumerate(labels):
-        if lab:
-            out.append(f'<text x="{X(i):.1f}" y="{h - 8}" font-size="12" fill="{MUTED}" text-anchor="middle">{escape(lab)}</text>')
+        top_line, second = lab if isinstance(lab, tuple) else (lab, '')
+        y1 = h - 26 if two_rows else h - 8
+        if top_line:
+            out.append(f'<text x="{X(i):.1f}" y="{y1}" font-size="{11 if two_rows else 12}" fill="{MUTED}" '
+                       f'text-anchor="middle">{escape(top_line)}</text>')
+        if second:
+            out.append(f'<text x="{X(i):.1f}" y="{h - 8}" font-size="12" font-weight="600" fill="{INK}" '
+                       f'text-anchor="middle">{escape(second)}</text>')
     for s in series:
         segs, cur = [], []
         for i, v in enumerate(s['values']):
@@ -134,6 +146,11 @@ def line_chart(series, labels, label, gaps=(), w=1040, h=240, end_labels=True):
                 out.append(f'<circle cx="{X(li):.1f}" cy="{Y(lv):.1f}" r="4" fill="{s["color"]}" stroke="#fff" stroke-width="2"/>')
                 out.append(f'<text x="{X(li) + 10:.1f}" y="{Y(lv) + 4 + s.get("dy", 0):.1f}" font-size="13" font-weight="600" '
                            f'fill="{INK}">{escape(s["name"])} {lv:,}</text>')
+    for i, tip in enumerate(tips or []):
+        # one invisible column per x value, for the hover tip
+        if tip:
+            out.append(f'<rect class="an-hover" x="{X(i) - half:.1f}" y="{pt}" width="{2 * half:.1f}" height="{ih}" '
+                       f'fill="transparent" data-tip="{escape(tip)}"/>')
     out.append('</svg>')
     return Markup(''.join(out))
 
@@ -160,12 +177,12 @@ def world_map(counts, total, labels=None):
            'aria-label="Map of visits by country; the table beside it lists the numbers">']
     for code, d in geo['shapes'].items():
         v = counts.get(code, 0)
-        out.append(f'<path d="{d}" fill="{fill(v)}" stroke="#fff" stroke-width="0.6"><title>{escape(tip(code, v))}</title></path>')
+        out.append(f'<path d="{d}" fill="{fill(v)}" stroke="#fff" stroke-width="0.6" data-tip="{escape(tip(code, v))}"/>')
     for code, (x, y) in geo['dots'].items():
         v = counts.get(code, 0)
         if v:
-            out.append(f'<circle cx="{x}" cy="{y}" r="{5 if v >= 100 else 3.5}" fill="{fill(v)}" stroke="#fff" stroke-width="1.5">'
-                       f'<title>{escape(tip(code, v))}</title></circle>')
+            out.append(f'<circle cx="{x}" cy="{y}" r="{5 if v >= 100 else 3.5}" fill="{fill(v)}" stroke="#fff" stroke-width="1.5" data-tip="{escape(tip(code, v))}">'
+                       f'</circle>')
     out.append('</svg>')
     return Markup(''.join(out))
 
@@ -220,7 +237,9 @@ def catalogue():
         'growth': {'years': years, 'datasets': ds_cum, 'tools': tl_cum, 'rows': list(zip(years, ds_cum, tl_cum)),
                    'svg': line_chart([{'name': 'Datasets', 'values': ds_cum, 'color': GREEN, 'dy': -6},
                                       {'name': 'Tools', 'values': tl_cum, 'color': BLUE, 'dy': 10}], years,
-                                     'Datasets and tools on the Portal, running total by year')},
+                                     'Datasets and tools on the Portal, running total by year',
+                                     tips=[f'{y}: {a or 0:,} datasets, {b or 0:,} tools'
+                                           for y, a, b in zip(years, ds_cum, tl_cum)])},
         'modality': modalities.most_common(14),
         'access': [(lvl, access.get(lvl, 0), why) for lvl, why in ACCESS_LEVELS],
         'origin': [('Canadian', origin.get('Canadian', 0)), ('International', origin.get('International', 0))],
@@ -260,13 +279,16 @@ def visits(months=36):
         elif m not in gap and start is not None:
             gaps.append((start, i - 1))
             start = None
-    labels = [f'Jan {m[:4]}' if m.endswith('-01') else (f'{dt.date(1, int(m[5:7]), 1):%b} {m[:4]}' if i == 0 else '')
+    # Every month labelled; the year under January and under the first month.
+    labels = [(f'{dt.date(1, int(m[5:7]), 1):%b}', m[:4] if (m.endswith('-01') or i == 0) else '')
               for i, m in enumerate(keys)]
+    tips = [f'{dt.date(int(m[:4]), int(m[5:7]), 1):%B %Y}: ' + ('not recorded' if m in gap else f'{by_month.get(m, 0):,} visits')
+            for m in keys]
     return {'months': keys, 'values': [by_month.get(m, 0) for m in keys], 'gap_months': gap,
             'rows': [(m, by_month.get(m, 0), 'no' if m in gap else 'yes') for m in keys],
             'last12': sum(by_month.get(m, 0) for m in keys[-12:]), 'period': f'{keys[-12]} – {keys[-1]}',
             'svg': line_chart([{'name': 'Visits', 'values': values, 'color': GREEN}], labels, 'Visits per month',
-                              gaps=gaps)}
+                              gaps=gaps, tips=tips)}
 
 
 def most_viewed(period, tool_titles, n=10):
@@ -378,18 +400,24 @@ def short_title(t, n=46):
     return t[:n - 1].rsplit(' ', 1)[0] + '…'
 
 
-_CACHE = {}
+# The page takes several seconds to build on the live tables, so it is never
+# built while someone waits, except the very first time: a built page is kept
+# in memory and on disk (shared by the gunicorn workers, and kept across
+# restarts); after an hour the kept page is still shown while a new one is
+# built in the background. `flask update_analytics` builds it at the end of
+# each run, so after the daily update the page is already fresh.
+MAX_AGE = 3600
+_CACHE = {}         # period -> (built at, context)
+_BUILDING = set()
+_LOCK = threading.Lock()
 EMPTY_CATALOGUE = {'n_datasets': 0, 'n_tools': 0, 'n_open': 0, 'n_canadian': 0,
                    'growth': {'years': [], 'datasets': [], 'tools': [], 'rows': [], 'svg': ''},
                    'modality': [], 'access': [], 'origin': [], 'runs': [], 'tool_titles': {}, 'tools': []}
+PERIODS = ('all', '12m')
 
 
-def page_context(period='all'):
-    """Everything the page shows, computed at most once an hour per period."""
-    key = (period, int(time.time() // 3600))
-    if key in _CACHE:
-        return _CACHE[key]
-
+def build_context(period='all'):
+    """Everything the page shows, computed now (several seconds)."""
     def safe(fn, *args, default=None):
         try:
             return fn(*args)
@@ -397,13 +425,91 @@ def page_context(period='all'):
             current_app.logger.exception('Analytics section %s failed', fn.__name__)
             return default
     cat = safe(catalogue, default=None) or EMPTY_CATALOGUE
-    ctx = {'catalogue': cat, 'visits': safe(visits), 'period': period,
-           'viewed': safe(most_viewed, period, cat['tool_titles'], default={'datasets': [], 'tools': []}),
-           'searches': safe(searches, cat['tools'], default=[]), 'countries': safe(countries),
-           'research': safe(research), 'updated': dt.date.today().isoformat()}
+    return {'catalogue': cat, 'visits': safe(visits), 'period': period,
+            'viewed': safe(most_viewed, period, cat['tool_titles'], default={'datasets': [], 'tools': []}),
+            'searches': safe(searches, cat['tools'], default=[]), 'countries': safe(countries),
+            'research': safe(research), 'updated': dt.date.today().isoformat()}
+
+
+def _cache_file(period):
+    return os.path.join(current_app.config['DATA_PATH'], 'analytics', f'page-cache-{period}.pickle')
+
+
+def _store(period, ctx, built=None):
+    built = built or time.time()
+    _CACHE[period] = (built, ctx)
+    try:
+        path = _cache_file(period)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        tmp = f'{path}.{os.getpid()}.tmp'
+        with open(tmp, 'wb') as f:
+            pickle.dump((built, ctx), f)
+        os.replace(tmp, path)
+    except Exception:   # a read-only data folder only loses the shared copy
+        current_app.logger.exception('Analytics page not saved to disk')
+
+
+def _load(period):
+    """The page another worker (or an earlier run) built, if it is newer."""
+    mem = _CACHE.get(period)
+    try:
+        path = _cache_file(period)
+        if mem and os.path.getmtime(path) <= mem[0]:
+            return mem
+        with open(path, 'rb') as f:
+            built, ctx = pickle.load(f)
+    except Exception:
+        return mem
+    if not mem or built > mem[0]:
+        _CACHE[period] = (built, ctx)
+        return built, ctx
+    return mem
+
+
+def clear_cache():
     _CACHE.clear()
-    _CACHE[key] = ctx
+    for period in PERIODS:
+        try:
+            os.remove(_cache_file(period))
+        except OSError:
+            pass
+
+
+def rebuild(period='all'):
+    """Build the page now and keep it (used by `flask update_analytics`)."""
+    ctx = build_context(period)
+    _store(period, ctx)
     return ctx
+
+
+def _refresh_in_background(period):
+    with _LOCK:
+        if period in _BUILDING:
+            return
+        _BUILDING.add(period)
+    app = current_app._get_current_object()
+
+    def run():
+        try:
+            with app.test_request_context('/analytics'):
+                rebuild(period)
+        except Exception:
+            app.logger.exception('Analytics page not rebuilt')
+        finally:
+            with _LOCK:
+                _BUILDING.discard(period)
+    threading.Thread(target=run, name=f'analytics-{period}', daemon=True).start()
+
+
+def page_context(period='all'):
+    """The page's numbers: the kept copy when there is one (renewed in the
+    background once it is an hour old), else built now."""
+    hit = _load(period)
+    if hit:
+        if time.time() - hit[0] >= MAX_AGE:
+            _refresh_in_background(period)
+        return hit[1]
+    return rebuild(period)
 
 
 def csv_rows(ctx, name):

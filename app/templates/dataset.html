@@ -77,7 +77,7 @@
 {% block contenttitle %}{% endblock %}
 
 {% block appcontent %}
-<article class="dp-card" data-dataset-id="{{ data.id }}" data-dataset-title="{{ data.title }}">
+<article class="dp-card" data-quick-tips data-dataset-id="{{ data.id }}" data-dataset-title="{{ data.title }}">
   {#- Back to the Data page, with the visitor's search and filters when they came from it. #}
   {%- set data_url = url_for('search.search') %}
   {%- set back = request.referrer if request.referrer and request.referrer.startswith(request.host_url ~ 'search') else data_url %}
@@ -388,7 +388,7 @@
           <p class="dp-side-label">Papers using it, per year</p>
           <div class="dp-years" role="img" aria-label="Papers that cite or mention the dataset, per year: {{ r.per_year | map('join', ' ') | join(', ') }}">
             {% for y, n in r.per_year %}
-            <div class="dp-year"><span class="dp-year-n">{{ n if n }}</span><span class="dp-year-bar" style="height: {{ (n / r.year_max * 84) | round(0, 'ceil') | int }}px"></span><span class="dp-year-label">’{{ (y | string)[2:] }}</span></div>
+            <div class="dp-year" data-tip="{{ y }}: {{ n }} paper{{ '' if n == 1 else 's' }}"><span class="dp-year-n">{{ n if n }}</span><span class="dp-year-bar" style="height: {{ (n / r.year_max * 84) | round(0, 'ceil') | int }}px"></span><span class="dp-year-label">’{{ (y | string)[2:] }}</span></div>
             {% endfor %}
           </div>
         </div>

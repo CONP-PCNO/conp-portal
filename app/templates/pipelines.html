@@ -62,7 +62,7 @@
 {% endblock %}
 
 {% block appcontent %}
-<form class="lp-page" id="lp-form" method="get" action="{{ url_for('pipelines.pipelines') }}" role="search">
+<form class="lp-page" data-quick-tips id="lp-form" method="get" action="{{ url_for('pipelines.pipelines') }}" role="search">
   <p class="lp-intro">{{ total }} tools with Boutiques descriptors: run them on CBRAIN, on your computer, or on Alliance HPC.</p>
 
   <div class="lp-search">

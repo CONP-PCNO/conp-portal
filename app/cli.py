@@ -733,6 +733,16 @@ def _update_analytics(app):
 
     _update_analytics_matomo_countries(app, matomo_api_baseurl)
 
+    # Build the Analytics page now, so nobody waits for it after the update.
+    from app.analytics.page import PERIODS, rebuild
+    with app.test_request_context('/analytics'):
+        for period in PERIODS:
+            try:
+                rebuild(period)
+                print(f'[INFO   ] Analytics page rebuilt ({period})')
+            except Exception as e:
+                print(f'Analytics page not rebuilt ({period}): {e}')
+
 
 def _update_analytics_matomo_countries(app, matomo_api_baseurl):
     """Visits by country over the last 12 complete months, for the Analytics

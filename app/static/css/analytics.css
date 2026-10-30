@@ -2,8 +2,8 @@
 .an { max-width: 1180px; color: #1d2129; }
 .an a { color: #1a5fb4; }
 .an-nav { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 6px; border-bottom: 1px solid #e2e5ea; }
-.an-nav a { padding: 9px 13px; color: #4a525a; text-decoration: none; font-weight: 500; }
-.an-nav a:hover { color: #1d2129; border-bottom: 3px solid #b3001b; }
+.an-nav a { padding: 9px 13px; color: #4a525a; text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent; }
+.an-nav a:hover, .an-nav a:focus-visible { color: #1d2129; border-bottom-color: #b3001b; }
 body .an h2.an-h { margin: 30px 0 14px; font-size: 1.4rem; font-weight: 700; }
 .an-lede { margin: -8px 0 12px; color: #5b6270; font-size: .95rem; max-width: 900px; }
 .an-stats { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
@@ -69,3 +69,9 @@ body .an table { border: 0; }
 .an-links .an-table:not([open]) { flex: 0 0 auto; order: 0; }
 .an-links .an-csv { margin: 0; }
 .an-bars-wide .an-bar-label { flex-basis: 300px; }
+
+/* hover tips (quick-tips.js): show which country, bar or month is under the pointer */
+.an-svg path[data-tip]:hover { stroke: #1d2129; stroke-width: 1.2; }
+.an-hover:hover { fill: rgba(23, 114, 69, .07); }
+.an-bar-row[data-tip]:hover .an-bar { filter: brightness(.88); }
+.an-col[data-tip]:hover .an-col-bar { filter: brightness(.88); }

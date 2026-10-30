@@ -74,7 +74,7 @@
 {% endblock %}
 
 {% block appcontent %}
-<form class="lp-page" id="lp-form" method="get" action="{{ url_for('search.search') }}" role="search">
+<form class="lp-page" data-quick-tips id="lp-form" method="get" action="{{ url_for('search.search') }}" role="search">
   <p class="lp-intro">{{ total }} neuroscience datasets, open or by request, from Canadian and international contributors.</p>
 
   <div class="lp-search">
@@ -125,7 +125,7 @@
           </label>
           <label>Show
             <select name="show">
-              {% for n in per_page_options %}<option value="{{ n }}"{% if per_page == n %} selected{% endif %}>{{ n }}</option>{% endfor %}
+              {% for n in per_page_options %}<option value="{{ n }}"{% if per_page == n %} selected{% endif %}>{{ 'All' if n == 'all' else n }}</option>{% endfor %}
             </select>
           </label>
         </div>
