@@ -1,7 +1,8 @@
 {% extends 'common/base_main.html' %}
 
 {#- The Analytics page, server-rendered (Oct 2026). Numbers come from
-    app/analytics/page.py; every chart has its table and a CSV. -#}
+    app/analytics/page.py; every chart has its numbers in a table.
+    (CSV downloads were taken off on 29 Oct; page.csv_rows keeps the rows.) -#}
 
 {% block head %} {{ super() }}
 <title>CONP Portal | Analytics</title>
@@ -28,14 +29,13 @@
 </div>
 {%- endmacro %}
 
-{% macro table_csv(name, header, rows) -%}
+{% macro numbers_table(name, header, rows) -%}
 <div class="an-links">
 <details class="an-table">
   <summary>Show the numbers as a table</summary>
   <table><thead><tr>{% for h in header %}<th>{{ h }}</th>{% endfor %}</tr></thead>
   <tbody>{% for r in rows %}<tr>{% for c in r %}<td>{{ c if c is not none else '' }}</td>{% endfor %}</tr>{% endfor %}</tbody></table>
 </details>
-<a class="an-csv" href="{{ url_for('analytics.analytics_csv', name=name, period=a.period) }}">CSV</a>
 </div>
 {%- endmacro %}
 
@@ -58,13 +58,13 @@
     <section class="an-card an-wide">
       <h3>Datasets and tools - running total</h3>
       {{ cat.growth.svg }}
-      {{ table_csv('catalogue-growth', ['Year', 'Datasets', 'Tools'], cat.growth.rows) }}
+      {{ numbers_table('catalogue-growth', ['Year', 'Datasets', 'Tools'], cat.growth.rows) }}
     </section>
     <section class="an-card">
       <h3>Datasets by modality</h3>
       <p class="an-sub">A dataset can count in several.</p>
       {{ bars(cat.modality, label='Datasets by modality', unit=' datasets') }}
-      {{ table_csv('modality', ['Modality', 'Datasets'], cat.modality) }}
+      {{ numbers_table('modality', ['Modality', 'Datasets'], cat.modality) }}
     </section>
     <section class="an-card">
       <h3>Datasets by access</h3>
@@ -75,7 +75,7 @@
       {{ bars(cat.origin, label='Datasets by origin', unit=' datasets') }}
       <h3 class="an-gap">Tools by where they run</h3>
       {{ bars(cat.runs, color='blue', label='Tools by where they run', unit=' tools') }}
-      {{ table_csv('access', ['Access level', 'Datasets', 'Meaning'], cat.access) }}
+      {{ numbers_table('access', ['Access level', 'Datasets', 'Meaning'], cat.access) }}
     </section>
   </div>
 
@@ -88,7 +88,7 @@
       <p class="an-sub">Last 3 years. {{ '{:,}'.format(a.visits.last12) }} visits in the last 12 months ({{ a.visits.period }}).</p>
       {{ a.visits.svg }}
       {% if a.visits.gap_months %}<p class="an-foot">Hatched: months when visits were not recorded.</p>{% endif %}
-      {{ table_csv('visits', ['Month', 'Visits', 'Recorded'], a.visits.rows) }}
+      {{ numbers_table('visits', ['Month', 'Visits', 'Recorded'], a.visits.rows) }}
     </section>
     {% endif %}
     {% for kind, label in [('datasets', 'Most viewed datasets'), ('tools', 'Most viewed tools')] %}
@@ -100,7 +100,6 @@
       <table class="an-list"><thead><tr><th>#</th><th>Title</th><th class="n">Visits</th></tr></thead>
       <tbody>{% for r in a.viewed[kind] %}<tr><td class="n an-muted">{{ loop.index }}</td><td><a href="{{ r.url }}">{{ r.title }}</a></td><td class="n">{{ '{:,}'.format(r.visits) }}</td></tr>{% endfor %}</tbody></table>
       {% if kind == 'datasets' and a.period != '12m' %}<p class="an-foot">All time: since May 2020.</p>{% endif %}
-      <a class="an-csv" href="{{ url_for('analytics.analytics_csv', name='most-viewed-' ~ kind, period=a.period) }}">CSV</a>
     </section>
     {% endfor %}
   </div>
@@ -120,7 +119,7 @@
       <h3>Datasets used in research - papers per dataset</h3>
       {{ bars(r.bar_rows, label='Papers per dataset', wide=true, unit=' papers') }}
       <p class="an-foot">Papers by the team that shared a dataset are counted and marked on its page. <a href="{{ url_for('main.contact_us', topic='other', message='A paper that used a CONP dataset is missing from the Portal. Dataset, and the paper\'s title, DOI or link: ') }}">Tell us about a paper we missed</a>. <a href="{{ url_for('analytics.research_use_changes') }}">What changed at each update</a>.</p>
-      {{ table_csv('research-use', ['Dataset', 'Papers'], r.table_rows) }}
+      {{ numbers_table('research-use', ['Dataset', 'Papers'], r.table_rows) }}
     </section>
     <section class="an-card an-narrow">
       <h3>Papers per year</h3>
@@ -143,7 +142,6 @@
     <h3>Most searched</h3>
     <table class="an-list"><thead><tr><th>Search</th><th class="n">Visits</th><th class="n">Datasets</th><th class="n">Tools</th></tr></thead>
     <tbody>{% for s in a.searches %}<tr><td><a href="/search?search={{ s.term | urlencode }}">{{ s.term }}</a></td><td class="n">{{ s.visits }}</td><td class="n">{{ s.datasets }}</td><td class="n">{{ s.tools }}</td></tr>{% endfor %}</tbody></table>
-    <a class="an-csv" href="{{ url_for('analytics.analytics_csv', name='searches') }}">CSV</a>
   </section>
 
   {# ---------------------------------------------------------------- visitors #}
@@ -162,7 +160,10 @@
       <table class="an-list"><thead><tr><th>Country</th><th class="n">Visits (share)</th></tr></thead>
       <tbody>{% for t in c.top %}<tr><td>{{ t.name }}</td><td class="n">{{ '{:,}'.format(t.visits) }} ({{ '%.0f' | format(t.share) }}%)</td></tr>{% endfor %}
       {% if c.rest_n %}<tr><td class="an-muted">{{ c.rest_n }} other countries, and unknown</td><td class="n">{{ '{:,}'.format(c.rest) }} ({{ '%.0f' | format(100 * c.rest / c.total) }}%)</td></tr>{% endif %}</tbody></table>
-      <a class="an-csv" href="{{ url_for('analytics.analytics_csv', name='countries') }}">All countries (CSV)</a>
+      <details class="an-table"><summary>All {{ c.rows | length }} countries</summary>
+      <table><thead><tr><th>Country</th><th class="n">Visits</th></tr></thead>
+      <tbody>{% for r in c.rows %}<tr><td>{{ r.label }}</td><td class="n">{{ '{:,}'.format(r.nb_visits) }}</td></tr>{% endfor %}</tbody></table>
+      </details>
     </section>
   </div>
   {% endif %}

@@ -599,3 +599,8 @@ body .content-main ol:not([class]) > li > a:not([class]) {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+
+/* The navigation bar stays at the top of the window (sticky-top), so a link to
+   an anchor (#research, #searches, #route-browser, ...) would put its target
+   under the bar. Every anchor target in the page content stops below it. */
+body .content-main [id] { scroll-margin-top: 90px; }

@@ -3,7 +3,8 @@
 .an a { color: #1a5fb4; }
 .an-nav { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 6px; border-bottom: 1px solid #e2e5ea; }
 .an-nav a { padding: 9px 13px; color: #4a525a; text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent; }
-.an-nav a:hover, .an-nav a:focus-visible { color: #1d2129; border-bottom-color: #b3001b; }
+/* only the red line: the Portal bundle's a:hover underline would add a second one under the word */
+.an-nav a:hover, .an-nav a:focus-visible { color: #1d2129; border-bottom-color: #b3001b; text-decoration: none; }
 body .an h2.an-h { margin: 30px 0 14px; font-size: 1.4rem; font-weight: 700; }
 .an-lede { margin: -8px 0 12px; color: #5b6270; font-size: .95rem; max-width: 900px; }
 .an-stats { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
@@ -35,7 +36,6 @@ body .an h3.an-gap { margin-top: 20px; }
 .an-defs dd { margin: 0; }
 .an-table { margin-top: 10px; font-size: .82rem; }
 .an-table summary { color: #1a5fb4; cursor: pointer; display: inline; }
-.an-csv { display: inline-block; margin: 8px 0 0 8px; font-size: .82rem; }
 .an-list, .an-table table { width: 100%; border-collapse: collapse; }
 .an-list th, .an-list td, .an-table th, .an-table td { text-align: left; padding: 7px 8px; border-bottom: 1px solid #eef0f3; font-size: .88rem; }
 .an-list th, .an-table th { font-size: .75rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #5b6270; }
@@ -67,7 +67,6 @@ body .an table { border: 0; }
 .an-links { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-top: 10px; font-size: .82rem; }
 .an-links .an-table { margin: 0; flex: 1 1 100%; order: 2; }
 .an-links .an-table:not([open]) { flex: 0 0 auto; order: 0; }
-.an-links .an-csv { margin: 0; }
 .an-bars-wide .an-bar-label { flex-basis: 300px; }
 
 /* hover tips (quick-tips.js): show which country, bar or month is under the pointer */

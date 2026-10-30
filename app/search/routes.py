@@ -19,7 +19,6 @@ from flask import (
 from flask_login import current_user
 from sqlalchemy import func
 
-from app.analytics.routes import datasets_downloads, datasets_views
 from app.dats import DEFAULT_LOGO, load_dataset_logos, load_remote_logo_copies, resolve_dataset_logo
 from app.models import ArkId, Dataset, DatasetAncestry
 from app.models import MatomoDailyGetDatasetPageViewsSummary
@@ -417,36 +416,122 @@ def _dataset_elements(search_term, authorized):
         else:
             datasets = searcher.documents()
 
-        evidence_publication_types = _evidence_publication_types()
-        dataset_logos = load_dataset_logos()
-        remote_logo_copies = load_remote_logo_copies()
+    if not search_term:
+        return [dict(e) for e in _all_dataset_elements(authorized)]
+    # A search: the matching datasets, in the index's order, from the list
+    # kept for all of them (same dicts as before, plus their score).
+    by_id = {e['id']: e for e in _all_dataset_elements(authorized)}
+    for d in datasets:
+        e = by_id.get(d['id'])
+        if e is not None:
+            elements.append(dict(e, _score=scores.get(d['id'], 0)))
+    # Best match first (as the index's own ranking did for /dataset-search).
+    return rank(elements, key='_score')
 
-        # Get the number of views of datasets
-        views = json.loads(datasets_views())
-        downloads = json.loads(datasets_downloads())
 
-        for d in datasets:
-            dataset_metadata = Dataset.query.filter_by(dataset_id=d['id']).first()
+# The Data page, /find and the Analytics catalogue list every dataset on each
+# request. Building that list took about two seconds on the live server: for
+# each of 185 datasets it ran two database queries, re-read the DATS record
+# and listed the download cache folder, and the view and download counts were
+# re-added from every daily Matomo row, once per dataset. The list is now
+# built with one query per table and kept for ten minutes, or until the
+# search index or the datasets table changes.
+ELEMENTS_MAX_AGE = 600
+_elements_cache = {}
+
+
+def _elements_signature():
+    from app import db
+    ix_dir = os.path.join(os.getcwd(), "index")
+    try:
+        ix_mtime = max(os.path.getmtime(os.path.join(ix_dir, f)) for f in os.listdir(ix_dir))
+    except (OSError, ValueError):
+        ix_mtime = 0
+    n, updated = db.session.query(func.count(Dataset.id), func.max(Dataset.date_updated)).one()
+    return (ix_mtime, n, str(updated))
+
+
+def _view_and_download_counts():
+    """{dataset_id: page views} and {download file name: downloads}, added up
+    by the database (the same totals /analytics/datasets/views and
+    /analytics/datasets/downloads give)."""
+    from app import db
+    from app.models import MatomoDailyGetPortalDownloadSummary as D
+    V = MatomoDailyGetDatasetPageViewsSummary
+    views = {i: int(n or 0) for i, n in db.session.query(V.dataset_id, func.sum(V.nb_hits))
+             .filter(V.dataset_id.isnot(None)).group_by(V.dataset_id)}
+    prefix = 'https://portal.conp.ca/data/'
+    downloads = {}
+    for url, n in db.session.query(D.url, func.sum(D.nb_hits)).filter(D.url.like('%' + prefix + '%')).group_by(D.url):
+        name = url.replace(prefix, '')
+        downloads[name] = downloads.get(name, 0) + int(n or 0)
+    return views, downloads
+
+
+def _zip_location(fspath, cache_dir, cached_names):
+    """The dataset's tar.gz in the download cache, or None (as
+    DatasetCache.getZipLocation, with the folder listed once per list)."""
+    from app.search.dataset_list import _descriptor
+    if not fspath:
+        return None
+    version = _descriptor(fspath).get('version')
+    if version is None:
+        return None
+    name = fspath.split('conp-dataset/projects/')[-1].replace('/', '__')
+    filename = '{}_version-{}.tar.gz'.format(name, version)
+    return os.path.join(cache_dir, filename) if filename in cached_names else None
+
+
+def _all_dataset_elements(authorized):
+    """Every dataset as the dicts /dataset-search returns, in the index's order;
+    kept (see ELEMENTS_MAX_AGE). Do not change the dicts: copy them."""
+    import time
+    key = (bool(authorized), _elements_signature())
+    hit = _elements_cache.get(key[0])
+    if hit and hit[0] == key and time.time() - hit[1] < ELEMENTS_MAX_AGE:
+        return hit[2]
+    elements = _build_dataset_elements(authorized)
+    _elements_cache[key[0]] = (key, time.time(), elements)
+    return elements
+
+
+def _build_dataset_elements(authorized):
+    elements = []
+    ix = _ensure_search_index()
+    evidence_publication_types = _evidence_publication_types()
+    dataset_logos = load_dataset_logos()
+    remote_logo_copies = load_remote_logo_copies()
+    view_counts, download_counts = _view_and_download_counts()
+    rows = {r.dataset_id: r for r in Dataset.query.all()}
+    arks = {r.dataset_id: r.ark_id for r in ArkId.query.all()}
+    cache_dir = DatasetCache(current_app).current_app.config['DATASET_CACHE_PATH']
+    try:
+        cached_names = set(os.listdir(cache_dir))
+    except OSError:
+        cached_names = set()
+    scores = {}
+    with ix.searcher() as searcher:
+        for d in searcher.documents():
+            dataset_metadata = rows.get(d['id'])
             if dataset_metadata is None:
                 # In the search index but not in the database (an index older
                 # than the last update): skip it rather than fail the list.
                 continue
 
-            views_nb = [v["nb_hits"] for v in views if v["dataset_id"] == d['id']]
+            views_nb = [view_counts[d['id']]] if d['id'] in view_counts else []
             download_id = os.path.basename(d['datasetPath']) + "_version"
-            downloads_nb = [
-                e["nb_hits"] for e in downloads if e["dataset_id"].startswith(download_id)
-            ]
+            downloads_nb = sorted((n for name, n in download_counts.items() if name.startswith(download_id)),
+                                  reverse=True)
 
-            ark_id_row = ArkId.query.filter_by(dataset_id=d['id']).first()
+            ark = arks.get(d['id'])
             # Python 3.14 compatibility: ArkId rows may not exist for all
             # datasets if they were added before the ARK ID generation CLI
             # command ran. Guard against AttributeError by checking if the
             # row exists before accessing its ark_id field.
-            ark_id = 'https://n2t.net/' + ark_id_row.ark_id if ark_id_row else None
+            ark_id = 'https://n2t.net/' + ark if ark else None
 
             try:
-                zipped = DatasetCache(current_app).getZipLocation(d['datasetPath'])
+                zipped = _zip_location(d.get('datasetPath'), cache_dir, cached_names)
             except OSError:
                 zipped = None
 
@@ -514,9 +599,6 @@ def _dataset_elements(search_term, authorized):
                 "_score": scores.get(d['id'], 0),
             }
             elements.append(dataset)
-    if search_term:
-        # Best match first (as the index's own ranking did for /dataset-search).
-        elements = rank(elements, key='_score')
     return elements
 
 
