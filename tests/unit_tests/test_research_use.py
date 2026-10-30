@@ -146,3 +146,34 @@ def test_openneuro_doi_from_landing_page_and_search_without_openalex_record():
             return []
     finds, _own = ru.find_works(inp, F())   # OpenAlex has no record for this DOI
     assert [f['doi'] for f in finds] == ['10.1/x']
+
+
+def test_a_journal_article_doi_given_as_the_dataset_identifier_is_not_the_dataset():
+    """MouseBytes records give the paper's DOI (JCI, FASEB J) as identifier: papers
+    citing that article were counted as uses of the data (79 of 108 on 29 Oct)."""
+    inp = ru.dataset_inputs('projects/mousebytes/MB-Co-transmission', {
+        'title': 'Mouse models that differ in neurotransmitter release from striatal cholinergic interneurons',
+        'identifier': {'identifier': 'https://doi.org/10.1172/JCI138532'}, 'distributions': []})
+    assert inp['dois'] == ['10.1172/jci138532']
+
+    class F(FakeFetch):
+        def openalex_work(self, doi):
+            if doi == '10.1172/jci138532':
+                return {'id': 'https://openalex.org/W77', 'cited_by_count': 3}
+            return super().openalex_work(doi)
+
+        def openalex_list(self, flt):
+            if flt == 'cites:W77':
+                return [oa('W78', '10.1/anorexia', 'Avoidance habit learning in anorexia nervosa')]
+            return super().openalex_list(flt)
+    result = ru.build([inp], F())
+    assert result['datasets'][inp['id']]['n_works'] == 0          # citing the article is not using the data
+    assert ru.data_dois(inp, F()) == ([], ['10.1172/jci138532'])
+
+    class Down(F):
+        def datacite(self, doi):
+            return None                                          # DataCite unreachable: keep the DOI
+    assert ru.data_dois(inp, Down()) == (['10.1172/jci138532'], [])
+    # repository DOIs (Zenodo, OSF, OpenNeuro, ...) are the dataset's without asking DataCite
+    osf = ru.dataset_inputs('projects/calgary', DESCRIPTOR)
+    assert ru.data_dois(osf, FakeFetch())[0] == ['10.17605/osf.io/axz5r']

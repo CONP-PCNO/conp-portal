@@ -48,7 +48,7 @@ import requests
 UA = {'User-Agent': 'CONP-Portal-research-use/1.0 (mailto:info@conp.ca)'}
 CACHE_DAYS = 6
 NOT_PAPERS = {'dataset', 'software', 'paratext', 'other', 'peer-review', 'erratum', 'retraction'}
-DATACITE_PREFIXES = ('10.5281/', '10.17605/', '10.18112/', '10.6084/', '10.5061/', '10.48324/', '10.20383/')
+DATACITE_PREFIXES = ('10.5281/', '10.17605/', '10.18112/', '10.6084/', '10.5061/', '10.48324/', '10.20383/', '10.5683/')
 CONP_NAME = 'Canadian Open Neuroscience Platform'
 
 
@@ -243,8 +243,33 @@ def _from_europepmc(h, source):
             'source': source}
 
 
+def data_dois(inp, fetch):
+    """Split the record's DOIs into the dataset's own and papers' DOIs.
+
+    Some records give a journal article's DOI as the dataset's identifier
+    (three MouseBytes datasets: a JCI and a FASEB J paper). Papers citing
+    that article are uses of the article, not of the data: on 29 Oct they
+    were 79 of the 108 papers counted. A DOI counts as the dataset's own
+    when a data repository registered it (the DataCite prefixes above, or
+    DataCite knows it); one DataCite has never heard of (a Crossref DOI)
+    is treated as the dataset's publication."""
+    own, papers = [], list(inp['publication_dois'])
+    for d in inp['dois']:
+        if d.startswith(DATACITE_PREFIXES):
+            own.append(d)
+            continue
+        j = fetch.datacite(d)
+        if j and j.get('_not_found'):
+            papers.append(d)
+        else:   # registered with DataCite, or the lookup failed: keep it
+            own.append(d)
+    return own, papers
+
+
 def find_works(inp, fetch):
     """Every record any source returns for one dataset (before merging)."""
+    dois, pub_dois = data_dois(inp, fetch)
+    inp = dict(inp, dois=dois, publication_dois=pub_dois)
     finds, own_ids = [], set(inp['dois']) | set(inp['publication_dois'])
     for d in inp['dois']:
         # Full-text and Europe PMC searches run whether or not OpenAlex has a record
