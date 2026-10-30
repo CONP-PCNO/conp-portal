@@ -6,7 +6,7 @@ from app.analytics import page
 
 
 def test_page_renders_without_matomo_widgets(test_client):
-    page._CACHE.clear()
+    page.clear_cache()
     r = test_client.get('/analytics')
     html = r.get_data(as_text=True)
     assert r.status_code == 200
@@ -32,7 +32,7 @@ def test_research_and_visitors_sections_from_data_files(test_client, tmp_path):
             'period': '2025-10-01 – 2026-09-30',
             'rows': [{'label': 'United States', 'code': 'us', 'nb_visits': 2067},
                      {'label': 'Canada', 'code': 'ca', 'nb_visits': 1527}]}))
-        page._CACHE.clear()
+        page.clear_cache()
         html = test_client.get('/analytics').get_data(as_text=True)
         assert 'Calgary Preschool MRI Dataset' in html and '253' in html
         assert 'United States: 2,067 visits (58%)' in html          # map tooltip
@@ -42,7 +42,7 @@ def test_research_and_visitors_sections_from_data_files(test_client, tmp_path):
         assert test_client.get('/analytics/data/nonsense.csv').status_code == 404
     finally:
         app.config['DATA_PATH'] = old
-        page._CACHE.clear()
+        page.clear_cache()
 
 
 def test_modality_labels_and_junk_searches():

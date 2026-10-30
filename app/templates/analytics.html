@@ -16,12 +16,12 @@
 <p class="page-lede">Updated {{ a.updated }} from the Portal's database, Matomo (visits), and OpenAlex, Europe PMC and DataCite (papers).</p>
 {% endblock %}
 
-{% macro bars(rows, color='green', label='', wide=false) -%}
+{% macro bars(rows, color='green', label='', wide=false, unit='') -%}
 {%- set mx = ((rows | map(attribute=1) | list | max) if rows else 1) or 1 -%}
 <div class="an-bars{{ ' an-bars-wide' if wide }}" role="img" aria-label="{{ label }}: {% for r in rows %}{{ r[0] }} {{ r[1] }}{{ '; ' if not loop.last }}{% endfor %}">
   {%- for r in rows %}
-  <div class="an-bar-row">
-    <span class="an-bar-label" title="{{ r[3] if r | length > 3 else r[0] }}">{{ r[0] }}</span>
+  <div class="an-bar-row" data-tip="{{ r[3] if r | length > 3 else r[0] }}: {{ '{:,}'.format(r[1]) }}{{ unit }}">
+    <span class="an-bar-label">{{ r[0] }}</span>
     <span class="an-bar-track"><span class="an-bar an-bar-{{ color }}" style="width: {{ '%.1f' | format(100 * r[1] / mx) }}%"></span><span class="an-bar-n">{{ '{:,}'.format(r[1]) }}</span></span>
   </div>
   {%- endfor %}
@@ -41,7 +41,7 @@
 
 {% block appcontent %}
 {% set cat = a.catalogue %}
-<div class="an">
+<div class="an" data-quick-tips>
   <nav class="an-nav" aria-label="Sections">
     <a href="#catalogue">The catalogue</a><a href="#use">Use</a>{% if a.research %}<a href="#research">Research use</a>{% endif %}<a href="#searches">Searches</a>{% if a.countries %}<a href="#visitors">Visitors</a>{% endif %}
   </nav>
@@ -63,18 +63,18 @@
     <section class="an-card">
       <h3>Datasets by modality</h3>
       <p class="an-sub">A dataset can count in several.</p>
-      {{ bars(cat.modality, label='Datasets by modality') }}
+      {{ bars(cat.modality, label='Datasets by modality', unit=' datasets') }}
       {{ table_csv('modality', ['Modality', 'Datasets'], cat.modality) }}
     </section>
     <section class="an-card">
       <h3>Datasets by access</h3>
       <p class="an-sub">The access level each dataset declares.</p>
-      {{ bars(cat.access, label='Datasets by access') }}
+      {{ bars(cat.access, label='Datasets by access', unit=' datasets') }}
       <dl class="an-defs">{% for lvl, n, why in cat.access %}<dt>{{ lvl }}</dt><dd>{{ why }}</dd>{% endfor %}</dl>
       <h3 class="an-gap">Datasets by origin</h3>
-      {{ bars(cat.origin, label='Datasets by origin') }}
+      {{ bars(cat.origin, label='Datasets by origin', unit=' datasets') }}
       <h3 class="an-gap">Tools by where they run</h3>
-      {{ bars(cat.runs, color='blue', label='Tools by where they run') }}
+      {{ bars(cat.runs, color='blue', label='Tools by where they run', unit=' tools') }}
       {{ table_csv('access', ['Access level', 'Datasets', 'Meaning'], cat.access) }}
     </section>
   </div>
@@ -118,7 +118,7 @@
   <div class="an-grid">
     <section class="an-card">
       <h3>Datasets used in research - papers per dataset</h3>
-      {{ bars(r.bar_rows, label='Papers per dataset', wide=true) }}
+      {{ bars(r.bar_rows, label='Papers per dataset', wide=true, unit=' papers') }}
       <p class="an-foot">Papers by the team that shared a dataset are counted and marked on its page. <a href="{{ url_for('main.contact_us', topic='other', message='A paper that used a CONP dataset is missing from the Portal. Dataset, and the paper\'s title, DOI or link: ') }}">Tell us about a paper we missed</a>. <a href="{{ url_for('analytics.research_use_changes') }}">What changed at each update</a>.</p>
       {{ table_csv('research-use', ['Dataset', 'Papers'], r.table_rows) }}
     </section>
@@ -127,7 +127,7 @@
       <div class="an-cols" role="img" aria-label="Papers per year: {% for y, n in r.years %}{{ y }} {{ n }}{{ ', ' if not loop.last }}{% endfor %}">
         {%- for y, n in r.years %}
         {%- set hgt = (120 * n / r.year_max) | round | int %}
-        <div class="an-col">{% if n and hgt < 20 %}<span class="an-col-n">{{ n }}</span>{% endif %}{% if n %}<div class="an-col-bar" style="height: {{ [hgt, 2] | max }}px">{% if hgt >= 20 %}<span>{{ n }}</span>{% endif %}</div>{% endif %}</div>
+        <div class="an-col" data-tip="{{ y }}: {{ n }} paper{{ '' if n == 1 else 's' }}">{% if n and hgt < 20 %}<span class="an-col-n">{{ n }}</span>{% endif %}{% if n %}<div class="an-col-bar" style="height: {{ [hgt, 2] | max }}px">{% if hgt >= 20 %}<span>{{ n }}</span>{% endif %}</div>{% endif %}</div>
         {%- endfor %}
       </div>
       <div class="an-col-labels">{% for y, n in r.years %}<span>{{ y }}</span>{% endfor %}</div>

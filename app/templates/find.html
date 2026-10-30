@@ -49,7 +49,7 @@
 {%- endmacro %}
 
 {% block appcontent %}
-<div class="lp-page">
+<div class="lp-page" data-quick-tips>
   <form class="lp-search" method="get" action="{{ url_for('search.find') }}" role="search">
     <label for="fd-q" class="visually-hidden">Search the Portal</label>
     <input id="fd-q" name="q" type="search" value="{{ query }}" placeholder="Search datasets, tools and experiments…" autocomplete="off" />

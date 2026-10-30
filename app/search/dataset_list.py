@@ -40,8 +40,10 @@ SORTS = (
     ('evidence', 'Has an Evidence publication'),
     ('used', 'Most used in research'),
 )
-# 30 by default, as the Data page has shown since #1021.
-PER_PAGE = (30, 50, 100)
+# 30 by default, as the Data page has shown since #1021; "All" shows every
+# dataset on one page (the old list's max_per_page=All still works).
+ALL = 'all'
+PER_PAGE = (30, 50, 100, ALL)
 # A facet shows this many values; the rest open with "More".
 FACET_SHOWN = 8
 
@@ -281,7 +283,10 @@ def sort_options(sorts, query, default_without_query):
 
 
 def chosen_per_page(args):
-    n = _int(args.get('show') or args.get('max_per_page'))
+    raw = str(args.get('show') or args.get('max_per_page') or '').strip().lower()
+    if raw == ALL:
+        return ALL
+    n = _int(raw)
     return n if n in PER_PAGE else PER_PAGE[0]
 
 
@@ -350,6 +355,8 @@ def filter_cards(cards, selected, sort):
 
 def page_of(items, page, per_page):
     """(the items on that page, page, number of pages)."""
+    if per_page == ALL:
+        return items, 1, 1
     pages = max(1, -(-len(items) // per_page))
     page = min(max(1, _int(page) or 1), pages)
     start = (page - 1) * per_page

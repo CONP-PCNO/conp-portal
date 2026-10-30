@@ -10,6 +10,31 @@ import requests
 from app.dats import DATSObject
 from app.downloads import size_label, total_bytes
 
+# Values DATS records use to mean "not known". Some importers write them
+# into every field they can't fill (one-off OSF imports wrote "N/A" for
+# formats, subjects and keywords, and "dataset" as the type; the Zenodo
+# crawler writes "unknown"), and records split into download parts repeat
+# them per part (MICA-PNI listed "N/A" 16 times). They are dropped wherever
+# the record is shown, indexed or published as schema.org.
+PLACEHOLDERS = {'', 'n/a', 'na', 'n.a.', 'none', 'null', 'nan', '-', 'unknown', 'not specified',
+                'not applicable', 'not available', 'tbd'}
+
+
+def is_placeholder(value):
+    return value is None or str(value).strip().lower() in PLACEHOLDERS
+
+
+def real_values(values, extra=()):
+    """The values that say something, each once (case-insensitive), in order."""
+    seen, out = set(), []
+    for v in values or []:
+        key = str(v).strip().lower()
+        if is_placeholder(v) or key in extra or key in seen:
+            continue
+        seen.add(key)
+        out.append(v.strip() if isinstance(v, str) else v)
+    return out
+
 
 @lru_cache(maxsize=1)
 def _get_latest_test_results(date):
@@ -129,9 +154,9 @@ class DATSDataset(DATSObject):
         c = self.descriptor.get('creators', '')
         if isinstance(c, list):
             for x in c:
-                if 'name' in x:
+                if 'name' in x and not is_placeholder(x['name']):
                     creators.append(x['name'])
-                if 'fullName' in x:
+                if 'fullName' in x and not is_placeholder(x['fullName']):
                     creators.append(x['fullName'])
         elif 'name' in c:
             creators.append(c['name'])
@@ -315,9 +340,9 @@ class DATSDataset(DATSObject):
             return None
 
         for x in dists:
-            formats += x.get('formats', [])
+            formats += x.get('formats', None) or []
 
-        return formats
+        return real_values(formats)
 
     @property
     def licenses(self):
@@ -346,7 +371,8 @@ class DATSDataset(DATSObject):
             modality = info.get('value', None)
             if modality is not None:
                 modalities.append(modality)
-
+        # "dataset" is the record's kind, not a modality
+        modalities = real_values(modalities, extra={'dataset'})
         return modalities if len(modalities) > 0 else None
 
     @property
@@ -356,7 +382,7 @@ class DATSDataset(DATSObject):
             keyword = t.get('value', None)
             if keyword is not None:
                 keywords.append(keyword)
-
+        keywords = real_values(keywords)
         return keywords if len(keywords) > 0 else None
 
     @property
