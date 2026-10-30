@@ -129,6 +129,17 @@ def register(app):
         """
         _update_analytics(app)
 
+    @app.cli.command('update_research_use')
+    @click.option('--dry-run', is_flag=True, default=False,
+                  help='Collect and print what would change, without writing anything.')
+    def update_research_use(dry_run):
+        """
+        Papers that cite or name each dataset (OpenAlex, Europe PMC, DataCite),
+        each counted once. Writes DATA_PATH/research_use/latest.json, a dated
+        snapshot, and an entry in CHANGES.md. Meant to run weekly from cron.
+        """
+        _update_research_use(app, dry_run)
+
     @app.cli.command('generate_missing_ark_ids')
     def generate_missing_ark_ids():
         """
@@ -1281,3 +1292,35 @@ def _get_repo_analytics(app, repo):
                 }
 
     return daily_stat_dict
+
+
+def _update_research_use(app, dry_run=False):
+    from app import research_use as ru
+    from app.search.models import DATSDataset
+
+    inputs = []
+    for d in DBDataset.query.order_by(DBDataset.id).all():
+        try:
+            dats = DATSDataset(d.fspath, dataset_id=d.dataset_id)
+            inputs.append(ru.dataset_inputs(d.dataset_id, dats.descriptor, dats.evidencePublication))
+        except Exception:
+            continue   # unreadable record: skipped here as everywhere else
+    overrides_path = os.path.join(os.getcwd(), 'app/static/datasets/research-use-overrides.json')
+    overrides = {}
+    if os.path.exists(overrides_path):
+        with open(overrides_path) as f:
+            overrides = json.load(f)
+    data_path = app.config['DATA_PATH']
+    fetch = ru.Fetcher(os.path.join(data_path, 'research_use', 'cache'), app.config.get('OPENALEX_API_KEY'))
+    if not fetch.key:
+        print('OPENALEX_API_KEY is not set: OpenAlex citation and full-text searches are skipped.')
+    result = ru.build(inputs, fetch, overrides)
+    failed = ru.too_many_failures(fetch)
+    if failed:
+        print(f'Not saved: too many failed requests to {", ".join(failed)} {dict(fetch.failures)}. '
+              'latest.json is unchanged; run again later.')
+        raise SystemExit(1)
+    if dry_run:
+        print(ru.changes(ru.load_latest(data_path), result))
+        return
+    print(ru.save(data_path, result))

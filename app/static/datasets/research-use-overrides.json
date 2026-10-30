@@ -1,0 +1,5 @@
+{
+  "_about": "Curated corrections to the research-use lists, applied on every `flask update_research_use` run. add: a paper that uses the dataset but isn't found automatically (e.g. reported through 'Tell us about a paper we missed'). remove: a paper found automatically that doesn't use the dataset. Each entry: dataset (Portal dataset id, e.g. projects/Calgary-Preschool-MRI-Dataset), doi, note (who reported it, why). Optional for add: how (cites|mentions), by_dataset_team (true|false).",
+  "add": [],
+  "remove": []
+}

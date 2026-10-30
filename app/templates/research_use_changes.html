@@ -1,0 +1,27 @@
+{% extends 'common/base_main.html' %}
+
+{% block head %} {{ super() }}
+<title>CONP Portal | Research use: changes</title>
+{% endblock %}
+
+{% block contenttitle %}
+<h2>Research use: changes</h2>
+{% endblock %}
+
+{% block appcontent %}
+<div class="ru-changes" style="max-width: 900px">
+  <p>Papers that cite or name each dataset are collected every week from OpenAlex, Europe PMC and DataCite, each paper counted once. Each update lists the papers it added and removed, newest first. <a href="{{ url_for('analytics.analytics') }}">Analytics</a></p>
+  {% for e in entries %}
+  <section style="margin-top: 1.5rem">
+    <h3 style="font-size: 1.15rem">{{ e.date }}</h3>
+    {% for line in e.lines %}
+      {% if line.startswith('- ') %}<p style="margin: 0 0 .2rem 1.2rem">{{ line[2:] }}</p>
+      {% elif line.startswith('**') %}<p style="margin: .8rem 0 .2rem; font-weight: 600">{{ line | replace('**', '') }}</p>
+      {% elif line %}<p style="margin: 0 0 .4rem">{{ line }}</p>{% endif %}
+    {% endfor %}
+  </section>
+  {% else %}
+  <p>No update has run yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -57,6 +57,11 @@ MATOMO_SITE_ID=<Your Matomo site ID>
 MATOMO_TOKEN_AUTH=<Your Matomo token auth>
 
 # -------------------------------------------------------------------
+# OPENALEX (for `flask update_research_use`; free key from https://openalex.org)
+# -------------------------------------------------------------------
+OPENALEX_API_KEY=
+
+# -------------------------------------------------------------------
 # GITHUB SETTINGS
 # -------------------------------------------------------------------
 # GITHUB CREDENTIALS FOR MARKDOWN RENDERER (OPTIONAL)

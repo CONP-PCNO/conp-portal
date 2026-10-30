@@ -80,6 +80,8 @@ class Config:
     MATOMO_SERVER_URL = os.environ.get("MATOMO_SERVER_URL")
     MATOMO_SITE_ID = os.environ.get("MATOMO_SITE_ID", "2")
     MATOMO_TOKEN_AUTH = os.environ.get("MATOMO_TOKEN_AUTH")
+    # OpenAlex API key for `flask update_research_use` (list and full-text searches)
+    OPENALEX_API_KEY = os.environ.get("OPENALEX_API_KEY")
 
     # ARK identifier NAAN for CONP
     ARK_CONP_NAAN = os.environ.get("ARK_CONP_NAAN") or "99999"
