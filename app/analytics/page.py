@@ -290,22 +290,43 @@ def most_viewed(period, tool_titles, n=10):
     return {'datasets': datasets, 'tools': tools[:n]}
 
 
+def dataset_match_counts(terms):
+    """How many datasets the Data page finds for each term: the same matcher
+    and search index as `_dataset_elements`, without building the full list
+    (views, downloads, ARKs, zips) for every term, which took the page past
+    the server's 30-second limit."""
+    from app.search.routes import _ensure_search_index, match_score
+    with open(os.path.join(os.getcwd(), 'app/static/datasets/dataset-terms-mapping.json')) as f:
+        mapping = json.load(f)
+    ix = _ensure_search_index()
+    with ix.searcher() as searcher:
+        fields = [f for f in ix.schema.scorable_names() if f in ix.schema.names()]
+        docs = [({f: d.get(f) for f in fields}, d.get('title')) for d in searcher.documents()]
+    counts = {}
+    for term in terms:
+        titles = set()
+        for values, title in docs:
+            try:
+                if match_score(values, term, mapping):
+                    titles.add(title)
+            except Exception:   # same as the Data page: a bad term finds nothing
+                pass
+        counts[term] = len(titles)
+    return counts
+
+
 def searches(tools, n=15):
     from app.models import MatomoDailyGetSiteSearchKeywords as K
     from app.pipelines.tool_list import filter_cards
-    from app.search.routes import _dataset_elements
     since = (dt.date.today() - dt.timedelta(days=365)).isoformat()
     rows = (K.query.with_entities(K.label, func.sum(K.nb_visits)).filter(K.date >= since)
             .group_by(K.label).order_by(func.sum(K.nb_visits).desc()).limit(400).all())
+    top = [(label, v) for label, v in rows if label and not JUNK_SEARCH.search(label)][:n]
+    found = dataset_match_counts([label for label, _v in top])
     out = []
-    for label, v in rows:
-        if not label or JUNK_SEARCH.search(label):
-            continue
-        n_ds = len(_dataset_elements(label, False))
+    for label, v in top:
         shown, _facets = filter_cards([dict(t) for t in tools], label, {}, 'relevance')
-        out.append({'term': label, 'visits': int(v or 0), 'datasets': n_ds, 'tools': len(shown)})
-        if len(out) >= n:
-            break
+        out.append({'term': label, 'visits': int(v or 0), 'datasets': found[label], 'tools': len(shown)})
     return out
 
 

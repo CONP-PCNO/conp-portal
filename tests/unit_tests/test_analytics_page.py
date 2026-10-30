@@ -56,3 +56,52 @@ def test_short_titles():
     assert page.short_title('MICA-PNI: Precision NeuroImaging and Connectomics') == 'MICA-PNI'
     assert page.short_title('Synthetic Animated Mouse (SAM), University of British Columbia, Datasets and 3D-models') \
         == 'Synthetic Animated Mouse (SAM)'
+
+
+class _FakeIndex:
+    """Just enough of a Whoosh index for the search-count helper."""
+    def __init__(self, docs):
+        self.docs = docs
+        fields = ['title', 'description', 'keywords']
+        self.schema = type('S', (), {'scorable_names': lambda s: fields, 'names': lambda s: fields})()
+
+    def searcher(self):
+        docs = self.docs
+
+        class _S:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+            def documents(self):
+                return iter(docs)
+        return _S()
+
+
+def test_search_counts_do_not_rebuild_the_dataset_list(session, monkeypatch):
+    """The page went past the server's 30-second limit because it built the whole
+    Data list (views, downloads, ARKs, per-dataset queries) for each top search.
+    The counts now come from the search index and the Data page's matcher alone."""
+    from app.models import MatomoDailyGetSiteSearchKeywords as K
+    from app.search import routes as search_routes
+    docs = [{'id': 'projects/a', 'title': 'Alzheimer MRI cohort', 'description': 'structural MRI', 'keywords': 'mri'},
+            {'id': 'projects/a2', 'title': 'Alzheimer MRI cohort', 'description': 'same title, listed once', 'keywords': 'mri'},
+            {'id': 'projects/b', 'title': 'Resting EEG', 'description': 'eeg in adults', 'keywords': 'eeg'}]
+    monkeypatch.setattr(search_routes, '_ensure_search_index', lambda: _FakeIndex(docs))
+
+    def boom(*args, **kwargs):
+        raise AssertionError('the Analytics page must not build the dataset list per search')
+    monkeypatch.setattr(search_routes, '_dataset_elements', boom)
+
+    assert page.dataset_match_counts(['mri', 'eeg', 'alzheimers', 'qwxzy']) == \
+        {'mri': 1, 'eeg': 1, 'alzheimers': 1, 'qwxzy': 0}
+
+    import datetime as dt
+    day = dt.date.today() - dt.timedelta(days=3)
+    for label, n in [('mri', 9), ('<script>', 50), ('eeg', 4)]:
+        session.add(K(date=day, label=label, nb_visits=n, segment=label))
+    session.commit()
+    rows = page.searches([], n=5)
+    assert [(r['term'], r['visits'], r['datasets']) for r in rows] == [('mri', 9, 1), ('eeg', 4, 1)]
