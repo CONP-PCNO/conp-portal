@@ -482,6 +482,7 @@ def _dataset_elements(search_term, authorized):
                 "sources": parse_field(d.get('sources')),
                 "conpStatus": d.get('conpStatus'),
                 "authorizations": d.get('authorizations'),
+                "privacy": d.get('privacy'),
                 "principalInvestigators": parse_field(d.get('principalInvestigators')),
                 "primaryPublications": parse_field(d.get('primaryPublications')),
                 # The index stores the logo found when it was built; a
