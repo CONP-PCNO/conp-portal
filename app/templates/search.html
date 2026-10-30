@@ -95,6 +95,7 @@
         {% for facet in facets %}
         <fieldset>
           <legend>{{ facet.label }}</legend>
+          {% if facet.key == 'used' %}<p class="lp-facet-note">Papers found through OpenAlex, Europe PMC and DataCite.</p>{% endif %}
           {% for item in facet['items'] %}
           <label><input type="checkbox" name="{{ facet.key }}" value="{{ item.value }}"{% if item.checked %} checked{% endif %} /><span>{{ item.value }}</span><span class="lp-count">{{ item.count }}</span></label>
           {% endfor %}

@@ -493,3 +493,74 @@ def save(data_path, result):
     with open(log, 'w') as f:
         f.write(head + '\n\n' + entry + '\n' + rest)   # newest first
     return entry
+
+
+# ---------------------------------------------------------------- what the pages show
+
+_PAGE_CACHE = {}
+TYPE_LABELS = {'posted-content': 'preprint', 'journal-article': 'article', 'book-chapter': 'book chapter',
+               'dissertation': 'thesis', 'review': 'review', 'preprint': 'preprint', 'article': 'article',
+               'letter': 'letter', 'editorial': 'editorial', 'book': 'book', 'report': 'report'}
+
+
+def cached_latest(data_path):
+    """latest.json, read again only when the file changes (the Data page asks
+    for every dataset on every request)."""
+    p = os.path.join(data_path or '', 'research_use', 'latest.json')
+    try:
+        mtime = os.path.getmtime(p)
+    except OSError:
+        return None
+    hit = _PAGE_CACHE.get(p)
+    if hit and hit[0] == mtime:
+        return hit[1]
+    try:
+        with open(p) as f:
+            latest = json.load(f)
+    except (OSError, ValueError):
+        return None
+    _PAGE_CACHE.clear()
+    _PAGE_CACHE[p] = (mtime, latest)
+    return latest
+
+
+def paper_count(data_path, dataset_id):
+    """Number of papers that cite or name a dataset (0 when unknown)."""
+    latest = cached_latest(data_path)
+    d = (latest or {}).get('datasets', {}).get(dataset_id) or {}
+    return int(d.get('n_works') or len(d.get('works') or []))
+
+
+def work_link(w):
+    if w.get('doi'):
+        return 'https://doi.org/' + w['doi']
+    if w.get('pmcid'):
+        return 'https://europepmc.org/article/PMC/' + str(w['pmcid']).replace('PMC', '')
+    if w.get('pmid'):
+        return 'https://pubmed.ncbi.nlm.nih.gov/' + str(w['pmid']) + '/'
+    return w.get('openalex')
+
+
+def dataset_view(data_path, dataset_id):
+    """The dataset page's "Used in research" tab, or None when no paper was found."""
+    latest = cached_latest(data_path)
+    d = (latest or {}).get('datasets', {}).get(dataset_id)
+    if not d or not d.get('works'):
+        return None
+    works = []
+    for w in d['works']:
+        kind = TYPE_LABELS.get(str(w.get('type') or '').lower(), str(w.get('type') or 'article').replace('-', ' '))
+        works.append({'title': re.sub(r'<[^>]+>', '', w.get('title') or w.get('doi') or 'Untitled'),
+                      'url': work_link(w), 'venue': w.get('venue'), 'year': w.get('year'), 'type': kind,
+                      'how': w.get('how') or 'mentions', 'team': bool(w.get('by_dataset_team')),
+                      'note': w.get('note')})
+    cites = [w for w in works if w['how'] == 'cites']
+    mentions = [w for w in works if w['how'] != 'cites']
+    years = Counter(w['year'] for w in works if w['year'])
+    this_year = dt.date.today().year
+    first = max(min(years or [this_year]), this_year - 7)
+    per_year = [(y, years.get(y, 0)) for y in range(first, this_year + 1)]
+    sources = Counter(s.split('-')[0] for w in d['works'] for s in set(w.get('sources') or []))
+    return {'n': len(works), 'n_team': sum(1 for w in works if w['team']), 'cites': cites, 'mentions': mentions,
+            'per_year': per_year, 'year_max': max([n for _y, n in per_year] or [1]) or 1,
+            'updated': str(latest.get('generated') or '')[:10], 'curated': sources.get('curated', 0)}

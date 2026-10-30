@@ -14,6 +14,7 @@
 .lp-filters { display: flex; flex-direction: column; gap: 20px; }
 .lp-filters fieldset { border: 0; margin: 0; padding: 0; }
 .lp-filters legend { font-size: .8rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #3a404c; margin-bottom: 6px; }
+.lp-facet-note { margin: -2px 0 6px; font-size: .8rem; color: #5b6270; }
 .lp-filters label { display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: .92rem; cursor: pointer; margin: 0; }
 .lp-filters input[type="checkbox"] { width: 17px; height: 17px; margin: 0; flex: none; accent-color: #177245; }
 .lp-filters label span:first-of-type { flex: 1 1 auto; }
@@ -51,6 +52,10 @@ body .content-main .lp-origin img { width: 14px; height: 14px; margin: 0; }
 .lp-desc { margin: 8px 0 0; font-size: .92rem; color: #2b303a; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .lp-facts { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; font-size: .85rem; color: #3a404c; }
 .lp-facts li { display: inline-flex; align-items: center; gap: 5px; border: 1px solid #dfe3e8; border-radius: 6px; padding: 2px 9px; background: #f7f8fa; }
+.lp-facts li.lp-used { padding: 0; border-color: #8fc3a2; background: #f1f7f3; }
+.lp-used a { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; color: #14532d; font-weight: 600; text-decoration: none; border-radius: 6px; }
+.lp-used a:hover { text-decoration: underline; }
+.lp-used a:focus-visible { outline: 2px solid #1a5fb4; outline-offset: 2px; }
 .lp-icon { width: 14px; height: 14px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .lp-get { margin-top: 12px; padding-top: 10px; border-top: 1px solid #eef0f3; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; font-size: .88rem; font-weight: 600; color: #3a404c; }
 .lp-get > span, .lp-get > a { display: inline-flex; align-items: center; gap: 5px; }

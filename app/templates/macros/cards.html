@@ -23,6 +23,7 @@
 {%- elif name == 'container' -%}<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/>
 {%- elif name == 'inputs' -%}<path d="M4 12h12M12 6l6 6-6 6"/>
 {%- elif name == 'downloads' -%}<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>
+{%- elif name == 'paper' -%}<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>
 {%- elif name == 'cluster' -%}<rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/><path d="M7 7h.01M7 17h.01"/>
 {%- endif -%}
 </svg>
@@ -47,6 +48,7 @@
       {% if c.modalities %}<li>{{ icon('modality') }}<span class="visually-hidden">Modality: </span>{{ c.modalities[:3] | join(', ') }}</li>{% endif %}
       {% if c.formats %}<li>{{ icon('formats') }}<span class="visually-hidden">Format: </span>{{ c.formats[:3] | join(', ') }}{% if c.formats | length > 3 %} +{{ c.formats | length - 3 }}{% endif %}</li>{% endif %}
       {% if c.licence %}<li>{{ icon('licence') }}<span class="visually-hidden">Licence: </span>{{ c.licence }}</li>{% endif %}
+      {% if c.papers %}<li class="lp-used"><a href="{{ c.url }}#research" title="Papers that cite this dataset or name it in their text">{{ icon('paper') }}Used in {{ c.papers }} paper{{ '' if c.papers == 1 else 's' }}</a></li>{% endif %}
     </ul>
     <div class="lp-get">
       <span class="lp-get-label">Get it</span>

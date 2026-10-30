@@ -347,3 +347,30 @@ body .content-main img.doi-src { height: 16px; width: auto; max-width: 44px; mar
 .dp-needs { background: #fafbfc; }
 .dp-needs .dp-dl { margin-top: 8px; }
 .dp-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ---------- used in research ---------- */
+.dp-chip-used .dp-chip { border-color: #8fc3a2; background: #f1f7f3; color: #14532d; font-weight: 600; }
+.dp-chip-used .dp-chip .dp-icon { color: #14532d; }
+.dp-chip-used a.dp-chip:hover { border-color: #5fa57c; color: #0f3d21; }
+.dp-tab-count { font-weight: 400; color: var(--conp-grey-4); font-size: .9em; }
+.dp-research { display: flex; flex-wrap: wrap; gap: 24px; }
+.dp-research-main { flex: 999 1 520px; min-width: 0; }
+.dp-research-side { flex: 1 1 240px; min-width: 220px; display: flex; flex-direction: column; gap: 14px; }
+.dp-research-lead { margin: 0 0 4px; color: #39424a; }
+.dp-papers { list-style: none; margin: 0 0 18px; padding: 0; }
+.dp-papers li { padding: 10px 0; border-bottom: 1px solid #eef0f3; }
+.dp-papers a, .dp-paper-title { font-weight: 600; color: #1d2129; text-decoration: none; }
+.dp-papers a:hover { text-decoration: underline; color: #123f78; }
+.dp-papers p { margin: 2px 0 0; font-size: .88rem; color: var(--conp-grey-4); }
+.dp-by-team { font-weight: 600; color: #7a4b00; }
+.dp-research-note { margin-top: 4px; }
+.dp-side-box { border: 1px solid #e2e5ea; border-radius: 8px; padding: 14px 16px; }
+.dp-side-label { margin: 0 0 6px; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--conp-grey-4); }
+.dp-side-text { margin: 0; font-size: .85rem; color: var(--conp-grey-4); }
+.dp-years { display: flex; align-items: flex-end; gap: 4px; height: 124px; }
+.dp-year { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+.dp-year-n { font-size: .75rem; font-weight: 600; line-height: 1; margin-bottom: 3px; min-height: .75rem; }
+.dp-year-bar { display: block; width: 72%; background: #177245; border-radius: 3px 3px 0 0; }
+.dp-year-label { font-size: .7rem; color: var(--conp-grey-4); margin-top: 4px; border-top: 1px solid #dfe2e6; width: 100%; text-align: center; padding-top: 3px; }
+/* Five tabs don't fit a phone's width: wrap rather than hide the last one. */
+@media (max-width: 600px) { .dp-tabs { flex-wrap: wrap; overflow-x: visible; } }
