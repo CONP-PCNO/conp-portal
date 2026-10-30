@@ -32,7 +32,7 @@ PyGithub==1.44.1
 
 ## Core string-handling library that escapes characters so they are safe to use in HTML and XML.
 ## aka markupsafe
-MarkupSafe==2.1.5 ## Prod
+MarkupSafe==3.0.4 ## Prod
 # MarkupSafe==3.0.3
 
 ## Library that reads key-value pairs from a .env file and sets them as environment variables.
