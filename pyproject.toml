@@ -44,7 +44,7 @@ dev = [
     "flake8==7.*",
     "pipdeptree==4.*",
     "prek==0.5.*",
-    "pytest==8.*",
+    "pytest>=8,<10",
     "ruff==0.17.*",
     "semver==3.*",
 ]
