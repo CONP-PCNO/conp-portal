@@ -823,6 +823,17 @@ def _retired_dataset_page(dataset_id):
                            successor=successor), 410
 
 
+def _research_use_view(dataset_id):
+    """The "Used in research" tab (papers from `flask update_research_use`),
+    or None: no paper found, no data file yet, or an unreadable one."""
+    from app.research_use import dataset_view
+    try:
+        return dataset_view(current_app.config.get('DATA_PATH'), dataset_id)
+    except Exception:
+        current_app.logger.exception("Research use of %s can't be shown", dataset_id)
+        return None
+
+
 @search_bp.route('/dataset', methods=['GET'])
 def dataset_info():
     """ Dataset Route
@@ -971,6 +982,7 @@ def dataset_info():
         "title_html": title_html(dataset["title"]),
         "cbrainPipelinesUrl": url_for('pipelines.pipeline_search'),
         "views": _dataset_page_views(d.dataset_id),
+        "research": _research_use_view(d.dataset_id),
     }
 
     # The CircleCI test badge is gone: the dataset tests stopped running on

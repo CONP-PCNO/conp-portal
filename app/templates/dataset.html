@@ -21,6 +21,7 @@
 {%- elif name == 'formats' -%}<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="m10 12-2 2.5 2 2.5M14 12l2 2.5-2 2.5"/>
 {%- elif name == 'licence' -%}<path d="M12 4v16M8 20h8M5 7h14"/><path d="M5 7 2.5 13a2.6 2.6 0 0 0 5 0zM19 7l-2.5 6a2.6 2.6 0 0 0 5 0z"/>
 {%- elif name == 'eye' -%}<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>
+{%- elif name == 'paper' -%}<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>
 {%- elif name == 'copy' -%}<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>
 {%- endif -%}
 </svg>
@@ -123,6 +124,7 @@
         {% if data.modalities %}{% set mods = data.modalities %}<li>{{ chip('modality', 'Modality', (mods[:3] | join(', ')) ~ (' +' ~ (mods|length - 3) ~ ' more' if mods|length > 3 else ''), None, 'Modality: ' ~ (mods | join(', '))) }}</li>{% endif %}
         {% if data.formats %}<li>{{ chip('formats', 'Formats', data.formats | map('string') | join(', ')) }}</li>{% endif %}
         {% for lic in page.licences %}<li>{{ chip('licence', 'Licence', lic.label, lic.url or '#dp-licence', 'Licence: ' ~ lic.full) }}</li>{% endfor %}
+        {% if page.research %}<li class="dp-chip-used">{{ chip('paper', 'Research use', 'Used in ' ~ page.research.n ~ (' paper' if page.research.n == 1 else ' papers'), '#research', 'Papers that cite this dataset or name it in their text') }}</li>{% endif %}
       </ul>
 
       {% if data.evidencePublication %}
@@ -142,6 +144,7 @@
     <button role="tab" id="tab-about" aria-controls="about" aria-selected="false" tabindex="-1">About</button>
     <button role="tab" id="tab-metadata" aria-controls="metadata" aria-selected="false" tabindex="-1">All metadata</button>
     <button role="tab" id="tab-cite" aria-controls="cite" aria-selected="false" tabindex="-1">Cite</button>
+    {% if page.research %}<button role="tab" id="tab-research" aria-controls="research" aria-selected="false" tabindex="-1">Used in research <span class="dp-tab-count">({{ page.research.n }})</span></button>{% endif %}
   </div>
 
   {# ---------------- Get the data ---------------- #}
@@ -349,5 +352,49 @@
     <p class="dp-muted">This dataset is part of a NeuroLibre/Evidence publication: <a href="https://doi.org/{{ data.evidencePublication }}" target="_blank" rel="noopener noreferrer">doi:{{ data.evidencePublication }}</a>.</p>
     {% endif %}
   </section>
+
+  {# ---------------- Used in research ---------------- #}
+  {% if page.research %}{% set r = page.research %}
+  {% macro paper_list(works) -%}
+  <ul class="dp-papers">
+    {% for w in works %}
+    <li>{% if w.url %}<a href="{{ w.url }}" target="_blank" rel="noopener noreferrer">{{ w.title }}</a>{% else %}<span class="dp-paper-title">{{ w.title }}</span>{% endif %}
+      <p>{{ [w.venue, w.year, w.type] | select | join(' · ') }}{% if w.team %} · <span class="dp-by-team">by the dataset's team</span>{% endif %}{% if w.note %} · {{ w.note }}{% endif %}</p></li>
+    {% endfor %}
+  </ul>
+  {%- endmacro %}
+  <section class="dp-panel" id="research" role="tabpanel" aria-labelledby="tab-research" hidden>
+    <div class="dp-research">
+      <div class="dp-research-main">
+        <p class="dp-research-lead">{% if r.n == 1 %}One paper cites this dataset or mentions it in its text.{% if r.n_team %} It is from the team that shared it.{% endif %}{% else %}{{ r.n }} papers and preprints cite this dataset or mention it in their text.{% if r.n_team == 1 %} One is from the team that shared it.{% elif r.n_team == r.n %} All are from the team that shared it.{% elif r.n_team %} {{ r.n_team }} are from the team that shared it.{% endif %}{% endif %}</p>
+        {% if r.cites %}
+        <h2 class="dp-h2">Cite the dataset <span class="dp-muted">· {{ r.cites | length }}</span></h2>
+        {{ paper_list(r.cites) }}
+        {% endif %}
+        {% if r.mentions %}
+        <h2 class="dp-h2">Mention it in the text <span class="dp-muted">· {{ r.mentions | length }}{{ ' more' if r.cites }}</span></h2>
+        {{ paper_list(r.mentions) }}
+        {% endif %}
+        <p class="dp-muted dp-research-note">Found through OpenAlex, Europe PMC and DataCite, which look for this dataset's DOI{% if page.doi %} ({{ page.doi }}){% endif %} in reference lists and in the text of open-access papers, and for its title in papers that name the CONP. A paper found by more than one counts once. Papers that use the data without citing or naming it can't be found this way. Updated {{ r.updated }}. <a href="{{ url_for('main.contact_us', topic='other', message='A paper that used the dataset "' ~ data.title ~ '" is missing from its page. Title, DOI or link: ') }}">Tell us about a paper we missed</a></p>
+      </div>
+      <aside class="dp-research-side">
+        {% if page.publications %}
+        <div class="dp-side-box">
+          <p class="dp-side-label">{{ 'Paper describing the dataset' if page.publications | length == 1 else 'Papers describing the dataset' }}</p>
+          <p class="dp-side-text">Listed in this dataset's record (see <a href="#cite">Cite</a>), so not counted among the papers using it.</p>
+        </div>
+        {% endif %}
+        <div class="dp-side-box">
+          <p class="dp-side-label">Papers using it, per year</p>
+          <div class="dp-years" role="img" aria-label="Papers that cite or mention the dataset, per year: {{ r.per_year | map('join', ' ') | join(', ') }}">
+            {% for y, n in r.per_year %}
+            <div class="dp-year"><span class="dp-year-n">{{ n if n }}</span><span class="dp-year-bar" style="height: {{ (n / r.year_max * 84) | round(0, 'ceil') | int }}px"></span><span class="dp-year-label">’{{ (y | string)[2:] }}</span></div>
+            {% endfor %}
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+  {% endif %}
 </article>
 {% endblock %}

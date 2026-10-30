@@ -28,6 +28,7 @@ FACETS = (
     ('modality', 'Modality', 'modality_facet'),
     ('format', 'Format', 'formats'),
     ('linked', 'Linked publication', 'linked_facet'),
+    ('used', 'Used in research', 'used_facet'),
 )
 SORTS = (
     ('relevance', 'Best match'),
@@ -37,6 +38,7 @@ SORTS = (
     ('subjects', 'Most subjects'),
     ('size', 'Largest'),
     ('evidence', 'Has an Evidence publication'),
+    ('used', 'Most used in research'),
 )
 # 30 by default, as the Data page has shown since #1021.
 PER_PAGE = (30, 50, 100)
@@ -60,6 +62,7 @@ _EVIDENCE_LABEL = {'re-executable': 'Re-executable publication', 'interactive': 
 # (a dataset with no real modality is counted under "Not stated").
 _PLACEHOLDERS = {'', 'n/a', 'na', 'none', 'unknown', 'not specified', 'other', 'dataset', 'null', '-'}
 NOT_STATED = 'Not stated'
+USED = 'Cited or mentioned in papers'
 
 _dats_cache = {}
 
@@ -130,6 +133,18 @@ def _creators(element):
     return names
 
 
+def _paper_count(dataset_id):
+    """Papers that cite or name the dataset, from `flask update_research_use`
+    (DATA_PATH/research_use/latest.json); 0 without that file."""
+    try:
+        from flask import current_app
+
+        from app.research_use import paper_count
+        return paper_count(current_app.config.get('DATA_PATH'), dataset_id)
+    except Exception:   # outside an app, or an unreadable file: no chip
+        return 0
+
+
 def dataset_card(e):
     """What the Data page shows (and filters on) for one dataset, from a
     routes._dataset_elements dict."""
@@ -180,6 +195,7 @@ def dataset_card(e):
     views = sum(v for v in _listify(e.get('views')) if isinstance(v, (int, float)))
     description = re.sub(r'<[^>]+>', ' ', str(e.get('_description') or ''))
     description = re.sub(r'\s+', ' ', unescape(unescape(description))).strip()
+    papers = _paper_count(e['id'])
 
     return {
         'id': e['id'],
@@ -213,11 +229,13 @@ def dataset_card(e):
         'request': request,
         'evidence': evidence,
         'views': views,
+        'papers': papers,
         # facet values
         'origin_facet': [origin] if origin else [],
         'access_facet': ['Open'] if open_ else (['Account needed'] if restricted else ['Not stated']),
         'routes_facet': routes,
         'linked_facet': ['Evidence publication'] if evidence else [],
+        'used_facet': [USED] if papers else [],
     }
 
 
@@ -302,6 +320,8 @@ def filter_cards(cards, selected, sort):
         shown.sort(key=lambda c: (-c['size_bytes'], c['title'].lower()))
     elif sort == 'evidence':
         shown.sort(key=lambda c: (c['evidence'] is None, c['title'].lower()))
+    elif sort == 'used':
+        shown.sort(key=lambda c: (-(c.get('papers') or 0), c['title'].lower()))
     else:
         shown.sort(key=lambda c: c['added'] or '', reverse=True)
 
