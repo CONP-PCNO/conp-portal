@@ -731,6 +731,32 @@ def _update_analytics(app):
 
     _update_github_traffic_counts(app)
 
+    _update_analytics_matomo_countries(app, matomo_api_baseurl)
+
+
+def _update_analytics_matomo_countries(app, matomo_api_baseurl):
+    """Visits by country over the last 12 complete months, for the Analytics
+    page's map and table: DATA_PATH/analytics/countries.json."""
+    import requests
+
+    today = datetime.today().date()
+    end = today.replace(day=1) - timedelta(days=1)
+    start = (end.replace(day=1) - timedelta(days=330)).replace(day=1)
+    url = f"{matomo_api_baseurl}&method=UserCountry.getCountry&period=range&date={start},{end}"
+    try:
+        rows = requests.get(url, timeout=60).json()
+    except Exception as e:
+        print(f"Countries not updated: {e}")
+        return
+    if not isinstance(rows, list):
+        print(f"Countries not updated: {str(rows)[:200]}")
+        return
+    out_dir = os.path.join(app.config['DATA_PATH'], 'analytics')
+    os.makedirs(out_dir, exist_ok=True)
+    keep = [{'label': r.get('label'), 'code': r.get('code'), 'nb_visits': r.get('nb_visits', 0)} for r in rows]
+    with open(os.path.join(out_dir, 'countries.json'), 'w') as f:
+        json.dump({'period': f'{start} – {end}', 'rows': keep}, f, indent=1)
+
 
 def _update_analytics_matomo_visits_summary(app, matomo_api_baseurl):
     """

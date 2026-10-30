@@ -1,134 +1,170 @@
 {% extends 'common/base_main.html' %}
 
-<!-- Head Block -->
+{#- The Analytics page, server-rendered (Oct 2026). Numbers come from
+    app/analytics/page.py; every chart has its table and a CSV. -#}
+
 {% block head %} {{ super() }}
 <title>CONP Portal | Analytics</title>
 {% endblock %}
 
-{% block scripts %} {{ super() }}
-<script src=" {{ url_for('static',filename='v1/js/react.development-16.11.0.js') }}"></script>
-<script src=" {{ url_for('static',filename='v1/js/react-dom.development-16.11.0.js') }}"></script>
-<script type="text/javascript" src="static/lib/conp-react/umd/conp-react.js"></script>
-{% endblock %} {% block styles %} {{ super() }}
-
-{% endblock %} {% block contenttitle %}
-<h2>Analytics</h2>
+{% block styles %} {{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/analytics.css') }}">
 {% endblock %}
 
-<!-- Content Block -->
-{% block appcontent %}
+{% block contenttitle %}
+<h2>Analytics</h2>
+<p class="page-lede">Updated {{ a.updated }} from the Portal's database, Matomo (visits), and OpenAlex, Europe PMC and DataCite (papers).</p>
+{% endblock %}
 
-<div class="d-flex flex-column">
-  <div class="card p-1 m-1">
-    <div id="analytics-chart-1">
-      <script type="text/javascript">
-        const analyticsChart1 = React.createElement(CONPReact.ChartContainer, {
-          toggleState: 'TotalDatasetsPipelines'
-        });
-        ReactDOM.render(analyticsChart1, document.querySelector('#analytics-chart-1'));
-      </script>
-    </div>
+{% macro bars(rows, color='green', label='', wide=false) -%}
+{%- set mx = ((rows | map(attribute=1) | list | max) if rows else 1) or 1 -%}
+<div class="an-bars{{ ' an-bars-wide' if wide }}" role="img" aria-label="{{ label }}: {% for r in rows %}{{ r[0] }} {{ r[1] }}{{ '; ' if not loop.last }}{% endfor %}">
+  {%- for r in rows %}
+  <div class="an-bar-row">
+    <span class="an-bar-label" title="{{ r[3] if r | length > 3 else r[0] }}">{{ r[0] }}</span>
+    <span class="an-bar-track"><span class="an-bar an-bar-{{ color }}" style="width: {{ '%.1f' | format(100 * r[1] / mx) }}%"></span><span class="an-bar-n">{{ '{:,}'.format(r[1]) }}</span></span>
   </div>
-
-  <div class="d-flex flex-row">
-    <div class="card p-1 m-1 w-100">
-      <div id="analytics-chart-2">
-        <script type="text/javascript">
-          const analyticsChart2 = React.createElement(CONPReact.ChartContainer, {
-            toggleState: 'DatasetModalities'
-          });
-          ReactDOM.render(analyticsChart2, document.querySelector('#analytics-chart-2'));
-        </script>
-      </div>
-    </div>
-    <div class="card p-1 m-1 w-100">
-      <div id="analytics-chart-3">
-        <script type="text/javascript">
-          const analyticsChart3 = React.createElement(CONPReact.ChartContainer, {
-            toggleState: 'PipelineTags'
-          });
-          ReactDOM.render(analyticsChart3, document.querySelector('#analytics-chart-3'));
-        </script>
-      </div>
-    </div>
-  </div>
-
-  <div class="d-flex flex-row">
-    <div class="card p-1 m-1 w-100">
-      <div id="analytics-chart-4">
-        <script type="text/javascript">
-          const analyticsChart4 = React.createElement(CONPReact.ChartContainer, {
-            toggleState: 'DailyVisitors'
-          });
-          ReactDOM.render(analyticsChart4, document.querySelector('#analytics-chart-4'));
-        </script>
-      </div>
-    </div>
-    <div class="card p-1 m-1 w-100">
-      <div id="analytics-chart-5">
-        <script type="text/javascript">
-          const analyticsChart5 = React.createElement(CONPReact.ChartContainer, {
-            toggleState: 'Keywords'
-          });
-          ReactDOM.render(analyticsChart5, document.querySelector('#analytics-chart-5'));
-        </script>
-      </div>
-    </div>
-  </div>
-  <div class="card p-1 m-1">
-    <div id="analytics-chart-6">
-      <script type="text/javascript">
-        const analyticsChart6 = React.createElement(CONPReact.ChartContainer, {
-          toggleState: 'DatasetPageViews'
-        });
-        ReactDOM.render(analyticsChart6, document.querySelector('#analytics-chart-6'));
-      </script>
-    </div>
-  </div>
-  <div class="card p-1 m-1">
-    <div id="analytics-chart-7">
-      <script type="text/javascript">
-        const analyticsChart7 = React.createElement(CONPReact.ChartContainer, {
-          toggleState: 'PipelinePageViews'
-        });
-        ReactDOM.render(analyticsChart7, document.querySelector('#analytics-chart-7'));
-      </script>
-    </div>
-  </div>
-
-  <div class="d-flex flex-row">
-    <!-- Visitor Map -->
-    <div id="widgetIframe" class="w-100">
-      <iframe
-        width="100%"
-        height="400"
-        src="https://matomo.acelab.ca/index.php?module=Widgetize&action=iframe&disableLink=0&widget=1&moduleToWidgetize=UserCountryMap&actionToWidgetize=visitorMap&idSite=2&period=range&date=2021-01-22,today&disableLink=1&widget=1"
-        scrolling="no"
-        frameborder="0"
-        marginheight="0"
-        marginwidth="0"
-      ></iframe>
-    </div>
-    <!-- Real-time Visitor Map -->
-    <div id="widgetIframe" class="w-100">
-      <iframe
-        width="100%"
-        height="400"
-        src="https://matomo.acelab.ca/index.php?module=Widgetize&action=iframe&disableLink=0&widget=1&moduleToWidgetize=UserCountryMap&actionToWidgetize=realtimeMap&idSite=2&period=range&date=last30&disableLink=1&widget=1"
-        scrolling="no"
-        frameborder="0"
-        marginheight="0"
-        marginwidth="0"
-      ></iframe>
-    </div>
-  </div>
-
-  {# The Matomo "Transitions" widget was removed (Oct 2026): it showed raw
-     page addresses publicly, including the addresses of automated scanners
-     probing for weaknesses, and its page-to-page flows are an internal
-     diagnostic rather than something for Portal visitors. It is still
-     available in Matomo itself. (A template comment, so it is not sent to
-     browsers.) #}
+  {%- endfor %}
 </div>
+{%- endmacro %}
 
+{% macro table_csv(name, header, rows) -%}
+<div class="an-links">
+<details class="an-table">
+  <summary>Show the numbers as a table</summary>
+  <table><thead><tr>{% for h in header %}<th>{{ h }}</th>{% endfor %}</tr></thead>
+  <tbody>{% for r in rows %}<tr>{% for c in r %}<td>{{ c if c is not none else '' }}</td>{% endfor %}</tr>{% endfor %}</tbody></table>
+</details>
+<a class="an-csv" href="{{ url_for('analytics.analytics_csv', name=name, period=a.period) }}">CSV</a>
+</div>
+{%- endmacro %}
+
+{% block appcontent %}
+{% set cat = a.catalogue %}
+<div class="an">
+  <nav class="an-nav" aria-label="Sections">
+    <a href="#catalogue">The catalogue</a><a href="#use">Use</a>{% if a.research %}<a href="#research">Research use</a>{% endif %}<a href="#searches">Searches</a>{% if a.countries %}<a href="#visitors">Visitors</a>{% endif %}
+  </nav>
+
+  {# ---------------------------------------------------------------- catalogue #}
+  <h2 id="catalogue" class="an-h">The catalogue</h2>
+  <div class="an-stats">
+    <a class="an-stat" href="/search"><b>{{ cat.n_datasets }}</b><span>datasets</span></a>
+    <a class="an-stat" href="/pipelines"><b>{{ cat.n_tools }}</b><span>tools and pipelines</span></a>
+    <div class="an-stat"><b>{{ cat.n_open }}</b><span>open datasets</span></div>
+    <div class="an-stat"><b>{{ cat.n_canadian }}</b><span>Canadian datasets</span></div>
+  </div>
+  <div class="an-grid">
+    <section class="an-card an-wide">
+      <h3>Datasets and tools - running total</h3>
+      {{ cat.growth.svg }}
+      {{ table_csv('catalogue-growth', ['Year', 'Datasets', 'Tools'], cat.growth.rows) }}
+    </section>
+    <section class="an-card">
+      <h3>Datasets by modality</h3>
+      <p class="an-sub">A dataset can count in several.</p>
+      {{ bars(cat.modality, label='Datasets by modality') }}
+      {{ table_csv('modality', ['Modality', 'Datasets'], cat.modality) }}
+    </section>
+    <section class="an-card">
+      <h3>Datasets by access</h3>
+      <p class="an-sub">The access level each dataset declares.</p>
+      {{ bars(cat.access, label='Datasets by access') }}
+      <dl class="an-defs">{% for lvl, n, why in cat.access %}<dt>{{ lvl }}</dt><dd>{{ why }}</dd>{% endfor %}</dl>
+      <h3 class="an-gap">Datasets by origin</h3>
+      {{ bars(cat.origin, label='Datasets by origin') }}
+      <h3 class="an-gap">Tools by where they run</h3>
+      {{ bars(cat.runs, color='blue', label='Tools by where they run') }}
+      {{ table_csv('access', ['Access level', 'Datasets', 'Meaning'], cat.access) }}
+    </section>
+  </div>
+
+  {# ---------------------------------------------------------------- use #}
+  <h2 id="use" class="an-h">Use</h2>
+  <div class="an-grid">
+    {% if a.visits %}
+    <section class="an-card an-wide">
+      <h3>Visits per month</h3>
+      <p class="an-sub">Last 3 years. {{ '{:,}'.format(a.visits.last12) }} visits in the last 12 months ({{ a.visits.period }}).</p>
+      {{ a.visits.svg }}
+      {% if a.visits.gap_months %}<p class="an-foot">Hatched: months when visits were not recorded.</p>{% endif %}
+      {{ table_csv('visits', ['Month', 'Visits', 'Recorded'], a.visits.rows) }}
+    </section>
+    {% endif %}
+    {% for kind, label in [('datasets', 'Most viewed datasets'), ('tools', 'Most viewed tools')] %}
+    <section class="an-card">
+      <h3>{{ label }}</h3>
+      <div class="an-toggle" role="group" aria-label="Period">
+        <a href="{{ url_for('analytics.analytics', period='12m') }}#use" {% if a.period == '12m' %}aria-current="true"{% endif %}>Last 12 months</a><a href="{{ url_for('analytics.analytics') }}#use" {% if a.period != '12m' %}aria-current="true"{% endif %}>All time</a>
+      </div>
+      <table class="an-list"><thead><tr><th>#</th><th>Title</th><th class="n">Visits</th></tr></thead>
+      <tbody>{% for r in a.viewed[kind] %}<tr><td class="n an-muted">{{ loop.index }}</td><td><a href="{{ r.url }}">{{ r.title }}</a></td><td class="n">{{ '{:,}'.format(r.visits) }}</td></tr>{% endfor %}</tbody></table>
+      {% if kind == 'datasets' and a.period != '12m' %}<p class="an-foot">All time: since May 2020.</p>{% endif %}
+      <a class="an-csv" href="{{ url_for('analytics.analytics_csv', name='most-viewed-' ~ kind, period=a.period) }}">CSV</a>
+    </section>
+    {% endfor %}
+  </div>
+
+  {# ---------------------------------------------------------------- research use #}
+  {% if a.research %}
+  {% set r = a.research %}
+  <h2 id="research" class="an-h">Research use</h2>
+  <p class="an-lede">Papers and preprints that cite a dataset or name it in their text, found through OpenAlex, Europe PMC and DataCite. Each paper is counted once, however many sources found it; the publications a dataset's own record lists are not counted.</p>
+  <div class="an-stats">
+    <div class="an-stat"><b>{{ r.datasets_used }}</b><span>datasets cited/mentioned in papers</span></div>
+    <div class="an-stat"><b>{{ r.papers }}</b><span>papers and preprints</span></div>
+    <div class="an-stat"><b>{{ r.conp_mentions }}</b><span>outputs name the CONP</span></div>
+  </div>
+  <div class="an-grid">
+    <section class="an-card">
+      <h3>Datasets used in research - papers per dataset</h3>
+      {{ bars(r.bar_rows, label='Papers per dataset', wide=true) }}
+      <p class="an-foot">Papers by the team that shared a dataset are counted and marked on its page. <a href="{{ url_for('main.contact_us', topic='other', message='A paper that used a CONP dataset is missing from the Portal. Dataset, and the paper\'s title, DOI or link: ') }}">Tell us about a paper we missed</a>. <a href="{{ url_for('analytics.research_use_changes') }}">What changed at each update</a>.</p>
+      {{ table_csv('research-use', ['Dataset', 'Papers'], r.table_rows) }}
+    </section>
+    <section class="an-card an-narrow">
+      <h3>Papers per year</h3>
+      <div class="an-cols" role="img" aria-label="Papers per year: {% for y, n in r.years %}{{ y }} {{ n }}{{ ', ' if not loop.last }}{% endfor %}">
+        {%- for y, n in r.years %}
+        {%- set hgt = (120 * n / r.year_max) | round | int %}
+        <div class="an-col">{% if n and hgt < 20 %}<span class="an-col-n">{{ n }}</span>{% endif %}{% if n %}<div class="an-col-bar" style="height: {{ [hgt, 2] | max }}px">{% if hgt >= 20 %}<span>{{ n }}</span>{% endif %}</div>{% endif %}</div>
+        {%- endfor %}
+      </div>
+      <div class="an-col-labels">{% for y, n in r.years %}<span>{{ y }}</span>{% endfor %}</div>
+      <p class="an-foot">Found by {{ r.found_by }}: {{ r.papers }} papers once overlaps are removed. Updated {{ r.updated }}.</p>
+    </section>
+  </div>
+  {% endif %}
+
+  {# ---------------------------------------------------------------- searches #}
+  <h2 id="searches" class="an-h">Searches</h2>
+  <p class="an-lede">What people typed in the Portal's search boxes, last 12 months.</p>
+  <section class="an-card">
+    <h3>Most searched</h3>
+    <table class="an-list"><thead><tr><th>Search</th><th class="n">Visits</th><th class="n">Datasets</th><th class="n">Tools</th></tr></thead>
+    <tbody>{% for s in a.searches %}<tr><td><a href="/search?search={{ s.term | urlencode }}">{{ s.term }}</a></td><td class="n">{{ s.visits }}</td><td class="n">{{ s.datasets }}</td><td class="n">{{ s.tools }}</td></tr>{% endfor %}</tbody></table>
+    <a class="an-csv" href="{{ url_for('analytics.analytics_csv', name='searches') }}">CSV</a>
+  </section>
+
+  {# ---------------------------------------------------------------- visitors #}
+  {% if a.countries %}
+  {% set c = a.countries %}
+  <h2 id="visitors" class="an-h">Visitors</h2>
+  <div class="an-grid">
+    <section class="an-card an-map">
+      <h3>Visits by country</h3>
+      <p class="an-sub">{{ '{:,}'.format(c.total) }} visits from {{ c.n }} countries, {{ c.period }}. Hover a country for its numbers.</p>
+      {{ c.map }}
+      <div class="an-legend" aria-hidden="true"><span><i style="background:#cfe8d7"></i>1–49 visits</span><span><i style="background:#7cc297"></i>50–199</span><span><i style="background:#2e8b57"></i>200–999</span><span><i style="background:#14532d"></i>1,000 or more</span><span><i style="background:#eef0f3"></i>none recorded</span></div>
+    </section>
+    <section class="an-card an-narrow">
+      <h3>Top countries</h3>
+      <table class="an-list"><thead><tr><th>Country</th><th class="n">Visits (share)</th></tr></thead>
+      <tbody>{% for t in c.top %}<tr><td>{{ t.name }}</td><td class="n">{{ '{:,}'.format(t.visits) }} ({{ '%.0f' | format(t.share) }}%)</td></tr>{% endfor %}
+      {% if c.rest_n %}<tr><td class="an-muted">{{ c.rest_n }} other countries, and unknown</td><td class="n">{{ '{:,}'.format(c.rest) }} ({{ '%.0f' | format(100 * c.rest / c.total) }}%)</td></tr>{% endif %}</tbody></table>
+      <a class="an-csv" href="{{ url_for('analytics.analytics_csv', name='countries') }}">All countries (CSV)</a>
+    </section>
+  </div>
+  {% endif %}
+</div>
 {% endblock %}
