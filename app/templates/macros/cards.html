@@ -47,7 +47,7 @@
       {% if c.subjects_label %}<li>{{ icon('subjects') }}{{ c.subjects_label }}</li>{% endif %}
       {% if c.modalities %}<li>{{ icon('modality') }}<span class="visually-hidden">Modality: </span>{{ c.modalities[:3] | join(', ') }}</li>{% endif %}
       {% if c.formats %}<li>{{ icon('formats') }}<span class="visually-hidden">Format: </span>{{ c.formats[:3] | join(', ') }}{% if c.formats | length > 3 %} +{{ c.formats | length - 3 }}{% endif %}</li>{% endif %}
-      {% if c.licence %}<li>{{ icon('licence') }}<span class="visually-hidden">Licence: </span>{{ c.licence }}</li>{% endif %}
+      {% for lic in c.licences %}<li>{% if lic.url %}<a class="lp-licence" href="{{ lic.url }}" target="_blank" rel="noopener noreferrer" title="Licence: {{ lic.full }}">{{ icon('licence') }}<span class="visually-hidden">Licence: </span>{{ lic.label }}</a>{% else %}<span title="Licence: {{ lic.full }}">{{ icon('licence') }}<span class="visually-hidden">Licence: </span>{{ lic.label }}</span>{% endif %}</li>{% endfor %}
       {% if c.papers %}<li class="lp-used"><a href="{{ c.url }}#research" title="Papers that cite this dataset or name it in their text">{{ icon('paper') }}Used in {{ c.papers }} paper{{ '' if c.papers == 1 else 's' }}</a></li>{% endif %}
     </ul>
     <div class="lp-get">

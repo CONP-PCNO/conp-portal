@@ -6,6 +6,7 @@ README, the Portal database); nothing is written per dataset.
 import json
 import re
 from html import unescape
+from urllib.parse import unquote
 
 from app.downloads import download_parts
 
@@ -35,20 +36,59 @@ def _cc_badge(low):
     return label, url
 
 
-def short_licence(name):
-    """Map a DATS licence name to a short badge.
+def licence_entries(licenses):
+    """The DATS licences as [{"name", "url"}]. A licence's web address is its
+    `identifier` (PREVENT-AD open data: a picture of its terms of use), or its
+    name when the record gives an address as the name (PREVENT-AD registered)."""
+    out = []
+    for item in licenses if isinstance(licenses, list) else ([licenses] if licenses else []):
+        if isinstance(item, dict):
+            name = item.get('name') or item.get('id') or ''
+            ident = item.get('identifier')
+            ident = ident.get('identifier') if isinstance(ident, dict) else ident
+            url = ident if isinstance(ident, str) and ident.startswith(('http://', 'https://')) else None
+        else:
+            name, url = item, None
+        name = str(name or '').strip()
+        if name.startswith(('http://', 'https://')) and not url:
+            url = name
+        if name or url:
+            out.append({'name': name, 'url': url})
+    return out
 
+
+_FILE_EXT = re.compile(r'\.(png|jpe?g|gif|pdf|txt|md|docx?|odt|rtf)$', re.I)
+
+
+def _name_from_address(url):
+    """"PREVENT-AD Terms of Use" from .../PREVENT-AD_Terms_of_Use.png; None when
+    the address does not end in a document's file name."""
+    tail = unquote(url.split('?')[0].split('#')[0].rstrip('/').rsplit('/', 1)[-1])
+    if not _FILE_EXT.search(tail):
+        return None
+    name = re.sub(r'[_+]+', ' ', _FILE_EXT.sub('', tail)).strip()
+    return name if re.search(r'[A-Za-z]{3}', name) and len(name) <= 60 else None
+
+
+def short_licence(name, url=None):
+    """Map a DATS licence to a short badge, the same on Data cards and dataset
+    pages.
+
+    `name` is the licence's name (or a {"name", "url"} entry from
+    licence_entries); `url` its web address from the record, if any.
     Returns a dict {"label", "url", "full"} or None when there is no
-    licence. Standard licences get their usual short name (the version only
-    when the record states one); anything else (a data-use agreement, a
-    governance policy, a terms page) is shown as "Data use terms", linked
-    when the record gives a URL.
+    licence. Standard licences get their usual short name and their standard
+    address. Anything else (a data-use agreement, a governance policy, a terms
+    page) keeps its own name when that is short ("Open PREVENT-AD Terms of
+    Use", "Brain-CODE Governance Policy"), else "Data use terms", and links to
+    the record's address when there is one.
     """
     if name is None:
         return None
     raw = name
     if isinstance(raw, dict):
-        raw = raw.get('name') or raw.get('id') or json.dumps(raw)
+        url = url or raw.get('url')
+        raw = raw.get('name') or raw.get('id') or raw.get('url') or json.dumps(raw)
     s = str(raw).strip()
     if s.startswith('{'):
         try:
@@ -61,27 +101,35 @@ def short_licence(name):
     low = s.lower()
     full = s
 
-    if re.search(r'\bcc[\s_-]*0\b|cc[\s_-]*zero|creative commons zero', low):
+    if re.search(r'\bcc[\s_-]*0\b|cc[\s_-]*zero|creative commons zero|creativecommons\.org/publicdomain/zero', low):
         return {'label': 'CC0 1.0' if '1.0' in low else 'CC0',
                 'url': 'https://creativecommons.org/publicdomain/zero/1.0/', 'full': full}
+    m = re.search(r'creativecommons\.org/licenses/([a-z-]+)/(\d\.\d)', low)
+    if m:
+        return {'label': 'CC {} {}'.format(m.group(1).upper(), m.group(2)),
+                'url': '{}{}/{}/'.format(CC_BASE, m.group(1), m.group(2)), 'full': full}
     if low in ('other-pd', 'public domain'):
-        return {'label': 'Public domain', 'url': None, 'full': full}
+        return {'label': 'Public domain', 'url': url, 'full': full}
     if 'pddl' in low:
         return {'label': 'PDDL', 'url': 'https://opendatacommons.org/licenses/pddl/', 'full': full}
     if 'odbl' in low or 'open database license' in low:
         return {'label': 'ODbL', 'url': 'https://opendatacommons.org/licenses/odbl/', 'full': full}
     cc = _cc_badge(low)
     if cc:
-        return {'label': cc[0], 'url': cc[1], 'full': full}
+        return {'label': cc[0], 'url': cc[1] or url, 'full': full}
     if re.fullmatch(r'mit( license)?', low):
         return {'label': 'MIT', 'url': 'https://opensource.org/license/mit', 'full': full}
-    if low.startswith('http'):
-        return {'label': 'Data use terms', 'url': s, 'full': full}
-    return {'label': 'Data use terms', 'url': None, 'full': full}
+    if low.startswith(('http://', 'https://')):
+        return {'label': _name_from_address(s) or 'Data use terms', 'url': url or s, 'full': full}
+    title = re.sub(r'^(please\s+)?(refer\s+to|see)\s+(the\s+)?', '', s, flags=re.I).strip()
+    if len(title) <= 48 and not re.search(r'[.;:]\s', title):
+        return {'label': title[:1].upper() + title[1:], 'url': url, 'full': full}
+    return {'label': 'Data use terms', 'url': url, 'full': full}
 
 
 def licence_badges(licenses):
-    """Badges for the DATS licences (a list, a string or None), de-duplicated."""
+    """Badges for the DATS licences (licence_entries, a list of names, a
+    string or None), de-duplicated."""
     if licenses is None:
         return []
     items = licenses if isinstance(licenses, list) else [licenses]

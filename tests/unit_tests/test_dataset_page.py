@@ -35,7 +35,7 @@ from app.search.dataset_page import (
     ("ODbL", "ODbL", "https://opendatacommons.org/licenses/odbl/"),
     ("PDDL", "PDDL", "https://opendatacommons.org/licenses/pddl/"),
     ("MIT License", "MIT", "https://opensource.org/license/mit"),
-    ("Refer to Brain-CODE Governance Policy", "Data use terms", None),
+    ("Refer to Brain-CODE Governance Policy", "Brain-CODE Governance Policy", None),
     ("https://alleninstitute.org/legal/terms-use/", "Data use terms",
      "https://alleninstitute.org/legal/terms-use/"),
 ])

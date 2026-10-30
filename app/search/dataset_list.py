@@ -15,6 +15,7 @@ from html import unescape
 from app.search.dataset_page import (
     RESTRICTED,
     clean_version,
+    licence_badges,
     get_routes,
     repository_has_data,
     title_html,
@@ -189,8 +190,10 @@ def dataset_card(e):
                          if str(m).strip().lower() not in _PLACEHOLDERS}, key=str.lower)
     formats = sorted({format_label(f) for f in _listify(e.get('formats'))
                       if str(f).strip().lower().lstrip('.') not in _PLACEHOLDERS}, key=str.lower)
-    licences = [str(x.get('name') if isinstance(x, dict) else x) for x in _listify(e.get('licenses'))]
-    licences = [x for x in licences if x and x.lower() not in ('none', 'other')] or []
+    # Same badge as the dataset page (name, short name, link); the index's
+    # licenceLinks carry the addresses (older indexes: names only).
+    licences = [b for b in licence_badges(_listify(e.get('licenceLinks')) or _listify(e.get('licenses')))
+                if b['full'].lower() not in ('other',)][:2]
     subjects = _int(e.get('subjects'))
     evidence_type = str(e.get('evidencePublicationType') or '').lower()
     evidence = _EVIDENCE_LABEL.get(evidence_type, 'Evidence publication') if e.get('evidencePublication') else None
@@ -223,7 +226,8 @@ def dataset_card(e):
         'modalities': modalities,
         'modality_facet': modalities or [NOT_STATED],
         'formats': formats,
-        'licence': ', '.join(licences[:2]) or None,
+        'licence': ', '.join(b['label'] for b in licences) or None,
+        'licences': licences,
         'download': download,
         'datalad': datalad,
         'cbrain': r['cbrain'],
