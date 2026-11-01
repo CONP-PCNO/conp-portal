@@ -44,11 +44,6 @@ python-dotenv==1.1.1 ## Prod
 python-dateutil==2.8.0 ## Prod
 # python_dateutil==2.9.0.post0
 
-## Olson timezone database tracking library for accurate cross-platform timezone calculations in Python.
-## aka timezone
-pytz==2018.9 ## Prod
-# pytz==2026.3.post1
-
 pymysql==1.2.3
 
 ## Elegant and simple HTTP library for sending requests without manual query string encoding or POST-data formatting.

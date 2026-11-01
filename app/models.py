@@ -4,16 +4,16 @@ Module that contains the Data Models
 
 """
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 from flask_user import UserMixin
-from pytz import timezone
 from sqlalchemy.orm.collections import attribute_mapped_collection
 
 from app import db
 from app.oauth import OAuth_pretty
 
-eastern = timezone('US/Eastern')
+eastern = ZoneInfo("America/New_York")
 
 
 class RoleMixin:
