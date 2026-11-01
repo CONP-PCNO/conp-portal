@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
 ## [1.1.1-rc.4]
 
+### Changed
+
+- Upgrades Flask from 3.0.3 to 3.1.3.
 - Removes the `pytz` dependency; timezone handling now uses Python's built-in `zoneinfo` module.
 
 ## [1.1.1-rc.3]
