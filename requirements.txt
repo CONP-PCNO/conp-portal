@@ -103,8 +103,8 @@ Flask-Login==0.6.3
 
 ## Flask-Mail
 ## Flask extension that provides a simple interface to send email messages from your application.
-Flask-Mail==0.9.1 ## Prod
-# flask_mail==0.10.0
+## aka flask_mail
+Flask-Mail==0.10.0
 
 ## Flask-Migrate
 ## SQLAlchemy database migrations extension for Flask applications using Alembic.

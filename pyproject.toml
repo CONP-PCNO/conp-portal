@@ -15,7 +15,7 @@ dependencies = [
     "flask==3.0.3",
     "flask-dance==3.0.0",
     "flask-login==0.6.3",
-    "flask-mail==0.9.1",
+    "Flask-Mail==0.10.0",
     "flask-migrate==2.*",
     "flask-sqlalchemy==3.1.1",
     "flask-user==1.0.2.2",
