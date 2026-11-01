@@ -7,11 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Removed
-### Changed
-### Added
-### Fixed
+## [1.1.1-rc.4]
 
+- Removes the `pytz` dependency; timezone handling now uses Python's built-in `zoneinfo` module.
+
+## [1.1.1-rc.3]
 ## [1.1.1-rc.2]
 
 ### Bootstrap 5.3.8

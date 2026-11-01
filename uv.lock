@@ -431,7 +431,6 @@ dependencies = [
     { name = "pymysql" },
     { name = "python-dateutil" },
     { name = "python-dotenv" },
-    { name = "pytz" },
     { name = "requests" },
     { name = "sqlalchemy" },
     { name = "sqlalchemy-utils" },
@@ -474,7 +473,6 @@ requires-dist = [
     { name = "pymysql", specifier = "==1.2.3" },
     { name = "python-dateutil", specifier = "==2.8.0" },
     { name = "python-dotenv", specifier = "==1.*" },
-    { name = "pytz", specifier = "==2018.9" },
     { name = "requests", specifier = "==2.34.2" },
     { name = "sqlalchemy", specifier = "==2.*" },
     { name = "sqlalchemy-utils", specifier = "==0.43.0" },
@@ -1538,15 +1536,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/5c/dc/292d32245ca35447b265c47a0ed9f35de1ab280a05da1da306b61a035833/python_gitlab-8.6.0.tar.gz", hash = "sha256:d1602164fb58ab280ceef460faf015cec6e7d83bb2d9cbae44ba448adb5568ef", size = 423347, upload-time = "2026-09-28T03:13:53.86Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/55/aa/9c96a88d79453eaea91f301c318dc3c5e95b195087759fd94fedf1104386/python_gitlab-8.6.0-py3-none-any.whl", hash = "sha256:34fee7e5576cf01982c4bfa98f94d50e24733edb66beba3cb8ef286287723019", size = 159654, upload-time = "2026-09-28T03:13:52.285Z" },
-]
-
-[[package]]
-name = "pytz"
-version = "2018.9"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/af/be/6c59e30e208a5f28da85751b93ec7b97e4612268bb054d0dff396e758a90/pytz-2018.9.tar.gz", hash = "sha256:d5f05e487007e29e03409f9398d074e158d920d36eb82eaf66fb1136b0c5374c", size = 310705, upload-time = "2019-01-07T07:55:01.694Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/61/28/1d3920e4d1d50b19bc5d24398a7cd85cc7b9a75a490570d5a30c57622d34/pytz-2018.9-py2.py3-none-any.whl", hash = "sha256:32b0891edff07e28efe91284ed9c31e123d84bea3fd98e1f72be2508f43ef8d9", size = 510688, upload-time = "2019-01-07T07:54:53.185Z" },
 ]
 
 [[package]]
