@@ -70,14 +70,18 @@ def register(app):
         Refresh the conp-experiments checkout and the Experiment rows
         (same as seed_test_experiments, which is kept for old scripts)
         """
+        click.echo("Refreshing experiment metadata from conp-experiments...")
         _update_experiments(app)
+        click.echo("Experiment metadata update complete.")
 
     @app.cli.command('update_pipeline_data')
     def update_pipeline_data():
         """
         Wrapper to call the updating to the pipeline data
         """
+        click.echo("Refreshing available pipelines from Zenodo...")
         _update_pipeline_data(app)
+        click.echo("Pipeline data update complete.")
 
     @app.cli.command('update_datasets')
     def update_datasets():
@@ -85,7 +89,9 @@ def register(app):
         Wrapper to call the updating to the datasets metadata
         and search index
         """
+        click.echo("Refreshing dataset metadata from conp-datasets...")
         _update_datasets(app)
+        click.echo("Rebuilding the dataset search index...")
         _update_index(app, DBDataset, True)
         _report_stale_datasets(app)
 
@@ -225,6 +231,7 @@ def _update_pipeline_data(app):
     t.start()
     t.join()
 
+    click.echo("Generating missing pipeline ARK identifiers...")
     _generate_missing_ark_ids(app)
 
 
@@ -246,7 +253,7 @@ def _update_datalad_objects(
     from app.models import ArkId
     from app.models import DatasetAncestry as DBDatasetAncestry
 
-    print("Updating datalad objects")
+    print(f"_update_datalad_objects: Refreshing  {object_type} metadata from {repo_name}")
 
     datasetsdir = Path(app.config['DATA_PATH']) / repo_name
     datasetsdir.mkdir(parents=True, exist_ok=True)
@@ -256,6 +263,7 @@ def _update_datalad_objects(
     # same subdataset paths, and can leave partial nested checkouts behind.
     d = DataladDataset(path=datasetsdir)
     if not d.is_installed():
+        print(f"DataladDataset not installed at {datasetsdir} for {repo_name}, cloning...")
         api.clone(
             source=f'https://github.com/CONP-PCNO/{repo_name}',
             path=datasetsdir
@@ -286,10 +294,14 @@ def _update_datalad_objects(
         print("\033[0m")
         return
 
-    print('[INFO   ] conp-dataset update complete')
-    print('[INFO   ] Updating subdatasets')
+    print(f'[INFO   ] {repo_name} checkout updated')
+    print('[INFO   ] Finding subdatasets to update')
 
-    for ds in d.subdatasets():
+    subdatasets = d.subdatasets()
+    print(f'[INFO   ] Found {len(subdatasets)} subdatasets')
+    updated_count = 0
+    for ds in subdatasets:
+        print('---------------------------------------------------------------------')
         print('[INFO   ] Updating ' + ds['gitmodule_url'])
         print('[INFO   ] Subdataset path: ' + ds['path'])
         subdataset = DataladDataset(path=ds['path'])
@@ -354,6 +366,9 @@ def _update_datalad_objects(
         # pull the timestamp of the first commit in the git log for the dataset create date
         createDate = datetime.utcnow()
         try:
+            # git_cmd = "git -C {} log --pretty=format:%ct --reverse | head -1".format(ds['path'])
+            # print("[INFO   ] GIT CMD " + git_cmd)
+
             createTimeStamp = os.popen(
                 "git -C '{}' log --pretty=format:%ct --reverse | head -1".format(ds['path'])).read()
             createDate = datetime.fromtimestamp(int(createTimeStamp))
@@ -438,6 +453,7 @@ def _update_datalad_objects(
 
         db.session.merge(dataset)
         db.session.commit()
+        updated_count += 1
 
         # if the dataset does not have an ARK identifier yet, generate it
         dataset_with_ark_id_list = [row[0] for row in db.session.query(getattr(ArkId, f'{object_type}_id')).all()]
@@ -445,6 +461,8 @@ def _update_datalad_objects(
             new_ark_id = ark_id_minter(app, object_type)
             save_ark_id_in_database(app, object_type, new_ark_id, getattr(dataset, f'{object_type}_id'))
         print('[INFO   ] ' + ds['gitmodule_name'] + ' updated.')
+
+    print(f'[INFO   ] Updated {updated_count} of {len(subdatasets)} {object_type} records')
 
 
 def _update_schema(app):
