@@ -50,6 +50,12 @@ dev = [
     "semver==3.*",
 ]
 
+[project.urls]
+Homepage = "https://portal.conp.ca/"
+Repository = "https://github.com/CONP-PCNO/conp-portal/"
+Issues = "https://github.com/CONP-PCNO/conp-portal/issues"
+Changelog = "https://github.com/CONP-PCNO/conp-portal/blob/main/CHANGELOG.md"
+
 [tool.ruff]
 # excluded directories
 extend-exclude = [
