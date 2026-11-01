@@ -1,6 +1,9 @@
 # Ack configuration File .ackrc file
 # https://beyondgrep.com/
 
+# Local Dev Files
+--ignore-directory=is:_dev/
+
 # Obsidian
 # https://obsidian.md/
 --ignore-directory=is:.obsidian
