@@ -26,7 +26,7 @@ dependencies = [
     "markupsafe==3.0.4",
     "pygithub==1.44.1",
     "python-dateutil==2.8.0",
-    "python-dotenv==1.1.1",
+    "python-dotenv==1.*",
     "pytz==2018.9",
     "requests==2.34.2",
     "sqlalchemy==2.0.38",
