@@ -495,7 +495,7 @@ def _zip_location(fspath, cache_dir, cached_names):
     if version is None:
         return None
     name = fspath.split('conp-dataset/projects/')[-1].replace('/', '__')
-    filename = '{}_version-{}.tar.gz'.format(name, version)
+    filename = f'{name}_version-{version}.tar.gz'
     return os.path.join(cache_dir, filename) if filename in cached_names else None
 
 
