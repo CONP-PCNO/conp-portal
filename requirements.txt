@@ -10,8 +10,7 @@
 boutiques>=0.5.33
 
 ## Composable command-line interface toolkit for creating beautiful CLI applications.
-click==8.5.0 ## Prod
-# click==8.4.2
+click==8.5.0
 
 ## Distributed data management and version control system built on top of Git and git-annex.
 ## Requires: annexremote, boto3, chardet, distro, fasteners, giturlparse, humanize, iso8601, keyring, keyrings.alt, looseversion, msgpack, packaging, patool, platformdirs, python-gitlab, requests, tqdm
@@ -22,8 +21,8 @@ datalad~=1.7
 ## programmatic access to commits, branches, and files.
 ## https://github.com/gitpython-developers/GitPython
 ## Development Status: maintenance mode
-GitPython==3.2.1
-gitdb==4.0.12
+GitPython==3.2.*
+gitdb>=4.0.12
 
 ## Python library to access the GitHub REST API v3 and manage
 ## repositories, users, and organizations.
@@ -36,38 +35,33 @@ MarkupSafe==3.0.4
 
 ## Library that reads key-value pairs from a .env file and sets them as environment variables.
 ## aka dotenv
-python-dotenv==1.1.1 ## Prod
-# python-dotenv==1.2.2
+python-dotenv==1.*
 
 ## Powerful extensions to the standard datetime module, including relative deltas and flexible parsing.
 ## aka dateutil, python_dateutil
-python-dateutil==2.8.0 ## Prod
-# python_dateutil==2.9.0.post0
+python-dateutil==2.8.0
 
+## PyMySQL is a pure-Python MySQL client library, implementing the Python Database API v2.0 and built on top of MySQL C client libraries.
+## aka pymysql
 pymysql==1.2.3
 
 ## Elegant and simple HTTP library for sending requests without manual query string encoding or POST-data formatting.
 ## aka: requests
-# requests==2.32.0 ## Prod | requests==2.32.0` is yanked (reason: "Yanked due to conflicts with CVE-2024-35195 mitigation").
 requests==2.34.2
 
-# @todo: remove. included with flask_sqlalchemy
+# @todo: remove included with flask_sqlalchemy
 ## Comprehensive Database Toolkit and Object Relational Mapper (ORM) featuring enterprise-level persistence patterns.
-SQLAlchemy==2.0.38 ## Prod
-# SQLAlchemy==2.0.51
+SQLAlchemy==2.*
 
 ## Collection of various utility functions, data types, and helpers to complement SQLAlchemy.
 ## aka: SQLAlchemy-Utils, sqlalchemy_utils
-sqlalchemy_utils==0.43.0 # Prod
-# sqlalchemy_utils==0.42.1
+sqlalchemy_utils==0.43.0
 
 ## ASCII transliterations of Unicode text to safely convert accents, symbols, and non-Roman characters into plain text.
-Unidecode==1.3.8 ## Prod
-# Unidecode==1.4.0
+Unidecode==1.*
 
 ## Comprehensive WSGI web application library providing request/response objects, routing, and debugging utilities.
 # Development Status: Transitive Dependency Only.
-#Werkzeug==3.0.6 ## Prod
 # Werkzeug==3.1.8
 
 ## Fast, pure-Python search engine library for indexing and searching text fields.
@@ -75,20 +69,20 @@ whoosh==2.7.4
 
 ## Flexible form validation and rendering library for Python web development, independent of any web framework.
 ## aka wtforms
-WTForms==2.2.1 ## Prod
-# WTForms==3.2.2
+WTForms==2.2.1
+#@todo: WTForms==3.2.2
 
 ## Flask ##############################################################
 
 ## Flask
 ## Lightweight WSGI web application framework designed to make getting started quick and easy.
-Flask==3.1.3 ## Prod
+Flask==3.1.3
 
 ## Flask-Dance
 ## Flask extension providing turnkey OAuth consumer support for logging in via services like Google and GitHub.
 ## aka flask_dance
-Flask-Dance==3.0.0 ## Prod
-# Flask-Dance==7.1.0
+Flask-Dance==3.0.0
+# @todo: Flask-Dance==7.1.0
 
 ## Flask-Login
 ## User session management library for Flask that handles logging in, logging out, and remembering sessions.
@@ -103,8 +97,8 @@ Flask-Mail==0.10.0
 ## Flask-Migrate
 ## SQLAlchemy database migrations extension for Flask applications using Alembic.
 ## aka: flask_migrate
-Flask-Migrate==2.* # Prod
-# Flask-Migrate==4.1.0
+Flask-Migrate==2.*
+# @todo:Flask-Migrate==4.1.0
 
 ## Flask-SQLAlchemy [aka flask-sqlalchemy]
 ## Extension for Flask that adds support for SQLAlchemy to simplify database interactions.
@@ -139,17 +133,16 @@ bcrypt<4
 ## Lightweight database migration tool for usage with SQLAlchemy.
 ## Requires: Mako, SQLAlchemy, typing-extensions
 ## Required-by: Flask-Migrate
-alembic==1.14.1 ## Prod
+alembic==1.14.1
 # alembic==1.19.1
 
 ## Robust testing framework that makes it easy to write small, readable scripts and scale to complex functional testing.
-pytest==8.3.5 ## Prod
-# pytest==9.1.1
+pytest==8.3.5
+# @todo: pytest==9.1.1
 
 # Gunicorn
-# gunicorn==22.0.0 # Prod
-# gunicorn==23.0.0 # Next
 gunicorn>=26.2.0
+
 ## Historic Record ####################################################
 
 # Flask-DotEnv==0.1.1 ## obsolete. Flask natively supports environment variables using the package python-dotenv, rather than the older Flask-DotEnv extension.
