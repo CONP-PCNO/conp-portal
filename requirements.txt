@@ -133,8 +133,7 @@ bcrypt<4
 ## Lightweight database migration tool for usage with SQLAlchemy.
 ## Requires: Mako, SQLAlchemy, typing-extensions
 ## Required-by: Flask-Migrate
-alembic==1.14.1
-# alembic==1.19.1
+alembic==1.*
 
 ## Robust testing framework that makes it easy to write small, readable scripts and scale to complex functional testing.
 pytest==8.3.5
