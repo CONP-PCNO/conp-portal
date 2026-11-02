@@ -37,10 +37,6 @@ MarkupSafe==3.0.4
 ## aka dotenv
 python-dotenv==1.*
 
-## Powerful extensions to the standard datetime module, including relative deltas and flexible parsing.
-## aka dateutil, python_dateutil
-python-dateutil==2.8.0
-
 ## PyMySQL is a pure-Python MySQL client library, implementing the Python Database API v2.0 and built on top of MySQL C client libraries.
 ## aka pymysql
 pymysql==1.2.3
