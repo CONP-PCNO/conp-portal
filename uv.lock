@@ -500,7 +500,7 @@ requires-dist = [
     { name = "click", specifier = "==8.5.0" },
     { name = "datalad", specifier = "~=1.7" },
     { name = "flask", specifier = "==3.1.3" },
-    { name = "flask-dance", specifier = "==3.0.0" },
+    { name = "flask-dance", specifier = "==3.*" },
     { name = "flask-login", specifier = "==0.6.3" },
     { name = "flask-mail", specifier = "==0.10.0" },
     { name = "flask-migrate", specifier = "==2.*" },
@@ -712,7 +712,7 @@ wheels = [
 
 [[package]]
 name = "flask-dance"
-version = "3.0.0"
+version = "3.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "flask" },
@@ -722,9 +722,9 @@ dependencies = [
     { name = "six" },
     { name = "urlobject" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e4/1b/14e319de35a7680db7ae189d883d4c11448807ae0f246f2b9d808d6b101e/Flask-Dance-3.0.0.tar.gz", hash = "sha256:5ec8fae543ef93aab96d6a4c6d34ed835c793e2f6a211212a89a4e9c31c42bed", size = 1393524, upload-time = "2019-10-21T08:54:42.455Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b3/c5/1287e459d80aa57c73f4e015ca6fc3148af332df272f7c04af106329b93a/Flask-Dance-3.3.1.tar.gz", hash = "sha256:6a570e051fe40148698080c65b815704641bf05091fbb9becae549b8d8e1e33b", size = 131495, upload-time = "2021-03-02T07:06:14.312Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/48/22/81ef0c49d0e4e8af9bfb95e9abe0d54c12e05d0531b8967938eb223b316e/Flask_Dance-3.0.0-py2.py3-none-any.whl", hash = "sha256:1b30ea6765ca2a9c5c15eb00a18e18f8c347a4bf2f9947b68ff0024c4c7d1dfa", size = 50588, upload-time = "2019-10-21T08:54:51.472Z" },
+    { url = "https://files.pythonhosted.org/packages/dc/19/326c399eb907bf46ebf6dda57352378176d852d1cb3edc8c277aa7e32e4e/Flask_Dance-3.3.1-py2.py3-none-any.whl", hash = "sha256:cd2955a46cf3b72ff9b0b5a6521df5aed05dd5189eb312a5d27a9e2e4983ce29", size = 55742, upload-time = "2021-03-02T07:06:12.941Z" },
 ]
 
 [[package]]
