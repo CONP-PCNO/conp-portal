@@ -3,7 +3,7 @@
 Module that contains the Data Models
 
 """
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from zoneinfo import ZoneInfo
 
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
@@ -14,6 +14,10 @@ from app import db
 from app.oauth import OAuth_pretty
 
 eastern = ZoneInfo("America/New_York")
+
+
+def _utc_now():
+    return datetime.now(UTC).replace(tzinfo=None)
 
 
 class RoleMixin:
@@ -49,12 +53,13 @@ class User(db.Model, UserMixin, RoleMixin):
     # Customizable Fields
     full_name = db.Column(db.String(64), nullable=False, server_default='')
     affiliation = db.Column(db.String(128))
-    expiration = db.Column(db.DateTime, nullable=False,
-                           default=datetime.utcnow() + timedelta(days=365))
+    expiration = db.Column(
+        db.DateTime, nullable=False,
+        default=lambda: _utc_now() + timedelta(days=365))
     date_created = db.Column(
-        db.DateTime, nullable=False, default=datetime.utcnow())
+        db.DateTime, nullable=False, default=_utc_now)
     date_updated = db.Column(
-        db.DateTime, nullable=False, default=datetime.utcnow())
+        db.DateTime, nullable=False, default=_utc_now)
     # Many To One relationship
     affiliation_type_id = db.Column(
         db.Integer, db.ForeignKey('affiliation_type.id'))
@@ -228,7 +233,7 @@ class RetiredDataset(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     dataset_id = db.Column(db.String(256), index=True, unique=True)
     name = db.Column(db.String(256))
-    retired_on = db.Column(db.DateTime, default=datetime.utcnow)
+    retired_on = db.Column(db.DateTime, default=_utc_now)
     reason = db.Column(db.Text)
     # dataset_id of the dataset that replaces it, if any (linked from its page)
     replaced_by = db.Column(db.String(256))
