@@ -4,7 +4,6 @@ import os
 import re
 from functools import lru_cache
 
-import dateutil
 import requests
 
 from app.dats import DATSObject
