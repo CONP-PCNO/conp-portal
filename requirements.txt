@@ -31,7 +31,7 @@ PyGithub==1.44.1
 
 ## Core string-handling library that escapes characters so they are safe to use in HTML and XML.
 ## aka markupsafe
-MarkupSafe==3.0.4
+MarkupSafe==3.*
 
 ## Library that reads key-value pairs from a .env file and sets them as environment variables.
 ## aka dotenv
@@ -39,7 +39,7 @@ python-dotenv==1.*
 
 ## PyMySQL is a pure-Python MySQL client library, implementing the Python Database API v2.0 and built on top of MySQL C client libraries.
 ## aka pymysql
-pymysql==1.2.3
+pymysql==1.2.*
 
 ## Elegant and simple HTTP library for sending requests without manual query string encoding or POST-data formatting.
 ## aka: requests
@@ -51,7 +51,7 @@ SQLAlchemy==2.*
 
 ## Collection of various utility functions, data types, and helpers to complement SQLAlchemy.
 ## aka: SQLAlchemy-Utils, sqlalchemy_utils
-sqlalchemy_utils==0.43.0
+sqlalchemy_utils==0.43.*
 
 ## ASCII transliterations of Unicode text to safely convert accents, symbols, and non-Roman characters into plain text.
 Unidecode==1.*
@@ -61,7 +61,7 @@ Unidecode==1.*
 # Werkzeug==3.1.8
 
 ## Fast, pure-Python search engine library for indexing and searching text fields.
-whoosh==2.7.4
+whoosh==2.*
 
 ## Flexible form validation and rendering library for Python web development, independent of any web framework.
 ## aka wtforms
@@ -88,7 +88,7 @@ Flask-Login==0.6.3
 ## Flask-Mail
 ## Flask extension that provides a simple interface to send email messages from your application.
 ## aka flask_mail
-Flask-Mail==0.10.0
+Flask-Mail==0.10.*
 
 ## Flask-Migrate
 ## SQLAlchemy database migrations extension for Flask applications using Alembic.
@@ -98,12 +98,12 @@ Flask-Migrate==2.*
 
 ## Flask-SQLAlchemy [aka flask-sqlalchemy]
 ## Extension for Flask that adds support for SQLAlchemy to simplify database interactions.
-Flask-SQLAlchemy==3.1.1
+Flask-SQLAlchemy==3.*
 
 ## Flask-WTF
 ## Simple integration of Flask and WTForms, including CSRF protection and file upload validation.
 ## aka: flask_wtf
-Flask-WTF==1.3.0
+Flask-WTF==1.3.*
 
 
 ## Flask-User
@@ -118,7 +118,6 @@ Flask-WTF==1.3.0
 ## like werkzeug.security.If you are looking for a more feature-rich, modern alternative that handles
 ## everything out-of-the-box, look into the actively maintained Flask-Security-Too fork.
 Flask-User==1.0.2.2
-# Flask-User==1.0.1.5
 
 ## Development ########################################################
 
