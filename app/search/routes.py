@@ -19,12 +19,19 @@ from flask import (
 from flask_login import current_user
 from sqlalchemy import func
 
-from app.dats import DEFAULT_LOGO, load_dataset_logos, load_remote_logo_copies, resolve_dataset_logo
-from app.models import ArkId, Dataset, DatasetAncestry
-from app.models import MatomoDailyGetDatasetPageViewsSummary
+from app.dats import (
+    DEFAULT_LOGO,
+    load_dataset_logos,
+    load_remote_logo_copies,
+    resolve_dataset_logo,
+)
+from app.models import (
+    ArkId,
+    Dataset,
+    DatasetAncestry,
+    MatomoDailyGetDatasetPageViewsSummary,
+)
 from app.search import search_bp
-from app.search.dataset_query import matches_suggestion, suggest_correction, vocabulary
-from app.search.text_match import rank, score as match_score
 from app.search.dataset_page import (
     access_context,
     as_url,
@@ -39,11 +46,12 @@ from app.search.dataset_page import (
     direct_download,
     fix_readme_links,
     get_routes,
-    publication_citations,
-    title_html,
     licence_badges,
+    publication_citations,
     strip_title_heading,
+    title_html,
 )
+from app.search.dataset_query import matches_suggestion, suggest_correction, vocabulary
 from app.search.models import DatasetCache, DATSDataset
 from app.search.queries import (
     example_query_1,
@@ -52,6 +60,8 @@ from app.search.queries import (
     example_query_4,
     example_query_5,
 )
+from app.search.text_match import rank
+from app.search.text_match import score as match_score
 from app.services import github
 from config import Config
 
@@ -152,9 +162,16 @@ def find():
     to the full list in each section."""
     from app.experiments.experiment_page import filter_cards as experiment_filter
     from app.experiments.routes import experiment_cards
-    from app.pipelines.routes import _tool_elements, get_cbrain_availability, get_tool_icons, tool_icon
-    from app.pipelines.tool_list import filter_cards as tool_filter, group_related, tool_card
-    from app.search.dataset_list import dataset_card, filter_cards as dataset_filter
+    from app.pipelines.routes import (
+        _tool_elements,
+        get_cbrain_availability,
+        get_tool_icons,
+        tool_icon,
+    )
+    from app.pipelines.tool_list import filter_cards as tool_filter
+    from app.pipelines.tool_list import group_related, tool_card
+    from app.search.dataset_list import dataset_card
+    from app.search.dataset_list import filter_cards as dataset_filter
 
     query = (request.args.get('q') or request.args.get('search') or '').strip()
     if not query:
