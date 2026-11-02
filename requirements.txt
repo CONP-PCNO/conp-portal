@@ -65,7 +65,7 @@ whoosh==2.7.4
 
 ## Flexible form validation and rendering library for Python web development, independent of any web framework.
 ## aka wtforms
-WTForms==2.2.1
+WTForms==2.*
 #@todo: WTForms==3.2.2
 
 ## Flask ##############################################################
