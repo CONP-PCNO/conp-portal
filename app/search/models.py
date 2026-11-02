@@ -57,7 +57,8 @@ def _get_latest_test_results(date):
 
 
 def get_latest_test_results():
-    current_date = dt.datetime.now().astimezone(tz=dateutil.tz.UTC)
+    # Uses built-in UTC timezone (Python 3.12+) instead of dateutil
+    current_date = dt.datetime.now(dt.UTC)
     normalized_date = current_date.replace(
         # Round the date to the lowest 4hour
         hour=(current_date.hour // 4 * 4 + 1),
