@@ -23,7 +23,7 @@ dependencies = [
     "Flask-WTF==1.3.*",
     "gitpython==3.2.*",
     "markupsafe==3.*",
-    "pygithub==1.44.1",
+    "pygithub==1.*",
     "python-dotenv==1.*",
     "requests==2.34.2",
     "sqlalchemy==2.*",

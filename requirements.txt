@@ -27,7 +27,7 @@ gitdb>=4.0.12
 ## Python library to access the GitHub REST API v3 and manage
 ## repositories, users, and organizations.
 ## aka github, pygithub
-PyGithub==1.44.1
+PyGithub==1.*
 
 ## Core string-handling library that escapes characters so they are safe to use in HTML and XML.
 ## aka markupsafe
