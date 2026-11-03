@@ -44,6 +44,7 @@ dev = [
     "pipdeptree==4.*",
     "prek==0.5.*",
     "pytest==8.*",
+    "pytest-cov>=7.1.0",
     "ruff==0.17.*",
     "semver==3.*",
 ]
@@ -80,3 +81,8 @@ select = [
 ignore = [
     "E501", # Line length violations (let the formatter handle this)
 ]
+
+[tool.pytest.ini_options]
+# Tells pytest to completely skip these directories during collection
+addopts = "--ignore=.venv --ignore=venv --ignore=node_modules --ignore=data --ignore=__pycache__ --ignore=docs --ignore=index --ignore=test --ignore=kb --ignore=logs"
+testpaths = ["tests"]
