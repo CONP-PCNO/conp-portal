@@ -62,7 +62,7 @@ sqlalchemy_utils==0.43.0 # Prod
 # sqlalchemy_utils==0.42.1
 
 ## ASCII transliterations of Unicode text to safely convert accents, symbols, and non-Roman characters into plain text.
-Unidecode==1.3.8 ## Prod
+Unidecode==1.4.0 ## Prod
 # Unidecode==1.4.0
 
 ## Comprehensive WSGI web application library providing request/response objects, routing, and debugging utilities.
