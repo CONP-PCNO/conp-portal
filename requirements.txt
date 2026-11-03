@@ -87,6 +87,7 @@ Flask-Login==0.6.3
 ## Flask-Mail
 ## Flask extension that provides a simple interface to send email messages from your application.
 ## aka flask_mail
+## Development Status: no longer actively maintained
 Flask-Mail==0.10.*
 
 ## Flask-Migrate
