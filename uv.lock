@@ -502,7 +502,7 @@ requires-dist = [
     { name = "datalad", specifier = "~=1.7" },
     { name = "email-validator", specifier = ">=2.3.0" },
     { name = "flask", specifier = "==3.1.3" },
-    { name = "flask-dance", specifier = "==3.*" },
+    { name = "flask-dance", specifier = "==7.*" },
     { name = "flask-login", specifier = "==0.6.3" },
     { name = "flask-mail", specifier = "==0.10.*" },
     { name = "flask-migrate", specifier = "==2.*" },
@@ -736,19 +736,19 @@ wheels = [
 
 [[package]]
 name = "flask-dance"
-version = "3.3.1"
+version = "7.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "flask" },
     { name = "oauthlib" },
     { name = "requests" },
     { name = "requests-oauthlib" },
-    { name = "six" },
     { name = "urlobject" },
+    { name = "werkzeug" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b3/c5/1287e459d80aa57c73f4e015ca6fc3148af332df272f7c04af106329b93a/Flask-Dance-3.3.1.tar.gz", hash = "sha256:6a570e051fe40148698080c65b815704641bf05091fbb9becae549b8d8e1e33b", size = 131495, upload-time = "2021-03-02T07:06:14.312Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d7/b3/38aff96fbafe850f7f4186dc06e96ebc29625d68d1427ad65c9d41c4ec9e/flask_dance-7.1.0.tar.gz", hash = "sha256:6d0510e284f3d6ff05af918849791b17ef93a008628ec33f3a80578a44b51674", size = 140993, upload-time = "2024-03-05T12:43:21.558Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/dc/19/326c399eb907bf46ebf6dda57352378176d852d1cb3edc8c277aa7e32e4e/Flask_Dance-3.3.1-py2.py3-none-any.whl", hash = "sha256:cd2955a46cf3b72ff9b0b5a6521df5aed05dd5189eb312a5d27a9e2e4983ce29", size = 55742, upload-time = "2021-03-02T07:06:12.941Z" },
+    { url = "https://files.pythonhosted.org/packages/75/8c/4125e9f1196e5ab9675d38ff445ae4abd7085aba7551335980ac19196389/flask_dance-7.1.0-py3-none-any.whl", hash = "sha256:81599328a2b3604fd4332b3d41a901cf36980c2067e5e38c44ce3b85c4e1ae9c", size = 62176, upload-time = "2024-03-05T12:43:19.149Z" },
 ]
 
 [[package]]
