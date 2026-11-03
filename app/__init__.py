@@ -36,7 +36,7 @@ def create_app(config_settings=None):
             mtime = int(os.path.getmtime(os.path.join(app.static_folder, filename)))
         except OSError:
             return url
-        return '{}?v={}'.format(url, mtime)
+        return f'{url}?v={mtime}'
 
     from app.doi_sources import doi_source as _doi_source
     app.add_template_global(_doi_source, 'doi_source')
