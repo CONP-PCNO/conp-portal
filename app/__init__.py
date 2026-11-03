@@ -117,7 +117,10 @@ def init_email_and_logs_error_handler(app):
 
         secure = None
         if app.config['MAIL_USE_TLS']:
-            secure = 90
+            # To specify the use of a secure protocol (TLS), pass in a tuple
+            # to the secure argument. This will only be used when
+            # authentication credentials are supplied.
+            secure = ()
 
         mail_handler = SMTPHandler(mailhost=(app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
                                    fromaddr='no-reply@' + app.config['MAIL_SERVER'],
