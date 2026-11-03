@@ -9,5 +9,6 @@ deptry==0.25.*
 flake8==7.*
 prek==0.5.*
 pytest==8.*
+pytest-cov>=7.1.0
 ruff==0.17.*
 semver==3.*
