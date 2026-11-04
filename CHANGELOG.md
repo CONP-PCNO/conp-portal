@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Adds phase and progress messages to the `update_experiments`, `update_datasets`, and `update_pipeline_data` Flask CLI commands.
+- Prints the dataset update completion message after the stale-dataset report.
 
 ## [1.1.1-rc.4]
 

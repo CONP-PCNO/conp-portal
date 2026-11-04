@@ -94,6 +94,7 @@ def register(app):
         click.echo("Rebuilding the dataset search index...")
         _update_index(app, DBDataset, True)
         _report_stale_datasets(app)
+        click.echo("Dataset metadata and search index update complete.")
 
     @app.cli.command('prune_datasets')
     @click.option('--apply', 'apply_changes', is_flag=True, default=False,
@@ -111,6 +112,7 @@ def register(app):
         "retired" record that its ARK and old address show (HTTP 410).
         """
         _prune_datasets(app, apply_changes=apply_changes, reason=reason, replaced_by=replaced_by, force=force)
+        click.echo("Dataset metadata and search index update complete.")
 
     @app.cli.command('update_index')
     @click.option(
