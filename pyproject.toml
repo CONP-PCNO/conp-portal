@@ -17,7 +17,7 @@ dependencies = [
     "flask-dance==7.*",
     "flask-login==0.6.3",
     "Flask-Mail==0.10.*",
-    "flask-migrate==2.*",
+    "Flask-Migrate==4.*",
     "flask-sqlalchemy==3.*",
     "flask-user==1.0.2.2",
     "Flask-WTF==1.3.*",
