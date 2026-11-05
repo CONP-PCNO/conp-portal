@@ -241,6 +241,14 @@ def _seed_test_datasets_db(app):
     _update_index(app, DBDataset, True)
 
 
+def _is_project_dataset_path(data_path, repo_name, subdataset_path):
+    from pathlib import Path
+
+    project_dir = (Path(data_path) / repo_name / 'projects').resolve()
+    candidate = Path(subdataset_path).resolve()
+    return candidate != project_dir and candidate.is_relative_to(project_dir)
+
+
 def _update_pipeline_data(app):
     """
     Updates from Zenodo the available pipelines
@@ -273,7 +281,7 @@ def _update_datalad_objects(
 
     print(f"_update_datalad_objects: Refreshing  {object_type} metadata from {repo_name}")
 
-    datasetsdir = Path(app.config['DATA_PATH']) / repo_name
+    datasetsdir = (Path(app.config['DATA_PATH']) / repo_name).resolve()
     datasetsdir.mkdir(parents=True, exist_ok=True)
 
     # DataLad owns this checkout.  Do not mix GitPython's recursive
@@ -342,12 +350,13 @@ def _update_datalad_objects(
         # The following relates to the DATS.json files
         # of the projects directory in the conp-dataset repo.
         # Skip directories that aren't projects.
-        patterns = [app.config['DATA_PATH'] + f'/{repo_name}/projects/*']
-        if not any(fnmatch.fnmatch(ds['path'], pattern) for pattern in patterns):
-            print(f"[ERROR  ] No matching dataset found for {ds['path']}, {patterns}")
+        subdataset_path = Path(ds['path']).resolve()
+        if not _is_project_dataset_path(app.config['DATA_PATH'], repo_name, subdataset_path):
+            print(f"[ERROR  ] No matching dataset found for {ds['path']}, "
+                  f"{(datasetsdir / 'projects').resolve()}")
             continue
 
-        dirs = os.listdir(ds['path'])
+        dirs = os.listdir(subdataset_path)
         descriptor = ''
         for file in dirs:
             if fnmatch.fnmatch(file.lower(), 'dats.json'):
@@ -361,12 +370,12 @@ def _update_datalad_objects(
 
         try:
             # Try standard UTF-8 first
-            with open(os.path.join(ds['path'], descriptor), encoding='utf-8') as f:
+            with open(subdataset_path / descriptor, encoding='utf-8') as f:
                 dats = json.load(f)
         except (UnicodeDecodeError, Exception):
             try:
                 # Fallback to latin-1/cp1252 to handle legacy character encodings gracefully
-                with open(os.path.join(ds['path'], descriptor), encoding='latin-1') as f:
+                with open(subdataset_path / descriptor, encoding='latin-1') as f:
                     dats = json.load(f)
             except Exception as e:
                 print("\033[91m")

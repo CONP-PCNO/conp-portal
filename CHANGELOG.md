@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adds pytest coverage for backup naming, compression, environment-file loading, URL validation, and dump failures.
 - Adds phase and progress messages to the `update_experiments`, `update_datasets`, and `update_pipeline_data` Flask CLI commands.
 - Prints the dataset update completion message after the stale-dataset report.
+- Fixes dataset seeding when `DATA_PATH` ends with a path separator by normalizing DataLad subdataset paths before checking whether they are project datasets; isolates the dataset CLI progress test from database-backed stale-dataset reporting.
 - Upgrades Flask from 3.0.3 to 3.1.3.
 - Removes the `pytz` dependency; timezone handling now uses Python's built-in `zoneinfo` module.
 

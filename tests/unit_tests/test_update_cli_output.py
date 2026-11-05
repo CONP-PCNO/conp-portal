@@ -19,6 +19,7 @@ def test_update_experiments_reports_progress(app, runner, monkeypatch):
 def test_update_datasets_reports_progress(app, runner, monkeypatch):
     monkeypatch.setattr(cli, "_update_datasets", lambda _app: None)
     monkeypatch.setattr(cli, "_update_index", lambda *_args: None)
+    monkeypatch.setattr(cli, "_report_stale_datasets", lambda _app: None)
     cli.register(app)
 
     result = runner.invoke(args=["update_datasets"])
