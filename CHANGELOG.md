@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Adds a Bash-only MariaDB/MySQL database backup script with optional gzip compression and developer documentation.
+- Reads `DATABASE_URL` from the environment or sources the shell-compatible project-root `.flaskenv` (falling back to `.env`); updates `flaskenv.template` assignments to be valid Bash.
+- Adds pytest coverage for backup naming, compression, environment-file loading, URL validation, and dump failures.
+
 - Adds phase and progress messages to the `update_experiments`, `update_datasets`, and `update_pipeline_data` Flask CLI commands.
 - Prints the dataset update completion message after the stale-dataset report.
 
