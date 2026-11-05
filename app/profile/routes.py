@@ -50,7 +50,7 @@ def admin_user_profile_page():
     user_id = request.args.get('user_id')
     user = User.query.filter(User.id == user_id).first()
     if user is None:
-        redirect(url_for('main.index'))
+        return redirect(url_for('main.index'))
 
     form = UserProfileForm(request.form, obj=user)
     roles = Role.query.all()

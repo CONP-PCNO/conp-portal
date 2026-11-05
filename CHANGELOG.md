@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.1-rc.4]
 
+- Adds a visible, CSRF-protected POST logout control to the shared navigation for authenticated users, with a login link for anonymous users.
+- Fixes the Flask-Security password-change template by removing an unsupported translation tag and unsupported form-macro arguments.
+- Redirects administrators away from the user-profile editor when the target `user_id` is missing or invalid.
 - Replaces the abandoned Flask-User authentication extension with Flask-Security 5.9.2, preserving registration, email confirmation, password reset, role checks, ORCID login, and existing bcrypt password hashes; adds a migration for existing user and role tables, requires a separate production password salt, and switches logout to CSRF-protected POST.
 - Adds a Bash-only MariaDB/MySQL database backup script with optional gzip compression and developer documentation.
 - Reads `DATABASE_URL` from the environment or sources the shell-compatible project-root `.flaskenv` (falling back to `.env`); updates `flaskenv.template` assignments to be valid Bash.
