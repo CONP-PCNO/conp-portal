@@ -568,7 +568,7 @@ requires-dist = [
     { name = "flask-login", specifier = "==0.6.3" },
     { name = "flask-mail", specifier = "==0.10.*" },
     { name = "flask-migrate", specifier = "==4.*" },
-    { name = "flask-security", extras = ["fsqla", "common"], specifier = "==5.9.2" },
+    { name = "flask-security", extras = ["common", "fsqla"], specifier = "==5.9.2" },
     { name = "flask-sqlalchemy", specifier = "==3.*" },
     { name = "flask-wtf", specifier = "==1.3.*" },
     { name = "gitdb", specifier = ">=4.0.12" },
