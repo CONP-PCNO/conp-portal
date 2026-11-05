@@ -12,8 +12,8 @@ SECRET_KEY=you-will-never-guess
 # -------------------------------------------------------------------
 # DATABASE SETTINGS
 # -------------------------------------------------------------------
-# mysql should have ?charset=utf8mb4 at end
-DATABASE_URL=sqlite:///<ENTER FLASK TOP DIR>/app.db
+# For MySQL, include ?charset=utf8mb4 at the end of the URL.
+DATABASE_URL='sqlite:////path/to/conp-portal/app.db'
 SQLALCHEMY_TRACK_MODIFICATIONS=False
 
 
@@ -30,20 +30,20 @@ DATASET_CACHE_PATH=${HOME}/.cache/conp-dataset
 MAIL_SERVER=smtp.googlemail.com
 MAIL_PORT=587
 MAIL_USE_TLS=1
-MAIL_USERNAME=<Your gmail user name>
-MAIL_PASSWORD=<Your gmail app specific password, not your normal one>
+MAIL_USERNAME='your-gmail-username'
+MAIL_PASSWORD='your-gmail-app-specific-password'
 OAUTHLIB_INSECURE_TRANSPORT=1
 
 # -------------------------------------------------------------------
 # ORCID SETTINGS
 # -------------------------------------------------------------------
-USE_ORCID_OAUTH_SANDBOX=<1 if testing 0 if not>
-ORCID_OAUTH_CLIENT_ID=<ORCID CLIENT ID>
-ORCID_OAUTH_CLIENT_SECRET=<ORCID SECRET ID>
+USE_ORCID_OAUTH_SANDBOX=0
+ORCID_OAUTH_CLIENT_ID=''
+ORCID_OAUTH_CLIENT_SECRET=''
 ORCID_TOKEN_URL=https://orcid.org/oauth/token
 
-ADMIN_EMAIL = <Your gmail>
-WEBHOOKS_SECRET=<github webhook secret>
+ADMIN_EMAIL=your-email@example.org
+WEBHOOKS_SECRET='replace-with-github-webhook-secret'
 
 # @todo: these are on the production server but not in repo flaskenv.template
 #GIT_PYTHON_GIT_EXECUTABLE=/usr/bin/git
@@ -52,9 +52,9 @@ WEBHOOKS_SECRET=<github webhook secret>
 # -------------------------------------------------------------------
 # MATOMO SETTINGS
 # -------------------------------------------------------------------
-MATOMO_SERVER_URL=<Your Matomo base URL> ## no http:// or https://
-MATOMO_SITE_ID=<Your Matomo site ID>
-MATOMO_TOKEN_AUTH=<Your Matomo token auth>
+MATOMO_SERVER_URL=matomo.example.org # no http:// or https://
+MATOMO_SITE_ID=your-matomo-site-id
+MATOMO_TOKEN_AUTH='your-matomo-token'
 
 # -------------------------------------------------------------------
 # OPENALEX (for `flask update_research_use`; free key from https://openalex.org)
