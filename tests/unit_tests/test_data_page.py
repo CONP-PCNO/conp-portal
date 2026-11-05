@@ -34,7 +34,7 @@ def test_card_routes_and_labels(tmp_path):
     assert c['routes_facet'] == [dl.ROUTE_DOWNLOAD, dl.ROUTE_DATALAD, dl.ROUTE_CBRAIN]
     assert c['modalities'] == ['MRI'] and c['formats'] == ['NIfTI'] and c['subjects_label'] == '1 subject'
     assert c['description'] == 'A dataset .'
-    assert c['origin'] == 'Canadian dataset' and c['access_facet'] == ['Open']
+    assert c['origin'] == 'Canadian' and c['access_facet'] == ['Open']
 
     # Registered, metadata only, Brain-CODE: request access at the source.
     bc = _element(tmp_path, 'projects/braincode_x', authorizations='registered', conpStatus='external',
@@ -130,3 +130,24 @@ def test_dataset_search_json_hides_server_paths(session, test_client, monkeypatc
     monkeypatch.setattr(routes, '_dataset_elements', lambda q, authorized: [_element(tmp_path, 'projects/x')])
     body = test_client.get('/dataset-search').get_json(force=True)
     assert body['elements'] and not any(k.startswith('_') for k in body['elements'][0])
+
+
+def test_modality_labels_acronyms_and_merges():
+    from app.search.dataset_list import modality_label, modality_labels
+    assert modality_label("Blood Oxygen Level Dependent Functional Magnetic Resonance Imaging") == "BOLD"
+    assert modality_label("Diffusion-weighted MRI 3D image") == "DWI"
+    assert modality_label("T1-weighted MRI 3D image") == "T1w"
+    assert modality_label("Electroencephalography") == "EEG"
+    assert modality_label("Histology") == "Histology"          # no acronym: unchanged
+    labels = modality_labels(["Diffusion-weighted Imaging", "DWI", "Diffusion-weighted MRI 3D image", "n/a", "EEG"])
+    assert [label for label, _ in labels] == ["DWI", "EEG"]
+    assert labels[0][1] == "DWI (Diffusion-weighted Imaging; Diffusion-weighted MRI 3D image)"
+    assert labels[1][1] == "EEG"
+
+
+def test_old_filter_links_still_work():
+    from werkzeug.datastructures import MultiDict
+    sel = dl.selected_filters(MultiDict([('origin', 'Canadian dataset'), ('modality', 'Electroencephalography'),
+                                         ('modalities', 'diffusion-weighted imaging')]))
+    assert sel['origin'] == ['Canadian']
+    assert sel['modality'] == ['EEG', 'DWI']
