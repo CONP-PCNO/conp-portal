@@ -137,6 +137,20 @@ def register(app):
         """
         _update_analytics(app)
 
+    @app.cli.command('backfill_dataset_views')
+    @click.option('--dataset', 'dataset_ids', multiple=True,
+                  help='Dataset id (projects/...); repeat for several. Default: every dataset on the Portal.')
+    @click.option('--since', default=None,
+                  help='First date to check (YYYY-MM-DD). Default: the dataset\'s date added, or 2020-05-01.')
+    def backfill_dataset_views(dataset_ids, since):
+        """
+        Fetch from Matomo the daily page views a dataset is missing (days on
+        which it was not on the Portal when update_analytics ran). Only
+        (dataset, day) pairs without a row are added; running it again adds
+        nothing twice.
+        """
+        _backfill_dataset_views(app, _matomo_api_baseurl(app), dataset_ids=dataset_ids or None, since=since)
+
     @app.cli.command('update_research_use')
     @click.option('--dry-run', is_flag=True, default=False,
                   help='Collect and print what would change, without writing anything.')
@@ -726,26 +740,36 @@ def _update_experiments(app):
     _update_datalad_objects(app, "experiment", "conp-experiments", DBExperiment)
 
 
+def _matomo_api_baseurl(app):
+    matomo_server_url = app.config['MATOMO_SERVER_URL']
+    matomo_site_id = app.config['MATOMO_SITE_ID']
+    matomo_token_auth = app.config['MATOMO_TOKEN_AUTH']
+
+    return f"https://{matomo_server_url}/?module=API" \
+           f"&idSite={matomo_site_id}" \
+           f"&token_auth={matomo_token_auth}" \
+           f"&format=json" \
+           f"&filter_limit=-1"
+
+
 def _update_analytics(app):
     """
     Updates analytics table using Matomo API endpoints
     """
 
-    matomo_server_url = app.config['MATOMO_SERVER_URL']
-    matomo_site_id = app.config['MATOMO_SITE_ID']
-    matomo_token_auth = app.config['MATOMO_TOKEN_AUTH']
-
-    matomo_api_baseurl = f"https://{matomo_server_url}/?module=API" \
-                         f"&idSite={matomo_site_id}" \
-                         f"&token_auth={matomo_token_auth}" \
-                         f"&format=json" \
-                         f"&filter_limit=-1"
+    matomo_api_baseurl = _matomo_api_baseurl(app)
 
     _update_analytics_matomo_visits_summary(app, matomo_api_baseurl)
 
     _update_analytics_matomo_get_page_urls_summary(app, matomo_api_baseurl)
 
     _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_baseurl)
+
+    # A day counts as done once any dataset has views for it, so a dataset
+    # that was off the Portal that day (an unreadable record, a dataset added
+    # late) would never get them: look again over the last two weeks.
+    _backfill_dataset_views(app, matomo_api_baseurl,
+                            since=str((datetime.today() - timedelta(days=VIEWS_RECHECK_DAYS)).date()))
 
     _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_baseurl)
 
@@ -1087,6 +1111,64 @@ def _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_
             db.session.commit()
 
         print(f'[INFO   ] Inserted Matomo search keywords summary for {date}')
+
+
+VIEWS_RECHECK_DAYS = 14
+_PORTAL_START = '2020-05-01'
+
+
+def _backfill_dataset_views(app, matomo_api_baseurl, dataset_ids=None, since=None, get=None):
+    """Add the daily page views each dataset is missing, one Matomo request
+    per dataset for the whole period (period=day with a date range answers
+    {day: [row] or []}). Only days already processed by update_analytics
+    (up to yesterday) are checked, and only (dataset, day) pairs without a
+    row are added. Returns the number of rows added."""
+    from app.models import MatomoDailyGetDatasetPageViewsSummary as Views
+
+    if get is None:
+        import requests
+
+        def get(url):
+            return requests.get(url, timeout=300).json()
+
+    end = str((datetime.today() - timedelta(days=1)).date())
+    rows = DBDataset.query.order_by(DBDataset.dataset_id)
+    if dataset_ids:
+        rows = rows.filter(DBDataset.dataset_id.in_(list(dataset_ids)))
+    added = 0
+    for d in rows.all():
+        start = since or (str(d.date_added_to_portal.date()) if d.date_added_to_portal else _PORTAL_START)
+        start = max(start, _PORTAL_START)
+        if start > end:
+            continue
+        have = {r[0] for r in db.session.query(Views.date).filter(Views.dataset_id == d.dataset_id)}
+        page_url = f"https://portal.conp.ca/dataset?id={d.dataset_id}"
+        url = f"{matomo_api_baseurl}&method=Actions.getPageUrl&period=day&date={start},{end}&pageUrl={page_url}"
+        try:
+            answer = get(url)
+        except Exception as e:   # one dataset failing must not stop the others
+            print(f'[WARNING] Matomo views for {d.dataset_id} not fetched: {e}')
+            continue
+        if not isinstance(answer, dict):
+            print(f'[WARNING] Unexpected Matomo answer for {d.dataset_id}: {str(answer)[:200]}')
+            continue
+        n = 0
+        for date, day_rows in sorted(answer.items()):
+            if date in have or not day_rows:
+                continue
+            r = day_rows[0]
+            db.session.add(Views(
+                date=date, dataset_id=d.dataset_id, url=r.get('url'), label=r.get('label'),
+                nb_hits=r.get('nb_hits', 0), nb_visits=r.get('nb_visits', 0),
+                nb_uniq_visitors=r.get('nb_uniq_visitors'), sum_time_spent=r.get('sum_time_spent'),
+                avg_time_on_page=r.get('avg_time_on_page')))
+            n += 1
+        if n:
+            db.session.commit()
+            print(f'[INFO   ] {d.dataset_id}: {n} missing day(s) of views added')
+        added += n
+    print(f'[INFO   ] Dataset views backfill: {added} row(s) added')
+    return added
 
 
 def determine_dates_to_query_on_matomo(dates_in_database):
