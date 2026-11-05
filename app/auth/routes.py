@@ -12,4 +12,4 @@ def confirmation_sent():
     """
     Provides a path for displaying a page when a users confirmation email is sent
     """
-    return render_template('auth/flask_user/confirmation_sent.html')
+    return render_template('security/confirmation_sent.html')

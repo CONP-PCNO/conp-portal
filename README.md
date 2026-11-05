@@ -63,6 +63,9 @@ You can set environment variables in the `.env` or `.flaskenv` file.  A template
 cp flaskenv.template .flaskenv
 ```
 
+Keep `SECURITY_PASSWORD_SALT` stable and distinct from `SECRET_KEY`; it is used
+to sign Flask-Security tokens.
+
 You will need to specify a database environment to use.  The easiest for testing purposes is sqlite3
 which is a filebased database system that will run locally on your system.
 
@@ -90,6 +93,9 @@ python -m flask seed_test_db
 python -m flask update_pipeline_data
 python -m flask seed_test_experiments
 ```
+
+The database upgrade also adds the Flask-Security user identifier required
+for authentication. Run it before starting the application after updating.
 
 If using a python environment, try `./venv/bin/python3 -m flask <command>` instead.
 

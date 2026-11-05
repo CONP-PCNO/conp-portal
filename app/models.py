@@ -4,10 +4,12 @@ Module that contains the Data Models
 
 """
 from datetime import UTC, datetime, timedelta
+from uuid import uuid4
 from zoneinfo import ZoneInfo
 
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
-from flask_user import UserMixin
+from flask_security import RoleMixin as FlaskSecurityRoleMixin
+from flask_security import UserMixin as FlaskSecurityUserMixin
 from sqlalchemy.orm.collections import attribute_mapped_collection
 
 from app import db
@@ -20,7 +22,7 @@ def _utc_now():
     return datetime.now(UTC).replace(tzinfo=None)
 
 
-class RoleMixin:
+class DefaultRoleMixin:
     """
     RoleMixin provides a method to set the default roles of a person
     at registration time.
@@ -28,14 +30,14 @@ class RoleMixin:
     @classmethod
     def before_commit(cls, session):
         for obj in list(session.new):
-            if isinstance(obj, RoleMixin):
+            if isinstance(obj, DefaultRoleMixin):
                 obj.add_role("member")
 
 
-db.event.listen(db.session, 'before_commit', RoleMixin.before_commit)
+db.event.listen(db.session, 'before_commit', DefaultRoleMixin.before_commit)
 
 
-class User(db.Model, UserMixin, RoleMixin):
+class User(db.Model, FlaskSecurityUserMixin, DefaultRoleMixin):
     """
         Provides User Model
     """
@@ -43,12 +45,15 @@ class User(db.Model, UserMixin, RoleMixin):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    # User Authentication Information (Required by Flask-User)
+    # User Authentication Information (Required by Flask-Security)
     # we will use the users email as the primary means of login
     email = db.Column(db.String(128), unique=True)
     email_confirmed_at = db.Column(db.DateTime)
     password = db.Column(db.String(256), nullable=False, server_default='')
     active = db.Column(db.Boolean, nullable=False, server_default='0')
+    fs_uniquifier = db.Column(
+        db.String(64), nullable=False, unique=True,
+        default=lambda: uuid4().hex)
 
     # Customizable Fields
     full_name = db.Column(db.String(64), nullable=False, server_default='')
@@ -67,6 +72,14 @@ class User(db.Model, UserMixin, RoleMixin):
     # One To Many relationship
     roles = db.relationship('Role', secondary='users_roles',
                             backref=db.backref('users'))
+
+    @property
+    def confirmed_at(self):
+        return self.email_confirmed_at
+
+    @confirmed_at.setter
+    def confirmed_at(self, value):
+        self.email_confirmed_at = value
 
     def has_role(self, role):
         """
@@ -154,7 +167,7 @@ class AffiliationType(db.Model):
     label = db.Column(db.String(255), server_default='')
 
 
-class Role(db.Model):
+class Role(db.Model, FlaskSecurityRoleMixin):
     """
     Provides Role Model for Role based authorization
     """
@@ -163,6 +176,7 @@ class Role(db.Model):
     # for @roles_accepted()
     name = db.Column(db.String(50), nullable=False,
                      server_default='', unique=True)
+    description = db.Column(db.String(255))
     # for display purposes
     label = db.Column(db.String(255), server_default='')
 

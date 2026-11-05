@@ -6,11 +6,10 @@ Module that contains the full blueprint for ORCID OAuth
 from datetime import datetime
 from pprint import pprint
 
-from flask import current_app, flash, redirect, session, url_for
+from flask import flash, redirect, session, url_for
 from flask_dance.consumer import oauth_authorized, oauth_error
 from flask_dance.consumer.storage.sqla import SQLAlchemyStorage
-from flask_login import login_user
-from flask_user import current_user
+from flask_login import current_user, login_user
 from markupsafe import Markup
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -75,7 +74,8 @@ def orcid_logged_in(orcid_blueprint, token):
         print("Current user is anonymous")
         if oauth.user:
             # Case 1 (above)
-            return current_app.user_manager._do_login_user(oauth.user, url_for("main.public"))
+            login_user(oauth.user)
+            return redirect(url_for("main.public"))
         else:
             # Case 2 (above)
             print("!!! No Oauth")
@@ -113,7 +113,7 @@ def orcid_logged_in(orcid_blueprint, token):
                                 full_name="{} {}".format(orcid_person['name']['given-names']['value'],
                                                          orcid_person['name']['family-name']['value']),
                                 active=True,
-                                email_confirmed_at=datetime.utcnow(),
+                                confirmed_at=datetime.utcnow(),
 
                                 )
 
@@ -126,7 +126,8 @@ def orcid_logged_in(orcid_blueprint, token):
                     db.session.commit()
                     # Need to use private method to bypass in this case
                     flash("Please update your Profile affiliation and affiliation type")
-                    return current_app.user_manager._do_login_user(user, url_for('profile.current_user_profile_page'))
+                    login_user(user)
+                    return redirect(url_for('profile.current_user_profile_page'))
                 except Exception as e:
                     flash(f"There was an error creating a user from the ORCID credentials: {e}")
                     return redirect(url_for("user.login"))

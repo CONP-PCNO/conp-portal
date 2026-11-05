@@ -78,13 +78,8 @@ CONP Portal: Edit User Profile
 </form>
 <br/>
 
-{% if not user_manager.USER_ENABLE_AUTH0 %}
-    {% if user_manager.USER_ENABLE_CHANGE_USERNAME %}
-        <p><a href="{{ url_for('user.change_username') }}">{%trans%}Change username{%endtrans%}</a></p>
-    {% endif %}
-    {% if user_manager.USER_ENABLE_CHANGE_PASSWORD %}
-        <p><a href="{{ url_for('user.change_password') }}">{%trans%}Change password{%endtrans%}</a></p>
-    {% endif %}
+{% if config.SECURITY_CHANGEABLE %}
+    <p><a href="{{ url_for('user.change_password') }}">Change password</a></p>
 {% endif %}
 
 {% endblock %}

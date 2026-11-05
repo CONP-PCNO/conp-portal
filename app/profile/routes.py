@@ -3,7 +3,8 @@
     Currently this module contains all of the routes for profile blueprint
 """
 from flask import flash, redirect, render_template, request, session, url_for
-from flask_user import current_user, login_required, roles_accepted
+from flask_login import current_user, login_required
+from flask_security import roles_accepted
 
 from app import db
 from app.models import AffiliationType, Role, User

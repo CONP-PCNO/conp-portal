@@ -5,9 +5,11 @@ FLASK_APP=conp.py
 FLASK_ENV=development
 FLASK_DEBUG=0
 
-## Flask-User TokenManager
+## Flask and Flask-Security signing keys
 ## Should not be shorter than 32 bytes.
 SECRET_KEY=you-will-never-guess
+# Set to a generated value distinct from SECRET_KEY; keep it stable.
+SECURITY_PASSWORD_SALT=
 
 # -------------------------------------------------------------------
 # DATABASE SETTINGS

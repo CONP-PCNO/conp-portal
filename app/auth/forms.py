@@ -1,16 +1,15 @@
 """
-Defines forms needed for Flask-User login
+Defines the registration form used by Flask-Security.
 """
-from flask_user import UserManager
-from flask_user.forms import RegisterForm
+from flask_security import RegisterFormV2
 from wtforms import BooleanField, StringField
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from wtforms_sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired
 
 from app.utils.form_utils import possible_affiliation_types
 
 
-class CustomRegisterForm(RegisterForm):
+class CustomRegisterForm(RegisterFormV2):
     """
     Custom Form Class to define custom members of the User Model
     """
@@ -26,21 +25,3 @@ class CustomRegisterForm(RegisterForm):
 
     agreeToTerms = BooleanField('I Agree to the CONP Terms and Conditions',
                                 validators=[DataRequired('Need to agree to the terms to register account')])
-
-    def validate_affiliation_type(form, field):
-        """
-        Needed or the validation bombs
-        Not a big deal as it is set by a dropdown menu.
-        """
-
-
-class CustomUserManager(UserManager):
-    """
-    Custom User Manager for overriding Flask-User Forms
-    """
-
-    def customize(self, app):
-        """
-        Customizes classes for Flask-User
-        """
-        self.RegisterFormClass = CustomRegisterForm

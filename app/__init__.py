@@ -5,26 +5,43 @@ from flask import Flask
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_security import Security, SQLAlchemyUserDatastore
 from flask_wtf.csrf import CSRFProtect
 
-from config import DevelopmentConfig
+from config import DevelopmentConfig, ProductionConfig
 
 db = SQLAlchemy()
 config = DevelopmentConfig()
 migrate = Migrate(compare_type=True)
 csrf_protect = CSRFProtect()
 mail = Mail()
+security = Security()
 
 
 def create_app(config_settings=None):
 
     app = Flask(__name__, static_url_path='/static')
     if os.environ.get('FLASK_ENV') == 'production':
-        from config import ProductionConfig
         config_settings = ProductionConfig
     elif not config_settings:
         config_settings = DevelopmentConfig
     app.config.from_object(config_settings)
+
+    is_production_config = (
+        os.environ.get('FLASK_ENV') == 'production'
+        or (
+            isinstance(config_settings, type)
+            and issubclass(config_settings, ProductionConfig)
+        )
+    )
+    if is_production_config and (
+        not app.config['SECURITY_PASSWORD_SALT']
+        or app.config['SECURITY_PASSWORD_SALT'] == app.config['SECRET_KEY']
+    ):
+        raise RuntimeError(
+            "Production requires SECURITY_PASSWORD_SALT to be set to a "
+            "stable value distinct from SECRET_KEY."
+        )
 
     @app.template_global()
     def static_v(filename):
@@ -45,6 +62,12 @@ def create_app(config_settings=None):
     migrate.init_app(app, db)
     csrf_protect.init_app(app)
     mail.init_app(app)
+
+    from app.auth.forms import CustomRegisterForm
+    from app.models import Role, User
+
+    user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+    security.init_app(app, user_datastore, register_form=CustomRegisterForm)
 
     from app.main import main_bp
     app.register_blueprint(main_bp)
@@ -82,17 +105,9 @@ def create_app(config_settings=None):
     from app.styleguide import styleguide_bp
     app.register_blueprint(styleguide_bp)
 
-    from app.auth.forms import CustomUserManager
-    from app.models import User
-    user_manager = CustomUserManager(app, db, User)
-
     from app.webhooks import webhooks_bp
     csrf_protect.exempt(webhooks_bp)
     app.register_blueprint(webhooks_bp)
-
-    @app.context_processor
-    def context_processor():
-        return dict(user_manager=user_manager)
 
     # Initialize Email and Logging
     init_email_and_logs_error_handler(app)

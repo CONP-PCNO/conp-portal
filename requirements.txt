@@ -65,8 +65,9 @@ whoosh==2.*
 
 ## Flexible form validation and rendering library for Python web development, independent of any web framework.
 ## aka wtforms
-WTForms==2.*
-#@todo: WTForms==3.2.2
+WTForms==3.2.*
+WTForms-SQLAlchemy==0.4.2
+email-validator>=2.3.0
 
 ## Flask ##############################################################
 
@@ -81,7 +82,7 @@ Flask-Dance==7.*
 
 ## Flask-Login
 ## User session management library for Flask that handles logging in, logging out, and remembering sessions.
-## NOTE: included in Flask-User, but Flask-User is yanked from PyPI and abandoned. Use Flask-Login instead.
+## Used by Flask-Security for session management.
 Flask-Login==0.6.3
 
 ## Flask-Mail
@@ -105,18 +106,9 @@ Flask-SQLAlchemy==3.*
 Flask-WTF==1.3.*
 
 
-## Flask-User
-## https://github.com/lingthio/Flask-User
-# Customizable user management extension for Flask providing registration, email verification, and role-based access control.
-## Development Status: the index lists this package but every file is yanked
-## aka flask_user
-## Devnotes:
-## While Flask-User offers more out-of-the-box convenience, its codebase has been heavily abandoned
-## and yanked from PyPI due to obsolescence. For a modern Flask app, use Flask-Login for your sessions
-## alongside Flask-WTF for registration forms, and handle password security using standard utilities
-## like werkzeug.security.If you are looking for a more feature-rich, modern alternative that handles
-## everything out-of-the-box, look into the actively maintained Flask-Security-Too fork.
-Flask-User==1.0.2.2
+## Flask-Security
+## Comprehensive authentication, registration, and role-based access control for Flask.
+Flask-Security[fsqla,common]==5.9.2
 
 ## Development ########################################################
 
