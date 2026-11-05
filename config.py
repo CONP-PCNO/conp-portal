@@ -39,32 +39,27 @@ class Config:
     LOG_TO_STDOUT = True
     TEMPLATES_AUTO_RELOAD = True
 
-    # Flask-User Settings
-    USER_APP_NAME = "CONP-PCNO Data Portal"
-    USER_ENABLE_CHANGE_PASSWORD = True
-    USER_ENABLE_CHANGE_USERNAME = False
-    USER_ENABLE_CONFIFM_EMAIL = True
-    USER_ENABLE_FORGOT_PASSWORD = True
-    USER_ENABLE_EMAIL = True
-    USER_ENABLE_REGISTRATION = True
-    USER_REQUIRE_RETYPE_PASSWORD = True
-    USER_ENABLE_USERNAME = False
-    USER_EMAIL_SENDER = USER_APP_NAME
-    USER_EMAIL_SENDER_EMAIL = ADMINS[0]
-    USER_AFTER_LOGIN_ENDPOINT = "main.index"
-    USER_AFTER_LOGOUT_ENDPOINT = "main.index"
-    USER_AFTER_REGISTER_ENDPOINT = "auth.confirmation_sent"
-    USER_ALLOW_LOGIN_WITHOUT_CONFIRMED_EMAIL = False
-    USER_AUTO_LOGIN_AFTER_REGISTER = False
-    USER_AUTO_LOGIN_AFTER_CONFIRM = True
-    USER_LOGIN_TEMPLATE = "auth/flask_user/login.html"
-    USER_FORGOT_PASSWORD_TEMPLATE = "auth/flask_user/forgot_password.html"
-    USER_REGISTER_TEMPLATE = "auth/flask_user/register.html"
-    USER_RESEND_CONFIRM_EMAIL_TEMPLATE = "auth/flask_user/resend_confirm_email.html"
-    USER_RESET_PASSWORD_TEMPLATE = "auth/flask_user/reset_password.html"
-    USER_EDIT_USER_PROFILE_TEMPLATE = "auth/flask_user/edit_user_profile.html"
-    USER_CONFIRM_EMAIL_TEMPLATE = "auth/flask_user/emails/confirm_email"
-    USER_REGISTERED_EMAIL_TEMPLATE = "auth/flask_user/emails/registered"
+    SECURITY_APP_NAME = "CONP-PCNO Data Portal"
+    SECURITY_BLUEPRINT_NAME = "user"
+    SECURITY_PASSWORD_HASH = "bcrypt"
+    SECURITY_PASSWORD_SINGLE_HASH = True
+    SECURITY_PASSWORD_SALT = os.environ.get("SECURITY_PASSWORD_SALT") or SECRET_KEY
+    SECURITY_REGISTERABLE = True
+    SECURITY_CONFIRMABLE = True
+    SECURITY_RECOVERABLE = True
+    SECURITY_CHANGEABLE = True
+    SECURITY_PASSWORD_CONFIRM_REQUIRED = True
+    SECURITY_POST_LOGIN_VIEW = "main.index"
+    SECURITY_POST_LOGOUT_VIEW = "main.index"
+    SECURITY_POST_REGISTER_VIEW = "auth.confirmation_sent"
+    SECURITY_POST_CONFIRM_VIEW = "profile.current_user_profile_page"
+    SECURITY_AUTO_LOGIN_AFTER_CONFIRM = True
+    SECURITY_LOGIN_USER_TEMPLATE = "security/login.html"
+    SECURITY_REGISTER_USER_TEMPLATE = "security/register.html"
+    SECURITY_FORGOT_PASSWORD_TEMPLATE = "security/forgot_password.html"
+    SECURITY_RESET_PASSWORD_TEMPLATE = "security/reset_password.html"
+    SECURITY_SEND_CONFIRMATION_TEMPLATE = "security/resend_confirm_email.html"
+    SECURITY_CHANGE_PASSWORD_TEMPLATE = "security/change_password.html"
 
     # ORCID PARAMETERS, must come from .flaskenv file!
     ORCID_OAUTH_CLIENT_ID = os.environ.get("ORCID_OAUTH_CLIENT_ID")
@@ -127,6 +122,7 @@ class TestingConfig(Config):
     SERVER_NAME = "localhost"
     APPLICATION_ROOT = "/"
     PREFERRED_URL_SCHEME = "http"
+    SECURITY_EMAIL_VALIDATOR_ARGS = {"check_deliverability": False}
 
 
 class ProductionConfig(Config):

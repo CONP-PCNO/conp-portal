@@ -3,7 +3,7 @@ Contains the forms for User Profiles
 """
 from flask_wtf import FlaskForm
 from wtforms import StringField
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from wtforms_sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, ValidationError
 from wtforms.widgets import ListWidget
 

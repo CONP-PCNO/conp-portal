@@ -19,7 +19,10 @@ dependencies = [
     "Flask-Mail==0.10.*",
     "Flask-Migrate==4.*",
     "flask-sqlalchemy==3.*",
-    "flask-user==1.0.2.2",
+    #kb# `flask-security[fsqla,common]` v5.9.2 is the last version that supports Flask v3.x.
+    #kb# `[fsqla]` is required for Flask-SQLAlchemy support.
+    #kb# `[common]` contains the helper packages required for the default UI components (like Flask-WTF for rendering the built-in login, registration, and password-reset forms).
+    "flask-security[common,fsqla]==5.9.2",
     "Flask-WTF==1.3.*",
     "gitpython==3.2.*",
     "markupsafe==3.*",
@@ -30,7 +33,8 @@ dependencies = [
     "sqlalchemy-utils==0.43.*",
     "unidecode==1.*",
     "whoosh==2.*",
-    "wtforms==2.*",
+    "wtforms==3.2.*",
+    "wtforms-sqlalchemy==0.4.2",
     "gunicorn>=26.2.0",
     "pymysql==1.2.*",
     "gitdb>=4.0.12",

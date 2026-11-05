@@ -7,19 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+## [1.1.1-rc.4]
 
+- Replaces the abandoned Flask-User authentication extension with Flask-Security 5.9.2, preserving registration, email confirmation, password reset, role checks, ORCID login, and existing bcrypt password hashes; adds a migration for existing user and role tables, requires a separate production password salt, and switches logout to CSRF-protected POST.
 - Adds a Bash-only MariaDB/MySQL database backup script with optional gzip compression and developer documentation.
 - Reads `DATABASE_URL` from the environment or sources the shell-compatible project-root `.flaskenv` (falling back to `.env`); updates `flaskenv.template` assignments to be valid Bash.
 - Adds pytest coverage for backup naming, compression, environment-file loading, URL validation, and dump failures.
-
 - Adds phase and progress messages to the `update_experiments`, `update_datasets`, and `update_pipeline_data` Flask CLI commands.
 - Prints the dataset update completion message after the stale-dataset report.
-
-## [1.1.1-rc.4]
-
-### Changed
-
 - Upgrades Flask from 3.0.3 to 3.1.3.
 - Removes the `pytz` dependency; timezone handling now uses Python's built-in `zoneinfo` module.
 

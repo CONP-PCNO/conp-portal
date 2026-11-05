@@ -27,9 +27,12 @@
 {% block login %}
 {% if current_user.is_authenticated %}
     <li class="login">
-        <a href="/logout">
-            <span class="glyphicon glyphicon-log-out"></span> Logout
-        </a>
+        <form method="post" action="{{ url_for('user.logout') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-link p-0">
+                <span class="glyphicon glyphicon-log-out"></span> Logout
+            </button>
+        </form>
     </li>
 {% else %}
     <li class="login">
@@ -69,4 +72,3 @@
 </div>
 <!--/span-->
 {% endblock %}
-

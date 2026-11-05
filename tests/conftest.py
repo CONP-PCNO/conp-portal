@@ -14,6 +14,7 @@ import os
 from datetime import datetime, timedelta
 
 import pytest
+from flask_security import hash_password
 
 from app import create_app
 from app import db as _db
@@ -182,6 +183,6 @@ def new_user(app, new_affiliation_type):
         affiliation_type=new_affiliation_type,
         full_name="Example User",
         expiration=datetime.utcnow() + timedelta(days=30),
-        password=app.user_manager.hash_password("ThisPassword")
+        password=hash_password("ThisPassword")
     )
     return user

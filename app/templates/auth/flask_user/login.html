@@ -1,6 +1,5 @@
 {% extends 'common/base_login.html' %}
 {% import 'common/_bootstrap5_forms.html' as wtf %}
-{% from "flask_user/_macros.html" import render_checkbox_field %}
 {% block cardtitle %}
 CONP Portal: Sign in to your CONP account
 {% endblock %}
@@ -11,6 +10,7 @@ CONP Portal: Sign in to your CONP account
 {% endblock %}
 
 {% block appcontent %}
+    {% set form = login_user_form %}
     <!--<section class="row">
         <a id="alt-login-inst" class="btn-alt-login" href="#">
             <img class="osf-alt-logo" src="/static/img/institution-logo.png">
@@ -39,9 +39,7 @@ CONP Portal: Sign in to your CONP account
     {{ wtf.form_field(form.password, placeholder='Password') }}
 
     {# Remember me #}
-    {% if user_manager.USER_ENABLE_REMEMBER_ME %}
-        {{ render_checkbox_field(login_form.remember_me, tabindex=130) }}
-    {% endif %}
+    {{ wtf.form_field(form.remember) }}
 
     {# Submit button #}
     <button type=submit class='btn btn-primary btn-signin'>Login</button>

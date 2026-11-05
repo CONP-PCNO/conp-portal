@@ -202,6 +202,8 @@ def _seed_admin_acct_db(app):
     Seeds an administrator account
     Uses Config Paramters for determining Admin account
     """
+    from flask_security import hash_password
+
     from app import db
     from app.models import AffiliationType, Role, User
 
@@ -212,7 +214,7 @@ def _seed_admin_acct_db(app):
         user = User(
             email=app.config['ADMINS'][0],
             email_confirmed_at=datetime.utcnow(),
-            password=app.user_manager.hash_password('TestPW!'),
+            password=hash_password('TestPW!'),
             active=True,
             full_name='CONP Admin',
             affiliation='CONP',

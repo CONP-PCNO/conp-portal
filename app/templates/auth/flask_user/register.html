@@ -7,6 +7,7 @@ CONP Portal: Register New User
 {% endblock %}
 
 {% block appcontent %}
+  {% set form = register_user_form %}
   <form action="" method="POST" class="form" role="form">
       {{ form.hidden_tag() }}
       {{ wtf.form_errors(form, hiddens="only") }}
@@ -15,7 +16,7 @@ CONP Portal: Register New User
       {{ wtf.form_field(form.affiliation, placeholder="Your Current Affiliation") }}
       {{ wtf.form_field(form.affiliation_type) }}
       {{ wtf.form_field(form.password, placeholder='Please Select a Password') }}
-      {{ wtf.form_field(form.retype_password, placeholder='Please Retype your Password') }}
+      {{ wtf.form_field(form.password_confirm, placeholder='Please Retype your Password') }}
       {{ termsbox.render_terms_box() }}
       {{ wtf.form_field(form.agreeToTerms) }}
       <button type=submit class='btn btn-primary btn-block btn-signin'>Register</button>
