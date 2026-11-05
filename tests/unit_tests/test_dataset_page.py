@@ -153,7 +153,10 @@ def test_dataset_page_open_dataset(app):
     assert 'version 1.0, added 2020-01-01, updated 2021-01-01' in html
     assert 'in a single tar.gz file' in html
     assert 'and the ability to include' in html
-    assert 'Canadian dataset' in html            # conpStatus "Canadian"
+    assert '/>Canadian</span>' in html           # conpStatus "Canadian"
+    assert 'Canadian dataset' not in html
+    assert 'class="dp-open"' in html             # access pill, as on the Data card
+    assert html.index('dp-origin') < html.index('dp-open') < html.index('dp-views')
     assert 'dp-views' in html and '1,234' in html
     assert 'cd demo' in html and 'datalad get .<span class="dp-comment">' in html
     assert 'Open in' not in html                  # no CBRAIN id: no CBRAIN row
@@ -166,6 +169,7 @@ def test_dataset_page_registered_offsite(app):
                    _metadata(downloadOptions="offsite", registrationPage="https://reg.example.org/"))
     assert 'Request access' in html
     assert 'Go to the source' in html
+    assert 'class="dp-account"' in html and 'class="dp-open"' not in html
     assert 'data-dp-download' not in html
     assert 'datalad install' not in html
 
@@ -366,3 +370,22 @@ def test_datalad_comment_is_separate_from_the_command(app):
     html = _render(app, _data(), _metadata())
     assert 'datalad get .<span class="dp-comment">   # all files; or give individual paths</span>' in html
     assert 'datalad get *' not in html
+
+
+def test_access_pill_without_canadian_badge(app):
+    html = _render(app, _data(conpStatus="external", authorizations="Open"), _metadata())
+    assert 'dp-origin' not in html
+    assert 'class="dp-open"' in html
+
+
+def test_no_access_pill_when_authorization_unknown(app):
+    html = _render(app, _data(authorizations=None), _metadata())
+    assert 'class="dp-open"' not in html and 'class="dp-account"' not in html
+
+
+def test_modality_chip_uses_acronyms(app):
+    long = "Blood Oxygen Level Dependent Functional Magnetic Resonance Imaging"
+    html = _render(app, _data(modalities=[long, "Diffusion-weighted MRI 3D image", "MRI Image"]), _metadata())
+    chip = html[html.index('Modality: </span>'):]
+    assert chip.startswith('Modality: </span>BOLD, DWI, MRI')
+    assert 'BOLD (' + long + ')' in html          # the full term stays in the tooltip

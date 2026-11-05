@@ -71,6 +71,13 @@ def _as_url_filter(value):
     return as_url(value)
 
 
+@search_bp.app_template_global('modality_labels')
+def _modality_labels_global(values):
+    """[(acronym or label, tooltip)] for the dataset page's Modality chip."""
+    from app.search.dataset_list import modality_labels
+    return modality_labels(values)
+
+
 @search_bp.app_template_global('dataset_routes')
 def _dataset_routes_global(*args, **kwargs):
     """get_routes for templates rendered without page.routes (tests, older callers)."""

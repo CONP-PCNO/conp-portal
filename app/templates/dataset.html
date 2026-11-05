@@ -15,6 +15,8 @@
 {% macro icon(name) -%}
 <svg class="dp-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
 {%- if name == 'size' -%}<rect x="3" y="13" width="18" height="7" rx="2"/><path d="M5.5 13 8 5h8l2.5 8"/><circle cx="7.5" cy="16.5" r=".9" fill="currentColor" stroke="none"/>
+{%- elif name == 'open' -%}<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/>
+{%- elif name == 'locked' -%}<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>
 {%- elif name == 'files' -%}<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>
 {%- elif name == 'subjects' -%}<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>
 {%- elif name == 'modality' -%}<path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M8 12h8"/>
@@ -86,8 +88,12 @@
     <div class="dp-side">
       {% if logo_src %}<img class="dp-logo" src="{{ logo_src }}" alt="" />{% endif %}
       {% if data.conpStatus and data.conpStatus | lower != 'external' %}
-      <span class="dp-origin"><img src="{{ url_for('static', filename='img/canada.svg') }}" alt="" width="14" height="14" />Canadian dataset</span>
+      <span class="dp-origin"><img src="{{ url_for('static', filename='img/canada.svg') }}" alt="" width="14" height="14" />Canadian</span>
       {% endif %}
+      {#- Same access pill as the dataset's card on the Data page. #}
+      {%- set auth = (data.authorizations or '') | string | lower | trim %}
+      {% if auth in ['public', 'open'] %}<span class="dp-open">{{ icon('open') }}Open</span>
+      {% elif auth in ['registered', 'private', 'controlled'] %}<span class="dp-account">{{ icon('locked') }}Account needed</span>{% endif %}
       {% if page.views %}
       <span class="dp-views" title="{{ '{:,}'.format(page.views) }} page views on the Portal since January 2021">{{ icon('eye') }}<span class="visually-hidden">Page views: </span>{{ '{:,}'.format(page.views) }}</span>
       {% endif %}
@@ -121,7 +127,8 @@
         {% if data.size %}<li>{{ chip('size', 'Size', data.size | replace('.0 ', ' ')) }}</li>{% endif %}
         {% if data.files %}<li>{{ chip('files', 'Files', '{:,} file{}'.format(data.files, '' if data.files == 1 else 's') if data.files is number else data.files ~ ' files') }}</li>{% endif %}
         {% if data.subjects %}<li>{{ chip('subjects', 'Subjects', '{:,} subject{}'.format(data.subjects, '' if data.subjects == 1 else 's') if data.subjects is number else data.subjects ~ ' subjects') }}</li>{% endif %}
-        {% if data.modalities %}{% set mods = data.modalities %}<li>{{ chip('modality', 'Modality', (mods[:3] | join(', ')) ~ (' +' ~ (mods|length - 3) ~ ' more' if mods|length > 3 else ''), None, 'Modality: ' ~ (mods | join(', '))) }}</li>{% endif %}
+        {% set mods = modality_labels(data.modalities) %}
+        {% if mods %}{% set names = mods | map('first') | list %}<li>{{ chip('modality', 'Modality', (names[:3] | join(', ')) ~ (' +' ~ (names|length - 3) ~ ' more' if names|length > 3 else ''), None, 'Modality: ' ~ (mods | map('last') | join(', '))) }}</li>{% endif %}
         {% if data.formats %}<li>{{ chip('formats', 'Formats', data.formats | map('string') | join(', ')) }}</li>{% endif %}
         {% for lic in page.licences %}<li>{{ chip('licence', 'Licence', lic.label, lic.url or '#dp-licence', 'Licence: ' ~ lic.full) }}</li>{% endfor %}
         {% if page.research %}<li class="dp-chip-used">{{ chip('paper', 'Research use', 'Used in ' ~ page.research.n ~ (' paper' if page.research.n == 1 else ' papers'), '#research', 'Papers that cite this dataset or name it in their text') }}</li>{% endif %}

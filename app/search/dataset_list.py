@@ -52,10 +52,27 @@ ROUTE_DOWNLOAD = 'Download in the browser'
 ROUTE_DATALAD = 'DataLad'
 ROUTE_CBRAIN = 'On CBRAIN'
 ROUTE_SOURCE = 'At the source'
+CANADIAN = 'Canadian'   # Origin filter value and card pill ("Canadian dataset" until Nov 2026)
 
 _CASE = {'mri': 'MRI', 'fmri': 'fMRI', 'dmri': 'dMRI', 'eeg': 'EEG', 'meg': 'MEG', 'pet': 'PET', 'ieeg': 'iEEG',
          'ct': 'CT', 'dti': 'DTI', 'mrs': 'MRS', 'nirs': 'NIRS', 'fnirs': 'fNIRS', 'ecg': 'ECG', 'emg': 'EMG',
-         'rna-seq': 'RNA-Seq', 'snp': 'SNP'}
+         'rna-seq': 'RNA-Seq', 'snp': 'SNP',
+         # Spelled-out terms (often from the records' ontology labels) shown
+         # as the acronym people use; the full term stays in the tooltip.
+         'blood oxygen level dependent functional magnetic resonance imaging': 'BOLD', 'bold': 'BOLD',
+         'diffusion-weighted mri 3d image': 'DWI', 'diffusion-weighted imaging': 'DWI',
+         'diffusion weighted imaging': 'DWI', 'dwi': 'DWI', 'diffusion tensor imaging': 'DTI',
+         't1-weighted mri 3d image': 'T1w', 't1w': 'T1w', 't1-weighted': 'T1w',
+         't2-weighted mri 3d image': 'T2w', 't2w': 'T2w', 't2-weighted': 'T2w',
+         'susceptibility-weighted mri 3d image': 'SWI', 'swi': 'SWI',
+         'mri image': 'MRI', 'magnetic resonance imaging': 'MRI',
+         'functional magnetic resonance imaging': 'fMRI', 'electroencephalography': 'EEG',
+         'magnetoencephalography': 'MEG', 'positron emission tomography': 'PET', 'computed tomography': 'CT',
+         'magnetic resonance spectroscopy': 'MRS', 'electrocorticography': 'ECoG',
+         'intracranial electroencephalography': 'iEEG', 'near-infrared spectroscopy': 'NIRS',
+         'functional near-infrared spectroscopy': 'fNIRS', 'electrocardiography': 'ECG',
+         'electromyography': 'EMG', 'arterial spin labeling': 'ASL', 'arterial spin labelling': 'ASL',
+         'asl': 'ASL'}
 _FORMAT_CASE = {'nifti': 'NIfTI', 'nii': 'NIfTI', 'niigz': 'NIfTI', 'nii.gz': 'NIfTI', 'gifti': 'GIfTI',
                 'gii': 'GIfTI', 'bigwig': 'bigWig', 'rna-seq': 'RNA-Seq'}
 _EVIDENCE_LABEL = {'re-executable': 'Re-executable publication', 'interactive': 'Interactive publication',
@@ -81,6 +98,23 @@ def _listify(v):
 def modality_label(m):
     s = str(m).strip()
     return _CASE.get(s.lower(), s[:1].upper() + s[1:])
+
+
+def modality_labels(values):
+    """[(label, tooltip)] for a record's modalities, placeholders left out and
+    repeats merged ("Diffusion-weighted Imaging" and "DWI" are one DWI). The
+    tooltip names the spelled-out terms behind an acronym."""
+    full = {}
+    for m in _listify(values):
+        s = str(m).strip()
+        if s.lower() in _PLACEHOLDERS:
+            continue
+        label = modality_label(s)
+        full.setdefault(label, [])
+        if s.lower() != label.lower() and s not in full[label]:
+            full[label].append(s)
+    return [(label, '{} ({})'.format(label, '; '.join(full[label])) if full[label] else label)
+            for label in sorted(full, key=str.lower)]
 
 
 def format_label(f):
@@ -184,10 +218,10 @@ def dataset_card(e):
 
     status = str(e.get('conpStatus') or '').strip().lower()
     canadian = status in ('conp', 'canadian')
-    origin = 'Canadian dataset' if canadian else ('International' if status == 'external' else None)
+    origin = CANADIAN if canadian else ('International' if status == 'external' else None)
 
-    modalities = sorted({modality_label(m) for m in _listify(e.get('modalities'))
-                         if str(m).strip().lower() not in _PLACEHOLDERS}, key=str.lower)
+    modality_tips = modality_labels(e.get('modalities'))
+    modalities = [label for label, _ in modality_tips]
     formats = sorted({format_label(f) for f in _listify(e.get('formats'))
                       if str(f).strip().lower().lstrip('.') not in _PLACEHOLDERS}, key=str.lower)
     # Same badge as the dataset page (name, short name, link); the index's
@@ -224,6 +258,7 @@ def dataset_card(e):
         'subjects': subjects,
         'subjects_label': ('{} subject{}'.format(subjects, '' if subjects == 1 else 's') if subjects else None),
         'modalities': modalities,
+        'modalities_tip': 'Modality: ' + ', '.join(tip for _, tip in modality_tips) if modality_tips else None,
         'modality_facet': modalities or [NOT_STATED],
         'formats': formats,
         'licence': ', '.join(b['label'] for b in licences) or None,
@@ -248,12 +283,16 @@ def dataset_card(e):
 def selected_filters(args):
     """The sidebar's checked values from the query string, plus the Data
     page's old parameters (modalities=, formats=, authorizations=Yes|No,
-    cbrain=) so earlier links keep their filters."""
+    cbrain=, origin=Canadian dataset) so earlier links keep their filters."""
     selected = {key: [v for v in args.getlist(key) if v] for key, _label, _field in FACETS}
 
     def csv(name):
         return [v.strip() for v in (args.get(name) or '').split(',') if v.strip()]
 
+    # Earlier links: origin=Canadian dataset; modality values spelled out or
+    # in other cases (both read as the label the cards show).
+    selected['origin'] = [CANADIAN if v == 'Canadian dataset' else v for v in selected['origin']]
+    selected['modality'] = [modality_label(m) for m in selected['modality']]
     selected['modality'] += [modality_label(m) for m in csv('modalities')]
     selected['format'] += [format_label(f) for f in csv('formats')]
     for v in csv('authorizations'):
