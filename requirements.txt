@@ -45,6 +45,10 @@ pymysql==1.2.*
 ## aka: requests
 requests==2.34.2
 
+## HTTP client library providing connection pooling and retry utilities.
+## Used directly by app/threads.py for retry configuration.
+urllib3==2.*
+
 # @todo: remove included with flask_sqlalchemy
 ## Comprehensive Database Toolkit and Object Relational Mapper (ORM) featuring enterprise-level persistence patterns.
 SQLAlchemy==2.*
