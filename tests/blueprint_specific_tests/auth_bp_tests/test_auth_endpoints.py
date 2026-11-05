@@ -41,6 +41,19 @@ def test_login_route(app, test_client):
     assert res.status_code == 200
 
 
+def test_change_password_template_compiles(app):
+    """The migrated Flask-Security password-change template renders."""
+    template = app.jinja_env.get_template("security/change_password.html")
+    from flask_security.forms import ChangePasswordForm
+
+    with app.test_request_context("/change"):
+        html = template.render(change_password_form=ChangePasswordForm())
+
+    assert "Change password" in html
+    assert 'name="new_password"' in html
+    assert 'name="new_password_confirm"' in html
+
+
 def test_registration_route(db, test_client):
     """
     GIVEN an unregistered visitor

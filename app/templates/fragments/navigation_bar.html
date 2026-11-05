@@ -58,6 +58,20 @@
       <li class="nav-item px-3">
         <a class="nav-link" href="{{ url_for('main.contact_us') }}">Contact Us</a>
       </li>
+      {% if current_user.is_authenticated %}
+      <li class="nav-item px-3">
+        <form method="post" action="{{ url_for('user.logout') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="nav-link btn btn-link border-0 bg-transparent p-0">
+            Logout
+          </button>
+        </form>
+      </li>
+      {% else %}
+      <li class="nav-item px-3">
+        <a class="nav-link" href="{{ url_for('user.login') }}">Login</a>
+      </li>
+      {% endif %}
     </ul>
   </div>
 </nav>
