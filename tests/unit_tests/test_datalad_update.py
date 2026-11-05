@@ -54,3 +54,10 @@ def test_existing_repository_uses_bounded_datalad_updates(
         }),
         ("install", {"path": "", "recursive": True, "recursion_limit": 1}),
     ]
+
+
+def test_project_dataset_paths_match_with_trailing_data_path_separator(tmp_path):
+    data_path = f"{tmp_path}/"
+    project_path = tmp_path / "conp-dataset" / "projects" / "example"
+    assert cli._is_project_dataset_path(data_path, "conp-dataset", project_path)
+    assert not cli._is_project_dataset_path(data_path, "conp-dataset", tmp_path / "scripts" / "helper")
