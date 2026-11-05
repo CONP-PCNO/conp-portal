@@ -32,6 +32,7 @@ dependencies = [
     "sqlalchemy==2.*",
     "sqlalchemy-utils==0.43.*",
     "unidecode==1.*",
+    "urllib3==2.*",
     "whoosh==2.*",
     "wtforms==3.2.*",
     "wtforms-sqlalchemy==0.4.2",
