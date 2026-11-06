@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Upgrades PyGithub from 1.59.1 to 2.10.0 for GitHub repository traffic analytics.
+
 ## [1.1.1-rc.4]
 
 - Adds a visible, CSRF-protected POST logout control to the shared navigation for authenticated users, with a login link for anonymous users.
