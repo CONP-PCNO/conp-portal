@@ -5,6 +5,8 @@ import json
 import os
 import time
 
+import pytest
+
 from werkzeug.datastructures import MultiDict
 
 from app.analytics import page
@@ -57,7 +59,7 @@ def test_visits_chart_labels_all_36_months(session):
         session.merge(V(date=day, nb_visits=20))
         day += dt.timedelta(days=9)
     session.commit()
-    v = page.visits()
+    v = page.visits(today=dt.date(2026, 11, 5))
     svg = str(v['svg'])
     assert v['months'][0] == '2023-11' and len(v['months']) == 36
     assert svg.count('font-size="11"') == 36                    # one label per month
@@ -133,3 +135,42 @@ def test_anchor_targets_stop_below_the_sticky_navigation_bar():
     assert 'body .content-main [id] { scroll-margin-top: 90px; }' in css
     js = open(os.path.join('app', 'static', 'js', 'dataset-page.js')).read()
     assert "tab.closest('.dp-tabs').scrollIntoView({ block: 'start' })" in js   # #research shows its tab bar
+
+
+@pytest.fixture
+def no_visits(session):
+    """This suite's rollback does not undo commits: start and end empty."""
+    from app.models import MatomoDailyVisitsSummary as V
+    session.query(V).delete()
+    session.commit()
+    yield session
+    session.query(V).delete()
+    session.commit()
+
+
+def test_visits_leave_out_the_month_in_progress(no_visits):
+    import datetime as dt
+    from app.models import MatomoDailyVisitsSummary as V
+    session = no_visits
+    for day, n in ((dt.date(2026, 9, 10), 1000), (dt.date(2026, 10, 10), 1700), (dt.date(2026, 11, 3), 306)):
+        session.merge(V(date=day, nb_visits=n))
+    session.commit()
+    v = page.visits(today=dt.date(2026, 11, 5))
+    assert v['months'][-1] == '2026-10' and '2026-11' not in v['months']
+    assert v['period'].endswith('2026-10') and v['last12'] == 2700
+    assert '306' not in str(v['svg'])
+    # Once November is over it appears.
+    assert page.visits(today=dt.date(2026, 12, 1))['months'][-1] == '2026-11'
+
+
+def test_december_start_gets_no_year_label_overlapping_january(no_visits):
+    import datetime as dt
+    from app.models import MatomoDailyVisitsSummary as V
+    session = no_visits
+    session.merge(V(date=dt.date(2026, 10, 2), nb_visits=5))
+    session.commit()
+    svg = str(page.visits(today=dt.date(2026, 11, 5))['svg'])     # 36 months: Nov 2023 .. Oct 2026
+    v = page.visits(months=35, today=dt.date(2026, 11, 5))           # starts in December 2023
+    assert v['months'][0] == '2023-12'
+    assert '>2023<' not in str(v['svg']) and '>2024<' in str(v['svg'])
+    assert '>2023<' in svg                                           # a November start keeps its year
