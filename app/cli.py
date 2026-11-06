@@ -765,30 +765,37 @@ def _matomo_api_baseurl(app):
 
 def _update_analytics(app):
     """
-    Updates analytics table using Matomo API endpoints
+    Updates analytics table using Matomo API endpoints.
+
+    Each step runs on its own: one that fails (a Matomo outage, a value the
+    database refuses) is reported, its unsaved rows are dropped, and the other
+    steps still run. The command ends with exit status 1 when any step failed,
+    so cron mail and logs show it.
     """
 
     matomo_api_baseurl = _matomo_api_baseurl(app)
-
-    _update_analytics_matomo_visits_summary(app, matomo_api_baseurl)
-
-    _update_analytics_matomo_get_page_urls_summary(app, matomo_api_baseurl)
-
-    _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_baseurl)
-
-    # A day counts as done once any dataset has views for it, so a dataset
-    # that was off the Portal that day (an unreadable record, a dataset added
-    # late) would never get them: look again over the last two weeks.
-    _backfill_dataset_views(app, matomo_api_baseurl,
-                            since=str((datetime.today() - timedelta(days=VIEWS_RECHECK_DAYS)).date()))
-
-    _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_baseurl)
-
-    _update_analytics_matomo_get_daily_portal_download_summary(app, matomo_api_baseurl)
-
-    _update_github_traffic_counts(app)
-
-    _update_analytics_matomo_countries(app, matomo_api_baseurl)
+    since = str((datetime.today() - timedelta(days=VIEWS_RECHECK_DAYS)).date())
+    steps = [
+        ('visits', lambda: _update_analytics_matomo_visits_summary(app, matomo_api_baseurl)),
+        ('page URLs', lambda: _update_analytics_matomo_get_page_urls_summary(app, matomo_api_baseurl)),
+        ('dataset page views', lambda: _update_analytics_matomo_get_daily_dataset_views_summary(app, matomo_api_baseurl)),
+        # A day counts as done once any dataset has views for it, so a dataset
+        # that was off the Portal that day (an unreadable record, a dataset
+        # added late) would never get them: look again over the last two weeks.
+        ('dataset views re-check', lambda: _backfill_dataset_views(app, matomo_api_baseurl, since=since)),
+        ('site searches', lambda: _update_analytics_matomo_get_daily_keyword_searches_summary(app, matomo_api_baseurl)),
+        ('downloads', lambda: _update_analytics_matomo_get_daily_portal_download_summary(app, matomo_api_baseurl)),
+        ('GitHub traffic', lambda: _update_github_traffic_counts(app)),
+        ('countries', lambda: _update_analytics_matomo_countries(app, matomo_api_baseurl)),
+    ]
+    failed = []
+    for name, step in steps:
+        try:
+            step()
+        except Exception as e:
+            db.session.rollback()
+            failed.append(name)
+            print(f'[ERROR  ] Analytics step "{name}" failed: {str(e).splitlines()[0][:300]}')
 
     # Build the Analytics page now, so nobody waits for it after the update.
     from app.analytics.page import PERIODS, rebuild
@@ -799,6 +806,9 @@ def _update_analytics(app):
                 print(f'[INFO   ] Analytics page rebuilt ({period})')
             except Exception as e:
                 print(f'Analytics page not rebuilt ({period}): {e}')
+    if failed:
+        print(f'[ERROR  ] update_analytics: {len(failed)} step(s) failed: {", ".join(failed)}')
+        raise SystemExit(1)
 
 
 def _update_analytics_matomo_countries(app, matomo_api_baseurl):
