@@ -249,12 +249,17 @@ def catalogue():
     }
 
 
-def visits(months=36):
+def visits(months=36, today=None):
+    """Visits per month over the last `months` complete months: the current
+    month is left out until it is over (a part month reads as a fall)."""
     from app.models import MatomoDailyVisitsSummary as V
+    current = (today or dt.date.today()).strftime('%Y-%m')
     rows = V.query.with_entities(V.date, V.nb_visits).all()
     by_month, zero_days, days = defaultdict(int), Counter(), Counter()
     for date, n in rows:
         m = str(date)[:7]
+        if m >= current:
+            continue
         by_month[m] += n or 0
         days[m] += 1
         if not n:
@@ -279,8 +284,10 @@ def visits(months=36):
         elif m not in gap and start is not None:
             gaps.append((start, i - 1))
             start = None
-    # Every month labelled; the year under January and under the first month.
-    labels = [(f'{dt.date(1, int(m[5:7]), 1):%b}', m[:4] if (m.endswith('-01') or i == 0) else '')
+    # Every month labelled; the year under January and under the first month,
+    # unless the first month is December (its year would overlap January's).
+    labels = [(f'{dt.date(1, int(m[5:7]), 1):%b}',
+               m[:4] if (m.endswith('-01') or (i == 0 and not m.endswith('-12'))) else '')
               for i, m in enumerate(keys)]
     tips = [f'{dt.date(int(m[:4]), int(m[5:7]), 1):%B %Y}: ' + ('not recorded' if m in gap else f'{by_month.get(m, 0):,} visits')
             for m in keys]
