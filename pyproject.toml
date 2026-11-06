@@ -34,7 +34,7 @@ dependencies = [
     "unidecode==1.*",
     "urllib3==2.*",
     "whoosh==2.*",
-    "wtforms==3.2.*",
+    "WTForms==3.*",
     "wtforms-sqlalchemy==0.4.2",
     "gunicorn>=26.2.0",
     "pymysql==1.2.*",
