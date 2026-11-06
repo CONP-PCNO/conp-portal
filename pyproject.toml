@@ -58,6 +58,11 @@ Repository = "https://github.com/CONP-PCNO/conp-portal/"
 Issues = "https://github.com/CONP-PCNO/conp-portal/issues"
 Changelog = "https://github.com/CONP-PCNO/conp-portal/blob/main/CHANGELOG.md"
 
+[tool.deptry]
+# PyMySQL is loaded dynamically by SQLAlchemy for production's mysql+pymysql URL.
+# Gunicorn is the production server invoked by deploy/systemctl/gunicorn.service.
+per_rule_ignores = { DEP002 = ["pymysql", "gunicorn"] }
+
 [tool.ruff]
 # excluded directories
 extend-exclude = [
