@@ -38,7 +38,6 @@ dependencies = [
     "wtforms-sqlalchemy==0.4.2",
     "gunicorn>=26.2.0",
     "pymysql==1.2.*",
-    "gitdb>=4.0.12",
 ]
 
 [dependency-groups]
