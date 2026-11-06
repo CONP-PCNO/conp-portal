@@ -71,7 +71,6 @@ whoosh==2.*
 ## aka wtforms
 WTForms==3.2.*
 WTForms-SQLAlchemy==0.4.2
-email-validator>=2.3.0
 
 ## Flask ##############################################################
 
