@@ -137,6 +137,23 @@ def register(app):
         """
         _update_analytics(app)
 
+    @app.cli.command('rename_datasets')
+    @click.argument('mapping', type=click.Path(exists=True, dir_okay=False))
+    @click.option('--apply', 'apply_changes', is_flag=True, default=False,
+                  help='Make the changes (default: dry run, print what would change).')
+    def rename_datasets(mapping, apply_changes):
+        """
+        Carry datasets whose submodule path changed (so their Portal id
+        changed) over to the new id. MAPPING is a JSON file {old_id: new_id}.
+        For each pair: the original ARK resolves to the new id again (and is
+        the one the page shows), the page-view history moves across, and the
+        old address redirects to the new page. A pair is skipped while the old
+        id is still listed, or when the new id is not on the Portal yet.
+        """
+        with open(mapping) as f:
+            pairs = json.load(f)
+        _rename_datasets(app, pairs, apply_changes)
+
     @app.cli.command('backfill_dataset_views')
     @click.option('--dataset', 'dataset_ids', multiple=True,
                   help='Dataset id (projects/...); repeat for several. Default: every dataset on the Portal.')
@@ -689,6 +706,56 @@ def _report_stale_datasets(app):
         print("[WARNING] Run `flask prune_datasets` to review them, then `flask prune_datasets --apply`.")
 
 
+RENAMED_REASON = 'Renamed: the dataset moved to a new address in conp-dataset (same data).'
+
+
+def _rename_datasets(app, pairs, apply_changes=False):
+    """Move ARKs, page-view history and the old address of renamed datasets
+    to their new ids (see `flask rename_datasets`). Returns {old: status}."""
+    from app import db
+    from app.models import ArkId, RetiredDataset
+    from app.models import MatomoDailyGetDatasetPageViewsSummary as Views
+
+    done = {}
+    for old_id, new_id in pairs.items():
+        if old_id == new_id:
+            continue
+        if DBDataset.query.filter_by(dataset_id=old_id).first() is not None:
+            done[old_id] = 'skipped: the old id is still listed (remove it from conp-dataset, prune, then re-run)'
+        elif DBDataset.query.filter_by(dataset_id=new_id).first() is None:
+            done[old_id] = 'skipped: the new id is not on the Portal'
+        else:
+            arks = ArkId.query.filter_by(dataset_id=old_id).all()
+            views = Views.query.filter_by(dataset_id=old_id).all()
+            done[old_id] = f'{len(arks)} ARK(s), {len(views)} day(s) of views'
+            if apply_changes:
+                for a in arks:
+                    a.dataset_id = new_id
+                have = {v.date: v for v in Views.query.filter_by(dataset_id=new_id)}
+                for v in views:
+                    same_day = have.get(v.date)
+                    if same_day is None:
+                        v.dataset_id = new_id
+                    else:   # both addresses were visited that day: add the counts
+                        for field in ('nb_hits', 'nb_visits', 'nb_uniq_visitors', 'sum_time_spent'):
+                            setattr(same_day, field, (getattr(same_day, field) or 0) + (getattr(v, field) or 0))
+                        db.session.delete(v)
+                retired = RetiredDataset.query.filter_by(dataset_id=old_id).first()
+                if retired is None:
+                    retired = RetiredDataset(dataset_id=old_id, retired_on=datetime.utcnow())
+                    db.session.add(retired)
+                retired.name = retired.name or DBDataset.query.filter_by(dataset_id=new_id).first().name
+                retired.reason = RENAMED_REASON
+                retired.replaced_by = new_id
+        print(f'  {old_id} -> {new_id}: {done[old_id]}')
+    if apply_changes:
+        db.session.commit()
+        print(f'[INFO   ] {sum(1 for v in done.values() if not v.startswith("skipped"))} dataset(s) carried over.')
+    else:
+        print('[INFO   ] Dry run: nothing changed. Add --apply to make these changes.')
+    return done
+
+
 def _prune_datasets(app, apply_changes=False, reason=None, replaced_by=None, force=False):
     """List, or remove, the datasets conp-dataset no longer lists.
 
@@ -709,7 +776,7 @@ def _prune_datasets(app, apply_changes=False, reason=None, replaced_by=None, for
     total = DBDataset.query.count()
     print(f"[INFO   ] {len(stale)} of {total} dataset rows are no longer in conp-dataset.")
     for d in stale:
-        ark = db.session.query(ArkId.ark_id).filter_by(dataset_id=d.dataset_id).first()
+        ark = db.session.query(ArkId.ark_id).filter_by(dataset_id=d.dataset_id).order_by(ArkId.id).first()
         on_disk = bool(d.fspath) and os.path.isdir(d.fspath)
         print(f"  {d.dataset_id} | {d.name} | {ark[0] if ark else 'no ARK'} | folder {'present' if on_disk else 'gone'}")
     ids = [d.dataset_id for d in stale]

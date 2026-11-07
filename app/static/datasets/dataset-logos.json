@@ -22,7 +22,7 @@
       "why": "MICA-PNI is the MICA lab's (Bernhardt lab, The Neuro) own dataset.",
       "tier": "A"
     },
-    "projects/An_open_dataset_of_cerebral_tau_deposition_in_young_healthy_adults_based_on__18F_MK6240_positron_emission_tomography": {
+    "projects/An-open-dataset-of-cerebral-tau-deposition-in-young-healthy-adults-based-on-18F-MK6240": {
       "img": "img/datasets/mica-lab.png",
       "label": "MICA lab",
       "source": "GitHub organisation avatar, https://github.com/MICA-MNI.png",
@@ -106,6 +106,13 @@
       "why": "Silveira lab, McGill University (origin in DATS); only the institution mark was available.",
       "tier": "B"
     },
+    "projects/Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_networ": {
+      "img": "img/datasets/mcgill.png",
+      "label": "McGill University",
+      "source": "Official McGill shield and wordmark, supplied as a local file in July 2026 (dataset-logos/logo-preview/mcgill_preferred_logo.png); no public URL recorded",
+      "why": "Silveira lab, McGill University (origin in DATS); only the institution mark was available.",
+      "tier": "B"
+    },
     "projects/mcgill-emc-rna-seq-experiment": {
       "img": "img/datasets/mcgill.png",
       "label": "McGill University",
@@ -113,14 +120,14 @@
       "why": "McGill EMC, McGill University (creator and origin in DATS); only the institution mark was available.",
       "tier": "B"
     },
-    "projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regulates_the_spre": {
+    "projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regul": {
       "img": "img/datasets/western.png",
       "label": "Western University",
       "source": "Wikipedia, https://en.wikipedia.org/wiki/Special:FilePath/University%20of%20Western%20Ontario%20Logo.svg?width=640",
       "why": "Prado lab, Robarts Research Institute, Western University; only the institution mark was available.",
       "tier": "B"
     },
-    "projects/Neural_capacity_limits_on_the_responses_to_memory_interference_during_working_me": {
+    "projects/Neural_capacity_limits_on_the_responses_to_memory_interference_duri": {
       "img": "img/datasets/uottawa.png",
       "label": "University of Ottawa",
       "source": "Official uOttawa wordmark, supplied as a local file in July 2026 (dataset-logos/logo-preview/university-of-ottawa2.png); no public URL recorded",
@@ -134,14 +141,14 @@
       "why": "RISE comes from the Ragland lab, UC Davis; the UC Davis GitHub avatar is the university seal, the only mark available.",
       "tier": "B"
     },
-    "projects/Feasibility_of_high_resolution_perfusion_imaging_using_Arterial_Spin_Labelling_MRI_at_3_Tesla___Dataset": {
+    "projects/Feasibility-of-high-resolution-perfusion-imaging-using-Arterial-Spin-Labelling-MRI-at-3": {
       "img": "img/datasets/uhn.png",
       "label": "University Health Network",
       "source": "GitHub organisation avatar, https://github.com/UHN.png (the UHN symbol, same mark as https://github.com/UHN-Digital)",
       "why": "Krembil Brain Institute, University Health Network, Toronto (origin in DATS); only the institution mark was available.",
       "tier": "B"
     },
-    "projects/Dataset_Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin_in_Vivo": {
+    "projects/Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin": {
       "url": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg",
       "label": "Zenodo",
       "source": "Zenodo logo URL as written by the Zenodo crawler, https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg",
