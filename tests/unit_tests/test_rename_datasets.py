@@ -113,3 +113,33 @@ def test_command_reads_the_map_file_and_the_shipped_map_is_sound(app, clean, tmp
     pairs = json.load(open(shipped))
     assert len(pairs) == 32 and all(k.startswith('projects/') and v.startswith('projects/') for k, v in pairs.items())
     assert len(set(pairs.values())) == len(pairs)          # no two old ids onto one new id
+
+
+def test_added_date_comes_from_the_old_folder(app, clean, tmp_path, monkeypatch):
+    import os
+    import subprocess
+    repo = tmp_path / 'conp-dataset'
+    (repo / 'projects').mkdir(parents=True)
+
+    def commit(path, when):
+        (repo / path).write_text(when)
+        env = dict(os.environ, GIT_AUTHOR_DATE=when, GIT_COMMITTER_DATE=when,
+                   GIT_AUTHOR_NAME='t', GIT_AUTHOR_EMAIL='t@t', GIT_COMMITTER_NAME='t', GIT_COMMITTER_EMAIL='t@t')
+        subprocess.run(['git', 'add', path], cwd=repo, check=True, env=env)
+        subprocess.run(['git', 'commit', '-q', '-m', path], cwd=repo, check=True, env=env)
+    subprocess.run(['git', 'init', '-q'], cwd=repo, check=True)
+    commit(OLD, '2021-03-04T12:00:00')
+    commit(NEW, '2026-11-05T12:00:00')
+    monkeypatch.setitem(app.config, 'DATA_PATH', str(tmp_path))
+    _renamed(app, clean)
+    row = Dataset.query.filter_by(dataset_id=NEW).first()
+    row.date_added_to_portal = datetime(2026, 11, 5, 12)
+    clean.commit()
+
+    done = cli._rename_datasets(app, {OLD: NEW})                          # dry run reports it
+    assert done[OLD].endswith('added 2026-11-05 -> 2021-03-04')
+    assert Dataset.query.filter_by(dataset_id=NEW).first().date_added_to_portal.year == 2026
+    cli._rename_datasets(app, {OLD: NEW}, apply_changes=True)
+    assert Dataset.query.filter_by(dataset_id=NEW).first().date_added_to_portal.date().isoformat() == '2021-03-04'
+    # Re-running after the first --apply still fixes the date (and only the date).
+    assert cli._rename_datasets(app, {OLD: NEW}, apply_changes=True)[OLD] == '0 ARK(s), 0 day(s) of views'
