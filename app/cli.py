@@ -5,6 +5,7 @@ Module that contains the special command line tools
 """
 import json
 import os
+import subprocess
 import uuid
 from datetime import datetime, timedelta
 
@@ -706,6 +707,16 @@ def _report_stale_datasets(app):
         print("[WARNING] Run `flask prune_datasets` to review them, then `flask prune_datasets --apply`.")
 
 
+def _first_merge_date(repo_dir, path):
+    """Date of the first commit in conp-dataset that touched `path`, or None."""
+    try:
+        stamp = subprocess.run(['git', '-C', repo_dir, 'log', '--reverse', '--pretty=format:%ct', '--', path],
+                               capture_output=True, text=True, timeout=120).stdout.split()
+        return datetime.fromtimestamp(int(stamp[0])) if stamp else None
+    except Exception:
+        return None
+
+
 RENAMED_REASON = 'Renamed: the dataset moved to a new address in conp-dataset (same data).'
 
 
@@ -728,6 +739,16 @@ def _rename_datasets(app, pairs, apply_changes=False):
             arks = ArkId.query.filter_by(dataset_id=old_id).all()
             views = Views.query.filter_by(dataset_id=old_id).all()
             done[old_id] = f'{len(arks)} ARK(s), {len(views)} day(s) of views'
+            # "Added" comes from the first conp-dataset commit touching the
+            # folder, so the new folder reads as added on the rename day: take
+            # the old folder's first commit instead.
+            new_row = DBDataset.query.filter_by(dataset_id=new_id).first()
+            first = _first_merge_date(os.path.join(app.config['DATA_PATH'], 'conp-dataset'), old_id)
+            if first is not None and (new_row.date_added_to_portal is None or first < new_row.date_added_to_portal):
+                done[old_id] += f', added {new_row.date_added_to_portal:%Y-%m-%d} -> {first:%Y-%m-%d}' \
+                    if new_row.date_added_to_portal else f', added -> {first:%Y-%m-%d}'
+                if apply_changes:
+                    new_row.date_added_to_portal = first
             if apply_changes:
                 for a in arks:
                     a.dataset_id = new_id
