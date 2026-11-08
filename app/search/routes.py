@@ -527,7 +527,8 @@ def _build_dataset_elements(authorized):
     remote_logo_copies = load_remote_logo_copies()
     view_counts, download_counts = _view_and_download_counts()
     rows = {r.dataset_id: r for r in Dataset.query.all()}
-    arks = {r.dataset_id: r.ark_id for r in ArkId.query.all()}
+    # Newest first, so each dataset ends with its oldest (original) ARK.
+    arks = {r.dataset_id: r.ark_id for r in ArkId.query.order_by(ArkId.id.desc()).all()}
     cache_dir = DatasetCache(current_app).current_app.config['DATASET_CACHE_PATH']
     try:
         cached_names = set(os.listdir(cache_dir))
@@ -922,9 +923,13 @@ def _retired_dataset_page(dataset_id):
     retired = RetiredDataset.query.filter_by(dataset_id=dataset_id).first()
     if retired is None:
         return None
-    ark = ArkId.query.filter_by(dataset_id=dataset_id).first()
+    ark = ArkId.query.filter_by(dataset_id=dataset_id).order_by(ArkId.id).first()
     name = retired.name or dataset_id.split('/')[-1]
     successor = Dataset.query.filter_by(dataset_id=retired.replaced_by).first() if retired.replaced_by else None
+    if successor is not None and ark is None:
+        # Renamed (flask rename_datasets): its ARK went with it to the new id,
+        # so the old address is the same dataset under another name.
+        return redirect(url_for('search.dataset_info', id=successor.dataset_id), code=301)
     return render_template('retired_dataset.html', title='CONP | Dataset removed', user=current_user,
                            name=name, retired=retired, ark_id=ark.ark_id if ark else None,
                            successor=successor), 410
@@ -990,7 +995,8 @@ def dataset_info():
     else:
         dataset_cbrain_id = ""
 
-    ark_id_row = ArkId.query.filter_by(dataset_id=d.dataset_id).first()
+    # The oldest ARK first: a renamed dataset keeps its original identifier.
+    ark_id_row = ArkId.query.filter_by(dataset_id=d.dataset_id).order_by(ArkId.id).first()
 
     try:
         zipped = DatasetCache(current_app).getZipLocation(d.fspath)
