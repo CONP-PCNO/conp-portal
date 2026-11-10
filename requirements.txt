@@ -121,7 +121,7 @@ Flask-Security[fsqla,common]==5.9.2
 alembic==1.*
 
 ## Robust testing framework that makes it easy to write small, readable scripts and scale to complex functional testing.
-pytest==8.3.5
+pytest==9.2.0
 # @todo: pytest==9.1.1
 
 # Gunicorn
