@@ -10,7 +10,7 @@
 boutiques>=0.5.33
 
 ## Composable command-line interface toolkit for creating beautiful CLI applications.
-click==8.5.0
+click==8.5.1
 
 ## Distributed data management and version control system built on top of Git and git-annex.
 ## Requires: annexremote, boto3, chardet, distro, fasteners, giturlparse, humanize, iso8601, keyring, keyrings.alt, looseversion, msgpack, packaging, patool, platformdirs, python-gitlab, requests, tqdm
