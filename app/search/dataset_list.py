@@ -226,8 +226,7 @@ def dataset_card(e):
                       if str(f).strip().lower().lstrip('.') not in _PLACEHOLDERS}, key=str.lower)
     # Same badge as the dataset page (name, short name, link); the index's
     # licenceLinks carry the addresses (older indexes: names only).
-    licences = [b for b in licence_badges(_listify(e.get('licenceLinks')) or _listify(e.get('licenses')))
-                if b['full'].lower() not in ('other',)][:2]
+    licences = licence_badges(_listify(e.get('licenceLinks')) or _listify(e.get('licenses')))[:2]
     subjects = _int(e.get('subjects'))
     evidence_type = str(e.get('evidencePublicationType') or '').lower()
     evidence = _EVIDENCE_LABEL.get(evidence_type, 'Evidence publication') if e.get('evidencePublication') else None

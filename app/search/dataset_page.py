@@ -70,6 +70,10 @@ def _name_from_address(url):
     return name if re.search(r'[A-Za-z]{3}', name) and len(name) <= 60 else None
 
 
+LICENCE_NOT_STATED = 'Licence not stated'
+NOT_STATED = {'other', 'n/a', 'na', 'unknown', 'not specified', 'unspecified', '-'}
+
+
 def short_licence(name, url=None):
     """Map a DATS licence to a short badge, the same on Data cards and dataset
     pages.
@@ -100,6 +104,12 @@ def short_licence(name, url=None):
         return None
     low = s.lower()
     full = s
+    if low in NOT_STATED and not url:
+        # "Other" (OSF's choice when the licence is in a file) or a placeholder,
+        # with no address: say so rather than show a meaningless "Other".
+        return {'label': LICENCE_NOT_STATED, 'url': None, 'full': full}
+    if low in NOT_STATED:          # a placeholder name, but the record links the terms
+        return {'label': 'Data use terms', 'url': url, 'full': full}
 
     if re.search(r'\bcc[\s_-]*0\b|cc[\s_-]*zero|creative commons zero|creativecommons\.org/publicdomain/zero', low):
         return {'label': 'CC0 1.0' if '1.0' in low else 'CC0',
