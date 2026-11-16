@@ -169,6 +169,21 @@ def register(app):
         """
         _backfill_dataset_views(app, _matomo_api_baseurl(app), dataset_ids=dataset_ids or None, since=since)
 
+    @app.cli.command('backup_analytics')
+    @click.option('--to', 'dest', default=None,
+                  help='Folder for the copies (default: ANALYTICS_BACKUP_PATH, else DATA_PATH/analytics/backups).')
+    @click.option('--keep', default=30, show_default=True,
+                  help='Daily copies to keep; the first copy of each month is always kept.')
+    def backup_analytics(dest, keep):
+        """
+        Copy the Portal's use history to a dated folder: every Matomo and
+        GitHub analytics table as CSV, the research-use files (without the
+        request cache) and countries.json. GitHub keeps only 14 days of
+        traffic and the tables are its only long-term record. Run daily after
+        update_analytics (bin/crons/update_analytics.sh does both).
+        """
+        print(_backup_analytics(app, dest, keep))
+
     @app.cli.command('update_research_use')
     @click.option('--dry-run', is_flag=True, default=False,
                   help='Collect and print what would change, without writing anything.')
@@ -849,6 +864,75 @@ def _matomo_api_baseurl(app):
            f"&token_auth={matomo_token_auth}" \
            f"&format=json" \
            f"&filter_limit=-1"
+
+
+ANALYTICS_TABLES = (
+    'matomo_daily_visits_summary', 'matomo_daily_get_page_urls_summary',
+    'matomo_daily_dataset_page_views_summary', 'matomo_daily_portal_download_summary',
+    'matomo_daily_site_keyword_searches_summary', 'github_daily_clones_count', 'github_daily_views_count',
+)
+
+
+def _backup_analytics(app, dest=None, keep=30, today=None):
+    """Write DEST/YYYY-MM-DD/ (tables as gzipped CSV, research_use/, countries.json),
+    prune old daily copies, and return a one-line summary."""
+    import csv
+    import gzip
+    import re
+    import shutil
+
+    from sqlalchemy import inspect, text
+
+    data_path = app.config['DATA_PATH']
+    dest = dest or app.config.get('ANALYTICS_BACKUP_PATH') or os.path.join(data_path, 'analytics', 'backups')
+    day = (today or datetime.today().date()).isoformat()
+    out = os.path.join(dest, day)
+    tmp = out + '.partial'
+    shutil.rmtree(tmp, ignore_errors=True)
+    os.makedirs(tmp)
+
+    rows_written = {}
+    present = set(inspect(db.engine).get_table_names())
+    for table in ANALYTICS_TABLES:
+        if table not in present:
+            continue
+        result = db.session.execute(text(f'SELECT * FROM {table}'))
+        with gzip.open(os.path.join(tmp, table + '.csv.gz'), 'wt', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow(result.keys())
+            n = 0
+            for row in result:
+                writer.writerow(row)
+                n += 1
+        rows_written[table] = n
+
+    research = os.path.join(data_path, 'research_use')
+    if os.path.isdir(research):
+        shutil.copytree(research, os.path.join(tmp, 'research_use'), ignore=shutil.ignore_patterns('cache'))
+    countries = os.path.join(data_path, 'analytics', 'countries.json')
+    if os.path.exists(countries):
+        shutil.copy2(countries, os.path.join(tmp, 'countries.json'))
+
+    shutil.rmtree(out, ignore_errors=True)
+    os.replace(tmp, out)
+
+    # Keep the newest `keep` daily copies and the first copy of every month.
+    days = sorted(d for d in os.listdir(dest) if re.fullmatch(r'\d{4}-\d{2}-\d{2}', d))
+    first_of_month = {}
+    for d in days:
+        first_of_month.setdefault(d[:7], d)
+    removed = 0
+    for d in days[:-keep] if keep > 0 else []:
+        if first_of_month[d[:7]] != d:
+            shutil.rmtree(os.path.join(dest, d), ignore_errors=True)
+            removed += 1
+
+    warn = '' if (dest != os.path.join(data_path, 'analytics', 'backups')) else \
+        ' (under DATA_PATH: set ANALYTICS_BACKUP_PATH to a backed-up folder)'
+    total = sum(rows_written.values())
+    return (f'Analytics history copied to {out}{warn}: {len(rows_written)} tables, {total:,} rows'
+            f'{", research use" if os.path.isdir(research) else ""}'
+            f'{", countries" if os.path.exists(countries) else ""}; {removed} old copies removed.')
 
 
 def _update_analytics(app):

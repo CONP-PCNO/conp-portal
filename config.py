@@ -22,6 +22,10 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or "conp-secret-key-for-here-ABC0321XYZHHHAAASSSHHH"
     DATA_PATH = os.environ.get('DATA_PATH') or os.path.join(
         basedir, "data")
+    # Where `flask backup_analytics` writes its daily copies of the use
+    # history (Matomo and GitHub tables, research use, countries). Set it in
+    # .flaskenv to a backed-up location; the default sits under DATA_PATH.
+    ANALYTICS_BACKUP_PATH = os.environ.get('ANALYTICS_BACKUP_PATH')
     # Dataset cache
     DATASET_CACHE_PATH = os.environ.get('DATASET_CACHE_PATH') or os.path.join(
         basedir, "data/.cache/conp-dataset")
