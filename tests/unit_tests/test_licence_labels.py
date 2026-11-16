@@ -66,3 +66,25 @@ def test_licence_pill_icon_and_label_are_spaced_like_other_facts(tmp_path):
         assert '<span title' not in li and ('<a class="lp-licence"' in li) == bool(links[0]['url'])
         if links[0]['url']:
             assert li.index('</svg>') < li.index('<a class="lp-licence"')
+
+
+def test_other_without_address_reads_licence_not_stated():
+    from app.search.dataset_page import short_licence, licence_badges
+    assert short_licence('Other')['label'] == 'Licence not stated'
+    assert short_licence({'name': 'other'})['label'] == 'Licence not stated'
+    assert short_licence('N/A')['label'] == 'Licence not stated'
+    # With an address it is a real (custom) licence: not "not stated".
+    b = short_licence({'name': 'Other', 'url': 'https://osf.io/download/y25w8/'})
+    assert b['label'] == 'Data use terms' and b['url'] == 'https://osf.io/download/y25w8/'
+    assert [x['label'] for x in licence_badges(['Other', 'CC0'])] == ['Licence not stated', 'CC0']
+
+
+def test_card_shows_licence_not_stated(tmp_path):
+    import json
+    from app.search import dataset_list as dl
+    folder = tmp_path / 'cpca'
+    folder.mkdir()
+    (folder / 'DATS.json').write_text(json.dumps({'title': 'x'}))
+    c = dl.dataset_card({'id': 'projects/cpca', 'title': 'x', 'licenses': ['Other'],
+                         'fspath': str(folder)})
+    assert [b['label'] for b in c['licences']] == ['Licence not stated']
