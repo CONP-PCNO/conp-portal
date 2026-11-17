@@ -1508,6 +1508,8 @@ def _update_github_traffic_counts(app):
     try:
         repo = git.Repo(datasetsdir)
     except git.exc.InvalidGitRepositoryError:
+        print(f'[ERROR  ] Invalid Git repository at {datasetsdir}')
+        # @todo: this should never clone the repo, that job is for update_datasets() and it should be called before this function. If the repo is not there, we should skip the analytics update.
         repo = git.Repo.clone_from(
             'https://github.com/CONP-PCNO/conp-dataset',
             datasetsdir,
@@ -1516,14 +1518,18 @@ def _update_github_traffic_counts(app):
 
     # loop through the list of submodules present in CONP-PCNO/conp-dataset.git
     for submodule in repo.submodules:
+        print('--------------------------------------------------------------')
+        print(f'[INFO   ] Processing GitHub analytics for {submodule.name} ({submodule.url})')
         sub_repo = submodule.url.replace('https://github.com/', '').replace('.git', '')
         if sub_repo.startswith('CONP-PCNO/'):
             # skip the repos under the CONP-PCNO organization as they are not datasets
+            print(f'[INFO   ] Skipping {sub_repo} as it is under the CONP-PCNO organization')
             continue
 
         # query the GitHub analytics API for number of clones and views
         daily_stat_dict = _get_repo_analytics(app, sub_repo)
         if not daily_stat_dict:
+            print(f'[ERROR  ] No analytics data found for {sub_repo}')
             continue
 
         # get the list of dates already in the database for this repo
@@ -1603,6 +1609,7 @@ def _get_repo_analytics(app, repo):
     # https://pygithub.readthedocs.io/en/stable/
     # @todo: remove PyGithub dependency. the only place this is used is g.get_repo
 
+    print(f'[INFO   ] Fetching GitHub analytics for {repo}')
     token = app.config['GITHUB_PAT']
     g = Github(token)
 
