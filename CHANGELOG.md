@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Adds more verbose output to cli `flask update_analytics`.
+- Fixes Clones/Views object is not subscriptable error in _get_repo_analytics()
 - Deprecates and Removes GITHUB_USER. It is no longer needed.
 - Upgrades PyGithub from 1.59.1 to 2.10.0 for GitHub repository traffic analytics.
 
