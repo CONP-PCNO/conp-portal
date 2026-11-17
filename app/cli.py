@@ -19,6 +19,14 @@ from app.threads import UpdatePipelineData
 
 def register(app):
 
+    @app.cli.command('print_env')
+    def print_env():
+        """
+        Prints the flask environment variables for debugging purposes.
+        """
+        for key, value in os.environ.items():
+            print(f"{key}: {value}")
+
     @app.cli.command('print_config')
     def print_config():
         """
