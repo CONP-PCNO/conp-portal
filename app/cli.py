@@ -24,7 +24,6 @@ def register(app):
         """
         Prints the flask config environment for debugging purposes.
         """
-        # print(dict(app.config))
         for key, value in app.config.items():
             print(f"{key}: {value}")
 
