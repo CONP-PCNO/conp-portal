@@ -1615,20 +1615,22 @@ def _get_repo_analytics(app, repo):
 
     g_analytics = {}
     try:
-        g_analytics['clones'] = g.get_repo(repo).get_clones_traffic(per='day')
-        g_analytics['views'] = g.get_repo(repo).get_views_traffic(per='day')
+        github_repo = g.get_repo(repo)
+
+        g_analytics['clones'] = github_repo.get_clones_traffic(per='day')
+        g_analytics['views'] = github_repo.get_views_traffic(per='day')
     except Exception as e:
-        g_analytics['clones'] = {}
-        g_analytics['views'] = {}
+        g_analytics['clones'] = None
+        g_analytics['views'] = None
         print(f"Error while fetching GitHub analytics for {repo}:\n\t{e}")
 
     daily_stat_dict = {
         'clones': {},
         'views': {}
     }
-    for analytic_type in g_analytics:
-        if g_analytics[analytic_type]:
-            for day_data in g_analytics[analytic_type][analytic_type]:
+    for analytic_type, traffic_obj in g_analytics.items():
+        if traffic_obj:
+            for day_data in getattr(traffic_obj, analytic_type):
                 timestamp = day_data.timestamp
                 date = timestamp.strftime('%Y-%m-%d')
                 daily_stat_dict[analytic_type][date] = {
