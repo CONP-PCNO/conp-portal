@@ -50699,7 +50699,7 @@ function areEqualValues(a, b) {
   return String(a) === String(b);
 }
 
-function isEmpty(display) {
+function SelectInput_isEmpty(display) {
   return display == null || typeof display === 'string' && !display.trim();
 }
 /**
@@ -51044,7 +51044,7 @@ var SelectInput_SelectInput = /*#__PURE__*/external_root_React_commonjs2_react_c
   }, SelectDisplayProps, {
     // The id is required for proper a11y
     id: buttonId
-  }), isEmpty(display) ?
+  }), SelectInput_isEmpty(display) ?
   /*#__PURE__*/
   // eslint-disable-next-line react/no-danger
   external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"]("span", {
@@ -103084,7 +103084,7 @@ function isAlphanumerical(character) {
 const fromCharCode = String.fromCharCode
 
 // Warning messages.
-const messages = [
+const lib_messages = [
   '',
   /* 1: Non terminated (named) */
   'Named character references must be terminated by a semicolon',
@@ -103420,7 +103420,7 @@ function parseEntities(value, options = {}) {
 
       options.warning.call(
         options.warningContext,
-        messages[code],
+        lib_messages[code],
         position,
         code
       )
@@ -133935,6 +133935,235 @@ function rehypeSanitize(options = defaultSchema) {
 
 
 
+// CONCATENATED MODULE: ./node_modules/date-fns/esm/parseISO/index.js
+
+
+
+/**
+ * @name parseISO
+ * @category Common Helpers
+ * @summary Parse ISO string
+ *
+ * @description
+ * Parse the given string in ISO 8601 format and return an instance of Date.
+ *
+ * Function accepts complete ISO 8601 formats as well as partial implementations.
+ * ISO 8601: http://en.wikipedia.org/wiki/ISO_8601
+ *
+ * If the argument isn't a string, the function cannot parse the string or
+ * the values are invalid, it returns Invalid Date.
+ *
+ * @param {String} argument - the value to convert
+ * @param {Object} [options] - an object with options.
+ * @param {0|1|2} [options.additionalDigits=2] - the additional number of digits in the extended year format
+ * @returns {Date} the parsed date in the local time zone
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Convert string '2014-02-11T11:30:30' to date:
+ * const result = parseISO('2014-02-11T11:30:30')
+ * //=> Tue Feb 11 2014 11:30:30
+ *
+ * @example
+ * // Convert string '+02014101' to date,
+ * // if the additional number of digits in the extended year format is 1:
+ * const result = parseISO('+02014101', { additionalDigits: 1 })
+ * //=> Fri Apr 11 2014 00:00:00
+ */
+function parseISO(argument, options) {
+  var _options$additionalDi;
+  requiredArgs(1, arguments);
+  var additionalDigits = toInteger((_options$additionalDi = options === null || options === void 0 ? void 0 : options.additionalDigits) !== null && _options$additionalDi !== void 0 ? _options$additionalDi : 2);
+  if (additionalDigits !== 2 && additionalDigits !== 1 && additionalDigits !== 0) {
+    throw new RangeError('additionalDigits must be 0, 1 or 2');
+  }
+  if (!(typeof argument === 'string' || Object.prototype.toString.call(argument) === '[object String]')) {
+    return new Date(NaN);
+  }
+  var dateStrings = splitDateString(argument);
+  var date;
+  if (dateStrings.date) {
+    var parseYearResult = parseYear(dateStrings.date, additionalDigits);
+    date = parseDate(parseYearResult.restDateString, parseYearResult.year);
+  }
+  if (!date || isNaN(date.getTime())) {
+    return new Date(NaN);
+  }
+  var timestamp = date.getTime();
+  var time = 0;
+  var offset;
+  if (dateStrings.time) {
+    time = parseTime(dateStrings.time);
+    if (isNaN(time)) {
+      return new Date(NaN);
+    }
+  }
+  if (dateStrings.timezone) {
+    offset = parseTimezone(dateStrings.timezone);
+    if (isNaN(offset)) {
+      return new Date(NaN);
+    }
+  } else {
+    var dirtyDate = new Date(timestamp + time);
+    // js parsed string assuming it's in UTC timezone
+    // but we need it to be parsed in our timezone
+    // so we use utc values to build date in our timezone.
+    // Year values from 0 to 99 map to the years 1900 to 1999
+    // so set year explicitly with setFullYear.
+    var result = new Date(0);
+    result.setFullYear(dirtyDate.getUTCFullYear(), dirtyDate.getUTCMonth(), dirtyDate.getUTCDate());
+    result.setHours(dirtyDate.getUTCHours(), dirtyDate.getUTCMinutes(), dirtyDate.getUTCSeconds(), dirtyDate.getUTCMilliseconds());
+    return result;
+  }
+  return new Date(timestamp + time + offset);
+}
+var patterns = {
+  dateTimeDelimiter: /[T ]/,
+  timeZoneDelimiter: /[Z ]/i,
+  timezone: /([Z+-].*)$/
+};
+var dateRegex = /^-?(?:(\d{3})|(\d{2})(?:-?(\d{2}))?|W(\d{2})(?:-?(\d{1}))?|)$/;
+var timeRegex = /^(\d{2}(?:[.,]\d*)?)(?::?(\d{2}(?:[.,]\d*)?))?(?::?(\d{2}(?:[.,]\d*)?))?$/;
+var timezoneRegex = /^([+-])(\d{2})(?::?(\d{2}))?$/;
+function splitDateString(dateString) {
+  var dateStrings = {};
+  var array = dateString.split(patterns.dateTimeDelimiter);
+  var timeString;
+
+  // The regex match should only return at maximum two array elements.
+  // [date], [time], or [date, time].
+  if (array.length > 2) {
+    return dateStrings;
+  }
+  if (/:/.test(array[0])) {
+    timeString = array[0];
+  } else {
+    dateStrings.date = array[0];
+    timeString = array[1];
+    if (patterns.timeZoneDelimiter.test(dateStrings.date)) {
+      dateStrings.date = dateString.split(patterns.timeZoneDelimiter)[0];
+      timeString = dateString.substr(dateStrings.date.length, dateString.length);
+    }
+  }
+  if (timeString) {
+    var token = patterns.timezone.exec(timeString);
+    if (token) {
+      dateStrings.time = timeString.replace(token[1], '');
+      dateStrings.timezone = token[1];
+    } else {
+      dateStrings.time = timeString;
+    }
+  }
+  return dateStrings;
+}
+function parseYear(dateString, additionalDigits) {
+  var regex = new RegExp('^(?:(\\d{4}|[+-]\\d{' + (4 + additionalDigits) + '})|(\\d{2}|[+-]\\d{' + (2 + additionalDigits) + '})$)');
+  var captures = dateString.match(regex);
+  // Invalid ISO-formatted year
+  if (!captures) return {
+    year: NaN,
+    restDateString: ''
+  };
+  var year = captures[1] ? parseInt(captures[1]) : null;
+  var century = captures[2] ? parseInt(captures[2]) : null;
+
+  // either year or century is null, not both
+  return {
+    year: century === null ? year : century * 100,
+    restDateString: dateString.slice((captures[1] || captures[2]).length)
+  };
+}
+function parseDate(dateString, year) {
+  // Invalid ISO-formatted year
+  if (year === null) return new Date(NaN);
+  var captures = dateString.match(dateRegex);
+  // Invalid ISO-formatted string
+  if (!captures) return new Date(NaN);
+  var isWeekDate = !!captures[4];
+  var dayOfYear = parseDateUnit(captures[1]);
+  var month = parseDateUnit(captures[2]) - 1;
+  var day = parseDateUnit(captures[3]);
+  var week = parseDateUnit(captures[4]);
+  var dayOfWeek = parseDateUnit(captures[5]) - 1;
+  if (isWeekDate) {
+    if (!validateWeekDate(year, week, dayOfWeek)) {
+      return new Date(NaN);
+    }
+    return dayOfISOWeekYear(year, week, dayOfWeek);
+  } else {
+    var date = new Date(0);
+    if (!validateDate(year, month, day) || !validateDayOfYearDate(year, dayOfYear)) {
+      return new Date(NaN);
+    }
+    date.setUTCFullYear(year, month, Math.max(dayOfYear, day));
+    return date;
+  }
+}
+function parseDateUnit(value) {
+  return value ? parseInt(value) : 1;
+}
+function parseTime(timeString) {
+  var captures = timeString.match(timeRegex);
+  if (!captures) return NaN; // Invalid ISO-formatted time
+
+  var hours = parseTimeUnit(captures[1]);
+  var minutes = parseTimeUnit(captures[2]);
+  var seconds = parseTimeUnit(captures[3]);
+  if (!validateTime(hours, minutes, seconds)) {
+    return NaN;
+  }
+  return hours * millisecondsInHour + minutes * millisecondsInMinute + seconds * 1000;
+}
+function parseTimeUnit(value) {
+  return value && parseFloat(value.replace(',', '.')) || 0;
+}
+function parseTimezone(timezoneString) {
+  if (timezoneString === 'Z') return 0;
+  var captures = timezoneString.match(timezoneRegex);
+  if (!captures) return 0;
+  var sign = captures[1] === '+' ? -1 : 1;
+  var hours = parseInt(captures[2]);
+  var minutes = captures[3] && parseInt(captures[3]) || 0;
+  if (!validateTimezone(hours, minutes)) {
+    return NaN;
+  }
+  return sign * (hours * millisecondsInHour + minutes * millisecondsInMinute);
+}
+function dayOfISOWeekYear(isoWeekYear, week, day) {
+  var date = new Date(0);
+  date.setUTCFullYear(isoWeekYear, 0, 4);
+  var fourthOfJanuaryDay = date.getUTCDay() || 7;
+  var diff = (week - 1) * 7 + day + 1 - fourthOfJanuaryDay;
+  date.setUTCDate(date.getUTCDate() + diff);
+  return date;
+}
+
+// Validation functions
+
+// February is null to handle the leap year (using ||)
+var daysInMonths = [31, null, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+function parseISO_isLeapYearIndex(year) {
+  return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
+}
+function validateDate(year, month, date) {
+  return month >= 0 && month <= 11 && date >= 1 && date <= (daysInMonths[month] || (parseISO_isLeapYearIndex(year) ? 29 : 28));
+}
+function validateDayOfYearDate(year, dayOfYear) {
+  return dayOfYear >= 1 && dayOfYear <= (parseISO_isLeapYearIndex(year) ? 366 : 365);
+}
+function validateWeekDate(_year, week, day) {
+  return week >= 1 && week <= 53 && day >= 0 && day <= 6;
+}
+function validateTime(hours, minutes, seconds) {
+  if (hours === 24) {
+    return minutes === 0 && seconds === 0;
+  }
+  return seconds >= 0 && seconds < 60 && minutes >= 0 && minutes < 60 && hours >= 0 && hours < 25;
+}
+function validateTimezone(_hours, minutes) {
+  return minutes >= 0 && minutes <= 59;
+}
 // CONCATENATED MODULE: ./node_modules/lodash-es/_baseHas.js
 /** Used for built-in method references. */
 var _baseHas_objectProto = Object.prototype;
@@ -138631,688 +138860,6 @@ function index_modern_objectWithoutPropertiesLoose(source, excluded) {
   return target;
 }
 
-function genErrorString(errors) {
-  if (!errors) {
-    return '';
-  }
-  if (typeof errors === 'string') {
-    return errors;
-  }
-  if (Array.isArray(errors)) {
-    return errors.map(function (err, index) {
-      if (typeof err === 'object' && err !== null) {
-        return "Item " + index + ": " + genErrorString(err);
-      }
-      return typeof err === 'string' ? err : JSON.stringify(err);
-    }).join('; ');
-  }
-  if (typeof errors === 'object' && errors !== null) {
-    return Object.keys(errors).map(function (key) {
-      return key + ": " + genErrorString(errors[key]);
-    }).join('; ');
-  }
-  return JSON.stringify(errors);
-}
-function warningFromKey(key, errors, touched) {
-  if (!Object.keys(touched).includes(key)) {
-    return null;
-  }
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
-    gutterBottom: true,
-    key: "" + Math.random(),
-    variant: "subtitle1"
-  }, key + ": " + genErrorString(errors[key]));
-}
-function DatsErrors(props) {
-  var errors = props.errors,
-    touched = props.touched,
-    className = props.className,
-    formEmpty = props.formEmpty;
-  if (Object.keys(errors).length === 0) {
-    return null;
-  }
-  var warnings = Object.keys(errors).map(function (key) {
-    return warningFromKey(key, errors, touched);
-  }).filter(function (x) {
-    return x !== null;
-  });
-  if (warnings.length === 0) {
-    return null;
-  }
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: className
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
-    gutterBottom: true,
-    variant: "h6"
-  }, "To successfully create the DATS.json file, you must first resolve issues with the following fields:"), warnings, formEmpty && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
-    gutterBottom: true,
-    variant: "subtitle1"
-  }, "All fields are empty"));
-}
-
-var baseStyle = {
-  flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: '20px',
-  borderWidth: 2,
-  borderRadius: 2,
-  borderColor: '#eeeeee',
-  borderStyle: 'dashed',
-  backgroundColor: '#fafafa',
-  color: '#bdbdbd',
-  outline: 'none',
-  transition: 'border .24s ease-in-out'
-};
-var activeStyle = {
-  borderColor: '#2196f3'
-};
-var acceptStyle = {
-  borderColor: '#00e676'
-};
-var rejectStyle = {
-  borderColor: '#ff1744'
-};
-var index_modern_DatsUploader = function DatsUploader(props) {
-  var onDatsReceived = props.onDatsReceived;
-  var onDrop = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (acceptedFiles) {
-    acceptedFiles.forEach(function (file) {
-      var reader = new FileReader();
-      reader.onabort = function () {
-        return console.log('file reading was aborted');
-      };
-      reader.onerror = function () {
-        return console.log('file reading has failed');
-      };
-      reader.onload = function () {
-        var json = JSON.parse(reader.result);
-        onDatsReceived(json);
-      };
-      reader.readAsText(file);
-    });
-  }, [onDatsReceived]);
-  var _useDropzone = useDropzone({
-      onDrop: onDrop,
-      accept: 'application/json'
-    }),
-    acceptedFiles = _useDropzone.acceptedFiles,
-    fileRejections = _useDropzone.fileRejections,
-    getRootProps = _useDropzone.getRootProps,
-    getInputProps = _useDropzone.getInputProps,
-    isDragActive = _useDropzone.isDragActive,
-    isDragAccept = _useDropzone.isDragAccept,
-    isDragReject = _useDropzone.isDragReject;
-  var style = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () {
-    return index_modern_extends({}, baseStyle, isDragActive ? activeStyle : {}, isDragAccept ? acceptStyle : {}, isDragReject ? rejectStyle : {});
-  }, [isDragActive, isDragReject, isDragAccept]);
-  var acceptedFileItems = acceptedFiles.map(function (file) {
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
-      key: file.path
-    }, file.path, " - ", file.size, " bytes");
-  });
-  var fileRejectionItems = fileRejections.map(function (_ref) {
-    var file = _ref.file,
-      errors = _ref.errors;
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
-      key: file.path
-    }, file.path, " - ", file.size, " bytes", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", null, errors.map(function (e) {
-      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
-        key: e.code
-      }, e.message);
-    })));
-  });
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    className: "container"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", getRootProps({
-    style: style
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", getInputProps()), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Upload your DATS.json file here"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("em", null, "(Only *.json files will be accepted)")), acceptedFiles.length > 0 && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    style: {
-      paddingTop: '20px'
-    }
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
-    style: {
-      color: 'limegreen',
-      fontSize: '34px'
-    }
-  }, "\u2714"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
-    style: {
-      paddingLeft: '10px'
-    }
-  }, acceptedFiles[0].path, " - ", acceptedFiles[0].size, " bytes")), fileRejections.length > 0 && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    style: {
-      paddingTop: '20px'
-    }
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
-    style: {
-      color: 'red',
-      fontSize: '34px'
-    }
-  }, "\u2718"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
-    style: {
-      paddingLeft: '10px'
-    }
-  }, fileRejections[0].file.path, " - ", fileRejections[0].file.size, " bytes"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", null, fileRejections[0].errors.map(function (e, index) {
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
-      key: index
-    }, "Reason: ", e.message);
-  }))));
-};
-
-var index_modern_Section = function Section(props) {
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
-    display: "flex flex-column",
-    width: "100%",
-    p: 1,
-    my: 2,
-    boxShadow: props.subsection ? 2 : 0
-  }, Array.isArray(props.children) ? props.children.map(function (child, index) {
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
-      key: 'child_' + index,
-      m: 1
-    }, child);
-  }) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
-    m: 1
-  }, props.children));
-};
-
-var index_modern_useStyles = styles_makeStyles(function (theme) {
-  return {
-    disabled: {
-      color: theme.palette.action.disabled
-    }
-  };
-});
-var index_modern_SectionTitle = function SectionTitle(props) {
-  var classes = index_modern_useStyles();
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
-    display: "flex flex-column"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
-    variant: props.subsection ? 'subtitle1' : 'h6',
-    gutterBottom: true,
-    className: props.isDisabled ? classes.disabled : ''
-  }, props.name), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
-    variant: "caption",
-    className: props.isDisabled ? classes.disabled : ''
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
-    dangerouslySetInnerHTML: {
-      __html: props.tooltip
-    }
-  })));
-};
-
-var index_modern_FieldGroup = function FieldGroup(props) {
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
-    display: "flex",
-    width: "100%"
-  }, props.indexed ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
-    variant: "subtitle1"
-  }, props.index + 1 + '. ') : null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
-    display: props.column ? 'flex flex-column' : 'flex',
-    flexWrap: "wrap",
-    alignItems: props.column ? 'stretch' : 'center',
-    width: "100%",
-    my: 2
-  }, Array.isArray(props.children) ? props.children.map(function (child, index) {
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
-      key: props.name + '_' + index,
-      display: "flex",
-      width: "100%",
-      justifyContent: "space-between",
-      m: 1
-    }, child);
-  }) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
-    width: "100%",
-    p: 1
-  }, props.children)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_IconButton_IconButton, {
-    color: "default",
-    onClick: function onClick() {
-      return props.arrayHelpers.remove(props.index);
-    }
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Cancel_default.a, null))));
-};
-
-function parseValue(value, selfString) {
-  return typeof value === 'string' ? value : value[selfString];
-}
-function parseObject(object, selfString) {
-  return typeof Object.values(object)[0] === 'string' ? object : object[selfString];
-}
-function parseValues(values, selfString) {
-  var name = parseValue(values.name, selfString);
-  var description = parseValue(values.description, selfString);
-  var out = {
-    name: name,
-    description: description
-  };
-  if (Object.hasOwn(values, 'fieldName')) {
-    out.fieldName = values.fieldName;
-  }
-  if (Object.hasOwn(values, 'items')) {
-    out.items = parseObject(values.items, selfString);
-  }
-  return out;
-}
-
-var index_modern_excluded = ["isExperiment", "isRequired", "jsonField", "setupProps", "nameAttr", "values"];
-function FieldArraySection(props) {
-  var isExperiment = props.isExperiment,
-    isRequired = props.isRequired,
-    jsonField = props.jsonField,
-    setupProps = props.setupProps,
-    nameAttr = props.nameAttr,
-    values = props.values,
-    fieldProps = index_modern_objectWithoutPropertiesLoose(props, index_modern_excluded);
-  var selfString = isExperiment ? 'experiment' : 'dataset';
-  var _parseValues = parseValues(setupProps, selfString),
-    name = _parseValues.name,
-    description = _parseValues.description,
-    fieldName = _parseValues.fieldName;
-  var requiredStar = isRequired ? ' *' : '';
-  var JsonField = jsonField;
-  var _useFormikContext = useFormikContext(),
-    errors = _useFormikContext.errors,
-    touched = _useFormikContext.touched,
-    setFieldValue = _useFormikContext.setFieldValue;
-  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-    if ((nameAttr === 'types' || nameAttr === 'keywords' || nameAttr === 'licenses' || nameAttr === 'experimentsFunctionAssessed' || nameAttr === 'experimentsModalities' || nameAttr === 'experimentsLanguages') && values.length === 0) {
-      setFieldValue(nameAttr, ['']);
-    }
-  }, [nameAttr, values.length, setFieldValue]);
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "" + name + requiredStar,
-    tooltip: description
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FieldArray, {
-    name: nameAttr
-  }, function (arrayHelpers) {
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
-      display: "flex flex-column"
-    }, values.map(function (value, index) {
-      var fieldPath = nameAttr + "[" + index + "]";
-      var errorText = getIn(errors, fieldPath);
-      var touchedField = getIn(touched, fieldPath);
-      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_FieldGroup, {
-        arrayHelpers: arrayHelpers,
-        index: index,
-        key: "" + fieldName + index,
-        name: "" + fieldName + index
-      }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(JsonField, index_modern_extends({
-        isExperiment: isExperiment,
-        isRequired: isRequired,
-        nameAttr: nameAttr + "." + index,
-        setupProps: setupProps,
-        value: value
-      }, fieldProps)));
-    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
-      py: 1
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Button_Button, {
-      color: "secondary",
-      onClick: function onClick() {
-        return arrayHelpers.push('');
-      },
-      variant: "outlined"
-    }, values.length > 0 ? "Add another " + fieldName : "Add a " + fieldName)));
-  }));
-}
-
-function JsonSectionTitle(props) {
-  var isExperiment = props.isExperiment,
-    isRequired = props.isRequired,
-    setupProps = props.setupProps,
-    subsection = props.subsection,
-    isDisabled = props.isDisabled;
-  var selfString = isExperiment ? 'experiment' : 'dataset';
-  var _parseValues = parseValues(setupProps, selfString),
-    description = _parseValues.description,
-    name = _parseValues.name;
-  var requiredStar = isRequired ? ' *' : '';
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "" + name + requiredStar,
-    subsection: subsection,
-    tooltip: description,
-    isDisabled: isDisabled
-  });
-}
-
-var index_modern_excluded$1 = ["disabled"];
-function CustomTextField(_ref) {
-  var disabled = _ref.disabled,
-    props = index_modern_objectWithoutPropertiesLoose(_ref, index_modern_excluded$1);
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FastField, index_modern_extends({
-    component: formik_material_ui_es6_TextField
-  }, props, {
-    variant: "outlined",
-    fullWidth: true,
-    disabled: disabled,
-    inputProps: {
-      'data-testid': "" + props.name
-    }
-  }));
-}
-
-var _excluded$2 = ["isExperiment", "isRequired", "nameAttr", "setupProps", "value"];
-function JsonTextField(props) {
-  var isExperiment = props.isExperiment,
-    isRequired = props.isRequired,
-    nameAttr = props.nameAttr,
-    setupProps = props.setupProps,
-    fieldProps = index_modern_objectWithoutPropertiesLoose(props, _excluded$2);
-  var selfString = isExperiment ? 'experiment' : 'dataset';
-  var _parseValues = parseValues(setupProps, selfString),
-    name = _parseValues.name;
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, index_modern_extends({
-    label: name,
-    name: nameAttr,
-    required: isRequired
-  }, fieldProps));
-}
-
-var index_modern_useStyles$1 = styles_makeStyles(function () {
-  return {
-    formControl: {
-      minWidth: 220
-    }
-  };
-});
-function HybridSelectTextField(props) {
-  var field = props.field,
-    label = props.label,
-    options = props.options,
-    inputProps = props.inputProps;
-  var _useFormikContext = useFormikContext(),
-    touched = _useFormikContext.touched,
-    errors = _useFormikContext.errors,
-    values = _useFormikContext.values;
-  var meta = useField(field.name)[1];
-  var _useField$ = useField(field.name)[2],
-    setValue = _useField$.setValue,
-    setTouched = _useField$.setTouched;
-  var value = getIn(values, field.name);
-  var errorText = getIn(touched, field.name) && getIn(errors, field.name);
-  var showError = !!errorText && (!value || value === '');
-  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(value === 'other'),
-    useTextInput = _useState[0],
-    setUseTextInput = _useState[1];
-  var classes = index_modern_useStyles$1();
-  var handleSelect = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (ev) {
-    var newVal = ev.target.value;
-    setTouched(true);
-    if (newVal === 'other') {
-      setUseTextInput(true);
-      setValue('');
-    } else {
-      setUseTextInput(false);
-      setValue(newVal);
-    }
-  }, [setUseTextInput, setValue, setTouched]);
-  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
-    if (!Object.values(options).includes(value)) {
-      setUseTextInput(false);
-    }
-  }, [value, options]);
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
-    my: 1
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormControl_FormControl, {
-    className: classes.formControl,
-    variant: "outlined",
-    error: showError
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_InputLabel_InputLabel, null, label), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Select_Select, index_modern_extends({}, field, inputProps, {
-    label: label,
-    onChange: handleSelect,
-    value: value || ''
-  }), Object.entries(options).map(function (_ref) {
-    var optionValue = _ref[0],
-      optionLabel = _ref[1];
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
-      key: optionValue,
-      value: optionValue
-    }, optionLabel);
-  }), !Object.values(options).includes("Other (Please Specify)") && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
-    key: "other",
-    value: "other"
-  }, "Other (Please Specify)")), showError && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormHelperText_FormHelperText, null, errorText))), useTextInput && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
-    my: 1
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_TextField_TextField, index_modern_extends({
-    fullWidth: true,
-    onChange: function onChange(ev) {
-      return setValue(ev.target.value);
-    },
-    value: value || '',
-    variant: "outlined"
-  }, inputProps, {
-    name: field.name,
-    error: showError,
-    helperText: errorText
-  }))));
-}
-
-function JsonOtherSelectField(props) {
-  var isExperiment = props.isExperiment,
-    isRequired = props.isRequired,
-    nameAttr = props.nameAttr,
-    setupProps = props.setupProps;
-  var selfString = isExperiment ? 'experiment' : 'dataset';
-  var _parseValues = parseValues(setupProps, selfString),
-    name = _parseValues.name,
-    items = _parseValues.items;
-  var requiredStar = isRequired ? ' *' : '';
-  var label = "" + name + requiredStar;
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FastField, {
-    component: HybridSelectTextField,
-    inputProps: {
-      'data-testid': "" + nameAttr
-    },
-    label: label,
-    name: nameAttr,
-    options: items
-  });
-}
-
-var _excluded$3 = ["form", "field", "disabled"];
-var index_modern_useStyles$2 = styles_makeStyles(function (theme) {
-  return {
-    formControl: {
-      minWidth: 220,
-      maxWidth: '100%'
-    }
-  };
-});
-var index_modern_CustomSelectField = function CustomSelectField(_ref) {
-  var disabled = _ref.disabled,
-    props = index_modern_objectWithoutPropertiesLoose(_ref, _excluded$3);
-  var classes = index_modern_useStyles$2();
-  var _useFormikContext = useFormikContext(),
-    touched = _useFormikContext.touched,
-    errors = _useFormikContext.errors,
-    values = _useFormikContext.values;
-  var value = getIn(values, props.name);
-  var errorText = getIn(touched, props.name) && getIn(errors, props.name);
-  var isError = !!errorText && (!value || value === "");
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormControl_FormControl, {
-    className: classes.formControl,
-    variant: "outlined",
-    error: isError,
-    disabled: disabled
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_InputLabel_InputLabel, null, props.label), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FastField, index_modern_extends({
-    component: formik_material_ui_es6_Select
-  }, props, {
-    inputProps: {
-      'data-testid': "" + props.name
-    }
-  }), props.children), errorText && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormHelperText_FormHelperText, null, errorText));
-};
-
-function JsonSelectField(props) {
-  var isExperiment = props.isExperiment,
-    isRequired = props.isRequired,
-    nameAttr = props.nameAttr,
-    setupProps = props.setupProps;
-  var selfString = isExperiment ? 'experiment' : 'dataset';
-  var _parseValues = parseValues(setupProps, selfString),
-    name = _parseValues.name,
-    items = _parseValues.items;
-  var requiredStar = isRequired ? ' *' : '';
-  var label = "" + name + requiredStar;
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomSelectField, {
-    label: label,
-    name: nameAttr,
-    required: isRequired
-  }, Object.entries(items).map(function (entry) {
-    var itemValue = entry[0],
-      itemLabel = entry[1];
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
-      key: itemValue,
-      value: itemValue
-    }, itemLabel);
-  }));
-}
-
-var index_modern_useStyles$3 = styles_makeStyles(function (theme) {
-  return {
-    formControl: {
-      minWidth: 160
-    }
-  };
-});
-var index_modern_CustomRadioGroup = function CustomRadioGroup(_ref) {
-  var props = index_modern_extends({}, (_objectDestructuringEmpty(_ref), _ref));
-  var classes = index_modern_useStyles$3();
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormControl_FormControl, {
-    component: "fieldset"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormLabel_FormLabel, {
-    component: "legend"
-  }, props.label), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FastField, index_modern_extends({
-    component: formik_material_ui_es6_RadioGroup
-  }, props), props.children));
-};
-
-function PersonField(props) {
-  var nameAttr = props.nameAttr,
-    value = props.value;
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
-    label: "Full Name",
-    name: nameAttr + ".fullName",
-    required: true
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
-    label: "First Name",
-    name: nameAttr + ".firstName",
-    required: true
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
-    label: "Middle Initial",
-    name: nameAttr + ".middleInitial"
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
-    fullWidth: true,
-    label: "Last Name",
-    name: nameAttr + ".lastName",
-    required: true
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
-    label: "Email",
-    name: nameAttr + ".email"
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
-    label: "ORCID iD (https://orcid.org/XXXX-XXXX-XXXX-XXXX)",
-    name: nameAttr + ".orcid",
-    required: true
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FieldArray, {
-    name: nameAttr + ".affiliations"
-  }, function (arrayHelpers) {
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, {
-      subsection: true
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-      name: "Affiliations",
-      subsection: true,
-      tooltip: "Creator affiliations"
-    }), ((value === null || value === void 0 ? void 0 : value.affiliations) || []).map(function (affiliation, i) {
-      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_FieldGroup, {
-        arrayHelpers: arrayHelpers,
-        column: true,
-        index: i,
-        indexed: true,
-        key: "affiliation_" + i,
-        name: "affiliation_" + i
-      }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
-        label: "Affiliation",
-        name: nameAttr + ".affiliations." + i + ".name"
-      }));
-    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
-      py: 1
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Button_Button, {
-      color: "secondary",
-      onClick: function onClick() {
-        arrayHelpers.push('');
-      },
-      variant: "outlined"
-    }, ((value === null || value === void 0 ? void 0 : value.affiliations) || []).length > 0 ? 'Add another Affiliation' : 'Add an Affiliation')));
-  }));
-}
-
-function CreatorsField(props) {
-  var isExperiment = props.isExperiment,
-    isRequired = props.isRequired,
-    nameAttr = props.nameAttr,
-    setupProps = props.setupProps,
-    value = props.value;
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomRadioGroup, {
-    label: "Type",
-    name: nameAttr + ".type"
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormControlLabel_FormControlLabel, {
-    control: /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Radio_Radio, null),
-    label: "Person",
-    value: "Person"
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormControlLabel_FormControlLabel, {
-    control: /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Radio_Radio, null),
-    label: "Organization",
-    value: "Organization"
-  })), value.type === 'Organization' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
-    label: "Name/Institution",
-    name: nameAttr + ".name",
-    required: true
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
-    label: "Abbreviation",
-    name: nameAttr + ".abbreviation"
-  })) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(PersonField, {
-    isExperiment: isExperiment,
-    isRequired: isRequired,
-    nameAttr: nameAttr,
-    setupProps: setupProps,
-    value: value
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomSelectField, {
-    label: "Role",
-    name: nameAttr + ".role",
-    required: true
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
-    value: ""
-  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("em", null, "None")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
-    value: "Principal Investigator"
-  }, "Principal Investigator"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
-    value: "Contributor"
-  }, "Contributor")));
-}
-
-var _excluded$4 = ["isExperiment", "isRequired", "jsonField", "nameAttr", "setupProps", "nextClicked"];
-function SingleFieldSection(props) {
-  var isExperiment = props.isExperiment,
-    isRequired = props.isRequired,
-    jsonField = props.jsonField,
-    nameAttr = props.nameAttr,
-    setupProps = props.setupProps,
-    fieldProps = index_modern_objectWithoutPropertiesLoose(props, _excluded$4);
-  var selfString = isExperiment ? 'experiment' : 'dataset';
-  var _parseValues = parseValues(setupProps, selfString),
-    description = _parseValues.description,
-    name = _parseValues.name;
-  var requiredStar = isRequired ? ' *' : '';
-  var JsonField = jsonField;
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
-    name: "" + name + requiredStar,
-    tooltip: description
-  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(JsonField, index_modern_extends({
-    isExperiment: isExperiment,
-    isRequired: isRequired,
-    nameAttr: nameAttr,
-    setupProps: setupProps
-  }, fieldProps)));
-}
-
 var index_modern_title = {
 	name: "Title",
 	description: {
@@ -139420,7 +138967,7 @@ var units = {
 		PB: "PB"
 	}
 };
-var access = {
+var index_modern_access = {
 	name: "Access",
 	description: {
 		dataset: "The information about access modality for the dataset distribution.",
@@ -139764,7 +139311,7 @@ var fieldDescriptions = {
 	formats: formats,
 	size: index_modern_size,
 	units: units,
-	access: access,
+	access: index_modern_access,
 	landingPage: landingPage,
 	authorizations: index_modern_authorizations,
 	files: index_modern_files,
@@ -139876,6 +139423,719 @@ var fieldDescriptions = {
 	experimentsAdditionalRequirements: experimentsAdditionalRequirements
 };
 
+var LABELS = {
+  registrationPageURL: 'Registration page',
+  reb_info: 'Ethics statement',
+  reb_number: 'Ethics committee approval number',
+  files: 'Number of files',
+  subjects: 'Number of subjects',
+  primaryPublications: 'Primary publications',
+  isAbout: 'Is about (species)',
+  experimentsRequiredSoftware: 'Software'
+};
+function fieldLabel(key, isExperiment) {
+  if (LABELS[key]) return LABELS[key];
+  var d = fieldDescriptions[key];
+  var name = d && d.name;
+  if (typeof name === 'string') return name;
+  if (name && typeof name === 'object') return name[isExperiment ? 'experiment' : 'dataset'] || name.dataset;
+  return key;
+}
+function plainMessage(message) {
+  var m = String(message || '');
+  if (/^[\w.[\]]+ is a required field$/.test(m)) return 'This is required.';
+  if (/must be a `number` type/.test(m)) return 'Enter a number.';
+  if (/must be a valid URL$/.test(m)) return 'Enter a web address starting with https://';
+  if (/^[\w.[\]]+ field must have at least \d+ items?$/.test(m)) return 'Add at least one.';
+  return m;
+}
+function errorMessages(errors, prefix) {
+  if (prefix === void 0) {
+    prefix = '';
+  }
+  if (!errors) return [];
+  if (typeof errors === 'string') return [prefix + plainMessage(errors)];
+  if (Array.isArray(errors)) {
+    return errors.flatMap(function (err, index) {
+      return err ? errorMessages(err, typeof err === 'string' ? prefix : prefix + "item " + (index + 1) + " \u203A ") : [];
+    });
+  }
+  if (typeof errors === 'object') {
+    return Object.keys(errors).flatMap(function (key) {
+      return errorMessages(errors[key], prefix);
+    });
+  }
+  return [prefix + String(errors)];
+}
+function warningFromKey(key, errors, touched, isExperiment) {
+  if (!Object.keys(touched).includes(key)) {
+    return null;
+  }
+  var messages = Array.from(new Set(errorMessages(errors[key])));
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+    key: key
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
+    component: "span",
+    variant: "subtitle1"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("strong", null, fieldLabel(key, isExperiment)), ": ", messages.join(' ')));
+}
+function DatsErrors(props) {
+  var errors = props.errors,
+    touched = props.touched,
+    className = props.className,
+    formEmpty = props.formEmpty,
+    isExperiment = props.isExperiment;
+  if (Object.keys(errors).length === 0) {
+    return null;
+  }
+  var warnings = Object.keys(errors).map(function (key) {
+    return warningFromKey(key, errors, touched, isExperiment);
+  }).filter(function (x) {
+    return x !== null;
+  });
+  if (warnings.length === 0) {
+    return null;
+  }
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: className,
+    role: "alert"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
+    gutterBottom: true,
+    variant: "h6"
+  }, "Before the file can be created, please complete or correct:"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", null, warnings), formEmpty && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
+    gutterBottom: true,
+    variant: "subtitle1"
+  }, "All fields are empty."));
+}
+
+var baseStyle = {
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  padding: '20px',
+  borderWidth: 2,
+  borderRadius: 2,
+  borderColor: '#eeeeee',
+  borderStyle: 'dashed',
+  backgroundColor: '#fafafa',
+  color: '#bdbdbd',
+  outline: 'none',
+  transition: 'border .24s ease-in-out'
+};
+var activeStyle = {
+  borderColor: '#2196f3'
+};
+var acceptStyle = {
+  borderColor: '#00e676'
+};
+var rejectStyle = {
+  borderColor: '#ff1744'
+};
+var index_modern_DatsUploader = function DatsUploader(props) {
+  var onDatsReceived = props.onDatsReceived;
+  var onDrop = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (acceptedFiles) {
+    acceptedFiles.forEach(function (file) {
+      var reader = new FileReader();
+      reader.onabort = function () {
+        return console.log('file reading was aborted');
+      };
+      reader.onerror = function () {
+        return console.log('file reading has failed');
+      };
+      reader.onload = function () {
+        var json = JSON.parse(reader.result);
+        onDatsReceived(json);
+      };
+      reader.readAsText(file);
+    });
+  }, [onDatsReceived]);
+  var _useDropzone = useDropzone({
+      onDrop: onDrop,
+      accept: 'application/json'
+    }),
+    acceptedFiles = _useDropzone.acceptedFiles,
+    fileRejections = _useDropzone.fileRejections,
+    getRootProps = _useDropzone.getRootProps,
+    getInputProps = _useDropzone.getInputProps,
+    isDragActive = _useDropzone.isDragActive,
+    isDragAccept = _useDropzone.isDragAccept,
+    isDragReject = _useDropzone.isDragReject;
+  var style = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () {
+    return index_modern_extends({}, baseStyle, isDragActive ? activeStyle : {}, isDragAccept ? acceptStyle : {}, isDragReject ? rejectStyle : {});
+  }, [isDragActive, isDragReject, isDragAccept]);
+  var acceptedFileItems = acceptedFiles.map(function (file) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+      key: file.path
+    }, file.path, " - ", file.size, " bytes");
+  });
+  var fileRejectionItems = fileRejections.map(function (_ref) {
+    var file = _ref.file,
+      errors = _ref.errors;
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+      key: file.path
+    }, file.path, " - ", file.size, " bytes", /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", null, errors.map(function (e) {
+      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+        key: e.code
+      }, e.message);
+    })));
+  });
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", getRootProps({
+    style: style
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("input", getInputProps()), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("p", null, "Upload your DATS.json file here"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("em", null, "(Only *.json files will be accepted)")), acceptedFiles.length > 0 && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    style: {
+      paddingTop: '20px'
+    }
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    style: {
+      color: 'limegreen',
+      fontSize: '34px'
+    }
+  }, "\u2714"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    style: {
+      paddingLeft: '10px'
+    }
+  }, acceptedFiles[0].path, " - ", acceptedFiles[0].size, " bytes")), fileRejections.length > 0 && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    style: {
+      paddingTop: '20px'
+    }
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    style: {
+      color: 'red',
+      fontSize: '34px'
+    }
+  }, "\u2718"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("span", {
+    style: {
+      paddingLeft: '10px'
+    }
+  }, fileRejections[0].file.path, " - ", fileRejections[0].file.size, " bytes"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", null, fileRejections[0].errors.map(function (e, index) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
+      key: index
+    }, "Reason: ", e.message);
+  }))));
+};
+
+var index_modern_Section = function Section(props) {
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
+    display: "flex flex-column",
+    width: "100%",
+    p: 1,
+    my: 2,
+    boxShadow: props.subsection ? 2 : 0
+  }, Array.isArray(props.children) ? props.children.map(function (child, index) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
+      key: 'child_' + index,
+      m: 1
+    }, child);
+  }) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
+    m: 1
+  }, props.children));
+};
+
+var index_modern_useStyles = styles_makeStyles(function (theme) {
+  return {
+    disabled: {
+      color: theme.palette.action.disabled
+    }
+  };
+});
+var index_modern_SectionTitle = function SectionTitle(props) {
+  var classes = index_modern_useStyles();
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
+    display: "flex flex-column"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
+    variant: props.subsection ? 'subtitle1' : 'h6',
+    gutterBottom: true,
+    className: props.isDisabled ? classes.disabled : ''
+  }, props.name), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
+    variant: "caption",
+    className: props.isDisabled ? classes.disabled : ''
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+    dangerouslySetInnerHTML: {
+      __html: props.tooltip
+    }
+  })));
+};
+
+var index_modern_FieldGroup = function FieldGroup(props) {
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
+    display: "flex",
+    width: "100%"
+  }, props.indexed ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
+    variant: "subtitle1"
+  }, props.index + 1 + '. ') : null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
+    display: props.column ? 'flex flex-column' : 'flex',
+    flexWrap: "wrap",
+    alignItems: props.column ? 'stretch' : 'center',
+    width: "100%",
+    my: 2
+  }, Array.isArray(props.children) ? props.children.map(function (child, index) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
+      key: props.name + '_' + index,
+      display: "flex",
+      width: "100%",
+      justifyContent: "space-between",
+      m: 1
+    }, child);
+  }) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
+    width: "100%",
+    p: 1
+  }, props.children)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_IconButton_IconButton, {
+    color: "default",
+    onClick: function onClick() {
+      return props.arrayHelpers.remove(props.index);
+    }
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Cancel_default.a, null))));
+};
+
+function parseValue(value, selfString) {
+  return typeof value === 'string' ? value : value[selfString];
+}
+function parseObject(object, selfString) {
+  return typeof Object.values(object)[0] === 'string' ? object : object[selfString];
+}
+function parseValues(values, selfString) {
+  var name = parseValue(values.name, selfString);
+  var description = parseValue(values.description, selfString);
+  var out = {
+    name: name,
+    description: description
+  };
+  if (Object.hasOwn(values, 'fieldName')) {
+    out.fieldName = values.fieldName;
+  }
+  if (Object.hasOwn(values, 'items')) {
+    out.items = parseObject(values.items, selfString);
+  }
+  return out;
+}
+
+var index_modern_excluded = ["isExperiment", "isRequired", "jsonField", "setupProps", "nameAttr", "values"];
+function FieldArraySection(props) {
+  var isExperiment = props.isExperiment,
+    isRequired = props.isRequired,
+    jsonField = props.jsonField,
+    setupProps = props.setupProps,
+    nameAttr = props.nameAttr,
+    values = props.values,
+    fieldProps = index_modern_objectWithoutPropertiesLoose(props, index_modern_excluded);
+  var selfString = isExperiment ? 'experiment' : 'dataset';
+  var _parseValues = parseValues(setupProps, selfString),
+    name = _parseValues.name,
+    description = _parseValues.description,
+    fieldName = _parseValues.fieldName;
+  var requiredStar = isRequired ? ' *' : '';
+  var JsonField = jsonField;
+  var _useFormikContext = useFormikContext(),
+    errors = _useFormikContext.errors,
+    touched = _useFormikContext.touched,
+    setFieldValue = _useFormikContext.setFieldValue;
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    if ((nameAttr === 'types' || nameAttr === 'keywords' || nameAttr === 'licenses' || nameAttr === 'experimentsFunctionAssessed' || nameAttr === 'experimentsModalities' || nameAttr === 'experimentsLanguages') && values.length === 0) {
+      setFieldValue(nameAttr, ['']);
+    }
+  }, [nameAttr, values.length, setFieldValue]);
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
+    name: "" + name + requiredStar,
+    tooltip: description
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FieldArray, {
+    name: nameAttr
+  }, function (arrayHelpers) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
+      display: "flex flex-column"
+    }, values.map(function (value, index) {
+      var fieldPath = nameAttr + "[" + index + "]";
+      var errorText = getIn(errors, fieldPath);
+      var touchedField = getIn(touched, fieldPath);
+      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_FieldGroup, {
+        arrayHelpers: arrayHelpers,
+        index: index,
+        key: "" + fieldName + index,
+        name: "" + fieldName + index
+      }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(JsonField, index_modern_extends({
+        isExperiment: isExperiment,
+        isRequired: isRequired,
+        nameAttr: nameAttr + "." + index,
+        setupProps: setupProps,
+        value: value
+      }, fieldProps)));
+    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
+      py: 1
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Button_Button, {
+      color: "secondary",
+      onClick: function onClick() {
+        return arrayHelpers.push('');
+      },
+      variant: "outlined"
+    }, values.length > 0 ? "Add another " + fieldName : "Add a " + fieldName)));
+  }));
+}
+
+function JsonSectionTitle(props) {
+  var isExperiment = props.isExperiment,
+    isRequired = props.isRequired,
+    setupProps = props.setupProps,
+    subsection = props.subsection,
+    isDisabled = props.isDisabled;
+  var selfString = isExperiment ? 'experiment' : 'dataset';
+  var _parseValues = parseValues(setupProps, selfString),
+    description = _parseValues.description,
+    name = _parseValues.name;
+  var requiredStar = isRequired ? ' *' : '';
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
+    name: "" + name + requiredStar,
+    subsection: subsection,
+    tooltip: description,
+    isDisabled: isDisabled
+  });
+}
+
+var index_modern_excluded$1 = ["disabled"];
+function CustomTextField(_ref) {
+  var disabled = _ref.disabled,
+    props = index_modern_objectWithoutPropertiesLoose(_ref, index_modern_excluded$1);
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FastField, index_modern_extends({
+    component: formik_material_ui_es6_TextField,
+    id: props.id || props.name
+  }, props, {
+    variant: "outlined",
+    fullWidth: true,
+    disabled: disabled,
+    inputProps: {
+      'data-testid': "" + props.name
+    }
+  }));
+}
+
+var _excluded$2 = ["isExperiment", "isRequired", "nameAttr", "setupProps", "value"];
+function JsonTextField(props) {
+  var isExperiment = props.isExperiment,
+    isRequired = props.isRequired,
+    nameAttr = props.nameAttr,
+    setupProps = props.setupProps,
+    fieldProps = index_modern_objectWithoutPropertiesLoose(props, _excluded$2);
+  var selfString = isExperiment ? 'experiment' : 'dataset';
+  var _parseValues = parseValues(setupProps, selfString),
+    name = _parseValues.name;
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, index_modern_extends({
+    label: name,
+    name: nameAttr,
+    required: isRequired
+  }, fieldProps));
+}
+
+var index_modern_useStyles$1 = styles_makeStyles(function () {
+  return {
+    formControl: {
+      minWidth: 220
+    }
+  };
+});
+function HybridSelectTextField(props) {
+  var field = props.field,
+    label = props.label,
+    options = props.options,
+    inputProps = props.inputProps;
+  var _useFormikContext = useFormikContext(),
+    touched = _useFormikContext.touched,
+    errors = _useFormikContext.errors,
+    values = _useFormikContext.values;
+  var meta = useField(field.name)[1];
+  var _useField$ = useField(field.name)[2],
+    setValue = _useField$.setValue,
+    setTouched = _useField$.setTouched;
+  var value = getIn(values, field.name);
+  var errorText = getIn(touched, field.name) && getIn(errors, field.name);
+  var showError = !!errorText && (!value || value === '');
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(value === 'other'),
+    useTextInput = _useState[0],
+    setUseTextInput = _useState[1];
+  var classes = index_modern_useStyles$1();
+  var handleSelect = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (ev) {
+    var newVal = ev.target.value;
+    setTouched(true);
+    if (newVal === 'other') {
+      setUseTextInput(true);
+      setValue('');
+    } else {
+      setUseTextInput(false);
+      setValue(newVal);
+    }
+  }, [setUseTextInput, setValue, setTouched]);
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    if (!Object.values(options).includes(value)) {
+      setUseTextInput(false);
+    }
+  }, [value, options]);
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
+    my: 1
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormControl_FormControl, {
+    className: classes.formControl,
+    variant: "outlined",
+    error: showError
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_InputLabel_InputLabel, null, label), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Select_Select, index_modern_extends({}, field, inputProps, {
+    label: label,
+    onChange: handleSelect,
+    value: value || ''
+  }), Object.entries(options).map(function (_ref) {
+    var optionValue = _ref[0],
+      optionLabel = _ref[1];
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+      key: optionValue,
+      value: optionValue
+    }, optionLabel);
+  }), !Object.values(options).includes("Other (Please Specify)") && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+    key: "other",
+    value: "other"
+  }, "Other (Please Specify)")), showError && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormHelperText_FormHelperText, null, errorText))), useTextInput && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
+    my: 1
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_TextField_TextField, index_modern_extends({
+    fullWidth: true,
+    onChange: function onChange(ev) {
+      return setValue(ev.target.value);
+    },
+    value: value || '',
+    variant: "outlined"
+  }, inputProps, {
+    name: field.name,
+    error: showError,
+    helperText: errorText
+  }))));
+}
+
+function JsonOtherSelectField(props) {
+  var isExperiment = props.isExperiment,
+    isRequired = props.isRequired,
+    nameAttr = props.nameAttr,
+    setupProps = props.setupProps;
+  var selfString = isExperiment ? 'experiment' : 'dataset';
+  var _parseValues = parseValues(setupProps, selfString),
+    name = _parseValues.name,
+    items = _parseValues.items;
+  var requiredStar = isRequired ? ' *' : '';
+  var label = "" + name + requiredStar;
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FastField, {
+    component: HybridSelectTextField,
+    inputProps: {
+      'data-testid': "" + nameAttr
+    },
+    label: label,
+    name: nameAttr,
+    options: items
+  });
+}
+
+var _excluded$3 = ["form", "field", "disabled"];
+var index_modern_useStyles$2 = styles_makeStyles(function (theme) {
+  return {
+    formControl: {
+      minWidth: 220,
+      maxWidth: '100%'
+    }
+  };
+});
+var index_modern_CustomSelectField = function CustomSelectField(_ref) {
+  var disabled = _ref.disabled,
+    props = index_modern_objectWithoutPropertiesLoose(_ref, _excluded$3);
+  var classes = index_modern_useStyles$2();
+  var _useFormikContext = useFormikContext(),
+    touched = _useFormikContext.touched,
+    errors = _useFormikContext.errors,
+    values = _useFormikContext.values;
+  var value = getIn(values, props.name);
+  var errorText = getIn(touched, props.name) && getIn(errors, props.name);
+  var isError = !!errorText && (!value || value === "");
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormControl_FormControl, {
+    className: classes.formControl,
+    variant: "outlined",
+    error: isError,
+    disabled: disabled
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_InputLabel_InputLabel, {
+    id: props.name + "-label"
+  }, props.label), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FastField, index_modern_extends({
+    component: formik_material_ui_es6_Select,
+    labelId: props.name + "-label",
+    label: props.label
+  }, props, {
+    inputProps: {
+      'data-testid': "" + props.name
+    }
+  }), props.children), errorText && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormHelperText_FormHelperText, null, errorText));
+};
+
+function JsonSelectField(props) {
+  var isExperiment = props.isExperiment,
+    isRequired = props.isRequired,
+    nameAttr = props.nameAttr,
+    setupProps = props.setupProps;
+  var selfString = isExperiment ? 'experiment' : 'dataset';
+  var _parseValues = parseValues(setupProps, selfString),
+    name = _parseValues.name,
+    items = _parseValues.items;
+  var requiredStar = isRequired ? ' *' : '';
+  var label = "" + name + requiredStar;
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomSelectField, {
+    label: label,
+    name: nameAttr,
+    required: isRequired
+  }, Object.entries(items).map(function (entry) {
+    var itemValue = entry[0],
+      itemLabel = entry[1];
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+      key: itemValue,
+      value: itemValue
+    }, itemLabel);
+  }));
+}
+
+var index_modern_useStyles$3 = styles_makeStyles(function (theme) {
+  return {
+    formControl: {
+      minWidth: 160
+    }
+  };
+});
+var index_modern_CustomRadioGroup = function CustomRadioGroup(_ref) {
+  var props = index_modern_extends({}, (_objectDestructuringEmpty(_ref), _ref));
+  var classes = index_modern_useStyles$3();
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormControl_FormControl, {
+    component: "fieldset"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormLabel_FormLabel, {
+    component: "legend"
+  }, props.label), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FastField, index_modern_extends({
+    component: formik_material_ui_es6_RadioGroup
+  }, props), props.children));
+};
+
+function PersonField(props) {
+  var nameAttr = props.nameAttr,
+    value = props.value;
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
+    label: "Full Name",
+    name: nameAttr + ".fullName",
+    required: true
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
+    label: "First Name",
+    name: nameAttr + ".firstName",
+    required: true
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
+    label: "Middle Initial",
+    name: nameAttr + ".middleInitial"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
+    fullWidth: true,
+    label: "Last Name",
+    name: nameAttr + ".lastName",
+    required: true
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
+    label: "Email",
+    name: nameAttr + ".email"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
+    label: "ORCID iD (https://orcid.org/XXXX-XXXX-XXXX-XXXX)",
+    name: nameAttr + ".orcid",
+    required: true
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(FieldArray, {
+    name: nameAttr + ".affiliations"
+  }, function (arrayHelpers) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, {
+      subsection: true
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
+      name: "Affiliations",
+      subsection: true,
+      tooltip: "Creator affiliations"
+    }), ((value === null || value === void 0 ? void 0 : value.affiliations) || []).map(function (affiliation, i) {
+      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_FieldGroup, {
+        arrayHelpers: arrayHelpers,
+        column: true,
+        index: i,
+        indexed: true,
+        key: "affiliation_" + i,
+        name: "affiliation_" + i
+      }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
+        label: "Affiliation",
+        name: nameAttr + ".affiliations." + i + ".name"
+      }));
+    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Box_Box, {
+      py: 1
+    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Button_Button, {
+      color: "secondary",
+      onClick: function onClick() {
+        arrayHelpers.push('');
+      },
+      variant: "outlined"
+    }, ((value === null || value === void 0 ? void 0 : value.affiliations) || []).length > 0 ? 'Add another Affiliation' : 'Add an Affiliation')));
+  }));
+}
+
+function CreatorsField(props) {
+  var isExperiment = props.isExperiment,
+    isRequired = props.isRequired,
+    nameAttr = props.nameAttr,
+    setupProps = props.setupProps,
+    value = props.value;
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomRadioGroup, {
+    label: "Type",
+    name: nameAttr + ".type"
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormControlLabel_FormControlLabel, {
+    control: /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Radio_Radio, null),
+    label: "Person",
+    value: "Person"
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_FormControlLabel_FormControlLabel, {
+    control: /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Radio_Radio, null),
+    label: "Organization",
+    value: "Organization"
+  })), value.type === 'Organization' ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
+    label: "Name/Institution",
+    name: nameAttr + ".name",
+    required: true
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
+    label: "Abbreviation",
+    name: nameAttr + ".abbreviation"
+  })) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(PersonField, {
+    isExperiment: isExperiment,
+    isRequired: isRequired,
+    nameAttr: nameAttr,
+    setupProps: setupProps,
+    value: value
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_CustomSelectField, {
+    label: "Role",
+    name: nameAttr + ".role",
+    required: true
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+    value: ""
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("em", null, "None")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+    value: "Principal Investigator"
+  }, "Principal Investigator"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_MenuItem_MenuItem, {
+    value: "Contributor"
+  }, "Contributor")));
+}
+
+var _excluded$4 = ["isExperiment", "isRequired", "jsonField", "nameAttr", "setupProps", "nextClicked"];
+function SingleFieldSection(props) {
+  var isExperiment = props.isExperiment,
+    isRequired = props.isRequired,
+    jsonField = props.jsonField,
+    nameAttr = props.nameAttr,
+    setupProps = props.setupProps,
+    fieldProps = index_modern_objectWithoutPropertiesLoose(props, _excluded$4);
+  var selfString = isExperiment ? 'experiment' : 'dataset';
+  var _parseValues = parseValues(setupProps, selfString),
+    description = _parseValues.description,
+    name = _parseValues.name;
+  var requiredStar = isRequired ? ' *' : '';
+  var JsonField = jsonField;
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_SectionTitle, {
+    name: "" + name + requiredStar,
+    tooltip: description
+  }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(JsonField, index_modern_extends({
+    isExperiment: isExperiment,
+    isRequired: isRequired,
+    nameAttr: nameAttr,
+    setupProps: setupProps
+  }, fieldProps)));
+}
+
 function GeneralForm(props) {
   var values = props.values,
     isExperiment = props.isExperiment,
@@ -139981,7 +140241,7 @@ function GeneralForm(props) {
     isRequired: isRegistrationPageRequired,
     setupProps: fieldDescriptions.registrationPage
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
-    label: "registrationPage",
+    label: "Registration page (web address or email)",
     name: "registrationPageURL",
     required: isRegistrationPageRequired
   })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
@@ -140898,7 +141158,7 @@ function ExtraPropertiesForm(props) {
       },
       variant: "outlined"
     }, values.spatialCoverage.length > 0 ? 'Add another Spatial Coverage' : 'Add a Spatial Coverage')));
-  })), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
+  })), !isExperiment && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Divider_Divider, {
     variant: "middle"
   }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(index_modern_Section, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(JsonSectionTitle, {
     isExperiment: isExperiment,
@@ -140945,14 +141205,37 @@ function ExtraPropertiesForm(props) {
     },
     value: "option_4",
     disabled: isPrivacyOpen
-  }, "These data are not derived from human participants.")), isExperiment ? null : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
+  }, "These data are not derived from human participants.")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(CustomTextField, {
     label: "Ethics committee approval number",
     name: "reb_number",
     disabled: isPrivacyOpen
-  })));
+  }))));
 }
 
+function genDatasetReadme(values) {
+  var list = function list(a) {
+    return (a || []).filter(Boolean);
+  };
+  var publications = list(values.primaryPublications).filter(function (p) {
+    return p.title;
+  }).map(function (p) {
+    return "* " + p.title + (p.identifier && p.identifier.identifier ? " (" + p.identifier.identifier + ")" : '');
+  }).join('\n');
+  var species = list(values.isAbout).map(function (i) {
+    return i.name || i;
+  }).filter(Boolean).join(', ');
+  var formats = list(values.formats).join(', ');
+  var size = values.size && values.size.value ? (values.size.value + " " + (values.size.units || '')).trim() : '';
+  var licenses = list(values.licenses).map(function (l) {
+    return l.value || l;
+  }).join(', ');
+  var contact = values.contact && (values.contact.name || values.contact.email) ? "" + (values.contact.name || '') + (values.contact.email ? " (" + values.contact.email + ")" : '') : '';
+  return "# " + values.title + "\n\n" + values.description + "\n\n## How the data were collected\n\n<!-- Study design, participants or samples, equipment, acquisition protocol. -->\n\n## What the dataset contains\n\n" + [values.subjects && values.subjects.value ? "* Subjects: " + values.subjects.value : '', species ? "* Species: " + species : '', values.files ? "* Files: " + values.files : '', size ? "* Size: " + size : '', formats ? "* Formats: " + formats : ''].filter(Boolean).join('\n') + "\n\n<!-- How the files are organized (e.g. BIDS), and what each folder holds. -->\n\n## Getting access\n\n" + (values.privacy && values.privacy !== 'open' ? "Access is " + values.privacy + (values.registrationPageURL ? ": " + values.registrationPageURL : '.') : 'The data are open.') + "\n\n## How to cite\n\n" + (publications || '<!-- The publication that describes these data, if any. -->') + "\n\n## License\n\n" + licenses + "\n\n## Contact\n\n" + contact + "\n";
+}
 function genDefaultReadme(values) {
+  return values.isExperiment ? genExperimentReadme(values) : genDatasetReadme(values);
+}
+function genExperimentReadme(values) {
   var publications = values.primaryPublications.map(function (publication) {
     return publication.title;
   }).join(', ');
@@ -141028,7 +141311,7 @@ function ReadmeEditor(props) {
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Typography_Typography, {
     gutterBottom: true,
     variant: "body1"
-  }, "To start the creation of a new DATS.json file, click on 'CREATE A NEW DATS'.")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
+  }, "To start a new record, click on 'START A NEW RECORD'.")), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("div", {
     className: wrapperClass
   }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Button_Button, {
     className: buttonClass,
@@ -141080,6 +141363,288 @@ function CreateDatsSuccess(props) {
   }, "Once you've downloaded the \"DATS.json\" file, click the \"Next\" button below to continue to the Markdown text editor that will allow you to create a \"README.md\" file for your dataset.")));
 }
 
+var doiRegex = /^(?:https?:\/\/(?:dx\.)?doi\.org\/|doi:\s*)?(10\.\d{4,9}\/\S+)$/i;
+var arkRegex = /^(?:https?:\/\/[a-zA-Z0-9.-]+\/)?ark:\/?\d{5}\/\S+$/i;
+var urlRegex = /^https?:\/\/\S+$/i;
+var publicationSchema = ObjectSchema().shape({
+  title: StringSchema().nullable(),
+  publicationVenue: StringSchema().nullable(),
+  authors: es_array().nullable().when('title', {
+    is: function is(title) {
+      return !!title;
+    },
+    then: es_array().of(ObjectSchema().shape({
+      fullName: StringSchema().nullable().test('full-or-parts', 'Give the full name, or both the first and last names', function (value) {
+        var _this$parent = this.parent,
+          firstName = _this$parent.firstName,
+          lastName = _this$parent.lastName;
+        var has = function has(x) {
+          return typeof x === 'string' && x.trim() !== '';
+        };
+        return has(value) || has(firstName) && has(lastName);
+      }),
+      firstName: StringSchema().nullable(),
+      lastName: StringSchema().nullable(),
+      middleInitial: StringSchema().nullable(),
+      affiliations: es_array().of(StringSchema().nullable()).nullable()
+    })).min(1, 'At least one author is required if title is provided'),
+    otherwise: es_array().nullable()
+  }),
+  dates: es_array().of(ObjectSchema().shape({
+    date: es_date().nullable(),
+    description: StringSchema().nullable()
+  })).nullable(),
+  identifier: ObjectSchema().nullable().when('title', {
+    is: function is(title) {
+      return !!title;
+    },
+    then: ObjectSchema().shape({
+      identifier: StringSchema().nullable().test('is-doi-ark-or-url', 'Give a DOI (e.g. 10.1016/j.dib.2020.105224), an ARK, or a web address, or leave it empty', function (value) {
+        return !value || doiRegex.test(value.trim()) || arkRegex.test(value.trim()) || urlRegex.test(value.trim());
+      }),
+      identifierSource: StringSchema().nullable()
+    }),
+    otherwise: ObjectSchema().shape({
+      identifier: StringSchema().nullable(),
+      identifierSource: StringSchema().nullable()
+    })
+  })
+});
+var defaultDatsValidationSchema = ObjectSchema({
+  isExperiment: yup_es_boolean(),
+  title: StringSchema().required(),
+  creators: es_array().of(ObjectSchema().shape({
+    type: StringSchema().required('Type is required'),
+    name: StringSchema().when('type', {
+      is: 'Organization',
+      then: StringSchema().required('Name/Institution is required'),
+      otherwise: StringSchema().nullable()
+    }),
+    fullName: StringSchema().when('type', {
+      is: 'Person',
+      then: StringSchema().required('Full name is required'),
+      otherwise: StringSchema().nullable()
+    }),
+    firstName: StringSchema().when('type', {
+      is: 'Person',
+      then: StringSchema().required('First name is required'),
+      otherwise: StringSchema().nullable()
+    }),
+    lastName: StringSchema().when('type', {
+      is: 'Person',
+      then: StringSchema().required('Last name is required'),
+      otherwise: StringSchema().nullable()
+    }),
+    email: StringSchema().email('Invalid email format').nullable(),
+    orcid: StringSchema().when('type', {
+      is: 'Person',
+      then: StringSchema().matches(/^https:\/\/orcid(?:[\0-\t\x0B\f\x0E-\u2027\u202A-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])org\/[0-9][0-9][0-9][0-9]\x2D[0-9][0-9][0-9][0-9]\x2D[0-9][0-9][0-9][0-9]\x2D[0-9][0-9][0-9][0-9X]$/, "The ORCID format must match: https://orcid.org/XXXX-XXXX-XXXX-XXXX").required('An ORCID is required'),
+      otherwise: StringSchema().nullable()
+    }).nullable()
+  })).min(1, 'At least one creator is required'),
+  contact: ObjectSchema().shape({
+    name: StringSchema().required(),
+    email: StringSchema().email().required()
+  }),
+  description: StringSchema().required(),
+  types: es_array().of(StringSchema().required().notOneOf([""], "Type cannot be empty")).min(1).required("Type cannot be empty"),
+  version: StringSchema().required(),
+  licenses: es_array().of(StringSchema().required("Licenses cannot be empty")).min(1, "At least one license is required").required("Licenses are required"),
+  keywords: es_array().of(StringSchema().required().notOneOf([""], "Keywords cannot be empty")).min(1).required("Keywords cannot be empty"),
+  formats: es_array().of(StringSchema()),
+  size: ObjectSchema({
+    value: NumberSchema().positive().required(),
+    units: StringSchema().required()
+  }).required(),
+  access: ObjectSchema({
+    landingPage: StringSchema().url().required(),
+    authorization: StringSchema().required()
+  }).required(),
+  privacy: StringSchema().matches(/(?:open|registered|controlled|private)/, {
+    excludeEmptyString: true
+  }).required(),
+  files: NumberSchema().integer().positive().required(),
+  subjects: ObjectSchema({
+    applicable: yup_es_boolean(),
+    value: NumberSchema().integer().positive().nullable()
+  }),
+  conpStatus: StringSchema().matches(/(?:CONP|Canadian|external)/, {
+    excludeEmptyString: true
+  }).required(),
+  derivedFrom: StringSchema(),
+  parentDatasetId: StringSchema(),
+  primaryPublications: es_array().of(publicationSchema),
+  dimensions: es_array().of(StringSchema()),
+  identifier: ObjectSchema({
+    identifier: StringSchema().url(),
+    identifierSource: StringSchema()
+  }),
+  logo: ObjectSchema({
+    type: StringSchema().oneOf(['url', 'fileName']),
+    fileName: StringSchema(),
+    url: StringSchema().url()
+  }),
+  registrationPageURL: StringSchema().when(['privacy', 'isExperiment'], {
+    is: function is(privacy, isExperiment) {
+      return isExperiment || !['registered', 'controlled', 'private'].includes(privacy);
+    },
+    then: StringSchema(),
+    otherwise: StringSchema().required('Registration page is required when privacy is set to registered, controlled, or private.').test('is-url-or-email', 'Registration page must be a valid URL or email address', function (value) {
+      var urlPattern = new RegExp('^(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\\d_]*)?$', 'i');
+      var emailPattern = new RegExp('^\\S+@\\S+\\.\\S+$');
+      return urlPattern.test(value) || emailPattern.test(value);
+    })
+  }),
+  dates: es_array().of(ObjectSchema({
+    date: es_date(),
+    description: StringSchema()
+  })),
+  citations: es_array().of(StringSchema()),
+  producedBy: StringSchema(),
+  isAbout: es_array().of(StringSchema()),
+  hasPart: StringSchema(),
+  acknowledges: StringSchema(),
+  refinement: StringSchema(),
+  aggregation: StringSchema(),
+  spatialCoverage: es_array().of(StringSchema()),
+  reb_info: StringSchema().when(['privacy', 'isExperiment'], {
+    is: function is(privacy, isExperiment) {
+      return isExperiment || ['registered', 'controlled', 'private'].includes(privacy);
+    },
+    then: StringSchema(),
+    otherwise: StringSchema().oneOf(['option_1', 'option_2', 'option_3', 'option_4']).required('Choose the statement that applies to how these data may be shared openly.')
+  }),
+  reb_number: StringSchema(),
+  experimentsFunctionAssessed: es_array().when('isExperiment', {
+    is: true,
+    then: es_array().of(StringSchema().required()),
+    otherwise: es_array().of(StringSchema())
+  }),
+  experimentsLanguages: es_array().when('isExperiment', {
+    is: true,
+    then: es_array().of(StringSchema().required()),
+    otherwise: es_array().of(StringSchema())
+  }),
+  experimentsValidationMeasures: es_array().of(StringSchema()),
+  experimentsValidationPopulations: es_array().of(StringSchema()),
+  experimentsAccessibility: es_array().of(StringSchema()),
+  experimentsSpecies: es_array().of(StringSchema()),
+  experimentsModalities: es_array().when('isExperiment', {
+    is: true,
+    then: es_array().of(StringSchema().required()),
+    otherwise: es_array().of(StringSchema())
+  }),
+  experimentsRequiredDevices: es_array().when('isExperiment', {
+    is: true,
+    then: es_array().of(StringSchema().required()),
+    otherwise: es_array().of(StringSchema())
+  }),
+  experimentsRequiredSoftware: es_array().when('isExperiment', {
+    is: true,
+    then: es_array().of(ObjectSchema({
+      software: StringSchema().required().matches(/^(?!\s*$).+/, 'Software name cannot be empty or just spaces'),
+      version: StringSchema()
+    }))
+  }),
+  experimentsStimuli: es_array().of(StringSchema()),
+  experimentsAdditionalRequirements: StringSchema()
+});
+var defaultDatsValues = {
+  title: '',
+  creators: [{
+    name: '',
+    type: 'Organization',
+    role: 'Principal Investigator',
+    abbreviation: ''
+  }],
+  contact: {
+    name: '',
+    email: ''
+  },
+  description: '',
+  types: [],
+  version: '',
+  licenses: [],
+  keywords: [],
+  formats: [],
+  size: {
+    value: '',
+    units: 'MB'
+  },
+  access: {
+    landingPage: '',
+    authorization: 'public'
+  },
+  privacy: '',
+  files: '',
+  subjects: {
+    applicable: true,
+    value: ''
+  },
+  conpStatus: '',
+  origin: {
+    institution: '',
+    city: '',
+    province: '',
+    country: ''
+  },
+  derivedFrom: '',
+  parentDatasetId: '',
+  primaryPublications: [],
+  dimensions: [],
+  identifier: {
+    identifier: '',
+    identifierSource: ''
+  },
+  logo: {
+    type: 'url',
+    fileName: '',
+    url: ''
+  },
+  registrationPageURL: '',
+  dates: [],
+  citations: [],
+  producedBy: '',
+  isAbout: [{
+    type: 'Species'
+  }],
+  hasPart: '',
+  acknowledges: [],
+  refinement: '',
+  aggregation: '',
+  spatialCoverage: [],
+  attachments: [],
+  reb_info: '',
+  reb_number: '',
+  experimentsFunctionAssessed: [],
+  experimentsLanguages: [],
+  experimentsValidationMeasures: [],
+  experimentsValidationPopulations: [],
+  experimentsAccessibility: [],
+  experimentsSpecies: [],
+  experimentsModalities: [],
+  experimentsRequiredDevices: [],
+  experimentsRequiredSoftware: [],
+  experimentsStimuli: [],
+  experimentsAdditionalRequirements: ''
+};
+
+function index_modern_normalizeIdentifier(value) {
+  var v = String(value || '').trim();
+  var m = v.match(doiRegex);
+  return m ? "https://doi.org/" + m[1] : v;
+}
+function completeAuthorName(author) {
+  var has = function has(x) {
+    return typeof x === 'string' && x.trim() !== '';
+  };
+  if (author && !has(author.fullName) && has(author.firstName) && has(author.lastName)) {
+    author.fullName = [author.firstName, author.middleInitial, author.lastName].filter(has).map(function (x) {
+      return x.trim();
+    }).join(' ');
+  }
+  return author;
+}
 var index_modern_FormToDats = /*#__PURE__*/function () {
   function FormToDats(data) {
     this.data = data;
@@ -141165,8 +141730,15 @@ var index_modern_FormToDats = /*#__PURE__*/function () {
         }
       }],
       primaryPublications: this.data.primaryPublications.map(function (pp) {
+        if (pp.identifier && pp.identifier.identifier) {
+          pp.identifier.identifier = index_modern_normalizeIdentifier(pp.identifier.identifier);
+        }
+        pp.authors = (pp.authors || []).map(completeAuthorName);
         return Object.assign(pp, {
-          dates: pp.dates.map(function (date) {
+          dates: (pp.dates || []).filter(function (date) {
+            return date && date.date;
+          }).map(function (date) {
+            delete date.description;
             return Object.assign(date, {
               date: "" + date.date,
               type: {
@@ -141346,7 +141918,7 @@ var index_modern_FormToDats = /*#__PURE__*/function () {
       }]
     };
     var ethicsStatement = 'In submitting this dataset for inclusion, I declare that ';
-    if (this.data.reb_info === 'option_1') {
+    if (this.data.isExperiment) ; else if (this.data.reb_info === 'option_1') {
       extraProperties.push({
         category: 'REB_statement',
         values: [{
@@ -141423,6 +141995,63 @@ var index_modern_FormToDats = /*#__PURE__*/function () {
     if (json.primaryPublications.length === 0) {
       delete json.primaryPublications;
     }
+    var kept = this.data._preserved;
+    var detail = kept && kept.detail;
+    if (detail) {
+      json.types = json.types.map(function (t) {
+        return detail.types[t.information.value] || t;
+      });
+      json.licenses = json.licenses.map(function (l) {
+        return detail.licenses[l.name] || l;
+      });
+      if (detail.distribution && json.distributions[0]) {
+        var d = json.distributions[0];
+        Object.keys(detail.distribution).forEach(function (key) {
+          if (!(key in d)) d[key] = detail.distribution[key];
+        });
+        var access = detail.distribution.access || {};
+        Object.keys(access).forEach(function (key) {
+          if (!(key in d.access)) d.access[key] = access[key];
+        });
+      }
+      if (detail.contact) {
+        var was = String(detail.contact.values && detail.contact.values[0] && detail.contact.values[0].value || '');
+        var now = json.extraProperties.find(function (p) {
+          return p.category === 'contact';
+        });
+        var name = this.data.contact && this.data.contact.name;
+        var email = this.data.contact && this.data.contact.email;
+        if (now && name && was.startsWith(name) && (!email || was.includes(email))) {
+          now.values = detail.contact.values;
+        }
+      }
+      (json.primaryPublications || []).forEach(function (pub, i) {
+        var original = detail.publicationDates[i] || [];
+        pub.dates = (pub.dates || []).map(function (d, j) {
+          var o = original[j];
+          return o && o.date && String(o.date).startsWith(String(d.date)) ? o : d;
+        });
+      });
+    }
+    if (kept) {
+      Object.keys(kept.fields || {}).forEach(function (key) {
+        if (!(key in json)) json[key] = kept.fields[key];
+      });
+      (kept.extraProperties || []).forEach(function (prop) {
+        if (!json.extraProperties.some(function (e) {
+          return e.category === prop.category;
+        })) json.extraProperties.push(prop);
+      });
+    }
+    var isEmpty = function isEmpty(v) {
+      return v === '' || v === null || v === undefined || Array.isArray(v) && v.length === 0;
+    };
+    json.extraProperties = (json.extraProperties || []).filter(function (p) {
+      return p && Array.isArray(p.values) && p.values.some(function (v) {
+        return v && !isEmpty(v.value);
+      });
+    });
+    delete json._preserved;
     Object.keys(json).forEach(function (key) {
       return json[key] == null && delete json[key];
     });
@@ -141439,7 +142068,46 @@ function readExtraProperties(data, category) {
     return val.value;
   })) || [];
 }
-var DatsToForm = /*#__PURE__*/function () {
+var HANDLED_FIELDS = ['title', 'description', 'identifier', 'dates', 'creators', 'types', 'version', 'privacy', 'licenses', 'keywords', 'distributions', 'primaryPublications', 'isAbout', 'spatialCoverage', 'aggregation', 'dimensions', 'acknowledges', 'extraProperties'];
+var HANDLED_PROPERTIES = ['CONP_status', 'ORCID', 'REB_number', 'REB_statement', 'contact', 'derivedFrom', 'files', 'logo', 'origin_city', 'origin_consortium', 'origin_country', 'origin_institution', 'origin_province', 'parent_dataset_id', 'registrationPage', 'subjects', 'experimentAccessibility', 'experimentAdditionalRequirements', 'experimentFunctionAssessed', 'experimentLanguages', 'experimentModalities', 'experimentRequiredDevices', 'experimentRequiredSoftware', 'experimentStimuli', 'experimentValidationMeasures', 'experimentValidationPopulations'];
+function preservedParts(data) {
+  var fields = {};
+  Object.keys(data || {}).forEach(function (key) {
+    if (!HANDLED_FIELDS.includes(key)) fields[key] = data[key];
+  });
+  var extraProperties = (data && data.extraProperties || []).filter(function (p) {
+    return p && !HANDLED_PROPERTIES.includes(p.category);
+  });
+  var detail = {
+    types: {},
+    licenses: {},
+    distribution: null,
+    contact: null,
+    publicationDates: []
+  };
+  (data && data.types || []).forEach(function (t) {
+    var v = t && t.information && t.information.value;
+    if (v) detail.types[v] = t;
+  });
+  (data && data.licenses || []).forEach(function (l) {
+    if (l && l.name) detail.licenses[l.name] = l;
+  });
+  var dist = data && data.distributions && data.distributions[0];
+  if (dist) detail.distribution = dist;
+  var contact = (data && data.extraProperties || []).find(function (p) {
+    return p && p.category === 'contact';
+  });
+  if (contact) detail.contact = contact;
+  detail.publicationDates = (data && data.primaryPublications || []).map(function (p) {
+    return p && p.dates || [];
+  });
+  return {
+    fields: fields,
+    extraProperties: extraProperties,
+    detail: detail
+  };
+}
+var index_modern_DatsToForm = /*#__PURE__*/function () {
   function DatsToForm(data) {
     this.data = data;
   }
@@ -141635,8 +142303,10 @@ var DatsToForm = /*#__PURE__*/function () {
       };
     }
     json.dates = json.dates.map(function (date) {
+      var s = String(date.date || '');
+      var local = /^\d{4}-\d{2}-\d{2}/.test(s) ? parseISO(s.slice(0, 10)) : new Date(s);
       return Object.assign(date, {
-        date: new Date(date.date)
+        date: local
       });
     });
     json.primaryPublications = json.primaryPublications.map(function (pp) {
@@ -141648,267 +142318,11 @@ var DatsToForm = /*#__PURE__*/function () {
         })
       });
     });
+    json._preserved = preservedParts(this.data);
     return json;
   };
   return DatsToForm;
 }();
-
-var doiRegex = /^https:\/\/.+\/10\.\d{4,9}\/[-._;()/:A-Z0-9]+$/i;
-var arkRegex = /^https:\/\/[a-zA-Z0-9.-]+\/ark:\/\d{5}\/[\w.-]+$/i;
-var publicationSchema = ObjectSchema().shape({
-  title: StringSchema().nullable(),
-  publicationVenue: StringSchema().nullable(),
-  authors: es_array().nullable().when('title', {
-    is: function is(title) {
-      return !!title;
-    },
-    then: es_array().of(ObjectSchema().shape({
-      fullName: StringSchema().required('Full name is required'),
-      firstName: StringSchema().required('First name is required'),
-      lastName: StringSchema().required('Last name is required'),
-      middleInitial: StringSchema().nullable(),
-      affiliations: es_array().of(StringSchema().nullable()).nullable()
-    })).min(1, 'At least one author is required if title is provided'),
-    otherwise: es_array().nullable()
-  }),
-  dates: es_array().of(ObjectSchema().shape({
-    date: es_date().nullable(),
-    description: StringSchema().nullable()
-  })).nullable(),
-  identifier: ObjectSchema().nullable().when('title', {
-    is: function is(title) {
-      return !!title;
-    },
-    then: ObjectSchema().shape({
-      identifier: StringSchema().required('Identifier must be a valid DOI or ARK URL').test('is-doi-or-ark', 'Identifier must be a valid DOI or ARK URL', function (value) {
-        return !!value && (doiRegex.test(value) || arkRegex.test(value));
-      }),
-      identifierSource: StringSchema().nullable()
-    }),
-    otherwise: ObjectSchema().shape({
-      identifier: StringSchema().nullable(),
-      identifierSource: StringSchema().nullable()
-    })
-  })
-});
-var defaultDatsValidationSchema = ObjectSchema({
-  isExperiment: yup_es_boolean(),
-  title: StringSchema().required(),
-  creators: es_array().of(ObjectSchema().shape({
-    type: StringSchema().required('Type is required'),
-    name: StringSchema().when('type', {
-      is: 'Organization',
-      then: StringSchema().required('Name/Institution is required'),
-      otherwise: StringSchema().nullable()
-    }),
-    fullName: StringSchema().when('type', {
-      is: 'Person',
-      then: StringSchema().required('Full name is required'),
-      otherwise: StringSchema().nullable()
-    }),
-    firstName: StringSchema().when('type', {
-      is: 'Person',
-      then: StringSchema().required('First name is required'),
-      otherwise: StringSchema().nullable()
-    }),
-    lastName: StringSchema().when('type', {
-      is: 'Person',
-      then: StringSchema().required('Last name is required'),
-      otherwise: StringSchema().nullable()
-    }),
-    email: StringSchema().email('Invalid email format').nullable(),
-    orcid: StringSchema().when('type', {
-      is: 'Person',
-      then: StringSchema().matches(/^https:\/\/orcid(?:[\0-\t\x0B\f\x0E-\u2027\u202A-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])org\/[0-9][0-9][0-9][0-9]\x2D[0-9][0-9][0-9][0-9]\x2D[0-9][0-9][0-9][0-9]\x2D[0-9][0-9][0-9][0-9X]$/, "The ORCID format must match: https://orcid.org/XXXX-XXXX-XXXX-XXXX").required('An ORCID is required'),
-      otherwise: StringSchema().nullable()
-    }).nullable()
-  })).min(1, 'At least one creator is required'),
-  contact: ObjectSchema().shape({
-    name: StringSchema().required(),
-    email: StringSchema().email().required()
-  }),
-  description: StringSchema().required(),
-  types: es_array().of(StringSchema().required().notOneOf([""], "Type cannot be empty")).min(1).required("Type cannot be empty"),
-  version: StringSchema().required(),
-  licenses: es_array().of(StringSchema().required("Licenses cannot be empty")).min(1, "At least one license is required").required("Licenses are required"),
-  keywords: es_array().of(StringSchema().required().notOneOf([""], "Keywords cannot be empty")).min(1).required("Keywords cannot be empty"),
-  formats: es_array().of(StringSchema()),
-  size: ObjectSchema({
-    value: NumberSchema().positive().required(),
-    units: StringSchema().required()
-  }).required(),
-  access: ObjectSchema({
-    landingPage: StringSchema().url().required(),
-    authorization: StringSchema().required()
-  }).required(),
-  privacy: StringSchema().matches(/(?:open|registered|controlled|private)/, {
-    excludeEmptyString: true
-  }).required(),
-  files: NumberSchema().integer().positive().required(),
-  subjects: ObjectSchema({
-    applicable: yup_es_boolean(),
-    value: NumberSchema().integer().positive().nullable()
-  }),
-  conpStatus: StringSchema().matches(/(?:CONP|Canadian|external)/, {
-    excludeEmptyString: true
-  }).required(),
-  derivedFrom: StringSchema(),
-  parentDatasetId: StringSchema(),
-  primaryPublications: es_array().of(publicationSchema),
-  dimensions: es_array().of(StringSchema()),
-  identifier: ObjectSchema({
-    identifier: StringSchema().url(),
-    identifierSource: StringSchema()
-  }),
-  logo: ObjectSchema({
-    type: StringSchema().oneOf(['url', 'fileName']),
-    fileName: StringSchema(),
-    url: StringSchema().url()
-  }),
-  registrationPageURL: StringSchema().when(['privacy', 'isExperiment'], {
-    is: function is(privacy, isExperiment) {
-      return isExperiment || !['registered', 'controlled', 'private'].includes(privacy);
-    },
-    then: StringSchema(),
-    otherwise: StringSchema().required('Registration page is required when privacy is set to registered, controlled, or private.').test('is-url-or-email', 'Registration page must be a valid URL or email address', function (value) {
-      var urlPattern = new RegExp('^(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\\d_]*)?$', 'i');
-      var emailPattern = new RegExp('^\\S+@\\S+\\.\\S+$');
-      return urlPattern.test(value) || emailPattern.test(value);
-    })
-  }),
-  dates: es_array().of(ObjectSchema({
-    date: es_date(),
-    description: StringSchema()
-  })),
-  citations: es_array().of(StringSchema()),
-  producedBy: StringSchema(),
-  isAbout: es_array().of(StringSchema()),
-  hasPart: StringSchema(),
-  acknowledges: StringSchema(),
-  refinement: StringSchema(),
-  aggregation: StringSchema(),
-  spatialCoverage: es_array().of(StringSchema()),
-  reb_info: StringSchema().when('privacy', {
-    is: function is(privacy) {
-      return ['registered', 'controlled', 'private'].includes(privacy);
-    },
-    then: StringSchema(),
-    otherwise: StringSchema().oneOf(['option_1', 'option_2', 'option_3', 'option_4']).required('reb_info is required unless privacy is registered, controlled, or private.')
-  }),
-  reb_number: StringSchema(),
-  experimentsFunctionAssessed: es_array().when('isExperiment', {
-    is: true,
-    then: es_array().of(StringSchema().required()),
-    otherwise: es_array().of(StringSchema())
-  }),
-  experimentsLanguages: es_array().when('isExperiment', {
-    is: true,
-    then: es_array().of(StringSchema().required()),
-    otherwise: es_array().of(StringSchema())
-  }),
-  experimentsValidationMeasures: es_array().of(StringSchema()),
-  experimentsValidationPopulations: es_array().of(StringSchema()),
-  experimentsAccessibility: es_array().of(StringSchema()),
-  experimentsSpecies: es_array().of(StringSchema()),
-  experimentsModalities: es_array().when('isExperiment', {
-    is: true,
-    then: es_array().of(StringSchema().required()),
-    otherwise: es_array().of(StringSchema())
-  }),
-  experimentsRequiredDevices: es_array().when('isExperiment', {
-    is: true,
-    then: es_array().of(StringSchema().required()),
-    otherwise: es_array().of(StringSchema())
-  }),
-  experimentsRequiredSoftware: es_array().when('isExperiment', {
-    is: true,
-    then: es_array().of(ObjectSchema({
-      software: StringSchema().required().matches(/^(?!\s*$).+/, 'Software name cannot be empty or just spaces'),
-      version: StringSchema()
-    }))
-  }),
-  experimentsStimuli: es_array().of(StringSchema()),
-  experimentsAdditionalRequirements: StringSchema()
-});
-var defaultDatsValues = {
-  title: '',
-  creators: [{
-    name: '',
-    type: 'Organization',
-    role: 'Principal Investigator',
-    abbreviation: ''
-  }],
-  contact: {
-    name: '',
-    email: ''
-  },
-  description: '',
-  types: [],
-  version: '',
-  licenses: [],
-  keywords: [],
-  formats: [],
-  size: {
-    value: '',
-    units: 'MB'
-  },
-  access: {
-    landingPage: '',
-    authorization: 'public'
-  },
-  privacy: '',
-  files: '',
-  subjects: {
-    applicable: true,
-    value: ''
-  },
-  conpStatus: '',
-  origin: {
-    institution: '',
-    city: '',
-    province: '',
-    country: ''
-  },
-  derivedFrom: '',
-  parentDatasetId: '',
-  primaryPublications: [],
-  dimensions: [],
-  identifier: {
-    identifier: '',
-    identifierSource: ''
-  },
-  logo: {
-    type: 'url',
-    fileName: '',
-    url: ''
-  },
-  registrationPageURL: '',
-  dates: [],
-  citations: [],
-  producedBy: '',
-  isAbout: [{
-    type: 'Species'
-  }],
-  hasPart: '',
-  acknowledges: [],
-  refinement: '',
-  aggregation: '',
-  spatialCoverage: [],
-  attachments: [],
-  reb_info: '',
-  reb_number: '',
-  experimentsFunctionAssessed: [],
-  experimentsLanguages: [],
-  experimentsValidationMeasures: [],
-  experimentsValidationPopulations: [],
-  experimentsAccessibility: [],
-  experimentsSpecies: [],
-  experimentsModalities: [],
-  experimentsRequiredDevices: [],
-  experimentsRequiredSoftware: [],
-  experimentsStimuli: [],
-  experimentsAdditionalRequirements: ''
-};
 
 var useStyles$5 = styles_makeStyles(function (theme) {
   var _layout, _paper;
@@ -142042,7 +142456,7 @@ function DatsEditorForm(props) {
     return activeStep <= steps.length - (postDatsSteps + 1);
   };
   var onDatsReceived = function onDatsReceived(json) {
-    var formData = new DatsToForm(json).getJson();
+    var formData = new index_modern_DatsToForm(json).getJson();
     setValuesState(formData);
     if (formData.experimentsLanguages.length > 0) {
       setIsExperiment(true);
@@ -142315,7 +142729,7 @@ function DatsEditorForm(props) {
     align: "center",
     component: "h1",
     variant: "h4"
-  }, "DATS Editor"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Stepper_Stepper, {
+  }, "Metadata Editor"), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Stepper_Stepper, {
     activeStep: activeStep,
     className: classes.stepper
   }, steps.map(function (label) {
@@ -142383,15 +142797,13 @@ function DatsEditorForm(props) {
     }, (activeStep < 3 || isExperiment && activeStep < 4) && /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Button_Button, {
       className: classes.button,
       style: {
-        backgroundColor: '#3f51b5',
-        color: 'white',
         marginRight: 'auto'
       },
       onClick: function onClick() {
         return downloadDats(values);
       },
-      variant: "contained"
-    }, "Save partial DATS"), shouldShowClearButton(activeStep) ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Button_Button, {
+      variant: "outlined"
+    }, "Save a draft"), shouldShowClearButton(activeStep) ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Button_Button, {
       className: classes.button,
       onClick: function onClick() {
         handleClear();
@@ -142428,11 +142840,12 @@ function DatsEditorForm(props) {
         handleReset();
       },
       variant: "contained"
-    }, "Create a new DATS"), isSubmitting ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_CircularProgress_CircularProgress, {
+    }, "Start a new record"), isSubmitting ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_CircularProgress_CircularProgress, {
       className: classes.buttonProgress,
       size: 24
     }) : null)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(DatsErrors, {
       className: classes.section,
+      isExperiment: isExperiment,
       errors: errors,
       touched: touched,
       formEmpty: formEmpty
