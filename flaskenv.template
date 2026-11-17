@@ -66,8 +66,9 @@ OPENALEX_API_KEY=
 # -------------------------------------------------------------------
 # GITHUB SETTINGS
 # -------------------------------------------------------------------
-# GITHUB CREDENTIALS FOR MARKDOWN RENDERER (OPTIONAL)
-GITHUB_USER=
+# GITHUB PAT CREDENTIALS FOR
+# - Analytics
+# - MARKDOWN RENDERER (OPTIONAL)
 GITHUB_PAT=
 
 # -------------------------------------------------------------------

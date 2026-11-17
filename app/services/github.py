@@ -8,19 +8,16 @@ def render_content(raw):
     body = {
         "text": raw,
         "mode": "gfm",
-        "context": "github/gollum"
+        "context": "CONP-PCNO/conp-documentation"
     }
 
-    # Get the Github username and personal access token to authenticate the request,
-    # else make the request without authentication
-    github_user = os.environ.get('GITHUB_USER') or None
-    github_pat = os.environ.get('GITHUB_PAT') or None
+    headers = {}
+    # Fallback to standard GITHUB_TOKEN if used in GitHub Actions, or GITHUB_PAT
+    github_pat = os.environ.get('GITHUB_PAT') or os.environ.get('GITHUB_TOKEN')
+    if github_pat:
+        headers['Authorization'] = f'Bearer {github_pat}'
 
-    if github_user is not None and github_pat is not None:
-        response = requests.post(url, json=body, auth=(github_user, github_pat))
-
-    else:
-        response = requests.post(url, json=body)
+    response = requests.post(url, json=body, headers=headers)
 
     content = response.text.replace('user-content-', '')
     return content
