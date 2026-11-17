@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Deprecates and Removes GITHUB_USER. It is no longer needed.
 - Upgrades PyGithub from 1.59.1 to 2.10.0 for GitHub repository traffic analytics.
 
 ## [1.1.1-rc.4]
