@@ -155,7 +155,7 @@ def __getTotal(mask):
 
 
 def __checkdigit(s):
-    # TODO: Fix checkdigit to autostrip scheme names shorter or longer than 3 chars.
+    # @todo: Fix checkdigit to autostrip scheme names shorter or longer than 3 chars.
     try:
         if s[3] == ':':
             s = s[4:].lstrip('/')

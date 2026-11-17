@@ -100,7 +100,7 @@ def test_dataset_route(session, new_dataset, test_client):
     WHEN no user is logged in
     THEN should return success code
 
-    TODO: mock the datasets table to provide a valid return object
+    @todo: mock the datasets table to provide a valid return object
     """
     session.add(new_dataset)
     session.commit()
@@ -111,4 +111,3 @@ def test_dataset_route(session, new_dataset, test_client):
     # res = test_client.get("/dataset", headers = headers, query_string = query)
 
     assert True
-    

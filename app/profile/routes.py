@@ -32,7 +32,7 @@ def current_user_profile_page():
 
         db.session.commit()
         flash("Profile Information Updated", "message")
-        # TODO: Add a redirect
+        # @todo: Add a redirect
 
     return render_template('profile/edit_user_profile.html',
                            form=form,
