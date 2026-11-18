@@ -1,10 +1,5 @@
-import datetime as dt
 import fnmatch
 import os
-import re
-from functools import lru_cache
-
-import requests
 
 from app.dats import DATSObject
 from app.downloads import size_label, total_bytes
@@ -33,40 +28,6 @@ def real_values(values, extra=()):
         seen.add(key)
         out.append(v.strip() if isinstance(v, str) else v)
     return out
-
-
-@lru_cache(maxsize=1)
-def _get_latest_test_results(date):
-    url = "https://circleci.com/api/v1.1/" \
-        + "project/github/CONP-PCNO/conp-dataset/" \
-        + "latest/artifacts" \
-        + "?branch=master&filter=completed"
-
-    artifacts = requests.get(url).json()
-
-    previous_test_results = {}
-    for artifact in artifacts:
-        # Merge dictionnaries together.
-        previous_test_results = {
-            **previous_test_results,
-            **requests.get(artifact["url"]).json(),
-        }
-
-    return previous_test_results
-
-
-def get_latest_test_results():
-    # Uses built-in UTC timezone (Python 3.12+) instead of dateutil
-    current_date = dt.datetime.now(dt.UTC)
-    normalized_date = current_date.replace(
-        # Round the date to the lowest 4hour
-        hour=(current_date.hour // 4 * 4 + 1),
-        minute=0,                               # range and give an extra hour gap
-        second=0,                               # for tests execution.
-        microsecond=0
-    )
-
-    return _get_latest_test_results(normalized_date)
 
 
 class DatasetCache:
@@ -628,23 +589,3 @@ class DATSDataset(DATSObject):
 
         except Exception:
             return None
-
-    @property
-    def status(self):
-
-        test_results = get_latest_test_results()
-        tests_status = [
-            results["status"]
-            for test, results in test_results.items()
-            if test.startswith(re.sub("/", "_", self.name) + ":")
-        ]
-
-        if tests_status == []:
-            # Problem occured during the test suite.
-            return "Unknown"
-        if any(map(lambda x: x == "Failure", tests_status)):
-            return "Broken"
-        if all(map(lambda x: x == "Success", tests_status)):
-            return "Working"
-
-        return "Unknown"

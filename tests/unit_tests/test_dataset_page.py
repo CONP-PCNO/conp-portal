@@ -118,7 +118,7 @@ def _data(**over):
         "logoFilepath": "", "thumbnailURL": "/dataset_logo?id=projects/demo", "cbrain_id": "",
         "showDownloadButton": True, "zipLocation": "/data/demo.tar.gz", "evidencePublication": None,
         "evidencePublicationType": None, "dateAdded": "2020-01-01", "dateUpdated": "2021-01-01",
-        "primaryPublications": None, "principalInvestigators": None, "status": "Working",
+        "primaryPublications": None, "principalInvestigators": None,
         "conpStatus": "Canadian",
     }
     data.update(over)
