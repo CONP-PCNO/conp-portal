@@ -1042,7 +1042,6 @@ def dataset_info():
         "registrationPage": datsdataset.registrationPage,
         "downloadOptions": datsdataset.downloadOptions,
         "logoFilepath": datsdataset.LogoFilepath,
-        "status": datsdataset.status,
         "cbrain_id": dataset_cbrain_id,
         "zipLocation": zip_location,
         "showDownloadButton": show_download_button,
@@ -1098,8 +1097,6 @@ def dataset_info():
         "research": _research_use_view(d.dataset_id),
     }
 
-    # The CircleCI test badge is gone: the dataset tests stopped running on
-    # 1 Oct 2026 and every page showed "Test status: Unknown".
     return render_template(
         'dataset.html',
         title='CONP | Dataset',
