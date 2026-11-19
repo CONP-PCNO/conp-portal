@@ -50,6 +50,11 @@ Uses the theme tokens from conp-theme.css. All rules are scoped to .dp-*.
 .dp-desc > :first-child { margin-top: 0; }
 .dp-desc p { margin: 0 0 .5em; }
 .dp-desc.is-open { max-height: none; }
+/* Clamped: the last visible line fades out (dataset-page.js sets the cut). */
+.dp-desc.is-clamped {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1.55em), rgba(0, 0, 0, .3));
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 1.55em), rgba(0, 0, 0, .3));
+}
 .dp-more {
   background: none;
   border: 0;

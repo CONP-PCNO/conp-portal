@@ -102,22 +102,63 @@
     });
   }
 
-  // ---------- description: five lines, then "more" ----------
+  // ---------- description: five lines' height, then "more" ----------
+  // The CSS caps the description at five lines' height. Paragraph gaps shift
+  // the lines off that grid, so a line could be sliced through the middle.
+  // Here the cut moves up to just below the last line that fits whole, and
+  // that line fades out (.is-clamped). Open, the description shows in full.
+  function lineBottoms(el) {
+    // Text only: an element's own box (a whole paragraph) spans several lines.
+    var top = el.getBoundingClientRect().top;
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    var range = document.createRange();
+    var all = [];
+    var node;
+    while ((node = walker.nextNode())) {
+      if (!node.nodeValue.trim()) { continue; }
+      range.selectNodeContents(node);
+      var rects = range.getClientRects();
+      for (var i = 0; i < rects.length; i++) {
+        if (rects[i].height >= 1 && rects[i].width >= 1) { all.push(Math.round(rects[i].bottom - top)); }
+      }
+    }
+    all.sort(function (a, b) { return a - b; });
+    var bottoms = [];
+    for (var j = 0; j < all.length; j++) {
+      // one entry per line: pieces of the same line share (nearly) a bottom
+      if (!bottoms.length || all[j] > bottoms[bottoms.length - 1] + 2) { bottoms.push(all[j]); }
+    }
+    return bottoms;
+  }
   function initMore() {
     var desc = document.getElementById('dp-desc');
     var btn = document.querySelector('.dp-more');
     if (!desc || !btn) { return; }
     function check() {
       if (desc.classList.contains('is-open')) { btn.hidden = false; return; }
-      btn.hidden = desc.scrollHeight <= desc.clientHeight + 2;
+      desc.style.maxHeight = '';
+      var budget = desc.clientHeight;
+      var overflows = desc.scrollHeight > budget + 2;
+      btn.hidden = !overflows;
+      desc.classList.toggle('is-clamped', overflows);
+      if (!overflows) { return; }
+      var fit = lineBottoms(desc).filter(function (b) { return b <= budget + 1; });
+      if (fit.length) { desc.style.maxHeight = fit[fit.length - 1] + 'px'; }
     }
     btn.addEventListener('click', function () {
       var open = desc.classList.toggle('is-open');
       btn.textContent = open ? 'less' : 'more';
       btn.setAttribute('aria-expanded', String(open));
+      if (open) {
+        desc.style.maxHeight = '';
+        desc.classList.remove('is-clamped');
+      } else {
+        check();
+      }
     });
     check();
     window.addEventListener('resize', check);
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(check); }
   }
 
   // ---------- copy buttons ----------
