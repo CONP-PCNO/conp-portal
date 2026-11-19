@@ -1063,7 +1063,10 @@ def dataset_info():
         ev = evidence_publication_info(current_app.config['DATA_PATH'], datsdataset.evidencePublication)
         dataset["evidenceTitle"] = ev['title']
         thumbnail = ev['thumbnail']
-        dataset["evidenceThumbnail"] = url_for('search.evidence_thumbnail', name=thumbnail) if thumbnail else None
+        # The address has no .png: nginx serves every *.png from static files and
+        # would answer 404 without ever reaching the Portal.
+        dataset["evidenceThumbnail"] = (url_for('search.evidence_thumbnail', slug=thumbnail[:-4])
+                                        if thumbnail and thumbnail.endswith('.png') else None)
 
     metadata = get_dataset_metadata_information(d)
 
@@ -1161,13 +1164,19 @@ def download_metadata():
     )
 
 
-@search_bp.route('/evidence_thumbnail/<name>', methods=['GET'])
-def evidence_thumbnail(name):
+@search_bp.route('/evidence_thumbnail/<slug>', methods=['GET'])
+def evidence_thumbnail(slug):
     """First page of a NeuroLibre/Evidence publication, as rendered by
-    `flask update_evidence_thumbnails`. Only names that command writes are served."""
-    if not re.fullmatch(r'[a-z0-9][a-z0-9-]{0,120}\.png', name):
+    `flask update_evidence_thumbnails`, by its DOI slug (10-55458-neurolibre-00050).
+
+    The address deliberately has no .png: the server's nginx serves every *.png
+    request from static files (deploy/nginx/nginx.conf), so such a request never
+    reaches the Portal. Only names that command writes are served."""
+    if not re.fullmatch(r'[a-z0-9][a-z0-9-]{0,120}', slug):
         return 'Not Found', 404
-    response = send_from_directory(evidence_store_dir(current_app.config['DATA_PATH']), name, mimetype='image/png')
+    # abspath: send_from_directory reads a relative folder from the app package, not the working folder.
+    response = send_from_directory(os.path.abspath(evidence_store_dir(current_app.config['DATA_PATH'])), slug + '.png',
+                                   mimetype='image/png')
     response.cache_control.max_age = 86400
     return response
 
