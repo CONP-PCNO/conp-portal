@@ -133,7 +133,9 @@ def test_tool_page_cite_licence_and_job(app):
         **{'suggested-resources': {'cpu-cores': 1, 'ram': 10240, 'walltime-estimate': 960}}))
     # Cite: the descriptor's Zenodo record in three formats, with a note to cite the software too
     assert 'id="tp-cite"' in html and 'data-cite-format="bibtex"' in html
-    assert 'Martinos Center for Biomedical Imaging (2020): FreeSurfer-Recon-all. V. 6.0.0. Zenodo. (software). https://doi.org/10.5281/zenodo.4043546' in html
+    assert ('Martinos Center for Biomedical Imaging (2020): FreeSurfer-Recon-all. V. 6.0.0. Zenodo. (software). '
+            '<a href="https://doi.org/10.5281/zenodo.4043546" target="_blank" rel="noopener noreferrer">'
+            'https://doi.org/10.5281/zenodo.4043546</a>') in html
     assert 'TY  - COMP' in html and 'Cite the software itself too' in html
     # Licence file: where to get FreeSurfer's, and which input takes it
     assert 'id="tp-licence"' in html and 'surfer.nmr.mgh.harvard.edu/registration.html' in html

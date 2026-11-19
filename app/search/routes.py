@@ -47,6 +47,7 @@ from app.search.dataset_page import (
     fix_readme_links,
     get_routes,
     licence_badges,
+    linkify,
     publication_citations,
     strip_title_heading,
     title_html,
@@ -64,6 +65,11 @@ from app.search.text_match import rank
 from app.search.text_match import score as match_score
 from app.services import github
 from config import Config
+
+
+@search_bp.app_template_filter('linkify')
+def _linkify_filter(value):
+    return linkify(value)
 
 
 @search_bp.app_template_filter('as_url')

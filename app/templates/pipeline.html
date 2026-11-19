@@ -260,7 +260,7 @@
       <a class="dp-cite-download" id="dp-cite-download" href="#" download="{{ page.cite.key }}.txt">Download <span>.txt</span></a>
     </div>
     <div class="dp-cite" data-cite-group>
-      <p id="tp-cite-text" data-cite-block="text" data-ext="txt">{{ page.cite.text }}</p>
+      <p id="tp-cite-text" data-cite-block="text" data-ext="txt">{{ page.cite.text | linkify }}</p>
       <pre id="tp-cite-bibtex" data-cite-block="bibtex" data-ext="bib" hidden>{{ page.cite.bibtex }}</pre>
       <pre id="tp-cite-ris" data-cite-block="ris" data-ext="ris" hidden>{{ page.cite.ris }}</pre>
       <button class="dp-copy dp-copy--light" type="button" data-copy-target="tp-cite-text" aria-label="Copy the citation" title="Copy">{{ icon('copy') }}</button>
