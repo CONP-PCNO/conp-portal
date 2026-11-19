@@ -80,10 +80,12 @@ def test_thumbnail_route(test_client, app, tmp_path, monkeypatch):
     folder = tmp_path / 'evidence-publications'
     folder.mkdir()
     (folder / '10-55458-neurolibre-00050.png').write_bytes(b'\x89PNG fake')
-    r = test_client.get('/evidence_thumbnail/10-55458-neurolibre-00050.png')
+    # No .png in the address: nginx would serve it as a static file (404).
+    r = test_client.get('/evidence_thumbnail/10-55458-neurolibre-00050')
     assert r.status_code == 200 and r.mimetype == 'image/png' and r.cache_control.max_age == 86400
-    assert test_client.get('/evidence_thumbnail/index.json').status_code == 404
-    assert test_client.get('/evidence_thumbnail/..%2Findex.png').status_code == 404
+    assert test_client.get('/evidence_thumbnail/10-55458-neurolibre-00050.png').status_code == 404
+    assert test_client.get('/evidence_thumbnail/index').status_code == 404
+    assert test_client.get('/evidence_thumbnail/..%2Findex').status_code == 404
 
 
 def test_banner_with_page_title_and_without(app):
@@ -97,6 +99,19 @@ def test_banner_with_page_title_and_without(app):
                     _metadata())
     assert 'class="dp-evidence"' in plain and 'dp-evidence-page' not in plain and '<cite>' not in plain
     assert 'whose analyses you can re-run' in plain
+
+
+def test_dataset_page_thumbnail_address_has_no_png(app, tmp_path, monkeypatch):
+    from app.search import routes
+    folder = tmp_path / 'evidence-publications'
+    folder.mkdir()
+    (folder / '10-55458-neurolibre-00050.png').write_bytes(b'\x89PNG fake')
+    (folder / 'index.json').write_text(json.dumps({'10.55458/neurolibre.00050': {
+        'title': 'T', 'thumbnail': '10-55458-neurolibre-00050.png'}}))
+    ev = evidence.publication_info(str(tmp_path), '10.55458/neurolibre.00050')
+    with app.test_request_context('/'):
+        url = routes.url_for('search.evidence_thumbnail', slug=ev['thumbnail'][:-4])
+    assert url == '/evidence_thumbnail/10-55458-neurolibre-00050' and not url.endswith('.png')
 
 
 def test_cli_update_evidence_thumbnails(runner, app, tmp_path, monkeypatch):
