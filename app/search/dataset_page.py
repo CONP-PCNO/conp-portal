@@ -967,3 +967,32 @@ def access_context(authorization, registration_page, landing_page, dataset_dir):
         'host': host_name(registration_page) or host_name(landing_page),
         'source_host': host_name(landing_page),
     }
+
+
+_CITE_URL = re.compile(r'https?://[^\s<>"]+')
+
+
+def linkify(text):
+    """A citation or reference in plain text, with every http(s) address in it
+    made a link (the DOI or ARK that ends a citation). The text itself is
+    unchanged, so copying it or downloading it gives the same string;
+    a full stop or bracket that closes the sentence stays outside the link."""
+    from markupsafe import Markup, escape
+
+    s = str(text or '')
+    out = []
+    pos = 0
+    for m in _CITE_URL.finditer(s):
+        url = m.group(0)
+        tail = ''
+        while url and url[-1] in '.,;:)]':
+            if url[-1] == ')' and url.count('(') >= url.count(')'):
+                break
+            tail = url[-1] + tail
+            url = url[:-1]
+        out.append(str(escape(s[pos:m.start()])))
+        out.append('<a href="{0}" target="_blank" rel="noopener noreferrer">{0}</a>'.format(escape(url)))
+        out.append(str(escape(tail)))
+        pos = m.end()
+    out.append(str(escape(s[pos:])))
+    return Markup(''.join(out))

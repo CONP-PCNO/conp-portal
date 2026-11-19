@@ -208,7 +208,7 @@
     </div>
     <h2 class="dp-h2">The task</h2>
     <div class="dp-cite" data-cite-group>
-      <p id="dp-cite-text" data-cite-block="text" data-ext="txt">{{ page.citation }}</p>
+      <p id="dp-cite-text" data-cite-block="text" data-ext="txt">{{ page.citation | linkify }}</p>
       <pre id="dp-cite-bibtex" data-cite-block="bibtex" data-ext="bib" hidden>{{ page.citation_bibtex }}</pre>
       <pre id="dp-cite-ris" data-cite-block="ris" data-ext="ris" hidden>{{ page.citation_ris }}</pre>
       <button class="dp-copy dp-copy--light" type="button" data-copy-target="dp-cite-text" aria-label="Copy the task citation" title="Copy">{{ icon('copy') }}</button>
@@ -216,7 +216,7 @@
     {% for pub in page.publications %}
     <h2 class="dp-h2">{{ 'The publication using it' if page.publications | length == 1 else 'Publication ' ~ loop.index ~ ' using it' }}</h2>
     <div class="dp-cite" data-cite-group>
-      <p id="dp-pub{{ loop.index }}-text" data-cite-block="text" data-ext="txt">{{ pub.text }}</p>
+      <p id="dp-pub{{ loop.index }}-text" data-cite-block="text" data-ext="txt">{{ pub.text | linkify }}</p>
       <pre id="dp-pub{{ loop.index }}-bibtex" data-cite-block="bibtex" data-ext="bib" hidden>{{ pub.bibtex }}</pre>
       <pre id="dp-pub{{ loop.index }}-ris" data-cite-block="ris" data-ext="ris" hidden>{{ pub.ris }}</pre>
       <button class="dp-copy dp-copy--light" type="button" data-copy-target="dp-pub{{ loop.index }}-text" aria-label="Copy the publication reference" title="Copy">{{ icon('copy') }}</button>

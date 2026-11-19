@@ -389,3 +389,22 @@ def test_modality_chip_uses_acronyms(app):
     chip = html[html.index('Modality: </span>'):]
     assert chip.startswith('Modality: </span>BOLD, DWI, MRI')
     assert 'BOLD (' + long + ')' in html          # the full term stays in the tooltip
+
+
+def test_linkify_makes_the_citation_identifier_a_link():
+    from app.search.dataset_page import linkify
+
+    text = 'Smith, J. (2020): Title. CONP Portal. (dataset). https://n2t.net/ark:/70798/d72xnk2wd397j190qv'
+    html = str(linkify(text))
+    assert '<a href="https://n2t.net/ark:/70798/d72xnk2wd397j190qv" target="_blank"' in html
+    assert html.startswith('Smith, J. (2020): Title.')
+
+
+def test_linkify_keeps_closing_punctuation_and_escapes_text():
+    from app.search.dataset_page import linkify
+
+    html = str(linkify('A <b> & B. https://doi.org/10.1000/x(1). Next'))
+    assert '&lt;b&gt; &amp; B.' in html
+    assert 'href="https://doi.org/10.1000/x(1)"' in html
+    assert '</a>. Next' in html
+    assert str(linkify('No address here.')) == 'No address here.'
