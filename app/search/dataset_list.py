@@ -75,8 +75,12 @@ _CASE = {'mri': 'MRI', 'fmri': 'fMRI', 'dmri': 'dMRI', 'eeg': 'EEG', 'meg': 'MEG
          'asl': 'ASL'}
 _FORMAT_CASE = {'nifti': 'NIfTI', 'nii': 'NIfTI', 'niigz': 'NIfTI', 'nii.gz': 'NIfTI', 'gifti': 'GIfTI',
                 'gii': 'GIfTI', 'bigwig': 'bigWig', 'rna-seq': 'RNA-Seq'}
-_EVIDENCE_LABEL = {'re-executable': 'Re-executable publication', 'interactive': 'Interactive publication',
-                   'wired': 'Evidence publication'}
+# The same tiers as the dataset page's Evidence banner (dataset.html,
+# evidence_tiers): the card names the tier, so a Wired publication reads
+# "Wired publication" in both places. An unknown or missing type falls back
+# to the generic name.
+_EVIDENCE_LABEL = {'wired': 'Wired publication', 're-executable': 'Re-executable publication',
+                   'interactive': 'Interactive publication', 'archived': 'Archived publication'}
 
 # Values the records use for "no information", left out of chips and filters
 # (a dataset with no real modality is counted under "Not stated").
@@ -229,7 +233,9 @@ def dataset_card(e):
     licences = licence_badges(_listify(e.get('licenceLinks')) or _listify(e.get('licenses')))[:2]
     subjects = _int(e.get('subjects'))
     evidence_type = str(e.get('evidencePublicationType') or '').lower()
-    evidence = _EVIDENCE_LABEL.get(evidence_type, 'Evidence publication') if e.get('evidencePublication') else None
+    evidence_doi = str(e.get('evidencePublication') or '').strip()
+    evidence = _EVIDENCE_LABEL.get(evidence_type, 'Evidence publication') if evidence_doi else None
+    evidence_url = 'https://doi.org/' + evidence_doi if evidence_doi else None
     views = sum(v for v in _listify(e.get('views')) if isinstance(v, (int, float)))
     description = re.sub(r'<[^>]+>', ' ', str(e.get('_description') or ''))
     description = re.sub(r'\s+', ' ', unescape(unescape(description))).strip()
@@ -268,6 +274,7 @@ def dataset_card(e):
         'at_source': at_source,
         'request': request,
         'evidence': evidence,
+        'evidence_url': evidence_url,
         'views': views,
         'papers': papers,
         # facet values
