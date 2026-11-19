@@ -53,6 +53,8 @@ from app.search.dataset_page import (
     title_html,
 )
 from app.search.dataset_query import matches_suggestion, suggest_correction, vocabulary
+from app.search.evidence import publication_info as evidence_publication_info
+from app.search.evidence import store_dir as evidence_store_dir
 from app.search.models import DatasetCache, DATSDataset
 from app.search.queries import (
     example_query_1,
@@ -1056,6 +1058,12 @@ def dataset_info():
             (datsdataset.evidencePublication or '').lower()
         ),
     }
+    if datsdataset.evidencePublication:
+        # Title and first-page thumbnail recorded by `flask update_evidence_thumbnails`.
+        ev = evidence_publication_info(current_app.config['DATA_PATH'], datsdataset.evidencePublication)
+        dataset["evidenceTitle"] = ev['title']
+        thumbnail = ev['thumbnail']
+        dataset["evidenceThumbnail"] = url_for('search.evidence_thumbnail', name=thumbnail) if thumbnail else None
 
     metadata = get_dataset_metadata_information(d)
 
@@ -1151,6 +1159,17 @@ def download_metadata():
         download_name=unidecode(dataset.name.replace(' ', '_') + '.dats.json'),
         mimetype='application/json'
     )
+
+
+@search_bp.route('/evidence_thumbnail/<name>', methods=['GET'])
+def evidence_thumbnail(name):
+    """First page of a NeuroLibre/Evidence publication, as rendered by
+    `flask update_evidence_thumbnails`. Only names that command writes are served."""
+    if not re.fullmatch(r'[a-z0-9][a-z0-9-]{0,120}\.png', name):
+        return 'Not Found', 404
+    response = send_from_directory(evidence_store_dir(current_app.config['DATA_PATH']), name, mimetype='image/png')
+    response.cache_control.max_age = 86400
+    return response
 
 
 @search_bp.route('/download_metadata_experiment', methods=['GET'])

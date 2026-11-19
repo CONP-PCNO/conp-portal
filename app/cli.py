@@ -145,6 +145,42 @@ def register(app):
         """
         _update_analytics(app)
 
+    @app.cli.command('update_evidence_thumbnails')
+    @click.option('--force', is_flag=True, help='Fetch and render again, even when already done.')
+    @click.option('--doi', 'dois', multiple=True, help='Only this publication DOI (repeatable).')
+    def update_evidence_thumbnails(force, dois):
+        """Titles and first-page thumbnails of the NeuroLibre/Evidence publications
+        that datasets belong to, for the dataset page's Evidence banner. Needs
+        poppler (pdftoppm) to render; only new publications are fetched unless --force."""
+        import requests
+
+        from app.search import evidence
+        from app.search.models import DATSDataset
+
+        if not dois:
+            found = set()
+            types_path = os.path.join(os.getcwd(), 'app/static/datasets/evidence-publication-types.json')
+            try:
+                with open(types_path) as f:
+                    found.update(json.load(f))
+            except (OSError, ValueError):
+                pass
+            for d in DBDataset.query.all():
+                try:
+                    doi = DATSDataset(d.fspath).evidencePublication
+                except Exception:  # an unreadable record must not stop the rest
+                    doi = None
+                if doi:
+                    found.add(doi)
+            dois = sorted(found)
+        click.echo(f"{len(dois)} Evidence publications")
+        index = evidence.update(app.config['DATA_PATH'], dois,
+                                get=lambda url: requests.get(url, timeout=60,
+                                                             headers={'User-Agent': 'CONP-Portal (portal.conp.ca)'}),
+                                force=force, log=click.echo)
+        with_thumb = sum(1 for e in index.values() if e.get('thumbnail'))
+        click.echo(f"Done: {len(index)} recorded, {with_thumb} with a thumbnail.")
+
     @app.cli.command('rename_datasets')
     @click.argument('mapping', type=click.Path(exists=True, dir_okay=False))
     @click.option('--apply', 'apply_changes', is_flag=True, default=False,
