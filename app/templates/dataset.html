@@ -136,11 +136,16 @@
 
       {% if data.evidencePublication %}
       {% set tier = evidence_tiers.get((data.evidencePublicationType or '') | lower, evidence_fallback) %}
-      <a class="dp-evidence" href="https://doi.org/{{ data.evidencePublication }}" target="_blank" rel="noopener noreferrer"
+      {#- Option A (18 Nov 2026): the publication's first page peeks over the banner's right edge.
+          Title and page come from `flask update_evidence_thumbnails`; without them the banner reads as before. -#}
+      <a class="dp-evidence{% if data.evidenceThumbnail %} dp-evidence--page{% endif %}" href="https://doi.org/{{ data.evidencePublication }}" target="_blank" rel="noopener noreferrer"
          style="--ev-accent: {{ tier.accent }}; --ev-wash: {{ tier.wash }};">
-        <img src="{{ url_for('static', filename='img/evidence_logo.svg') }}" alt="" width="28" height="28" />
-        {% if data.evidencePublicationType %}<span class="dp-evidence-type">{{ data.evidencePublicationType }}</span>{% endif %}
-        <span><strong>NeuroLibre/Evidence publication</strong>: this dataset is part of {{ tier.blurb }} <span aria-hidden="true">↗</span></span>
+        <img class="dp-evidence-logo" src="{{ url_for('static', filename='img/evidence_logo.svg') }}" alt="" width="32" height="32" />
+        <span class="dp-evidence-text">
+          <span class="dp-evidence-head">{% if data.evidencePublicationType %}<span class="dp-evidence-type">{{ data.evidencePublicationType }}</span>{% endif %}<strong>NeuroLibre/Evidence publication</strong></span>
+          <span>This dataset is part of {{ tier.blurb }}{% if data.evidenceTitle %}: <cite>{{ data.evidenceTitle }}</cite>{% endif %} <span aria-hidden="true">↗</span></span>
+        </span>
+        {% if data.evidenceThumbnail %}<img class="dp-evidence-page" src="{{ data.evidenceThumbnail }}" alt="" aria-hidden="true" width="80" height="113" loading="lazy" />{% endif %}
       </a>
       {% endif %}
     </div>

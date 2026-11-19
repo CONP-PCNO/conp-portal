@@ -88,19 +88,25 @@ a.dp-chip:hover { border-color: #b8c0cc; color: #1d2129; }
 .dp-chip .dp-icon { color: #5d6472; }
 
 .dp-evidence {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 12px;
-  padding: 7px 12px;
-  border: 1px solid var(--ev-accent);
-  border-left-width: 4px;
-  border-radius: 4px;
-  background: linear-gradient(90deg, var(--ev-wash), #fff);
+  gap: 12px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+  background: var(--ev-wash);
   color: var(--conp-slate-dark);
-  font-size: .86rem;
+  font-size: .9rem;
   text-decoration: none;
 }
+.dp-evidence:hover { border-color: var(--ev-accent); text-decoration: none; color: var(--conp-slate-dark); }
+.dp-evidence:focus-visible { outline: 2px solid #1a5fb4; outline-offset: 2px; }
+.dp-card img.dp-evidence-logo { width: 32px; height: 32px; flex: none; margin: 0; }
+.dp-evidence-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.dp-evidence-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.dp-evidence-text cite { font-style: italic; }
 .dp-evidence-type {
   background: var(--conp-slate-dark);
   color: #fff;
@@ -111,6 +117,31 @@ a.dp-chip:hover { border-color: #b8c0cc; color: #1d2129; }
   border-radius: 3px;
   padding: 3px 8px;
   white-space: nowrap;
+}
+/* Option A: the first page peeks over the right edge, tilted; it straightens on hover. */
+.dp-evidence--page { min-height: 88px; margin-top: 30px; padding-right: 124px; }
+.dp-card img.dp-evidence-page {
+  position: absolute;
+  right: 24px;
+  top: -24px;
+  width: 80px;
+  height: 113px;
+  margin: 0;
+  object-fit: cover;
+  object-position: top;
+  background: #fff;
+  border: 1px solid #d5dae1;
+  border-radius: 3px;
+  box-shadow: 0 6px 16px rgba(29, 33, 41, .18);
+  transform: rotate(4deg);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.dp-evidence--page:hover img.dp-evidence-page,
+.dp-evidence--page:focus-visible img.dp-evidence-page { transform: rotate(0deg) translateY(-6px); box-shadow: 0 10px 24px rgba(29, 33, 41, .22); }
+@media (prefers-reduced-motion: reduce) { .dp-card img.dp-evidence-page { transition: none; } }
+@media (max-width: 640px) {
+  .dp-evidence--page { margin-top: 14px; padding-right: 14px; }
+  .dp-card img.dp-evidence-page { display: none; }
 }
 
 /* ---------- tabs ---------- */

@@ -41,6 +41,12 @@ echo "Triggering Flask portal update..."
 
 # Run the metadata update command
 $VENV_PYTHON -m flask update_datasets
+status=$?
+
+# Titles and first-page thumbnails of new NeuroLibre/Evidence publications
+# (only new ones are fetched; needs poppler-utils). Never fails the update.
+$VENV_PYTHON -m flask update_evidence_thumbnails || echo "WARNING: update_evidence_thumbnails failed"
+(exit $status)
 
 # Final Status Check
 if [ $? -eq 0 ]; then
