@@ -70,6 +70,7 @@ body .content-main .lp-origin img { width: 14px; height: 14px; margin: 0; }
 .lp-get > .lp-get-request { color: #7a4a00; }
 body .content-main .lp-get-cbrain img { height: 14px; width: auto; max-width: 70px; margin: 0; }
 .lp-evidence { margin-left: auto; font-weight: 500; background: #f0f2f5; border-radius: 6px; padding: 2px 8px; }
+.lp-get > a.lp-evidence:hover { background: #e4e8ee; }
 body .content-main .lp-evidence img { width: 16px; height: 16px; margin: 0; }
 .lp-none { margin-top: 18px; }
 

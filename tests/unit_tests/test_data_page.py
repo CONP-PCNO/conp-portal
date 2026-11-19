@@ -50,6 +50,20 @@ def test_card_routes_and_labels(tmp_path):
     assert not c['datalad'] and not c['download'] and dl.ROUTE_SOURCE in c['routes_facet']
 
 
+def test_evidence_pill_names_the_tier_and_links(tmp_path):
+    wired = dl.dataset_card(_element(tmp_path, 'projects/w', evidencePublication='10.55458/neurolibre.00050',
+                                     evidencePublicationType='Wired'))
+    assert wired['evidence'] == 'Wired publication'
+    assert wired['evidence_url'] == 'https://doi.org/10.55458/neurolibre.00050'
+    archived = dl.dataset_card(_element(tmp_path, 'projects/a', evidencePublication='10.55458/neurolibre.00031',
+                                        evidencePublicationType='Archived'))
+    assert archived['evidence'] == 'Archived publication'
+    untyped = dl.dataset_card(_element(tmp_path, 'projects/u', evidencePublication='10.55458/x'))
+    assert untyped['evidence'] == 'Evidence publication'
+    none = dl.dataset_card(_element(tmp_path, 'projects/n'))
+    assert none['evidence'] is None and none['evidence_url'] is None
+
+
 def test_placeholder_values_are_not_modalities_or_formats(tmp_path):
     c = dl.dataset_card(_element(tmp_path, 'projects/p', modalities=['Unknown', 'Dataset'], formats=['N/A', 'csv']))
     assert c['modalities'] == [] and c['modality_facet'] == [dl.NOT_STATED] and c['formats'] == ['CSV']
@@ -115,6 +129,7 @@ def test_data_page_renders(session, test_client, tmp_path, monkeypatch):
     assert '36 datasets' in html and 'rel="next"' in html and 'Locked dataset' not in html
     html = test_client.get('/search?sort=evidence').get_data(as_text=True)
     assert 'Locked dataset' in html and 'Request access at C-BIG' in html and 'Account needed' in html and 'Re-executable publication' in html
+    assert '<a class="lp-evidence" href="https://doi.org/10.55458/neurolibre.00004"' in html
     assert 'CONPReact.DataTableContainer' not in html
     html = test_client.get('/search?modality=Genomics').get_data(as_text=True)
     assert '1 dataset</strong>' in html and 'Dataset 3' not in html and 'Clear search and filters' in html

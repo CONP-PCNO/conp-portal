@@ -58,7 +58,7 @@
       {% if c.datalad %}<a href="{{ c.url }}#dataladInstructions">{{ icon('datalad') }}DataLad</a>{% endif %}
       {% if c.cbrain %}<a class="lp-get-cbrain" href="{{ c.url }}#route-cbrain">On <img src="{{ url_for('static', filename='img/cbrain-long-logo-blue.png') }}" alt="CBRAIN" /></a>{% endif %}
       {% if c.request %}<a class="lp-get-request" href="{{ c.url }}#route-request">{{ icon('key') }}{{ c.request }}</a>{% elif c.at_source %}<a href="{{ c.url }}#route-source">{{ icon('globe') }}At the source</a>{% endif %}
-      {% if c.evidence %}<span class="lp-evidence"><img src="{{ url_for('static', filename='img/evidence_logo.svg') }}" alt="" />{{ c.evidence }}</span>{% endif %}
+      {% if c.evidence %}<a class="lp-evidence" href="{{ c.evidence_url }}" target="_blank" rel="noopener noreferrer" title="Open the {{ c.evidence }} (NeuroLibre/Evidence) in a new tab"><img src="{{ url_for('static', filename='img/evidence_logo.svg') }}" alt="" />{{ c.evidence }}</a>{% endif %}
     </div>
   </div>
 </article>
