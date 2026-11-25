@@ -111,7 +111,7 @@ a.dp-chip:hover { border-color: #b8c0cc; color: #1d2129; }
 .dp-card img.dp-evidence-logo { width: 32px; height: 32px; flex: none; margin: 0; }
 .dp-evidence-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .dp-evidence-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.dp-evidence-text cite { font-style: italic; }
+.dp-evidence-text cite { font-style: italic; color: var(--conp-slate); }
 .dp-evidence-type {
   background: var(--conp-slate-dark);
   color: #fff;
