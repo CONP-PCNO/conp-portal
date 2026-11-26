@@ -79,6 +79,11 @@ class Config:
     MATOMO_SERVER_URL = os.environ.get("MATOMO_SERVER_URL")
     MATOMO_SITE_ID = os.environ.get("MATOMO_SITE_ID", "2")
     MATOMO_TOKEN_AUTH = os.environ.get("MATOMO_TOKEN_AUTH")
+    # Matomo segment applied to every update_analytics query. The default leaves out
+    # automated visits: headless Chrome (page checks, scripts), and a crawler that has
+    # posed since Aug 2026 as Chrome on Windows 10 with a 1800x1125 screen.
+    # Set MATOMO_SEGMENT= (empty) to count every visit.
+    MATOMO_SEGMENT = os.environ.get("MATOMO_SEGMENT", "browserName!=Headless Chrome;resolution!=1800x1125,operatingSystemCode!=WIN")
     # OpenAlex API key for `flask update_research_use` (list and full-text searches)
     OPENALEX_API_KEY = os.environ.get("OPENALEX_API_KEY")
 
