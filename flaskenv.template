@@ -57,6 +57,9 @@ WEBHOOKS_SECRET='replace-with-github-webhook-secret'
 MATOMO_SERVER_URL=matomo.example.org # no http:// or https://
 MATOMO_SITE_ID=your-matomo-site-id
 MATOMO_TOKEN_AUTH='your-matomo-token'
+# Visits update_analytics leaves out (a Matomo segment). Unset: headless browsers and
+# the fake-Chrome crawler are left out. Empty (MATOMO_SEGMENT=): every visit is counted.
+#MATOMO_SEGMENT=browserName!=Headless Chrome;resolution!=1800x1125,operatingSystemCode!=WIN
 
 # -------------------------------------------------------------------
 # OPENALEX (for `flask update_research_use`; free key from https://openalex.org)

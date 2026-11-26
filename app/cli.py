@@ -139,10 +139,15 @@ def register(app):
         _update_index(app, DBDataset, schema)
 
     @app.cli.command('update_analytics')
-    def update_analytics():
+    @click.option('--refetch-since', 'refetch_since', default=None, metavar='YYYY-MM-DD',
+                  help='Back up the analytics tables, delete the Matomo rows from this day on, and fetch '
+                       'them again (for example after changing MATOMO_SEGMENT).')
+    def update_analytics(refetch_since):
         """
         Wrapper to call the update of the analytics tables
         """
+        if refetch_since:
+            print(_refetch_matomo_since(app, refetch_since))
         _update_analytics(app)
 
     @app.cli.command('update_evidence_thumbnails')
@@ -898,15 +903,47 @@ def _update_experiments(app):
 
 
 def _matomo_api_baseurl(app):
+    from urllib.parse import quote
+
     matomo_server_url = app.config['MATOMO_SERVER_URL']
     matomo_site_id = app.config['MATOMO_SITE_ID']
     matomo_token_auth = app.config['MATOMO_TOKEN_AUTH']
+    # Every query shares the segment, so visits, page views, searches, downloads
+    # and countries leave out the same visits (see MATOMO_SEGMENT in config.py).
+    segment = (app.config.get('MATOMO_SEGMENT') or '').strip()
 
     return f"https://{matomo_server_url}/?module=API" \
            f"&idSite={matomo_site_id}" \
            f"&token_auth={matomo_token_auth}" \
            f"&format=json" \
-           f"&filter_limit=-1"
+           f"&filter_limit=-1" \
+           + (f"&segment={quote(segment, safe='')}" if segment else "")
+
+
+MATOMO_DAILY_TABLES = (
+    'matomo_daily_visits_summary', 'matomo_daily_get_page_urls_summary',
+    'matomo_daily_dataset_page_views_summary', 'matomo_daily_portal_download_summary',
+    'matomo_daily_site_keyword_searches_summary',
+)
+
+
+def _refetch_matomo_since(app, since):
+    """Back up the analytics tables, then delete the Matomo daily rows dated SINCE
+    or later, so the next update_analytics fetches those days again. GitHub
+    traffic is left alone (it does not come from Matomo)."""
+    from sqlalchemy import inspect, text
+
+    since = datetime.strptime(since, '%Y-%m-%d').date().isoformat()
+    print(_backup_analytics(app))
+    present = set(inspect(db.engine).get_table_names())
+    deleted = {}
+    for table in MATOMO_DAILY_TABLES:
+        if table in present:
+            result = db.session.execute(text(f'DELETE FROM {table} WHERE date >= :since'), {'since': since})
+            deleted[table] = result.rowcount
+    db.session.commit()
+    total = sum(deleted.values())
+    return f'Matomo rows from {since} on deleted ({total:,} in {len(deleted)} tables); fetching them again.'
 
 
 ANALYTICS_TABLES = (
