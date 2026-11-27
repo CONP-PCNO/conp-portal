@@ -22,7 +22,7 @@ dependencies = [
     #kb# `flask-security[fsqla,common]` v5.9.2 is the last version that supports Flask v3.x.
     #kb# `[fsqla]` is required for Flask-SQLAlchemy support.
     #kb# `[common]` contains the helper packages required for the default UI components (like Flask-WTF for rendering the built-in login, registration, and password-reset forms).
-    "flask-security[common,fsqla]==5.9.2",
+    "flask-security[common,fsqla]==5.9.3",
     "Flask-WTF==1.3.*",
     "gitpython==3.2.*",
     "markupsafe==3.*",
