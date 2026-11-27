@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Upgrades pytest to 9.2.0 and synchronizes the requirements, development dependencies, and lockfile.
 - Removes the obsolete CircleCI dataset test-status lookup and its unused dataset-page status field.
 - Adds more verbose output to cli `flask update_analytics`.
 - Fixes Clones/Views object is not subscriptable error in _get_repo_analytics()
